@@ -13,10 +13,11 @@
 <style>
 
     body {
-        font-family: Arial, sans-serif;
-        background-image: linear-gradient(90deg, #003300 25%, #663399 100%);;
-        margin: 0px;
-        padding: 0px;
+        font-family: 'Trebuchet MS', Helvetica, sans-serif;
+        background-image: linear-gradient(90deg, #003300 25%, #663399 100%);
+        color: #ffd324;
+        margin: 0;
+        padding: 0;
     }
 
     .container {
@@ -26,72 +27,61 @@
     }
 
     h1 {
-        font-size: 24px;
-        margin-top: 16px;
-        margin-bottom: 0px;
-        color: #ffd324;
+        font-size: 1.625rem;
+        margin-top: 1rem;
+        margin-bottom: 0;
     }
 
     h2 {
-        font-size: 16px;
-        margin-top: 8px;
-        margin-bottom: 0px;
-        color: #ffd324;
-    }
-
-    p {
-        color: #ffd324;
+        font-size: 1.125rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
     }
 
     a {
-        color: #ff6699;
+        color: #ffd324;
     }
-    a:link {
-        color: #ff6699;
-    }
-    a:visited {
-        color: #ff6699;
-    }
-    a:hover {
-        color: #ff6699;
-    }
-    a:active {
+
+    a:is(:hover, :active, :focus-visible) {
         color: #ff6699;
     }
 
     #fullscreenbutton {
-        position: fixed;
-        top: 16px;   /* Distance from the top of the page */
-        right: 16px; /* Distance from the right of the page */
-        padding: 10px 20px;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 5px;
+        position: absolute;
+        top: 1rem;   /* Distance from the top of the page */
+        right: 1rem; /* Distance from the right of the page */
+        padding: 0.625em 1.25em;
+        background-color: #ff6d9d;
+        color: black;
+        border: 0.125rem solid #ffd324;
+        border-radius: 0.5rem;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 1rem;
+        font-family: 'Trebuchet MS', Helvetica, sans-serif;
         z-index: 1000; /* Ensures it stays above other content */
     }
 
-    #fullscreenbutton:hover {
-        background-color: #0056b3;
+    #fullscreenbutton:is(:hover, :focus, :focus-visible) {
+        background-color: #ff9bbd;
+        border: 0.125rem solid #ff6699;
     }
 
     select {
-        -webkit-appearance: none;
+        /* -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%238C98F2'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
-        background-size: 12px;
-        background-position: calc(100% - 10px) center;
-        background-repeat: no-repeat;
-        background-color: #efefef;
+        background-size: 0.75rem;
+        background-position: calc(100% - 0.625rem) center;
+        background-repeat: no-repeat; */
+        /* background-color: #efefef; */
         color: black;
-        font-size: 17px;
-        padding: 5px;
-        margin-top: 12px;
-        margin-bottom: 16px;
+        font-size: 1.1rem;
+        padding: 0.33em;
+        margin-top: 0.75rem;
+        margin-bottom: 1rem;
         width: 350px;
+        border-radius: 0.33rem;
     }
 
     iframe {
@@ -99,24 +89,105 @@
         background-color: #ffffff;
     }
 
-    #footer1{
-        margin-top: 12px;
-        margin-bottom: 12px;
+    .footer {
+        position: relative;
+        font-size: 1.125rem;
+        padding-top: 0.75em;
+        margin: 0;
+    }
+
+    #footer1 {
+        padding-bottom: 0.75em;
+        margin: 0;
         color: #ffd324;
     }
 
-    #footer2{
-        margin-top: 12px;
-        margin-bottom: 0px;
+    #footer2 {
+        padding-top: 0.75em;
+        padding-bottom: 0;
         color: #ffd324;
     }
 
-    #website_help{
-        font-size: 28pt;
+    #website_help {
         position: absolute;
-        left: 16px;
-        top: 12px;
-        color: #ff6699;
+        left: 1.75rem;
+        top: 1.75rem;
+    }
+
+    .btn {
+        appearance: none;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        outline-color: transparent;
+        cursor: pointer;
+        color: #ff6d9d;
+    }
+
+    .footer-btn-x {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.05rem;
+    }
+
+    .footer-btn-x::after {
+        content: "\00d7";
+        padding-bottom: 0.35rem;
+    }
+
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .help-link {
+        font-size: 2.5rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .footer-btn-x {
+        font-size: 2.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .help-link,
+    .footer-btn-x {
+        border-radius: 50%;
+        opacity: 0.9;
+    }
+    
+    .help-link:is(:hover, :focus, :focus-visible),
+    .footer-btn-x:is(:hover, :focus, :focus-visible) {
+        outline: 0.2rem solid #ffd324;
+        opacity: 1;
+    }
+
+    a, 
+    iframe {
+        border-radius: 0.25rem;
+    }
+
+    a:focus-visible,
+    iframe:focus-visible,
+    select:is(:focus, :focus-visible),
+    #fullscreenbutton:is(:focus, :focus-visible) {
+        outline: 0.2rem solid #ffd324;
+    }
+
+    a:focus-visible,
+    #fullscreenbutton:is(:hover, :focus, :focus-visible) {
+        outline-offset: 0.12rem;
+    }
+
+    iframe:focus-visible {
+        outline-offset: -0.15rem;
     }
 
 </style>
@@ -126,33 +197,41 @@
 <body>
 
     <div class="container">
-        <a id="website_help" href="https://michaeleskin.com/abctools/userguide.html" target="_blank" style="text-decoration:none;" title="Information about using this tunebook" class="cornerbutton">?</a>
-        <button id="fullscreenbutton">Full Screen</button>
-        <h1 id="title"><span style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Novi Sad Session Setlist</span></h1>
-        <select id="tuneSelector" style="margin-right:12px;">
-            <option value="">Click to Select a Tune</option>
+        <div id="website_help" class="wrapper">
+            <a href="https://github.com/anton-bregolas/NS_Session_Setlist" target="_blank" style="text-decoration:none;" title="Visit GitHub page with tunebook information" aria-title="Visit GitHub page with tunebook information" class="cornerbutton help-link">?</a>
+        </div>
+        <h1 id="title">Novi Sad Session Setlist</h1>
+        <select id="tuneSelector" style="margin-right:0.75rem;" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
+            <option value="">Select SET of Tunes</option>
         </select>
-        <select id="displayOptions" style="width:220px;">
-           <option value="-1">Tablature Display</option>
-           <option value="0">Standard Notation</option>
-           <option value="1">Note Names</option>
-           <option value="2">Mandolin</option>
-           <option value="3">Tenor Banjo</option>
-           <option value="4">GDAD Bouzouki</option>
-           <option value="5">Standard Guitar</option>
-           <option value="6">DADGAD</option>
-           <option value="7">Tin Whistle</option>
-           <option value="8">Irish Flute</option>
+        <select id="displayOptions" style="width:220px;" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
+           <option value="-1">Pick Tabs & Instrument</option>
+           <option value="0">Staff Notation (Piano)</option>
+           <option value="1">ABC (Concertina)</option>
+           <option value="2">Tin Whistle Tabs</option>
+           <option value="3">Irish Flute Tabs</option>
+           <option value="4">GDAD Bouzouki Tabs</option>
+           <option value="5">EADGBE Guitar Tabs</option>
+           <option value="6">DADGAD Guitar Tabs</option>
+           <option value="7">Mandolin Tabs</option>
+           <option value="8">Tenor Banjo Tabs</option>
            <option value="9">Hammered Dulcimer</option>
+           <option value="10">Uilleann Pipes</option>
+           <option value="11">Melodeon</option>
+           <option value="12">Solfège </option>
         </select>
+        <button id="fullscreenbutton" title="View current tunes in full screen on a new page" aria-title="View current tunes in full screen on a new page">Full<br>Screen<br>View</button>
         <br/>
         <iframe id="tuneFrame" src=""></iframe>
-        <p id="footer1"><a href="https://t.me/irish_sessions_ns" target="_blank" style="color: #ffd324; font-family: 'Trebuchet MS', Helvetica, sans-serif;">Follow Trad Sessions NS</a></p>
+        <p id="footer1" class="footer">
+            <a href="https://t.me/irish_sessions_ns" target="_blank" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">Follow Trad Sessions NS</a>
+            <button class="btn footer-btn-x wrapper" title="Hide footer section" aria-title="Hide footer section" onclick="hideParentElement(event)"></button>
+        </p>
     </div>
 
     <script>
 
-    const tunes=[{"Name":"POLKAS John Walsh's Set","URL":"https://michaeleskin.com/abctools/abctools.html?lzw=BoLgBAjAUAKuAKB5AMgaQIIGVwCkD2AFgHZgDqAhgDYDOBA5NWJgKYAusuhJFN9jAcngB0kMAHowAcTwAjSuQDGBciQkARZgCdNATwDmVSsxIAhTQEsAJnuZQAwuAdh8xMlVr3w2MOiKs8qmDweJQK5GAqYABKALfizlxuvFDI4BBiABxQALLgAExiACxQUQghANbkUACKaUUAvBCFAAxQqOCSALbkAFZQAKTkMgo91AD61HgArkSWAGYBrGBzlFNWA-3ZAJJqW2AADpp4eprknWCt-Zs7ezLk1NSHxxcb27tgSnialk96L1dvW73agANxCYAAbMUATcPgQvpYwZRIcU1AAfECSAB86DAJnQaMkAFEwESseiTAAacmkimUtS0tFQbG4-GEklkuk0onoiBSPJSNQgNECySikxiSxiNFMjF6AVzPRo8h-PRichiNXMaWWEx4sQKMQS9DSll4yxMvRYv6K5Wq9WasTatG6vEEvli83C0Wi9FMuAJVw8WgMeLZAIg8inPEWay2dpSbp9DGSPUSw3G6UAQmozD0RDwWdTeIz0vQeoUFuYljxOKZxfTRrEJsJadLaPLH3d-MF3p7qZlUAx1jAao1Wp1babHYrVZrJixCiZI7HjudrpM7c7CgJntTwtlIBXGpk0pVo7yaO1c01YGrLrTi+Xqqx5DRMlVVbEN7+9-lo4dCcswUPBLHILMDw3A0mxNLM1CETAhCzQcAxcbh3D4eI1CoHRQ2ycxKEoNoOiTIdMT1SxmAffVSxbbEKKoywBSlbUpQlessQY6jG0zdlaTEIlpQ9X0+0kVkLUPasaJg00OTUATTUzKQTBdZiJSlJkpJ45tZP4wTWx0qQiTRYSvRFfs-SAA&format=noten&ssp=10&name=POLKAS_John_Walsh's_Set"},{"Name":"POLKAS P and O Set","URL":"https://michaeleskin.com/abctools/abctools.html?lzw=BoLgBATAUAKuAKB5AMgaQIIGUFgIYDsATMRMTAUwBdYEAyRKAYXGbBgAtyx56xBkAjCN2AJwCWAZ0oBPMMnK52UgDRgA9pU7DxYSsNyFRlUavy4ANk3DYw6fJRNgA9N1VmAxrjz4wAJQC3TmAAQsLkRATB5ADmZuRSUMjgAIyOABxQALLgEI4ALFA+CK4A1rhQAIrJeQC8SbkADFCo4AAiALai+FAApLgARm4AVuIA+uKqAK5EAGYmlGDTZhOihD3dGQCSLRtgAA7CqlF6bWCN3etbO3244uL7h6drm9tgbuyqwoT3UY-nz1c3cQAN1cYAAbPk-pdXu9PiCzOD8gAfEDoJQtMAtACiSIAYgBxRy45xYlpIrGMQQAPjJFMxjCRUDRGOxeIgYCx+Lx6DA+LcSKSYEI7MI6BASJFPMI5CRjJR03Z5H5hDcNi5WNVbkISPIIplUGmxCVSJVau5vP5guFQvI4pFktlNDYqhOGXYojcAHJtAA5VQAOjASSarTauEGUBR1q1jjcjiRQR5uPQCfZQX5ibAycZ0schGcMbjCaTtNxvIZgtJWbFEo5LLRjpRLSpWOrxazpd5OMz2agzdb2Z7nfxFbrmIgdrH2cZcGdrvdXt9AcgIcxYYjKPQQVe2vIxDj+bjQXjW53OsVEEZ6Cp261Ov3N6Rp7cMqt5DzBaC4tr1sIVOmjYgLg0xgHuSIKqBl7Xreu6KtMjhRPGUDAaB2oQeQKbQa8r5CiK-6Trm+avEEso2LkspAA&format=noten&ssp=10&name=POLKAS_P_and_O_Set"},{"Name":"POLKAS Toureendarby Set","URL":"https://michaeleskin.com/abctools/abctools.html?lzw=BoLgBAzAUAKuAKB5AMgaQIIGVwwPYFcAnAU2IDsATAQ0ICMBPMTYgF1hwJPOrsYHowAYSKEqAcwAWYAEpUAxsQDOUQeFVgYoigEsW23GSoAbFeGxh0ZFgbAAyDVTL0qYATG0BbD40QByQQZkuIQANEwAl1Qe+IpgAELEYkbE9FAAsuAATHwALFDI4ACMfAAcUACKRbkAvIU5AAxQqOAAohTBUACkVLRyAFaKAPqKBJQAZgYsYGNG+NoUXZ1pAJIAIstgAA6EuGKiHmCNnUtrG7RUiorbu4eLK+tgchLBFNdit8f3ZxeKAG64RjAADY8p9To9noQKP9ASCoAAfEBxFpgABiLXhyLRGNWAD4Uaj0PDVgSiVAsejMQScfi0UTCtiwC10CB4ZlGS1MvD4QiQMR2RQ4vDiGM+MQBIL4ehUWAKKipXE+HIJVyoCKxRKherxbKhdLZfKGeimXFWezjRRcXJuewmNpEsQwLgxkyyGRtLEBHFHABrWLOsDLMi-YiEMhKZTNMAAcQ8VD6vLxKNWcRCxJR0dxRLiFAsivQfHh0ZRcgxUCTYBTaZJMazmNz6HzhYZ0fZ0b4BfbLT4ZpjbbrPJzuvhCjAxFxFHreY7heLTNWg9zlqFo-HY3hYkdY0n-LHuPXUE30x3fFF4ooXuzDabRZLZYrVfTtav04LRf7RJ5iKHOangr4F7Crmv7EMBdbksBk5Dv+gGgfERLoNGfasl+IDRnEspcnBchcoKMZ6nwTbtvOPLobKE5AY8uLEPCeHFvCDItKslaZL2TExhiPJwPEhC6E8ShovgRiAgGmB6Cw-GRuAsbxrymboPE0ZSkhcRKfJinKUyqrqapmm-up9HsasrE2oilqOpKiF5rR1HDlZnI8uZdlIY2RZZhxDHzixbHMSS3JAA&format=noten&ssp=10&name=POLKAS_Toureendarby_Set"}];
+    const tunes=[{"Name":"POLKAS John Walsh's Set","URL":"https://michaeleskin.com/abctools/abctools.html?lzw=BoLgBAjAUAKuAKB5AMgaQIIGVwCkD2AFgHZgDqAhgDYDOBA5NWJgKYAusuhJFN9jAcngB0kMAHowAcTwAjSuQDGBciQkARZgCdNATwDmVSsxIAhTQEsAJnuZQAwuAdh8xMlVr3w2MOiKs8JABkTHgADgTmzOJg8HiUCuRgKmAASgC30S7c7gRQyOAQYgAcUACy4ABMYgAsUCkIcQDW5FAAigU1ALwQ1QAMUKjgkgC25ABWUACk5DIKY9QA+tR4AK5ElgBmAaxgG5QrVlOTpQCSaidgoZp4eprkw2D9k8dnFzLk1NRXN49Hp+dgJR4TSWb56X7Pf5vD7UABucTAADZapDXoCCMDLPDKEjamoAD4gSQAPnQYBM6HxkgAomBqcSCSYADQMumMplqNn4qAkskUqm0+ns1nUgkQKQVKRqED4yWSOUmMSWMT47mEvSSjZ6fHkcF6MTkMT65gqywmcliBRiRXoFW88mWbl6YngrU6vUGo1iE34s3kyni+UOmVyuUE7lwZxcNy8BjRUoBWHkO7kizWWyDKSjCaEyTmxVWm0qgCE1GYeiIeGLefJhZV6HNCkdzEs5NJ3JrBetYltVPzdfxDcBAYlUpDo7zqqghOsYH1huNpv73cHjebrZMxIU3Nn869Pr9JgHQ4UlKDeZlapAu8NMhVurnFXxJo2RrALd9+a3O71xPI+JkPVmzEV9wQ-DU509RdiwUPBLHIYtL0PS1u1tYs1CETAhGLKdIyyGNaDjdQqB0ONSnMShKAGIZs2nIlzUsZhPwtOtexJBimMsSVlRNZVFQ7YkOOYrsiwFNkxGpFVAzDcdJD5R0rxbFjULtQU1Aku0iykExfW4xVlW5JSRJ7VTxMkvsTKkal8Wk4NZQncMgA&format=noten&ssp=10&name=POLKAS_John_Walsh's_Set"},{"Name":"POLKAS P and O Set","URL":"https://michaeleskin.com/abctools/abctools.html?lzw=BoLgBATAUAKuAKB5AMgaQIIGUFgIYDsATMRMTAUwBdYEAyRKAYXGbHnrEGQCMRgCwCcAlgGdKATzDJyuXmIDcYAPaVe5fsK5hK-XIUGVBi-LgA2TcNjDp8lI2FokTggK7DeAa1xgA9G0UmAYy8CMAAlAFuAGjAYXgAtPh8wACF+ciIQ5PIAcxNyMShkcABGbwAOKABZcAhvABYoUIR-TygARRL6gF5iuoAGKFRwABEAW0F8KABSXAAjAIArYQB9YUVnIgAzI0owTZNnQUJpqcqASWGzsAAHfkVsnVGwAanTi6vZ3GFhW-vnk-OlzAAV4in4hF+2X+r0BHy+wgAbv4wAA2Bow97A0HgpEmVENAA+IHQkWGYGGAFECQAxADi3mpvgpwwJFMYPAAfCy2eTGASoCSyZSaRAwBTaTT0GBaQECcUwIRRYR0CACUqpYRyAT+UTNqLyLLCAErBKKcaAoQCeQlVqoJtiAaCUaTZLpbL5YqFeRVUr1dqaDFFE9KrxBAEAOQaAByigAdGBioMRqNcAsoETPRbvAFvATklLqeg86LkrL82BC-zNd5CL4szm8wXudTpXz5cyKyq1WKhST-UThhyKZ3GxXm9KqeXK1BB8PK1Px7S2z3yRAfSvK-y4IHg6GI9G45Ak+SU2miehksDLeRiDnaznkrmL1erfqIPz0BzLxarbevwTnwCLUPXIGs62SVVu09QgOU2fsQFwTYwBvAk9WQ99P2-a99U2bxslzKBEOQy00PIItMOBYCFSVWD12rWtgWSbUrDqbUgA&format=noten&ssp=10&name=POLKAS_P_and_O_Set"},{"Name":"POLKAS Toureendarby Set","URL":"https://michaeleskin.com/abctools/abctools.html?lzw=BoLgBAzAUAKuAKB5AMgaQIIGVwwPYFcAnAU2IDsATAQ0ICMBPMTYgF1hwJPOrsYHowAYSKEqAcwAWYAEpUAxsQDOUQeFVgYoigEsW23GSoAbFeGxh0ZFgbAAyDVTL0qYATG0BbD40QByQQZkuIQANEwAl1Qe+IpgAELEYkbE9FAAsuAATHwALFDI4ACMfAAcUACKRbkAvIU5AAxQqOAAohTBUACkVLRyAFaKAPqKBJQAZgYsYGNG+NoUXZ1pAJIAIstgAA6EuGKiHmCNnUtrG7RUiorbu4eLK+tgchLBFNdit8f3ZxeKAG64RjAADY8p9To9noQKP9ASCoAAfEBxFpgABiLXhyLRGNWAD4Uaj0PDVgSiVAsejMQScfi0UTCtiwC10CB4ZlGS1MvD4QiQMR2RQ4vDiGM+MQBIL4ehUWAKKipXE+HIJVyoCKxRKherxbKhdLZfKGeimXFWezjRRcXJuewmNpEsQwLgxkyyGRtLEBHFHABrWLOsDLMi-YiEMhKZTNMAAcQ8VD6vLxKNWcRCxJR0dxRLiFAsivQfHh0ZRcgxUCTYBTaZJMazmNz6HzhYZ0fZ0b4BfbLT4ZpjbbrPJzuvhCjAxFxFHreY7heLTNWg9zlqFo-HY3hYkdY0n-LHuPXUE30x3fFF4ooXuzDabRZLZYrVfTtav04LRf7RJ5iKHOangr4F7Crmv7EMBdbksBk5Dv+gGgfERLoNGfasl+IDRnEspcnBchcoKMZ6nwTbtvOPLobKE5AY8uLEPCeHFvCDItKslaZL2TExhiPJwPEhC6E8ShovgRiAgGmB6Cw-GRuAsbxrymboPE0ZSkhcRKfJinKUyqrqapmm-up9HsasrE2oilqOpKiF5rR1HDlZnI8uZdlIY2RZZhxDHzixbHMSS3JAA&format=noten&ssp=10&name=POLKAS_Toureendarby_Set"}];
 
     // Set this to false to disable state persistence
     var gAllowStatePersistence = true;
@@ -165,6 +244,9 @@
     var isBanjo = false;
     var isFlute = false;
     var isDulcimer = false;
+    var isUPipes = false;
+    var isMelodeon = false;
+    var isSolfege = false;
 
     var lastURL = "";
 
@@ -211,10 +293,10 @@
 
                    if (window.localStorage){
 
-                       localStorage.lastTuneName_RPKZXDV = tuneSelector.options[tuneSelector.selectedIndex].text;
+                       localStorage.lastTuneName_GKUCFRH = tuneSelector.options[tuneSelector.selectedIndex].text;
 
                        var theLastTuneTab = document.getElementById('displayOptions').value;
-                       localStorage.lastTab_RPKZXDV = theLastTuneTab;
+                       localStorage.lastTab_GKUCFRH = theLastTuneTab;
 
                    }
 
@@ -292,9 +374,22 @@
                     abcInLZW = abcInLZW.replace("%%MIDI bassvol 64","%%MIDI bassvol 64");
                     abcInLZW = abcInLZW.replace("%%MIDI chordvol 64","%%MIDI chordvol 64");
                     break;
+                case "notenames":
+                    if (isSolfege){
+                        abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 136");
+                        break;
+                    } 
+                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 133");
+                    break;
                 case "noten":
                     if (isDulcimer){
                         abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 15");
+                    }
+                    else if (isUPipes) {
+                        abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 129");
+                    }
+                    else if (isMelodeon) {
+                        abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 135");     
                     }
                     else{
                         return theURL;
@@ -315,121 +410,102 @@
 
           displayOptions.addEventListener('change', () => {
 
-             var origTabStyle = tabStyle;
+            var origTabStyle = tabStyle;
 
-             if (displayOptions.value == "-1"){
-                 return;
-             }
+            if (displayOptions.value == "-1"){
+                return;
+            }
+            isBanjo = false;
+            isFlute = false;
+            isDulcimer = false;
+            isUPipes = false;
+            isMelodeon = false;
+            isSolfege = false;
 
-             isBanjo = false;
-             isFlute = false;
-             isDulcimer = false;
-
-             switch (displayOptions.value){
-                 case "0": // Standard notation
+            switch (displayOptions.value){
+                case "0": // Standard notation + piano voice
                      tabStyle = "noten";
                      break;
-                 case "1": // Note names
+                case "1": // Note names + concertina voice
                      tabStyle = "notenames";
                      break;
-                 case "2": // Mandolin
-                     tabStyle = "mandolin";
+                case "12": // Note names + solfa voice
+                     isSolfege = true;
+                     tabStyle = "notenames";
                      break;
-                 case "3": // Tenor banjo
-                     isBanjo = true;
-                     tabStyle = "mandolin";
-                     break;
-                 case "4": // GDAD
-                     tabStyle = "gdad";
-                     break;
-                 case "5": // Guitar
-                     tabStyle = "guitare";
-                     break;
-                 case "6": // DADGAD
-                     tabStyle = "guitard";
-                     break;
-                 case "7": // Whistle
-                     tabStyle = "whistle";
-                     break;
-                 case "8": // Irish flute
-                     isFlute = true;
-                     tabStyle = "whistle";
-                     break;
-                 case "9": // Hammered dulcimer
+                case "2": // Whistle voice + tabs
+                    tabStyle = "whistle";
+                    break;
+                case "3": // Irish flute voice + tabs
+                    isFlute = true;
+                    tabStyle = "whistle";
+                    break;
+                case "4": // GDAD Bouzouki voice + tabs
+                    tabStyle = "gdad";
+                    break;
+                case "5": // EADGBE Guitar voice + tabs
+                    tabStyle = "guitare";
+                    break;
+                case "6": // DADGAD Guitar voice + tabs
+                    tabStyle = "guitard";
+                    break;
+                case "7": // Mandolin voice + tabs
+                    tabStyle = "mandolin";
+                    break;
+                case "8": // Tenor banjo voice + tabs
+                    isBanjo = true;
+                    tabStyle = "mandolin";
+                    break;
+                case "9": // Hammered dulcimer voice only
                      isDulcimer = true;
+
+                case "10": // Uilleann pipes voice only
+                     isUPipes = true;
+
+                case "11": // Melodeon voice only
+                     isMelodeon = true;
+
+                default:
                      tabStyle = "noten";
                      break;
-                 default:
-                     tabStyle = "noten";
-                     break;
-             }
+            }
 
-             var theURL;
+            var theURL;
+            
+            if (tunes.length > 1){
+               theURL = tuneSelector.value;
+            }
+            else {
+               theURL = tunes[0].URL;
+            }
 
-             if (tunes.length > 1){
-                theURL = tuneSelector.value;
-             }
-             else {
-                theURL = tunes[0].URL;
-             }
+            if (theURL == "")return;
 
-             if (theURL == "")return;
+            theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
 
-             theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
+            if (gAllowInstrumentChanges){
+                
+                theURL = injectInstrument(theURL);
+            }
 
-             if (gAllowInstrumentChanges){
-                 theURL = injectInstrument(theURL);
-             }
-
-             tuneFrame.src = theURL;
-             lastURL = theURL;
-
+            tuneFrame.src = theURL;
+            lastURL = theURL;
              // Save last tune
              if (gAllowStatePersistence){
 
                  if (window.localStorage){
 
                      if (tunes.length > 1){
-                         localStorage.lastTuneName_RPKZXDV = tuneSelector.options[tuneSelector.selectedIndex].text;
+                         localStorage.lastTuneName_GKUCFRH = tuneSelector.options[tuneSelector.selectedIndex].text;
                      }
 
                      var theLastTuneTab = document.getElementById('displayOptions').value;
-                     localStorage.lastTab_RPKZXDV = theLastTuneTab;
+                     localStorage.lastTab_GKUCFRH = theLastTuneTab;
                  }
 
              }
 
         });
-
-       function getElementsTotalHeight() {
-
-           const ids = ['title', 'subtitle', 'displayOptions', 'footer1', 'footer2'];
-
-           let totalHeight = 0;
-
-           ids.forEach(id => {
-
-               const element = document.getElementById(id);
-
-               if (element && (element.textContent.trim() !== "")) {
-                   const elementHeight = element.offsetHeight;
-                   const computedStyle = window.getComputedStyle(element);
-
-                   // Include margins
-                   const marginTop = parseFloat(computedStyle.marginTop);
-                   const marginBottom = parseFloat(computedStyle.marginBottom);
-                   totalHeight += elementHeight + marginTop + marginBottom + 1;
-               }
-           });
-           return totalHeight+5;
-       }
-
-       function resizeIframe() {
-           const iframe = document.getElementById('tuneFrame');
-           iframe.style.width = (window.innerWidth-3) + 'px';
-           var otherElementsHeight = getElementsTotalHeight();
-           iframe.style.height = (window.innerHeight-otherElementsHeight) + 'px';
-       }
 
        function setSelectedTuneByName(optionText) {
            var gotMatch = false;
@@ -458,7 +534,7 @@
 
               setTimeout(function(){
 
-                var theLastTuneTab = localStorage.lastTab_RPKZXDV;
+                var theLastTuneTab = localStorage.lastTab_GKUCFRH;
                 if (theLastTuneTab && (theLastTuneTab != "")){
                     var elem = document.getElementById('displayOptions');
                     elem.value = theLastTuneTab;
@@ -467,7 +543,7 @@
 
                 if (tunes.length > 1){
 
-                   var theLastTuneName = localStorage.lastTuneName_RPKZXDV;
+                   var theLastTuneName = localStorage.lastTuneName_GKUCFRH;
                    if (theLastTuneName && (theLastTuneName != "")){
                        setSelectedTuneByName(theLastTuneName);
                    }
@@ -478,6 +554,46 @@
           }
        }
     });
+
+       function getElementsTotalHeight() {
+
+           const ids = ['title', 'subtitle', 'displayOptions', 'footer1', 'footer2'];
+
+           let totalHeight = 0;
+
+           ids.forEach(id => {
+
+               const element = document.getElementById(id);
+
+               if (element && (element.textContent.trim() !== "")) {
+
+                console.log(element);
+                   const elementHeight = element.offsetHeight;
+                   const computedStyle = window.getComputedStyle(element);
+
+                   // Include margins
+                   const marginTop = parseFloat(computedStyle.marginTop);
+                   const marginBottom = parseFloat(computedStyle.marginBottom);
+                   totalHeight += elementHeight + marginTop + marginBottom + 1;
+               }
+           });
+           return totalHeight+5;
+       }
+
+       function resizeIframe() {
+           const iframe = document.getElementById('tuneFrame');
+           iframe.style.width = (window.innerWidth-3) + 'px';
+           var otherElementsHeight = getElementsTotalHeight();
+           iframe.style.height = (window.innerHeight-otherElementsHeight) + 'px';
+       }
+
+       // Hide parent element and resize the embedded ABC Tools
+       
+       function hideParentElement(event) {
+            const parentEl = event.target.parentElement;
+            parentEl.setAttribute("hidden", "");
+            resizeIframe();
+        }
 
 </script>
 
