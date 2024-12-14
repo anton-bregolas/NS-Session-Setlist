@@ -23,6 +23,7 @@ v.0.1.0: Initial App Version
   - Page refactored with basic semantic markup in mind
   - Launch screen section, Tunebook section and Play Along section implemented
   - Scripts moved to modules, CSS moved to styles
+  - HTML file renamed to index.html
   - Meta tags updated in <head>
 
 + JavaScript updates:
