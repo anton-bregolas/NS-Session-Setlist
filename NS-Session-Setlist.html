@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=860" />
+    <meta name="description" content="Explore tunes played at the Novi Sad traditional Irish music session using a new app developed by Anton Zille and Michael Eskin's ABC Transcription Tools.">
+    <meta property="og:title" content="Tunes played at the Novi Sad traditional Irish music session" />
+    <meta property="og:description" content="View session tunes using Michael Eskin's ABC Transcription Tools" />
+    <meta property="og:image" content="" />
+    <title>Novi Sad Session Setlist</title>
+    <link rel="stylesheet" href="./styles/nss-styles.css">
+    <script type="module" src="./modules/scripts-ns-sessions.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="nss-header">
+
+            <nav class="nss-switch-container">
+
+                <button id="website_help" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
+                    <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank" class="nss-icon-container" title="Visit GitHub page with tunebook information" aria-title="Visit GitHub page with tunebook information">
+                        <svg class="nss-icon github-icon-dark" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-github"></use>
+                        </svg>
+                    </a>
+                </button>
+
+                <div class="nss-tunebook-el" hidden>
+                    <button data-load="tunelist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Tunelist view" aria-title="Switch to Tunelist view" hidden>
+                        <svg class="nss-switch-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-music"></use>
+                        </svg>
+                    </button>
+                    <button data-load="setlist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Setlist view" aria-title="Switch to Setlist view" hidden>
+                        <svg class="nss-switch-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-tunelist"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="nss-playalong-el" hidden>
+                    <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch screen" aria-title="Return to Launch screen">
+                        <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-launch"></use>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <h1 id="title">Novi Sad Session Setlist</h1>
+            
+            <section class="nss-select nss-tunebook-el" hidden>
+                <div class="nss-select-container flex-wrapper">
+                    <select id="tuneSelector" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
+                        <option id="tuneSelectorTitle" value="">Select Tunes from the List</option>
+                    </select>
+                    <select id="displayOptions" style="width:220px;" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
+                       <option value="-1">Pick Tabs & Instrument</option>
+                       <option value="0">Staff Notation (Piano)</option>
+                       <option value="1">ABC (Concertina)</option>
+                       <option value="2">Tin Whistle Tabs</option>
+                       <option value="3">Irish Flute Tabs</option>
+                       <option value="4">GDAD Bouzouki Tabs</option>
+                       <option value="5">EADGBE Guitar Tabs</option>
+                       <option value="6">DADGAD Guitar Tabs</option>
+                       <option value="7">Mandolin Tabs</option>
+                       <option value="8">Tenor Banjo Tabs</option>
+                       <option value="9">Hammered Dulcimer</option>
+                       <option value="10">Uilleann Pipes</option>
+                       <option value="11">Melodeon</option>
+                       <option value="12">Solfège </option>
+                    </select>
+                </div>
+            </section>
+
+            <nav class="nss-abclink-container">
+                <button id="fullscreenbutton" class="nss-tunebook-el" title="View current tunes in full screen on a new page" aria-title="View current tunes in full screen on a new page" hidden>
+                    Full<br>Screen<br>View
+                </button>
+                <button id="nss-btn-abc" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
+                    <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-icon-container" title="View raw ABC file of NS Session Tunelist" aria-title="View raw ABC file of NS Session Tunelist">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-abc"></use>
+                        </svg>
+                    </a>
+                </button>
+            </nav>
+
+        </header>
+
+        <main>
+            
+            <section class="nss-launch nss-launch-el flex-wrapper">
+                <div class="nss-launch-container flex-wrapper">
+                    <button data-load="setlist" class="nss-btn nss-btn-launch flex-wrapper">
+                        <span class="nss-btn-text flex-wrapper">Load Setlist
+                            <span class="nss-icon-container flex-wrapper" aria-hidden="true">
+                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#nav-icon-tunelist"></use></svg>
+                            </span>
+                        </span>
+                    </button>
+                    <button data-load="tunelist" class="nss-btn nss-btn-launch flex-wrapper">
+                        <span class="nss-btn-text flex-wrapper">Load Tunelist
+                            <span class="nss-icon-container flex-wrapper" aria-hidden="true">
+                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#action-icon-music"></use></svg>
+                            </span>
+                        </span>
+                    </button>
+                    <button data-load="playalong" class="nss-btn nss-btn-launch flex-wrapper">
+                        <span class="nss-btn-text flex-wrapper">Play Along
+                            <span class="nss-icon-container flex-wrapper" aria-hidden="true">
+                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#action-icon-records"></use></svg>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="nss-abctools-embed nss-tunebook-el" hidden>
+                <iframe id="tuneFrame" src=""></iframe>
+            </section>
+
+            <section class="nss-playalong nss-playalong-el" hidden>
+                <div class="nss-playalong-container flex-wrapper">
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="nss-footers">
+
+            <section id="footer1" class="footer nss-tunebook-el" hidden>
+                <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch screen" aria-title="Return to Launch screen">
+                    <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
+                        <use href="assets/icons/icons.svg#action-icon-launch"></use>
+                    </svg>
+                </button>
+                <a href="https://t.me/irish_sessions_ns" target="_blank" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">Follow Trad Sessions NS</a>
+                <button class="nss-btn nss-btn-x footer-btn-x flex-wrapper" title="Hide footer section" aria-title="Hide footer section"></button>
+            </section>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
