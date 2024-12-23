@@ -1,8 +1,10 @@
 X: 1
 T: POLKAS: John Walsh's Set
 T: John Walsh's No. 1 / Goblachan / Derrygallen Bridge
-C: C: John Walsh
-C: S: Anton & Sophie / Polca an Rí / John Walsh
+C: C: John Walsh; S: Polca an Rí; John Walsh
+C: Set Leaders: Anton, Sophie
+Z: By Anton Zille / Bregolas at The Session
+N: https://thesession.org/members/26966/sets/7124
 L: 1/8
 M: 2/4
 R: Polka
@@ -28,9 +30,11 @@ G>B de|dB B/c/B/A/|GE ED/E/|1 G2 GD:|2 GA Bd||
 ed B/c/B/A/|GE ED/E/|GB/A/ GE|1 G2 Bd:|2 G2 GD||
 X: 2
 T: POLKAS: P and O Set
-T: P&O
-C: C: P&O – Christy Leahy; others – traditional
-C: S: Anton & Oliushka / Polca an Rí, ThZCh / Brendan Begley
+T: P&O (D)
+C: C: Christy Leahy / Trad. / Trad.; S: Polca an Rí; ThZCh; Brendan Begley
+C: Set Leaders: Oliushka, Anton
+Z: By Anton Zille / Bregolas at The Session
+N: https://thesession.org/members/26966/sets/76527
 L: 1/8
 M: 2/4
 R: Polka
@@ -55,8 +59,10 @@ af ed|f2 eA|A>B ce|1 d2 d>f:|2 de/d/ cB|| A4||
 X: 3
 T: POLKAS: Toureendarby Set
 T: Toureendarby / Curragh Races
-C: C: Traditional
-C: S: Anton & Tanya / Timmy O'Connor, Séamus Begley, Laoise Kelly
+C: C: Trad.; S: Timmy O'Connor; Laoise Kelly / Séamus Begley / Jackie Daly & Séamus Creagh
+C: Set Leaders: Tanya, Anton
+Z: Anton Zille ed.; Weejie / CreadurMawnOrganig / benhockenberry at The Session
+N: https://thesession.org/members/26966/sets/89997
 M: 2/4
 L: 1/8
 Q: 1/4=140
@@ -77,7 +83,7 @@ D>E DB,|DE G>A|Bd AB/A/|G2 G>A||
 Bd Bd|Bd dB/d/|ed BA|AG G2:||
 |:GB d2|ed c2|dB GB|A/B/A/G/ ED|
 GB d>d|ed c>e|dB GE|1 ED D2:|2 ED GE||
-T: Britches Full of Stitches
+T: Britches Full of Stitches (G)
 K: Gmaj
 |:G>A BG|AG BG|G>A BG|AG E2|
 G>A BG|AG Bd|G>A GE|ED D2:||

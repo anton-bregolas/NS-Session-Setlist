@@ -11,6 +11,14 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.1.1
+
++ Session DB updates: 
+  - Session DB updated to 2024-12-22
+  - Naming format changed for C: / S: fields
+  - Naming format standardised for C: Set Leaders field
+  - Z: [Transcription By] and N: [Link to the Set] fields added
+
 v.0.1.0: Initial App Version 
 
 + Project updates:
