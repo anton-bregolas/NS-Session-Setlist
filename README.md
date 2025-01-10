@@ -11,6 +11,11 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.2.0: Play Along Page
+
++ Project updates:
+  - Playalong thumbnails added
+
 v.0.1.1: Session DB Update
 
 + Session DB updates:
