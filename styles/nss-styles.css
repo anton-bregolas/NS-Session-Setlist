@@ -282,10 +282,17 @@ iframe:focus-visible {
 }
 
 .nss-playalong-container {
+  display: flex;
+  width: clamp(25%, 45rem, 80%);
   flex-flow: column wrap;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  gap: 1rem;
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
+  gap: 2.25rem;
+}
+
+.nss-playalong-container img {
+  width: 100%;
+  justify-self: center;
 }
 
 .flex-wrapper:not([hidden]) {
