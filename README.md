@@ -11,6 +11,13 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.2.3: Session DB Update
+
++ Session DB updates:
+  - Session DB updated to 2025-01-12
+  - Spaces added between ABCs
+  - Titles updated to restore "unsafe" characters
+
 v.0.2.2: Play Along Page (Styles updated)
 
 + HTML updates:
