@@ -11,7 +11,31 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-v.0.2.0: Play Along Page
+v.0.2.2: Play Along Page (Styles updated)
+
++ HTML updates:
+  - Playalong page: 
+    - Links wrapped in container divs
+    - Links are now display: block and contain overlay div, title text and image
+
++ CSS updates:
+  - Gradient added to h1 and buttons
+  - Playalong page:
+    - Outline gradient added via div with abs positioning & negative margins
+    - Link hover styles updated
+
+v.0.2.1: Play Along Page (Basic HTML)
+
++ Project updates:
+  - Playalong page: Thumbnails updated
+
++ HTML updates:
+  - Playalong page: Basic HTML added
+
++ CSS updates:
+  - Playalong page: Basic styles added
+
+v.0.2.0: Play Along Page (Initial commit)
 
 + Project updates:
   - Playalong thumbnails added

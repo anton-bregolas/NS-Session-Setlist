@@ -47,6 +47,12 @@ a:is(:hover, :active, :focus, :focus-visible) > * {
   color: #ff6699;
 }
 
+#title {
+  background: linear-gradient(to right, #ffd324 30%, #ff6699);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
 #fullscreenbutton {
   padding: 0.625em 1.25em;
   background-color: #ff6d9d;
@@ -55,11 +61,11 @@ a:is(:hover, :active, :focus, :focus-visible) > * {
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
-  z-index: 1000; /* Ensures it stays above other content */
 }
 
 #fullscreenbutton:is(:hover, :focus, :focus-visible) {
-  background-color: #ff9bbd;
+  background-image: linear-gradient(to right, #ff6f9f, #ffd324);
+
   border: 0.125rem solid #ff6699;
 }
 
@@ -181,9 +187,13 @@ iframe:focus-visible {
   opacity: 1;
 }
 
+/* .nss-switch-btn:is(:hover, :focus, :focus-visible) {
+  background-color: #ff6d9d;
+} */
+
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible) {
-  background-color: #ff6d9d;
+  background-image: linear-gradient(to right, #ff4a86, #ffae00);
 }
 
 .nss-switch-container {
@@ -292,7 +302,56 @@ iframe:focus-visible {
 
 .nss-playalong-container img {
   width: 100%;
-  justify-self: center;
+}
+
+.nss-playalong-link-container {
+  position: relative;
+}
+
+.nss-playalong-link-container::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: -0.25rem;
+  border-radius: 0.5rem;
+  background-image: linear-gradient(90deg, #ffd324 25%, #ff6699 100%);;
+  z-index: -1;
+}
+
+.nss-playalong-link-container a {
+  display: block;
+  color: #f0f0f0;
+}
+
+.nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) {
+  outline: 0.25rem solid #ffd324;
+  outline-offset: unset;
+}
+
+.nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) > * {
+  color: #ffd324;
+}
+
+.nss-playalong-img-overlay {
+  position: absolute;
+  display: flex;
+  flex-direction: column-reverse;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent 33%);
+  width: 100%;
+  height: 100%;
+  text-align: left;
+}
+
+.nss-playalong-img-overlay h2 {
+  font-size: 2.5rem;
+  margin: 0.2rem 0.52rem;
+}
+
+.nss-playalong-container img,
+.nss-playalong-img-overlay {
+  border-radius: 0.25rem;
 }
 
 .flex-wrapper:not([hidden]) {
