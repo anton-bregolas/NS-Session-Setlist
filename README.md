@@ -11,6 +11,49 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.3.0: ABC Encoder (Initial commit)
+
++ Project updates:
+	- ABC Encoder:
+		- N.S.S.S. tools page (abc-encoder.html) added with ABC Encoder / ABC Decoder / ABC Sort tools 
+		- ABC Encoder scripts (scripts-abc-encoder.js) added to project: Sort and Decoder functional, Encoder in development
+		- ABC Encoder styles based on Launch Screen styles, additional styles merged into nss-styles.css
+	- Launcher: Links added, responsive design tweaks
+	- Tunebook:	Filter selector added, responsive design tweaks
+	- Playalong: Links added, responsive design tweaks
+	- New Icons added
+	
++ HTML updates:
+	- ABC Encoder interface added with nav links to raw ABC files, GitHub and ABC Tools
+	- Back to Launch Screen nav links added to Encoder and Playalong pages
+	- ABC Encoder link and ABC Tools link added to Launch Screen footer
+	- YouTube link added to Playalong
+	- Additional data- attributes made
+	
++ CSS updates:
+	- ABC Encoder styles added, some refactoring done in nss-styles.css
+	- Playalong styles added including new nav link class nss-link-filled
+	- Titles responsive changes partly implemented via CSS pseudoclasses
+	- Gradient text class nss-gradient-text added using @supports
+	- Responsive design tweaks for Launch Screen, Playalong and Tunebook
+	
++ JavaScript updates:
+	- ABC Encoder scripts added including:
+		- Handler function for ABC Encoder (parseAbcFromFile)
+		- File Reader scripts readFileContent, downloadAbcFile
+		- New function for input ABC file validation (validateAbcFile)
+		- New functions for Sort tool (sortFilterAbc + getSortedAbc)
+		- Function for ABC Decode tool (getDecodedAbc)
+	- Main app scripts changed:
+		- Title change scripts updateTuneBookTitles and resizeTuneBookHeader refactored
+		- Switch buttons behavior tweaked
+	- ABC Tools scripts tweaked:
+		- MIDI settings now dynamically constructed via a string to be injected into ABC
+
++ Session DB updates:
+  - Session DB updated to 2025-01-15
+  - MIDI instructions removed from encoded data files, to be injected dynamically (injectInstrument)
+
 v.0.2.3: Session DB Update
 
 + Session DB updates:

@@ -23,7 +23,7 @@
             <nav class="nss-switch-container">
 
                 <button id="website_help" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
-                    <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank" class="nss-icon-container" title="Visit GitHub page with tunebook information" aria-title="Visit GitHub page with tunebook information">
+                    <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank" class="nss-icon-container" title="Visit GitHub page with tunebook info" aria-title="Visit GitHub page with tunebook info">
                         <svg class="nss-icon github-icon-dark" aria-hidden="true">
                             <use href="assets/icons/icons.svg#nav-icon-github"></use>
                         </svg>
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="nss-playalong-el" hidden>
-                    <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch screen" aria-title="Return to Launch screen">
+                    <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
                         <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
                             <use href="assets/icons/icons.svg#action-icon-launch"></use>
                         </svg>
@@ -52,16 +52,19 @@
                 </div>
             </nav>
 
-            <h1 id="title">Novi Sad Session Setlist</h1>
+            <h1 id="title" class="nss-gradient-text" data-title="launcher"></h1>
             
             <section class="nss-select nss-tunebook-el" hidden>
                 <div class="nss-select-container flex-wrapper">
-                    <select id="tuneSelector" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
-                        <option id="tuneSelectorTitle" value="">Select Tunes from the List</option>
+                    <select id="filterOptions" class="nss-select-options" title="Filter tunes by tune type or players" aria-title="Filter tunes by tune type or players">
+                        <option value="-1">Filter Options</option>
                     </select>
-                    <select id="displayOptions" style="width:220px;" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
-                       <option value="-1">Pick Tabs & Instrument</option>
-                       <option value="0">Staff Notation (Piano)</option>
+                    <select id="tuneSelector" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
+                        <option id="tuneSelectorTitle" data-title="setlist" value=""></option>
+                    </select>
+                    <select id="displayOptions" class="nss-select-options" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
+                       <option value="-1">Tabs & MIDI</option>
+                       <option value="0">Default (Piano)</option>
                        <option value="1">ABC (Concertina)</option>
                        <option value="2">Tin Whistle Tabs</option>
                        <option value="3">Irish Flute Tabs</option>
@@ -82,10 +85,17 @@
                 <button id="fullscreenbutton" class="nss-tunebook-el" title="View current tunes in full screen on a new page" aria-title="View current tunes in full screen on a new page" hidden>
                     Full<br>Screen<br>View
                 </button>
-                <button id="nss-btn-abc" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
-                    <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-icon-container" title="View raw ABC file of NS Session Tunelist" aria-title="View raw ABC file of NS Session Tunelist">
-                        <svg class="nss-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#nav-icon-abc"></use>
+                <button id="nss-btn-abctools" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
+                    <a href="https://michaeleskin.com/abctools/abctools.html" target="_blank" class="nss-icon-container" title="Launch ABC Transcription Tools" aria-title="Open ABC Transcription Tools">
+                        <svg class="nss-icon github-icon-dark" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-abctools-fill"></use>
+                        </svg>
+                    </a>
+                </button>
+                <button class="nss-btn nss-link-btn nss-playalong-el" tabindex="-1" hidden>
+                    <a href="https://www.youtube.com/@AntonBregolas" target="_blank" class="nss-icon-container nss-link-filled flex-wrapper" title="Visit Anton Zille's YouTube for more session tunes" aria-title="Visit Anton Zille's YouTube for more session tunes">
+                        <svg class="nss-switch-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-youtube"></use>
                         </svg>
                     </a>
                 </button>
@@ -98,14 +108,14 @@
             <section class="nss-launch nss-launch-el flex-wrapper">
                 <div class="nss-launch-container flex-wrapper">
                     <button data-load="setlist" class="nss-btn nss-btn-launch flex-wrapper">
-                        <span class="nss-btn-text flex-wrapper">Load Setlist
+                        <span class="nss-btn-text flex-wrapper">Open Setlist
                             <span class="nss-icon-container flex-wrapper" aria-hidden="true">
                                 <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#nav-icon-tunelist"></use></svg>
                             </span>
                         </span>
                     </button>
                     <button data-load="tunelist" class="nss-btn nss-btn-launch flex-wrapper">
-                        <span class="nss-btn-text flex-wrapper">Load Tunelist
+                        <span class="nss-btn-text flex-wrapper">Open Tunelist
                             <span class="nss-icon-container flex-wrapper" aria-hidden="true">
                                 <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#action-icon-music"></use></svg>
                             </span>
@@ -145,6 +155,7 @@
                             <img src="assets/images/playalong-polkas-johnwalshs.jpg" draggable="false" alt="John Walsh's Polka Set playalong">
                         </a>
                     </div>
+                    <a href="index.html" class="nss-subhead-link" title="Return to Launch Screen" aria-title="Return to Launch Screen"><h2 class="nss-gradient-text">Back to Launch Screen</h2></a>
                 </div>
             </section>
 
@@ -152,8 +163,25 @@
 
         <footer class="nss-footers">
 
-            <section id="footer1" class="footer nss-tunebook-el" hidden>
-                <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch screen" aria-title="Return to Launch screen">
+            <section class="nss-footer-launch nss-launch-el footer-wrapper">
+                <button class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
+                    <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-icon-container" title="View raw ABC file of NS Session Tunelist" aria-title="View raw ABC file of NS Session Tunelist">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-abc"></use>
+                        </svg>
+                    </a>
+                </button>
+                <button class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
+                    <a href="abc-encoder.html" class="nss-icon-container" title="Launch ABC Encoder" aria-title="Launch ABC Encoder">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-sort-az"></use>
+                        </svg>
+                    </a>
+                </button>
+            </section>
+
+            <section id="footer1" class="nss-footer-tunebook nss-tunebook-el footer-wrapper" hidden>
+                <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
                     <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
                         <use href="assets/icons/icons.svg#action-icon-launch"></use>
                     </svg>

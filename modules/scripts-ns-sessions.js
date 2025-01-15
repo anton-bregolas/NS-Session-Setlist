@@ -1,4 +1,5 @@
 import { initAbcTools, populateTuneSelector, resizeIframe } from './scripts-abc-tools.js';
+import { parseAbcFromFile } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NS Session Setlist Custom App Scripts
@@ -6,7 +7,7 @@ import { initAbcTools, populateTuneSelector, resizeIframe } from './scripts-abc-
 // Session DB and/or Code Contributors:
 // Anton Zille https://github.com/anton-bregolas/
 //
-// Version / NS Session DB date: 2024-12-06
+// Version / NS Session DB date: 2025-01-12
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -27,7 +28,7 @@ const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
 const allLaunchEls = document.querySelectorAll('.nss-launch-el');
 const allTuneBookEls = document.querySelectorAll('.nss-tunebook-el');
 const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
-const tuneDropDown = document.querySelector('#tuneSelector');
+const tuneDropDownTitle = document.querySelector('#tuneSelectorTitle');
 const tuneBookTitle = document.querySelector('#title');
 
 ////////////////////////////////
@@ -44,7 +45,7 @@ async function launchTuneBook(dataType) {
     
     hideLaunchers();
     updateTuneBookTitles(dataType);
-    updateTuneBookHeader(dataType);
+    resizeTuneBookHeader(dataType);
     swapSwitchBtns(dataType);
 
     allTuneBookEls.forEach(tuneBookEl => {
@@ -62,7 +63,7 @@ function launchPlayAlong(dataType) {
 
   hideLaunchers();
   updateTuneBookTitles(dataType);
-  updateTuneBookHeader(dataType);
+  resizeTuneBookHeader(dataType);
 
   allPlayAlongEls.forEach(playalongEl => {
 
@@ -74,11 +75,13 @@ function launchPlayAlong(dataType) {
 // SWITCHERS
 ///////////////////////////////
 
-// Repopulate ABC tools selector with target data type, swap switch buttons
+// Switch between sections or repopulate ABC tools selector with target data type, swap elements
 
 function switchTuneBookType(dataType) {
 
   updateTuneBookTitles(dataType);
+
+  // Switch between Setlist and Tunelist interface
 
   if (dataType === "setlist" || dataType === "tunelist") {
 
@@ -89,8 +92,10 @@ function switchTuneBookType(dataType) {
     return;
   }
 
-  updateTuneBookHeader(dataType);
-  hideMainScreenEls();
+  // Switch to Launch Screen by default
+
+  resizeTuneBookHeader(dataType);
+  hideAllSectionsEls();
   showLaunchers();
 }
 
@@ -133,7 +138,7 @@ function swapSwitchBtns(dataType) {
 
 // Hide screen elements in all sections except for Launcher
 
-function hideMainScreenEls() {
+function hideAllSectionsEls() {
 
   allTuneBookEls.forEach(tuneBookEl => {
 
@@ -161,25 +166,27 @@ export function checkTuneBookSetting() {
 
 function updateTuneBookTitles(dataType) {
 
-  tuneDropDown.options[0].textContent = 
-    dataType === "setlist"? "Select a SET from the List" : 
-    dataType === "tunelist"? "Select a TUNE from the List" :
-    "Select Tunes from the List";
-  
   tuneBookTitle.textContent =
-    dataType === "setlist"? "Novi Sad Session Setlist" : 
-    dataType === "tunelist"? "Novi Sad Session Tunelist" :
-    dataType === "playalong"? "Session Tunes Play Along" :
-    "Novi Sad Session Setlist";
-}
-
-// Update Tunebook header style depending on section shown
-
-function updateTuneBookHeader(dataType) {
+  dataType === "setlist"? "Novi Sad Session Setlist" : 
+  dataType === "tunelist"? "Novi Sad Session Tunelist" : "";
 
   if (dataType === "setlist" || dataType === "tunelist") {
 
-    tuneBookTitle.setAttribute("style", "font-size: 1.625rem; margin-top: 1rem;")
+    tuneDropDownTitle.textContent = 
+    dataType === "tunelist"? "Select a TUNE from the List" :
+    "Select a SET from the List";
+  }
+
+  tuneBookTitle.dataset.title = dataType;
+}
+
+// Change Tunebook header style depending on section shown
+
+function resizeTuneBookHeader(dataType) {
+
+  if (dataType === "setlist" || dataType === "tunelist") {
+
+    tuneBookTitle.setAttribute("style", "font-size: 1.8rem; margin-top: 1rem;")
     
     return;
   }
@@ -335,6 +342,13 @@ async function appButtonHandler() {
     if (this.dataset.load === "playalong") {
 
       launchPlayAlong(this.dataset.load);
+    }
+
+    // Handle ABC Encoder buttons
+
+    if (this.dataset.load.startsWith("abc")) {
+
+      parseAbcFromFile(this.dataset.load);
     }
   }
 

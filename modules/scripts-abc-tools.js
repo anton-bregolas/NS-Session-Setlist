@@ -1,6 +1,4 @@
-// Import the latest fetched tune JSONs from NS Sessions DB
-
-import { checkTuneBookSetting, tuneSets, tuneList } from "./scripts-ns-sessions.js";
+import { checkTuneBookSetting, tuneSets, tuneList } from "./scripts-ns-sessions.js"; // Import tune JSONs from NS Sessions DB
 
 let tunes = [];
 
@@ -139,48 +137,52 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
 
         var abcInLZW = LZString.decompressFromEncodedURIComponent(originalAbcInLZW);
 
+        // Construct a MIDI settings string to be injected into the ABC
+
+        let injectMidiString = `%abcjs_soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 64\n%%MIDI chordvol 64`;
+
         switch (tabStyle){
             case "mandolin":
                 if (isBanjo){
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 105");
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 105");
                 }
                 else{
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 141");
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 141");
                 }
                 break;
             case "gdad":
-                abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 140");
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 140");
                 break;
             case "guitare":
             case "guitard":
-                abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 24\n%%MIDI transpose -12");
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 24\n%%MIDI transpose -12");
                 break;
             case "whistle":
                 if (isFlute){
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 73");
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 73");
                 }
                 else{
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 78");
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 78");
                 }
-                abcInLZW = abcInLZW.replace("%%MIDI bassvol 64","%%MIDI bassvol 64");
-                abcInLZW = abcInLZW.replace("%%MIDI chordvol 64","%%MIDI chordvol 64");
+                injectMidiString = injectMidiString.replace("%%MIDI bassvol 64","%%MIDI bassvol 64");
+                injectMidiString = injectMidiString.replace("%%MIDI chordvol 64","%%MIDI chordvol 64");
                 break;
             case "notenames":
                 if (isSolfege){
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 136");
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 136");
                     break;
                 } 
-                abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 133");
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 133");
                 break;
             case "noten":
                 if (isDulcimer){
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 15");
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 15");
                 }
                 else if (isUPipes) {
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 129");
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 129");
                 }
                 else if (isMelodeon) {
-                    abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 135");     
+                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 135");     
                 }
                 else{
                     return theURL;
@@ -188,7 +190,11 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
                 break;
         }
 
-        var newLZWparam = "lzw="+LZString.compressToEncodedURIComponent(abcInLZW);
+        // Update the decompressed ABC with the new MIDI settings
+
+        let updatedAbcString = abcInLZW.replace(`K:`, `${injectMidiString}\nK:`);
+
+        var newLZWparam = "lzw="+LZString.compressToEncodedURIComponent(updatedAbcString);
 
         originalAbcInLZW = "lzw="+originalAbcInLZW;
 
@@ -354,6 +360,8 @@ export function populateTuneSelector() {
         const option = document.createElement('option');
         option.value = tune.URL;
         option.textContent = tune.Name;
+        // option.dataset.tunetype = tune.Type;
+        // option.dataset.leaders = tune.Leaders;
         tuneSelector.appendChild(option);
     });
 }

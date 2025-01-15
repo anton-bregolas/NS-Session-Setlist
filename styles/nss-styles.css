@@ -16,25 +16,39 @@ body {
   padding: 0;
 }
 
+#title:is([data-title="launcher"])::after {
+  content: "Novi Sad Session Setlist";
+}
+
+#title:is([data-title="playalong"])::after {
+  content: "Session Tunes Play Along";
+}
+
+#title-encoder:is([data-title="encoder"])::after {
+  content: "N.S.S.S. ABC Encoder";
+}
+
+#title:is([data-title="setlist"])::after,
+#title:is([data-title="tunelist"])::after {
+  content: "";
+}
+
 .container {
   margin: 0 auto;
   text-align: center;
   overflow-x: hidden;
 }
 
-.nss-header {
-  min-width: 860px;
-}
-
 h1 {
   font-size: 3.25rem;
   margin-top: 1.5rem;
   margin-bottom: 0;
+  /* min-height: 3.01rem; */
 }
 
 h2 {
-  font-size: 1.125rem;
-  margin-top: 0.5rem;
+  font-size: 1.75rem;
+  margin-top: 1.5rem;
   margin-bottom: 0;
 }
 
@@ -42,18 +56,15 @@ a {
   color: #ffd324;
 }
 
-a:is(:hover, :active, :focus, :focus-visible),
-a:is(:hover, :active, :focus, :focus-visible) > * {
+a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible),
+a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible) > * {
   color: #ff6699;
 }
 
-#title {
-  background: linear-gradient(to right, #ffd324 30%, #ff6699);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-}
-
 #fullscreenbutton {
+  position: absolute;
+  top: -0.75rem;
+  right: -0.75rem;
   padding: 0.625em 1.25em;
   background-color: #ff6d9d;
   color: black;
@@ -65,7 +76,6 @@ a:is(:hover, :active, :focus, :focus-visible) > * {
 
 #fullscreenbutton:is(:hover, :focus, :focus-visible) {
   background-image: linear-gradient(to right, #ff6f9f, #ffd324);
-
   border: 0.125rem solid #ff6699;
 }
 
@@ -75,8 +85,12 @@ select {
   padding: 0.33em;
   margin-top: 0.75rem;
   margin-bottom: 1rem;
-  width: 350px;
+  width: 15.75rem;
   border-radius: 0.33rem;
+}
+
+.nss-select-options {
+  width: 9.75rem;
 }
 
 iframe {
@@ -84,23 +98,19 @@ iframe {
   background-color: #ffffff;
 }
 
-.footer {
+.nss-footer-tunebook {
   position: relative;
-  font-size: 1.125rem;
-  padding-top: 0.75em;
-  margin: 0;
+  font-size: 1.25rem;
+  height: 3.65rem;
+  padding: 0 0.5rem;
 }
 
-#footer1 {
-  padding-bottom: 0.75em;
-  margin: 0;
-  color: #ffd324;
-}
-
-#footer2 {
-  padding-top: 0.75em;
-  padding-bottom: 0;
-  color: #ffd324;
+.nss-footer-launch {
+  width: 100%;
+  position: absolute;
+  padding: 0 1.75rem;
+  bottom: 1.25rem;
+  left: 0;
 }
 
 a, 
@@ -115,9 +125,24 @@ select:is(:focus, :focus-visible),
   outline: 0.2rem solid #ffd324;
 }
 
-a:focus-visible,
-#fullscreenbutton:is(:hover, :focus, :focus-visible) {
+a:not([class*="nss-icon-container"]):focus-visible {
   outline-offset: 0.12rem;
+}
+
+.nss-subhead-link {
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.22rem;
+}
+
+.nss-subhead-link:is(:hover, :active, :focus, :focus-visible) {
+  outline: none;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 0.24rem;
+  text-decoration-color: #ff6699;
+}
+
+#fullscreenbutton:is(:hover, :focus, :focus-visible){ 
+  outline-offset: 0.05rem;
 }
 
 iframe:focus-visible {
@@ -137,17 +162,20 @@ iframe:focus-visible {
   cursor: pointer;
 }
 
-.nss-switch-btn {
-  font-size: 1.5rem;
+.nss-switch-btn,
+.nss-link-filled {
+  font-size: 2rem;
   background-color: #ffd324;
 }
 
-.nss-switch-btn > * {
+.nss-switch-btn > *,
+.nss-link-filled {
   color: #663399;
   stroke: black;
   stroke-width: 0.2px;
 }
 
+.nss-link-btn,
 .nss-link-btn a,
 .nss-switch-btn,
 .nss-btn-x {
@@ -157,15 +185,19 @@ iframe:focus-visible {
 
 .nss-link-btn,
 .nss-switch-btn {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.nss-btn-abcraw {
   width: 3rem;
   height: 3rem;
 }
 
 .nss-btn-x {
-  position: absolute;
-  font-size: 2.5rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  font-size: 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
   color: #ff6d9d;
 }
 
@@ -175,7 +207,6 @@ iframe:focus-visible {
 }
 
 .footer-btn-x {
-  right: 0.5rem;
   top: 0.05rem;
 }
 
@@ -187,19 +218,29 @@ iframe:focus-visible {
   opacity: 1;
 }
 
-/* .nss-switch-btn:is(:hover, :focus, :focus-visible) {
-  background-color: #ff6d9d;
-} */
+.nss-btn-abcraw a:is(:hover, :focus, :focus-visible) {
+  outline: 0.24rem solid #ffd324;
+  outline-offset: 0.4rem;
+}
 
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
-.nss-btn-launch:is(:hover, :focus, :focus-visible) {
+.nss-btn-launch:is(:hover, :focus, :focus-visible),
+.nss-link-filled:is(:hover, :focus, :focus-visible) {
   background-image: linear-gradient(to right, #ff4a86, #ffae00);
 }
 
-.nss-switch-container {
+.nss-switch-container,
+.nss-abclink-container {
   position: absolute;
-  left: 1.75rem;
   top: 1.75rem;
+}
+
+.nss-switch-container {
+  left: 1.75rem;
+}
+
+.nss-abclink-container {
+  right: 1.75rem;
 }
 
 .nss-icon,
@@ -209,26 +250,19 @@ iframe:focus-visible {
 }
 
 .nss-switch-icon {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.45rem;
+  height: 2.45rem;
 }
 
-.nss-switch-icon:is([data-icon="launch"]) {
-  width: 2rem;
-  height: 2rem;
+.nss-switch-icon:is([data-icon="launch"]),
+.nss-link-filled > * {
+  width: 70%;
+  height: 70%;
 }
 
-#footer1 > .nss-switch-btn {
-  position: absolute;
-  left: 0.5rem;
-  top: 0.25rem;
-  width: 2.5rem;
-  height: 2.5rem;
-}
-
-#footer1 > .nss-switch-btn > .nss-switch-icon:is([data-icon="launch"]) {
-  width: 1.75rem;
-  height: 1.75rem;
+.nss-footer-tunebook > .nss-switch-btn {
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 .nss-launch {
@@ -270,18 +304,6 @@ iframe:focus-visible {
   gap: 0.35em;
 }
 
-.nss-abclink-container,
-#nss-btn-abc {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-}
-
-#nss-btn-abc {
-  top: 0.75rem;
-  right: 0.75rem;
-}
-
 .nss-select-container {
   flex-flow: row wrap;
   gap: 0.75rem;
@@ -295,7 +317,7 @@ iframe:focus-visible {
   display: flex;
   width: clamp(25%, 45rem, 80%);
   flex-flow: column wrap;
-  margin-top: 2.25rem;
+  margin-top: 3.25rem;
   margin-bottom: 2.25rem;
   gap: 2.25rem;
 }
@@ -360,19 +382,68 @@ iframe:focus-visible {
   align-items: center;
 }
 
+.footer-wrapper:not([hidden]) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* Media queries */
 
+/* @media screen (max-width: 858px) { */
+@media screen and (max-width: 53.625em) {
+  
+  h1 {
+    font-size: 2.8rem;
+  }
+
+  #title:is([data-title="launcher"])::after {
+    content: "N.S.S.S.";
+  }
+
+  #title:is([data-title="playalong"])::after {
+    content: "Play Along";
+  }
+
+  #title-encoder:is([data-title="encoder"])::after {
+    content: "ABC Encoder";
+  }
+
+  /* #filterOptions {
+    display: none;
+  }
+
+  #displayOptions {
+    display: none;
+  } */
+}
+
 /* @media screen and (max-height: 960px) and (max-width: 860px) { */
-@media screen and (max-height: 60em) and (max-width: 53.75em) {
+@media screen and ((max-height: 60em) and (max-width: 53.75em)) {
 
   .nss-launch {
     position: unset;
     transform: unset;
   }
+
+  .nss-footer-launch {
+    position: unset;
+    margin: 1.75rem 0 1.5rem;
+  }
 }
 
 /* @media screen and (max-width: 860px) and (max-height: 860px) { */
 @media screen and (max-width: 53.75em) and (min-height: 53.75em) {
+
+  h1 {
+    margin-top: 2.45rem;
+  }
+  
+  .nss-link-btn,
+  .nss-playalong-el > .nss-switch-btn {
+    width: 5rem;
+    height: 5rem;
+  }
 
   .nss-btn-launch {
     width: 70%;
@@ -385,6 +456,10 @@ iframe:focus-visible {
     gap: 2rem;
   }
 
+  .nss-playalong-container {
+    gap: 4rem;
+  }
+
   .nss-btn-text .nss-icon-container > * {
     width: 3.25rem;
     height: 3.25rem;
@@ -392,5 +467,23 @@ iframe:focus-visible {
 
   .nss-btn-launch:is(:hover, :focus, :focus-visible) {
     outline: 0.3rem solid #ffd324;
+  }
+}
+
+/* Style overrides */
+
+@supports (-webkit-background-clip: text) and (-webkit-text-fill-color: transparent) {
+  .nss-gradient-text {
+    background: linear-gradient(to right, #ffd324 30%, #ff6699);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+  }
+}
+
+@supports (background-clip: text) {
+  .nss-gradient-text {
+    background: linear-gradient(to right, #ffd324 30%, #ff6699);
+    background-clip: text;
+    color: transparent;
   }
 }
