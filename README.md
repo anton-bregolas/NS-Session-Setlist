@@ -11,6 +11,31 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.3.1: ABC Encoder (Encoder scripts)
+
++ Project updates:
+	- ABC Encoder: 
+    - Encoder tool functional
+    - ABC Encoder also sorts ABCs by default
+    - ABC Encoder, Decoder and Sort now remove extra line breaks and spaces between tunes
+  - ABC Tools scripts:
+    - LZString updated to lz-string.min v.1.5.0
+
++ JavaScript updates:
+  - ABC Encoder: 
+    - Handler function for Encode ABC tool (getEncodedAbc) added
+    - getEncodedAbc passes ABC contents to sort and encode functions, returns a JSON array of objects
+    - Main function for Encode ABC tool (encodeTunesForAbcTools) added
+    - Extra line breaks and space cleanup added to sortFilterAbc, encodeTunesForAbcTools and getDecodedAbc
+    - Output file naming improved in downloadAbcFile
+  - ABC Tools scripts tweaked:
+    - Handling of Type and Leaders data added to populateTuneSelector
+
++ Session DB updates:
+  - Session DB updated to 2025-01-16
+  - Missing R fields added to tunes and sets
+  - Order of R: -> M: -> L: -> Q -> K standardised
+
 v.0.3.0: ABC Encoder (Initial commit)
 
 + Project updates:
@@ -43,7 +68,7 @@ v.0.3.0: ABC Encoder (Initial commit)
 		- File Reader scripts readFileContent, downloadAbcFile
 		- New function for input ABC file validation (validateAbcFile)
 		- New functions for Sort tool (sortFilterAbc + getSortedAbc)
-		- Function for ABC Decode tool (getDecodedAbc)
+		- Function for ABC Decode tool (getDecodedAbc) added
 	- Main app scripts changed:
 		- Title change scripts updateTuneBookTitles and resizeTuneBookHeader refactored
 		- Switch buttons behavior tweaked
