@@ -1,5 +1,9 @@
 import { LZString } from './scripts-abc-tools.js';
 
+////////////////////////////////
+// ABC FILE PARSERS & HANDLERS
+///////////////////////////////
+
 // Convert an imported ABC file into a JSON array of tunes / sets
   
 export async function parseAbcFromFile(taskType) {
@@ -85,6 +89,36 @@ async function readFileContent(file) {
     });
 }
 
+// Download a file containing ABC Encoder output, assign file name depending on task type
+
+function downloadAbcFile(abcContent, fileName, taskType) {
+
+    const abcFile = new Blob([abcContent], { type: taskType === "abc-encode"? "application/json" : "text/plain" });
+    const abcFileName = taskType === "abc-encode" && fileName.startsWith("NS-Session-Sets") ? "tunesets.json" :
+                        taskType === "abc-encode" && fileName.startsWith("NS-Session-Tunes") ? "tunes.json" :
+                        taskType === "abc-encode" ? "tunes-encoded.json" :
+                        taskType === "abc-decode" && fileName.startsWith("tunesets") ? "NS-Session-Sets.abc" :
+                        taskType === "abc-decode" && fileName.startsWith("tunes") ? "NS-Session-Tunes.abc" :
+                        taskType === "abc-decode" ? "tunes-decoded.abc" :
+                        fileName;
+    
+    const abcLink = document.createElement("a");
+
+    abcLink.href = URL.createObjectURL(abcFile);
+    abcLink.download = abcFileName;
+    document.body.appendChild(abcLink);
+  
+    abcLink.click();
+    
+    document.body.removeChild(abcLink);
+
+    console.log(`ABC Encoder:\n\n${abcFileName} saved!`);
+}
+
+////////////////////////////////
+// VALIDATE ABC FUNCTIONS
+///////////////////////////////
+
 // Check if the file contains valid ABC format depending on the task
 
 function validateAbcFile(abcContent, taskType) {
@@ -116,24 +150,79 @@ function validateAbcFile(abcContent, taskType) {
     return false;
 }
 
+////////////////////////////////
+// SORT ABC FUNCTIONS
+///////////////////////////////
+
 // Return a sorted, filtered and renumbered array of ABCs
 
 function sortFilterAbc(abcContent) {
 
     try { 
 
-        const splitAbc = abcContent.split(/X.*/gm);
+        const splitAbcArr = abcContent.split(/X.*/gm);
 
-        const filteredAbc = splitAbc.sort().filter(string => string.trim() !== '' && string.startsWith("\r\nT:") || string.startsWith("\nT:"));
+        const filteredAbcArr = splitAbcArr.map(abc => abc.trim()).filter(abc => abc.startsWith("T:"));
 
-        const sortedAbc = filteredAbc.map(abc => { return `X: ${filteredAbc.indexOf(abc) + 1}\n` + abc.replaceAll('\n\n', '').trim() });
+        const sortedAbcArr = filteredAbcArr.sort().map(abc => `X: ${filteredAbcArr.indexOf(abc) + 1}\n${abc}`);
 
-        return sortedAbc;
+        // Option A: Also remove all empty lines inside ABCs
+
+        // return removeLineBreaksInAbc(sortedAbcArr);
+
+        // Option B: Also remove all text separated by empty lines inside ABCs
+
+        // return removeTextAfterLineBreaksInAbc(sortedAbcArr);
+
+        // Default option: Return sorted ABCs as is (everything in-between X: fields)
+
+        return sortedAbcArr;
 
     } catch (error) {
 
         throw new Error("ABC Encoder:\n\nFailed to sort ABC\n\n", { cause: error });
     }
+}
+
+// Optionally look for and remove empty lines inside an ABC
+
+function removeLineBreaksInAbc(sortedAbcArr) {
+
+    return abcContent.map(abc => abc.split('\n').map(line => line.trim()).filter(line => line !== '').join('\n'));
+}
+
+// Optionally look for and remove all content separated by an empty line inside an ABC
+
+function removeTextAfterLineBreaksInAbc(sortedAbcArr) {
+
+    // Regex implementation:
+
+    // return sortedAbcArr.map(abc => abc.match(/^[\s\S]*?(?=(\r?\n\n|\r?\n\r\n))|^[\s\S]*/m)[0]);
+    
+    // Step-by-step implementation:
+
+    const splitAbcLinesArr = sortedAbcArr.map(abc => abc.split('\n'));
+
+    const filteredAbcArr = [];
+
+    splitAbcLinesArr.forEach(abc => {
+
+        const filteredAbcLinesArr = [];
+
+        for (let line of abc) {
+
+            if (line.trim() === "") {  
+
+                break;
+            }
+
+            filteredAbcLinesArr.push(`${line}\n`);
+        }
+
+        filteredAbcArr.push(filteredAbcLinesArr.join('').trim());
+    });
+
+    return filteredAbcArr;
 }
 
 // Sort, filter and renumber raw ABC contents and return a string of ABCs
@@ -142,11 +231,11 @@ function getSortedAbc(abcContent) {
 
     console.log("ABC Encoder:\n\nSorting ABC file contents...");
 
-    const sortedAbcContent = sortFilterAbc(abcContent);
+    const sortedAbcContentArr = sortFilterAbc(abcContent);
 
-    if (sortedAbcContent.length > 0) {
+    if (sortedAbcContentArr.length > 0) {
 
-        const sortedAbcOutput = sortedAbcContent.join('\n\n');
+        const sortedAbcOutput = sortedAbcContentArr.join('\n\n');
 
         console.log("ABC Encoder:\n\nABC file contents sorted!");
 
@@ -159,6 +248,10 @@ function getSortedAbc(abcContent) {
     }
 }
 
+////////////////////////////////
+// ENCODE ABC FUNCTIONS
+///////////////////////////////
+
 // Encode ABC contents into ABC Tools-readable URL using lz-string, extract
 // Tune Name, Tune Type and Set Leaders, return data in an array of objects
 
@@ -169,6 +262,8 @@ function encodeTunesForAbcTools(abcContent) {
         const rawAbcArr = abcContent.split('X:');
 
         const encodedAbcArr = [];
+
+        // Extract Tune Name, Tune Type and Set Leaders custom keys, push to JSON object
 
         for (let i = 1; i < rawAbcArr.length; i++) {
 
@@ -196,13 +291,20 @@ function encodeTunesForAbcTools(abcContent) {
                 }
             });
 
-            const customTuneType = encodedAbcArr[i - 1].Name.split(':')[0];
-            const customTuneTypeProperCase = customTuneType[0] + customTuneType.slice(1).toLowerCase();
+            // If tune name includes TYPE: prefix that does not match Tune Type, replace it with Custom Type
 
-            if (encodedAbcArr[i - 1].Name !== customTuneTypeProperCase) {
-                
-                encodedAbcArr[i - 1].Type = customTuneTypeProperCase;
+            if (encodedAbcArr[i - 1].Name.match(/^.*:/)) {
+
+                const customTuneType = encodedAbcArr[i - 1].Name.split(':')[0];
+                const customTuneTypeProperCase = customTuneType[0] + customTuneType.slice(1).toLowerCase();
+
+                if (encodedAbcArr[i - 1].Name !== customTuneTypeProperCase) {
+
+                    encodedAbcArr[i - 1].Type = customTuneTypeProperCase;
+                }
             }
+
+            // Generate URL to Michael Eskin's ABC Tools with default parameters
 
             const encodedAbcString = LZString.compressToEncodedURIComponent(`X:${rawAbcArr[i].replaceAll('\n\n', '')}`);
 
@@ -235,6 +337,10 @@ function getEncodedAbc(abcContent) {
     }
 }
 
+////////////////////////////////
+// DECODE ABC FUNCTIONS
+///////////////////////////////
+
 // Decode ABC contents encoded via lz-string and return a string of ABCs
 
 function getDecodedAbc(abcContent) { 
@@ -251,7 +357,11 @@ function getDecodedAbc(abcContent) {
 
         if (encodedAbcString) {
 
-            let decodedAbcString = LZString.decompressFromEncodedURIComponent(encodedAbcString.split('lzw=')[1]).replaceAll('\n\n', '').trim();
+            let decodedAbcString = LZString.decompressFromEncodedURIComponent(encodedAbcString.split('lzw=')[1]);
+
+            // Optional: Remove all empty lines in decoded ABC
+
+            // decodedAbcString = decodedAbcString.replaceAll('\n\n', '').trim();
 
             if (encodedAbcJson.indexOf(abcObject) !== encodedAbcJson.length - 1) {
 
@@ -278,30 +388,4 @@ function getDecodedAbc(abcContent) {
         console.warn("ABC Encoder:\n\nNo valid ABC data found after sorting");
         return;
     }
-}
-
-// Download a file containing the resulting ABC content
-
-function downloadAbcFile(abcContent, fileName, taskType) {
-
-    const abcFile = new Blob([abcContent], { type: taskType === "abc-encode"? "application/json" : "text/plain" });
-    const abcFileName = taskType === "abc-encode" && fileName.startsWith("NS-Session-Sets") ? "tunesets.json" :
-                        taskType === "abc-encode" && fileName.startsWith("NS-Session-Tunes") ? "tunes.json" :
-                        taskType === "abc-encode" ? "tunes-encoded.json" :
-                        taskType === "abc-decode" && fileName.startsWith("tunesets") ? "NS-Session-Sets.abc" :
-                        taskType === "abc-decode" && fileName.startsWith("tunes") ? "NS-Session-Tunes.abc" :
-                        taskType === "abc-decode" ? "tunes-decoded.abc" :
-                        fileName;
-    
-    const abcLink = document.createElement("a");
-
-    abcLink.href = URL.createObjectURL(abcFile);
-    abcLink.download = abcFileName;
-    document.body.appendChild(abcLink);
-  
-    abcLink.click();
-    
-    document.body.removeChild(abcLink);
-
-    console.log(`ABC Encoder:\n\n${abcFileName} saved!`);
 }

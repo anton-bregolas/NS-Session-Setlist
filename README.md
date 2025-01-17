@@ -11,6 +11,20 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.3.2: ABC Encoder (Encoder tweaks)
+
++ Project updates:
+	- ABC Encoder: ABC cleanup logic tweaked, optional algorithms added, documentation improved
+
++ JavaScript updates:
+	- ABC Encoder:
+		- sortFilterAbc tweaked and expanded with additional ABC cleanup options
+		- Extra line breaks in ABCs are no longer removed by default (potential options feature)
+		- Optional functions added for extra ABC line breaks cleanup (removeLineBreaksInAbc, removeTextAfterLineBreaksInAbc)
+		- Regex and step-by-step implementations added to removeTextAfterLineBreaksInAbc
+		- Custom Type JSON key naming fixed in encodeTunesForAbcTools
+		- Subheaders and comments added to scripts-abc-encoder.js
+
 v.0.3.1: ABC Encoder (Encoder scripts)
 
 + Project updates:
