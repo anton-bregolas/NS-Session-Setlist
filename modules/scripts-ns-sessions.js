@@ -1,4 +1,4 @@
-import { initAbcTools, resizeIframe, tuneFrame, tuneSelector, populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
+import { initAbcTools, resizeIframe, tuneSelector, tuneFrame, populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
 import { parseAbcFromFile } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +30,7 @@ const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
 const allLaunchEls = document.querySelectorAll('.nss-launch-el');
 const allTuneBookEls = document.querySelectorAll('.nss-tunebook-el');
 const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
+// const tuneSelector = document.querySelector('#tuneSelector');
 const tuneSelectorTitle = document.querySelector('#tuneSelectorTitle');
 export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#title');
@@ -67,7 +68,7 @@ async function launchTuneBook(dataType) {
       refreshTuneBook();
 
       // Optionally reset loaded ABC to blank
-      // tuneFrame.src = "";
+      tuneFrame.src = "";
     
     } else {
 
@@ -189,7 +190,7 @@ export function checkTuneBookSetting() {
 
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
 
-function refreshTuneBook() {
+export function refreshTuneBook() {
 
   resetTuneBookMenus();
   resetTuneBookFilters();
@@ -202,15 +203,16 @@ function refreshTuneBook() {
 
 // Clear the contents of custom Tunebook dropdown menus, reset to default options
 
-function resetTuneBookMenus() {
+export function resetTuneBookMenus() {
 
   tuneSelector.options.length = 1;
   tuneSelector.options[0].selected = "selected";
-  tuneSelector.value = "-1";
 
   filterOptions.options.length = 2;
   filterOptions.options[0].selected = "selected";
   filterOptions.value = "-1";
+
+  refreshTabsDisplayOptions();
 }
 
 // Clear the effects of all custom Tunebook filter options
@@ -253,6 +255,14 @@ function resizeTuneBookHeader(dataType) {
   }
 
   tuneBookTitle.removeAttribute("style");
+}
+
+// Refresh tab & MIDI selector options, set dropdown menu to default option
+
+function refreshTabsDisplayOptions() {
+
+    displayOptions.options[0].selected = "selected";
+    displayOptions.value = "-1";
 }
 
 ////////////////////////////////
@@ -450,6 +460,7 @@ async function appDropDownHandler() {
       if (filterId === "0") {
 
         resetTuneBookFilters();
+        tuneSelector.options[0].selected = "selected";
     
         console.log("NS Session App:\n\nTunebook filters cleared");
 
@@ -478,8 +489,6 @@ async function appDropDownHandler() {
       });
 
       tuneSelector.options[0].selected = "selected";
-
-      tuneSelector.value = "-1";
 
       console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
     }

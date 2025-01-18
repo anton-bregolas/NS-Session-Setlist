@@ -11,6 +11,21 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.4.1 Filter Options (Menu Fixes)
+
++ Project updates:
+  - Rolled back and fixed some changes causing errors in Tabs / MIDI menu after refactoring
+  - Refactored script for injecting custom MIDI programs into clean ABC
+  - Testing UX for optiomal tune behavior in ABC Tools iframe (tune remains after switching between sections vs. blank page)
+
++ CSS updates:
+  - Option menus slightly expanded in Tunebook
+
++ JavaScript updates:
+  - ABC Tools: injectInstrument refactored, errors fixed
+  - Launcher: Fixed tuneSelector values being set to -1
+  - Launcher: refreshTabsDisplayOptions added
+
 v.0.4.0 Filter Options (Initial commit)
 
 + Project updates:
