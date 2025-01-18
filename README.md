@@ -11,7 +11,12 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-v.0.4.1 Filter Options (Menu Fixes)
+v.0.4.2: Filter Options (Session DB Update)
++ Session DB updates:
+  - Session DB updated to 2025-01-18
+  - Four draft sets of various tune types added for Filter Options testing
+
+v.0.4.1: Filter Options (Menu Fixes)
 
 + Project updates:
   - Rolled back and fixed some changes causing errors in Tabs / MIDI menu after refactoring
@@ -26,7 +31,7 @@ v.0.4.1 Filter Options (Menu Fixes)
   - Launcher: Fixed tuneSelector values being set to -1
   - Launcher: refreshTabsDisplayOptions added
 
-v.0.4.0 Filter Options (Initial commit)
+v.0.4.0: Filter Options (Initial commit)
 
 + Project updates:
 	- Tunebook:	Filter options implemented, Tunebook can now be filtered by Tune Type or Set Leader
