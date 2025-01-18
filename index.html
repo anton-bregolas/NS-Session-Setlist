@@ -57,13 +57,14 @@
             <section class="nss-select nss-tunebook-el" hidden>
                 <div class="nss-select-container flex-wrapper">
                     <select id="filterOptions" class="nss-select-options" title="Filter tunes by tune type or players" aria-title="Filter tunes by tune type or players">
-                        <option value="-1">Filter Options</option>
+                        <option value="-1">✨ Filter by...</option>
+                        <option value="0">😎 Show All 😎</option>
                     </select>
                     <select id="tuneSelector" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
-                        <option id="tuneSelectorTitle" data-title="setlist" value=""></option>
+                        <option id="tuneSelectorTitle" data-title="setlist" value="-1"></option>
                     </select>
                     <select id="displayOptions" class="nss-select-options" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
-                       <option value="-1">Tabs & MIDI</option>
+                       <option value="-1">🎹 Tabs & MIDI</option>
                        <option value="0">Default (Piano)</option>
                        <option value="1">ABC (Concertina)</option>
                        <option value="2">Tin Whistle Tabs</option>
@@ -180,7 +181,7 @@
                 </button>
             </section>
 
-            <section id="footer1" class="nss-footer-tunebook nss-tunebook-el footer-wrapper" hidden>
+            <section id="footer" class="nss-footer-tunebook nss-tunebook-el footer-wrapper" hidden>
                 <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
                     <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
                         <use href="assets/icons/icons.svg#action-icon-launch"></use>

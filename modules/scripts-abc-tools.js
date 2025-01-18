@@ -1,4 +1,4 @@
-import { checkTuneBookSetting, tuneSets, tuneList } from "./scripts-ns-sessions.js"; // Import tune JSONs from NS Sessions DB
+import { checkTuneBookSetting, tuneSets, tuneList, filterOptions, initCustomDropDownMenus } from "./scripts-ns-sessions.js"; // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // lz-string by Pieroxy (LZ-based compression algorithm)
@@ -27,6 +27,8 @@ var gAllowStatePersistence = false;
 // Set this to false to disable changing instruments when switching tablature
 var gAllowInstrumentChanges = true;
 
+var tabStyle = "noten";
+
 var isBanjo = false;
 var isFlute = false;
 var isDulcimer = false;
@@ -37,17 +39,27 @@ var isSolfege = false;
 
 var lastURL = "";
 
+/////////////////////////////////////////////////////////////
+// Michael Eskin's Export Tunebook Website: OG Page Elements
+////////////////////////////////////////////////////////////
+
+export const tuneFrame = document.querySelector('#tuneFrame');
+export const tuneSelector = document.querySelector('#tuneSelector');
+export const displayOptions = document.getElementById('displayOptions');
+
 /////////////////////////////////////////////////////////////////
-// Michael Eskin's Export Tunebook Website: Scripts (Customized)
+// Michael Eskin's Export Tunebook Website: OG Scripts (Tweaked)
 ////////////////////////////////////////////////////////////////
+
+// Initialize ABC Transcription Tools, add event listeners to Tunebook elements
 
 export function initAbcTools() {
 
-// Select Session DB JSON to open in ABC Tools
+    // Select Session DB JSON to open in ABC Tools
 
-tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
+    tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
 
-// Populate the selector with options from JSON
+    // Populate the selector with options from JSON
 
     document.getElementById('fullscreenbutton').addEventListener('click', function() {
         if (lastURL != ""){
@@ -55,13 +67,13 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
         }
     });
 
-    const tuneSelector = document.getElementById('tuneSelector');
-
-    const tuneFrame = document.getElementById('tuneFrame');
-
     if (tunes.length > 1){
 
         populateTuneSelector();
+
+        // Initialize custom N.S.S.S. elements
+        populateFilterOptions(sortFilterOptions());
+        initCustomDropDownMenus();
 
         // Update iframe src when an option is selected
         tuneSelector.addEventListener('change', () => {
@@ -86,7 +98,7 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
 
                     localStorage.lastTuneName_GKUCFRH = tuneSelector.options[tuneSelector.selectedIndex].text;
 
-                    var theLastTuneTab = document.getElementById('displayOptions').value;
+                    var theLastTuneTab = displayOptions.value;
                     localStorage.lastTab_GKUCFRH = theLastTuneTab;
 
                 }
@@ -117,103 +129,12 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
         },250);
     }
 
-    var tabStyle = "noten";
-
-    //
-    // Decompress the tune LZW, replace the instrument and volumes
-    //
-
-    function extractLZWParameter(url) {
-        // Use a regular expression to find the part starting with &lzw= followed by any characters until the next &
-        const match = url.match(/lzw=([^&]*)/);
-
-        // If a match is found, return the part after &lzw=
-        return match ? match[0] : null;
-    }
-
-    function injectInstrument(theURL){
-
-        var originalAbcInLZW = extractLZWParameter(theURL);
-
-        originalAbcInLZW = originalAbcInLZW.replace("lzw=","");
-
-        var abcInLZW = LZString.decompressFromEncodedURIComponent(originalAbcInLZW);
-
-        // Construct a MIDI settings string to be injected into the ABC
-
-        let injectMidiString = `%abcjs_soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 64\n%%MIDI chordvol 64`;
-
-        switch (tabStyle){
-            case "mandolin":
-                if (isBanjo){
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 105");
-                }
-                else{
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 141");
-                }
-                break;
-            case "gdad":
-                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 140");
-                break;
-            case "guitare":
-            case "guitard":
-                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 24\n%%MIDI transpose -12");
-                break;
-            case "whistle":
-                if (isFlute){
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 73");
-                }
-                else{
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 78");
-                }
-                injectMidiString = injectMidiString.replace("%%MIDI bassvol 64","%%MIDI bassvol 64");
-                injectMidiString = injectMidiString.replace("%%MIDI chordvol 64","%%MIDI chordvol 64");
-                break;
-            case "notenames":
-                if (isSolfege){
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 136");
-                    break;
-                } 
-                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 133");
-                break;
-            case "noten":
-                if (isDulcimer){
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 15");
-                }
-                else if (isUPipes) {
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 129");
-                }
-                else if (isMelodeon) {
-                    injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 135");     
-                }
-                else{
-                    return theURL;
-                }
-                break;
-        }
-
-        // Update the decompressed ABC with the new MIDI settings
-
-        let updatedAbcString = abcInLZW.replace(`K:`, `${injectMidiString}\nK:`);
-
-        var newLZWparam = "lzw="+LZString.compressToEncodedURIComponent(updatedAbcString);
-
-        originalAbcInLZW = "lzw="+originalAbcInLZW;
-
-        theURL = theURL.replace(originalAbcInLZW,newLZWparam);
-
-        return theURL;
-    }
-
-    const displayOptions = document.getElementById('displayOptions');
-
-      displayOptions.addEventListener('change', () => {
-
-        var origTabStyle = tabStyle;
+    displayOptions.addEventListener('change', () => {
 
         if (displayOptions.value == "-1"){
             return;
         }
+
         isBanjo = false;
         isFlute = false;
         isDulcimer = false;
@@ -298,7 +219,7 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
                       localStorage.lastTuneName_GKUCFRH = tuneSelector.options[tuneSelector.selectedIndex].text;
                   }
 
-                  var theLastTuneTab = document.getElementById('displayOptions').value;
+                  var theLastTuneTab = displayOptions.value;
                   localStorage.lastTab_GKUCFRH = theLastTuneTab;
               }
 
@@ -335,7 +256,7 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
 
             var theLastTuneTab = localStorage.lastTab_GKUCFRH;
             if (theLastTuneTab && (theLastTuneTab != "")){
-                var elem = document.getElementById('displayOptions');
+                var elem = displayOptions;
                 elem.value = theLastTuneTab;
                 elem.dispatchEvent(new Event('change'));
             }
@@ -354,9 +275,101 @@ tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
     }
 }
 
+// Decompress the tune LZW, replace the instrument and volumes
+
+function extractLZWParameter(url) {
+    // Use a regular expression to find the part starting with &lzw= followed by any characters until the next &
+    const match = url.match(/lzw=([^&]*)/);
+
+    // If a match is found, return the part after &lzw=
+    return match ? match[0] : null;
+}
+
+/////////////////////////////////////////////////////////////////
+// Customized, New and Exported Tunebook Functions for N.S.S.S.
+////////////////////////////////////////////////////////////////
+
+// Inject custom MIDI settings into ABC by modifying a default template string
+
+function injectInstrument(theURL){
+
+    var originalAbcInLZW = extractLZWParameter(theURL);
+
+    originalAbcInLZW = originalAbcInLZW.replace("lzw=","");
+
+    var abcInLZW = LZString.decompressFromEncodedURIComponent(originalAbcInLZW);
+
+    // Construct a MIDI settings string to be injected into the ABC
+
+    let injectMidiString = `%abcjs_soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 64\n%%MIDI chordvol 64`;
+
+    switch (tabStyle){
+        case "mandolin":
+            if (isBanjo){
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 105");
+            }
+            else{
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 141");
+            }
+            break;
+        case "gdad":
+            injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 140");
+            break;
+        case "guitare":
+        case "guitard":
+            injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 24\n%%MIDI transpose -12");
+            break;
+        case "whistle":
+            if (isFlute){
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 73");
+            }
+            else{
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 78");
+            }
+            injectMidiString = injectMidiString.replace("%%MIDI bassvol 64","%%MIDI bassvol 64");
+            injectMidiString = injectMidiString.replace("%%MIDI chordvol 64","%%MIDI chordvol 64");
+            break;
+        case "notenames":
+            if (isSolfege){
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 136");
+                break;
+            } 
+            injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 133");
+            break;
+        case "noten":
+            if (isDulcimer){
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 15");
+            }
+            else if (isUPipes) {
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 129");
+            }
+            else if (isMelodeon) {
+                injectMidiString = injectMidiString.replace("%%MIDI program 0","%%MIDI program 135");     
+            }
+            else{
+                return theURL;
+            }
+            break;
+    }
+
+    // Update the decompressed ABC with the new MIDI settings
+
+    let updatedAbcString = abcInLZW.replace(`K:`, `${injectMidiString}\nK:`);
+
+    var newLZWparam = "lzw="+LZString.compressToEncodedURIComponent(updatedAbcString);
+
+    originalAbcInLZW = "lzw="+originalAbcInLZW;
+
+    theURL = theURL.replace(originalAbcInLZW,newLZWparam);
+
+    return theURL;
+}
+
+// Populate tune dropdown menu with options
+
 export function populateTuneSelector() {
 
-    tuneSelector.options.length = 1;
+    tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
 
     tunes.forEach(tune => {
         const option = document.createElement('option');
@@ -368,9 +381,81 @@ export function populateTuneSelector() {
     });
 }
 
+// Populate filter dropdown menu with options
+
+export function populateFilterOptions(filters) {
+
+    filters.forEach(filterList => {
+
+        if (filterList.id) {
+
+            const filterHeader = document.createElement('option');
+
+            if (filterList.id === "tuneTypes") {
+                
+                filterHeader.value = 1;
+                filterHeader.textContent = "👉 Tune Type 👈";
+                filterOptions.appendChild(filterHeader);
+            }
+
+            if (filterList.id === "setLeaders") {
+                
+                filterHeader.value = 2;
+                filterHeader.textContent = "👉 Set Leader 👈";
+                filterOptions.appendChild(filterHeader);
+            }
+        }
+
+        filterList.list?.forEach(filter => {
+
+            const filterOption = document.createElement('option');
+            filterOption.value = filter;
+            filterOption.textContent = `🎻 ${filter}`;
+            filterOptions.appendChild(filterOption);
+        });
+    });
+}
+
+// Gather and sort custom metadata found in tunes array
+
+export function sortFilterOptions() {
+
+    const allTuneTypes = {"id": "tuneTypes", "list": []};
+    const allTuneLeaders = {"id": "setLeaders", "list": []};
+
+    tunes.forEach(tune => {
+
+        const tuneType = tune.Type;
+        const tuneLeaders = tune.Leaders;
+
+        if (tuneType && !allTuneTypes.list.includes(tuneType)) {
+
+            allTuneTypes.list.push(tuneType);
+        }
+
+        if (tuneLeaders) {
+
+            tuneLeaders.split(', ').forEach(tuneLeader => {
+
+                if(!allTuneLeaders.list.includes(tuneLeader)) {
+
+                    allTuneLeaders.list.push(tuneLeader);
+                }
+            });
+        }
+    });
+
+    allTuneTypes.list.sort();
+    allTuneLeaders.list.sort();
+
+    return [allTuneTypes, allTuneLeaders];
+}
+
+// Calculate sizes of Tunebook section elements
+
 function getElementsTotalHeight() {
 
-    const ids = ['title', 'subtitle', 'displayOptions', 'footer1', 'footer2'];
+    const ids = ['title', 'subtitle', 'displayOptions', 'footer'];
 
     let totalHeight = 0;
 
@@ -392,9 +477,11 @@ function getElementsTotalHeight() {
     return totalHeight+5;
 }
 
+// Resize the embedded ABC Tools iframe
+
 export function resizeIframe() {
-    const iframe = document.getElementById('tuneFrame');
-    iframe.style.width = (window.innerWidth-3) + 'px';
+
+    tuneFrame.style.width = (window.innerWidth-3) + 'px';
     var otherElementsHeight = getElementsTotalHeight();
-    iframe.style.height = (window.innerHeight-otherElementsHeight) + 'px';
+    tuneFrame.style.height = (window.innerHeight-otherElementsHeight) + 'px';
 }

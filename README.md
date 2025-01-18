@@ -11,6 +11,32 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.4.0 Filter Options (Initial commit)
+
++ Project updates:
+	- Tunebook:	Filter options implemented, Tunebook can now be filtered by Tune Type or Set Leader
+ 	- Launcher: Code updated and refactored to account for Tunebook state (initialized, section last opened)
+  - ABC Tools scripts: Code updated and refactored, custom and general scripts moved from function initializing event listeners
+
++ HTML updates:
+  - Filter Options selector shell added, to be populated programmatically
+  - Emojis added to dropdown menus to lighted up lists of options
+
++ JavaScript updates:
+  - Dropdown menu handler functions (appDropDownHandler, initCustomDropDownMenus) added to scripts-ns-sessions.js
+  - Filter Options population and sorting functions (populateFilterOptions, sortFilterOptions) added to scripts-abc-encoder.js
+  - Tunebook cleanup functions (refreshTuneBook, resetTuneBookMenus, resetTuneBookFilters) added to scripts-ns-sessions.js
+  - New global variables (tuneBookInitialized, tuneBookLastOpened) added to keep track of event listeners and last opened section
+  - ABC Tools scripts refactored:
+    - initAbcTools narrowed down to adding initial event listeners to Tunebook elements to prevent from multiplying event listeners
+    - Subheaders for OG Scripts and Customized, New and Exported Tunebook Functions added plus more comments describing functions
+    - Exports and constants revisited, duplicates removed, functions closely tied to initAbcTools are to be kept in the same file
+    - Original Tunebook elements tuneFrame, tuneSelector and displayOptions are now defined globally in ABC Tools scripts
+
++ Session DB updates:
+  - Session DB updated to 2025-01-17
+  - Encoded ABCs now include Type and Leaders keys
+
 v.0.3.2: ABC Encoder (Encoder tweaks)
 
 + Project updates:

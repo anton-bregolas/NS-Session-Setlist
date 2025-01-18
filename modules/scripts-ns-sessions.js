@@ -1,4 +1,4 @@
-import { initAbcTools, populateTuneSelector, resizeIframe } from './scripts-abc-tools.js';
+import { initAbcTools, resizeIframe, tuneFrame, tuneSelector, populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
 import { parseAbcFromFile } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7,12 +7,14 @@ import { parseAbcFromFile } from './scripts-abc-encoder.js';
 // Session DB and/or Code Contributors:
 // Anton Zille https://github.com/anton-bregolas/
 //
-// Version / NS Session DB date: 2025-01-16
+// Version / NS Session DB date: 2025-01-17
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
 
 let tuneBookSetting = 0;
+let tuneBookLastOpened = "";
+let tuneBookInitialized = false;
 
 // Define Session DB items
 
@@ -28,7 +30,8 @@ const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
 const allLaunchEls = document.querySelectorAll('.nss-launch-el');
 const allTuneBookEls = document.querySelectorAll('.nss-tunebook-el');
 const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
-const tuneDropDownTitle = document.querySelector('#tuneSelectorTitle');
+const tuneSelectorTitle = document.querySelector('#tuneSelectorTitle');
+export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#title');
 
 ////////////////////////////////
@@ -53,7 +56,23 @@ async function launchTuneBook(dataType) {
       tuneBookEl.removeAttribute("hidden");
     });
 
-    initAbcTools();
+    if (tuneBookInitialized === false) {
+
+      initAbcTools();
+      console.log(`NS Session App:\n\nABC Tools initialized`);
+      tuneBookInitialized = true;
+
+    } else if (tuneBookLastOpened !== tuneBookSetting) {
+
+      refreshTuneBook();
+
+      // Optionally reset loaded ABC to blank
+      // tuneFrame.src = "";
+    
+    } else {
+
+      console.log(`NS Session App:\n\nTunebook has been reopened`);
+    }
   }
 }
 
@@ -75,7 +94,7 @@ function launchPlayAlong(dataType) {
 // SWITCHERS
 ///////////////////////////////
 
-// Switch between sections or repopulate ABC tools selector with target data type, swap elements
+// Switch between sections or repopulate ABC tools with new data, swap elements
 
 function switchTuneBookType(dataType) {
 
@@ -86,11 +105,17 @@ function switchTuneBookType(dataType) {
   if (dataType === "setlist" || dataType === "tunelist") {
 
     tuneBookSetting = dataType === "setlist"? 0 : 1;
+
     swapSwitchBtns(dataType);
-    populateTuneSelector();
-    initAbcTools();
+
+    refreshTuneBook();
+
     return;
   }
+
+  // Save last opened Tunebook section
+
+  tuneBookLastOpened = tuneBookSetting;
 
   // Switch to Launch Screen by default
 
@@ -162,6 +187,42 @@ export function checkTuneBookSetting() {
   return tuneBookSetting;
 }
 
+// Reset Tunebook dropdown menus without reinitializing ABC Tools
+
+function refreshTuneBook() {
+
+  resetTuneBookMenus();
+  resetTuneBookFilters();
+
+  populateTuneSelector();
+  populateFilterOptions(sortFilterOptions());
+
+  console.log(`NS Session App:\n\nTunebook has been refreshed`);
+}
+
+// Clear the contents of custom Tunebook dropdown menus, reset to default options
+
+function resetTuneBookMenus() {
+
+  tuneSelector.options.length = 1;
+  tuneSelector.options[0].selected = "selected";
+  tuneSelector.value = "-1";
+
+  filterOptions.options.length = 2;
+  filterOptions.options[0].selected = "selected";
+  filterOptions.value = "-1";
+}
+
+// Clear the effects of all custom Tunebook filter options
+
+function resetTuneBookFilters() {
+
+  tuneSelector.querySelectorAll('option').forEach(tuneOption => {
+          
+    tuneOption.removeAttribute("hidden");
+  });
+}
+
 // Update text content on page depending on data type shown
 
 function updateTuneBookTitles(dataType) {
@@ -172,9 +233,9 @@ function updateTuneBookTitles(dataType) {
 
   if (dataType === "setlist" || dataType === "tunelist") {
 
-    tuneDropDownTitle.textContent = 
-    dataType === "tunelist"? "Select a TUNE from the List" :
-    "Select a SET from the List";
+    tuneSelectorTitle.textContent = 
+    dataType === "tunelist"? "\u{1F3B5} Select a TUNE" :
+    "\u{1F3BC} Select a SET";
   }
 
   tuneBookTitle.dataset.title = dataType;
@@ -202,20 +263,27 @@ function resizeTuneBookHeader(dataType) {
 
 async function tuneDataFetch() {
 
-  try {
+  if (tuneBookInitialized === false) {
 
-    const tuneDataSize = await updateDataJsons();
+    try {
 
-    if (tuneDataSize[0] > 0) {
+      const tuneDataSize = await updateDataJsons();
 
-      console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
+      if (tuneDataSize[0] > 0) {
 
-      return tuneDataSize[0];
+        console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
+
+        return tuneDataSize[0];
+      }
+
+    } catch (error) {
+
+      console.warn(`NS Session App:\n\nLaunching app sequence failed. Details:\n\n${error.message}`);
     }
 
-  } catch (error) {
+  } else {
 
-    console.warn(`NS Session App:\n\nLaunching app sequence failed. Details:\n\n${error.message}`);
+    return 1;
   }
 }
 
@@ -317,7 +385,7 @@ export function clearData() {
   tuneSets.length = 0;
   tuneList.length = 0;
 
-  console.log("NS Session App:\n\nSession DB data cleared!")
+  console.log("NS Session App:\n\nSession DB data cleared!");
 }
 
 ////////////////////////////////
@@ -368,6 +436,56 @@ async function appButtonHandler() {
   }
 }
 
+// Handle custom dropdown menu events
+
+async function appDropDownHandler() { 
+
+  if (this === filterOptions) {
+
+    const tuneOptions = tuneSelector.querySelectorAll('[data-tunetype]');
+    const filterId = filterOptions.value;
+
+    if (Math.abs(+filterId) >= 0) {
+
+      if (filterId === "0") {
+
+        resetTuneBookFilters();
+    
+        console.log("NS Session App:\n\nTunebook filters cleared");
+
+        return;
+      }
+
+      filterOptions.options[0].selected = "selected";
+  
+      filterOptions.value = "-1";
+
+      return;
+    }
+
+    if (filterId) {
+
+      tuneOptions.forEach(tuneOption => {
+
+        if (filterId !== tuneOption.dataset.tunetype && !tuneOption.dataset.leaders.split(', ').includes(filterId)) {
+
+          tuneOption.setAttribute("hidden", "");
+
+        } else if (tuneOption.hasAttribute("hidden")) {
+
+          tuneOption.removeAttribute("hidden");
+        }
+      });
+
+      tuneSelector.options[0].selected = "selected";
+
+      tuneSelector.value = "-1";
+
+      console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
+    }
+  }
+}
+
 ////////////////////////////////
 // EVENT LISTENERS
 ///////////////////////////////
@@ -382,7 +500,18 @@ function initAppButtons() {
   });
 }
 
+// Add event listeners to custom dropdown menus
+
+export function initCustomDropDownMenus() {
+
+  filterOptions.addEventListener('change', appDropDownHandler);
+}
+
+// Initialize event listeners on Launch Screen load
+
 document.addEventListener('DOMContentLoaded', () => {
 
   initAppButtons();
+
+  console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });
