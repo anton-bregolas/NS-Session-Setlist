@@ -1,4 +1,33 @@
 X: 1
+T: JIGS: Humours of Killarney Set
+T: Humours of Killarney / Sheehan's / Cheer Up Old Hag
+C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien / Trad. / Méabh & Clíodhna Ní Bheaglaoich
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/71901
+R: jig
+M: 6/8
+L: 1/8
+Q:
+K: Gmaj
+|:A|BGG G2 B|ded d2 c|BAB GBd|e2 f g2 G|
+GBd gfe|fdB cBA|BGE EDE|c3 B2:|
+|:A|BGE EDE|GED D2 A|BGE EDE|c2 d edc|
+BGE EDE|GED D2 F|GBA GBA|G3 G2:|
+T: Connaughtman's Rambles
+K: Dmaj
+|:FAA dAA|BAB dAG|FAA def|edB BAG|
+FAA dAA|BAB def|gfe f2e|1 dBA BAG:|2 dBA B2 g||
+|:fbb faa|fef deg|fbb faa|fed e2 g|
+fbb faa|fef def|gfe f2 e|1 dBA B2 g:|2 dBA BAG||
+T: Donncha Lynch's / Donncha Ó Loinsigh's
+K: Amaj
+|:EAA cAA|BAB cAF|EAA cAA|B/c/dc BAF|
+EAA cAA|BAB cAA|Bcd e2d|cAA A2F:|
+|:E3 ECE|FAA FAA|Bcd e2d|cAA BAF|
+~E3 ECE|FAA FAA|Bcd e2d|cAA A2F:|
+
+X: 2
 T: POLKAS: John Walsh's Set
 T: John Walsh's No. 1 / Goblachan / Derrygallen Bridge
 C: C: John Walsh; S: Polca an Rí; John Walsh
@@ -29,7 +58,7 @@ G>B de|dB B/c/B/A/|GE ED/E/|1 G2 GD:|2 GA Bd||
 |:ed B/c/B/A/|GE ED/E/|GB/A/ GB|d2 dB/d/|
 ed B/c/B/A/|GE ED/E/|GB/A/ GE|1 G2 Bd:|2 G2 GD||
 
-X: 2
+X: 3
 T: POLKAS: P&O Set
 T: P&O (D)
 C: C: Christy Leahy / Trad. / Trad.; S: Polca an Rí; ThZCh; Brendan Begley
@@ -58,7 +87,7 @@ A>B cd|ed c>B|AB ce|1 de/d/ cB:||2 d2 d>f||
 |:af ed|f2 e2|A>B cd|e2 ef/g/|
 af ed|f2 eA|A>B ce|1 d2 d>f:|2 de/d/ cB|| A4||
 
-X: 3
+X: 4
 T: POLKAS: Toureendarby Set
 T: Toureendarby / Curragh Races
 C: C: Trad.; S: Timmy O'Connor; Laoise Kelly / Séamus Begley / Jackie Daly & Séamus Creagh
@@ -92,3 +121,96 @@ K: Gmaj
 G>A BG|AG Bd|G>A GE|ED D2:||
 |:d>e dB|AG AB|d>e dB|AG E2|
 d>e dB|AG AB|G>A GE|1 ED D2:|2 ED DE||
+
+X: 5
+T: REELS: Walter Sammon's Grandma Set
+T: Walter Sammon's Grandmother
+C: C: Trad.; S: ThZCh; Patrick Street / Trad. / Mary Bergin
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76523
+R: reel
+M: 4/4
+L: 1/8
+Q:
+K: Dmaj
+FAAB A2dB|AFDE FEE2|FAAB A2dB|AFEG FDD2|
+FAAB ABdB|AFDE FEE2|FAAB A2dB|AFEG FDD2||
+FAdA BAdA|FAdA BEE2|FAdA BAdB|AFEG FDD2|
+FAdA BAdA|FAdA BEE2|dcBA BcdB|AFEG FDD2||
+T: Broken Pledge (D)
+R: reel
+M: 4/4
+L: 1/8
+Q:
+K: Ddor
+dcAG ADDB|cAGF ECCE|D2 (3EFG Addc|AcGc Aefe|
+dcAG FGAB|c2Bd cAGE|D2 (3EFG AddB|cAGE FDD2:|
+|:dcAG Acde|~f3d ecAB|cAGE GAcd|ec~c2 eage|
+dcAG Acde|fedf ecAG|~F3G AddB|cAGE FDD2:|
+T: Blackhaired Lass
+R: reel
+M: 4/4
+L: 1/8
+Q:
+K: Amix
+|:B|cAA2 cdec|d2gd BGGB|cA~A2 cdec|dfec A3:|
+G|B/c/def ~g2eg|fddf gfed|B/c/def geag|fdec A2AG|
+B/c/def gfeg|fddc defg|afg/f/e fdec|dfec A3||
+
+X: 6
+T: SLIDES: Cat's Rambles Set
+T: Is It the Priest You Want?
+C: C: Trad.; S: Bothy Band; Denis Murphy; Julia Clifford; Johnny O'Leary
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/63219
+R: slide
+M: 12/8
+L: 1/8
+Q:
+K: Gmaj
+|:g|edB d2 B d2 B B2 g|edB d2 B c2 A A2 g|
+edB d2 B BAB g3|BAB g3 B2 G G2:|
+|:f|gag fgf g2 e e2 d|eaa aga b2 e e2 f|
+gag fgf g2 e e2 d|BAB g3 B2 G G2:|
+T: Cat's Rambles to the Child's Saucepan / Mary Willie's
+K: Dmaj
+A|:d2 ef2 e dcd ~B3|g2 A cBA e2 A cBA|
+d2 ef2 e dcd ~B3|g2 A cBA d3 d2 A:|
+|:d2 ef2 a baf a2 f|e2 A cBA efe cBA|
+d2 ef2 a baf a2 f|e2 A cBA d3 d2 A:|
+T: This is My Love, Do You Like Her?
+K: Ador
+A2A AGE c2B c2d|efe ede g3 g2e|
+def g2e dBA G2A|1 Bde dBG A2B c2B:|2 Bde dBG A3 ABd||
+|:eaa age dgg gfg|eaa agf g2b a2g|
+eaf g2e dBA G2A|1 Bde dBG A3 ABd:|2 bde dBG A2B c2B||
+
+X: 7
+T: SLIP JIGS: Snowy Path Set
+T: Snowy Path
+C: C: Trad.; S: Altan et. al.
+C: Set Leaders: Olya, Tanya, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76538
+R: slip jig
+M: 9/8
+L: 1/8
+K: Dmaj
+"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GFE|
+"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GAB||
+"A"c3 c2e d2c|"G"B2G B2c d2e|"Bm"f3 f2e d2B|"D"A2G F2G A2B|
+"A"c3 c2e d2c|"G"B2G B2c d2e|"D"d2A B2F A2F|"Em"E2D E2F GFE||
+T: Fig For a Kiss
+K: Edor
+G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF DEF|
+G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF E3||
+g2e g2e edB|f2d dcd fed|g2e g2e edB|dBG GBd e2f|
+g2e g2e edB|f2d dcd fed|gfe fed ecA|B/c/dB AGF E2F||
+T: Foxhunter's
+K: Dmaj
+|:FDF F2D G2E|FDF F2D E2D|FDF F2D G2B|AFD DEF E2D:|
+|:B3 BAG FGA|B2E E2F G2B|ABc dcB ABc|d2 D D2 F E2 D:|
+|:fdf f2d g2e|fdf f2d e2d|fdf f2d g2b|afd def e2d:|
+|:gfe dcB AGF|B2 E E2 F G2 B|ABc dcB ABc|d2 D DEF E2 D:|

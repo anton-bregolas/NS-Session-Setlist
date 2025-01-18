@@ -1,4 +1,54 @@
 X: 1
+T: JIG: Connaughtman's Rambles
+C: C: Trad.; S: ThZCh
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/71901
+R: jig
+M: 6/8
+L: 1/8
+Q:
+K: Dmaj
+|:FAA dAA|BAB dAG|FAA def|edB BAG|
+FAA dAA|BAB def|gfe f2e|1 dBA BAG:|2 dBA B2 g||
+|:fbb faa|fef deg|fbb faa|fed e2 g|
+fbb faa|fef def|gfe f2 e|1 dBA B2 g:|2 dBA BAG||
+
+X: 2
+T: JIG: Donncha Lynch's
+T: Donncha Ó Loinsigh's
+C: C: Trad.; S: ThZCh; Méabh Ní Bheaglaoich & Clíodhna Ní Bheaglaoich
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/71901
+R: jig
+M: 6/8
+L: 1/8
+Q:
+K: Amaj
+|:EAA cAA|BAB cAF|EAA cAA|B/c/dc BAF|
+EAA cAA|BAB cAA|Bcd e2d|cAA A2F:|
+|:E3 ECE|FAA FAA|Bcd e2d|cAA BAF|
+~E3 ECE|FAA FAA|Bcd e2d|cAA A2F:|
+
+X: 3
+T: JIG: Humours of Killarney
+T: Sheehan's / Cheer Up Old Hag
+C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien; Pádraig O'Keeffe
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/71901
+R: jig
+M: 6/8
+L: 1/8
+Q:
+K: Gmaj
+|:A|BGG G2 B|ded d2 c|BAB GBd|e2 f g2 G|
+GBd gfe|fdB cBA|BGE EDE|c3 B2:|
+|:A|BGE EDE|GED D2 A|BGE EDE|c2 d edc|
+BGE EDE|GED D2 F|GBA GBA|G3 G2:|
+
+X: 4
 T: POLKA: Britches Full of Stitches (G)
 C: C: Trad.; S: Jackie Daly & Séamus Creagh (A)
 C: Set Leaders: Tanya, Anton
@@ -14,7 +64,7 @@ G>A BG|AG Bd|G>A GE|ED D2:||
 |:d>e dB|AG AB|d>e dB|AG E2|
 d>e dB|AG AB|G>A GE|1 ED D2:|2 ED DE||
 
-X: 2
+X: 5
 T: POLKA: John Walsh's
 T: Goblachan / Derrygallen Bridge 
 C: C: John Walsh; S: Polca an Rí; John Walsh
@@ -31,7 +81,7 @@ G>A BA|GE E>D|B,>D ED|1 G2 GD:|2 G2 GB/d/||
 |:g2 fg|ag g/a/g/e/|dB B/c/B/A/|G>A Bd|
 g>g fg|ag g/a/g/e/|dB BA|1 G2 Bd:|2 G2 GD||
 
-X: 3
+X: 6
 T: POLKA: John Walsh's or Daly's Mill
 T: Daly's Mill
 C: C: John Walsh; S: Polca an Rí; John Walsh
@@ -48,7 +98,7 @@ G>B de|dB B/c/B/A/|GE ED/E/|1 G2 GD:|2 GA Bd||
 |:ed B/c/B/A/|GE ED/E/|GB/A/ GB|d2 dB/d/|
 ed B/c/B/A/|GE ED/E/|GB/A/ GE|1 G2 Bd:|2 G2 GD||
 
-X: 4
+X: 7
 T: POLKA: John Walsh's or Monvara Bridge
 T: Mountvara Bridge
 C: C: John Walsh; S: Polca an Rí; John Walsh
@@ -67,7 +117,7 @@ dg g/a/g/e/|dB Bc/B/|AB cA|G2 GB:||
 |:dg ga/b/|ag g2|e/f/g ed|dB B>c|
 dg g>a|bg gd|e/f/g ed|g2 g/a/g/e/!coda!:||dB B/c/B/A/!D.S.!||
 
-X: 5
+X: 8
 T: POLKA: P&O (D)
 T: P&O
 C: C: Christy Leahy; S: Polca an Rí; ThZCh; Brendan Begley
@@ -84,7 +134,7 @@ A,D DE|F2 EG|FA Gc|1 d2 dA:|2 dA de||
 |:f2 ec|dc AG|Ec cd|e2 de|
 fd ec|dc AG|FA Gc|1 d2 de:|2 d2 dA||
 
-X: 6
+X: 9
 T: POLKA: Siege of Ennis
 T: Banks of Inverness
 C: C: Trad.; S: Séamus Begley
@@ -107,7 +157,7 @@ Bd Bd|Bd dB/d/|ed BA|AG G2:||
 |:GB d2|ed c2|dB GB|A/B/A/G/ ED|
 GB d>d|ed c>e|dB GE|1 ED D2:|2 ED GE||
 
-X: 7
+X: 10
 T: POLKA: Tom Mhic's No. 1
 C: C: Trad.; S: Polca an Rí; ThZCh; Brendan Begley
 C: Set Leaders: Oliushka, Anton, Sophie
@@ -123,7 +173,7 @@ de/d/ cd/c/|BA FD|EF GC|1 ED FA:|2 ED DA,||
 |:D>E FA|BA FD|EF GE|BA FA|
 D>E FA|BA FD|EF GC|1 ED D2:|2 ED FA||
 
-X: 8
+X: 11
 T: POLKA: Tom Mhic's No. 2
 C: C: Trad.; S: Polca an Rí; ThZCh; Brendan Begley
 C: Set Leaders: Oliushka, Anton, Sophie
@@ -139,7 +189,7 @@ A>B cd|ed c>B|AB ce|1 de/d/ cB:||2 d2 d>f||
 |:af ed|f2 e2|A>B cd|e2 ef/g/|
 af ed|f2 eA|A>B ce|1 d2 d>f:|2 de/d/ cB|| A4||
 
-X: 9
+X: 12
 T: POLKA: Toureendarby
 T: Curragh Races
 C: C: Trad.; S: Timmy O'Connor; Laoise Kelly
@@ -155,3 +205,146 @@ K: Edor
 BE FE|BE FE|D>E FA|1 FE EA:|2 FE E2||
 |:e2 dB|ef/e/ dB|AF dF|AB/c/ d2|
 ef/e/ dB|ef/e/ dB|AF dF|1 FE EB:|2 FE d>c||
+
+X: 13
+T: REEL: Blackhaired Lass
+C: C: Trad.; S: ThZCh
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76523
+R: reel
+M: 4/4
+L: 1/8
+Q:
+K: Amix
+|:d|cAA2 cdec|d2gd BGGd|cA~A2 cdec|dfec A3:|
+d|B/c/def ~g2eg|fddf gfed|B/c/def geag|fdec A2AG|
+B/c/def gfeg|fddc defg|afg/f/e fdec|dfec A3||
+
+X: 14
+T: REEL: Broken Pledge (D)
+C: C: Trad.; S: ThZCh
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76523
+R: reel
+M: 4/4
+L: 1/8
+Q:
+K: Ddor
+dcAG ADDB|cAGF ECCE|D2 (3EFG Addc|AcGc Aefe|
+dcAG FGAB|c2Bd cAGE|D2 (3EFG AddB|cAGE FDD2:|
+|:dcAG Acde|~f3d ecAB|cAGE GAcd|ec~c2 eage|
+dcAG Acde|fedf ecAG|~F3G AddB|cAGE FDD2:|
+
+X: 15
+T: REEL: Walter Sammon's Grandma
+T: Walter Sammon's Grandmother
+C: C: Trad.; S: ThZCh
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76523
+R: reel
+M: 4/4
+L: 1/8
+Q:
+K: Dmaj
+FAAB A2dB|AFDE FEE2|FAAB A2dB|AFEG FDD2|
+FAAB ABdB|AFDE FEE2|FAAB A2dB|AFEG FDD2||
+FAdA BAdA|FAdA BEE2|FAdA BAdB|AFEG FDD2|
+FAdA BAdA|FAdA BEE2|dcBA BcdB|AFEG FDD2||
+
+X: 16
+T: SLIDE: Cat's Rambles to the Child's Saucepan
+T: Mary Willie's
+C: C: Trad.; S: Bothy Band; Julia Clifford & Billy Clifford; Johnny O'Leary
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/63219
+R: slide
+M: 12/8
+L: 1/8
+Q:
+K: Dmaj
+A|:d2 ef2 e dcd ~B3|g2 A cBA e2 A cBA|
+d2 ef2 e dcd ~B3|g2 A cBA d3 d2 A:|
+|:d2 ef2 a baf a2 f|e2 A cBA efe cBA|
+d2 ef2 a baf a2 f|e2 A cBA d3 d2 A:|
+
+X: 17
+T: SLIDE: Priest
+T: Is It the Priest You Want?
+C: C: Trad.; S: Bothy Band; Denis Murphy
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/63219
+R: slide
+M: 12/8
+L: 1/8
+Q:
+K: Gmaj
+|:g|edB d2 B d2 B B2 g|edB d2 B c2 A A2 g|
+edB d2 B BAB g3|BAB g3 B2 G G2:|
+|:f|gag fgf g2 e e2 d|eaa aga b2 e e2 f|
+gag fgf g2 e e2 d|BAB g3 B2 G G2:|
+
+X: 18
+T: SLIDE: This is My Love, Do You Like Her?
+C: C: Trad.; S: Bothy Band; Julia Clifford
+C: Set Leaders: Oliushka, Anton 
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/63219
+R: jig
+M: 6/8
+L: 1/8
+Q:
+K: Ador
+A2A AGE c2B c2d|efe ede g3 g2e|
+def g2e dBA G2A|1 Bde dBG A2B c2B:|2 Bde dBG A3 ABd||
+|:eaa age dgg gfg|eaa agf g2b a2g|
+eaf g2e dBA G2A|1 Bde dBG A3 ABd:|2 bde dBG A2B c2B||
+
+X: 19
+T: SLIP JIG: Fig For a Kiss
+C: C: Trad.; S:
+C: Set Leaders: Olya, Tanya, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76538
+R: slip jig
+M: 9/8
+L: 1/8
+K: Edor
+G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF DEF|
+G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF E3||
+g2e g2e edB|f2d dcd fed|g2e g2e edB|dBG GBd e2f|
+g2e g2e edB|f2d dcd fed|gfe fed ecA|B/c/dB AGF E2F||
+
+X: 20
+T: SLIP JIG: Foxhunter's
+C: C: Trad.; S:
+C: Set Leaders: Olya, Tanya, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76538
+R: slip jig
+M: 9/8
+L: 1/8
+K: Dmaj
+|:FDF F2D G2E|FDF F2D E2D|FDF F2D G2B|AFD DEF E2D:|
+|:B3 BAG FGA|B2E E2F G2B|ABc dcB ABc|d2 D D2 F E2 D:|
+|:fdf f2d g2e|fdf f2d e2d|fdf f2d g2b|afd def e2d:|
+|:gfe dcB AGF|B2 E E2 F G2 B|ABc dcB ABc|d2 D DEF E2 D:|
+
+X: 21
+T: SLIP JIG: Snowy Path
+C: C: Trad.; S: Altan
+C: Set Leaders: Olya, Tanya, Anton
+Z: Anton Zille ed.; The Session
+N: https://thesession.org/members/26966/sets/76538
+R: slip jig
+M: 9/8
+L: 1/8
+K: Dmaj
+"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GFE|
+"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GAB||
+"A"c3 c2e d2c|"G"B2G B2c d2e|"Bm"f3 f2e d2B|"D"A2G F2G A2B|
+"A"c3 c2e d2c|"G"B2G B2c d2e|"D"d2A B2F A2F|"Em"E2D E2F GFE||
