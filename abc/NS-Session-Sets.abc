@@ -5,10 +5,10 @@ C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien / Trad. / Méabh & Clíodh
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/71901
-R: jig
+R: Jig
 M: 6/8
 L: 1/8
-Q:
+Q: 3/8=116
 K: Gmaj
 |:A|BGG G2 B|ded d2 c|BAB GBd|e2 f g2 G|
 GBd gfe|fdB cBA|BGE EDE|c3 B2:|
@@ -129,30 +129,22 @@ C: C: Trad.; S: ThZCh; Patrick Street / Trad. / Mary Bergin
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76523
-R: reel
+R: Reel
 M: 4/4
 L: 1/8
-Q:
+Q: 1/2=100
 K: Dmaj
 FAAB A2dB|AFDE FEE2|FAAB A2dB|AFEG FDD2|
 FAAB ABdB|AFDE FEE2|FAAB A2dB|AFEG FDD2||
 FAdA BAdA|FAdA BEE2|FAdA BAdB|AFEG FDD2|
 FAdA BAdA|FAdA BEE2|dcBA BcdB|AFEG FDD2||
 T: Broken Pledge (D)
-R: reel
-M: 4/4
-L: 1/8
-Q:
 K: Ddor
 dcAG ADDB|cAGF ECCE|D2 (3EFG Addc|AcGc Aefe|
 dcAG FGAB|c2Bd cAGE|D2 (3EFG AddB|cAGE FDD2:|
 |:dcAG Acde|~f3d ecAB|cAGE GAcd|ec~c2 eage|
 dcAG Acde|fedf ecAG|~F3G AddB|cAGE FDD2:|
 T: Blackhaired Lass
-R: reel
-M: 4/4
-L: 1/8
-Q:
 K: Amix
 |:B|cAA2 cdec|d2gd BGGB|cA~A2 cdec|dfec A3:|
 G|B/c/def ~g2eg|fddf gfed|B/c/def geag|fdec A2AG|
@@ -165,10 +157,10 @@ C: C: Trad.; S: Bothy Band; Denis Murphy; Julia Clifford; Johnny O'Leary
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/63219
-R: slide
+R: Slide
 M: 12/8
 L: 1/8
-Q:
+Q: 3/8=130
 K: Gmaj
 |:g|edB d2 B d2 B B2 g|edB d2 B c2 A A2 g|
 edB d2 B BAB g3|BAB g3 B2 G G2:|
@@ -194,14 +186,15 @@ C: C: Trad.; S: Altan et. al.
 C: Set Leaders: Olya, Tanya, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76538
-R: slip jig
+R: Slip Jig
 M: 9/8
 L: 1/8
+Q: 3/8=114
 K: Dmaj
-"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GFE|
-"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GAB||
-"A"c3 c2e d2c|"G"B2G B2c d2e|"Bm"f3 f2e d2B|"D"A2G F2G A2B|
-"A"c3 c2e d2c|"G"B2G B2c d2e|"D"d2A B2F A2F|"Em"E2D E2F GFE||
+F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GFE|
+F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GAB||
+c3 c2e d2c|B2G B2c d2e|f3 f2e d2B|A2G F2G A2B|
+c3 c2e d2c|B2G B2c d2e|d2A B2F A2F|E2D E2F GFE||
 T: Fig For a Kiss
 K: Edor
 G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF DEF|

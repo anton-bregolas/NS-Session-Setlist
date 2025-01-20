@@ -4,10 +4,10 @@ C: C: Trad.; S: ThZCh
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/71901
-R: jig
+R: Jig
 M: 6/8
 L: 1/8
-Q:
+Q: 3/8=116
 K: Dmaj
 |:FAA dAA|BAB dAG|FAA def|edB BAG|
 FAA dAA|BAB def|gfe f2e|1 dBA BAG:|2 dBA B2 g||
@@ -21,10 +21,10 @@ C: C: Trad.; S: ThZCh; Méabh Ní Bheaglaoich & Clíodhna Ní Bheaglaoich
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/71901
-R: jig
+R: Jig
 M: 6/8
 L: 1/8
-Q:
+Q: 3/8=116
 K: Amaj
 |:EAA cAA|BAB cAF|EAA cAA|B/c/dc BAF|
 EAA cAA|BAB cAA|Bcd e2d|cAA A2F:|
@@ -38,10 +38,10 @@ C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien; Pádraig O'Keeffe
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/71901
-R: jig
+R: Jig
 M: 6/8
 L: 1/8
-Q:
+Q: 3/8=116
 K: Gmaj
 |:A|BGG G2 B|ded d2 c|BAB GBd|e2 f g2 G|
 GBd gfe|fdB cBA|BGE EDE|c3 B2:|
@@ -212,10 +212,10 @@ C: C: Trad.; S: ThZCh
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76523
-R: reel
+R: Reel
 M: 4/4
 L: 1/8
-Q:
+Q: 1/2=100
 K: Amix
 |:d|cAA2 cdec|d2gd BGGd|cA~A2 cdec|dfec A3:|
 d|B/c/def ~g2eg|fddf gfed|B/c/def geag|fdec A2AG|
@@ -227,10 +227,10 @@ C: C: Trad.; S: ThZCh
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76523
-R: reel
+R: Reel
 M: 4/4
 L: 1/8
-Q:
+Q: 1/2=100
 K: Ddor
 dcAG ADDB|cAGF ECCE|D2 (3EFG Addc|AcGc Aefe|
 dcAG FGAB|c2Bd cAGE|D2 (3EFG AddB|cAGE FDD2:|
@@ -244,10 +244,10 @@ C: C: Trad.; S: ThZCh
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76523
-R: reel
+R: Reel
 M: 4/4
 L: 1/8
-Q:
+Q: 1/2=100
 K: Dmaj
 FAAB A2dB|AFDE FEE2|FAAB A2dB|AFEG FDD2|
 FAAB ABdB|AFDE FEE2|FAAB A2dB|AFEG FDD2||
@@ -261,10 +261,10 @@ C: C: Trad.; S: Bothy Band; Julia Clifford & Billy Clifford; Johnny O'Leary
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/63219
-R: slide
+R: Slide
 M: 12/8
 L: 1/8
-Q:
+Q: 3/8=130
 K: Dmaj
 A|:d2 ef2 e dcd ~B3|g2 A cBA e2 A cBA|
 d2 ef2 e dcd ~B3|g2 A cBA d3 d2 A:|
@@ -278,10 +278,10 @@ C: C: Trad.; S: Bothy Band; Denis Murphy
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/63219
-R: slide
+R: Slide
 M: 12/8
 L: 1/8
-Q:
+Q: 3/8=130
 K: Gmaj
 |:g|edB d2 B d2 B B2 g|edB d2 B c2 A A2 g|
 edB d2 B BAB g3|BAB g3 B2 G G2:|
@@ -294,10 +294,11 @@ C: C: Trad.; S: Bothy Band; Julia Clifford
 C: Set Leaders: Oliushka, Anton 
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/63219
-R: jig
-M: 6/8
+R: Slide
+M: 12/8
 L: 1/8
-Q:
+Q: 3/8=130
+K: Gmaj
 K: Ador
 A2A AGE c2B c2d|efe ede g3 g2e|
 def g2e dBA G2A|1 Bde dBG A2B c2B:|2 Bde dBG A3 ABd||
@@ -310,9 +311,10 @@ C: C: Trad.; S:
 C: Set Leaders: Olya, Tanya, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76538
-R: slip jig
+R: Slip Jig
 M: 9/8
 L: 1/8
+Q: 3/8=114
 K: Edor
 G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF DEF|
 G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF E3||
@@ -325,9 +327,10 @@ C: C: Trad.; S:
 C: Set Leaders: Olya, Tanya, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76538
-R: slip jig
+R: Slip Jig
 M: 9/8
 L: 1/8
+Q: 3/8=114
 K: Dmaj
 |:FDF F2D G2E|FDF F2D E2D|FDF F2D G2B|AFD DEF E2D:|
 |:B3 BAG FGA|B2E E2F G2B|ABc dcB ABc|d2 D D2 F E2 D:|
@@ -340,11 +343,12 @@ C: C: Trad.; S: Altan
 C: Set Leaders: Olya, Tanya, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76538
-R: slip jig
+R: Slip Jig
 M: 9/8
 L: 1/8
+Q: 3/8=114
 K: Dmaj
-"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GFE|
-"D"F2A B2F A2F|"G"G2B d2e dBG|"D"F2A B2F A2F|"Em"E2D E2F GAB||
-"A"c3 c2e d2c|"G"B2G B2c d2e|"Bm"f3 f2e d2B|"D"A2G F2G A2B|
-"A"c3 c2e d2c|"G"B2G B2c d2e|"D"d2A B2F A2F|"Em"E2D E2F GFE||
+F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GFE|
+F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GAB||
+c3 c2e d2c|B2G B2c d2e|f3 f2e d2B|A2G F2G A2B|
+c3 c2e d2c|B2G B2c d2e|d2A B2F A2F|E2D E2F GFE||
