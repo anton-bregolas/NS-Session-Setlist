@@ -11,7 +11,30 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.4.4 Filter Options (Tune Load Tweaks)
+
++ Project updates:
+  - Tunebook now loads the first Set or Tune item into ABC Tools on launch or section switch
+
++ JavaScript updates:
+  - initAbcTools further tweaked in scripts-abc-tools.js
+  - loadTuneBookItem(currentTuneBook, itemNumber) script moved into separate export function
+  - resetTuneBookMenus in scripts-ns-sessions.js now loads first Tunebook item
+
++ Session DB updates:
+  - Session DB updated to 2025-01-21
+  - Sources added to new tunes & sets
+  - ABC fixes & tweaks
+
+v.0.4.3: Filter Options (Session DB Update)
+
++ Session DB updates:
+  - Session DB updated to 2025-01-20
+  - Tempos (Q:) standardised
+  - ABC fixes & tweaks
+
 v.0.4.2: Filter Options (Session DB Update)
+
 + Session DB updates:
   - Session DB updated to 2025-01-18
   - Four draft sets of various tune types added for Filter Options testing

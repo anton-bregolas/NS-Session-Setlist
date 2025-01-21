@@ -1,7 +1,7 @@
 X: 1
 T: JIGS: Humours of Killarney Set
 T: Humours of Killarney / Sheehan's / Cheer Up Old Hag
-C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien / Trad. / Méabh & Clíodhna Ní Bheaglaoich
+C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien // Méabh & Clíodhna Ní Bheaglaoich
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/71901
@@ -61,7 +61,7 @@ ed B/c/B/A/|GE ED/E/|GB/A/ GE|1 G2 Bd:|2 G2 GD||
 X: 3
 T: POLKAS: P&O Set
 T: P&O (D)
-C: C: Christy Leahy / Trad. / Trad.; S: Polca an Rí; ThZCh; Brendan Begley
+C: C: Christy Leahy / Trad. / Trad.; S: ThZCh; Polca an Rí; Brendan Begley
 C: Set Leaders: Oliushka, Anton
 Z: By Anton Zille / Bregolas at The Session
 N: https://thesession.org/members/26966/sets/76527
@@ -125,7 +125,7 @@ d>e dB|AG AB|G>A GE|1 ED D2:|2 ED DE||
 X: 5
 T: REELS: Walter Sammon's Grandma Set
 T: Walter Sammon's Grandmother
-C: C: Trad.; S: ThZCh; Patrick Street / Trad. / Mary Bergin
+C: C: Trad.; S: ThZCh; Patrick Street / Martin Hayes / Mary Bergin
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/76523
@@ -153,7 +153,7 @@ B/c/def gfeg|fddc defg|afg/f/e fdec|dfec A3||
 X: 6
 T: SLIDES: Cat's Rambles Set
 T: Is It the Priest You Want?
-C: C: Trad.; S: Bothy Band; Denis Murphy; Julia Clifford; Johnny O'Leary
+C: C: Trad.; S: Bothy Band; Denis Murphy; Johnny O'Leary; Julia Clifford
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; The Session
 N: https://thesession.org/members/26966/sets/63219
@@ -182,9 +182,9 @@ eaf g2e dBA G2A|1 Bde dBG A3 ABd:|2 bde dBG A2B c2B||
 X: 7
 T: SLIP JIGS: Snowy Path Set
 T: Snowy Path
-C: C: Trad.; S: Altan et. al.
+C: C: Mark Kelly / Trad. / Trad.; S: Altan // Various
 C: Set Leaders: Olya, Tanya, Anton
-Z: Anton Zille ed.; The Session
+Z: Anton Zille ed.; Shawn Cassady / Josh Kane / Netallica at The Session
 N: https://thesession.org/members/26966/sets/76538
 R: Slip Jig
 M: 9/8
@@ -200,10 +200,10 @@ K: Edor
 G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF DEF|
 G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF E3||
 g2e g2e edB|f2d dcd fed|g2e g2e edB|dBG GBd e2f|
-g2e g2e edB|f2d dcd fed|gfe fed ecA|B/c/dB AGF E2F||
+g2e g2e edB|f2d dcd fed|gfe fed edA|B/c/dB AGF E2F||
 T: Foxhunter's
 K: Dmaj
-|:FDF F2D G2E|FDF F2D E2D|FDF F2D G2B|AFD DEF E2D:|
-|:B3 BAG FGA|B2E E2F G2B|ABc dcB ABc|d2 D D2 F E2 D:|
-|:fdf f2d g2e|fdf f2d e2d|fdf f2d g2b|afd def e2d:|
-|:gfe dcB AGF|B2 E E2 F G2 B|ABc dcB ABc|d2 D DEF E2 D:|
+|:FDF FDF G2E|FDF FED E2D|FDF FDF G2B|AFD DEF E2D:|
+|:B3 BAG FGA|B2E E2F G2B|ABc dcB ABc|d2D DEF E2D:|
+|:fdf fdf g2e|fdf fed e2d|fdf fdf g2b|afd def e2d:|
+|:gfe d=cB AGA|B2 E E2 F G2 B|ABc dcB ABc|d2 D DEF E2 D:|

@@ -1,13 +1,14 @@
-import { initAbcTools, resizeIframe, tuneSelector, tuneFrame, populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
+import { initAbcTools, resizeIframe, tuneSelector, tuneFrame, loadTuneBookItem,
+         populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
 import { parseAbcFromFile } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NS Session Setlist Custom App Scripts
 //
 // Session DB and/or Code Contributors:
-// Anton Zille https://github.com/anton-bregolas/
+// Anton Zille https://github.com/anton-bregolas/ - Code, ABC
 //
-// Version / NS Session DB date: 2025-01-17
+// Version / NS Session DB date: 2025-01-21
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -66,9 +67,6 @@ async function launchTuneBook(dataType) {
     } else if (tuneBookLastOpened !== tuneBookSetting) {
 
       refreshTuneBook();
-
-      // Optionally reset loaded ABC to blank
-      tuneFrame.src = "";
     
     } else {
 
@@ -205,14 +203,18 @@ export function refreshTuneBook() {
 
 export function resetTuneBookMenus() {
 
+  let currentTuneBook = checkTuneBookSetting() === 0? tuneSets : tuneList;
+  
   tuneSelector.options.length = 1;
   tuneSelector.options[0].selected = "selected";
-
+  
   filterOptions.options.length = 2;
   filterOptions.options[0].selected = "selected";
   filterOptions.value = "-1";
-
+  
   refreshTabsDisplayOptions();
+
+  loadTuneBookItem(currentTuneBook, 0);
 }
 
 // Clear the effects of all custom Tunebook filter options
