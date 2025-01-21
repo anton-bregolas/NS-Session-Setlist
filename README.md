@@ -11,7 +11,7 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-v.0.4.4 Filter Options (Tune Load Tweaks)
+v.0.4.4: Filter Options (Tune Load Tweaks)
 
 + Project updates:
   - Tunebook now loads the first Set or Tune item into ABC Tools on launch or section switch
