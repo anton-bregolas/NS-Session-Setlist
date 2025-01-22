@@ -116,6 +116,7 @@ iframe {
 a, 
 iframe {
   border-radius: 0.25rem;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 a:focus-visible,
@@ -160,6 +161,7 @@ iframe:focus-visible {
   text-align: center;
   outline-color: transparent;
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .nss-switch-btn,
@@ -227,6 +229,13 @@ iframe:focus-visible {
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
 .nss-link-filled:is(:hover, :focus, :focus-visible) {
   background-image: linear-gradient(to right, #ff4a86, #ffae00);
+}
+
+.nss-switch-container,
+.nss-abclink-container,
+.nss-switch-btn,
+.nss-icon-container {
+  border-radius: 50%;
 }
 
 .nss-switch-container,

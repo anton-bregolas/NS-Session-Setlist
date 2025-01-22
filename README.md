@@ -11,7 +11,30 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-v.0.5.0 Save & Restore Tunes
+v.0.5.0: Save & Restore Tunes
+
++ Project updates:
+  - Tune items are now saved and restored on Tunebook launch
+  - ABC Tools scripts refactored, initAbcTools cleaned up
+  - Local storage variables added (lastTabMidiOption_NSSSAPP, lastTuneBookItem_NSSSAPP, tuneBookLastOpened_NSSSAPP)
+
++ JavaScript updates:
+  - Tunebook: Last loaded Set or Tune and Tab & MIDI options are now saved into local storage
+  - Tunebook: Last saved item and/or options are now restored on new Tunebook launch
+  - Tunebook: Default Set or Tune now consistently loads on first Tunebook launch
+  - Launcher: Last opened Tunebook variable moved to local storage (tuneBookLastOpened_NSSSAPP)
+  - Refactored ABC Tools scripts (scripts-abc-tools.js) leaving initializing scripts in initAbcTools
+  - New functions: restoreTuneBookOptions, restoreLastTunebookItem, saveLastTuneBookItem, setSelectedTuneByName
+  - Options-updating script (loadTabsMidiOptions) now triggers Tunebook item restoring & loading
+  - Tweaked scripts updating tuneBookSetting and tuneBookLastOpened variables (scripts-ns-sessions.js)
+
++ CSS updates:
+  - Removed superfluous highlight of buttons and links for mobile taps (-webkit-tap-highlight-color)
+
++ Session DB updates:
+  - Session DB updated to 2025-01-22
+  - ABC fixes & tweaks
+  - Soundslice links added
 
 v.0.4.4: Filter Options (Tune Load Tweaks)
 

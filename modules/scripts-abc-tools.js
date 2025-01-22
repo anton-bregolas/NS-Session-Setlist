@@ -1,4 +1,4 @@
-import { checkTuneBookSetting, tuneSets, tuneList, filterOptions, resetTuneBookMenus, initCustomDropDownMenus } from "./scripts-ns-sessions.js"; // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB 
+import { checkTuneBookSetting, tuneSets, tuneList, filterOptions, resetTuneBookMenus, refreshTabsDisplayOptions, initCustomDropDownMenus } from "./scripts-ns-sessions.js"; // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // lz-string by Pieroxy (LZ-based compression algorithm)
@@ -6,8 +6,7 @@ import { checkTuneBookSetting, tuneSets, tuneList, filterOptions, resetTuneBookM
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Updated to lz-string.min version 1.5.0
-// export var LZString=function(){function o(o,r){if(!t[o]){t[o]={};for(var n=0;n<o.length;n++)t[o][o.charAt(n)]=n}return t[o][r]}var r=String.fromCharCode,n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",e="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",t={},i={compressToBase64:function(o){if(null==o)return"";var r=i._compress(o,6,function(o){return n.charAt(o)});switch(r.length%4){default:case 0:return r;case 1:return r+"===";case 2:return r+"==";case 3:return r+"="}},decompressFromBase64:function(r){return null==r?"":""==r?null:i._decompress(r.length,32,function(e){return o(n,r.charAt(e))})},compressToUTF16:function(o){return null==o?"":i._compress(o,15,function(o){return r(o+32)})+" "},decompressFromUTF16:function(o){return null==o?"":""==o?null:i._decompress(o.length,16384,function(r){return o.charCodeAt(r)-32})},compressToUint8Array:function(o){for(var r=i.compress(o),n=new Uint8Array(2*r.length),e=0,t=r.length;t>e;e++){var s=r.charCodeAt(e);n[2*e]=s>>>8,n[2*e+1]=s%256}return n},decompressFromUint8Array:function(o){if(null===o||void 0===o)return i.decompress(o);for(var n=new Array(o.length/2),e=0,t=n.length;t>e;e++)n[e]=256*o[2*e]+o[2*e+1];var s=[];return n.forEach(function(o){s.push(r(o))}),i.decompress(s.join(""))},compressToEncodedURIComponent:function(o){return null==o?"":i._compress(o,6,function(o){return e.charAt(o)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),i._decompress(r.length,32,function(n){return o(e,r.charAt(n))}))},compress:function(o){return i._compress(o,16,function(o){return r(o)})},_compress:function(o,r,n){if(null==o)return"";var e,t,i,s={},p={},u="",c="",a="",l=2,f=3,h=2,d=[],m=0,v=0;for(i=0;i<o.length;i+=1)if(u=o.charAt(i),Object.prototype.hasOwnProperty.call(s,u)||(s[u]=f++,p[u]=!0),c=a+u,Object.prototype.hasOwnProperty.call(s,c))a=c;else{if(Object.prototype.hasOwnProperty.call(p,a)){if(a.charCodeAt(0)<256){for(e=0;h>e;e++)m<<=1,v==r-1?(v=0,d.push(n(m)),m=0):v++;for(t=a.charCodeAt(0),e=0;8>e;e++)m=m<<1|1&t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;h>e;e++)m=m<<1|t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=a.charCodeAt(0),e=0;16>e;e++)m=m<<1|1&t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}l--,0==l&&(l=Math.pow(2,h),h++),delete p[a]}else for(t=s[a],e=0;h>e;e++)m=m<<1|1&t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;l--,0==l&&(l=Math.pow(2,h),h++),s[c]=f++,a=String(u)}if(""!==a){if(Object.prototype.hasOwnProperty.call(p,a)){if(a.charCodeAt(0)<256){for(e=0;h>e;e++)m<<=1,v==r-1?(v=0,d.push(n(m)),m=0):v++;for(t=a.charCodeAt(0),e=0;8>e;e++)m=m<<1|1&t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;h>e;e++)m=m<<1|t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=a.charCodeAt(0),e=0;16>e;e++)m=m<<1|1&t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}l--,0==l&&(l=Math.pow(2,h),h++),delete p[a]}else for(t=s[a],e=0;h>e;e++)m=m<<1|1&t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;l--,0==l&&(l=Math.pow(2,h),h++)}for(t=2,e=0;h>e;e++)m=m<<1|1&t,v==r-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;for(;;){if(m<<=1,v==r-1){d.push(n(m));break}v++}return d.join("")},decompress:function(o){return null==o?"":""==o?null:i._decompress(o.length,32768,function(r){return o.charCodeAt(r)})},_decompress:function(o,n,e){var t,i,s,p,u,c,a,l,f=[],h=4,d=4,m=3,v="",w=[],A={val:e(0),position:n,index:1};for(i=0;3>i;i+=1)f[i]=i;for(p=0,c=Math.pow(2,2),a=1;a!=c;)u=A.val&A.position,A.position>>=1,0==A.position&&(A.position=n,A.val=e(A.index++)),p|=(u>0?1:0)*a,a<<=1;switch(t=p){case 0:for(p=0,c=Math.pow(2,8),a=1;a!=c;)u=A.val&A.position,A.position>>=1,0==A.position&&(A.position=n,A.val=e(A.index++)),p|=(u>0?1:0)*a,a<<=1;l=r(p);break;case 1:for(p=0,c=Math.pow(2,16),a=1;a!=c;)u=A.val&A.position,A.position>>=1,0==A.position&&(A.position=n,A.val=e(A.index++)),p|=(u>0?1:0)*a,a<<=1;l=r(p);break;case 2:return""}for(f[3]=l,s=l,w.push(l);;){if(A.index>o)return"";for(p=0,c=Math.pow(2,m),a=1;a!=c;)u=A.val&A.position,A.position>>=1,0==A.position&&(A.position=n,A.val=e(A.index++)),p|=(u>0?1:0)*a,a<<=1;switch(l=p){case 0:for(p=0,c=Math.pow(2,8),a=1;a!=c;)u=A.val&A.position,A.position>>=1,0==A.position&&(A.position=n,A.val=e(A.index++)),p|=(u>0?1:0)*a,a<<=1;f[d++]=r(p),l=d-1,h--;break;case 1:for(p=0,c=Math.pow(2,16),a=1;a!=c;)u=A.val&A.position,A.position>>=1,0==A.position&&(A.position=n,A.val=e(A.index++)),p|=(u>0?1:0)*a,a<<=1;f[d++]=r(p),l=d-1,h--;break;case 2:return w.join("")}if(0==h&&(h=Math.pow(2,m),m++),f[l])v=f[l];else{if(l!==d)return null;v=s+s.charAt(0)}w.push(v),f[d++]=s+v.charAt(0),h--,s=v,0==h&&(h=Math.pow(2,m),m++)}}};return i}();"function"==typeof define&&define.amd?define(function(){return LZString}):"undefined"!=typeof module&&null!=module&&(module.exports=LZString);
-export var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",e={};function t(r,o){if(!e[r]){e[r]={};for(var n=0;n<r.length;n++)e[r][r.charAt(n)]=n}return e[r][o]}var i={compressToBase64:function(r){if(null==r)return"";var n=i._compress(r,6,function(r){return o.charAt(r)});switch(n.length%4){default:case 0:return n;case 1:return n+"===";case 2:return n+"==";case 3:return n+"="}},decompressFromBase64:function(r){return null==r?"":""==r?null:i._decompress(r.length,32,function(n){return t(o,r.charAt(n))})},compressToUTF16:function(o){return null==o?"":i._compress(o,15,function(o){return r(o+32)})+" "},decompressFromUTF16:function(r){return null==r?"":""==r?null:i._decompress(r.length,16384,function(o){return r.charCodeAt(o)-32})},compressToUint8Array:function(r){for(var o=i.compress(r),n=new Uint8Array(2*o.length),e=0,t=o.length;e<t;e++){var s=o.charCodeAt(e);n[2*e]=s>>>8,n[2*e+1]=s%256}return n},decompressFromUint8Array:function(o){if(null==o)return i.decompress(o);for(var n=new Array(o.length/2),e=0,t=n.length;e<t;e++)n[e]=256*o[2*e]+o[2*e+1];var s=[];return n.forEach(function(o){s.push(r(o))}),i.decompress(s.join(""))},compressToEncodedURIComponent:function(r){return null==r?"":i._compress(r,6,function(r){return n.charAt(r)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),i._decompress(r.length,32,function(o){return t(n,r.charAt(o))}))},compress:function(o){return i._compress(o,16,function(o){return r(o)})},_compress:function(r,o,n){if(null==r)return"";var e,t,i,s={},u={},a="",p="",c="",l=2,f=3,h=2,d=[],m=0,v=0;for(i=0;i<r.length;i+=1)if(a=r.charAt(i),Object.prototype.hasOwnProperty.call(s,a)||(s[a]=f++,u[a]=!0),p=c+a,Object.prototype.hasOwnProperty.call(s,p))c=p;else{if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++),s[p]=f++,c=String(a)}if(""!==c){if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++)}for(t=2,e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;for(;;){if(m<<=1,v==o-1){d.push(n(m));break}v++}return d.join("")},decompress:function(r){return null==r?"":""==r?null:i._decompress(r.length,32768,function(o){return r.charCodeAt(o)})},_decompress:function(o,n,e){var t,i,s,u,a,p,c,l=[],f=4,h=4,d=3,m="",v=[],g={val:e(0),position:n,index:1};for(t=0;t<3;t+=1)l[t]=t;for(s=0,a=Math.pow(2,2),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 2:return""}for(l[3]=c,i=c,v.push(c);;){if(g.index>o)return"";for(s=0,a=Math.pow(2,d),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(c=s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 2:return v.join("")}if(0==f&&(f=Math.pow(2,d),d++),l[c])m=l[c];else{if(c!==h)return null;m=i+i.charAt(0)}v.push(m),l[h++]=i+m.charAt(0),i=m,0==--f&&(f=Math.pow(2,d),d++)}}};return i}();"function"==typeof define&&define.amd?define(function(){return LZString}):"undefined"!=typeof module&&null!=module?module.exports=LZString:"undefined"!=typeof angular&&null!=angular&&angular.module("LZString",[]).factory("LZString",function(){return LZString});
+export const LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",e={};function t(r,o){if(!e[r]){e[r]={};for(var n=0;n<r.length;n++)e[r][r.charAt(n)]=n}return e[r][o]}var i={compressToBase64:function(r){if(null==r)return"";var n=i._compress(r,6,function(r){return o.charAt(r)});switch(n.length%4){default:case 0:return n;case 1:return n+"===";case 2:return n+"==";case 3:return n+"="}},decompressFromBase64:function(r){return null==r?"":""==r?null:i._decompress(r.length,32,function(n){return t(o,r.charAt(n))})},compressToUTF16:function(o){return null==o?"":i._compress(o,15,function(o){return r(o+32)})+" "},decompressFromUTF16:function(r){return null==r?"":""==r?null:i._decompress(r.length,16384,function(o){return r.charCodeAt(o)-32})},compressToUint8Array:function(r){for(var o=i.compress(r),n=new Uint8Array(2*o.length),e=0,t=o.length;e<t;e++){var s=o.charCodeAt(e);n[2*e]=s>>>8,n[2*e+1]=s%256}return n},decompressFromUint8Array:function(o){if(null==o)return i.decompress(o);for(var n=new Array(o.length/2),e=0,t=n.length;e<t;e++)n[e]=256*o[2*e]+o[2*e+1];var s=[];return n.forEach(function(o){s.push(r(o))}),i.decompress(s.join(""))},compressToEncodedURIComponent:function(r){return null==r?"":i._compress(r,6,function(r){return n.charAt(r)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),i._decompress(r.length,32,function(o){return t(n,r.charAt(o))}))},compress:function(o){return i._compress(o,16,function(o){return r(o)})},_compress:function(r,o,n){if(null==r)return"";var e,t,i,s={},u={},a="",p="",c="",l=2,f=3,h=2,d=[],m=0,v=0;for(i=0;i<r.length;i+=1)if(a=r.charAt(i),Object.prototype.hasOwnProperty.call(s,a)||(s[a]=f++,u[a]=!0),p=c+a,Object.prototype.hasOwnProperty.call(s,p))c=p;else{if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++),s[p]=f++,c=String(a)}if(""!==c){if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++)}for(t=2,e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;for(;;){if(m<<=1,v==o-1){d.push(n(m));break}v++}return d.join("")},decompress:function(r){return null==r?"":""==r?null:i._decompress(r.length,32768,function(o){return r.charCodeAt(o)})},_decompress:function(o,n,e){var t,i,s,u,a,p,c,l=[],f=4,h=4,d=3,m="",v=[],g={val:e(0),position:n,index:1};for(t=0;t<3;t+=1)l[t]=t;for(s=0,a=Math.pow(2,2),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 2:return""}for(l[3]=c,i=c,v.push(c);;){if(g.index>o)return"";for(s=0,a=Math.pow(2,d),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(c=s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 2:return v.join("")}if(0==f&&(f=Math.pow(2,d),d++),l[c])m=l[c];else{if(c!==h)return null;m=i+i.charAt(0)}v.push(m),l[h++]=i+m.charAt(0),i=m,0==--f&&(f=Math.pow(2,d),d++)}}};return i}();"function"==typeof define&&define.amd?define(function(){return LZString}):"undefined"!=typeof module&&null!=module?module.exports=LZString:"undefined"!=typeof angular&&null!=angular&&angular.module("LZString",[]).factory("LZString",function(){return LZString});
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Michael Eskin's Export Tunebook Website Scripts (Modified)
@@ -21,23 +20,25 @@ export var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRST
 
 let tunes = [];
 
-// Set this to false to disable state persistence
-var gAllowStatePersistence = false;
+// Set this to false to disable saving & restoring last Tunebook item
+let gAllowStatePersistence = true;
 
 // Set this to false to disable changing instruments when switching tablature
-var gAllowInstrumentChanges = true;
+let gAllowInstrumentChanges = true;
 
-var tabStyle = "noten";
+let isFirstTuneBookLoad = true;
 
-var isBanjo = false;
-var isFlute = false;
-var isDulcimer = false;
+let tabStyle = "noten";
 
-var isUPipes = false;
-var isMelodeon = false;
-var isSolfege = false;
+let isBanjo = false;
+let isFlute = false;
+let isDulcimer = false;
 
-var lastURL = "";
+let isUPipes = false;
+let isMelodeon = false;
+let isSolfege = false;
+
+let lastURL = "";
 
 /////////////////////////////////////////////////////////////
 // Michael Eskin's Export Tunebook Website: OG Page Elements
@@ -45,11 +46,11 @@ var lastURL = "";
 
 export const tuneFrame = document.querySelector('#tuneFrame');
 export const tuneSelector = document.querySelector('#tuneSelector');
-// export const displayOptions = document.getElementById('displayOptions');
+export const displayOptions = document.getElementById('displayOptions');
 
-/////////////////////////////////////////////////////////////////
-// Michael Eskin's Export Tunebook Website: OG Scripts (Tweaked)
-////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// Michael Eskin's Export Tunebook Website: OG Scripts (Refactored)
+///////////////////////////////////////////////////////////////////
 
 // Initialize ABC Transcription Tools, add event listeners to Tunebook elements
 
@@ -57,23 +58,24 @@ export function initAbcTools() {
 
     // Select Session DB JSON to open in ABC Tools
 
-    tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
+    tunes = checkTuneBookSetting() === 1? tuneSets : tuneList;
 
-    // Populate the selector with options from JSON
+    // Initialize the Full Screen Button
 
     document.getElementById('fullscreenbutton').addEventListener('click', function() {
-        if (lastURL != ""){
-          window.open(lastURL, '_blank');
+
+        if (lastURL != "") {
+
+            window.open(lastURL, '_blank');
         }
     });
+    
+    // Populate the selector with options from JSON
 
-    if (tunes.length > 1){
-
-        // Reset dropdown menu settings and open first tune in the collection
-        resetTuneBookMenus();
+    if (tunes.length > 1) {
 
         // Populate Tunebook menu with Sets or Tunes
-        populateTuneSelector();
+        populateTuneSelector(tunes);
 
         // Initialize custom N.S.S.S. elements
         populateFilterOptions(sortFilterOptions());
@@ -83,46 +85,83 @@ export function initAbcTools() {
         tuneSelector.addEventListener('change', () => {
 
             // Load a new Set or Tune into the Tuneframe
+
             loadTuneBookItem(tunes);
-
-            // Save last tune
-            if (gAllowStatePersistence){
-
-                if (window.localStorage){
-
-                    localStorage.lastTuneName_GKUCFRH = tuneSelector.options[tuneSelector.selectedIndex].text;
-
-                    var theLastTuneTab = document.getElementById('displayOptions').value;
-                    localStorage.lastTab_GKUCFRH = theLastTuneTab;
-
-                }
-
-            }
-
         });
+
+    }
+
+    // Initialize the Tabs & MIDI dropdown menu
+    displayOptions.addEventListener('change', loadTabsMidiOptions);
+
+    // Resize the iframe on window resize
+    window.addEventListener('resize', resizeIframe);
+
+    // Initial call to ensure it fits when the page loads
+    resizeIframe();
+    
+    // Restore last saved Tunebook options & trigger last saved item load
+
+    if (gAllowStatePersistence
+        && localStorage?.lastTabMidiOption_NSSSAPP 
+        || localStorage?.lastTuneBookItem_NSSSAPP) {
+
+        restoreTuneBookOptions();
+
+    // Load the first Set or Tune into the Tuneframe
 
     } else {
 
-        tuneSelector.style.display="none";
+        refreshTabsDisplayOptions();
 
-        setTimeout(function(){
-
-            // Load the first Set or Tune into the Tuneframe
+        setTimeout(function() {
 
             loadTuneBookItem(tunes, 0);
 
-        },250);
+        }, 150);
+    }
+}
+
+// Load a Set or a Tune into the Tuneframe
+
+export function loadTuneBookItem(currentTuneBook, itemNumber) {
+
+    let theURL = itemNumber >= 0? currentTuneBook[itemNumber].URL : tuneSelector.value;
+
+    if (theURL == "") return;
+
+    theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
+
+    if (gAllowInstrumentChanges) {
+      theURL = injectInstrument(theURL);
     }
 
-    const displayOptions = document.getElementById('displayOptions');
+    tuneFrame.src = theURL;
+    lastURL = theURL;
 
-    displayOptions.addEventListener('change', () => {
+    // Save last Tunebook item loaded
+    if (gAllowStatePersistence) {
 
-        // var origTabStyle = tabStyle;
+        setTimeout(() => {
 
-        if (displayOptions.value == "-1"){
-            return;
-        }
+            saveLastTuneBookItem();
+            
+        }, 250);
+    }
+}
+
+// Load Tabs and MIDI selected in displayOptions, update URL & ABC
+
+function loadTabsMidiOptions() {
+
+    // Set tabStyle setting depending on displayOptions value
+
+    if (displayOptions.value === "-1" && !isFirstTuneBookLoad) {
+
+        return;
+    }
+
+    if (displayOptions.value !== "-1") {
 
         isBanjo = false;
         isFlute = false;
@@ -131,17 +170,17 @@ export function initAbcTools() {
         isMelodeon = false;
         isSolfege = false;
 
-        switch (displayOptions.value){
+        switch (displayOptions.value) {
             case "0": // Standard notation + piano voice
-                  tabStyle = "noten";
-                  break;
+                    tabStyle = "noten";
+                    break;
             case "1": // Note names + concertina voice
-                  tabStyle = "notenames";
-                  break;
+                    tabStyle = "notenames";
+                    break;
             case "12": // Note names + solfa voice
-                  isSolfege = true;
-                  tabStyle = "notenames";
-                  break;
+                    isSolfege = true;
+                    tabStyle = "notenames";
+                    break;
             case "2": // Whistle voice + tabs
                 tabStyle = "whistle";
                 break;
@@ -166,121 +205,144 @@ export function initAbcTools() {
                 tabStyle = "mandolin";
                 break;
             case "9": // Hammered dulcimer voice only
-                  isDulcimer = true;
+                    isDulcimer = true;
 
             case "10": // Uilleann pipes voice only
-                  isUPipes = true;
+                    isUPipes = true;
 
             case "11": // Melodeon voice only
-                  isMelodeon = true;
+                    isMelodeon = true;
 
             default:
-                  tabStyle = "noten";
-                  break;
-        }
-
-        var theURL;
-        
-        if (tunes.length > 1 && tuneSelector.value !== ""){
-
-            theURL = tuneSelector.value;
-        }
-        else {
-            theURL = tunes[0].URL;
-        }
-
-        if (theURL == "")return;
-
-        theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
-
-        if (gAllowInstrumentChanges){
-            
-            theURL = injectInstrument(theURL);
-        }
-
-        tuneFrame.src = theURL;
-        lastURL = theURL;
-          // Save last tune
-          if (gAllowStatePersistence){
-
-              if (window.localStorage){
-
-                  if (tunes.length > 1){
-                      localStorage.lastTuneName_GKUCFRH = tuneSelector.options[tuneSelector.selectedIndex].text;
-                  }
-
-                  var theLastTuneTab = document.getElementById('displayOptions').value;
-                  localStorage.lastTab_GKUCFRH = theLastTuneTab;
-              }
-
-          }
-
-    });
-
-    function setSelectedTuneByName(optionText) {
-        var gotMatch = false;
-        for (let i = 0; i < tuneSelector.options.length; i++) {
-            if (tuneSelector.options[i].text === optionText) {
-                tuneSelector.selectedIndex = i;
-                gotMatch = true;
-                break;
-            }
-        }
-        if (gotMatch){
-            tuneSelector.dispatchEvent(new Event('change'));
+                    tabStyle = "noten";
+                    break;
         }
     }
 
-    // Resize the iframe on window resize
-    window.addEventListener('resize', resizeIframe);
+    // Trigger the (re)loading of Tunebook item
 
-    // Initial call to ensure it fits when the page loads
-    resizeIframe();
+    if (tunes.length > 1) {
 
-    // Restore state
-    if (gAllowStatePersistence){
+        if (isFirstTuneBookLoad === true 
+            && gAllowStatePersistence
+            && localStorage?.lastTuneBookItem_NSSSAPP
+            && checkTuneBookSetting() === +localStorage?.tuneBookLastOpened_NSSSAPP) {
 
-      if (window.localStorage){
+            isFirstTuneBookLoad = false;
+            restoreLastTunebookItem();
+            return;
+        }
 
-          setTimeout(function(){
+        if (tuneSelector.value !== "") {
 
-            var theLastTuneTab = localStorage.lastTab_GKUCFRH;
-            if (theLastTuneTab && (theLastTuneTab != "")){
-                var elem = document.getElementById('displayOptions');
-                elem.value = theLastTuneTab;
-                elem.dispatchEvent(new Event('change'));
-            }
+            loadTuneBookItem(tunes);
+            return;
+        }
 
-            if (tunes.length > 1){
-
-                var theLastTuneName = localStorage.lastTuneName_GKUCFRH;
-                if (theLastTuneName && (theLastTuneName != "")){
-                    setSelectedTuneByName(theLastTuneName);
-                }
-
-            }
-
-          },250);
-      }
+        loadTuneBookItem(tunes, 0);
     }
 }
 
-// Load a Set or a Tune into the Tuneframe
+// Store the last selected Set or Tune and Tab & MIDI option in user's local storage
 
-export function loadTuneBookItem(currentTuneBook, itemNumber) {
+function saveLastTuneBookItem() {
 
-    var theURL = itemNumber >= 0? currentTuneBook[itemNumber].URL : tuneSelector.value;
+    if (window.localStorage) {
 
-    if (theURL == "") return;
+        if (tunes.length > 1) {
 
-    theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
+            console.log(`NS Session App:\n\nSaving current Tunebook item...`);
 
-    if (gAllowInstrumentChanges){
-      theURL = injectInstrument(theURL);
+            if (tuneSelector.value !== "") {
+
+                localStorage.lastTuneBookItem_NSSSAPP = tuneSelector.options[tuneSelector.selectedIndex].text;
+
+            } else {
+                
+                localStorage.lastTuneBookItem_NSSSAPP = tuneSelector.options[1].text;
+            }
+        }
+        
+        const theLastTuneTab = document.getElementById('displayOptions').value;
+
+        if (+theLastTuneTab > -1) {
+
+            console.log(`NS Session App:\n\nSaving Tab & MIDI setting...`);
+
+            localStorage.lastTabMidiOption_NSSSAPP = theLastTuneTab;
+        }
+    }
+}
+
+// Look for saved Tunebook options in user's local storage, fire displayOptions change event
+// Trigger the loading of last saved Tab & MIDI options and Tunebook item via loadTabsMidiOptions
+
+function restoreTuneBookOptions() {
+
+    if (window.localStorage) {
+
+        let theLastTuneTab = localStorage.lastTabMidiOption_NSSSAPP;
+            
+        if (!theLastTuneTab || theLastTuneTab === "" || theLastTuneTab === "0") {
+
+            theLastTuneTab = "-1";
+            localStorage.lastTabMidiOption_NSSSAPP = "-1";
+            refreshTabsDisplayOptions();
+        }
+
+        console.log(`NS Session App:\n\nRestoring last saved Tab & MIDI setting [${theLastTuneTab}]`);
+
+        displayOptions.value = theLastTuneTab;
+
+        displayOptions.dispatchEvent(new Event('change'));
+    }
+}
+
+// Restore the last selected Set or Tune from user's local storage
+
+function restoreLastTunebookItem() {
+
+    if (window.localStorage) {
+
+        setTimeout(function() {
+
+            if (tunes.length > 1) {
+
+                const theLastTuneName = localStorage.lastTuneBookItem_NSSSAPP;
+
+                    if (theLastTuneName && (theLastTuneName != "")) {
+
+                        console.log(`NS Session App:\n\nRestoring last Tunebook item saved:\n\n[${localStorage.lastTuneBookItem_NSSSAPP}]`);
+
+                        setSelectedTuneByName(theLastTuneName);
+                    }
+                }
+
+        }, 250);
+    }
+}
+
+// Check if Tunebook contains an item with the name passed
+// Fire a change event on tuneSelector if a match is found
+
+function setSelectedTuneByName(optionText) {
+
+    let gotMatch = false;
+
+    for (let i = 0; i < tuneSelector.options.length; i++) {
+
+        if (tuneSelector.options[i].text === optionText) {
+
+            tuneSelector.selectedIndex = i;
+            gotMatch = true;
+            break;
+        }
     }
 
-    tuneFrame.src = theURL;
-    lastURL = theURL;
+    if (gotMatch) {
+
+        tuneSelector.dispatchEvent(new Event('change'));
+    }
 }
 
 // Decompress the tune LZW, replace the instrument and volumes
@@ -299,7 +361,7 @@ function extractLZWParameter(url) {
 
 // Inject custom MIDI settings into ABC by modifying a default template string
 
-function injectInstrument(theURL){
+function injectInstrument(theURL) {
 
     let originalAbcInLZW = extractLZWParameter(theURL);
 
@@ -322,12 +384,12 @@ function injectInstrument(theURL){
     
     // Update the decompressed ABC with the new MIDI settings
 
-    switch (tabStyle){
+    switch (tabStyle) {
         case "mandolin":
-            if (isBanjo){
+            if (isBanjo) {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 105");
             }
-            else{
+            else {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 141");
             }
             break;
@@ -339,24 +401,24 @@ function injectInstrument(theURL){
             abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 24\n%%MIDI transpose -12");
             break;
         case "whistle":
-            if (isFlute){
+            if (isFlute) {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 73");
             }
-            else{
+            else {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 78");
             }
             abcInLZW = abcInLZW.replace("%%MIDI bassvol 64","%%MIDI bassvol 64");
             abcInLZW = abcInLZW.replace("%%MIDI chordvol 64","%%MIDI chordvol 64");
             break;
         case "notenames":
-            if (isSolfege){
+            if (isSolfege) {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 136");
                 break;
             } 
             abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 133");
             break;
         case "noten":
-            if (isDulcimer){
+            if (isDulcimer) {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 15");
             }
             else if (isUPipes) {
@@ -365,28 +427,26 @@ function injectInstrument(theURL){
             else if (isMelodeon) {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 135");     
             }
-            else{
+            else {
                 return theURL;
             }
             break;
     }
 
-    var newLZWparam = "lzw="+LZString.compressToEncodedURIComponent(abcInLZW);
+    const newLZWparam = "lzw="+LZString.compressToEncodedURIComponent(abcInLZW);
 
     originalAbcInLZW = "lzw="+originalAbcInLZW;
 
-    theURL = theURL.replace(originalAbcInLZW,newLZWparam);
+    theURL = theURL.replace(originalAbcInLZW, newLZWparam);
 
     return theURL;
 }
 
 // Populate tune dropdown menu with options
 
-export function populateTuneSelector() {
+export function populateTuneSelector(tuneBook) {
 
-    tunes = checkTuneBookSetting() === 0? tuneSets : tuneList;
-
-    tunes.forEach(tune => {
+    tuneBook.forEach(tune => {
         const option = document.createElement('option');
         option.value = tune.URL;
         option.textContent = tune.Name;
@@ -489,7 +549,7 @@ function getElementsTotalHeight() {
             totalHeight += elementHeight + marginTop + marginBottom + 1;
         }
     });
-    return totalHeight+5;
+    return totalHeight + 5;
 }
 
 // Resize the embedded ABC Tools iframe
@@ -497,6 +557,6 @@ function getElementsTotalHeight() {
 export function resizeIframe() {
 
     tuneFrame.style.width = (window.innerWidth-3) + 'px';
-    var otherElementsHeight = getElementsTotalHeight();
+    const otherElementsHeight = getElementsTotalHeight();
     tuneFrame.style.height = (window.innerHeight-otherElementsHeight) + 'px';
 }

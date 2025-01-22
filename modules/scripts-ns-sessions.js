@@ -13,8 +13,7 @@ import { parseAbcFromFile } from './scripts-abc-encoder.js';
 
 // Define Global Variables
 
-let tuneBookSetting = 0;
-let tuneBookLastOpened = "";
+let tuneBookSetting = 1;
 let tuneBookInitialized = false;
 
 // Define Session DB items
@@ -31,7 +30,6 @@ const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
 const allLaunchEls = document.querySelectorAll('.nss-launch-el');
 const allTuneBookEls = document.querySelectorAll('.nss-tunebook-el');
 const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
-// const tuneSelector = document.querySelector('#tuneSelector');
 const tuneSelectorTitle = document.querySelector('#tuneSelectorTitle');
 export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#title');
@@ -44,7 +42,7 @@ const tuneBookTitle = document.querySelector('#title');
 
 async function launchTuneBook(dataType) {
 
-  tuneBookSetting = dataType === "setlist"? 0 : 1;
+  tuneBookSetting = dataType === "setlist"? 1 : 2;
 
   if (await tuneDataFetch() > 0) {
     
@@ -61,10 +59,19 @@ async function launchTuneBook(dataType) {
     if (tuneBookInitialized === false) {
 
       initAbcTools();
+      
       console.log(`NS Session App:\n\nABC Tools initialized`);
+
       tuneBookInitialized = true;
 
-    } else if (tuneBookLastOpened !== tuneBookSetting) {
+      if (window.localStorage) {
+
+        localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
+      }
+
+      return;
+
+    } else if (+localStorage?.tuneBookLastOpened_NSSSAPP !== tuneBookSetting) {
 
       refreshTuneBook();
     
@@ -103,7 +110,7 @@ function switchTuneBookType(dataType) {
 
   if (dataType === "setlist" || dataType === "tunelist") {
 
-    tuneBookSetting = dataType === "setlist"? 0 : 1;
+    tuneBookSetting = dataType === "setlist"? 1 : 2;
 
     swapSwitchBtns(dataType);
 
@@ -114,7 +121,10 @@ function switchTuneBookType(dataType) {
 
   // Save last opened Tunebook section
 
-  tuneBookLastOpened = tuneBookSetting;
+  if (window.localStorage) {
+
+    localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
+  }
 
   // Switch to Launch Screen by default
 
@@ -190,10 +200,12 @@ export function checkTuneBookSetting() {
 
 export function refreshTuneBook() {
 
+  const currentTuneBook = checkTuneBookSetting() === 1? tuneSets : tuneList;
+
   resetTuneBookMenus();
   resetTuneBookFilters();
 
-  populateTuneSelector();
+  populateTuneSelector(currentTuneBook);
   populateFilterOptions(sortFilterOptions());
 
   console.log(`NS Session App:\n\nTunebook has been refreshed`);
@@ -203,7 +215,12 @@ export function refreshTuneBook() {
 
 export function resetTuneBookMenus() {
 
-  let currentTuneBook = checkTuneBookSetting() === 0? tuneSets : tuneList;
+  const currentTuneBook = checkTuneBookSetting() === 1? tuneSets : tuneList;
+
+  if (window.localStorage) {
+
+    localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
+  }
   
   tuneSelector.options.length = 1;
   tuneSelector.options[0].selected = "selected";
@@ -212,8 +229,6 @@ export function resetTuneBookMenus() {
   filterOptions.options[0].selected = "selected";
   filterOptions.value = "-1";
   
-  refreshTabsDisplayOptions();
-
   loadTuneBookItem(currentTuneBook, 0);
 }
 
@@ -261,7 +276,7 @@ function resizeTuneBookHeader(dataType) {
 
 // Refresh tab & MIDI selector options, set dropdown menu to default option
 
-function refreshTabsDisplayOptions() {
+export function refreshTabsDisplayOptions() {
 
     displayOptions.options[0].selected = "selected";
     displayOptions.value = "-1";
