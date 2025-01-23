@@ -11,6 +11,8 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.5.1: Save & Restore Tunes (Save Last Set & Last Tune)
+
 v.0.5.0: Save & Restore Tunes
 
 + Project updates:
