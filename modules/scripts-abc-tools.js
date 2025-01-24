@@ -1,4 +1,4 @@
-import { checkTuneBookSetting, tuneSets, tuneList, filterOptions, resetTuneBookMenus, refreshTabsDisplayOptions, initCustomDropDownMenus } from "./scripts-ns-sessions.js"; // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB 
+import { checkTuneBookSetting, tuneSets, tuneList, filterOptions, refreshTabsDisplayOptions, initCustomDropDownMenus } from "./scripts-ns-sessions.js"; // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // lz-string by Pieroxy (LZ-based compression algorithm)
@@ -78,7 +78,7 @@ export function initAbcTools() {
         populateTuneSelector(tunes);
 
         // Initialize custom N.S.S.S. elements
-        populateFilterOptions(sortFilterOptions());
+        populateFilterOptions(sortFilterOptions(tunes));
         initCustomDropDownMenus();
 
         // Update iframe src when an option is selected
@@ -104,7 +104,8 @@ export function initAbcTools() {
 
     if (gAllowStatePersistence
         && localStorage?.lastTabMidiOption_NSSSAPP 
-        || localStorage?.lastTuneBookItem_NSSSAPP) {
+        || (localStorage?.lastTuneBookSet_NSSSAPP
+        || localStorage?.lastTuneBookTune_NSSSAPP)) {
 
         restoreTuneBookOptions();
 
@@ -225,8 +226,8 @@ function loadTabsMidiOptions() {
 
         if (isFirstTuneBookLoad === true 
             && gAllowStatePersistence
-            && localStorage?.lastTuneBookItem_NSSSAPP
-            && checkTuneBookSetting() === +localStorage?.tuneBookLastOpened_NSSSAPP) {
+            && ((checkTuneBookSetting() === 1 && localStorage?.lastTuneBookSet_NSSSAPP)
+            || (checkTuneBookSetting() === 2 && localStorage?.lastTuneBookTune_NSSSAPP))) {
 
             isFirstTuneBookLoad = false;
             restoreLastTunebookItem();
@@ -255,11 +256,19 @@ function saveLastTuneBookItem() {
 
             if (tuneSelector.value !== "") {
 
-                localStorage.lastTuneBookItem_NSSSAPP = tuneSelector.options[tuneSelector.selectedIndex].text;
+                const currentTuneName = tuneSelector.options[tuneSelector.selectedIndex].text;
+
+                checkTuneBookSetting() === 1?
+                localStorage.lastTuneBookSet_NSSSAPP = currentTuneName :
+                localStorage.lastTuneBookTune_NSSSAPP = currentTuneName;
 
             } else {
+
+                const defaultTuneName = tuneSelector.options[1].text
                 
-                localStorage.lastTuneBookItem_NSSSAPP = tuneSelector.options[1].text;
+                checkTuneBookSetting() === 1?
+                localStorage.lastTuneBookSet_NSSSAPP = defaultTuneName :
+                localStorage.lastTuneBookTune_NSSSAPP = defaultTuneName;
             }
         }
         
@@ -290,7 +299,10 @@ function restoreTuneBookOptions() {
             refreshTabsDisplayOptions();
         }
 
-        console.log(`NS Session App:\n\nRestoring last saved Tab & MIDI setting [${theLastTuneTab}]`);
+        if (theLastTuneTab !== "-1") {
+
+            console.log(`NS Session App:\n\nRestoring last saved Tab & MIDI setting [${theLastTuneTab}]`);
+        }
 
         displayOptions.value = theLastTuneTab;
 
@@ -300,7 +312,7 @@ function restoreTuneBookOptions() {
 
 // Restore the last selected Set or Tune from user's local storage
 
-function restoreLastTunebookItem() {
+export function restoreLastTunebookItem() {
 
     if (window.localStorage) {
 
@@ -308,11 +320,13 @@ function restoreLastTunebookItem() {
 
             if (tunes.length > 1) {
 
-                const theLastTuneName = localStorage.lastTuneBookItem_NSSSAPP;
+                const theLastTuneName = checkTuneBookSetting() === 1? 
+                                        localStorage?.lastTuneBookSet_NSSSAPP :
+                                        localStorage?.lastTuneBookTune_NSSSAPP;
 
                     if (theLastTuneName && (theLastTuneName != "")) {
 
-                        console.log(`NS Session App:\n\nRestoring last Tunebook item saved:\n\n[${localStorage.lastTuneBookItem_NSSSAPP}]`);
+                        console.log(`NS Session App:\n\nRestoring last Tunebook item saved:\n\n[${theLastTuneName}]`);
 
                         setSelectedTuneByName(theLastTuneName);
                     }
@@ -493,12 +507,12 @@ export function populateFilterOptions(filters) {
 
 // Gather and sort custom metadata found in tunes array
 
-export function sortFilterOptions() {
+export function sortFilterOptions(currentTuneBook) {
 
     const allTuneTypes = {"id": "tuneTypes", "list": []};
     const allTuneLeaders = {"id": "setLeaders", "list": []};
 
-    tunes.forEach(tune => {
+    currentTuneBook.forEach(tune => {
 
         const tuneType = tune.Type;
         const tuneLeaders = tune.Leaders;
@@ -559,4 +573,11 @@ export function resizeIframe() {
     tuneFrame.style.width = (window.innerWidth-3) + 'px';
     const otherElementsHeight = getElementsTotalHeight();
     tuneFrame.style.height = (window.innerHeight-otherElementsHeight) + 'px';
+}
+
+// Return up-to-date gAllowStatePersistence state (for use in external modules)
+
+export function checkPersistenceState() {
+
+    return gAllowStatePersistence;
 }

@@ -280,9 +280,12 @@ function encodeTunesForAbcTools(abcContent) {
 
                 if (tuneLine.startsWith('R:') && !encodedAbcArr[i - 1].Type) {
 
-                    const tuneType = tuneLine.split('R:')[1].trim();
+                    const tuneTypeArr = tuneLine.split('R:')[1].trim().split(/[\s,-]/);
+                    let tuneType = '';
 
-                    encodedAbcArr[i - 1].Type = tuneType[0].toUpperCase() + tuneType.slice(1);
+                    tuneType = tuneTypeArr.filter(word => word !== '').map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+
+                    encodedAbcArr[i - 1].Type = tuneType;
                 }
 
                 if (tuneLine.startsWith('C: Set Leaders:') && !encodedAbcArr[i - 1].Leaders) {
@@ -295,10 +298,11 @@ function encodeTunesForAbcTools(abcContent) {
 
             if (encodedAbcArr[i - 1].Name.match(/^.*:/)) {
 
-                const customTuneType = encodedAbcArr[i - 1].Name.split(':')[0];
-                const customTuneTypeProperCase = customTuneType[0] + customTuneType.slice(1).toLowerCase();
+                const customTuneTypeArr = encodedAbcArr[i - 1].Name.split(':')[0].split(/[\s,-]/);
+                const customTuneTypeProperCase = 
+                      customTuneTypeArr.map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 
-                if (encodedAbcArr[i - 1].Name !== customTuneTypeProperCase) {
+                if (encodedAbcArr[i - 1].Type !== customTuneTypeProperCase) {
 
                     encodedAbcArr[i - 1].Type = customTuneTypeProperCase;
                 }

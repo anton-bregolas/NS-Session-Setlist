@@ -13,6 +13,25 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 v.0.5.1: Save & Restore Tunes (Save Last Set & Last Tune)
 
++ Project updates:
+  - Tunebook:	Sets and Tunes are now saved and restored separately on Tunebook launch and switch 
+  - Tunebook:	Filters now properly repopulate on Tunebook switch
+  - ABC Encoder: Tune Type is now converted to Proper Case, check against TYPE: tweaked
+
++ JavaScript updates:
+  - Sets and Tunes local storage variables added in place of lastTuneBookItem (lastTuneBookSet_NSSSAPP, lastTuneBookTune_NSSSAPP)
+  - Checks added to account for Sets or Tunes save and restore logic in ABC Tools scripts (scripts-abc-tools.js)
+  - initAbcTools, saveLastTuneBookItem, restoreLastTunebookItem functions updated in ABC Tools scripts
+  - checkPersistenceState function added to ABC Tools scripts
+  - refreshTuneBook updated with loading last saved Set or Tune; load callback removed from resetTuneBookMenus (scripts-ns-sessions.js)
+  - Tunebook Filter fix: sortFilterOptions now receives currentTuneBook as argument
+  - Proper Case Tune Type: encodeTunesForAbcTools tweaked to account for multi-word types (scripts-abc-encoder.js)
+
++ Session DB updates:
+  - Session DB updated to 2025-01-24
+  - Proper Case tune type naming tweak
+  - ABC fixes & tweaks (added to encoded tunes)
+
 v.0.5.0: Save & Restore Tunes
 
 + Project updates:

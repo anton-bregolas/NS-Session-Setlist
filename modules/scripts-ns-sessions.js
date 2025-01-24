@@ -1,5 +1,5 @@
-import { initAbcTools, resizeIframe, tuneSelector, tuneFrame, loadTuneBookItem,
-         populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
+import { initAbcTools, resizeIframe, tuneSelector, tuneFrame, loadTuneBookItem, restoreLastTunebookItem,
+         populateTuneSelector, populateFilterOptions, sortFilterOptions, checkPersistenceState } from './scripts-abc-tools.js';
 import { parseAbcFromFile } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -206,16 +206,24 @@ export function refreshTuneBook() {
   resetTuneBookFilters();
 
   populateTuneSelector(currentTuneBook);
-  populateFilterOptions(sortFilterOptions());
+  populateFilterOptions(sortFilterOptions(currentTuneBook));
 
   console.log(`NS Session App:\n\nTunebook has been refreshed`);
+
+  if (checkPersistenceState() === true
+      && ((currentTuneBook === tuneSets && localStorage?.lastTuneBookSet_NSSSAPP)
+      || (currentTuneBook === tuneList && localStorage?.lastTuneBookTune_NSSSAPP))) {
+
+    restoreLastTunebookItem();
+    return;
+  }
+  
+  loadTuneBookItem(currentTuneBook, 0);
 }
 
 // Clear the contents of custom Tunebook dropdown menus, reset to default options
 
 export function resetTuneBookMenus() {
-
-  const currentTuneBook = checkTuneBookSetting() === 1? tuneSets : tuneList;
 
   if (window.localStorage) {
 
@@ -228,8 +236,6 @@ export function resetTuneBookMenus() {
   filterOptions.options.length = 2;
   filterOptions.options[0].selected = "selected";
   filterOptions.value = "-1";
-  
-  loadTuneBookItem(currentTuneBook, 0);
 }
 
 // Clear the effects of all custom Tunebook filter options
