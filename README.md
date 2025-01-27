@@ -11,9 +11,17 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.5.4: Session DB Update
+
++ Session DB updates:
+  - Session DB updated to 2025-01-27
+  - Sets & Tunes from Tania added (v.1)
+
 v.0.5.3: Session DB Update
+
++ Session DB updates:
   - Session DB updated to 2025-01-26
-  - 1st ed. of Sets & Tunes from Mars added
+  - Sets & Tunes from Mars added (v.1)
 
 v.0.5.2: Session DB Update
 
