@@ -7,8 +7,10 @@ import { parseAbcFromFile } from './scripts-abc-encoder.js';
 //
 // Session DB and/or Code Contributors:
 // Anton Zille https://github.com/anton-bregolas/ - Code, ABC
+// Mars Agliullin - ABC
+// Tania Sycheva - ABC
 //
-// Version / NS Session DB date: 2025-01-21
+// Version / NS Session DB date: 2025-01-27
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
