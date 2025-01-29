@@ -22,6 +22,30 @@ de dB GA BG|EA GE D3 A|B d2 B AG AB|1 G2 GF G2 Bc:|2 G2 GF GGBd||
 de dB GA BG|EA GE D3 A|B d2 B AG AB|1 G2 GF GABd:|2 G2 GF G2 Bc||
 
 X: 2
+T: HORNPIPES: Galtee Hunt Set
+T: An Súisin Bán / Casadh an tSúgáin
+C: C: Trad.; S: Jack Talty & Cormac Begley; Various
+C: Set Leaders: Tania, Anton
+Z: Anton Zille ed.; Tommy McCarty / gian marco at The Session
+N: https://thesession.org/members/26966/sets/92417
+R: Hornpipe
+M: 4/4
+L: 1/8
+Q: 1/2=82
+K: Gmaj
+|:(3GAB|cEED E2 GE|DE (3GAB c3A|BAGE D2 EG|
+A2 AB (3ABA GA|BAGE DB,DE|1 G2 GF G2:|2 G2 GF GABd||
+|:e2 ed efge|dB (3GAB c3A|BAGE D2 EG|
+A2 AB ADGA|BAGE DB,DE|1 G2 GF GABd:|2 G2 GF G2||
+T: Galtee Hunt
+K: Gmaj
+D2|:GABG AGED|c2 cA BGED|G2 BG AGED|EAAG AB (3cBA|
+GABG AGED|cBcd ef (3gfe|dB (3GAB AGED|EGGF G3D:||
+|:GABc d2 Bd|(3efg fd e2 d2|e2 d2 g2 d2|edBc dB (3GAB|
+c2 cB ce g2|B2 BA BcdB|(3ABA AB AGED|gfgb (3agf ge|
+dB (3GAB AGED|cBcd ef (3gfe|dB (3GAB AGED|1 EGGF G3D:|2 EGGF G2||
+
+X: 3
 T: HORNPIPES: Plains of Boyle Set
 T: Plains of Boyle
 C: C: Trad.; S: Various
@@ -44,7 +68,7 @@ FDFA dfaf|gfec dcBA|dfaf bgec|d2 d2 d2:||
 |:A2|d2fd c2dc|BABc dcBA|G2BG F2AF|EDEF GFED|
 FDFA dfaf|gfec dcBA|dfaf bgec|d2 d2 d2:||
 
-X: 3
+X: 4
 T: HORNPIPES: Sonny Murray's Set
 T: Sonny Murray's
 C: C: Trad. / Frank McCollum / Trad.; S: Various
@@ -73,7 +97,73 @@ d2Bd A2FA|BAFA D2 ED|B,DA,D DFBF|AFEF D2:||
 |:fg|afed bafd|Adfd edBd|DFAd FAde|fdgf e2fg|
 afed bafd|Adfd edBd|DFAd FAdf|eABc d2:||
 
-X: 4
+X: 5
+T: JIGS: Carraroe Set
+T: Carraroe
+C: C: Trad.; S: Various
+C: Set Leaders: Tania, Anton, Sophie
+Z: Anton Zille ed.; JACKB / R-O-I-S-I-N / shanachie at The Session
+N: https://thesession.org/members/26966/sets/92422
+R: Jig
+M: 6/8
+L: 1/8
+Q: 3/8=116
+K: Dmaj
+|:DED F2A|dfe d2A|B/c/dB Adf|afd e2f|
+DED F2A|dfe d2A|B/c/dB AFA|dAF E2D:||
+|:dfa afa|bge edB|dfa afa|bge efe|
+dfa afa|bge edB|d2B AFA|1 dAF E2D:|2 dAF E3||
+T: Kevin McHugh's
+R: Single Jig
+M: 12/8
+K: Gmaj
+|:B2d ded BAB G2B|AGE DEG AGE D3|
+Bdd ded BAB G2B|AGE DEG AGF G2A:||
+|:BAB GAB cBc ABc|B2G GFG ABc d2c|
+B2G GAB cec BdB|AGE DEG AGF G2A:||
+T: Old Favourite
+K: Gmaj
+|:B3 BAB dBA G2B|ded d2B ded B2A|
+~B3 BAB dBA G2B|1 ded cBA G3 G2A:|2 ded cBA G3 GBd||
+g3 fgf e/f/ge d2B|ded d2B ded B2d|
+~g3 fgf ege d2B|ded cBA G2G GBd|
+g2g fgf e/f/ge d2B|ded d2B ded B2d|
+~g3 fgf|ege edB|dge dge dge dBA||
+
+X: 6
+T: JIGS: Cook in the Kitchen Set
+T: Cook in the Kitchen
+C: C: Trad.; S: Various
+C: Set Leaders: Tania, Anton
+Z: [Unedited]; JACKB / Jeremy / Phantom Button at The Session
+N: https://thesession.org/members/26966/sets/92421
+R: Jig
+M: 6/8
+L: 1/8
+Q: 3/8=116
+K: Gmaj
+|:E|DGG GAG|FDE =F3|DGG GFG|A2 d cAG|
+DGG GAG|FDE =F2 d|cAG FGA|BGG G2:||
+|:A|B3 BAG|A3 AGF|G3 GFG|A2 d cAG|
+B3 BAG|A3 A2 d|cAG FGA|BGG G2:||
+|:B|d2 e f2 g|a2 g fed|cAG FGA|B/c/dB cAG|
+d2 e f2 g|a2 g fed|cAG FGA|BGG G2:||
+T: Blarney Pilgrim
+K: Dmix
+|:DED DEG|A2A ABc|BAG AGE|GEA GED|
+DED DEG|A2A ABc|BAG AGE|GED D3:||
+|:ded dBG|AGA BGE|ded dBG|AGA GAB|
+g2e dBG|AGA BGE|B2G AGE|GED D3:||
+|:A2D B2D|A2D ABc|BAG AGE|GEA GED|
+ADD BDD|ADD ABc|BAG AGE|GED D3:||
+T: Have a Drink With Me
+K: Gmaj
+|:BAG EGD|EGD EGA|BAG EGD|EAG ABc|
+BAG EGD|EGD EGA|BAG EGD|1 EGF G2A:|2 EGF G2D||
+|:GBd e2d|dgd B2A|GBd edB|cea aga|
+bag age|ged e/f/ge|dBG AGA|1 BGF G2D:|2 BGF G2A||
+
+X: 7
 T: JIGS: Humours of Glendart Set
 T: Humours of Glendart
 C: C: Trad.; S: Various
@@ -104,7 +194,7 @@ G3 GAB|AGE GAB|cBA BGE|1 DED DEF:|2 DED D3||
 |:cBA BAG|ABA AGE|cBA BGE|EDE GAB|
 cBA BAG|AAA ABc|dcA AGE|1 GED DAB:|2 GED DEF||
 
-X: 5
+X: 8
 T: JIGS: Humours of Killarney Set
 T: Humours of Killarney / Sheehan's / Cheer Up Old Hag
 C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien // Méabh & Clíodhna Ní Bheaglaoich
@@ -133,7 +223,7 @@ EAA cAA|BAB cAA|Bcd e2d|cAA A2F:||
 |:E3 ECE|FAA FAA|Bcd e2d|cAA BAF|
 ~E3 ECE|FAA FAA|Bcd e2d|cAA A2F:||
 
-X: 6
+X: 9
 T: JIGS: Kilmovee Set
 T: Kilmovee
 C: C: Trad.; S: Various
@@ -157,7 +247,33 @@ K: Dmaj
 |:ABA AFA|~f3 f2e|dce dcB|AFF F2G|
 AFA A2d|BGB B2d|cBc ABc|1 dfe dcB:|2 dfe dB=c||
 
-X: 7
+X: 10
+T: MEDLEY: Mountains of Pomeroy Set
+T: Mountains of Pomeroy (Air / March)
+C: C: Trad.; S: Séamus Begley; Noel Hill / Séamus Begley; Séamus Ennis
+C: Set Leaders: Tania, Anton, Sophie
+Z: Anton Zille ed.; Bregolas / JACKB at The Session
+N: https://thesession.org/members/26966/sets/92425
+R: Air
+M: 4/4
+L: 1/8
+Q: 1/2=40
+K: Gmaj
+B>c|d2 de d>c BA|G2 A>G E2 G>E|D3E G2 A>B|c6 B>c|
+d2 de d>c BA|G2 A>G E2 G>E|D3E G2 A>G|G6 G>A||
+B2 A>B G2 A>B|c2 d2 d2 g>e|d>c BA G2 A>B|c6 B>c|
+d2 de d>c BA|G2 A>G E2 G>E|D2 E2 G2 A>G|G8||
+T: Tá an Coileach ag Fógairt an Lae / When the Cock Crows It Is Day (Jig)
+R: Jig
+M: 6/8
+Q: 3/8=116
+K: Gmaj
+|:D|GAB BAG|(d3 d2)B|GAB BAG|A3 ABA|
+GAB BAG|Bcd e/f/ge|dBG AFD|1 G3 G2:|2 G3 GBd||
+|:gdd gdB|c3 c2d|gdd gdB|A3 ABd|
+gdd gdB|c2d e/f/ge|dBG AFD|1 G3 GBd:|2 G3 G2||
+
+X: 11
 T: POLKAS: Ballinafad Set
 T: Ballinafad
 C: C: Trad. / Niel Gow / Trad.; S: Various
@@ -188,7 +304,7 @@ FA Ad|B/c/d/B/ A/B/A/F/|GB A/B/A/G/|FD D>E:||
 |:FA A/B/d/e/|f/e/f/d/ ed|Bd/B/ A/D/F/A/|BE G/F/E/D/|
 FA A/B/d/e/|f/e/f/d/ ed|Bd/B/ A/B/A/G/|FD D>E:||
 
-X: 8
+X: 12
 T: POLKAS: John Walsh's Set
 T: John Walsh's No. 1 / Goblachan / Derrygallen Bridge
 C: C: John Walsh; S: Polca an Rí; John Walsh
@@ -220,7 +336,7 @@ G>B de|dB B/c/B/A/|GE ED/E/|1 G2 GD:|2 GA Bd||
 |:ed B/c/B/A/|GE ED/E/|GB/A/ GB|d2 dB/d/|
 ed B/c/B/A/|GE ED/E/|GB/A/ GE|1 G2 Bd:|2 G2 GD||
 
-X: 9
+X: 13
 T: POLKAS: P&O Set
 T: P&O (D)
 C: C: Christy Leahy / Trad. / Trad.; S: ThZCh; Polca an Rí; Brendan Begley
@@ -250,7 +366,7 @@ A>B cd|ed c>B|AB ce|1 de/d/ cB:||2 d2 d>f||
 |:af ed|f2 e2|A>B cd|e2 ef/g/|
 af ed|f2 eA|A>B ce|1 d2 d>f:|2 de/d/ cB|| A4||
 
-X: 10
+X: 14
 T: POLKAS: Toureendarby Set
 T: Toureendarby / Curragh Races
 C: C: Trad.; S: Timmy O'Connor; Laoise Kelly / Séamus Begley / Jackie Daly & Séamus Creagh
@@ -286,372 +402,7 @@ G>A BG|AG Bd|G>A GE|ED D2:||
 |:d>e dB|AG AB|d>e dB|AG E2|
 d>e dB|AG AB|G>A GE|1 ED D2:|2 ED DE||
 
-X: 11
-T: REELS: Maids of Mount Kisco Set
-T: Maud Millar
-C: C: Trad. / Paddy Killoran (?) / Trad.; S: Various
-C: Set Leaders: Mars, Anton
-Z: [Unedited]; slainte / Torc / leprecawn at The Session
-N: https://thesession.org/members/26966/sets/94255
-R: Reel
-M: 4/4
-L: 1/8
-Q: 1/2=100
-K: Gmaj
-gf|edBA GEDE|G2BG dGBd|e2dB A2GA|Beed efgf|
-edBA GEDE|G2BG dGBd|e2dB A2GA|Beed e2ge||
-dega bgg2|agef g3e|dega bgg2|aged eage|
-dega bgg2|agef g3a|bgaf gfed|Beed e4||
-T: Maids of Mount Kisco
-K: Ador
-|:EA~A2 BGAG|EA~A2 BGAG|EG~G2 AG~G2|EG~G2 EGDG|
-EA~A2 BGAG|EA~A2 BABd|e~g3 afge|1 dBGB ~A3G:|2 dBGB A2dB||
-|:~A3B dBAB|G2BG DGBG|~A3B dGBd|1 efge dBGB:|2 efge d2 Bd||
-|:ea~a2 bgaf|gedB GABd|ea~a2 bgaf|gede g2eg|
-~a3f ~g3e|dedB GABd|eA~A2 efge|1 dBGB A2 Bd:|2 dBGB ~A3G||
-T: Red-Haired Lass
-K: Gmaj
-DGGF G2 BG|G2 BG AGEG|DGGF GABd|egdB c2 BA|
-DGGF G2 BG|G2 BG AGEG|DGGF GABd|gedB c2 Bc||
-d2 gd edgd|d2 gd BABc|d2 gd edef|gedB c2 Bc|
-d2 gd edgd|d2 gd BABd|c3A B3A|GABd egdB||
-
-X: 12
-T: REELS: Torn Jacket Set
-T: Torn Jacket
-C: C: Connie O'Connell / Trad. / Trad.; S: Tommy Guihen; Connie O'Connell & Eibhlín de Paor / Bothy Band / Shaskeen
-C: Set Leaders: Mars, Anton
-Z: Anton Zille ed.; Mars / UPipes & harp / DanG at the The Session
-N: https://thesession.org/members/26966/sets/94278
-R: Reel
-M: 4/4
-L: 1/8
-Q: 1/2=100
-K: Dmaj
-|:~F3A d2 ed|cAAB cd e2|~F3A dfed|cAGE EDDE|
-~F3A dfed|cA~A2 B/c/d ec|dcde fded|cAGE ED D2:||
-|:FAdf ~a3f|g2 gf gfed|cA~A2 B/c/d ef|gfed cAGE|
-FAdf ~a3f|~g3a gfef|g2ba gfed|cAGE ED D2:||
-T: Morning Star
-K: Gmaj
-B2 BA BGEF|G2 Bd efgd|~B3A BGEF|GBAF G3A|
-~B3A BGEF|GABd efge|dBAc BGEF|GBAF G3A||
-Bdef g2 eg|f2 df eBBA|B/c/d ef g2 eg|fedf e2 ed|
-B/c/d ef ~g2 eg|~f2 df eBBA|Bdef g2 bg|faaf gfed||
-T: Shaskeen
-K: Gmaj
-|:DG~G2 ABcA|dfed cAAc|~B3G ~A3F|GBAG FGEF|
-DG~G2 ABcA|dfed cAAe|~f3g fdcA|1 AGFA G2 GF:|2 AGFA G2B||
-dggf g2 fg|abag fddc|~B3G ~A3F|GBAG FD D2|
-dggf g2 fg|abag fdde|fd~d2 edcA|AGFA G3B|
-dggf ~g2 fg|~a3g fddc|~B2 GB ~A2 FA|GBAG FD D2|
-BG~G2 AF~F2|dB~B2 cA~A2|fd~d2 edcA|AGFA G4||
-
-X: 13
-T: REELS: Trip to Birmingham Set
-T: Trip to Birmingham
-C: C: Josie McDermott / Dan Cleary / Phil Murphy; S: Various
-C: Set Leaders: Mars, Tania, Anton
-Z: [Unedited]; slainte / SPeak / Kenny at The Session
-N: https://thesession.org/members/26966/sets/94276
-R: Reel
-M: 4/4
-L: 1/8
-Q: 1/2=100
-K: Gmaj
-|:DGGF G2Bd|~e3d edBA|~G3B dGBG|ABAG EFGE|
-DGGF G2Bd|~e3d efga|bg~g2 ageg|dBAB G3:||
-e|dggf g2 ga|bg~g2 edBA|~G3B dGBG|ABAG EFG2|
-dggf g2 ga|bg~g2 edBA|~G3B dGBG|AGFA G3e|
-dggf g2 ga|bg~g2 edBA|~G3B dGBG|ABAG EFG2|
-dg~g2 ag~g2|bg~g2 edBA|~G3B dGBG|AGFA G3||
-T: Trip to Durrow
-K: Dmaj
-|:D2DF ADFA|dfed B3c|dBBA dBBA|FADE FE E2|
-D2DF ADFA|dfed B3c|dBBA FAdB|AFEG FD D2:||
-|:dcde fefg|afdf gfed|B/c/d ef gebe|gebe gfef|
-d2de fefg|afdf gfed|B/c/d ef gbag|fdec d2de|
-fdec d2de|fded B3c|dBBA dBBA|FADE FE E2|
-D2DF ADFA|dfed B3c|dBBA FAdB|AFEG FD D2:||
-T: Trip to Cullenstown (G)
-K: Gmaj
-|:d2 de dBGA|B2 BG AGEG|d2 de dBGA|BAAG A4|
-BABd e2 dB|dedB AGEG|B2 BG AGEG|1 DGGF GABc:|2 DGGF G3 A||
-|:Bd d2 ce e2|d2 de dBGA|Bd d2 ed d2|gedB A4|
-BABd e2 dB|dedB AGEG|B2 BG AGEG|DGGF G4:||
-
-X: 14
-T: REELS: Walter Sammon's Grandma Set
-T: Walter Sammon's Grandmother
-C: C: Trad.; S: ThZCh; Patrick Street / Martin Hayes / Mary Bergin
-C: Set Leaders: Oliushka, Anton
-Z: Anton Zille ed.; shanachie / Bregolas / Bregolas at The Session
-N: https://thesession.org/members/26966/sets/76523
-R: Reel
-M: 4/4
-L: 1/8
-Q: 1/2=100
-K: Dmaj
-FAAB A2dB|AFDE FEE2|FAAB A2dB|AFEG FDD2|
-FAAB ABdB|AFDE FEE2|FAAB A2dB|AFEG FDD2||
-FAdA BAdA|FAdA BEE2|FAdA BAdB|AFEG FDD2|
-FAdA BAdA|FAdA BEE2|dcBA BcdB|AFEG FDD2||
-T: Broken Pledge (D)
-K: Ddor
-|:dcAG ADDB|cAGE EDCE|DEFG Addc|A/B/A Gc Aefe|
-dcAG E/F/G AB|cAGE EDCE|DEFG Addc|A/B/A GE ED D2:||
-|:dcAG Acde|f2 df ecAB|cAGE G2 cd|ec~c2 eage|
-dcAG Acde|~f2 df ecAG|~F3E FGAB|cAGE ED D2:||
-T: Blackhaired Lass
-K: Amix
-d|cAAB cdec|d2 gd BGGd|cA~A2 cdec|dfec AddB|
-cA~A2 Acec|dBgd BGGd|cA~A2 B/c/d ec|dfec A3 A||
-B/c/d ef g2 eg|~f2 df gfed|B/c/d ef geag|fdec A2~A2|
-B/c/d ef g2 e/f/g|fedc defg|afge fdec|dfec A3||
-
 X: 15
-T: SLIDES: Cat's Rambles Set
-T: Is It the Priest You Want?
-C: C: Trad.; S: Bothy Band; Denis Murphy; Johnny O'Leary; Julia Clifford
-C: Set Leaders: Oliushka, Anton
-Z: Anton Zille ed.; Kuddel / Anon. / nobu at The Session
-N: https://thesession.org/members/26966/sets/63219
-R: Slide
-M: 12/8
-L: 1/8
-Q: 3/8=130
-K: Gmaj
-|:g|edB d2 B d2 B B2 g|edB d2 B c2 A A2 g|
-edB d2 B BAB ~g3|BAB ~g3 B2 G G2:||
-|:f|gbg f/g/af g2 e e2 d|eaa aga b2 e e2 f|
-gbg faf g2 e e2 d|BAB ~g3 B2 G G2:||
-T: Cat's Rambles to the Child's Saucepan / Mary Willie's
-K: Dmaj
-A|:d2 ef2 e dcd ~B3|g2 A cBA e2 A cBA|
-d2 ef2 e dcd ~B3|g2 A cBA d3 d2 A:||
-|:d2 ef2 a baf a2 f|e2 A cBA efe cBA|
-d2 ef2 a baf a2 f|e2 A cBA d3 d2 A:||
-T: This is My Love, Do You Like Her? / Biddy Crowley’s Ball / Pussycat Up in a Plum Tree
-K: Ador
-A2A AGE c2B c2d|e2e ede g3 g2e|
-def g2e dBA G2A|1 B2e dBG A2B c2B:|2 B2e dBG A3 ABd||
-|:e2a age d2g gfg|eaa agf g2b a2g|
-eaf g2e dBA G2A|1 B2e dBG A3 ABd:|2 B2e dBG A2B c2B||
-
-X: 16
-T: SLIDES: Denny Mescall's Set
-T: Bank of Turf
-C: C: Trad. / Trad. / Mike Scott; S: Various
-C: Set Leaders: Mars, Anton
-Z: Mars ed.; Mars at The Session
-N: https://thesession.org/members/26966/sets/94265
-R: Single Jig
-M: 12/8
-L: 1/8
-Q: 3/8=130
-K: Dmaj
-d2 B|:ABA DFA BAF DFA|dcd ede ~f3 def|
-~g3 gab afd Bcd|1 efe e2d cBA Bcd:|2 ABA efe d3 dcd||
-|:e2A efg f2d fga|gfe fed edB ABd|
-eAA efg fdd fga|1 gfe dcB A3 ABd:|2 gfe dcB AFA Bcd||
-T: Denny Mescall's
-R: Slide
-K: Gmaj
-|:B3 BAB dBA G3|GBd g2e d2B A2G|
-B3 BAB dBA G2B|ded cBA G3 G3:||
-|:g2g gfe d2B c2d|e2a a2b a2g e2f|
-g2g gfe d2B c2d|efg fgf g3 g3:||
-T: Kings of Kerry
-K: Amaj
-c3 cBA F2A E2A|F2A E2c B3 BAB|
-c3 cBA F2A E2f|1 ecA BcB A3 A2B:|2 ecA BcB A3 Ace||
-a3 afe f2a e2A|c3 cBA B3 Bce|
-a3 afe f2a e2f|ecA BcB A3 Ace|
-a3 afe f2a e2A|c3 cBA B3 BAB|
-c3 cBA F2A E2f|ecA BcB A3 A3||
-
-X: 17
-T: SLIP JIGS: Snowy Path Set
-T: Snowy Path
-C: C: Mark Kelly / Trad. / Trad.; S: Altan // Various
-C: Set Leaders: Olya, Tania, Anton
-Z: Anton Zille ed.; Shawn Cassady / Josh Kane / Netallica at The Session
-N: https://thesession.org/members/26966/sets/76538
-R: Slip Jig
-M: 9/8
-L: 1/8
-Q: 3/8=114
-K: Dmaj
-F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GFE|
-F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GAB||
-c3 c2e d2c|B2G B2c d2e|f3 f2e d2B|A2G F2G A2B|
-c3 c2e d2c|B2G B2c d2e|d2A B2F A2F|E2D E2F GFE||
-T: Fig For a Kiss
-K: Edor
-G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF DEF|
-G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF E3||
-g2e g2e edB|f2d dcd fed|g2e g2e edB|dBG GBd e2f|
-g2e g2e edB|f2d dcd fed|gfe fed edA|B/c/dB AGF E2F||
-T: Foxhunter's
-K: Dmaj
-|:FDF FDF G2E|FDF FED E2D|FDF FDF G2B|AFD DEF E2D:||
-|:B3 BAG FGA|B2E E2F G2B|ABc dcB ABc|d2D DEF E2D:||
-|:fdf fdf g2e|fdf fed e2d|fdf fdf g2b|afd def e2d:||
-|:gfe d=cB AGA|B2 E E2 F G2 B|ABc dcB ABc|d2 D DEF E2 D:||
-
-X: 1
-T: HORNPIPES: Galtee Hunt Set
-T: An Súisin Bán / Casadh an tSúgáin
-C: C: Trad.; S: Jack Talty & Cormac Begley; Various
-C: Set Leaders: Tania, Anton
-Z: Anton Zille ed.; Tommy McCarty / gian marco at The Session
-N: https://thesession.org/members/26966/sets/92417
-R: Hornpipe
-M: 4/4
-L: 1/8
-Q: 1/2=82
-K: Gmaj
-|:(3GAB|cEED E2 GE|DE (3GAB c3A|BAGE D2 EG|
-A2 AB (3ABA GA|BAGE DB,DE|1 G2 GF G2:|2 G2 GF GABd||
-|:e2 ed efge|dB (3GAB c3A|BAGE D2 EG|
-A2 AB ADGA|BAGE DB,DE|1 G2 GF GABd:|2 G2 GF G2||
-T: Galtee Hunt
-K: Gmaj
-D2|:GABG AGED|c2 cA BGED|G2 BG AGED|EAAG AB (3cBA|
-GABG AGED|cBcd ef (3gfe|dB (3GAB AGED|EGGF G3D:||
-|:GABc d2 Bd|(3efg fd e2 d2|e2 d2 g2 d2|edBc dB (3GAB|
-c2 cB ce g2|B2 BA BcdB|(3ABA AB AGED|gfgb (3agf ge|
-dB (3GAB AGED|cBcd ef (3gfe|dB (3GAB AGED|1 EGGF G3D:|2 EGGF G2||
-
-X: 2
-T: JIGS: Carraroe Set
-T: Carraroe
-C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton, Sophie
-Z: Anton Zille ed.; JACKB / R-O-I-S-I-N / shanachie at The Session
-N: https://thesession.org/members/26966/sets/92422
-R: Jig
-M: 6/8
-L: 1/8
-Q: 3/8=116
-K: Dmaj
-|:DED F2A|dfe d2A|B/c/dB Adf|afd e2f|
-DED F2A|dfe d2A|B/c/dB AFA|dAF E2D:||
-|:dfa afa|bge edB|dfa afa|bge efe|
-dfa afa|bge edB|d2B AFA|1 dAF E2D:|2 dAF E3||
-T: Kevin McHugh's
-R: Single Jig
-M: 12/8
-K: Gmaj
-|:B2d ded BAB G2B|AGE DEG AGE D3|
-Bdd ded BAB G2B|AGE DEG AGF G2A:||
-|:BAB GAB cBc ABc|B2G GFG ABc d2c|
-B2G GAB cec BdB|AGE DEG AGF G2A:||
-T: Old Favourite
-K: Gmaj
-|:B3 BAB dBA G2B|ded d2B ded B2A|
-~B3 BAB dBA G2B|1 ded cBA G3 G2A:|2 ded cBA G3 GBd||
-g3 fgf e/f/ge d2B|ded d2B ded B2d|
-~g3 fgf ege d2B|ded cBA G2G GBd|
-g2g fgf e/f/ge d2B|ded d2B ded B2d|
-~g3 fgf|ege edB|dge dge dge dBA||
-
-X: 3
-T: JIGS: Cook in the Kitchen Set
-T: Cook in the Kitchen
-C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton
-Z: [Unedited]; JACKB / Jeremy / Phantom Button at The Session
-N: https://thesession.org/members/26966/sets/92421
-R: Jig
-M: 6/8
-L: 1/8
-Q: 3/8=116
-K: Gmaj
-|:E|DGG GAG|FDE =F3|DGG GFG|A2 d cAG|
-DGG GAG|FDE =F2 d|cAG FGA|BGG G2:||
-|:A|B3 BAG|A3 AGF|G3 GFG|A2 d cAG|
-B3 BAG|A3 A2 d|cAG FGA|BGG G2:||
-|:B|d2 e f2 g|a2 g fed|cAG FGA|B/c/dB cAG|
-d2 e f2 g|a2 g fed|cAG FGA|BGG G2:||
-T: Blarney Pilgrim
-K: Dmix
-|:DED DEG|A2A ABc|BAG AGE|GEA GED|
-DED DEG|A2A ABc|BAG AGE|GED D3:||
-|:ded dBG|AGA BGE|ded dBG|AGA GAB|
-g2e dBG|AGA BGE|B2G AGE|GED D3:||
-|:A2D B2D|A2D ABc|BAG AGE|GEA GED|
-ADD BDD|ADD ABc|BAG AGE|GED D3:||
-T: Have a Drink With Me
-K: Gmaj
-|:BAG EGD|EGD EGA|BAG EGD|EAG ABc|
-BAG EGD|EGD EGA|BAG EGD|1 EGF G2A:|2 EGF G2D||
-|:GBd e2d|dgd B2A|GBd edB|cea aga|
-bag age|ged e/f/ge|dBG AGA|1 BGF G2D:|2 BGF G2A||
-
-X: 4
-T: MEDLEY: Mountains of Pomeroy Set
-T: Mountains of Pomeroy (Air / March)
-C: C: Trad.; S: Séamus Begley; Noel Hill / Séamus Begley; Séamus Ennis
-C: Set Leaders: Tania, Anton, Sophie
-Z: Anton Zille ed.; Bregolas / JACKB at The Session
-N: https://thesession.org/members/26966/sets/92425
-R: Air
-M: 4/4
-L: 1/8
-Q: 1/2=40
-K: Gmaj
-B>c|d2 de d>c BA|G2 A>G E2 G>E|D3E G2 A>B|c6 B>c|
-d2 de d>c BA|G2 A>G E2 G>E|D3E G2 A>G|G6 G>A||
-B2 A>B G2 A>B|c2 d2 d2 g>e|d>c BA G2 A>B|c6 B>c|
-d2 de d>c BA|G2 A>G E2 G>E|D2 E2 G2 A>G|G8||
-T: Tá an Coileach ag Fógairt an Lae / When the Cock Crows It Is Day (Jig)
-R: Jig
-M: 6/8
-Q: 3/8=116
-K: Gmaj
-|:D|GAB BAG|(d3 d2)B|GAB BAG|A3 ABA|
-GAB BAG|Bcd e/f/ge|dBG AFD|1 G3 G2:|2 G3 GBd||
-|:gdd gdB|c3 c2d|gdd gdB|A3 ABd|
-gdd gdB|c2d e/f/ge|dBG AFD|1 G3 GBd:|2 G3 G2||
-
-X: 5
-T: POLKAS: Toureendarby Set
-T: Toureendarby / Curragh Races
-C: C: Trad.; S: Timmy O'Connor; Laoise Kelly / Séamus Begley / Jackie Daly
-C: Set Leaders: Tania, Anton
-Z: Anton Zille ed.; Weejie / CreadurMawnOrganig / benhockenberry at The Session
-N: https://www.soundslice.com/slices/CLHRc/
-N: https://thesession.org/members/26966/sets/89997
-R: Polka
-M: 2/4
-L: 1/8
-Q: 1/4=140
-K: Edor
-|:BE FE|BE FE|D>E FA|DE FA|
-BE FE|BE FE|D>E FA|1 FE EA:|2 FE E2||
-|:e2 dB|ef/e/ dB|AF dF|AB/c/ d2|
-ef/e/ dB|ef/e/ dB|AF dF|1 FE EB:|2 FE d>c||
-T: Siege of Ennis / Banks of Inverness
-K: Gmaj
-|:D>E DB,|DE G>A|Bd AB/A/|GE cE|
-D>E DB,|DE G>A|Bd AB/A/|1 G2 G/A/G/E/:|2 G2 G>A||
-Bd dB|ce e>d|Bd AB/A/|GE ED|
-Bd d>B|ce e>f|gf ed|e2 e>f|
-ge fd|e/f/e/d/ BA|Bd AB/A/|GE cE|
-D>E DB,|DE G>A|Bd AB/A/|G2 G>A||
-|:Bd Bd|Bd dB/d/|ed Bd|ed B>A|
-Bd Bd|Bd dB/d/|ed BA|AG G2:||
-|:GB d2|ed c2|dB GB|A/B/A/G/ ED|
-GB d>d|ed c>e|dB GE|1 ED D2:|2 ED GE||
-T: Britches Full of Stitches (G)
-K: Gmaj
-|:G>A BG|AG BG|G>A BG|AG E2|
-G>A BG|AG Bd|G>A GE|ED D2:||
-|:d>e dB|AG AB|d>e dB|AG E2|
-d>e dB|AG AB|G>A GE|1 ED D2:|2 ED DE||
-
-X: 6
 T: POLKAS: We Won't Go Home Set
 T: We Won't Go Home Til' Morning
 C: C: Trad.; S: Brendan & Séamus Begley
@@ -684,7 +435,7 @@ d>e fd|cA Ad|BG AF|D2 DB/c/|
 d>e fd|cA Ad|BG GA/B/|cA AB/c/|
 d>e fd|cA AB|BA GE|DA AB||
 
-X: 7
+X: 16
 T: REELS: Alice's Set
 T: Alice's
 C: C: Frankie Gavin / Trad.; S: Various
@@ -707,7 +458,7 @@ F2 AF GFED|DFAF GFED|B/c/d ef gece|1 dfec d2 DE:|2 dfec d2 ef||
 |:gB B/B/B gBaB|gB B/B/B gfed|c/B/A eA fAeA|B/c/d ef gfef|
 gB B/B/B gBaB|gB B/B/B gfed|cdef gece|1 dfec d2 ef:|2 dfec d2 AG||
 
-X: 8
+X: 17
 T: REELS: Devanny's Goat Set
 T: Devanny's Goat
 C: C: Tommy Whelan (?) / Trad. / Trad.; S: Noel Hill; Various // Bothy Band
@@ -736,7 +487,130 @@ K: Dmaj
 faaf gefd|ed B/c/d egfe|fa~a2 gefd|efdB ~A3e|
 ~a3f gefd|ed B/c/d egfe|fa~a2 bfaf|e2 ef g/f/e fe||
 
-X: 9
+X: 18
+T: REELS: Maids of Mount Kisco Set
+T: Maud Millar
+C: C: Trad. / Paddy Killoran (?) / Trad.; S: Various
+C: Set Leaders: Mars, Anton
+Z: [Unedited]; slainte / Torc / leprecawn at The Session
+N: https://thesession.org/members/26966/sets/94255
+R: Reel
+M: 4/4
+L: 1/8
+Q: 1/2=100
+K: Gmaj
+gf|edBA GEDE|G2BG dGBd|e2dB A2GA|Beed efgf|
+edBA GEDE|G2BG dGBd|e2dB A2GA|Beed e2ge||
+dega bgg2|agef g3e|dega bgg2|aged eage|
+dega bgg2|agef g3a|bgaf gfed|Beed e4||
+T: Maids of Mount Kisco
+K: Ador
+|:EA~A2 BGAG|EA~A2 BGAG|EG~G2 AG~G2|EG~G2 EGDG|
+EA~A2 BGAG|EA~A2 BABd|e~g3 afge|1 dBGB ~A3G:|2 dBGB A2dB||
+|:~A3B dBAB|G2BG DGBG|~A3B dGBd|1 efge dBGB:|2 efge d2 Bd||
+|:ea~a2 bgaf|gedB GABd|ea~a2 bgaf|gede g2eg|
+~a3f ~g3e|dedB GABd|eA~A2 efge|1 dBGB A2 Bd:|2 dBGB ~A3G||
+T: Red-Haired Lass
+K: Gmaj
+DGGF G2 BG|G2 BG AGEG|DGGF GABd|egdB c2 BA|
+DGGF G2 BG|G2 BG AGEG|DGGF GABd|gedB c2 Bc||
+d2 gd edgd|d2 gd BABc|d2 gd edef|gedB c2 Bc|
+d2 gd edgd|d2 gd BABd|c3A B3A|GABd egdB||
+
+X: 19
+T: REELS: Torn Jacket Set
+T: Torn Jacket
+C: C: Connie O'Connell / Trad. / Trad.; S: Tommy Guihen; Connie O'Connell & Eibhlín de Paor / Bothy Band / Shaskeen
+C: Set Leaders: Mars, Anton
+Z: Anton Zille ed.; Mars / UPipes & harp / DanG at the The Session
+N: https://thesession.org/members/26966/sets/94278
+R: Reel
+M: 4/4
+L: 1/8
+Q: 1/2=100
+K: Dmaj
+|:~F3A d2 ed|cAAB cd e2|~F3A dfed|cAGE EDDE|
+~F3A dfed|cA~A2 B/c/d ec|dcde fded|cAGE ED D2:||
+|:FAdf ~a3f|g2 gf gfed|cA~A2 B/c/d ef|gfed cAGE|
+FAdf ~a3f|~g3a gfef|g2ba gfed|cAGE ED D2:||
+T: Morning Star
+K: Gmaj
+B2 BA BGEF|G2 Bd efgd|~B3A BGEF|GBAF G3A|
+~B3A BGEF|GABd efge|dBAc BGEF|GBAF G3A||
+Bdef g2 eg|f2 df eBBA|B/c/d ef g2 eg|fedf e2 ed|
+B/c/d ef ~g2 eg|~f2 df eBBA|Bdef g2 bg|faaf gfed||
+T: Shaskeen
+K: Gmaj
+|:DG~G2 ABcA|dfed cAAc|~B3G ~A3F|GBAG FGEF|
+DG~G2 ABcA|dfed cAAe|~f3g fdcA|1 AGFA G2 GF:|2 AGFA G2B||
+dggf g2 fg|abag fddc|~B3G ~A3F|GBAG FD D2|
+dggf g2 fg|abag fdde|fd~d2 edcA|AGFA G3B|
+dggf ~g2 fg|~a3g fddc|~B2 GB ~A2 FA|GBAG FD D2|
+BG~G2 AF~F2|dB~B2 cA~A2|fd~d2 edcA|AGFA G4||
+
+X: 20
+T: REELS: Trip to Birmingham Set
+T: Trip to Birmingham
+C: C: Josie McDermott / Dan Cleary / Phil Murphy; S: Various
+C: Set Leaders: Mars, Tania, Anton
+Z: [Unedited]; slainte / SPeak / Kenny at The Session
+N: https://thesession.org/members/26966/sets/94276
+R: Reel
+M: 4/4
+L: 1/8
+Q: 1/2=100
+K: Gmaj
+|:DGGF G2Bd|~e3d edBA|~G3B dGBG|ABAG EFGE|
+DGGF G2Bd|~e3d efga|bg~g2 ageg|dBAB G3:||
+e|dggf g2 ga|bg~g2 edBA|~G3B dGBG|ABAG EFG2|
+dggf g2 ga|bg~g2 edBA|~G3B dGBG|AGFA G3e|
+dggf g2 ga|bg~g2 edBA|~G3B dGBG|ABAG EFG2|
+dg~g2 ag~g2|bg~g2 edBA|~G3B dGBG|AGFA G3||
+T: Trip to Durrow
+K: Dmaj
+|:D2DF ADFA|dfed B3c|dBBA dBBA|FADE FE E2|
+D2DF ADFA|dfed B3c|dBBA FAdB|AFEG FD D2:||
+|:dcde fefg|afdf gfed|B/c/d ef gebe|gebe gfef|
+d2de fefg|afdf gfed|B/c/d ef gbag|fdec d2de|
+fdec d2de|fded B3c|dBBA dBBA|FADE FE E2|
+D2DF ADFA|dfed B3c|dBBA FAdB|AFEG FD D2:||
+T: Trip to Cullenstown (G)
+K: Gmaj
+|:d2 de dBGA|B2 BG AGEG|d2 de dBGA|BAAG A4|
+BABd e2 dB|dedB AGEG|B2 BG AGEG|1 DGGF GABc:|2 DGGF G3 A||
+|:Bd d2 ce e2|d2 de dBGA|Bd d2 ed d2|gedB A4|
+BABd e2 dB|dedB AGEG|B2 BG AGEG|DGGF G4:||
+
+X: 21
+T: REELS: Walter Sammon's Grandma Set
+T: Walter Sammon's Grandmother
+C: C: Trad.; S: ThZCh; Patrick Street / Martin Hayes / Mary Bergin
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; shanachie / Bregolas / Bregolas at The Session
+N: https://thesession.org/members/26966/sets/76523
+R: Reel
+M: 4/4
+L: 1/8
+Q: 1/2=100
+K: Dmaj
+FAAB A2dB|AFDE FEE2|FAAB A2dB|AFEG FDD2|
+FAAB ABdB|AFDE FEE2|FAAB A2dB|AFEG FDD2||
+FAdA BAdA|FAdA BEE2|FAdA BAdB|AFEG FDD2|
+FAdA BAdA|FAdA BEE2|dcBA BcdB|AFEG FDD2||
+T: Broken Pledge (D)
+K: Ddor
+|:dcAG ADDB|cAGE EDCE|DEFG Addc|A/B/A Gc Aefe|
+dcAG E/F/G AB|cAGE EDCE|DEFG Addc|A/B/A GE ED D2:||
+|:dcAG Acde|f2 df ecAB|cAGE G2 cd|ec~c2 eage|
+dcAG Acde|~f2 df ecAG|~F3E FGAB|cAGE ED D2:||
+T: Blackhaired Lass
+K: Amix
+d|cAAB cdec|d2 gd BGGd|cA~A2 cdec|dfec AddB|
+cA~A2 Acec|dBgd BGGd|cA~A2 B/c/d ec|dfec A3 A||
+B/c/d ef g2 eg|~f2 df gfed|B/c/d ef geag|fdec A2~A2|
+B/c/d ef g2 e/f/g|fedc defg|afge fdec|dfec A3||
+
+X: 22
 T: SLIDES: Brosna Set
 T: Brosna No. 1
 C: C: Trad.; S: Denis Murphy & Julia Clifford
@@ -759,7 +633,97 @@ A2e e2d BAB d3|1 BAB d2e B2A A2G:|2 BAB d2e B2A A2e|
 |:e2a a2b a2g e2d|efg a2b a2g e2f|
 g3 gfe dBA G2A|1 BAB d2e B2A ABd:|2 BAB d2e B2A A2G||
 
-X: 10
+X: 23
+T: SLIDES: Cat's Rambles Set
+T: Is It the Priest You Want?
+C: C: Trad.; S: Bothy Band; Denis Murphy; Johnny O'Leary; Julia Clifford
+C: Set Leaders: Oliushka, Anton
+Z: Anton Zille ed.; Kuddel / Anon. / nobu at The Session
+N: https://thesession.org/members/26966/sets/63219
+R: Slide
+M: 12/8
+L: 1/8
+Q: 3/8=130
+K: Gmaj
+|:g|edB d2 B d2 B B2 g|edB d2 B c2 A A2 g|
+edB d2 B BAB ~g3|BAB ~g3 B2 G G2:||
+|:f|gbg f/g/af g2 e e2 d|eaa aga b2 e e2 f|
+gbg faf g2 e e2 d|BAB ~g3 B2 G G2:||
+T: Cat's Rambles to the Child's Saucepan / Mary Willie's
+K: Dmaj
+A|:d2 ef2 e dcd ~B3|g2 A cBA e2 A cBA|
+d2 ef2 e dcd ~B3|g2 A cBA d3 d2 A:||
+|:d2 ef2 a baf a2 f|e2 A cBA efe cBA|
+d2 ef2 a baf a2 f|e2 A cBA d3 d2 A:||
+T: This is My Love, Do You Like Her? / Biddy Crowley’s Ball / Pussycat Up in a Plum Tree
+K: Ador
+A2A AGE c2B c2d|e2e ede g3 g2e|
+def g2e dBA G2A|1 B2e dBG A2B c2B:|2 B2e dBG A3 ABd||
+|:e2a age d2g gfg|eaa agf g2b a2g|
+eaf g2e dBA G2A|1 B2e dBG A3 ABd:|2 B2e dBG A2B c2B||
+
+X: 24
+T: SLIDES: Denny Mescall's Set
+T: Bank of Turf
+C: C: Trad. / Trad. / Mike Scott; S: Various
+C: Set Leaders: Mars, Anton
+Z: Mars ed.; Mars at The Session
+N: https://thesession.org/members/26966/sets/94265
+R: Single Jig
+M: 12/8
+L: 1/8
+Q: 3/8=130
+K: Dmaj
+d2 B|:ABA DFA BAF DFA|dcd ede ~f3 def|
+~g3 gab afd Bcd|1 efe e2d cBA Bcd:|2 ABA efe d3 dcd||
+|:e2A efg f2d fga|gfe fed edB ABd|
+eAA efg fdd fga|1 gfe dcB A3 ABd:|2 gfe dcB AFA Bcd||
+T: Denny Mescall's
+R: Slide
+K: Gmaj
+|:B3 BAB dBA G3|GBd g2e d2B A2G|
+B3 BAB dBA G2B|ded cBA G3 G3:||
+|:g2g gfe d2B c2d|e2a a2b a2g e2f|
+g2g gfe d2B c2d|efg fgf g3 g3:||
+T: Kings of Kerry
+K: Amaj
+c3 cBA F2A E2A|F2A E2c B3 BAB|
+c3 cBA F2A E2f|1 ecA BcB A3 A2B:|2 ecA BcB A3 Ace||
+a3 afe f2a e2A|c3 cBA B3 Bce|
+a3 afe f2a e2f|ecA BcB A3 Ace|
+a3 afe f2a e2A|c3 cBA B3 BAB|
+c3 cBA F2A E2f|ecA BcB A3 A3||
+
+X: 25
+T: SLIP JIGS: Snowy Path Set
+T: Snowy Path
+C: C: Mark Kelly / Trad. / Trad.; S: Altan // Various
+C: Set Leaders: Olya, Tania, Anton
+Z: Anton Zille ed.; Shawn Cassady / Josh Kane / Netallica at The Session
+N: https://thesession.org/members/26966/sets/76538
+R: Slip Jig
+M: 9/8
+L: 1/8
+Q: 3/8=114
+K: Dmaj
+F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GFE|
+F2A B2F A2F|G2B d2e dBG|F2A B2F A2F|E2D E2F GAB||
+c3 c2e d2c|B2G B2c d2e|f3 f2e d2B|A2G F2G A2B|
+c3 c2e d2c|B2G B2c d2e|d2A B2F A2F|E2D E2F GFE||
+T: Fig For a Kiss
+K: Edor
+G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF DEF|
+G2B E2B BAG|F2A D2A AGF|G2B E2B BAG|B/c/dB AGF E3||
+g2e g2e edB|f2d dcd fed|g2e g2e edB|dBG GBd e2f|
+g2e g2e edB|f2d dcd fed|gfe fed edA|B/c/dB AGF E2F||
+T: Foxhunter's
+K: Dmaj
+|:FDF FDF G2E|FDF FED E2D|FDF FDF G2B|AFD DEF E2D:||
+|:B3 BAG FGA|B2E E2F G2B|ABc dcB ABc|d2D DEF E2D:||
+|:fdf fdf g2e|fdf fed e2d|fdf fdf g2b|afd def e2d:||
+|:gfe d=cB AGA|B2 E E2 F G2 B|ABc dcB ABc|d2 D DEF E2 D:||
+
+X: 26
 T: WALTZES: Munster Cloak Set
 T: Munster Cloak
 C: C: Trad.; S: Various

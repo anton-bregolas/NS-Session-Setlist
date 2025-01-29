@@ -16,6 +16,7 @@ v.0.5.4: Session DB Update
 + Session DB updates:
   - Session DB updated to 2025-01-28
   - Sets & Tunes from Tania added (v.1)
+  - Minor fixes in Mars and Tania Sets & Tunes
 
 v.0.5.3: Session DB Update
 
