@@ -36,7 +36,8 @@ export async function parseAbcFromFile(taskType) {
 
                 if (taskType === "abc-encode") {
 
-                    abcContentResult = getEncodedAbc(rawAbcContent);                    
+                    abcContentResult = getEncodedAbc(rawAbcContent);
+                    downloadAbcFile(exportTuneList(abcContentResult), "Tunelist.txt");
                 }
 
                 if (taskType === "abc-decode") { 
@@ -397,3 +398,26 @@ function getDecodedAbc(abcContent) {
 ////////////////////////////////
 // EXPORT TUNELIST FUNCTIONS
 ///////////////////////////////
+
+// Export tab-separated list of Session DB Tunes / Tune Types / Links
+
+function exportTuneList(abcContent) {
+
+    let tuneListStr = '';
+
+    const abcArr = JSON.parse(abcContent);
+
+    abcArr.forEach(abcObj => {
+
+        let abcName = abcObj.Name;
+
+        if (abcName.match(/^.*:/)) {
+            
+            abcName = abcName.split(': ')[1];
+        }
+
+        tuneListStr += `${abcObj.Type}\t${abcName}\t${abcObj.URL}\t${abcObj.Leaders.split(', ').join(`\t`)}\n`;
+    });
+
+    return tuneListStr;
+}
