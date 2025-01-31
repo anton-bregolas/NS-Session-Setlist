@@ -11,6 +11,20 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.5.5: Session DB Update
+
++ Project updates:
+  - ABC Encoder: Now exports tab-separated Tunelist in addition to JSON file
+  - ABC Encoder: Sort function now checks for missing custom fields, adds them to ABC
+
++ JavaScript updates:
+  - exportTuneList function added to scripts-abc-encoder.js
+  - addMissingFields function added to ABC Sort:
+    - Check ABC for C: / Z: / N: / Q: fields, add default values if missing
+
++ Session DB updates:
+  - Session DB updated to 2025-01-31
+
 v.0.5.4: Session DB Update
 
 + Session DB updates:
