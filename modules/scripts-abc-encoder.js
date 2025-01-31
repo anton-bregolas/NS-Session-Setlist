@@ -1,4 +1,5 @@
 import { LZString } from './scripts-abc-tools.js';
+import { updateData } from './scripts-ns-sessions.js';
 
 ////////////////////////////////
 // ABC FILE PARSERS & HANDLERS
@@ -165,7 +166,7 @@ function sortFilterAbc(abcContent) {
 
         const filteredAbcArr = splitAbcArr.map(abc => abc.trim()).filter(abc => abc.startsWith("T:"));
 
-        const sortedAbcArr = filteredAbcArr.sort().map(abc => `X: ${filteredAbcArr.indexOf(abc) + 1}\n${abc}`);
+        const sortedAbcArr = filteredAbcArr.sort().map(abc => `X: ${filteredAbcArr.indexOf(abc) + 1}\n${addMissingFields(abc)}`);
 
         // Option A: Also remove all empty lines inside ABCs
 
@@ -224,6 +225,98 @@ function removeTextAfterLineBreaksInAbc(sortedAbcArr) {
     });
 
     return filteredAbcArr;
+}
+
+// Update the tune with custom N.S.S.S. ABC fields if any of them are missing 
+
+function addMissingFields(abcContent) {
+
+    let abcTitle = abcContent.match(/^T:.*/);
+    let updatedAbc = abcContent.replace(/^T:.*/, '').trim();
+
+    if (!updatedAbc.includes('N:')) {
+
+        updatedAbc = `N: \n` + updatedAbc;
+        console.log(`ABC Encoder:\n\nMissing N: field added to ${abcTitle[0].split('T: ')[1]}`);
+    }
+
+    if (!updatedAbc.includes('Z:')) {
+
+        updatedAbc = `Z: [Unedited]; The Session\n` + updatedAbc;
+        console.log(`ABC Encoder:\n\nMissing Z: field added to ${abcTitle[0].split('T: ')[1]}`);
+    }
+
+    if (!updatedAbc.includes('C: Set Leaders:')) {
+
+        updatedAbc = `C: Set Leaders: \n` + updatedAbc;
+        console.log(`ABC Encoder:\n\nMissing Set Leaders field added to ${abcTitle[0].split('T: ')[1]}`);
+    }
+    
+    if (!updatedAbc.includes('C: C:')) {
+
+        updatedAbc = `C: C: Trad.; S: Various\n` + updatedAbc;
+        console.log(`ABC Encoder:\n\nMissing C: / S: field added to ${abcTitle[0].split('T: ')[1]}`);
+    }
+
+    if (!updatedAbc.includes('Q:')) {
+
+        let defaultTempo = '';
+        let tuneType = abcContent.split('R: ')[1].split('\n')[0].trim();
+
+        if (tuneType) {
+
+            switch (tuneType.toLowerCase()) {
+
+                case "air":
+                    defaultTempo = "1/2=40";
+                    break;
+                    
+                case "barndance":
+                    defaultTempo = "1/2=86";
+                    break;
+
+                case "hornpipe":
+                    defaultTempo = "1/2=82";
+                    break;
+
+                case "hop jig":
+                    defaultTempo = "1/4=146";
+                    break;
+
+                case "jig":
+                    defaultTempo = "3/8=116";
+                    break;
+
+                case "polka":
+                    defaultTempo = "1/4=140";
+                    break;
+
+                case "reel":
+                    defaultTempo = "1/2=100";
+                    break;
+
+                case "slide":
+                    defaultTempo = "3/8=130";
+                    break;
+                        
+                case "slip jig":
+                    defaultTempo = "3/8=114";
+                    break;
+
+                case "waltz":
+                    defaultTempo = "1/4=144";
+                    break;
+            
+                default:
+                    break;
+            }
+
+            updatedAbc = updatedAbc.replace('K:', `Q: ${defaultTempo}\nK:`);
+            console.log(`ABC Encoder:\n\nMissing Q: field added to ${abcTitle[0].split('T: ')[1]}`);
+        }
+    }
+
+    return `${abcTitle}\n${updatedAbc}`;
 }
 
 // Sort, filter and renumber raw ABC contents and return a string of ABCs
