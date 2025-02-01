@@ -20,7 +20,9 @@ v.0.5.5: Session DB Update
 + JavaScript updates:
   - exportTuneList function added to scripts-abc-encoder.js
   - addMissingFields function added to ABC Sort:
-    - Check ABC for C: / Z: / N: / Q: fields, add default values if missing
+    - Check ABC for R: / M: / L: fields, warn in console and add defaults if missing
+    - Check ABC for C: / Z: / N: / Q: fields, add default custom values if missing
+    - M: and Q: fields use switch statements depending on Tune Type
 
 + Session DB updates:
   - Session DB updated to 2025-01-31
