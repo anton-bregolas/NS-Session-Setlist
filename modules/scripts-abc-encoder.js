@@ -231,37 +231,125 @@ function removeTextAfterLineBreaksInAbc(sortedAbcArr) {
 
 function addMissingFields(abcContent) {
 
-    let abcTitle = abcContent.match(/^T:.*/);
-    let updatedAbc = abcContent.replace(/^T:.*/, '').trim();
+    let abcTitle = '';
+    let updatedAbc = abcContent;
+
+    // Separate primary title(s) of Tune / Set from the rest of the ABC
+
+    do {
+        abcTitle += `${updatedAbc.match(/^T:.*/)[0]}\n`;
+        updatedAbc = updatedAbc.replace(/^T:.*/, '').trim();
+
+    } while (updatedAbc.startsWith("T:"));
+    
+    // Check basic ABC fields, add defaults if missing
+
+    if (!updatedAbc.includes('R:')) {
+
+        let abcTitlePrefix = '';
+        let abcTuneType = '';
+        
+        if (abcTitle.match(/^T:.*:/)) {
+
+            abcTitlePrefix = abcTitle.split('T: ')[1].split(':')[0].trim();
+            abcTuneType = abcTitlePrefix.split(/[\s,-]/).map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+            abcTuneType = abcTuneType.replace(/es$/, '').replace(/s$/, '');
+        }
+        
+        updatedAbc = updatedAbc.replace('K:', `R: ${abcTuneType}\nK:`);
+        console.warn(`ABC Encoder:\n\nMissing R: field added to ${abcTitle.split('T: ')[1]}`);
+    }
+
+    if (!updatedAbc.includes('M:')) {
+
+        let abcTuneType = updatedAbc.split('R: ')[1].split('\n')[0];
+        let defaultMeter = '';
+
+        if (abcTuneType) {
+
+            switch (abcTuneType.toLowerCase()) {
+                    
+                case "barndance":
+                case "hornpipe":
+                case "march":
+                case "reel":
+                    defaultMeter = "4/4";
+                    break;
+
+                case "air":
+                case "hop jig":
+                case "waltz":
+                    defaultMeter = "3/4";
+                    break;
+
+                case "jig":
+                    defaultMeter = "6/8";
+                    break;
+
+                case "polka":
+                    defaultMeter = "2/4";
+                    break;
+
+                case "slide":
+                case "single jig":
+                    defaultMeter = "12/8";
+                    break;
+                        
+                case "slip jig":
+                    defaultMeter = "9/8";
+                    break;
+
+                case "three-two":
+                    defaultMeter = "3/2";
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+
+        updatedAbc = updatedAbc.replace('K:', `M: ${defaultMeter}\nK:`);
+        console.warn(`ABC Encoder:\n\nMissing M: field added to ${abcTitle.split('T: ')[1]}`);
+    }
+
+    if (!updatedAbc.includes('L:')) {
+
+        updatedAbc = updatedAbc.replace('K:', `L: 1/8\nK:`);
+        console.warn(`ABC Encoder:\n\nMissing L: field added to ${abcTitle.split('T: ')[1]}`);
+    }
+
+    // Check for missing custom ABC fields, add from the bottom up
 
     if (!updatedAbc.includes('N:')) {
 
         updatedAbc = `N: \n` + updatedAbc;
-        console.log(`ABC Encoder:\n\nMissing N: field added to ${abcTitle[0].split('T: ')[1]}`);
+        console.log(`ABC Encoder:\n\nMissing N: field added to ${abcTitle.split('T: ')[1]}`);
     }
 
     if (!updatedAbc.includes('Z:')) {
 
         updatedAbc = `Z: [Unedited]; The Session\n` + updatedAbc;
-        console.log(`ABC Encoder:\n\nMissing Z: field added to ${abcTitle[0].split('T: ')[1]}`);
+        console.log(`ABC Encoder:\n\nMissing Z: field added to ${abcTitle.split('T: ')[1]}`);
     }
 
     if (!updatedAbc.includes('C: Set Leaders:')) {
 
         updatedAbc = `C: Set Leaders: \n` + updatedAbc;
-        console.log(`ABC Encoder:\n\nMissing Set Leaders field added to ${abcTitle[0].split('T: ')[1]}`);
+        console.log(`ABC Encoder:\n\nMissing Set Leaders field added to ${abcTitle.split('T: ')[1]}`);
     }
     
     if (!updatedAbc.includes('C: C:')) {
 
         updatedAbc = `C: C: Trad.; S: Various\n` + updatedAbc;
-        console.log(`ABC Encoder:\n\nMissing C: / S: field added to ${abcTitle[0].split('T: ')[1]}`);
+        console.log(`ABC Encoder:\n\nMissing C: / S: field added to ${abcTitle.split('T: ')[1]}`);
     }
+
+    // Check for missing tempo field, add Q: value depending on Tune Type
 
     if (!updatedAbc.includes('Q:')) {
 
         let defaultTempo = '';
-        let tuneType = abcContent.split('R: ')[1].split('\n')[0].trim();
+        let tuneType = updatedAbc.split('R: ')[1].split('\n')[0].trim();
 
         if (tuneType) {
 
@@ -276,6 +364,7 @@ function addMissingFields(abcContent) {
                     break;
 
                 case "hornpipe":
+                case "march":
                     defaultTempo = "1/2=82";
                     break;
 
@@ -284,6 +373,7 @@ function addMissingFields(abcContent) {
                     break;
 
                 case "jig":
+                case "single jig":
                     defaultTempo = "3/8=116";
                     break;
 
@@ -303,6 +393,10 @@ function addMissingFields(abcContent) {
                     defaultTempo = "3/8=114";
                     break;
 
+                case "three-two":
+                    defaultTempo = "1/2=146";
+                    break;
+
                 case "waltz":
                     defaultTempo = "1/4=144";
                     break;
@@ -312,11 +406,11 @@ function addMissingFields(abcContent) {
             }
 
             updatedAbc = updatedAbc.replace('K:', `Q: ${defaultTempo}\nK:`);
-            console.log(`ABC Encoder:\n\nMissing Q: field added to ${abcTitle[0].split('T: ')[1]}`);
+            console.log(`ABC Encoder:\n\nMissing Q: field added to ${abcTitle.split('T: ')[1]}`);
         }
     }
 
-    return `${abcTitle}\n${updatedAbc}`;
+    return `${abcTitle}${updatedAbc}`;
 }
 
 // Sort, filter and renumber raw ABC contents and return a string of ABCs

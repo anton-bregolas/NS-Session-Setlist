@@ -24,6 +24,7 @@ v.0.5.5: Session DB Update
 
 + Session DB updates:
   - Session DB updated to 2025-01-31
+  - Sets & Tunes from Olya added (v.1)
 
 v.0.5.4: Session DB Update
 
