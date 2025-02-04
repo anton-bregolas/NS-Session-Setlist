@@ -9,7 +9,7 @@ R: Air
 M: 3/4
 L: 1/8
 Q: 1/4=144
-K: Dmix
+K: Gmaj
 |:B3 A Bd|B2 BA Bd|E3 B AB|D3 B AG|
 B3 A Bd|B2 BA Bd|G3 B A/G/F|1 G3 D ED:|2 G3 A Bd||
 e3 f ed|B3 A Bd|ef ed B/c/d|
@@ -72,7 +72,7 @@ T: HOP JIG: Cucanandy
 T: Dance to Your Daddy / She Didn't Dance and Dance
 C: C: Trad.; S: Various
 C: Set Leaders: Olya, Tania, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/92388
 R: Hop Jig
 M: 3/4
@@ -302,7 +302,7 @@ X: 19
 T: JIG: Connaughtman's Rambles
 C: C: Trad.; S: ThZCh
 C: Set Leaders: Oliushka, Anton
-Z: Anton Zille ed.; UPipes & harp / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71901
 R: Jig
 M: 6/8
@@ -500,7 +500,7 @@ X: 31
 T: POLKA: Ballinafad
 C: C: Trad.; S: Various
 C: Set Leaders: Mars, Anton
-Z: [Unedited]; gian marco / ceolachan at The Session
+Z: [Unedited]; gian marco at The Session
 N: https://thesession.org/members/26966/sets/94260
 R: Polka
 M: 2/4
@@ -518,7 +518,7 @@ X: 32
 T: POLKA: Bridgie Con Matt's
 C: C: Trad.; S: Julia & Billy Clifford
 C: Set Leaders: Olya, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71310
 R: Polka
 M: 2/4
@@ -532,7 +532,7 @@ Be ef/e/|d/e/f/a/ g2|g/a/g/e/ d/e/d/B/|AD FA :||
 
 X: 33
 T: POLKA: Britches Full of Stitches (G)
-C: C: Trad.; S: Jackie Daly & Séamus Creagh (A)
+C: C: Trad.; S: Jackie Daly & Séamus Creagh (Amaj)
 C: Set Leaders: Tania, Anton
 Z: Anton Zille ed.; benhockenberry at The Session
 N: https://www.soundslice.com/slices/CLHRc/
@@ -567,7 +567,7 @@ X: 35
 T: POLKA: Denis Murphy's
 C: C: Trad.; S: Denis Murphy & Johnny O'Leary
 C: Set Leaders: Olya, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71310
 R: Polka
 M: 2/4
@@ -600,7 +600,7 @@ T: POLKA: John Walsh's
 T: Goblachan / Derrygallen Bridge 
 C: C: John Walsh; S: Polca an Rí; John Walsh
 C: Set Leaders: Anton, Sophie
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/47PCc/
 N: https://thesession.org/members/26966/sets/7124
 R: Polka
@@ -618,7 +618,7 @@ T: POLKA: John Walsh's or Daly's Mill
 T: Daly's Mill
 C: C: John Walsh; S: Polca an Rí; John Walsh
 C: Set Leaders: Anton, Sophie
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/47PCc/
 N: https://thesession.org/members/26966/sets/7124
 R: Polka
@@ -636,7 +636,7 @@ T: POLKA: John Walsh's or Monvara Bridge
 T: Mountvara Bridge
 C: C: John Walsh; S: Polca an Rí; John Walsh
 C: Set Leaders: Anton, Sophie
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/47PCc/
 N: https://thesession.org/members/26966/sets/7124
 R: Polka
@@ -692,7 +692,7 @@ X: 42
 T: POLKA: P&O (D)
 C: C: Christy Leahy; S: ThZCh; Polca an Rí; Brendan Begley
 C: Set Leaders: Oliushka, Anton, Sophie
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/R1QCc/
 N: https://thesession.org/members/26966/sets/76527
 R: Polka
@@ -764,7 +764,7 @@ T: POLKA: Siege of Ennis
 T: Banks of Inverness
 C: C: Trad.; S: Séamus Begley
 C: Set Leaders: Tania, Anton
-Z: Anton Zille ed. / CreadurMawnOrganig at The Session
+Z: Anton Zille ed.; CreadurMawnOrganig at The Session
 N: https://www.soundslice.com/slices/CLHRc/
 N: https://thesession.org/members/26966/sets/89997
 R: Polka
@@ -787,7 +787,7 @@ X: 47
 T: POLKA: Tom Mhic's No. 1
 C: C: Trad.; S: ThZCh; Polca an Rí; Brendan Begley
 C: Set Leaders: Oliushka, Anton, Sophie
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/R1QCc/
 N: https://thesession.org/members/26966/sets/76527
 R: Polka
@@ -804,7 +804,7 @@ X: 48
 T: POLKA: Tom Mhic's No. 2
 C: C: Trad.; S: ThZCh; Polca an Rí; Brendan Begley
 C: Set Leaders: Oliushka, Anton, Sophie
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/R1QCc/
 N: https://thesession.org/members/26966/sets/76527
 R: Polka
@@ -822,7 +822,7 @@ T: POLKA: Toureendarby
 T: Curragh Races
 C: C: Trad.; S: Timmy O'Connor; Laoise Kelly
 C: Set Leaders: Tania, Anton
-Z: Anton Zille ed. / Weejie at The Session
+Z: Anton Zille ed.; Weejie at The Session
 N: https://www.soundslice.com/slices/CLHRc/
 N: https://thesession.org/members/26966/sets/89997
 R: Polka
@@ -855,7 +855,7 @@ X: 51
 T: POLKA: Weaver's Delight
 C: C: Trad.; S: Denis Murphy
 C: Set Leaders: Olya, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71310
 R: Polka
 M: 2/4
@@ -1046,7 +1046,7 @@ Bdef g2 eg|f2 df eBBA|B/c/d ef g2 eg|fedf e2 ed|
 B/c/d ef ~g2 eg|~f2 df eBBA|Bdef g2 bg|faaf gfed||
 
 X: 63
-T: REEL: New Mown Meadows (A)
+T: REEL: New Mown Meadows (Amix)
 C: C: Trad. ; S: Noel Hill; Various
 C: Set Leaders: Tania, Anton, Sophie
 Z: Anton Zille ed.; Kenny at The Session
@@ -1131,7 +1131,7 @@ X: 68
 T: REEL: Trip to Birmingham
 C: C: Josie McDermott; S: Various
 C: Set Leaders: Mars, Tania
-Z: [Unedited]; slainte / SPeak / Kenny at The Session
+Z: [Unedited]; slainte at The Session
 N: https://thesession.org/members/26966/sets/94276
 R: Reel
 M: 4/4
@@ -1215,7 +1215,7 @@ X: 73
 T: SINGLE JIG: Bank of Turf
 C: C: Trad.; S: Various
 C: Set Leaders: Mars, Anton
-Z: By Mars Agliullin / Anton Zille ed.; Mars at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; Mars at The Session
 N: https://thesession.org/members/26966/sets/94265
 R: Single Jig
 M: 12/8
@@ -1315,7 +1315,7 @@ X: 79
 T: SLIDE: Denny Mescall's
 C: C: Trad.; S: Various
 C: Set Leaders: Mars, Anton
-Z: By Mars Agliullin / Anton Zille ed.; Mars at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; Mars at The Session
 N: https://thesession.org/members/26966/sets/94265
 R: Slide
 M: 12/8
@@ -1331,7 +1331,7 @@ X: 80
 T: SLIDE: Kings of Kerry
 C: C: Mike Scott; S: Various
 C: Set Leaders: Mars, Anton
-Z: By Mars Agliullin / Anton Zille ed.; Mars at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; Mars at The Session
 N: https://thesession.org/members/26966/sets/94265
 R: Slide
 M: 12/8
@@ -1398,7 +1398,7 @@ eaf g2e dBA G2A|1 B2e dBG A3 ABd:|2 B2e dBG A2B c2B||
 
 X: 84
 T: SLIP JIG: Fig For a Kiss
-C: C: Trad.; S: Various
+C: C: Trad.; S: Altan
 C: Set Leaders: Olya, Tania, Anton
 Z: Anton Zille ed.; Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/76538
@@ -1449,7 +1449,7 @@ T: VARIOUS: Fishy Song (3/2 Hornpipe)
 T: Dance Ti' Thy Daddy / You Can Have a Fishy
 C: C: Trad.; S: Various
 C: Set Leaders: Olya, Tania, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/92388
 R: Three-Two
 M: 3/2
@@ -1494,7 +1494,7 @@ B3 G Bd|cA F2 de|fe dc BA|1 B4:|2 B3||
 fd Be cA|dB Gc AE|F2 B2 A2|1 B3:|2 B6||
 
 X: 90
-T: WALTZ: Flatwater Fran (A)
+T: WALTZ: Flatwater Fran (Amaj)
 C: C: Phil Cunningham; S: Various
 C: Set Leaders: Tania, Anton, Mars, Sophie
 Z: Anton Zille ed.; Sergei Ejov at The Session
@@ -1514,7 +1514,7 @@ f2 e2 a2|c2 ec BA|B2 e3d|c3 c BA|
 FB BA Bc|BA F2 AF|EF A2 A2|1 A4 ce:|2 A4||
 
 X: 91
-T: WALTZ: Flatwater Fran (G)
+T: WALTZ: Flatwater Fran (Gmaj)
 C: C: Phil Cunningham; S: Various
 C: Set Leaders: Tania, Anton, Mars, Sophie
 Z: Anton Zille ed.; onscuba at The Session

@@ -102,7 +102,7 @@ T: HORNPIPES: Sonny Murray's Set
 T: Sonny Murray's
 C: C: Trad. / Frank McCollum / Trad.; S: Various
 C: Set Leaders: Mars, Tania, Anton
-Z: [Unedited]; Jdharv // Bannerman at The Session
+Z: [Unedited]; Jdharv / Jdharv / Bannerman at The Session
 N: https://thesession.org/members/26966/sets/94256
 R: Hornpipe
 M: 4/4
@@ -278,10 +278,10 @@ AFA A2d|BGB B2d|cBc ABc|1 dfe dcB:|2 dfe dB=c||
 
 X: 11
 T: MEDLEY: Fishy Song Set
-T: Dance Ti' Thy Daddy (3/2 Hornpipe)
+T: Dance Ti' Thy Daddy [3/2 Hornpipe]
 C: C: Trad.; S: Various
 C: Set Leaders: Olya, Tania, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/92388
 R: Three-Two
 M: 3/2
@@ -292,7 +292,7 @@ d d d B A F|e e e d c A|d d d B A F|A d d c d2||
 d d d B A F|e e e d c A|d d d B A F|A d d c d2||
 f2 f e f a|e2 e d c A|f2 f e f a|e d d c d2|
 f2 f e f a|g2 g e c A|f2 f e f a|A d d c d2||
-T: Cucanandy (Hop Jig)
+T: Cucanandy [Hop Jig]
 R: Hop Jig
 M: 3/4
 L: 1/8
@@ -305,7 +305,7 @@ ef gf gA|Bd dB d2|eB BA GA|Be ed ed||
 
 X: 12
 T: MEDLEY: La Sansonette Set
-T: La Sansonette (Schottische)
+T: La Sansonette [Schottische]
 C: C: Dominique Forges / Niall Kenny; S: Various
 C: Set Leaders: Olya, Andrey
 Z: [Unedited]; NfldWhistler / Jeremy at The Session
@@ -319,7 +319,7 @@ K: Emin
 B3B A3G|FAGF EDB,D|EFGA B2AG|FAGF EFGA:||
 |:B2GB cGBc|B2GB cGBc|F2FB cFBc|F2FB cFBc|
 B2GB cGBc|B2GB cGBc|FcBA GAGF|EFGF EFGA:||
-T: Trip to Pakistan (Reel)
+T: Trip to Pakistan [Reel]
 R: Reel
 K: Emin
 |:EGBE G3 B|A3 B AGFG|EGBE G3 B|AGFG E4:||
@@ -328,7 +328,7 @@ K: Emin
 
 X: 13
 T: MEDLEY: Mountains of Pomeroy Set
-T: Mountains of Pomeroy (Air / March)
+T: Mountains of Pomeroy [Air / March]
 C: C: Trad.; S: Séamus Begley; Noel Hill / Séamus Begley; Séamus Ennis
 C: Set Leaders: Tania, Anton, Sophie
 Z: Anton Zille ed.; Bregolas / JACKB at The Session
@@ -342,7 +342,7 @@ B>c|d2 de d>c BA|G2 A>G E2 G>E|D3E G2 A>B|c6 B>c|
 d2 de d>c BA|G2 A>G E2 G>E|D3E G2 A>G|G6 G>A||
 B2 A>B G2 A>B|c2 d2 d2 g>e|d>c BA G2 A>B|c6 B>c|
 d2 de d>c BA|G2 A>G E2 G>E|D2 E2 G2 A>G|G8||
-T: Tá an Coileach ag Fógairt an Lae / When the Cock Crows It Is Day (Jig)
+T: Tá an Coileach ag Fógairt an Lae / When the Cock Crows It Is Day [Jig]
 R: Jig
 M: 6/8
 Q: 3/8=116
@@ -354,7 +354,7 @@ gdd gdB|c2d e/f/ge|dBG AFD|1 G3 GBd:|2 G3 G2||
 
 X: 14
 T: MEDLEY: Road to Lisdoonvarna Set
-T: Road to Lisdoonvarna (Slide)
+T: Road to Lisdoonvarna [Slide]
 C: C: Trad.; S: Various
 C: Set Leaders: Olya, Andrey
 Z: [Unedited]; birlibirdie / fidicen / NfldWhistler at The Session
@@ -368,7 +368,7 @@ E2B B2A B2c d2A|F2A ABA D2E FED|
 E2B B2A B2c d3|cdc B2A B2E E3:||
 e2f gfe d2B Bcd|c2A ABc d2B B3|
 e2f gfe d2B Bcd|cdc B2A B2E E3:||
-T: Swallowtail (Jig)
+T: Swallowtail [Jig]
 R: Jig
 M: 6/8
 K: Edor
@@ -376,7 +376,9 @@ K: Edor
 GEE BEE|GEG B2c|dcd AGF|GEE E3:||
 |:Bcd e2f|e2f edB|Bcd e2f|edB d3|
 Bcd e2f|e2f edB|dcd AGF|GEE E3:||
-T: Tripping Up the Stairs (Jig)
+T: Tripping Up the Stairs [Jig]
+R: Jig
+M: 6/8
 K: Dmaj
 |:FAA GBB|FAd fed|cBc ABc|dfe dAG|
 FAA GBB|FAd fed|cBc ABc|1 dfe d2A:|2 dfe d2c||
@@ -419,7 +421,7 @@ T: POLKAS: John Walsh's Set
 T: John Walsh's No. 1 / Goblachan / Derrygallen Bridge
 C: C: John Walsh; S: Polca an Rí; John Walsh
 C: Set Leaders: Anton, Sophie
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/47PCc/
 N: https://thesession.org/members/26966/sets/7124
 R: Polka
@@ -451,7 +453,7 @@ T: POLKAS: P&O Set
 T: P&O (D)
 C: C: Christy Leahy / Trad. / Trad.; S: ThZCh; Polca an Rí; Brendan Begley
 C: Set Leaders: Oliushka, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/R1QCc/
 N: https://thesession.org/members/26966/sets/76527
 R: Polka
@@ -585,7 +587,7 @@ T: POLKAS: Weaver's Delight Set
 T: Weaver's Delight
 C: C: Trad.; S: Denis Murphy / Julia & Billy Clifford / Denis Murphy & Johnny O'Leary
 C: Set Leaders: Olya, Anton
-Z: By Anton Zille / Bregolas at The Session
+Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71310
 R: Polka
 M: 2/4
@@ -637,7 +639,7 @@ T: REELS: Banshee Set
 T: Banshee / McMahon's
 C: C: James McMahon / Trad. / Trad.; S: Bothy Band / Joe Cooley / Various
 C: Set Leaders: Olya, Vova
-Z: [Unedited]; Anton Zille ed.; slainte / ceolachan / Jeremy at The Session
+Z: [Unedited] / Anton Zille ed. / [Unedited]; slainte / ceolachan / Jeremy at The Session
 N: https://thesession.org/members/26966/sets/92367
 R: Reel
 M: 4/4
@@ -676,7 +678,7 @@ K: Dmaj
 AFAB AFAB|defe dBAf|efdB AF~F2|AFEG FD D2:||
 |:faab afdf|a/b/a fd edBd|ABde fd~d2|edfd edBd|
 ABde fd~d2|e/f/g fd edBd|ABdB AF~F2|AFEG FD D2:||
-T: New Mown Meadows (A)
+T: New Mown Meadows (Amix)
 K: Amix
 |:eA~A2 BABd|egfd edBd|eA~A2 BABd|dfed Bcdf|
 eAAG A2 Bd|e/f/g fd edBd|~g3e ~f3e|dfed Bcdf||
@@ -869,7 +871,7 @@ T: SLIDES: Denny Mescall's Set
 T: Bank of Turf
 C: C: Trad. / Trad. / Mike Scott; S: Various
 C: Set Leaders: Mars, Anton
-Z: By Mars Agliullin / Anton Zille ed.; Mars at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; Mars at The Session
 N: https://thesession.org/members/26966/sets/94265
 R: Single Jig
 M: 12/8
@@ -899,7 +901,7 @@ c3 cBA F2A E2f|ecA BcB A3 A3||
 X: 32
 T: SLIP JIGS: Snowy Path Set
 T: Snowy Path
-C: C: Mark Kelly / Trad. / Trad.; S: Altan // Various
+C: C: Mark Kelly / Trad. / Trad.; S: Altan / Various
 C: Set Leaders: Olya, Tania, Anton
 Z: Anton Zille ed.; Shawn Cassady / Josh Kane / Netallica at The Session
 N: https://thesession.org/members/26966/sets/76538
@@ -943,14 +945,14 @@ G2 GA BG|A2 AB cA|d2 de fd|1 c2 A2 F2:|2 c2 A2 f2||
 b3 a g2|f2 de fd|dc Ad cA|1 A2 G2 f2:|2 A2 G2 F2||
 T: Inis Oírr / Inisheer
 R: Air
-K: Dmix
+K: Gmaj
 |:B3 A Bd|B2 BA Bd|E3 B AB|D3 B AG|
 B3 A Bd|B2 BA Bd|G3 B A/G/F|1 G3 D ED:|2 G3 A Bd||
 e3 f ed|B3 A Bd|ef ed B/c/d|
 e3 A Bd|e2 ef ed|B3 A Bd|G3 B A/G/F|
 G2 GA Bd|e2 ef ed|B2 BA Bd|gf ed B/c/d|
 e3 f gf|e2 ef ed|B3 A Bd|D3 B A/G/F|G3 D ED||
-T: Flatwater Fran (G)
+T: Flatwater Fran (Gmaj)
 R: Waltz
 K: Gmaj
 DE|:G2 G2 DE|G2 G2 Bd|e2 d2 G2|B4 DE|
@@ -961,7 +963,7 @@ A2 AG AB|AG E2 GE|DE G2 G2|1 G4 DE:|2 G4 Bd||
 e2 d2 g2|B2 dB AG|EA AG AB|A4 Bd|
 e2 d2 g2|B2 dB AG|A2 d3c|B3 B AG|
 EA AG AB|AG E2 GE|DE G2 G2|1 G4 Bd:|2 G4||
-T: Flatwater Fran (A)
+T: Flatwater Fran (Amaj)
 K: Amaj
 EF|:A2 A2 EF|A2 A2 ce|f2 e2 A2|c4 EF|
 A2 A2 EF|B2 B2 AB|c2 BA FE|F4 EF|

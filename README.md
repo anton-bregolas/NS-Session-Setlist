@@ -11,10 +11,48 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.6.0: Convert Sets to Tunes
+
++ Project updates:
+  - ABC Encoder: Sort now automatically generates ABC Tunebook from Sets
+  - ap-style-title-case v.2.0.0 added as a module for title formatting
+
++ JavaScript updates:
+  - Sets > Tunes conversion functionality added with new and updated ABC Encoder functions (scripts-abc-encoder.js)
+    - ABC Sort can now call function makeTuneListFromSets to automatically convert Sets data into separate Tunes
+    - sortFilterAbc now includes option to pass Sets data to makeTuneListFromSets and return an additional Tunebook array
+  - makeTuneListFromSets checks whether a Set is a Medley, removes Set Title and passes each tune to addCustomAbcFields along with the following arguments:
+    - abcMatch - first tune in a set containing most ABC headers
+    - setToTunes - set to true for additional Tune Title formatting
+    - abcIndex - Tune No. in the Set for splitting data contained in C: C: S: and Z: fields
+    - isMedley - set to true for sets containing mix of Tune Types
+  - addMissingFields renamed to addCustomAbcFields and refactored with new sorting algorithm:
+    - Get and format ABC Title and Tune Type text via processAbcTitle makeStringProperCase
+    - Check if ABC matches the N.S.S.S. custom fields layout
+    - Return with updated titles if headers are present in the correct order
+    - Store ABC field text into abcX variables if data found
+    - Update Title and abcX variables using reference ABC if abcMatch was passed
+    - Remove all opening headers
+    - Reconstruct headers using abcX variables, Tune Type and switch statements
+    - Return the reassembled ABC from Title, Headers and Body with a specific order of ABC fields
+  - Text formatting functions makeStringProperCase and processAbcTitle added to ABC Sort
+  - makeStringProperCase checks an array of objects makeProperCaseExceptions for overrides
+  - processAbcTitle passes a string to ap-style-title-case for Title Case capitalization
+  - sortFilterAbc now includes additional line break removal options (off by default)
+  - Output algorithm updated in parseAbcFromFile
+  - encodeTunesForAbcTools tweaked for better readability
+  - Global settings variables added for fine-tuning ABC Encoder sort and export functions
+  - abcBasicTuneTypes array added to control list of tune types with separate Tunebook category
+  - ABC Encoder functions sorting and comments updated
+
++ Session DB updates:
+  - Session DB updated to 2025-02-03
+  - Z: field standard fixed for auto-sorting: "Editor 1, Editor 2; TSO Source 1 / TSO Source N"
+
 v.0.5.5: Session DB Update
 
 + Project updates:
-  - ABC Encoder: Now exports tab-separated Tunelist in addition to JSON file
+  - ABC Encoder: Now exports tab-separated plain text Tunelist in addition to JSON file
   - ABC Encoder: Sort function now checks for missing custom fields, adds them to ABC
 
 + JavaScript updates:
