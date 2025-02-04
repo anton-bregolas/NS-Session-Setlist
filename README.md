@@ -48,7 +48,7 @@ v.0.6.0: Convert Sets to Tunes
 + Session DB updates:
   - Session DB updated to 2025-02-03
   - Tune Type in T: fields is now indicated in []
-  - Tune Keys in T: tweaked: (A) is being mistakenly lowercased to (a)
+  - Tune Keys in T: are now (Amaj) instead of (A)
   - Z: field standard fixed for auto-sorting: "Editor 1, Editor 2; TSO Source 1 / TSO Source N"
 
 v.0.5.5: Session DB Update
