@@ -48,7 +48,7 @@ K: Gmaj
 |:Bc|d2G2 GBAB|c2E2 A2AG|FGAB cBcd|e2d2 ~B3c|
 d2G2 GBAB|c2E2 A2AG|FGAB cADF|A2G2 G2:||
 (3Bcd|:g2ge ~f3d|efec A2AG|FGAB cBcd|e2d2 B2(3Bcd|
-g2ge ~f3d|efec A2AG|FGAB cADF|A2G2 G2:|
+g2ge ~f3d|efec A2AG|FGAB cADF|A2G2 G2:||
 
 X: 4
 T: BARNDANCE: If There Weren't Any Women
@@ -131,7 +131,7 @@ K: Dmaj
 |:AF|D2FA DAFA|dfed B2dB|A2AB AFDE|(3FED ED B,DA,B,|
 D2FA DAFA|dfed B2dB|A2AB AFDE|F2D2 D2:||
 |:dB|Addc d3 f|afbf afed|efed BAFA|fded BdA2|
-Addc d3 f|afbf afed|efed BAdB|AFEF D2:|
+Addc d3 f|afbf afed|efed BAdB|AFEF D2:||
 
 X: 9
 T: HORNPIPE: Kitty's Wedding
@@ -195,7 +195,7 @@ K: Dmaj
 |:FG|AFDE FEDF|(3ABA GB AF D2|fedf edce|dcAB =cAGB|
 AFDE FEDF|(3ABA GB AF D2|fedc ABAG|F2D2 D2:||
 |:fg|afdf g2 fe|dfed BAFA|(3ABA FA BAFG|(3ABA FA BAfg|
-afdf g2 fe|dfed BAFG|~A2 FG ABAG|F2D2 D2:|
+afdf g2 fe|dfed BAFG|~A2 FG ABAG|F2D2 D2:||
 
 X: 13
 T: HORNPIPE: Rights of Man
@@ -227,7 +227,7 @@ K: Dmaj
 |:FG|ABAF DEFG|AG (3FED =c2 (3AB^c|dcde fdAF|G2GF G2FG|
 ABAF DEFG|AG (3FED =c2 (3AB^c|dcde fdAG|F2D2 D2:||
 |:de|f2fd ecAF|Gggf g2fg|a2ab agec|dcAF G2FG|
-ABAF DEFG|AG (3FED =c2 (3AB^c|dcde fdAG|F2D2 D2:|
+ABAF DEFG|AG (3FED =c2 (3AB^c|dcde fdAG|F2D2 D2:||
 
 X: 15
 T: HORNPIPE: Súisin Bán
@@ -383,7 +383,7 @@ def d2 B|~A3 ABc|dcB AFE|FDD D2 A:||
 
 X: 24
 T: JIG: Humours of Killarney
-T: Sheehan's / Cheer Up Old Hag
+T: Sheehan's / Cheer up Old Hag
 C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien; Pádraig O'Keeffe
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; Nigel Gatherer at The Session
@@ -452,7 +452,7 @@ T: JIG: Swallowtail
 C: C: Trad.; S: Various
 C: Set Leaders: Olya, Andrey
 Z: [Unedited]; fidicen at The Session
-N: https://thesession.org/members/26966/sets/92387     
+N: https://thesession.org/members/26966/sets/92387
 R: Jig
 M: 6/8
 L: 1/8
@@ -464,7 +464,7 @@ GEE BEE|GEG B2c|dcd AGF|GEE E3:||
 Bcd e2f|e2f edB|dcd AGF|GEE E3:||
 
 X: 29
-T: JIG: Tripping Up the Stairs
+T: JIG: Tripping up the Stairs
 C: C: Trad.; S: Various
 C: Set Leaders: Olya, Andrey
 Z: [Unedited]; NfldWhistler at The Session
@@ -596,7 +596,7 @@ e/f/g/e/ dB|c/B/A/G/ AB|DG B/A/G/A/|1 BG G>E:|2 BG G>B||
 e/f/g/e/ dB|c/B/A/G/ AB|DG B/A/G/A/|1 BG G>B:|2 BG G>E||
 
 X: 37
-T: POLKA: John Walsh's
+T: POLKA: John Walsh's No. 1
 T: Goblachan / Derrygallen Bridge 
 C: C: John Walsh; S: Polca an Rí; John Walsh
 C: Set Leaders: Anton, Sophie
@@ -615,7 +615,6 @@ g>g fg|ag g/a/g/e/|dB BA|1 G2 Bd:|2 G2 GD||
 
 X: 38
 T: POLKA: John Walsh's or Daly's Mill
-T: Daly's Mill
 C: C: John Walsh; S: Polca an Rí; John Walsh
 C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed.; Bregolas at The Session
@@ -1011,7 +1010,7 @@ K: Ador
 EA~A2 BGAG|EA~A2 BABd|e~g3 afge|1 dBGB ~A3G:|2 dBGB A2dB||
 |:~A3B dBAB|G2BG DGBG|~A3B dGBd|1 efge dBGB:|2 efge d2 Bd||
 |:ea~a2 bgaf|gedB GABd|ea~a2 bgaf|gede g2eg|
-~a3f ~g3e|dedB GABd|eA~A2 efge|1 dBGB A2 Bd:|2 dBGB ~A3G|
+~a3f ~g3e|dedB GABd|eA~A2 efge|1 dBGB A2 Bd:|2 dBGB ~A3G||
 
 X: 61
 T: REEL: Maud Millar
@@ -1027,7 +1026,7 @@ K: Gmaj
 gf|edBA GEDE|G2BG dGBd|e2dB A2GA|Beed efgf|
 edBA GEDE|G2BG dGBd|e2dB A2GA|Beed e2ge||
 dega bgg2|agef g3e|dega bgg2|aged eage|
-dega bgg2|agef g3a|bgaf gfed|Beed e4|
+dega bgg2|agef g3a|bgaf gfed|Beed e4||
 
 X: 62
 T: REEL: Morning Star
@@ -1130,7 +1129,7 @@ FAdf ~a3f|~g3a gfef|g2ba gfed|cAGE ED D2:||
 X: 68
 T: REEL: Trip to Birmingham
 C: C: Josie McDermott; S: Various
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars, Tania, Anton
 Z: [Unedited]; slainte at The Session
 N: https://thesession.org/members/26966/sets/94276
 R: Reel
@@ -1148,7 +1147,7 @@ dg~g2 ag~g2|bg~g2 edBA|~G3B dGBG|AGFA G3||
 X: 69
 T: REEL: Trip to Cullenstown (Gmaj)
 C: C: Phil Murphy; S: Various
-C: Set Leaders: Mars, Tania 
+C: Set Leaders: Mars, Tania, Anton
 Z: [Unedited]; Kenny at The Session
 N: https://thesession.org/members/26966/sets/94276
 R: Reel
@@ -1164,7 +1163,7 @@ BABd e2 dB|dedB AGEG|B2 BG AGEG|DGGF G4:||
 X: 70
 T: REEL: Trip to Durrow
 C: C: Dan Cleary; S: Various
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars, Tania, Anton
 Z: [Unedited]; SPeak at The Session
 N: https://thesession.org/members/26966/sets/94276
 R: Reel
@@ -1195,8 +1194,7 @@ K: Emin
 |:FGBF GBGF|EFGE FGFE|DFAD FADF|AGFG E4:||
 
 X: 72
-T: REEL: Walter Sammon's Grandma
-T: Walter Sammon's Grandmother
+T: REEL: Walter Sammon's Grandmother
 C: C: Trad.; S: ThZCh; Polca an Rí; Patrick Street
 C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; shanachie at The Session
@@ -1367,7 +1365,7 @@ T: SLIDE: Road to Lisdoonvarna
 C: C: Trad.; S: Various
 C: Set Leaders: Olya, Andrey
 Z: [Unedited]; birlibirdie at The Session
-N: https://thesession.org/members/26966/sets/92387      
+N: https://thesession.org/members/26966/sets/92387
 R: Slide
 M: 12/8
 L: 1/8
@@ -1380,16 +1378,15 @@ e2f gfe d2B Bcd|cdc B2A B2E E3:||
 
 X: 83
 T: SLIDE: This is My Love, Do You Like Her?
-T: Biddy Crowley’s Ball / Pussycat Up in a Plum Tree
+T: Biddy Crowley’s Ball / Pussycat up in a Plum Tree
 C: C: Trad.; S: Bothy Band; Julia Clifford
-C: Set Leaders: Oliushka, Anton 
+C: Set Leaders: Oliushka, Anton
 Z: Anton Zille ed.; nobu at The Session
 N: https://thesession.org/members/26966/sets/63219
 R: Slide
 M: 12/8
 L: 1/8
 Q: 3/8=130
-K: Gmaj
 K: Ador
 A2A AGE c2B c2d|e2e ede g3 g2e|
 def g2e dBA G2A|1 B2e dBG A2B c2B:|2 B2e dBG A3 ABd||
