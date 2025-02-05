@@ -33,6 +33,24 @@ const abcBasicTuneTypes = [
     "waltz"
 ];
 
+// List of overrides for ABC string formatting
+// Other strings will be formatted by default
+
+const makeTitleCaseExceptions = [
+
+    { string: "an súisin bán", override: "An Súisin Bán"},
+    { string: "casadh an tsúgáin", override: "Casadh an tSúgáin"},
+    { string: "dance ti' thy daddy", override: "Dance ti' Thy Daddy"},
+    { string: "tá an coileach ag fógairt an lae", override: "Tá an Coileach ag Fógairt an Lae"}
+];
+
+const makeProperCaseExceptions = [
+
+    { string: "three-two", override: "3/2 Hornpipe"},
+    { string: "three two", override: "3/2 Hornpipe"},
+    { string: "3/2", override: "3/2 Hornpipe"}
+];
+
 ////////////////////////////////
 // ABC FILE PARSERS & HANDLERS
 ///////////////////////////////
@@ -106,8 +124,7 @@ export async function parseAbcFromFile(taskType) {
                     }
                 }
 
-                console.log("ABC Encoder:\n\nDownloading new ABC file...");
-
+                // console.log("ABC Encoder:\n\nDownloading new ABC file...");
                 downloadAbcFile(abcContentResult, rawAbcFile.name, taskType);
 
             } catch (error) {
@@ -342,15 +359,48 @@ function removeTextAfterLineBreaksInAbc(sortedAbcArr) {
     return sortedAbcArr;
 }
 
+// Make selected ABC field text Title Case via ap-style-title-case
+// Override exceptions with strings from makeTitleCaseExceptions
+
+function makeStringTitleCase(abcString) {
+
+    let abcTitleCaseOutput = '';
+
+    let abcTitleArr = abcString.trim().split(/(?:[\s]*[^0-9]\/[\s]*)/);
+
+    for (let i = 0; i < abcTitleArr.length; i++) {
+
+        let titleOverride = '';
+        
+        for (const caseObj of makeTitleCaseExceptions) {
+            
+            if (abcTitleArr[i].toLowerCase() === caseObj.string) {
+                
+                titleOverride = caseObj.override;
+                break;
+            }
+        }
+        
+        if (i > 0) {
+
+            abcTitleCaseOutput += " / ";
+        }
+
+        if (titleOverride) {
+    
+            abcTitleCaseOutput += titleOverride;
+
+        } else {
+
+            abcTitleCaseOutput += apStyleTitleCase(abcTitleArr[i]);
+        }
+    }
+
+    return abcTitleCaseOutput;
+}
+
 // Make selected ABC field text Proper Case
-// Override exceptions with unique strings
-
-const makeProperCaseExceptions = [
-
-    { string: "three-two", override: "3/2 Hornpipe"},
-    { string: "three two", override: "3/2 Hornpipe"},
-    { string: "3/2", override: "3/2 Hornpipe"}
-];
+// Override exceptions with strings from makeProperCaseExceptions
 
 function makeStringProperCase(abcString) {
 
@@ -380,7 +430,7 @@ function makeStringProperCase(abcString) {
 // Optional: Add TYPE: prefix to ABC Title
 
 function processAbcTitle(abcTitle, abcTitlePrefix) {
-    
+
     const abcTitleArr = abcTitle.trim().split('\n');
 
     let primaryTitle = abcTitleArr[0].match(/(?<=^T:).*/)[0].trim();
@@ -390,7 +440,7 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
         primaryTitle = primaryTitle.replace(/^.*:/, '').trim();
     }
 
-    let formattedTitle = apStyleTitleCase(primaryTitle);
+    let formattedTitle = makeStringTitleCase(primaryTitle);
 
     let formattedPrefix = abcTitlePrefix? `${abcTitlePrefix}: ` : '';
 
@@ -400,11 +450,7 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
 
         for (let i = 1; i < abcTitleArr.length; i++) {
 
-            debugger;
-
-            console.log(abcTitleArr[i])
-
-            abcTitleOutput += `\nT: ${apStyleTitleCase(abcTitleArr[i].match(/(?<=^T:).*/)[0].trim())}`;
+            abcTitleOutput += `\nT: ${makeStringTitleCase(abcTitleArr[i].match(/(?<=^T:).*/)[0])}`;
         }
     }
 
@@ -467,72 +513,73 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
     let abcCSL = abcContent.match(/(?<=^C: Set Leaders:).*/m)? abcContent.match(/(?<=^C: Set Leaders:).*/m)[0].trim() : '';
     let abcCCS = abcContent.match(/(?<=^C: C:).*/m)? abcContent.match(/(?<=^C: C:).*/m)[0].trim() : '';
     let abcZ = abcContent.match(/(?<=^Z:).*/m)? abcContent.match(/(?<=^Z:).*/m)[0].trim() : '';
-    let abcN = abcContent.match(/(?<=^N:).*/m)? abcContent.match(/(?<=^N:).*/m)[0].trim() : '';
+    let abcN = abcContent.match(/(?<=^N:).*/m)? abcContent.match(/(?<=^N:).*/gm) : [];
     let abcM = abcContent.match(/(?<=^M:).*/m)? abcContent.match(/(?<=^M:).*/m)[0].trim() : '';
     let abcL = abcContent.match(/(?<=^L:).*/m)? abcContent.match(/(?<=^L:).*/m)[0].trim() : '';
     let abcQ = abcContent.match(/(?<=^Q:).*/m)? abcContent.match(/(?<=^Q:).*/m)[0].trim() : '';
     let abcK = abcContent.match(/(?<=^K:).*/m)? abcContent.match(/(?<=^K:).*/m)[0].trim() : '';
-
+    
     // Retrieve custom ABC field data if abcMatch is provided
-
+    
     if (abcMatch) {
-
-        // Convert N.S.S.S. T: Set Subtitle to T: Tune Title + T: Subtitle
-
-        if (setToTunes) {
-
-            if (abcTitle.includes('[')) {
-
-                abcTitle = abcTitle.replace(/(?:[\s]*\[.*\])/, '');
-            }
-
-            if (abcTitle.includes('/')) {
-
-                abcTitle = abcTitle.replace(/(?:[\s]*\/[\s]*)/, `\nT: `)
-            }
-        }
         
         if (!isMedley) {
-
+            
             if (!abcR) {
                 
                 abcR = abcMatch.match(/(?<=^R:).*/m)? abcMatch.match(/(?<=^R:).*/m)[0].trim() : 
-                       abcMatch.match(/^T:.*:/) && abcBasicTuneTypes.includes(abcMatch.match(/(?<=^T:).*:/)[0].trim().toLowerCase)? abcMatch.match(/(?<=^T:).*:/)[0].trim() :
-                       'Various';
+                abcMatch.match(/^T:.*:/) && abcBasicTuneTypes.includes(abcMatch.match(/(?<=^T:).*:/)[0].trim().toLowerCase)? abcMatch.match(/(?<=^T:).*:/)[0].trim() :
+                'Various';
                 abcTuneType = makeStringProperCase(abcR);
                 abcTitlePrefix = abcBasicTuneTypes.includes(abcR.toLowerCase())? abcR.toUpperCase() : "VARIOUS";
             }
-
+            
             if (!abcQ) {
-
+                
                 abcQ = abcMatch.match(/(?<=^Q:).*/m)? abcMatch.match(/(?<=^Q:).*/m)[0].trim() : '';
             }
         }
-    
+        
         abcCSL = abcMatch.match(/(?<=^C: Set Leaders:).*/m)? abcMatch.match(/(?<=^C: Set Leaders:).*/m)[0].trim() : '';
         abcCCS = abcMatch.match(/(?<=^C: C:).*/m)? abcMatch.match(/(?<=^C: C:).*/m)[0].trim() : '';
         abcZ = abcMatch.match(/(?<=^Z:).*/m)? abcMatch.match(/(?<=^Z:).*/m)[0].trim() : '';
-        abcN = abcMatch.match(/(?<=^N:).*/m)? abcMatch.match(/(?<=^N:).*/m)[0].trim() : '';
+        abcN = abcMatch.match(/(?<=^N:).*/m)? abcMatch.match(/(?<=^N:).*/gm) : [];
         abcM = abcM === '' && abcMatch.match(/(?<=^M:).*/m)? abcMatch.match(/(?<=^M:).*/m)[0].trim() : abcM;
         abcL = abcL === '' && abcMatch.match(/(?<=^L:).*/m)? abcMatch.match(/(?<=^L:).*/m)[0].trim() : abcL;
+        
+        // Convert N.S.S.S. T: Set Subtitle to T: Tune Title + T: Subtitle
+        
+        if (setToTunes) {
+            
+            if (abcTitle.includes('[') && abcTitlePrefix !== "VARIOUS") {
+                
+                abcTitle = abcTitle.replace(/(?:[\s]*\[.*\])/, '');
+            }
+            
+            if (abcTitle.includes('/') && abcTitle.match(/(?:[\s]*[^0-9]\/[\s]*)/)) {
+                
+                abcTitle = abcTitle.replace(/(?:[\s]*[^0-9]\/[\s]*)/, `\nT: `);
+            }
+        }
     }
-
+    
     // Update primary ABC title to match TYPE: Title format
-
+    
     abcTitle = processAbcTitle(abcTitle, abcTitlePrefix);
-
+    
     // Remove all ABC header text and reconstruct ABC fields in the correct order
     
     let abcBody = updatedAbc.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
-
+    
     let abcHeaders = '';
-
+    let abcNotes = '';
+    
     // Update ABC Meter field if missing, derive M: from Tune Type
-
+    
     if (!abcM) {
-
+        
         switch (abcTuneType.toLowerCase()) {
-                
+            
             case "barndance":
             case "fling":
             case "highland":
@@ -609,7 +656,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
         switch (abcTuneType.toLowerCase()) {
 
             case "air":
-                abcQ = "1/2=40";
+                abcQ = abcM === "3/4"? "1/4=100" : "1/2=40";
                 break;
                 
             case "barndance":
@@ -673,6 +720,17 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
         }
     }
 
+    // Combine the array of N: fields into a single string
+
+    if (abcN.length > 0) {
+
+        abcN.forEach(abcNote => abcNotes += `N: ${abcNote.trim()}\n`);
+
+    } else {
+
+        abcNotes = `N: \n`;
+    }
+
     // Add ABC Transcription field if missing, fill in the default value
 
     if (!abcZ) {
@@ -691,7 +749,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     // Combine all ABC fields after Title(s) into an ordered headers string
 
-    abcHeaders = `C: C: ${abcCCS}\nC: Set Leaders: ${abcCSL}\nZ: ${abcZ}\nN: ${abcN}\nR: ${abcTuneType}\nM: ${abcM}\nL: ${abcL}\nQ: ${abcQ}\nK: ${abcK}`;
+    abcHeaders = `C: C: ${abcCCS}\nC: Set Leaders: ${abcCSL}\nZ: ${abcZ}\n${abcNotes}R: ${abcTuneType}\nM: ${abcM}\nL: ${abcL}\nQ: ${abcQ}\nK: ${abcK}`;
 
     // Return ABC with updated Title and fields
 

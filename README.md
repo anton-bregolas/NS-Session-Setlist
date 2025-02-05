@@ -11,6 +11,24 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.6.1: Convert Sets to Tunes (Set to Tunes Tweaks)
+
++ Project updates:
+  - ABC Encoder: Title Case formatting in Sort refactored to allow for exceptions (titles in Irish etc.)
+  - ABC Encoder: Sort now supports multiple Note fields
+  - ABC Encoder: Title filtering script tweaked
+
++ JavaScript updates:
+  - Tune Title cleanup logic refactored with regular expressions in addCustomAbcFields (scripts-abc-encoder.js)
+  - makeStringTitleCase function and makeTitleCaseExceptions array of objects added to override exceptions in capitalization
+  - processAbcTitle now passes strings to makeStringTitleCase
+  - addCustomAbcFields now creates an array of N: fields to account for multiple Note fields
+
++ Session DB updates:
+  - Session DB updated to 2025-02-05
+  - Sets & Tunes from Oliushka added (v.1)
+  - Sets & Tunes from Anton added (v.1)
+
 v.0.6.0: Convert Sets to Tunes
 
 + Project updates:
