@@ -259,7 +259,7 @@ function getSortedAbc(abcContent) {
 
 // Return a sorted, filtered and renumbered array of ABCs
 
-function sortFilterAbc(abcContent) {
+export function sortFilterAbc(abcContent) {
 
     try { 
 
@@ -426,7 +426,70 @@ function makeStringProperCase(abcString) {
             .join(' ');
 }
 
+// Make ABC Tune Type singular based on Title Prefix (formatting style for Tunes)
+
+function makeTuneTypeSingular(abcTitlePrefix) {
+
+    if (["march","schottis","waltz"].includes(abcTitlePrefix.toLowerCase())) {
+
+        return makeStringProperCase(abcTitlePrefix).replace(/es$/, '');
+    }
+
+    if (abcTitlePrefix.toUpperCase() !== "VARIOUS") {
+
+        return makeStringProperCase(abcTitlePrefix).replace(/s$/, '')
+    }
+
+    return "Various";
+}
+
+// Make ABC Tune Type plural in the Title Prefix (formatting style for Sets)
+// Check if number of T: fields is more than 2 (Primary Title + Subtitle)
+// Add plural affix to ABC Tune Type name depending on type
+
+function makeTuneTypePlural(abcContent, abcR) {
+
+    const isSet = abcContent.match(/^T:/gm).length > 2;
+
+    if (abcR && abcBasicTuneTypes.includes(abcR.toLowerCase())) {
+
+        let tuneTypeSuffix = '';
+
+        if (isSet) {
+    
+            tuneTypeSuffix = ["march","schottis","waltz"].includes(abcR.toLowerCase())? 'es' : 's';
+        }
+
+        return `${abcR + tuneTypeSuffix}`.toUpperCase()
+    }
+
+    return "VARIOUS";
+}
+
+// Remove articles from the start of the ABC Title to make it sort-friendly
+
+function toSortFriendlyTitle(abcTitle) { 
+    
+    return abcTitle.replace(/^(?:(?:The|An|A)[\s]+)/, '').trim();
+}
+
+// Process ABC Subtitles (single-line T:)
 // Make selected ABC field text Title Case
+// Remove articles to make ABC sort-friendly
+
+function processAbcSubtitles(abcContent) {
+
+    let processedAbcContent = abcContent.replace(/(?<=^T:).*/gm, 
+        
+        match => ` ${makeStringTitleCase(toSortFriendlyTitle(match.trim()))}`
+    );
+
+    return processedAbcContent;
+}
+
+// Process ABC Primary Title (single or multi-line)
+// Make selected ABC field text Title Case
+// Remove articles to make ABC sort-friendly
 // Optional: Add TYPE: prefix to ABC Title
 
 function processAbcTitle(abcTitle, abcTitlePrefix) {
@@ -440,7 +503,12 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
         primaryTitle = primaryTitle.replace(/^.*:/, '').trim();
     }
 
-    let formattedTitle = makeStringTitleCase(primaryTitle);
+    if (primaryTitle.match(/\.$/)) {
+
+        primaryTitle = primaryTitle.replace(/\.$/, '');
+    }
+
+    let formattedTitle = makeStringTitleCase(toSortFriendlyTitle(primaryTitle));
 
     let formattedPrefix = abcTitlePrefix? `${abcTitlePrefix}: ` : '';
 
@@ -450,7 +518,9 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
 
         for (let i = 1; i < abcTitleArr.length; i++) {
 
-            abcTitleOutput += `\nT: ${makeStringTitleCase(abcTitleArr[i].match(/(?<=^T:).*/)[0])}`;
+            let secondaryTitle = abcTitleArr[i].match(/(?<=^T:).*/)[0].trim();
+
+            abcTitleOutput += `\nT: ${makeStringTitleCase(toSortFriendlyTitle(secondaryTitle))}`;
         }
     }
 
@@ -482,26 +552,28 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     let abcR = abcContent.match(/(?<=^R:).*/m)? abcContent.match(/(?<=^R:).*/m)[0].trim() : '';
 
-    let abcTitlePrefix = abcTitle.match(/^T:.*:/)? abcTitle.match(/(?<=^T:).*(?=:)/)[0].trim().toUpperCase() :
-                         abcR && abcBasicTuneTypes.includes(abcR.toLowerCase())? abcR.toUpperCase() : 
-                         "VARIOUS";
+    let abcTitlePrefix = abcTitle.match(/^T:.*:/)? abcTitle.match(/(?<=^T:).*(?=:)/)[0].trim().toUpperCase() : makeTuneTypePlural(abcContent, abcR);
 
-    let abcTuneType = abcR? makeStringProperCase(abcR) :
-                      abcTitlePrefix !== "VARIOUS" && !["march","schottis","waltz"].includes(abcTitlePrefix.toLowerCase()) ? makeStringProperCase(abcTitlePrefix).replace(/s$/, '') :
-                      abcTitlePrefix !== "VARIOUS" ? makeStringProperCase(abcTitlePrefix).replace(/es$/, '') :
-                      "Various";
+    let abcTitleSuffix = abcContent.match(/^T:/gm).length > 2 && !abcContentTitle.toUpperCase().endsWith("SET")? " Set" : '';
+
+    let abcTuneType = abcR? makeStringProperCase(abcR) : makeTuneTypeSingular(abcTitlePrefix);
 
     // QUICK EDIT CASE:
 
     const abcCustomFieldsLayout = /^C: C:.*[\s]*C: Set Leaders:.*[\s]*Z:.*[\s]*(N:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*K:.*[\s]*/gm;
 
-    // Return ABC with processed Title and R: field if all custom fields are already in place
+    // Return ABC with processed Title and R: fields if all custom fields are already in place
 
     if (!abcMatch && updatedAbc.match(abcCustomFieldsLayout)) {
 
-        let updatedAbcTitle = processAbcTitle(abcTitle, abcTitlePrefix);
+        let updatedAbcTitle = processAbcTitle(abcTitle, abcTitlePrefix) + abcTitleSuffix;
 
-        updatedAbc = updatedAbc.replace(/^R:.*/m, `R: ${abcTuneType}`);
+        updatedAbc = updatedAbc.replace(/(?<=^R:).*/gm, tuneType => ` ${makeStringProperCase(tuneType.trim())}`);
+
+        if (updatedAbc.match(/^T:.*/m)) {
+
+            updatedAbc = processAbcSubtitles(updatedAbc);
+        }
 
         return `${updatedAbcTitle}\n${updatedAbc}`;
     }
@@ -565,7 +637,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
     
     // Update primary ABC title to match TYPE: Title format
     
-    abcTitle = processAbcTitle(abcTitle, abcTitlePrefix);
+    abcTitle = processAbcTitle(abcTitle, abcTitlePrefix) + abcTitleSuffix;
     
     // Remove all ABC header text and reconstruct ABC fields in the correct order
     
@@ -750,6 +822,8 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
     // Combine all ABC fields after Title(s) into an ordered headers string
 
     abcHeaders = `C: C: ${abcCCS}\nC: Set Leaders: ${abcCSL}\nZ: ${abcZ}\n${abcNotes}R: ${abcTuneType}\nM: ${abcM}\nL: ${abcL}\nQ: ${abcQ}\nK: ${abcK}`;
+
+    abcBody = abcBody.replace(/(?<=^R:).*/gm, tuneType => ` ${makeStringProperCase(tuneType.trim())}`);
 
     // Return ABC with updated Title and fields
 

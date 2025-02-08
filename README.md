@@ -11,6 +11,23 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.6.2: Convert Sets to Tunes (Setting up Tests)
+
++ Project updates:
+  - ABC Encoder: Fine-tuning ABC Sort scripts with help of unit tests
+  - ABC Encoder: Title processing tweaks for ABC Title and Subtitles
+  - Tests: Basic tests for TSO Import ABC conversion set up in Bun
+
++ JavaScript updates:
+  - processAbcTitle updated, now adds Title Prefix and "Set" at the end of Primary ABC Title for Sets
+  - processAbcSubtitles now handles ABC Subtitles (titles of 2nd+ Tunes in a Set)
+  - Tune Title formatting functions added (makeTuneTypeSingular, makeTuneTypePlural, toSortFriendlyTitle, processAbcSubtitles)
+
++ Tests updates:
+  - ABC Encoder tests file created (scripts-abc-encoder.test.js)
+  - Sample TSO Set of Tunes added for testing (abcImportRawTsoSet)
+  - Tests checking how ABC Sort handles addition of custom fields and Sets to Tunes conversion added
+
 v.0.6.1: Convert Sets to Tunes (Set to Tunes Tweaks)
 
 + Project updates:
