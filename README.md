@@ -11,6 +11,15 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.6.3: Convert Sets to Tunes (Testing ABC Field Splitting)
+
++ Project updates:
+  - Tests: Additional tests for handling of custom ABC fields set up in Vitest
+
++ Tests updates:
+  - New tests added for checking if ABC Sort correctly splits custom C: C: S: and Z: field values of a Set between several Tunes
+  - Variations of N.S.S.S. Sets of Tunes added for testing (abcImportProcessedNsssSet, abcImportMultiComposerNsssSet, abcImportMultiZNsssSet, abcImportMultiZAndComposerNsssSet)
+
 v.0.6.2: Convert Sets to Tunes (Setting up Tests)
 
 + Project updates:

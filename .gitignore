@@ -5,3 +5,4 @@ bunfig.toml
 happydom.ts
 package.json
 pnpm-lock.yaml
+vitest.config.js
