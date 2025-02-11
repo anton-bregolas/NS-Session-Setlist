@@ -11,6 +11,22 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.6.4: Convert Sets to Tunes (Correct ABC Field Splitting)
+
++ Project updates:
+  - ABC Encoder: ABC Sort now passes Z: and C: C: S: field values for processing when splitting Sets into Tunes
+  - ABC Encoder: Multiple value ABC fields listing composers, sources and transcription authors or editors are now correctly split between Tunes
+  - ESLint added to project for extra tweaks in development
+
++ JavaScript updates:
+  - addCustomAbcFields updated with abcZ and abcCCS processing logic under Sets to Tunes (scripts-abc-encoder.js)
+  - New ABC field value handler functions added (getValueByAbcIndex, processAbcCCS, processAbcZ)
+  - processAbcCCS and processAbcZ return a string with values based on Tune's index in a Set or a placeholder string
+  - Minor tweaks and refactoring in ABC Encoder, Launcher and ABC Tools scripts after ESLint installed
+
++ Tests updates:
+  - Minor fixes in expected test output ABCs
+
 v.0.6.3: Convert Sets to Tunes (Testing ABC Field Splitting)
 
 + Project updates:

@@ -1,4 +1,4 @@
-import { initAbcTools, resizeIframe, tuneSelector, tuneFrame, loadTuneBookItem, restoreLastTunebookItem,
+import { initAbcTools, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
          populateTuneSelector, populateFilterOptions, sortFilterOptions, checkPersistenceState } from './scripts-abc-tools.js';
 import { parseAbcFromFile } from './scripts-abc-encoder.js';
 
@@ -282,14 +282,6 @@ function resizeTuneBookHeader(dataType) {
   tuneBookTitle.removeAttribute("style");
 }
 
-// Refresh tab & MIDI selector options, set dropdown menu to default option
-
-export function refreshTabsDisplayOptions() {
-
-    displayOptions.options[0].selected = "selected";
-    displayOptions.value = "-1";
-}
-
 ////////////////////////////////
 // FETCHERS & DATA HANDLERS
 ///////////////////////////////
@@ -356,7 +348,7 @@ export async function fetchData(url, type) {
 
   } catch (error) {
 
-    throw new Error(`[NS Session App]\n\n` + error + `\n\nHTTP error code: ` + error.cause?.status);
+    throw new Error(`[${error}\n\nHTTP error code: ${error.cause?.status}]`);
   }
 }
 
@@ -364,42 +356,35 @@ export async function fetchData(url, type) {
 
 export async function fetchDataJsons() {
 
-  try {
+  // try {
 
     return Promise.all([
       fetchData(tuneSetsLink, "json"),
       fetchData(tuneListLink, "json")
     ]);
 
-  } catch (error) {
+  // } catch (error) {
 
-    throw (error);
-  }
+  //   throw (error);
+  // }
 }
 
 // Push new tune data to Custom JSONs after fetching Session DB
 
 export async function updateDataJsons() {
 
-  try {
+  console.log("NS Session App:\n\nFetching data from Session DB...");
 
-    console.log("NS Session App:\n\nFetching data from Session DB...");
+  const [setsData, tunesData] =
+  await fetchDataJsons();
 
-    const [setsData, tunesData] =
-    await fetchDataJsons();
+  updateData(tuneSets, setsData);
+  updateData(tuneList, tunesData);
 
-    updateData(tuneSets, setsData);
-    updateData(tuneList, tunesData);
+  // sessionSetsCounter.textContent = tuneSets.length;
+  // sessionTunesCounter.textContent = tuneList.length;
 
-    // sessionSetsCounter.textContent = tuneSets.length;
-    // sessionTunesCounter.textContent = tuneList.length;
-
-    return [tuneSets.length, tuneList.length];
-
-  } catch (error) {
-
-    throw (error);
-  }
+  return [tuneSets.length, tuneList.length];
 }
 
 // Update Custom Tune Data JSON

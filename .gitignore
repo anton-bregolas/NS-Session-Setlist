@@ -1,7 +1,9 @@
 .vscode
 node_modules
+.npmrc
 bun.lock
 bunfig.toml
+eslint.config.js
 happydom.ts
 package.json
 pnpm-lock.yaml

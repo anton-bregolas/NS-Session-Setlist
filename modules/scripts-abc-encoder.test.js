@@ -1,9 +1,5 @@
 import { sortFilterAbc } from "./scripts-abc-encoder";
-// import { describe, it, expect } from "bun:test";
 import { describe, it, expect } from "vitest";
-
-// const abcX = /^X:[\s]*[\d]*[\s]/;
-// const abcSortPrimaryOutputFirstAbc = (abcImport) => sortFilterAbc(abcImport)[0][0].replace(abcX, '')
 
 const abcImportRawTsoSet = `X: 1
 T: The Brosna, O'Keeffe's.
@@ -88,7 +84,7 @@ T: JIGS: Humours of Killarney Set
 T: Humours of Killarney / Sheehan's / Cheer up Old Hag
 C: C: Trad.; S: ThZCh; Paudie O'Connor & John O'Brien / Various / Méabh & Clíodhna Ní Bheaglaoich
 C: Set Leaders: Oliushka, Anton
-Z: Anton Zille ed.; Nigel Gatherer / UPipes & harp / Bregolas at The Session
+Z: Anton Zille ed.; Nigel Gatherer / JACKB / Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71901
 R: Jig
 M: 6/8
@@ -147,10 +143,9 @@ it("Correctly splits multiple Z: and C: C: S: values between tunes when converti
 
 expect(sortFilterAbc(abcImportMultiZAndComposerNsssSet)[1]).toEqual([`X: 1
 T: REEL: Devanny's Goat
-T: Devanny's Goat
 C: C: Tommy Whelan (?); S: Noel Hill
 C: Set Leaders: Tania, Anton, Sophie
-Z: Anton Zille ed.; Moulouf The Session
+Z: Anton Zille ed.; Moulouf at The Session
 N: https://thesession.org/members/26966/sets/92390
 R: Reel
 M: 4/4
@@ -163,7 +158,7 @@ AFAB AFAB|defe dBAf|efdB AF~F2|AFEG FD D2:||
 ABde fd~d2|e/f/g fd edBd|ABdB AF~F2|AFEG FD D2:||`,
 `X: 2
 T: REEL: New Mown Meadows (Amix)
-C: C: Trad. ; S: Noel Hill
+C: C: Trad.; S: Noel Hill
 C: Set Leaders: Tania, Anton, Sophie
 Z: Anton Zille ed.; Kenny at The Session
 N: https://thesession.org/members/26966/sets/92390
@@ -200,7 +195,7 @@ expect(sortFilterAbc(abcImportMultiZNsssSet)[1]).toEqual([
 T: JIG: Connaughtman's Rambles
 C: C: Trad.; S: Various
 C: Set Leaders: Oliushka, Anton
-Z: Anton Zille ed.; Bregolas at The Session
+Z: Anton Zille ed.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/71901
 R: Jig
 M: 6/8
@@ -252,7 +247,7 @@ expect(sortFilterAbc(abcImportMultiComposerNsssSet)[1]).toEqual([
 T: WALTZ: Looking at a Rainbow
 T: Looking at a Rainbow Through a Dirty Window
 C: C: Calum Stewart; S: Various
-C: Set Leaders: Olya, Tania
+C: Set Leaders: Oliushka, Anton, Sophie
 Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/95961
 R: Waltz

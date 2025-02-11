@@ -137,7 +137,7 @@ export async function parseAbcFromFile(taskType) {
 
     } catch (error) {
 
-        console.error("ABC Encoder:\n\nParsing sequence failed!");
+        console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
     }
 }
 
@@ -527,6 +527,46 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
     return abcTitleOutput;
 }
 
+//
+
+function getValueByAbcIndex(abcArr, abcIndex) {
+
+    if (abcIndex <= abcArr.length - 1) {
+
+        return abcArr[abcIndex];
+    
+    } else {
+
+        return abcArr[abcArr.length - 1];
+    }
+}
+
+//
+
+function processAbcCCS(abcCCS, abcIndex) {
+
+    let abcCArr = abcCCS.split('S:')[0]?.replace(';', '').split('/');
+    let abcSArr = abcCCS.split('S:')[1]?.split('/');
+
+    let abcC = abcCArr? getValueByAbcIndex(abcCArr, +abcIndex).trim() : '';
+    let abcS = abcSArr? getValueByAbcIndex(abcSArr, +abcIndex).trim() : '';
+
+    return `${abcC? abcC : 'Trad.'}; S: ${abcS? abcS : 'Various'}`;
+}
+
+//
+
+function processAbcZ(abcZ, abcIndex) {
+
+    let abcEds = abcZ.split(';')[0].trim();
+    let abcTsoArr = abcZ.split(';')[1]?.split('/');
+    let abcTso = abcTsoArr? getValueByAbcIndex(abcTsoArr, +abcIndex).trim() : '';
+
+    abcTso = abcTso && abcTso.includes('The Session')? abcTso : abcTso? abcTso + ' at The Session' : 'The Session';
+    
+    return `${abcEds? abcEds : '[Unedited]'}; ${abcTso}`;
+}
+
 // Scan the selected Set or Tune for custom N.S.S.S. ABC fields and update mismatching ABCs
 // Process Set or Tune Title and Tune Type and replace them with the custom style format
 // Optional: Use abcMatch as template for ABC fields text
@@ -632,6 +672,9 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
                 
                 abcTitle = abcTitle.replace(/(?:[\s]*[^0-9]\/[\s]*)/, `\nT: `);
             }
+
+            abcZ = processAbcZ(abcZ, abcIndex);
+            abcCCS = processAbcCCS(abcCCS, abcIndex);
         }
     }
     
