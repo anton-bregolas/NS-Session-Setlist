@@ -11,6 +11,20 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.6.5: Convert Sets to Tunes (Fixes & DB Update)
+
++ Project updates:
+  - ABC Encoder: Fixes and improvements for ABC field value handler functions
+  - Session DB updated with tweaks discovered during testing
+
++ JavaScript updates:
+  - processAbcCCS and processAbcZ array checks fixed (scripts-abc-encoder.js)
+  - S: field values can now be additionally subdivided by "+" to save up space, with value before "+" copied to each separate Tune's field
+
++ Session DB updates:
+  - Session DB updated to 2025-02-12
+  - Formatting of multiple value C: C: S: and Z: fields standartised
+
 v.0.6.4: Convert Sets to Tunes (Correct ABC Field Splitting)
 
 + Project updates:

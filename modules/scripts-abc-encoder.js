@@ -527,7 +527,8 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
     return abcTitleOutput;
 }
 
-//
+// Return the item in an ABC Field Text array based on abcIndex of the Tune in the Set
+// If abcIndex is greater than the number of items, return the last (or the first) array item
 
 function getValueByAbcIndex(abcArr, abcIndex) {
 
@@ -543,7 +544,8 @@ function getValueByAbcIndex(abcArr, abcIndex) {
     }
 }
 
-//
+// Process ABC Transcription Field text, separate Tune Composers from Tune Sources
+// Return correct C: C: S: field value for a Tune depending on its abcIndex in the Set
 
 function processAbcCCS(abcCCS, abcIndex) {
     
@@ -554,15 +556,14 @@ function processAbcCCS(abcCCS, abcIndex) {
         abcSTxt.split('+')[1].split('/').map(str => `${abcSTxt.split('+')[0].trim()}; ${str.trim()}`) :
         abcSTxt ? abcSTxt.split('/') : [];
     
-    // eslint-disable-next-line no-debugger
-    debugger;
     let abcC = abcCArr && abcCArr.length > 0? getValueByAbcIndex(abcCArr, +abcIndex).trim() : '';
     let abcS = abcSArr && abcSArr.length > 0? getValueByAbcIndex(abcSArr, +abcIndex).trim() : '';
 
     return `${abcC? abcC : 'Trad.'}; S: ${abcS? abcS : 'Various'}`;
 }
 
-//
+// Process ABC Transcription Field text, separate Editors from The Session authors
+// Return correct Z: field value for a Tune depending on its abcIndex in the Set
 
 function processAbcZ(abcZ, abcIndex) {
 
@@ -1068,8 +1069,6 @@ function makeTuneListFromSets(abcContentArr) {
             const abcIndex = abcSetArr.indexOf(tuneSet);
 
             const isMedley = tuneSet.includes('[MEDLEY]');
-
-            debugger;
 
             if (isMedley) {
 
