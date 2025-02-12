@@ -537,19 +537,27 @@ function getValueByAbcIndex(abcArr, abcIndex) {
     
     } else {
 
-        return abcArr[abcArr.length - 1];
+        const valueIndex = abcArr.length - 1 < 0? 0 : abcArr.length - 1;
+
+        return abcArr[valueIndex];
     }
 }
 
 //
 
 function processAbcCCS(abcCCS, abcIndex) {
-
+    
     let abcCArr = abcCCS.split('S:')[0]?.replace(';', '').split('/');
-    let abcSArr = abcCCS.split('S:')[1]?.split('/');
+    let abcSTxt = abcCCS.split('S:')[1];
 
-    let abcC = abcCArr? getValueByAbcIndex(abcCArr, +abcIndex).trim() : '';
-    let abcS = abcSArr? getValueByAbcIndex(abcSArr, +abcIndex).trim() : '';
+    let abcSArr = abcSTxt && abcSTxt.includes('+')? 
+        abcSTxt.split('+')[1].split('/').map(str => `${abcSTxt.split('+')[0].trim()}; ${str.trim()}`) :
+        abcSTxt ? abcSTxt.split('/') : [];
+    
+    // eslint-disable-next-line no-debugger
+    debugger;
+    let abcC = abcCArr && abcCArr.length > 0? getValueByAbcIndex(abcCArr, +abcIndex).trim() : '';
+    let abcS = abcSArr && abcSArr.length > 0? getValueByAbcIndex(abcSArr, +abcIndex).trim() : '';
 
     return `${abcC? abcC : 'Trad.'}; S: ${abcS? abcS : 'Various'}`;
 }
@@ -560,7 +568,7 @@ function processAbcZ(abcZ, abcIndex) {
 
     let abcEds = abcZ.split(';')[0].trim();
     let abcTsoArr = abcZ.split(';')[1]?.split('/');
-    let abcTso = abcTsoArr? getValueByAbcIndex(abcTsoArr, +abcIndex).trim() : '';
+    let abcTso = abcTsoArr && abcTsoArr.length > 0? getValueByAbcIndex(abcTsoArr, +abcIndex).trim() : '';
 
     abcTso = abcTso && abcTso.includes('The Session')? abcTso : abcTso? abcTso + ' at The Session' : 'The Session';
     
@@ -1057,14 +1065,18 @@ function makeTuneListFromSets(abcContentArr) {
 
         abcSetArr.map(tuneSet => {
 
+            const abcIndex = abcSetArr.indexOf(tuneSet);
+
             const isMedley = tuneSet.includes('[MEDLEY]');
+
+            debugger;
 
             if (isMedley) {
 
                 tuneSet = tuneSet.replaceAll(/\[MEDLEY\]/g, '');
             }
 
-            return addCustomAbcFields(tuneSet, abcSetArr[0], true, abcSetArr.indexOf(tuneSet), isMedley);
+            return addCustomAbcFields(tuneSet, abcSetArr[0], true, abcIndex, isMedley);
         })
     );
 
