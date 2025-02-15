@@ -137,7 +137,88 @@ K: Dmaj
 faaf gefd|ed B/c/d egfe|fa~a2 gefd|efdB ~A3e|
 ~a3f gefd|ed B/c/d egfe|fa~a2 bfaf|e2 ef g/f/e fe||`;
 
+const abcImportMedleyNsssSet = `X: 1
+T: MEDLEY: Road to Lisdoonvarna Set
+T: Road to Lisdoonvarna [Slide]
+C: C: Trad.; S: Various
+C: Set Leaders: Olya, Andrey
+Z: [Unedited]; birlibirdie / fidicen / NfldWhistler at The Session
+N: https://thesession.org/members/26966/sets/92387
+R: Slide
+M: 12/8
+L: 1/8
+Q: 3/8=130
+K: Edor
+E2B B2A B2c d2A|F2A ABA D2E FED|
+E2B B2A B2c d3|cdc B2A B2E E3:||
+e2f gfe d2B Bcd|c2A ABc d2B B3|
+e2f gfe d2B Bcd|cdc B2A B2E E3:||
+T: Swallowtail [Jig]
+R: Jig
+M: 6/8
+K: Edor
+|:GEE BEE|GEE BAG|FDD ADD|dcd AGF|
+GEE BEE|GEG B2c|dcd AGF|GEE E3:||
+|:Bcd e2f|e2f edB|Bcd e2f|edB d3|
+Bcd e2f|e2f edB|dcd AGF|GEE E3:||
+T: Tripping up the Stairs [Jig]
+M: 6/8
+K: Dmaj
+|:FAA GBB|FAd fed|cBc ABc|dfe dAG|
+FAA GBB|FAd fed|cBc ABc|1 dfe d2A:|2 dfe d2c||
+|:dBB fBB|fgf fed|cAA eAA|efe edc|
+dBB fBB|fgf fed|cBc ABc|1 dfe d2c:|2 dfe d2A||`;
+
 describe("ABC Sort function on valid ABC input", () => {
+
+it("Correctly converts an N.S.S.S. Medley into Tunes", () => {
+
+expect(sortFilterAbc(abcImportMedleyNsssSet)[1]).toEqual([`X: 1
+T: JIG: Swallowtail
+C: C: Trad.; S: Various
+C: Set Leaders: Olya, Andrey
+Z: [Unedited]; fidicen at The Session
+N: https://thesession.org/members/26966/sets/92387
+R: Jig
+M: 6/8
+L: 1/8
+Q: 3/8=116
+K: Edor
+|:GEE BEE|GEE BAG|FDD ADD|dcd AGF|
+GEE BEE|GEG B2c|dcd AGF|GEE E3:||
+|:Bcd e2f|e2f edB|Bcd e2f|edB d3|
+Bcd e2f|e2f edB|dcd AGF|GEE E3:||`,
+`X: 2
+T: JIG: Tripping up the Stairs
+C: C: Trad.; S: Various
+C: Set Leaders: Olya, Andrey
+Z: [Unedited]; NfldWhistler at The Session
+N: https://thesession.org/members/26966/sets/92387
+R: Jig
+M: 6/8
+L: 1/8
+Q: 3/8=116
+K: Dmaj
+|:FAA GBB|FAd fed|cBc ABc|dfe dAG|
+FAA GBB|FAd fed|cBc ABc|1 dfe d2A:|2 dfe d2c||
+|:dBB fBB|fgf fed|cAA eAA|efe edc|
+dBB fBB|fgf fed|cBc ABc|1 dfe d2c:|2 dfe d2A||`,
+`X: 3
+T: SLIDE: Road to Lisdoonvarna
+C: C: Trad.; S: Various
+C: Set Leaders: Olya, Andrey
+Z: [Unedited]; birlibirdie at The Session
+N: https://thesession.org/members/26966/sets/92387
+R: Slide
+M: 12/8
+L: 1/8
+Q: 3/8=130
+K: Edor
+E2B B2A B2c d2A|F2A ABA D2E FED|
+E2B B2A B2c d3|cdc B2A B2E E3:||
+e2f gfe d2B Bcd|c2A ABc d2B B3|
+e2f gfe d2B Bcd|cdc B2A B2E E3:||`]
+)});
 
 it("Correctly splits multiple Z: and C: C: S: values between tunes when converting an N.S.S.S. Set into Tunes", () => {
 
