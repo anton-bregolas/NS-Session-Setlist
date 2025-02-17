@@ -1,15 +1,67 @@
 NS Session Setlist
 ========================================================================================
 
-NS Session Tunebook by Anton Zille & Novi Sad Trad Sessions:
+🎵 [**TUNEBOOK APP**](https://anton-bregolas.github.io/NS-Session-Setlist/) 🎻 [**ABC ENCODER**](https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html) 🎵
+
+**NS Session Tunebook by Anton Zille & Novi Sad Trad Sessions** 👇
 
 https://github.com/anton-bregolas | https://t.me/irish_sessions_ns
 
-ABC Transcription Tools by Michael Eskin:
+**ABC Transcription Tools by Michael Eskin** 👇
 
 https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
+
+v.0.7.0: Generate Chordbook
+
++ Project updates:
+  - ABC Encoder: ABC Sort now generates Chords JSONs for Tunes and Sets
+  - ABC Encoder: New Convert functions extract data from ABC _"chords"_, fill in chords for missing beats
+  - ABC Encoder: Global settings variables are now in localStorage, to be editable in Encoder Options
+  - ABC Encoder: ABC Sort now correctly identifies ABC Rhythm based on tune type provided in title via "[]"
+  - Tunebook: Tunes / Chords toggle buttons implemented, Chords to be opened in Popover dialog window
+  - README: Version History entries wrapped with HTML details / summary
+  - New Icons added
+
++ HTML updates:
+  - Tunebook: Footer updated with radio buttons switching between Tunes and Chords in Full Screen View
+  - ABC Encoder page bottom elements changed to Options and Return to Launch Screen buttons
+
++ CSS updates:
+  - Radio button styles added for input:is([name="nss-radio-view"]) and its label
+  - Radio button label on-click style changes currently implemented fully in CSS
+  - Options button and Launch button styles added for ABC Encoder elements (nss-option-btn, nss-launcher-link)
+
++ JavaScript updates:
+  - (scripts-abc-encoder.js)
+  - Tunebook's Full Screen View button now changes behavior depending on fullScreenSetting value, opening either tunes or chords (scripts-abc-tools.js)
+  - setChords, tuneChords and corresponding data links added to (scripts-ns-sessions.js)
+  - Chords extraction and formatting functions added (makeAbcChordBook, getChordsFromTune, getCompleteAbcChordBar)
+  - Options button function added, Launch button behavior tweaked for ABC Encoder (scripts-ns-sessions.js)
+  - ABC Parse & Sort updated with chord export functions (parseAbcFromFile, downloadAbcFile, getSortedAbc)
+  - addCustomAbcFields now checks for "[]" in the title to get R: field value if missing from Tune (Medleys)
+  - New global settings variable added for switching on Chordbook export (abcSortExportsChordsFromTunes)
+
++ Session DB updates:
+  - Session DB updated to 2025-02-17
+  - Test Chords JSONs added (chords-sets.json, chords-tunes.json)
+
+<details>
+  <summary>v.0.6.* Convert Sets to Tunes</summary>
+
+v.0.6.6: Convert Sets to Tunes (Testing Medley Splitting)
+
++ Project updates:
+  - ABC and ABC Encoder Tests converted to LF for consistency
+  - Medley test added
+
++ Tests updates:
+  - New test added for checking if ABC Sort correctly adds R: field values to Tunes when splitting a Set
+  - N.S.S.S. Medley added for testing (abcImportMedleyNsssSet)
+
++ Session DB updates:
+  - Session DB updated to 2025-02-15
 
 v.0.6.5: Convert Sets to Tunes (Fixes & DB Update)
 
@@ -125,6 +177,11 @@ v.0.6.0: Convert Sets to Tunes
   - Tune Keys in T: are now (Amaj) instead of (A)
   - Z: field standard fixed for auto-sorting: "Editor 1, Editor 2; TSO Source 1 / TSO Source N"
 
+</details>
+
+<details>
+  <summary>v.0.5.* Save & Restore Tunes</summary>
+
 v.0.5.5: Session DB Update
 
 + Project updates:
@@ -206,6 +263,11 @@ v.0.5.0: Save & Restore Tunes
   - ABC fixes & tweaks
   - Soundslice links added
 
+</details>
+
+<details>
+  <summary>v.0.4.* Tunebook Filter Options</summary>
+
 v.0.4.4: Filter Options (Tune Load Tweaks)
 
 + Project updates:
@@ -274,6 +336,11 @@ v.0.4.0: Filter Options (Initial commit)
 + Session DB updates:
   - Session DB updated to 2025-01-17
   - Encoded ABCs now include Type and Leaders keys
+
+</details>
+
+<details>
+  <summary>v.0.3.* ABC Encoder</summary>
 
 v.0.3.2: ABC Encoder (Encoder tweaks)
 
@@ -356,6 +423,10 @@ v.0.3.0: ABC Encoder (Initial commit)
 + Session DB updates:
   - Session DB updated to 2025-01-15
   - MIDI instructions removed from encoded data files, to be injected dynamically (injectInstrument)
+</details>
+
+<details>
+  <summary>v.0.2.* Play Along Page</summary>
 
 v.0.2.3: Session DB Update
 
@@ -392,6 +463,10 @@ v.0.2.0: Play Along Page (Initial commit)
 
 + Project updates:
   - Playalong thumbnails added
+</details>
+
+<details>
+  <summary>v.0.1.* Initial App Outline</summary>
 
 v.0.1.1: Session DB Update
 
@@ -460,3 +535,5 @@ v.0.0.2
 v.0.0.1
 
 + Initial commit of raw export website file from Michael Eskin's ABC Transcription Tools.
+
+</details>

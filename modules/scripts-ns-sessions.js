@@ -10,7 +10,7 @@ import { parseAbcFromFile } from './scripts-abc-encoder.js';
 // Mars Agliullin - ABC
 // Tania Sycheva - ABC
 //
-// Version / NS Session DB date: 2025-01-28
+// Version / NS Session DB date: 2025-02-17
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -22,8 +22,12 @@ let tuneBookInitialized = false;
 
 export const tuneSets = [];
 export const tuneList = [];
+export const setChords = [];
+export const tuneChords = [];
 export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunesets.json"
 export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunes.json"
+export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
+export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-tunes.json";
 
 // Define Main Page elements
 
@@ -185,6 +189,25 @@ function hideAllSectionsEls() {
 
     playAlongEl.setAttribute("hidden", "");
   });
+}
+
+////////////////////////////////
+// POPOVER OPTIONS TRIGGERS
+///////////////////////////////
+
+// Launch a Popover Options menu depending on dataType
+
+export function openSettingsMenu(dataType) {
+
+  if (dataType === "encoder-options") {
+
+    console.log(`abcEncoderExportsTuneList: ${localStorage.abcEncoderExportsTuneList};
+abcEncoderSortsTuneBook: ${localStorage.abcEncoderSortsTuneBook};
+abcSortExportsTunesFromSets: ${localStorage.abcSortExportsTunesFromSets};
+abcSortRemovesLineBreaksInAbc: ${localStorage.abcSortRemovesLineBreaksInAbc};
+abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLineBreaksInAbc};
+abcSortExportsChordsFromTunes: ${localStorage.abcSortExportsChordsFromTunes};`);
+  }
 }
 
 ////////////////////////////////
@@ -356,17 +379,12 @@ export async function fetchData(url, type) {
 
 export async function fetchDataJsons() {
 
-  // try {
-
-    return Promise.all([
+  return Promise.all([
       fetchData(tuneSetsLink, "json"),
-      fetchData(tuneListLink, "json")
+      fetchData(tuneListLink, "json"),
+      fetchData(setChordsLink, "json"),
+      fetchData(tuneChordsLink, "json")
     ]);
-
-  // } catch (error) {
-
-  //   throw (error);
-  // }
 }
 
 // Push new tune data to Custom JSONs after fetching Session DB
@@ -375,16 +393,18 @@ export async function updateDataJsons() {
 
   console.log("NS Session App:\n\nFetching data from Session DB...");
 
-  const [setsData, tunesData] =
+  const [setsData, tunesData, setChordsData, tuneChordsData] =
   await fetchDataJsons();
 
   updateData(tuneSets, setsData);
   updateData(tuneList, tunesData);
+  updateData(setChords, setChordsData);
+  updateData(tuneChords, tuneChordsData);
 
   // sessionSetsCounter.textContent = tuneSets.length;
   // sessionTunesCounter.textContent = tuneList.length;
 
-  return [tuneSets.length, tuneList.length];
+  return [tuneSets.length, tuneList.length, setChords.length, tuneChords.length];
 }
 
 // Update Custom Tune Data JSON
@@ -404,6 +424,8 @@ export function clearData() {
 
   tuneSets.length = 0;
   tuneList.length = 0;
+  setChords.length = 0;
+  tuneChords.length = 0;
 
   console.log("NS Session App:\n\nSession DB data cleared!");
 }
@@ -444,7 +466,21 @@ async function appButtonHandler() {
 
   if (this.classList.contains('nss-switch-btn')) {
 
+    if (this.classList.contains('nss-launcher-link')) {
+
+      window.location.href = 'index.html';
+
+      return;
+    }
+
     switchTuneBookType(this.dataset.load);
+  }
+
+  // Options Buttons: Load settings dialogue depending on data type
+
+  if (this.classList.contains('nss-option-btn')) {
+
+    openSettingsMenu(this.dataset.load);
   }
   
   // Close Buttons: Hide parent element and resize ABC Tools

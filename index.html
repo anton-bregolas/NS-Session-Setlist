@@ -83,7 +83,7 @@
             </section>
 
             <nav class="nss-abclink-container">
-                <button id="fullscreenbutton" class="nss-tunebook-el" title="View current tunes in full screen on a new page" aria-title="View current tunes in full screen on a new page" hidden>
+                <button id="fullscreenbutton" class="nss-tunebook-el" title="View current item in full screen on a new page" aria-title="View current item in full screen on a new page" hidden>
                     Full<br>Screen<br>View
                 </button>
                 <button id="nss-btn-abctools" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
@@ -181,13 +181,53 @@
                 </button>
             </section>
 
-            <section id="footer" class="nss-footer-tunebook nss-tunebook-el footer-wrapper" hidden>
+            <id id="footer" class="nss-footer-tunebook nss-tunebook-el footer-wrapper" hidden>
                 <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
                     <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
                         <use href="assets/icons/icons.svg#action-icon-launch"></use>
                     </svg>
                 </button>
-                <a href="https://t.me/irish_sessions_ns" target="_blank" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">Follow Trad Sessions NS</a>
+
+                <div class="flex-wrapper footer-link-wrapper">
+                    <label for="nss-radio-view-tunes" class="radio-wrapper flex-wrapper">
+                        <input type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="1" checked>
+                        <span class="flex-wrapper">
+                            Full Screen: Tunes
+                            <div class="nss-footer-icon nss-icon-show">
+                                <svg class="nss-icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#action-icon-view"></use>
+                                </svg>
+                            </div>
+                            <div class="nss-footer-icon nss-icon-hide">
+                                <svg class="nss-icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#action-icon-unview"></use>
+                                </svg>
+                            </div>
+                        </span>
+                    </label>
+                    <a href="https://t.me/irish_sessions_ns" target="_blank" class="nss-footer-link flex-wrapper" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">
+                        <span class="nss-gradient-text">
+                            Follow Trad Sessions NS
+                        </span>
+                    </a>
+                    <label for="nss-radio-view-chords" class="radio-wrapper flex-wrapper">
+                        <input type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="2">
+                        <span class="flex-wrapper">
+                            <div class="nss-footer-icon nss-icon-show">
+                                <svg class="nss-icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#action-icon-view"></use>
+                                </svg>
+                            </div>
+                            <div class="nss-footer-icon nss-icon-hide">
+                                <svg class="nss-icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#action-icon-unview"></use>
+                                </svg>
+                            </div>
+                            Full Screen: Chords
+                        </span>
+                    </label>
+                </div>
+
                 <button class="nss-btn nss-btn-x footer-btn-x flex-wrapper" title="Hide footer section" aria-title="Hide footer section"></button>
             </section>
 

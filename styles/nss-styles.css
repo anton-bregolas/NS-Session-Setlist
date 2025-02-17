@@ -52,19 +52,21 @@ h2 {
   margin-bottom: 0;
 }
 
-a {
+a,
+.nss-option-btn {
   color: #ffd324;
 }
 
 a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible),
-a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible) > * {
+a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible) > *,
+.nss-option-btn:is(:hover, :focus, :focus-visible) {
   color: #ff6699;
 }
 
 #fullscreenbutton {
   position: absolute;
-  top: -0.75rem;
-  right: -0.75rem;
+  top: -0.65rem;
+  right: -0.65rem;
   padding: 0.625em 1.25em;
   background-color: #ff6d9d;
   color: black;
@@ -86,6 +88,7 @@ select {
   margin-top: 0.75rem;
   margin-bottom: 1rem;
   width: 15.75rem;
+  height: 2.5rem;
   border-radius: 0.33rem;
 }
 
@@ -122,11 +125,12 @@ iframe {
 a:focus-visible,
 iframe:focus-visible,
 select:is(:focus, :focus-visible),
+input:is(:focus-visible) + span,
 #fullscreenbutton:is(:focus, :focus-visible) {
   outline: 0.2rem solid #ffd324;
 }
 
-a:not([class*="nss-icon-container"]):focus-visible {
+a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visible {
   outline-offset: 0.12rem;
 }
 
@@ -142,12 +146,66 @@ a:not([class*="nss-icon-container"]):focus-visible {
   text-decoration-color: #ff6699;
 }
 
+.nss-footer-link {
+  height: 100%;
+  font-weight: bold;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 0.12rem;
+  text-underline-offset: 0.14rem;
+}
+
 #fullscreenbutton:is(:hover, :focus, :focus-visible){ 
   outline-offset: 0.05rem;
 }
 
 iframe:focus-visible {
   outline-offset: -0.15rem;
+}
+
+input:is([name="nss-radio-view"]) {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+label:is([class*="radio-wrapper"]) {
+  color: #ff6699;
+  cursor: pointer;
+  height: 100%;
+}
+
+label:is([class*="radio-wrapper"]) span {
+  gap: 1rem;
+}
+
+label:is([class*="radio-wrapper"]) span,
+.nss-footer-link {
+  height: 100%;
+  padding: 0 1.05rem;
+  outline-offset: -0.5rem;
+  border-radius: 0.85rem;
+}
+
+input:is(:focus-visible) {
+  outline: none;
+}
+
+input:is([name="nss-radio-view"]):checked + span {
+  color: #ffd324;
+}
+
+input:is([name="nss-radio-view"]):checked + span .nss-icon-hide {
+  display: none;
+}
+
+.nss-icon-show {
+  display: none;
+}
+
+input:is([name="nss-radio-view"]):checked + span .nss-icon-show {
+  display: block;
 }
 
 .nss-btn {
@@ -179,6 +237,7 @@ iframe:focus-visible {
 
 .nss-link-btn,
 .nss-link-btn a,
+.nss-option-btn,
 .nss-switch-btn,
 .nss-btn-x {
   border-radius: 50%;
@@ -186,6 +245,7 @@ iframe:focus-visible {
 }
 
 .nss-link-btn,
+.nss-option-btn,
 .nss-switch-btn {
   width: 3.25rem;
   height: 3.25rem;
@@ -214,6 +274,7 @@ iframe:focus-visible {
 
 .nss-link-btn a:is(:hover, :focus, :focus-visible),
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
+.nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
 .nss-btn-x:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid #ffd324;
@@ -223,6 +284,10 @@ iframe:focus-visible {
 .nss-btn-abcraw a:is(:hover, :focus, :focus-visible) {
   outline: 0.24rem solid #ffd324;
   outline-offset: 0.4rem;
+}
+
+.nss-option-btn:is(:hover, :focus, :focus-visible) {
+  outline: none;
 }
 
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
@@ -269,7 +334,12 @@ iframe:focus-visible {
   height: 70%;
 }
 
-.nss-footer-tunebook > .nss-switch-btn {
+.nss-footer-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.nss-footer-tunebook > .nss-btn {
   width: 2.75rem;
   height: 2.75rem;
 }
@@ -397,7 +467,24 @@ iframe:focus-visible {
   align-items: center;
 }
 
+.footer-link-wrapper {
+  width: calc(100% - 5.5rem);
+  height: 100%;
+}
+
+.nss-footer-tunebook .footer-link-wrapper {
+  justify-content: space-evenly;
+}
+
 /* Media queries */
+
+/* @media screen and (max-width: 1120px) { */
+@media screen and (max-width: 70em) {
+
+  .nss-footer-tunebook .footer-link-wrapper {
+    justify-content: space-around;
+  }
+}
 
 /* @media screen (max-width: 858px) { */
 @media screen and (max-width: 53.625em) {
@@ -449,6 +536,8 @@ iframe:focus-visible {
   }
   
   .nss-link-btn,
+  .nss-launcher-link,
+  .nss-option-btn,
   .nss-playalong-el > .nss-switch-btn {
     width: 5rem;
     height: 5rem;

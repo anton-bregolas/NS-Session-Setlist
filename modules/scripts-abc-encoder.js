@@ -5,11 +5,12 @@ import { LZString } from './scripts-abc-tools.js';
 // ABC ENCODER GLOBAL SETTINGS
 ///////////////////////////////
 
-const abcEncoderExportsTuneList = 1;
-const abcEncoderSortsTuneBook = 0;
-const abcSortExportsTunesFromSets = 1;
-const abcSortRemovesLineBreaksInAbc = 0
-const abcSortRemovesTextAfterLineBreaksInAbc = 0
+let abcEncoderExportsTuneList = localStorage.abcEncoderExportsTuneList? +localStorage.abcEncoderExportsTuneList : 1;
+let abcEncoderSortsTuneBook = localStorage.abcEncoderSortsTuneBook? +localStorage.abcEncoderSortsTuneBook : 0;
+let abcSortExportsTunesFromSets = localStorage.abcSortExportsTunesFromSets? +localStorage.abcSortExportsTunesFromSets : 1;
+let abcSortRemovesLineBreaksInAbc = localStorage.abcSortRemovesLineBreaksInAbc? +localStorage.abcSortRemovesLineBreaksInAbc : 0
+let abcSortRemovesTextAfterLineBreaksInAbc = localStorage.abcSortRemovesTextAfterLineBreaksInAbc? +localStorage.abcSortRemovesTextAfterLineBreaksInAbc : 0
+let abcSortExportsChordsFromTunes = localStorage.abcSortExportsChordsFromTunes? +localStorage.abcSortExportsChordsFromTunes : 1;
 
 // List of basic Tune Types in Session DB
 // Other tunes will be prefixed by Various
@@ -118,9 +119,21 @@ export async function parseAbcFromFile(taskType) {
 
                     abcContentResult = abcSortedOutput[0];
 
+                    console.warn(abcSortExportsTunesFromSets);
+
                     if (abcSortExportsTunesFromSets === 1 && abcSortedOutput[1] !== '') {
                         
                         downloadAbcFile(abcSortedOutput[1], "NS-Session-Tunes.abc");
+
+                        if (abcSortExportsChordsFromTunes === 1 && abcSortedOutput[3] !== '') {
+
+                            downloadAbcFile(abcSortedOutput[3], `chords-tunes.json`, "abc-extract-chords");
+                        }
+                    }
+
+                    if (abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
+
+                        downloadAbcFile(abcSortedOutput[2], `chords-sets.json`, "abc-extract-chords");
                     }
                 }
 
@@ -167,7 +180,7 @@ async function readFileContent(file) {
 
 function downloadAbcFile(abcContent, fileName, taskType) {
 
-    const abcFile = new Blob([abcContent], { type: taskType === "abc-encode"? "application/json" : "text/plain" });
+    const abcFile = new Blob([abcContent], { type: taskType === "abc-encode" || taskType === "abc-extract-chords"? "application/json" : "text/plain" });
     const abcFileName = taskType === "abc-encode" && fileName.startsWith("NS-Session-Sets") ? "tunesets.json" :
                         taskType === "abc-encode" && fileName.startsWith("NS-Session-Tunes") ? "tunes.json" :
                         taskType === "abc-encode" ? "tunes-encoded.json" :
@@ -239,16 +252,33 @@ function getSortedAbc(abcContent) {
     if (sortedAbcContentArr[0]?.length > 0) {
 
         const sortedAbcOutput = sortedAbcContentArr[0].join('\n\n');
+
         let sortedAbcTunes = '';
+        let sortedAbcChords = '';
+        let sortedAbcTuneChords = '';
 
         console.log("ABC Encoder:\n\nABC file contents sorted!");
+
+        if (abcSortExportsChordsFromTunes === 1) {
+
+            console.log(`ABC Encoder:\n\nExtracting Chords from ABC...`);
+
+            sortedAbcChords = makeAbcChordBook(sortedAbcOutput);
+        }
 
         if (sortedAbcContentArr[1]?.length > 0) {
 
             sortedAbcTunes = sortedAbcContentArr[1].join('\n\n');
+
+            if (abcSortExportsChordsFromTunes === 1) {
+
+                console.log(`ABC Encoder:\n\nExtracting Chords from ABC Tunes...`);
+
+                sortedAbcTuneChords = makeAbcChordBook(sortedAbcTunes);
+            }
         }
 
-        return [sortedAbcOutput, sortedAbcTunes];
+        return [sortedAbcOutput, sortedAbcTunes, sortedAbcChords, sortedAbcTuneChords];
 
     } else {
 
@@ -599,7 +629,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     // Derive ABC Tune Type from ABC R: field or TYPE: prefix
 
-    let abcR = abcContent.match(/(?<=^R:).*/m)? abcContent.match(/(?<=^R:).*/m)[0].trim() : '';
+    let abcR = abcContent.match(/(?<=^R:).*/m)? abcContent.match(/(?<=^R:).*/m)[0].trim() : abcTitle.includes('[')? abcTitle.match(/\[[\S]*\]/)[0].replace('[', '').replace(']', '') : '';
 
     let abcTitlePrefix = abcTitle.match(/^T:.*:/)? abcTitle.match(/(?<=^T:).*(?=:)/)[0].trim().toUpperCase() : makeTuneTypePlural(abcContent, abcR);
 
@@ -1043,7 +1073,7 @@ function getDecodedAbc(abcContent) {
 }
 
 ////////////////////////////////
-// CONVERT TUNELIST FUNCTIONS
+// CONVERT TUNEBOOK FUNCTIONS
 ///////////////////////////////
 
 // Convert sets into separate tunes by adding missing ABC fields
@@ -1082,6 +1112,156 @@ function makeTuneListFromSets(abcContentArr) {
     const abcTunesOutput = abcTunesArr.flat(Infinity);
 
     return abcTunesOutput;
+}
+
+// Convert N.S.S.S. list of Sets or Tunes into a Chordbook JSON
+// Extract chords from each ABC item via getChordsFromTune
+
+function makeAbcChordBook(abcContent) {
+
+    let chordBookOutput = '';
+
+    const splitAbcArr = abcContent.split(/X.*/gm).filter(abc => abc != '').map(abc => abc.trim());
+
+    const abcChordsArr = [];
+
+    splitAbcArr.forEach(abc => {
+
+        let abcChordsObj;
+        let abcTitle = '';
+        let abcMeter = '';
+        let abcBody = '';
+
+        if (abc.match(/^T:/gm).length > 2) {
+
+            const abcPrimaryTitle = abc.match(/(?<=^T:).*/m)[0].trim();
+            const abcTunesArr = abc.replace(/^T:.*/, '').trim().split('T:').filter(tune => tune != '');
+
+            abcChordsObj = { "setTitle": abcPrimaryTitle, "tunesChords": [] };
+
+            abcTunesArr.forEach(tune => {
+
+                abcTitle = tune.match(/^.*/)[0].split('/')[0].trim();
+                abcMeter = tune.match(/^M:/m)? tune.match(/(?<=^M:).*/m)[0].trim() : abc.match(/(?<=^M:).*/m)[0].trim();
+                abcBody = tune.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
+
+                const tuneChordObj = getChordsFromTune(abcBody, abcTitle, abcMeter);
+
+                abcChordsObj.tunesChords.push(tuneChordObj);
+            });
+        
+        } else {
+
+            abcTitle = abc.match(/(?<=^T:).*/m)[0].trim();
+            abcMeter = abc.match(/(?<=^M:).*/m)[0].trim();
+            abcBody = abc.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
+
+            abcChordsObj = getChordsFromTune(abcBody, abcTitle, abcMeter);
+        }
+
+        if (abcChordsObj) {
+
+            abcChordsArr.push(abcChordsObj);
+        }
+    });
+
+    if (abcChordsArr.length > 0) {
+        
+        chordBookOutput = JSON.stringify(abcChordsArr, null, 2);
+        
+        console.log(`ABC Encoder:\n\nChordbook JSON generated!`);
+    }
+        
+    return chordBookOutput;
+}
+
+// Extract chords from ABC Tune and return a single Chordbook object
+
+function getChordsFromTune(abcBody, abcTitle, abcMeter) {
+
+    const abcChordsObj = {};
+
+    const abcPrimaryTitle = abcTitle.replace(/T:[\s]*/, '');
+
+    abcChordsObj.Tune = abcPrimaryTitle;
+
+    const tuneMeter = abcMeter? abcMeter : "4/4";
+    let minTuneBeats = 2;
+
+    switch (tuneMeter) {
+        case "2/4":
+        case "4/4":
+        case "6/8":
+        case "12/8":
+            minTuneBeats = 2;
+            break;
+        case "3/4":
+        case "3/2":
+        case "9/8":
+            minTuneBeats = 3;
+            break;
+        default:
+            break;
+    }
+
+    const abcPartsArr = abcBody.split('||');
+    let partCount = 0;
+    let abcChords = '';
+
+    abcPartsArr.forEach(abcPart => {
+
+        partCount++;
+
+        const abcBarsArr = abcPart.split('|');
+
+        let abcPartChords = '';
+
+        abcBarsArr.forEach(abcBar => {
+
+            if (!abcBar.match(/\"[\S]*\"/)) {
+
+                return;
+            }
+
+            let voltaNo = '';
+
+            if (abcBar.match(/^[\d]/)) {
+
+                voltaNo = abcBar[0];
+            }
+
+            const abcBarChordsArr = abcBar.match(/\"[\S]*\"/g);
+
+            abcPartChords += `|${voltaNo} ${getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats)}`;
+        });
+
+        abcChords += abcPartChords? `PART ${partCount}:\n${abcPartChords}||\n` : '';
+    });
+
+    abcChordsObj.Chords = abcChords.trim();
+    
+    return abcChordsObj;
+}
+
+// Process an ABC bar of chords, completing missing beats if necessary
+
+function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats) {
+
+    let abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll('"', '')).filter(c => c != '');
+
+    if (abcBarChordsArr && abcBarChordsInput.length > 0) {
+
+        if (abcBarChordsInput.length === 1) {
+
+            return `${abcBarChordsInput[0]} `.repeat(minTuneBeats);
+        }
+
+        return `${abcBarChordsInput.join(' ')} `;
+
+    } else {
+
+        return '– ';
+    }
 }
 
 ////////////////////////////////

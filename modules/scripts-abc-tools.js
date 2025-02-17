@@ -65,9 +65,17 @@ export function initAbcTools() {
 
     document.getElementById('fullscreenbutton').addEventListener('click', function() {
 
-        if (lastURL != "") {
+        const fullScreenSetting = +document.querySelector('input[name="nss-radio-view"]:checked').value;
+
+        if (fullScreenSetting === 1 && lastURL != "") {
 
             window.open(lastURL, '_blank');
+            return;
+        }
+
+        if (fullScreenSetting === 2) {
+            
+            console.log(fullScreenSetting);
         }
     });
     
@@ -492,14 +500,14 @@ export function populateFilterOptions(filters) {
             if (filterList.id === "tuneTypes") {
                 
                 filterHeader.value = 1;
-                filterHeader.textContent = "👉 Tune Type 👈";
+                filterHeader.textContent = "👇 Tune Type 👇";
                 filterOptions.appendChild(filterHeader);
             }
 
             if (filterList.id === "setLeaders") {
                 
                 filterHeader.value = 2;
-                filterHeader.textContent = "👉 Set Leader 👈";
+                filterHeader.textContent = "👇 Set Leader 👇";
                 filterOptions.appendChild(filterHeader);
             }
         }
