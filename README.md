@@ -13,6 +13,28 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.7.1: Generate Chordbook (Chordbook Tweaks & Naming Update)
+
++ Project updates:
+  - Naming convention update: All JSONs now use camelCase in object key names for consistency
+  - ABC Tools scripts reorganised and updated with new naming convention
+  - ABC Encoder: ABC Sort now splits generated Chords after every 4 bars excluding voltas
+  - ABC Encoder: ABC Sort now correctly formats secondary tune types and titles in Sets
+  - App Options update: Settings defaults are now initialised on app load and stored locally
+
++ JavaScript updates:
+  - JSON object key names updated in scripts-abc-encoder.js, scripts-abc-tools.js and scripts-ns-sessions.js
+  - addCustomAbcFields tweaked and refactored, ABC body titles processing now handled by formatAbcBodyTitles
+  - formatAbcBodyTitles makes secondary R: field text Proper Case and subtitle T: field text Title Case
+  - openSettingsMenu logs Tunes and Sets Chords output in test mode (scripts-ns-sessions.js)
+  - initEncoderSettings and initAbcTools now initialise Global variables and store them to localStorage
+
++ Session DB updates:
+  - Session DB updated to 2025-02-17
+  - Sets and Tunes JSON objects now use key names "name", "leaders", "type", "url"
+  - Chords JSONs now use key names "title", "chords" for Tune object and "setTitle", "tuneChords" for Set object
+  - tunesets.json renamed to sets.json
+
 v.0.7.0: Generate Chordbook
 
 + Project updates:

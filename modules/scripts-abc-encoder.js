@@ -5,12 +5,15 @@ import { LZString } from './scripts-abc-tools.js';
 // ABC ENCODER GLOBAL SETTINGS
 ///////////////////////////////
 
-let abcEncoderExportsTuneList = localStorage.abcEncoderExportsTuneList? +localStorage.abcEncoderExportsTuneList : 1;
-let abcEncoderSortsTuneBook = localStorage.abcEncoderSortsTuneBook? +localStorage.abcEncoderSortsTuneBook : 0;
-let abcSortExportsTunesFromSets = localStorage.abcSortExportsTunesFromSets? +localStorage.abcSortExportsTunesFromSets : 1;
-let abcSortRemovesLineBreaksInAbc = localStorage.abcSortRemovesLineBreaksInAbc? +localStorage.abcSortRemovesLineBreaksInAbc : 0
-let abcSortRemovesTextAfterLineBreaksInAbc = localStorage.abcSortRemovesTextAfterLineBreaksInAbc? +localStorage.abcSortRemovesTextAfterLineBreaksInAbc : 0
-let abcSortExportsChordsFromTunes = localStorage.abcSortExportsChordsFromTunes? +localStorage.abcSortExportsChordsFromTunes : 1;
+// Default ABC Encoder settings on first load
+// Set in initEncoderSettings and user Options
+
+// abcEncoderExportsTuneList = 1
+// abcEncoderSortsTuneBook = 0
+// abcSortExportsTunesFromSets = 1
+// abcSortExportsChordsFromTunes = 1
+// abcSortRemovesLineBreaksInAbc = 0
+// abcSortRemovesTextAfterLineBreaksInAbc = 0
 
 // List of basic Tune Types in Session DB
 // Other tunes will be prefixed by Various
@@ -92,16 +95,16 @@ export async function parseAbcFromFile(taskType) {
 
                     abcContentResult = abcEncodedOutput[0];
 
-                    if (abcEncoderExportsTuneList === 1) {
+                    if (+localStorage.abcEncoderExportsTuneList === 1) {
 
                         downloadAbcFile(exportTuneList(abcContentResult), "Tunelist.txt");
                     }
 
-                    if (abcSortExportsTunesFromSets === 1 && abcEncodedOutput[1] !== '') {
+                    if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncodedOutput[1] !== '') {
 
                         downloadAbcFile(abcEncodedOutput[1], "tunes.json");
 
-                        if (abcEncoderExportsTuneList === 1) {
+                        if (+localStorage.abcEncoderExportsTuneList === 1) {
 
                             downloadAbcFile(abcEncodedOutput[1], "TunelistTunes.txt");
                         }
@@ -119,19 +122,17 @@ export async function parseAbcFromFile(taskType) {
 
                     abcContentResult = abcSortedOutput[0];
 
-                    console.warn(abcSortExportsTunesFromSets);
-
-                    if (abcSortExportsTunesFromSets === 1 && abcSortedOutput[1] !== '') {
+                    if (+localStorage.abcSortExportsTunesFromSets === 1 && abcSortedOutput[1] !== '') {
                         
                         downloadAbcFile(abcSortedOutput[1], "NS-Session-Tunes.abc");
 
-                        if (abcSortExportsChordsFromTunes === 1 && abcSortedOutput[3] !== '') {
+                        if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[3] !== '') {
 
                             downloadAbcFile(abcSortedOutput[3], `chords-tunes.json`, "abc-extract-chords");
                         }
                     }
 
-                    if (abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
+                    if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
 
                         downloadAbcFile(abcSortedOutput[2], `chords-sets.json`, "abc-extract-chords");
                     }
@@ -181,10 +182,10 @@ async function readFileContent(file) {
 function downloadAbcFile(abcContent, fileName, taskType) {
 
     const abcFile = new Blob([abcContent], { type: taskType === "abc-encode" || taskType === "abc-extract-chords"? "application/json" : "text/plain" });
-    const abcFileName = taskType === "abc-encode" && fileName.startsWith("NS-Session-Sets") ? "tunesets.json" :
+    const abcFileName = taskType === "abc-encode" && fileName.startsWith("NS-Session-Sets") ? "sets.json" :
                         taskType === "abc-encode" && fileName.startsWith("NS-Session-Tunes") ? "tunes.json" :
                         taskType === "abc-encode" ? "tunes-encoded.json" :
-                        taskType === "abc-decode" && fileName.startsWith("tunesets") ? "NS-Session-Sets.abc" :
+                        taskType === "abc-decode" && fileName.startsWith("sets") ? "NS-Session-Sets.abc" :
                         taskType === "abc-decode" && fileName.startsWith("tunes") ? "NS-Session-Tunes.abc" :
                         taskType === "abc-decode" ? "tunes-decoded.abc" :
                         fileName;
@@ -259,7 +260,7 @@ function getSortedAbc(abcContent) {
 
         console.log("ABC Encoder:\n\nABC file contents sorted!");
 
-        if (abcSortExportsChordsFromTunes === 1) {
+        if (+localStorage.abcSortExportsChordsFromTunes === 1) {
 
             console.log(`ABC Encoder:\n\nExtracting Chords from ABC...`);
 
@@ -270,7 +271,7 @@ function getSortedAbc(abcContent) {
 
             sortedAbcTunes = sortedAbcContentArr[1].join('\n\n');
 
-            if (abcSortExportsChordsFromTunes === 1) {
+            if (+localStorage.abcSortExportsChordsFromTunes === 1) {
 
                 console.log(`ABC Encoder:\n\nExtracting Chords from ABC Tunes...`);
 
@@ -305,7 +306,7 @@ export function sortFilterAbc(abcContent) {
 
         // Filter and sort an additional array of Tunes if abcContent contains Sets and abcSortExportsTunesFromSets setting is on
 
-        if (abcSortExportsTunesFromSets === 1 && filteredAbcArr[0].match(/^T:/gm).length > 2) {
+        if (+localStorage.abcSortExportsTunesFromSets === 1 && filteredAbcArr[0].match(/^T:/gm).length > 2) {
 
             const exportedTunesArr = makeTuneListFromSets(filteredAbcArr);
 
@@ -316,14 +317,14 @@ export function sortFilterAbc(abcContent) {
 
         // Option A: Also remove all empty lines inside ABCs
 
-        if (abcSortRemovesLineBreaksInAbc === 1) {
+        if (+localStorage.abcSortRemovesLineBreaksInAbc === 1) {
 
             return [removeLineBreaksInAbc(sortedAbcArr), removeLineBreaksInAbc(sortedAbcTunesArr)];
         }
 
         // Option B: Also remove all text separated by empty lines inside ABCs
 
-        if (abcSortRemovesTextAfterLineBreaksInAbc === 1) {
+        if (+localStorage.abcSortRemovesTextAfterLineBreaksInAbc === 1) {
 
             return [removeTextAfterLineBreaksInAbc(sortedAbcArr), removeTextAfterLineBreaksInAbc(sortedAbcTunesArr)];
         }
@@ -503,6 +504,20 @@ function toSortFriendlyTitle(abcTitle) {
     return abcTitle.replace(/^(?:(?:The|An|A)[\s]+)/, '').trim();
 }
 
+// Scan ABC Body for R: and T: fields and process them accordingly
+
+function formatAbcBodyTitles(abcContent) {
+
+    let formattedAbc = abcContent.replace(/(?<=^R:).*/gm, tuneType => ` ${makeStringProperCase(tuneType.trim())}`);
+
+    if (formattedAbc.match(/^T:.*/m)) {
+
+        formattedAbc = processAbcSubtitles(formattedAbc);
+    }
+
+    return formattedAbc;
+}
+
 // Process ABC Subtitles (single-line T:)
 // Make selected ABC field text Title Case
 // Remove articles to make ABC sort-friendly
@@ -647,12 +662,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
         let updatedAbcTitle = processAbcTitle(abcTitle, abcTitlePrefix) + abcTitleSuffix;
 
-        updatedAbc = updatedAbc.replace(/(?<=^R:).*/gm, tuneType => ` ${makeStringProperCase(tuneType.trim())}`);
-
-        if (updatedAbc.match(/^T:.*/m)) {
-
-            updatedAbc = processAbcSubtitles(updatedAbc);
-        }
+        updatedAbc = formatAbcBodyTitles(updatedAbc);
 
         return `${updatedAbcTitle}\n${updatedAbc}`;
     }
@@ -905,7 +915,9 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     abcHeaders = `C: C: ${abcCCS}\nC: Set Leaders: ${abcCSL}\nZ: ${abcZ}\n${abcNotes}R: ${abcTuneType}\nM: ${abcM}\nL: ${abcL}\nQ: ${abcQ}\nK: ${abcK}`;
 
-    abcBody = abcBody.replace(/(?<=^R:).*/gm, tuneType => ` ${makeStringProperCase(tuneType.trim())}`);
+    // Format ABC Body Titles and Tune Types
+
+    abcBody = formatAbcBodyTitles(abcBody);
 
     // Return ABC with updated Title and fields
 
@@ -922,7 +934,7 @@ function getEncodedAbc(abcContent) {
 
     let sortedAbcContent = [];
 
-    if (abcEncoderSortsTuneBook === 1) {
+    if (+localStorage.abcEncoderSortsTuneBook === 1) {
 
         sortedAbcContent = getSortedAbc(abcContent);
 
@@ -939,7 +951,7 @@ function getEncodedAbc(abcContent) {
 
         let encodedAbcTunesJson = '';
 
-        if (abcSortExportsTunesFromSets === 1 && sortedAbcContent[1]?.length > 0) {
+        if (+localStorage.abcSortExportsTunesFromSets === 1 && sortedAbcContent[1]?.length > 0) {
 
             encodedAbcTunesJson = JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[1]), null, 2);
         }
@@ -969,36 +981,36 @@ function encodeTunesForAbcTools(abcContent) {
 
             splitTuneArr.forEach(tuneLine => {
                 
-                if (tuneLine.startsWith('T:') && !encodedAbcArr[i].Name) {
+                if (tuneLine.startsWith('T:') && !encodedAbcArr[i].name) {
 
-                    encodedAbcArr[i].Name = tuneLine.split('T:')[1].trim();
+                    encodedAbcArr[i].name = tuneLine.split('T:')[1].trim();
                 }
 
-                if (tuneLine.startsWith('R:') && !encodedAbcArr[i].Type) {
+                if (tuneLine.startsWith('R:') && !encodedAbcArr[i].type) {
 
                     const tuneTypeArr = tuneLine.split('R:')[1].trim().split(/[\s,-]/);
                     let tuneType = '';
 
                     tuneType = tuneTypeArr.filter(word => word !== '').map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 
-                    encodedAbcArr[i].Type = tuneType;
+                    encodedAbcArr[i].type = tuneType;
                 }
 
-                if (tuneLine.startsWith('C: Set Leaders:') && !encodedAbcArr[i].Leaders) {
+                if (tuneLine.startsWith('C: Set Leaders:') && !encodedAbcArr[i].leaders) {
 
-                    encodedAbcArr[i].Leaders = tuneLine.split('C: Set Leaders:')[1].trim();
+                    encodedAbcArr[i].leaders = tuneLine.split('C: Set Leaders:')[1].trim();
                 }
             });
 
             // If tune name includes TYPE: prefix that does not match Tune Type, replace it with Custom Type
 
-            if (encodedAbcArr[i].Name.match(/^.*:/)) {
+            if (encodedAbcArr[i].name.match(/^.*:/)) {
 
-                const customTuneTypeProperCase = makeStringProperCase(encodedAbcArr[i].Name.split(':')[0]);
+                const customTuneTypeProperCase = makeStringProperCase(encodedAbcArr[i].name.split(':')[0]);
 
-                if (encodedAbcArr[i].Type !== customTuneTypeProperCase) {
+                if (encodedAbcArr[i].type !== customTuneTypeProperCase) {
 
-                    encodedAbcArr[i].Type = customTuneTypeProperCase;
+                    encodedAbcArr[i].type = customTuneTypeProperCase;
                 }
             }
 
@@ -1006,7 +1018,7 @@ function encodeTunesForAbcTools(abcContent) {
 
             const encodedAbcString = LZString.compressToEncodedURIComponent(`X:${rawAbcArr[i].replaceAll(/(\r?\n\n|\r?\n\r\n)/g, '')}`);
 
-            encodedAbcArr[i].URL = `https://michaeleskin.com/abctools/abctools.html?lzw=${encodedAbcString}&format=noten&ssp=10&name=${encodedAbcArr[i].Name.replaceAll(' ', '_')}`;
+            encodedAbcArr[i].url = `https://michaeleskin.com/abctools/abctools.html?lzw=${encodedAbcString}&format=noten&ssp=10&name=${encodedAbcArr[i].name.replaceAll(' ', '_')}`;
         }
 
         console.log("ABC Encoder:\n\nABC file contents encoded!");
@@ -1035,7 +1047,7 @@ function getDecodedAbc(abcContent) {
 
     encodedAbcJson.forEach(abcObject => {
 
-        const encodedAbcString = abcObject.URL?.match(/lzw=([^&]*)/)[0];
+        const encodedAbcString = abcObject.url?.match(/lzw=([^&]*)/)[0];
 
         if (encodedAbcString) {
 
@@ -1137,17 +1149,17 @@ function makeAbcChordBook(abcContent) {
             const abcPrimaryTitle = abc.match(/(?<=^T:).*/m)[0].trim();
             const abcTunesArr = abc.replace(/^T:.*/, '').trim().split('T:').filter(tune => tune != '');
 
-            abcChordsObj = { "setTitle": abcPrimaryTitle, "tunesChords": [] };
+            abcChordsObj = { "setTitle": abcPrimaryTitle, "tuneChords": [] };
 
             abcTunesArr.forEach(tune => {
 
-                abcTitle = tune.match(/^.*/)[0].split('/')[0].trim();
+                abcTitle = tune.match(/^.*/)[0].split(' / ')[0].trim();
                 abcMeter = tune.match(/^M:/m)? tune.match(/(?<=^M:).*/m)[0].trim() : abc.match(/(?<=^M:).*/m)[0].trim();
                 abcBody = tune.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
 
                 const tuneChordObj = getChordsFromTune(abcBody, abcTitle, abcMeter);
 
-                abcChordsObj.tunesChords.push(tuneChordObj);
+                abcChordsObj.tuneChords.push(tuneChordObj);
             });
         
         } else {
@@ -1183,7 +1195,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
     const abcPrimaryTitle = abcTitle.replace(/T:[\s]*/, '');
 
-    abcChordsObj.Tune = abcPrimaryTitle;
+    abcChordsObj.title = abcPrimaryTitle;
 
     const tuneMeter = abcMeter? abcMeter : "4/4";
     let minTuneBeats = 2;
@@ -1205,12 +1217,14 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
     }
 
     const abcPartsArr = abcBody.split('||');
-    let partCount = 0;
+    let partCounter = 0;
+    let barCounter;
     let abcChords = '';
 
     abcPartsArr.forEach(abcPart => {
 
-        partCount++;
+        partCounter++;
+        barCounter = 0;
 
         const abcBarsArr = abcPart.split('|');
 
@@ -1230,15 +1244,24 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
                 voltaNo = abcBar[0];
             }
 
+            if (barCounter >= 4 && !voltaNo) {
+
+                abcPartChords += `|\n`;
+
+                barCounter = 0;
+            }
+
             const abcBarChordsArr = abcBar.match(/\"[\S]*\"/g);
 
             abcPartChords += `|${voltaNo} ${getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats)}`;
+
+            barCounter++;
         });
 
-        abcChords += abcPartChords? `PART ${partCount}:\n${abcPartChords}||\n` : '';
+        abcChords += abcPartChords? `PART ${partCounter}:\n${abcPartChords}||\n` : '';
     });
 
-    abcChordsObj.Chords = abcChords.trim();
+    abcChordsObj.chords = abcChords.trim();
     
     return abcChordsObj;
 }
@@ -1278,15 +1301,54 @@ function exportTuneList(abcContent) {
 
     abcArr.forEach(abcObj => {
 
-        let abcTitle = abcObj.Name;
+        let abcTitle = abcObj.name;
 
         if (abcTitle.match(/^.*:/)) {
             
             abcTitle = abcTitle.split(':')[1].trim();
         }
 
-        tuneListStr += `${abcObj.Type}\t${abcTitle}\t${abcObj.URL}\t${abcObj.Leaders.split(/,[\s]*/g).join(`\t`)}\n`;
+        tuneListStr += `${abcObj.type}\t${abcTitle}\t${abcObj.url}\t${abcObj.leaders.split(/,[\s]*/g).join(`\t`)}\n`;
     });
 
     return tuneListStr;
+}
+
+////////////////////////////////
+// INITIALIZE ENCODER SETTINGS
+///////////////////////////////
+
+// Initialize default ABC Encoder settings on first page load
+
+export function initEncoderSettings() {
+
+    if (!localStorage?.abcEncoderExportsTuneList) {
+
+        localStorage.abcEncoderExportsTuneList = 1;
+    }
+
+    if (!localStorage?.abcEncoderSortsTuneBook) {
+
+        localStorage.abcEncoderSortsTuneBook = 0;
+    }
+
+    if (!localStorage?.abcSortExportsChordsFromTunes) {
+
+        localStorage.abcSortExportsChordsFromTunes = 1;
+    }
+
+    if (!localStorage?.abcSortExportsTunesFromSets) {
+
+        localStorage.abcSortExportsTunesFromSets = 1;
+    }
+
+    if (!localStorage?.abcSortRemovesLineBreaksInAbc) {
+
+        localStorage.abcSortRemovesLineBreaksInAbc = 0;
+    }
+
+    if (!localStorage?.abcSortRemovesTextAfterLineBreaksInAbc) {
+
+        localStorage.abcSortRemovesTextAfterLineBreaksInAbc = 0;
+    }
 }

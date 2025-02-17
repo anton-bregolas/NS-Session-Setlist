@@ -1,18 +1,18 @@
 [
   {
-    "Tune": "AIR: Inis Oírr",
-    "Chords": ""
+    "title": "AIR: Inis Oírr",
+    "chords": ""
   },
   {
-    "Tune": "WALTZ: Flatwater Fran (Amaj)",
-    "Chords": "PART 1:\n| A A A | A A A | D D D | A A A | A A A | Bm Bm Bm | F#m F#m F#m | D D D | A A A | A A A | D D D | A A A | Bm Bm Bm | F#m F#m F#m | D E7 |1 A A A |2 A A A ||\nPART 2:\n| D D D | A A A | D D D | A A A | D D D | F#m F#m F#m | Bm Bm Bm | E E E | D D D | A A A | E7 E7 E7 | F#m F#m F#m | Bm Bm Bm | F#m F#m F#m | D E7 |1 A A A |2 A A A ||"
+    "title": "WALTZ: Flatwater Fran (Amaj)",
+    "chords": "PART 1:\n| A A A | A A A | D D D | A A A |\n| A A A | Bm Bm Bm | F#m F#m F#m | D D D |\n| A A A | A A A | D D D | A A A |\n| Bm Bm Bm | F#m F#m F#m | D E7 |1 A A A |2 A A A ||\nPART 2:\n| D D D | A A A | D D D | A A A |\n| D D D | F#m F#m F#m | Bm Bm Bm | E E E |\n| D D D | A A A | E7 E7 E7 | F#m F#m F#m |\n| Bm Bm Bm | F#m F#m F#m | D E7 |1 A A A |2 A A A ||"
   },
   {
-    "Tune": "WALTZ: Flatwater Fran (Gmaj)",
-    "Chords": "PART 1:\n| G G G | G G G | C C C | G G G | G G G | Am Am Am | Em Em Em | C C C | G G G | G G G | C C C | G G G | Am Am Am | Em Em Em | C D7 |1 G G G |2 G G G ||\nPART 2:\n| C C C | G G G | C C C | G G G | C C C | Em Em Em | Am Am Am | D D D | C C C | G G G | D7 D7 D7 | Em Em Em | Am Am Am | Em Em Em | C D7 |1 G G G |2 G G G ||"
+    "title": "WALTZ: Flatwater Fran (Gmaj)",
+    "chords": "PART 1:\n| G G G | G G G | C C C | G G G |\n| G G G | Am Am Am | Em Em Em | C C C |\n| G G G | G G G | C C C | G G G |\n| Am Am Am | Em Em Em | C D7 |1 G G G |2 G G G ||\nPART 2:\n| C C C | G G G | C C C | G G G |\n| C C C | Em Em Em | Am Am Am | D D D |\n| C C C | G G G | D7 D7 D7 | Em Em Em |\n| Am Am Am | Em Em Em | C D7 |1 G G G |2 G G G ||"
   },
   {
-    "Tune": "WALTZ: Munster Cloak",
-    "Chords": ""
+    "title": "WALTZ: Munster Cloak",
+    "chords": ""
   }
 ]

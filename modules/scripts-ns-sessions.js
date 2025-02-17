@@ -1,6 +1,6 @@
 import { initAbcTools, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
-         populateTuneSelector, populateFilterOptions, sortFilterOptions, checkPersistenceState } from './scripts-abc-tools.js';
-import { parseAbcFromFile } from './scripts-abc-encoder.js';
+         populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
+import { parseAbcFromFile, initEncoderSettings } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NS Session Setlist Custom App Scripts
@@ -10,13 +10,13 @@ import { parseAbcFromFile } from './scripts-abc-encoder.js';
 // Mars Agliullin - ABC
 // Tania Sycheva - ABC
 //
-// Version / NS Session DB date: 2025-02-17
+// App Version 0.7.1 / NS Session DB date: 2025-02-17
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
 
-let tuneBookSetting = 1;
-let tuneBookInitialized = false;
+let tuneBookSetting = 1; // Tunebook loads Setlist by default
+let tuneBookInitialized = false; // Opening Tunebook will initialise ABC Tools and fetch Session DB data by default
 
 // Define Session DB items
 
@@ -24,7 +24,7 @@ export const tuneSets = [];
 export const tuneList = [];
 export const setChords = [];
 export const tuneChords = [];
-export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunesets.json"
+export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/sets.json"
 export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunes.json"
 export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
 export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-tunes.json";
@@ -203,10 +203,35 @@ export function openSettingsMenu(dataType) {
 
     console.log(`abcEncoderExportsTuneList: ${localStorage.abcEncoderExportsTuneList};
 abcEncoderSortsTuneBook: ${localStorage.abcEncoderSortsTuneBook};
+abcSortExportsChordsFromTunes: ${localStorage.abcSortExportsChordsFromTunes};
 abcSortExportsTunesFromSets: ${localStorage.abcSortExportsTunesFromSets};
 abcSortRemovesLineBreaksInAbc: ${localStorage.abcSortRemovesLineBreaksInAbc};
-abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLineBreaksInAbc};
-abcSortExportsChordsFromTunes: ${localStorage.abcSortExportsChordsFromTunes};`);
+abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLineBreaksInAbc};`);
+  }
+
+  if (dataType === "fullscreen-popover") {
+  
+    const currentAbcTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
+
+    const setMatch = setChords.find(set => set.setTitle === currentAbcTitle);
+    const tuneMatch = tuneChords.find(tune => tune.title === currentAbcTitle);
+    
+    if (setMatch) {
+
+      let setChords = '';
+
+      setMatch.tuneChords.forEach(tune => {
+
+        setChords += `${tune.title}\n`;
+        setChords += `${tune.chords? tune.chords : '–'}\n`;
+      });
+
+      console.log(`${setMatch.setTitle}\n${setChords}`);
+
+    } else if (tuneMatch) {
+
+      console.log(`${tuneMatch.title}\n${tuneMatch.chords}`);
+    }
   }
 }
 
@@ -235,7 +260,7 @@ export function refreshTuneBook() {
 
   console.log(`NS Session App:\n\nTunebook has been refreshed`);
 
-  if (checkPersistenceState() === true
+  if (+localStorage?.abcToolsSaveAndRestoreTunes === 1
       && ((currentTuneBook === tuneSets && localStorage?.lastTuneBookSet_NSSSAPP)
       || (currentTuneBook === tuneList && localStorage?.lastTuneBookTune_NSSSAPP))) {
 
@@ -567,6 +592,7 @@ export function initCustomDropDownMenus() {
 document.addEventListener('DOMContentLoaded', () => {
 
   initAppButtons();
+  initEncoderSettings();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });
