@@ -34,10 +34,12 @@ v.0.7.0: Generate Chordbook
   - Options button and Launch button styles added for ABC Encoder elements (nss-option-btn, nss-launcher-link)
 
 + JavaScript updates:
-  - (scripts-abc-encoder.js)
+  - Chords extraction and formatting functions added to scripts-abc-encoder.js (makeAbcChordBook, getChordsFromTune, getCompleteAbcChordBar)
+  - getChordsFromTune extracts chords from each ABC item and converts them into a plaintext list with part numbers, bar lines and optional volta numbers
+  - makeAbcChordBook exports JSON array of objects with chords organised depending on ABC Type (Set or Tune)
+  - getCompleteAbcChordBar fills chord bars with the minimum number of chords depending on beats per bar (NB: ambiguous bars with two chords in triple-meter tunes are currently left untouched)
   - Tunebook's Full Screen View button now changes behavior depending on fullScreenSetting value, opening either tunes or chords (scripts-abc-tools.js)
   - setChords, tuneChords and corresponding data links added to (scripts-ns-sessions.js)
-  - Chords extraction and formatting functions added (makeAbcChordBook, getChordsFromTune, getCompleteAbcChordBar)
   - Options button function added, Launch button behavior tweaked for ABC Encoder (scripts-ns-sessions.js)
   - ABC Parse & Sort updated with chord export functions (parseAbcFromFile, downloadAbcFile, getSortedAbc)
   - addCustomAbcFields now checks for "[]" in the title to get R: field value if missing from Tune (Medleys)
