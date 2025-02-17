@@ -1772,14 +1772,14 @@ M: 3/4
 L: 1/8
 Q: 1/4=144
 K: Amaj
-EF|:A2 A2 EF|A2 A2 ce|f2 e2 A2|c4 EF|
-A2 A2 EF|B2 B2 AB|c2 BA FE|F4 EF|
-A2 A2 EF|A2 A2 ce|f2 e2 a2|c4 ec|
-B2 BA Bc|BA F2 AF|EF A2 A2|1 A4 EF:|2 A4 ce||
-|:f2 e2 A2|c4 ce|f2 e2 A2|c4 ce|
-f2 e2 a2|c2 ec BA|FB BA Bc|B4 ce|
-f2 e2 a2|c2 ec BA|B2 e3d|c3 c BA|
-FB BA Bc|BA F2 AF|EF A2 A2|1 A4 ce:|2 A4||
+EF|:"A"A2 A2 EF|"A"A2 A2 ce|"D"f2 e2 A2|"A"c4 EF|
+"A"A2 A2 EF|"Bm"B2 B2 AB|"F#m"c2 BA FE|"D"F4 EF|
+"A"A2 A2 EF|"A"A2 A2 ce|"D"f2 e2 a2|"A"c4 ec|
+"Bm"B2 BA Bc|"F#m"BA F2 AF|"D"EF A2 "E7"A2|1 "A"A4 EF:|2 "A"A4 ce||
+|:"D"f2 e2 A2|"A"c4 ce|"D"f2 e2 A2|"A"c4 ce|
+"D"f2 e2 a2|"F#m"c2 ec BA|"Bm"FB BA Bc|"E"B4 ce|
+"D"f2 e2 a2|"A"c2 ec BA|"E7"B2 e3d|"F#m"c3 c BA|
+"Bm"FB BA Bc|"F#m"BA F2 AF|"D"EF A2 "E7"A2|1 "A"A4 ce:|2 "A"A4||
 
 X: 107
 T: WALTZ: Flatwater Fran (Gmaj)
@@ -1792,14 +1792,14 @@ M: 3/4
 L: 1/8
 Q: 1/4=144
 K: Gmaj
-DE|:G2 G2 DE|G2 G2 Bd|e2 d2 G2|B4 DE|
-G2 G2 DE|A2 A2 GA|B2 AG ED|E4 DE|
-G2 G2 DE|G2 G2 Bd|e2 d2 g2|B4 dB|
-A2 AG AB|AG E2 GE|DE G2 G2|1 G4 DE:|2 G4 Bd||
-|:e2 d2 G2|B4 Bd|e2 d2 G2|B4 Bd|
-e2 d2 g2|B2 dB AG|EA AG AB|A4 Bd|
-e2 d2 g2|B2 dB AG|A2 d3c|B3 B AG|
-EA AG AB|AG E2 GE|DE G2 G2|1 G4 Bd:|2 G4||
+DE|:"G"G2 G2 DE|"G"G2 G2 Bd|"C"e2 d2 G2|"G"B4 DE|
+"G"G2 G2 DE|"Am"A2 A2 GA|"Em"B2 AG ED|"C"E4 DE|
+"G"G2 G2 DE|"G"G2 G2 Bd|"C"e2 d2 g2|"G"B4 dB|
+"Am"A2 AG AB|"Em"AG E2 GE|"C"DE G2 "D7"G2|1 "G"G4 DE:|2 "G"G4 Bd||
+|:"C"e2 d2 G2|"G"B4 Bd|"C"e2 d2 G2|"G"B4 Bd|
+"C"e2 d2 g2|"Em"B2 dB AG|"Am"EA AG AB|"D"A4 Bd|
+"C"e2 d2 g2|"G"B2 dB AG|"D7"A2 d3c|"Em"B3 B AG|
+"Am"EA AG AB|"Em"AG E2 GE|"C"DE G2 "D7"G2|1 "G"G4 Bd:|2 "G"G4||
 
 X: 108
 T: WALTZ: Flatworld
