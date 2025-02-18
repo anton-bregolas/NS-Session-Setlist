@@ -153,7 +153,7 @@ afd B2A|AdF G2B|ABA F2E|EDD D2:||
 
 X: 7
 T: JIGS: Carraroe Set
-T: Carraroe
+T: Carraroe [Jig]
 C: C: Trad.; S: Various
 C: Set Leaders: Tania, Anton, Sophie
 Z: Anton Zille ed.; JACKB / R-O-I-S-I-N / shanachie at The Session
@@ -167,7 +167,7 @@ K: Dmaj
 DED F2A|dfe d2A|B/c/dB AFA|dAF E2D:||
 |:dfa afa|bge edB|dfa afa|bge efe|
 dfa afa|bge edB|d2B AFA|1 dAF E2D:|2 dAF E3||
-T: Kevin McHugh's
+T: Kevin McHugh's [Single Jig]
 R: Single Jig
 M: 12/8
 K: Gmaj
@@ -175,8 +175,7 @@ K: Gmaj
 Bdd ded BAB G2B|AGE DEG AGF G2A:||
 |:BAB GAB cBc ABc|B2G GFG ABc d2c|
 B2G GAB cec BdB|AGE DEG AGF G2A:||
-T: Old Favourite
-R: Single Jig
+T: Old Favourite [Single Jig]
 M: 12/8
 K: Gmaj
 |:B3 BAB dBA G2B|ded d2B ded B2A|
@@ -1054,7 +1053,7 @@ eaf g2e dBA G2A|1 B2e dBG A3 ABd:|2 B2e dBG A2B c2B||
 
 X: 38
 T: SLIDES: Denny Mescall's Set
-T: Bank of Turf
+T: Bank of Turf [Single Jig]
 C: C: Trad. / Trad. / Mike Scott; S: Various
 C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed., Anton Zille ed.; Mars at The Session
@@ -1068,14 +1067,14 @@ d2 B|:ABA DFA BAF DFA|dcd ede ~f3 def|
 ~g3 gab afd Bcd|1 efe e2d cBA Bcd:|2 ABA efe d3 dcd||
 |:e2A efg f2d fga|gfe fed edB ABd|
 eAA efg fdd fga|1 gfe dcB A3 ABd:|2 gfe dcB AFA Bcd||
-T: Denny Mescall's
+T: Denny Mescall's [Slide]
 R: Slide
 K: Gmaj
 |:B3 BAB dBA G3|GBd g2e d2B A2G|
 B3 BAB dBA G2B|ded cBA G3 G3:||
 |:g2g gfe d2B c2d|e2a a2b a2g e2f|
 g2g gfe d2B c2d|efg fgf g3 g3:||
-T: Kings of Kerry
+T: Kings of Kerry [Slide]
 R: Slide
 K: Amaj
 c3 cBA F2A E2A|F2A E2c B3 BAB|

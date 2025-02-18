@@ -73,6 +73,45 @@
                 </div>
             </section>
 
+            <article id="nss-popover-options" popover="manual" class="nss-popover" aria-label="Encoder Settings Menu">
+                <header class="nss-popover-header">
+                    <div class="flex-wrapper nss-header-x-container">
+                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
+                    </div>
+                    <h2 class="nss-popover-title">Encoder Settings</h2>
+                </header>
+                <div class="nss-popover-body">
+                    <div class="nss-checkbox-container">
+                        <label for="encoder-export-tunelist" class="nss-checkbox-label">
+                          <input type="checkbox" id="encoder-export-tunelist" data-option="abcEncoderExportsTuneList" class="nss-checkbox-btn" value="1">
+                            ENCODE also exports plain text Tunelist
+                        </label>
+                        <label for="encoder-sort-tunebook" class="nss-checkbox-label">
+                          <input type="checkbox" id="encoder-sort-tunebook" data-option="abcEncoderSortsTuneBook" class="nss-checkbox-btn" value="1">
+                            ENCODE automatically passes tunes to SORT
+                        </label>
+                        <label for="sort-export-chords" class="nss-checkbox-label">
+                          <input type="checkbox" id="sort-export-chords" data-option="abcSortExportsChordsFromTunes" class="nss-checkbox-btn" value="1">
+                            SORT extracts chords from Tunebook
+                        </label>
+                        <label for="sort-export-settunes" class="nss-checkbox-label">
+                          <input type="checkbox" id="sort-export-settunes" data-option="abcSortExportsTunesFromSets" class="nss-checkbox-btn" value="1">
+                            SORT exports Tunes ABC from Sets ABC
+                        </label>
+                        <label for="sort-remove-linebreaks" class="nss-checkbox-label">
+                          <input type="checkbox" id="sort-remove-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">
+                            SORT removes extra line breaks in ABC
+                        </label>
+                        <label for="sort-remove-afterbreaks" class="nss-checkbox-label">
+                          <input type="checkbox" id="sort-remove-afterbreaks" data-option="abcSortRemovesTextAfterLineBreaksInAbc" class="nss-checkbox-btn" value="1">
+                            SORT removes text after line breaks in ABC
+                        </label>
+                    </div>
+                </div>
+            </article>
+
+            <div class="nss-status-bar" aria-live="assertive"></div>
+
         </main>
 
         <footer class="nss-footers">

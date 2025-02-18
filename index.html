@@ -65,7 +65,8 @@
                     </select>
                     <select id="displayOptions" class="nss-select-options" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
                        <option value="-1">🎹 Tabs & MIDI</option>
-                       <option value="0">Default (Piano)</option>
+                       <option value="0">Default (ABC Tools)</option>
+                       <option value="13">Notes (Piano)</option>
                        <option value="1">ABC (Concertina)</option>
                        <option value="2">Tin Whistle Tabs</option>
                        <option value="3">Irish Flute Tabs</option>
@@ -160,17 +161,52 @@
                 </div>
             </section>
 
+            <article id="nss-popover-options" popover="manual" class="nss-popover" aria-label="App Options Menu">
+                <header class="nss-popover-header">
+                    <div class="flex-wrapper nss-header-x-container">
+                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close App Options" aria-title="Close App Options"></button>
+                    </div>
+                    <h2 class="nss-popover-title">Tunebook Options</h2>
+                </header>
+                <div class="nss-popover-body">
+                    <div class="nss-checkbox-container">
+                        <label for="tools-save-restore-tunes" class="nss-checkbox-label">
+                          <input type="checkbox" id="tools-save-restore-tunes" data-option="abcToolsSaveAndRestoreTunes" class="nss-checkbox-btn" value="1">
+                            Save & load last opened Set or Tune
+                        </label>
+                        <label for="tools-allow-midi-change" class="nss-checkbox-label">
+                          <input type="checkbox" id="tools-allow-midi-change" data-option="abcToolsAllowInstrumentChanges" class="nss-checkbox-btn" value="1">
+                            MIDI: Allow changing playback instrument
+                        </label>
+                        <label for="tools-allow-tab-change" class="nss-checkbox-label">
+                          <input type="checkbox" id="tools-allow-tab-change" data-option="abcToolsAllowTabStyleChanges" class="nss-checkbox-btn" value="1">
+                            Tabs: Allow adding Tablature to notes
+                        </label>
+                    </div>
+                </div>
+            </article>
+
+            <article id="nss-fullscreen-popover" popover class="nss-fullscreen-popover" aria-label="Full Screen View">
+                <header class="nss-fs-popover-header">
+                    <div class="flex-wrapper nss-header-x-container">
+                        <button autofocus id="nss-fs-popover-close" class="nss-btn nss-btn-x fs-popover-btn-x flex-wrapper" title="Close Full Screen View" aria-title="Close Full Screen View"></button>
+                    </div>
+                    <h2 class="nss-fs-popover-title"></h2>
+                </header>
+                <div class="nss-fs-popover-body"></div>
+            </article>
+
+            <div class="nss-status-bar" aria-live="assertive"></div>
+
         </main>
 
         <footer class="nss-footers">
 
             <section class="nss-footer-launch nss-launch-el footer-wrapper">
-                <button class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
-                    <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-icon-container" title="View raw ABC file of NS Session Tunelist" aria-title="View raw ABC file of NS Session Tunelist">
-                        <svg class="nss-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#nav-icon-abc"></use>
-                        </svg>
-                    </a>
+                <button class="nss-btn nss-option-btn flex-wrapper" data-load="app-options" title="Open N.S.S.S. App Options" aria-title="Open N.S.S.S. App Options">
+                    <svg class="nss-icon" aria-hidden="true">
+                        <use href="assets/icons/icons.svg#action-icon-options"></use>
+                    </svg>
                 </button>
                 <button class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
                     <a href="abc-encoder.html" class="nss-icon-container" title="Launch ABC Encoder" aria-title="Launch ABC Encoder">
@@ -190,7 +226,7 @@
 
                 <div class="flex-wrapper footer-link-wrapper">
                     <label for="nss-radio-view-tunes" class="radio-wrapper flex-wrapper">
-                        <input type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="1" checked>
+                        <input type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="1">
                         <span class="flex-wrapper">
                             Full Screen: Tunes
                             <div class="nss-footer-icon nss-icon-show">

@@ -1,4 +1,4 @@
-import { initAbcTools, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
+import { initAbcTools, initToolsOptions, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
          populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
 import { parseAbcFromFile, initEncoderSettings } from './scripts-abc-encoder.js';
 
@@ -10,7 +10,7 @@ import { parseAbcFromFile, initEncoderSettings } from './scripts-abc-encoder.js'
 // Mars Agliullin - ABC
 // Tania Sycheva - ABC
 //
-// App Version 0.7.1 / NS Session DB date: 2025-02-17
+// App Version 0.7.2 / NS Session DB date: 2025-02-18
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -34,11 +34,21 @@ export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/
 const allCustomBtn = document.querySelectorAll('.nss-btn');
 const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
 const allLaunchEls = document.querySelectorAll('.nss-launch-el');
+const allCheckBoxes = document.querySelectorAll('.nss-checkbox-btn');
 const allTuneBookEls = document.querySelectorAll('.nss-tunebook-el');
 const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
 const tuneSelectorTitle = document.querySelector('#tuneSelectorTitle');
 export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#title');
+
+// Define App Menu elements
+
+const appOptionsPopover = document.querySelector('#nss-popover-options');
+const fullScreenPopover = document.querySelector('#nss-fullscreen-popover');
+const fullScreenPopoverTitle = document.querySelector('.nss-fs-popover-title');
+const fullScreenPopoverBody = document.querySelector('.nss-fs-popover-body');
+const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
+const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
 
 ////////////////////////////////
 // APP LAUNCHERS
@@ -199,14 +209,29 @@ function hideAllSectionsEls() {
 
 export function openSettingsMenu(dataType) {
 
+  if (dataType === "app-options") {
+
+    console.log(`NS Session App Options:
+
+abcToolsSaveAndRestoreTunes: ${localStorage.abcToolsSaveAndRestoreTunes}
+abcToolsAllowInstrumentChanges: ${localStorage.abcToolsSaveAndRestoreTunes}
+abcToolsAllowTabStyleChanges: ${localStorage.abcToolsAllowTabStyleChanges}`);
+
+    appOptionsPopover.showPopover();
+  }
+
   if (dataType === "encoder-options") {
 
-    console.log(`abcEncoderExportsTuneList: ${localStorage.abcEncoderExportsTuneList};
-abcEncoderSortsTuneBook: ${localStorage.abcEncoderSortsTuneBook};
-abcSortExportsChordsFromTunes: ${localStorage.abcSortExportsChordsFromTunes};
-abcSortExportsTunesFromSets: ${localStorage.abcSortExportsTunesFromSets};
-abcSortRemovesLineBreaksInAbc: ${localStorage.abcSortRemovesLineBreaksInAbc};
-abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLineBreaksInAbc};`);
+    console.log(`ABC Encoder Settings:
+
+abcEncoderExportsTuneList: ${localStorage.abcEncoderExportsTuneList}
+abcEncoderSortsTuneBook: ${localStorage.abcEncoderSortsTuneBook}
+abcSortExportsChordsFromTunes: ${localStorage.abcSortExportsChordsFromTunes}
+abcSortExportsTunesFromSets: ${localStorage.abcSortExportsTunesFromSets}
+abcSortRemovesLineBreaksInAbc: ${localStorage.abcSortRemovesLineBreaksInAbc}
+abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLineBreaksInAbc}`);
+
+    appOptionsPopover.showPopover();
   }
 
   if (dataType === "fullscreen-popover") {
@@ -215,6 +240,11 @@ abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLi
 
     const setMatch = setChords.find(set => set.setTitle === currentAbcTitle);
     const tuneMatch = tuneChords.find(tune => tune.title === currentAbcTitle);
+
+    if (!setMatch && !tuneMatch) {
+
+      return;
+    }
     
     if (setMatch) {
 
@@ -222,16 +252,20 @@ abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLi
 
       setMatch.tuneChords.forEach(tune => {
 
-        setChords += `${tune.title}\n`;
-        setChords += `${tune.chords? tune.chords : '–'}\n`;
+        setChords += `${tune.title}\n\n`;
+        setChords += `${tune.chords? tune.chords : '–'}\n\n`;
       });
 
-      console.log(`${setMatch.setTitle}\n${setChords}`);
+      fullScreenPopoverTitle.textContent = setMatch.setTitle;
+      fullScreenPopoverBody.textContent = setChords;
 
     } else if (tuneMatch) {
 
-      console.log(`${tuneMatch.title}\n${tuneMatch.chords}`);
+      fullScreenPopoverTitle.textContent = tuneMatch.title;
+      fullScreenPopoverBody.textContent = tuneMatch.chords;
     }
+
+    fullScreenPopover.showPopover();
   }
 }
 
@@ -505,15 +539,34 @@ async function appButtonHandler() {
 
   if (this.classList.contains('nss-option-btn')) {
 
+    if (appOptionsPopover.matches(':popover-open')) {
+
+      appOptionsPopover.hidePopover();
+      return;
+    }
+
     openSettingsMenu(this.dataset.load);
   }
-  
+
   // Close Buttons: Hide parent element and resize ABC Tools
 
-  if (this.classList.contains('nss-btn-x')) {
+  if (this.classList.contains('footer-btn-x')) {
 
     parentEl.setAttribute("hidden", "");
     resizeIframe();
+    return;
+  }
+
+  if (this.classList.contains('popover-btn-x')) {
+
+    appOptionsPopover.hidePopover();
+    return;
+  }
+
+  if (this.classList.contains('fs-popover-btn-x')) {
+
+    fullScreenPopover.hidePopover();
+    return;
   }
 }
 
@@ -567,7 +620,7 @@ async function appDropDownHandler() {
 }
 
 ////////////////////////////////
-// EVENT LISTENERS
+// EVENT LISTENERS & SETTINGS
 ///////////////////////////////
 
 // Add event listeners to custom app buttons
@@ -587,12 +640,43 @@ export function initCustomDropDownMenus() {
   filterOptions.addEventListener('change', appDropDownHandler);
 }
 
-// Initialize event listeners on Launch Screen load
+// Initialize App & Encoder Settings checkboxes on page load
+
+export function initAppCheckboxes() {
+
+  allCheckBoxes.forEach(checkBox => {
+
+    if (+localStorage[checkBox.dataset.option] === 1) {
+
+      checkBox.checked = true;
+    
+    } else {
+
+      checkBox.checked = false;
+    } 
+
+    checkBox.addEventListener('click', () => {
+
+      if (+localStorage[checkBox.dataset.option] > 0) {
+
+        localStorage[checkBox.dataset.option] = 0;
+      
+      } else {
+
+        localStorage[checkBox.dataset.option] = 1;
+      } 
+    });
+  });
+}
+
+// Initialize event listeners and settings on Launch Screen load
 
 document.addEventListener('DOMContentLoaded', () => {
 
   initAppButtons();
+  initToolsOptions();
   initEncoderSettings();
+  initAppCheckboxes();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });

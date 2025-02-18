@@ -10,10 +10,18 @@ body * {
 }
 
 body {
-  background-image: linear-gradient(90deg, #003300 25%, #663399 100%);
-  color: #ffd324;
   margin: 0;
   padding: 0;
+}
+
+body,
+[popover]:not(.nss-fullscreen-popover) {
+  background-image: linear-gradient(90deg, #003300 25%, #663399 100%);
+  color: #ffd324;
+}
+
+html:has([popover]:popover-open) {
+  overflow: hidden;
 }
 
 #title:is([data-title="launcher"])::after {
@@ -415,7 +423,7 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-show {
   inset: 0;
   margin: -0.25rem;
   border-radius: 0.5rem;
-  background-image: linear-gradient(90deg, #ffd324 25%, #ff6699 100%);;
+  background-image: linear-gradient(90deg, #ffd324 25%, #ff6699 100%);
   z-index: -1;
 }
 
@@ -476,6 +484,111 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-show {
   justify-content: space-evenly;
 }
 
+.nss-fullscreen-popover {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  border: none;
+  outline: none;
+}
+
+.nss-fs-popover-body {
+  margin: 2.25rem;
+  white-space: pre;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  font-size: 1.75rem;
+}
+
+.nss-fs-popover-title h2 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.fs-popover-btn-x {
+  color: black;
+}
+
+.fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
+  outline-color: black;
+}
+
+.nss-popover {
+  padding: 1em;
+  width: min(calc(80svw - 3.7rem), 40rem);
+  height: calc(80svh - 3rem);
+  border-radius: 1.5rem;
+  border: 0.3rem solid #ffd324;
+}
+
+.nss-popover-header h2 {
+  font-size: 2rem;
+  margin: 1rem;
+}
+
+.nss-header-x-container {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.nss-popover-body {
+  margin: 2rem 5rem;
+}
+
+.nss-checkbox-container {
+  display: flex;
+  flex-flow: column;
+  gap: 1.9rem;
+}
+
+.nss-checkbox-label {
+  display: flex;
+  font-size: 1.2rem;
+  gap: 1rem;
+}
+
+.nss-checkbox-label,
+.nss-checkbox-btn {
+  cursor: pointer;
+}
+
+input[type="checkbox"]:focus-visible {
+  outline: 0.15rem solid #ffd324;
+  outline-style: solid;
+  outline-offset: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.nss-checkbox-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 0.12rem solid #ffd324;
+  border-radius: 0.26rem;
+  background-image: linear-gradient(90deg, #ffd324 25%, #ff6699 100%);
+  font: inherit;
+  font-weight: bold;
+  color: #003300;
+  align-items: center;
+  margin-right: 0.13rem;
+  margin-left: 0.8rem;
+  transform: translateY(-0.12rem);
+}
+
+.nss-checkbox-btn::before {
+  content:"\2714";
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.nss-checkbox-btn:checked::before {
+  opacity: 1;
+}
+
 /* Media queries */
 
 /* @media screen and (max-width: 1120px) { */
@@ -514,6 +627,47 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-show {
   } */
 }
 
+/* @media screen and (max-height: 640px),
+       screen and (max-width: 860px) { */
+@media screen and (max-height: 40em),
+       screen and (max-width: 53.75em) {
+
+  .nss-popover {
+    width: 100svw;
+    height: 100svh;
+    border-radius: 0;
+  }
+
+  .nss-popover-header h2 {
+    font-size: 3.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .nss-popover-body {
+    margin: 5rem 2rem 5rem 5rem;
+  }
+
+  .nss-checkbox-container {
+    gap: 3.75rem;
+  }
+
+  .nss-checkbox-label {
+    font-size: 1.9rem;
+    gap: 2.5rem;
+  }
+
+  .nss-btn-x {
+    font-size: 5rem;
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .nss-checkbox-btn {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+}
+
 /* @media screen and (max-height: 960px) and (max-width: 860px) { */
 @media screen and ((max-height: 60em) and (max-width: 53.75em)) {
 
@@ -528,7 +682,7 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-show {
   }
 }
 
-/* @media screen and (max-width: 860px) and (max-height: 860px) { */
+/* @media screen and (max-width: 860px) and (min-height: 860px) { */
 @media screen and (max-width: 53.75em) and (min-height: 53.75em) {
 
   h1 {
@@ -559,12 +713,17 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-show {
   }
 
   .nss-btn-text .nss-icon-container > * {
-    width: 3.25rem;
-    height: 3.25rem;
+    width: 4rem;
+    height: 4rem;
   }
 
-  .nss-btn-launch:is(:hover, :focus, :focus-visible) {
+  .nss-btn-launch:is(:hover, :focus, :focus-visible),
+  .nss-btn-x:is(:hover, :focus, :focus-visible) {
     outline: 0.3rem solid #ffd324;
+  }
+
+  .fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
+    outline-color: black;
   }
 }
 

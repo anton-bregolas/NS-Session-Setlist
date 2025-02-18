@@ -13,6 +13,36 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.7.2: Generate Chordbook (Popovers For Options & Chords)
+
++ Project updates:
+  - Launcher: Menu Popover with App Options checkboxes added with styles and scripts
+  - ABC Encoder: Menu Popover with Encoder Settings checkboxes added with styles and scripts
+  - Tunebook: Full Screen Popover for viewing Chords from Sets or Tunes separately added with basic styles
+  - App Options update: Global variables can now be directly modified via Options and Encoder Settings menus
+  - Tunebook: Tabs & MIDI options tweaked and expanded in wake of ABC Tools update, Default options has been split into ABC Tools Default and Piano options
+  - New Icons added
+
++ JavaScript updates:
+  - Scripts for updating Global variables in Local Storage via App Options and Encoder Settings Menus added
+  - openSettingsMenu, appButtonHandler, initAppCheckboxes updated with Popover scripts (scripts-ns-sessions.js)
+  - initToolsOptions updated with new Global variables (scripts-abc-tools.js)
+  - loadTuneBookItem, loadTabsMidiOptions and injectInstrument updated with fixes, now both ABC Tools Default option and Piano + Notes option are available (scripts-abc-tools.js)
+  - addCustomAbcFields fix for ABC body titles processing added (scripts-abc-encoder.js)
+
++ HTML updates:
+  - Two Popover types, App Options and Full Screen Popover added to index.html (id: nss-popover-options, nss-fullscreen-popover)
+  - Encoder Settings Popover added to abc-encoder.html (id: nss-popover-options)
+
++ CSS updates:
+  - Options Popover styles added
+  - Options Popover checkbox styles added
+  - @media breakpoints for Popover added
+  - Fullscreen Popover basic styles added
+
++ Session DB updates:
+  - Session DB updated to 2025-02-18
+
 v.0.7.1: Generate Chordbook (Chordbook Tweaks & Naming Update)
 
 + Project updates:

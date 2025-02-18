@@ -32,6 +32,7 @@ let isDulcimer = false;
 let isUPipes = false;
 let isMelodeon = false;
 let isSolfege = false;
+let isPianoForced = false;
 
 let lastURL = "";
 
@@ -51,11 +52,9 @@ export const displayOptions = document.getElementById('displayOptions');
 // TUNEBOOK LOAD FUNCTIONS
 ///////////////////////////////
 
-// Initialize ABC Transcription Tools, add event listeners to Tunebook elements
+// Initialize default Global settings for ABC Tools
 
-export function initAbcTools() {
-
-    // Initialize Global Settings for ABC Tools
+export function initToolsOptions() {
 
     if (!localStorage?.abcToolsSaveAndRestoreTunes) {
 
@@ -66,6 +65,16 @@ export function initAbcTools() {
 
         localStorage.abcToolsAllowInstrumentChanges = 1;
     }
+
+    if (!localStorage?.abcToolsAllowTabStyleChanges) {
+
+        localStorage.abcToolsAllowTabStyleChanges = 1;
+    }
+}
+
+// Initialize ABC Transcription Tools, add event listeners to Tunebook elements
+
+export function initAbcTools() {
 
     // Select Session DB JSON to open in ABC Tools
 
@@ -152,10 +161,17 @@ export function loadTuneBookItem(currentTuneBook, itemNumber) {
 
     if (theURL == "") return;
 
-    theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
+    if (+localStorage?.abcToolsAllowTabStyleChanges === 1) {
+
+        theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
+
+    } else {
+
+        theURL = theURL.replace(/&format=([^&]+)/g,"&format=noten");
+    }
 
     if (+localStorage?.abcToolsAllowInstrumentChanges === 1) {
-        
+
       theURL = injectInstrument(theURL);
     }
 
@@ -280,9 +296,10 @@ function loadTabsMidiOptions() {
         isUPipes = false;
         isMelodeon = false;
         isSolfege = false;
+        isPianoForced = false;
 
         switch (displayOptions.value) {
-            case "0": // Standard notation + piano voice
+            case "0": // Standard notation + default ABC Tools voice
                     tabStyle = "noten";
                     break;
             case "1": // Note names + concertina voice
@@ -324,7 +341,10 @@ function loadTabsMidiOptions() {
             case "11": // Melodeon voice only
                     isMelodeon = true;
             // falls through
-            default:
+            case "13": // Piano voice only
+                    isPianoForced = true;
+            // falls through
+            default: // Standard notation
                     tabStyle = "noten";
                     break;
         }
@@ -364,7 +384,7 @@ function injectInstrument(theURL) {
 
     let abcInLZW = LZString.decompressFromEncodedURIComponent(originalAbcInLZW);
 
-    let injectMidiString = `%abcjs_soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 64\n%%MIDI chordvol 64`;
+    let injectMidiString = `%abcjs_soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 55\n%%MIDI chordvol 40`;
 
     // Inject a template MIDI string into the ABC if no MIDI instructions found
 
@@ -374,7 +394,7 @@ function injectInstrument(theURL) {
 
     } else {
 
-        abcInLZW.replace(/(%abcjs_soundfont)[\s\S]*?(K:)/gm, `${injectMidiString}\nK:`)
+        abcInLZW.replace(/(%abcjs_soundfont)[\s\S]*?(K:)/gm, `${injectMidiString}\nK:`);
     }
     
     // Update the decompressed ABC with the new MIDI settings
@@ -389,7 +409,7 @@ function injectInstrument(theURL) {
             }
             break;
         case "gdad":
-            abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 140");
+            abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 139");
             break;
         case "guitare":
         case "guitard":
@@ -402,8 +422,6 @@ function injectInstrument(theURL) {
             else {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 78");
             }
-            abcInLZW = abcInLZW.replace("%%MIDI bassvol 64","%%MIDI bassvol 64");
-            abcInLZW = abcInLZW.replace("%%MIDI chordvol 64","%%MIDI chordvol 64");
             break;
         case "notenames":
             if (isSolfege) {
@@ -414,7 +432,7 @@ function injectInstrument(theURL) {
             break;
         case "noten":
             if (isDulcimer) {
-                abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 15");
+                abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 15").replace("%%MIDI bassvol 55","%%MIDI bassvol 40").replace("%%MIDI chordvol 40","%%MIDI chordvol 30");
             }
             else if (isUPipes) {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 129");
@@ -422,7 +440,7 @@ function injectInstrument(theURL) {
             else if (isMelodeon) {
                 abcInLZW = abcInLZW.replace("%%MIDI program 0","%%MIDI program 135");     
             }
-            else {
+            else if (!isPianoForced) {
                 return theURL;
             }
             break;
