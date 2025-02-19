@@ -1,3 +1,9 @@
+@supports not selector(:popover-open) {
+  [popover]:not(.\:popover-open) {
+    display: none;
+  }
+}
+
 *, *::before, *::after { 
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
@@ -214,6 +220,10 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-hide {
 
 input:is([name="nss-radio-view"]):checked + span .nss-icon-show {
   display: block;
+}
+
+option:is([disabled]) {
+  display: none;
 }
 
 .nss-btn {
@@ -656,7 +666,7 @@ input[type="checkbox"]:focus-visible {
     gap: 2.5rem;
   }
 
-  .nss-btn-x {
+  .nss-popover .nss-btn-x {
     font-size: 5rem;
     width: 5rem;
     height: 5rem;

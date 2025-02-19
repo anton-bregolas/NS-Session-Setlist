@@ -1,19 +1,22 @@
-import { apStyleTitleCase } from './scripts-ap-style-title-case.js';
-import { LZString } from './scripts-abc-tools.js';
+import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-title-case.js';
+import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
 
 ////////////////////////////////
 // ABC ENCODER GLOBAL SETTINGS
 ///////////////////////////////
 
-// Default ABC Encoder settings on first load
-// Set in initEncoderSettings and user Options
+// Default ABC Encoder Settings for reference
+// Set in initEncoderSettings on first load
 
-// abcEncoderExportsTuneList = 1
-// abcEncoderSortsTuneBook = 0
-// abcSortExportsTunesFromSets = 1
-// abcSortExportsChordsFromTunes = 1
-// abcSortRemovesLineBreaksInAbc = 0
-// abcSortRemovesTextAfterLineBreaksInAbc = 0
+export const abcEncoderDefaults = {
+
+    abcEncoderExportsTuneList: "1",
+    abcEncoderSortsTuneBook: "0",
+    abcSortExportsTunesFromSets: "1",
+    abcSortExportsChordsFromTunes: "1",
+    abcSortRemovesLineBreaksInAbc: "0",
+    abcSortRemovesTextAfterLineBreaksInAbc: "0" 
+};
 
 // List of basic Tune Types in Session DB
 // Other tunes will be prefixed by Various
@@ -59,7 +62,91 @@ const makeProperCaseExceptions = [
 // ABC FILE PARSERS & HANDLERS
 ///////////////////////////////
 
-// Convert an imported ABC file into a JSON array of tunes / sets
+// ABC Encoder Main Handler Function
+// Process and output files passed to ABC Encoder depending on task type
+// Pass the resulting abc/text or JSON output to downloadAbcFile
+
+async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
+
+    let abcEncoderOutput = '';
+
+    // Process input data depending on task type and Encoder settings
+    // Generate additional file formats before returning main output
+
+    if (taskType === "abc-encode") {
+
+        // Encode each Set or Tune from input ABC with lz-string, extract metadata, make abc-encoded JSON
+
+        const abcEncodedOutput = getEncodedAbc(rawAbcContent, fileName);
+
+        abcEncoderOutput = abcEncodedOutput[0];
+
+        // Optional: Save plain text Tunelist generated from source ABC
+
+        if (+localStorage.abcEncoderExportsTuneList === 1) {
+
+            downloadAbcFile(exportPlainTuneList(abcEncoderOutput), "Tunelist[Source].txt");
+        }
+
+        // Optional: Save additional JSON array of objects containing all individual Setlist Tunes encoded
+
+        if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncodedOutput[1] !== '') {
+
+            downloadAbcFile(abcEncodedOutput[1], "tunes.json");
+
+            // Optional: Save plain text Tunelist of all individual Setlist Tunes from source ABC
+
+            if (+localStorage.abcEncoderExportsTuneList === 1) {
+
+                downloadAbcFile(exportPlainTuneList(abcEncodedOutput[1]), "Tunelist[Tunes].txt");
+            }
+        }
+    }
+
+    // Decode tunes contained in input JSON file, decompress using lz-string, return generated ABC file
+
+    if (taskType === "abc-decode") { 
+
+        abcEncoderOutput = getDecodedAbc(rawAbcContent);
+    }
+
+    // Sort ABC input data: Apply NS Session format style to each Set or Tune, sort by Tune Title, return sorted ABC
+
+    if (taskType === "abc-sort") {
+
+        const abcSortedOutput = getSortedAbc(rawAbcContent);
+
+        abcEncoderOutput = abcSortedOutput[0];
+
+        // Optional: Save additional ABC file containing all individual Setlist Tunes
+
+        if (+localStorage.abcSortExportsTunesFromSets === 1 && abcSortedOutput[1] !== '') {
+            
+            downloadAbcFile(abcSortedOutput[1], "NS-Session-Tunes.abc");
+
+            // Optional: Save additional Chordbook JSON containing extracted chords arranged as Tunelist
+
+            if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[3] !== '') {
+
+                downloadAbcFile(abcSortedOutput[3], "chords-tunes.json", "abc-extract-chords");
+            }
+        }
+
+        // Optional: Save additional Chordbook JSON containing extracted chords arranged as Setlist
+
+        if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
+
+            downloadAbcFile(abcSortedOutput[2], "chords.json", "abc-extract-chords");
+        }
+    }
+
+    // Save main ABC Encoder output file
+
+    // console.log("ABC Encoder:\n\nDownloading main output file...");
+    downloadAbcFile(abcEncoderOutput, fileName, taskType);
+}
+
+// Parse ABC Encoder input depending on task type
   
 export async function parseAbcFromFile(taskType) {
 
@@ -81,65 +168,13 @@ export async function parseAbcFromFile(taskType) {
 
                 console.log("ABC Encoder:\n\nABC file contents read");
 
-                let abcContentResult = "";
-
                 if (!validateAbcFile(rawAbcContent, taskType)) {
 
                     console.warn("ABC Encoder:\n\nInvalid data type or format!");
                     return;
                 }
 
-                if (taskType === "abc-encode") {
-
-                    const abcEncodedOutput = getEncodedAbc(rawAbcContent);
-
-                    abcContentResult = abcEncodedOutput[0];
-
-                    if (+localStorage.abcEncoderExportsTuneList === 1) {
-
-                        downloadAbcFile(exportTuneList(abcContentResult), "Tunelist.txt");
-                    }
-
-                    if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncodedOutput[1] !== '') {
-
-                        downloadAbcFile(abcEncodedOutput[1], "tunes.json");
-
-                        if (+localStorage.abcEncoderExportsTuneList === 1) {
-
-                            downloadAbcFile(abcEncodedOutput[1], "TunelistTunes.txt");
-                        }
-                    }
-                }
-
-                if (taskType === "abc-decode") { 
-
-                    abcContentResult = getDecodedAbc(rawAbcContent);
-                }
-
-                if (taskType === "abc-sort") {
-
-                    const abcSortedOutput = getSortedAbc(rawAbcContent);
-
-                    abcContentResult = abcSortedOutput[0];
-
-                    if (+localStorage.abcSortExportsTunesFromSets === 1 && abcSortedOutput[1] !== '') {
-                        
-                        downloadAbcFile(abcSortedOutput[1], "NS-Session-Tunes.abc");
-
-                        if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[3] !== '') {
-
-                            downloadAbcFile(abcSortedOutput[3], `chords-tunes.json`, "abc-extract-chords");
-                        }
-                    }
-
-                    if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
-
-                        downloadAbcFile(abcSortedOutput[2], `chords-sets.json`, "abc-extract-chords");
-                    }
-                }
-
-                // console.log("ABC Encoder:\n\nDownloading new ABC file...");
-                downloadAbcFile(abcContentResult, rawAbcFile.name, taskType);
+                saveAbcEncoderOutput(rawAbcContent, rawAbcFile.name, taskType);
 
             } catch (error) {
 
@@ -184,10 +219,11 @@ function downloadAbcFile(abcContent, fileName, taskType) {
     const abcFile = new Blob([abcContent], { type: taskType === "abc-encode" || taskType === "abc-extract-chords"? "application/json" : "text/plain" });
     const abcFileName = taskType === "abc-encode" && fileName.startsWith("NS-Session-Sets") ? "sets.json" :
                         taskType === "abc-encode" && fileName.startsWith("NS-Session-Tunes") ? "tunes.json" :
-                        taskType === "abc-encode" ? "tunes-encoded.json" :
+                        taskType === "abc-encode" ? "ABC-ENCODED.json" :
                         taskType === "abc-decode" && fileName.startsWith("sets") ? "NS-Session-Sets.abc" :
                         taskType === "abc-decode" && fileName.startsWith("tunes") ? "NS-Session-Tunes.abc" :
-                        taskType === "abc-decode" ? "tunes-decoded.abc" :
+                        taskType === "abc-decode" ? "ABC-DECODED.abc" :
+                        taskType === "abc-sort" && !fileName.startsWith("NS-Session") && !fileName.startsWith("ABC-SORTED") ? `${fileName.split('.')[0]} [ABC-SORTED].abc` :
                         fileName;
     
     const abcLink = document.createElement("a");
@@ -222,7 +258,7 @@ function validateAbcFile(abcContent, taskType) {
 
             const testJson = JSON.parse(abcContent);
 
-            if (testJson[0]["Name"]) {
+            if (testJson[0]["leaders"] || testJson[0]["Name"]) {
 
                 return true;
             }
@@ -930,13 +966,15 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
 // Pass ABC contents to Sort and Encode functions, return a JSON array of objects
 
-function getEncodedAbc(abcContent) {
+function getEncodedAbc(abcContent, fileName) {
 
     let sortedAbcContent = [];
 
     if (+localStorage.abcEncoderSortsTuneBook === 1) {
 
         sortedAbcContent = getSortedAbc(abcContent);
+
+        saveAbcEncoderOutput(sortedAbcContent[0], fileName, "abc-sort");
 
     } else {
 
@@ -945,7 +983,7 @@ function getEncodedAbc(abcContent) {
 
     if (sortedAbcContent[0]?.length > 0) {
 
-        console.log("ABC Encoder:\n\nEncoding ABC file contents...");
+        console.log("ABC Encoder:\n\nEncoding ABC file contents...\n\n" + `[Source: ${fileName}]`);
 
         const encodedAbcJson = JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[0]), null, 2);
 
@@ -1232,7 +1270,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
         abcBarsArr.forEach(abcBar => {
 
-            if (!abcBar.match(/\"[\S]*\"/)) {
+            if (!abcBar.match(/"[\S]*"/)) {
 
                 return;
             }
@@ -1251,7 +1289,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
                 barCounter = 0;
             }
 
-            const abcBarChordsArr = abcBar.match(/\"[\S]*\"/g);
+            const abcBarChordsArr = abcBar.match(/"[\S]*"/g);
 
             abcPartChords += `|${voltaNo} ${getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats)}`;
 
@@ -1293,7 +1331,7 @@ function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats) {
 
 // Export tab-separated list of Session DB Tunes / Tune Types / Links
 
-function exportTuneList(abcContent) {
+function exportPlainTuneList(abcContent) {
 
     let tuneListStr = '';
 

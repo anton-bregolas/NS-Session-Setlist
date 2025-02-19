@@ -1,6 +1,6 @@
 import { initAbcTools, initToolsOptions, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
          populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
-import { parseAbcFromFile, initEncoderSettings } from './scripts-abc-encoder.js';
+import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NS Session Setlist Custom App Scripts
@@ -10,7 +10,7 @@ import { parseAbcFromFile, initEncoderSettings } from './scripts-abc-encoder.js'
 // Mars Agliullin - ABC
 // Tania Sycheva - ABC
 //
-// App Version 0.7.2 / NS Session DB date: 2025-02-18
+// App Version 0.7.3 / NS Session DB date: 2025-02-19
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -47,8 +47,8 @@ const appOptionsPopover = document.querySelector('#nss-popover-options');
 const fullScreenPopover = document.querySelector('#nss-fullscreen-popover');
 const fullScreenPopoverTitle = document.querySelector('.nss-fs-popover-title');
 const fullScreenPopoverBody = document.querySelector('.nss-fs-popover-body');
-const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
-const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
+//const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
+//const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
 
 ////////////////////////////////
 // APP LAUNCHERS
@@ -230,6 +230,14 @@ abcSortExportsChordsFromTunes: ${localStorage.abcSortExportsChordsFromTunes}
 abcSortExportsTunesFromSets: ${localStorage.abcSortExportsTunesFromSets}
 abcSortRemovesLineBreaksInAbc: ${localStorage.abcSortRemovesLineBreaksInAbc}
 abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLineBreaksInAbc}`);
+
+    for (const setting in abcEncoderDefaults) {
+
+      if (localStorage[setting] !== abcEncoderDefaults[setting]) {
+
+        console.log(`ABC Encoder:\n\n` + `${setting} has been modified\n\n[current: ${localStorage[setting]}, default: ${abcEncoderDefaults[setting]}]`);
+      };
+    };
 
     appOptionsPopover.showPopover();
   }
@@ -604,11 +612,18 @@ async function appDropDownHandler() {
 
         if (filterId !== tuneOption.dataset.tunetype && !tuneOption.dataset.leaders.split(', ').includes(filterId)) {
 
-          tuneOption.setAttribute("hidden", "");
+        //   tuneOption.setAttribute("hidden", "");
 
-        } else if (tuneOption.hasAttribute("hidden")) {
+        // } else if (tuneOption.hasAttribute("hidden")) {
 
-          tuneOption.removeAttribute("hidden");
+        //   tuneOption.removeAttribute("hidden");
+
+          tuneOption.setAttribute("disabled", "");
+
+        } else if (tuneOption.hasAttribute("disabled")) {
+
+          tuneOption.removeAttribute("disabled");
+          
         }
       });
 
@@ -669,10 +684,23 @@ export function initAppCheckboxes() {
   });
 }
 
+// Initialize popover polyfill warning if the browser doesn't support Popover API
+
+function initPopoverWarning() {
+
+  const isPopoverPolyfilled = document.body?.showPopover && !/native code/i.test(document.body.showPopover.toString());
+
+  if (isPopoverPolyfilled) {
+
+    console.log(`NS Session App:\n\nThis browser does not support Popover API. Polyfill has been applied`);
+  }
+}
+
 // Initialize event listeners and settings on Launch Screen load
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  initPopoverWarning();
   initAppButtons();
   initToolsOptions();
   initEncoderSettings();

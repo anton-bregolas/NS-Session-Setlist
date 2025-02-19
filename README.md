@@ -13,6 +13,35 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.7.3: Generate Chordbook (Bug Fixes, 3p Modules & Popover Polyfill)
+
++ Project updates:
+  - ABC Encoder scripts refactored
+  - Popover Polyfill by Oddbird added to project to enable older browser support
+  - Third-party helper scripts have been moved to modules/scripts-3p
+  - Test scripts have been moved to modules/scripts-tests
+  - Work-in-progress solution for Safari not hiding filtered options
+
++ JavaScript updates:
+  - Main ABC Encoder handler function refactored (scripts-abc-encoder.js)
+  - saveAbcEncoderOutput: parseAbcFromFile split into two handler functions, main handler function now accepts abcContent, fileName and taskType as arguments
+  - saveAbcEncoderOutput: Thorough commentary added to main handler function
+  - getEncodedAbc now passes optionally sorted ABC to saveAbcEncoderOutput
+  - downloadAbcFile and validateAbcFile tweaked for better output file naming and validation
+  - Temporary solution added to appDropDownHandler for Safari not hiding options in dropdown menus, filtered options are now also disabled
+  - LZString script moved from ABC Tools scripts to a separate module (scripts-abc-tools.js > scripts-3p/lz-string)
+  - Popover Polyfill warning added to initialisation scripts (scripts-ns-sessions.js)
+
++ HTML updates:
+  - Changed entry point module for abc-encoder.html to be scripts-ns-sessions.js
+  - Popover Polyfill module popover.min.js added to index.html and abc-encoder.html
+
++ CSS updates:
+  - Popover Polyfill fallback @supports block added to styles to avoid flashing of hidden elements on page load
+
++ Session DB updates:
+  - Session DB updated to 2025-02-19
+
 v.0.7.2: Generate Chordbook (Popovers For Options & Chords)
 
 + Project updates:

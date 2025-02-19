@@ -1,5 +1,7 @@
-import { sortFilterAbc } from "./scripts-abc-encoder";
+import { sortFilterAbc } from '../scripts-abc-encoder.js';
 import { describe, it, expect } from "vitest";
+
+localStorage.abcSortExportsTunesFromSets = 1;
 
 const abcImportRawTsoSet = `X: 1
 T: The Brosna, O'Keeffe's.
