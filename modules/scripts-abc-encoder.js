@@ -1317,6 +1317,11 @@ function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats) {
             return `${abcBarChordsInput[0]}\t`.repeat(minTuneBeats);
         }
 
+        if (abcBarChordsInput.length < minTuneBeats) {
+
+            return `${abcBarChordsInput[0]}\t${`*\t`.repeat(minTuneBeats - abcBarChordsInput.length)})`;
+        }
+
         return `${abcBarChordsInput.join('\t')}\t`;
 
     } else {
