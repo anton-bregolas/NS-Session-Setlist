@@ -1279,7 +1279,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
             if (abcBar.match(/^[\d]/)) {
 
-                voltaNo = abcBar[0];
+                voltaNo = +abcBar[0] > 1? `\n|${abcBar[0]}` : abcBar[0];
             }
 
             if (barCounter >= 4 && !voltaNo) {
@@ -1291,12 +1291,12 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
             const abcBarChordsArr = abcBar.match(/"[\S]*"/g);
 
-            abcPartChords += `|${voltaNo} ${getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats)}`;
+            abcPartChords += `|${voltaNo}\t${getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats)}`;
 
             barCounter++;
         });
 
-        abcChords += abcPartChords? `PART ${partCounter}:\n${abcPartChords}||\n` : '';
+        abcChords += abcPartChords? `\n\nPART ${partCounter}:\n${abcPartChords}||` : '';
     });
 
     abcChordsObj.chords = abcChords.trim();
@@ -1314,10 +1314,10 @@ function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats) {
 
         if (abcBarChordsInput.length === 1) {
 
-            return `${abcBarChordsInput[0]} `.repeat(minTuneBeats);
+            return `${abcBarChordsInput[0]}\t`.repeat(minTuneBeats);
         }
 
-        return `${abcBarChordsInput.join(' ')} `;
+        return `${abcBarChordsInput.join('\t')}\t`;
 
     } else {
 

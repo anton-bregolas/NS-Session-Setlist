@@ -22,8 +22,8 @@ let tuneBookInitialized = false; // Opening Tunebook will initialise ABC Tools a
 
 export const tuneSets = [];
 export const tuneList = [];
-export const setChords = [];
-export const tuneChords = [];
+export let setChords = [];
+export let tuneChords = [];
 export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/sets.json"
 export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunes.json"
 export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
@@ -243,6 +243,29 @@ abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLi
   }
 
   if (dataType === "fullscreen-popover") {
+
+    // setChords = [
+    //   {
+    //     "setTitle": "WALTZES: Munster Cloak Set",
+    //     "tuneChords": [
+    //       {
+    //         "title": "Flatwater Fran (Gmaj)",
+    //         "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tD7\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tC\tC\tC\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tEm\tEm\tEm\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD7\tD7\tD7\t|\tEm\tEm\tEm\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tD7\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
+    //       },
+    //       {
+    //         "title": "Flatwater Fran (Amaj)",
+    //         "chords": "PART 1:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tA\tA\tA\t|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tE\tE\tE\t|\n|\tD\tD\tD\t|\tA\tA\tA\t|\tE7\tE7\tE7\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
+    //       }
+    //     ]
+    //   }
+    // ]
+
+    // tuneChords = [
+    //   {
+    //     "title": "WALTZ: Flatwater Fran (Amaj)",
+    //     "chords": "PART 1:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tA\tA\tA\t|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tE\tE\tE\t|\n|\tD\tD\tD\t|\tA\tA\tA\t|\tE7\tE7\tE7\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
+    //   }
+    // ]
   
     const currentAbcTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
 
@@ -256,16 +279,16 @@ abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLi
     
     if (setMatch) {
 
-      let setChords = '';
+      let setChordsOutput = '';
 
       setMatch.tuneChords.forEach(tune => {
 
-        setChords += `${tune.title}\n\n`;
-        setChords += `${tune.chords? tune.chords : '–'}\n\n`;
+        setChordsOutput += `${tune.title}\n\n`;
+        setChordsOutput += `${tune.chords? tune.chords : '–'}\n\n`;
       });
 
       fullScreenPopoverTitle.textContent = setMatch.setTitle;
-      fullScreenPopoverBody.textContent = setChords;
+      fullScreenPopoverBody.textContent = setChordsOutput;
 
     } else if (tuneMatch) {
 
