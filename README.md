@@ -13,6 +13,23 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.7.4: Generate Chordbook (Chords Popover Basic)
+
++ Project updates:
+  - Basic implementation of fullscreen Chords Popover with tabulation
+  - ABC Encoder now exports tab-separated chord strings within Chords JSONs
+
++ JavaScript updates:
+  - ABC Encoder functions getChordsFromTune and getCompleteAbcChordBar now add tabs instead of spaces and properly indent Part subtitles (scripts-abc-encoder.js)
+  - Temporary placeholder Chords JSON and trigger functions added to scripts-ns-sessions.js
+
++ CSS updates:
+  - Basic nss-fullscreen-popover styles added and tweaked
+  - Popover output container now uses white-space: pre-wrap
+
++ Session DB updates:
+  - Session DB updated to 2025-02-19
+
 v.0.7.3: Generate Chordbook (Bug Fixes, 3p Modules & Popover Polyfill)
 
 + Project updates:
