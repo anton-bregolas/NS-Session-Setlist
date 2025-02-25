@@ -1,26 +1,27 @@
 [
   {
     "title": "REEL: Callaghan's",
-    "chords": "PART 1:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tDFAG\tDDFA\t|\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tA\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tC=cdA\tG\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||"
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tD\tG\tD\tA\t|\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tA\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tC\tA\tG\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||"
   },
   {
     "title": "REEL: Galtee Rangers",
+    "meter": "4/4",
     "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tG\t|\tA\tA\t||"
   },
   {
     "title": "REEL: Glentaun",
-    "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\tD\t|\tG\tD\t|\tG\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tCBdD\tG\t|\n|\tG\tG\t|\tC\tD\t|\tC\tC\t|\tD\tCBG\t||"
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\tD\t|\tG\tD\t|\tG\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tC\tD\tG\t|\n|\tG\tG\t|\tC\tD\t|\tC\tC\t|\tD\tC\t||"
   },
   {
     "title": "WALTZ: Flatwater Fran (Amaj)",
+    "meter": "3/4",
     "chords": "PART 1:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tA\tA\tA\t|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tE7\t*\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tE\tE\tE\t|\n|\tD\tD\tD\t|\tA\tA\tA\t|\tE7\tE7\tE7\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tE7\t*\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
   },
   {
     "title": "WALTZ: Flatwater Fran (Gmaj)",
+    "meter": "3/4",
     "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tD7\t*\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tC\tC\tC\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tEm\tEm\tEm\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD7\tD7\tD7\t|\tEm\tEm\tEm\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tD7\t*\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
-  },
-  {
-    "title": "WALTZ: Munster Cloak",
-    "chords": ""
   }
 ]
