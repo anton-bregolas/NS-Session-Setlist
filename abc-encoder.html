@@ -4,7 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=860" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore tunes played at the Novi Sad traditional Irish music session using a new app developed by Anton Zille and Michael Eskin's ABC Transcription Tools.">
     <meta name="description" content="Convert raw ABCs of tunes played at the Novi Sad traditional Irish music session to encoded format exportable to Michael Eskin's ABC Transcription Tools.">
     <title>N.S.S.S. ABC Encoder</title>
     <link rel="stylesheet" href="./styles/nss-styles.css">
@@ -14,35 +15,32 @@
 
 <body>
 
-    <div class="container">
+    <div class="body-container">
 
-        <header class="nss-header">
+        <header class="nss-header-container">
 
-            <nav class="nss-switch-container">
-
-                <button class="nss-btn-abc-setlist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
-                    <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Sets.abc" target="_blank" class="nss-icon-container" title="Get raw ABC of NS Session Setlist" aria-title="Get raw ABC of NS Session Setlist">
-                        <svg class="nss-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#nav-icon-tunelist"></use>
-                        </svg>
-                    </a>
-                </button>
-
+            <nav class="nss-encodernav-container">
+                <div id="nss-encoder-header" class="nss-header-app nss-header">
+                    <button class="nss-btn-abc-setlist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
+                        <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Sets.abc" target="_blank" class="nss-icon-container" title="Get raw ABC of NS Session Setlist" aria-title="Get raw ABC of NS Session Setlist">
+                            <svg class="nss-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#nav-icon-tunelist"></use>
+                            </svg>
+                        </a>
+                    </button>
+                    <div class="title-wrapper">
+                        <h1 id="nss-title-encoder" class="nss-gradient-text" data-title="encoder" aria-title="Novi Sad Session Setlist ABC Encoder"></h1>
+                    </div>
+                    <button class="nss-btn-abc-tunelist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
+                        <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-icon-container" title="Get raw ABC of NS Session Tunelist" aria-title="Get raw ABC of NS Session Tunelist">
+                            <svg class="nss-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-music"></use>
+                            </svg>
+                        </a>
+                    </button>
+                </div>
+                <a href="index.html" class="nss-subhead-link nss-encoder-subhead-link" title="Return to Launch Screen of Novi Sad Session Setlist App" aria-title="Return to Launch Screen of Novi Sad Session Setlist App" autofocus><h2 class="nss-gradient-text">Back to Launch Screen</h2></a>
             </nav>
-
-            <h1 id="title-encoder" class="nss-gradient-text" data-title="encoder"></h1>
-
-            <nav class="nss-abclink-container">
-                <button class="nss-btn-abc-tunelist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
-                    <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-icon-container" title="Get raw ABC of NS Session Tunelist" aria-title="Get raw ABC of NS Session Tunelist">
-                        <svg class="nss-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#action-icon-music"></use>
-                        </svg>
-                    </a>
-                </button>
-            </nav>
-
-            <a href="index.html" class="nss-subhead-link" title="Return to Launch Screen of Novi Sad Session Setlist App" aria-title="Return to Launch Screen of Novi Sad Session Setlist App" autofocus><h2 class="nss-gradient-text">Back to Launch Screen</h2></a>
 
         </header>
 
@@ -79,9 +77,11 @@
                     <div class="flex-wrapper nss-header-x-container">
                         <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
                     </div>
-                    <h2 class="nss-popover-title">Encoder Settings</h2>
+                    <div class="nss-popover-header-title-container flex-wrapper">
+                        <h2 class="nss-popover-title">Encoder Settings</h2>
+                    </div>
                 </header>
-                <div class="nss-popover-body">
+                <div class="nss-popover-body flex-wrapper">
                     <div class="nss-checkbox-container">
                         <label for="encoder-export-tunelist" class="nss-checkbox-label">
                           <input type="checkbox" id="encoder-export-tunelist" data-option="abcEncoderExportsTuneList" class="nss-checkbox-btn" value="1">

@@ -4,6 +4,42 @@
   }
 }
 
+body {
+  --accent-color: #ffd324;
+  --accent-color-contrast: #ffae00;
+  --accent-color-alt: #ff6699;
+  --accent-color-alt-contrast: #ff4a86;
+  --accent-color-alt-light: #ff6d9d;
+  --accent-color-alt-lighter: #ff6f9f;
+  --gradient-color-left: #003300;
+  --gradient-color-right: #663399;
+}
+
+.nss-fullscreen-popover {
+  --chords-font-size: 1.2rem;
+  --chords-line-height: 1.25rem;
+  --chords-line-margin: 0.6rem;
+  --chords-block-margin: 1.5rem;
+  --chords-line-width: 42rem;
+  --chords-max-width: 80%;
+  --chords-min-bar-width: 5rem;
+}
+
+.nss-fullscreen-popover,
+.nss-fullscreen-popover.light {
+  --chords-bg-color: white;
+  --chords-ui-color: #555;
+  --chords-font-color: black;
+  --chords-barline-color: #555;
+}
+
+.nss-fullscreen-popover.dark {
+  --chords-bg-color: #181818;
+  --chords-ui-color: #999;
+  --chords-font-color: #e0e0e0;
+  --chords-barline-color: #777;
+}
+
 *, *::before, *::after { 
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
@@ -22,77 +58,115 @@ body {
 
 body,
 [popover]:not(.nss-fullscreen-popover) {
-  background-image: linear-gradient(90deg, #003300 25%, #663399 100%);
-  color: #ffd324;
+  background-image: linear-gradient(90deg, var(--gradient-color-left) 25%, var(--gradient-color-right) 100%);
+  color: var(--accent-color);
 }
 
-html:has([popover]:popover-open) {
-  overflow: hidden;
-}
-
-#title:is([data-title="launcher"])::after {
-  content: "Novi Sad Session Setlist";
-}
-
-#title:is([data-title="playalong"])::after {
-  content: "Session Tunes Play Along";
-}
-
-#title-encoder:is([data-title="encoder"])::after {
-  content: "N.S.S.S. ABC Encoder";
-}
-
-#title:is([data-title="setlist"])::after,
-#title:is([data-title="tunelist"])::after {
-  content: "";
-}
-
-.container {
+.body-container {
   margin: 0 auto;
   text-align: center;
   overflow-x: hidden;
 }
 
+.nss-header:not([hidden]) {
+  display: flex;
+  align-items: center;
+}
+
+.nss-header-app {
+  padding: 1.5em;
+  justify-content: space-between;
+  overflow-y: hidden;
+}
+
+.nss-header-tunebook {
+  padding: 1rem 1.5rem 0;
+  justify-content: center;
+  min-width: calc(53.75rem - 3rem);
+}
+
+.nss-header-vertical-container {
+  display: flex;
+  flex-flow: column;
+}
+
+.title-wrapper {
+  width: calc(100svw - 10rem);
+}
+
 h1 {
   font-size: 3.25rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0;
-  /* min-height: 3.01rem; */
+  margin: 0;
+
+  @media (max-width: 50rem) {
+
+    &:is([data-title="launcher"])::after {
+      content: "N.S.S.S.";
+    }
+  
+    &:is([data-title="playalong"])::after {
+      content: "Play Along";
+    }
+  
+    &:is([data-title="encoder"])::after {
+      content: "ABC Encoder";
+    }
+  }
+}
+
+h1:is([data-title="launcher"])::after {
+  content: "Novi Sad Session Setlist";
+}
+
+h1:is([data-title="playalong"])::after {
+  content: "Session Tunes Play Along";
+}
+
+h1:is([data-title="encoder"])::after {
+  content: "N.S.S.S. ABC Encoder";
+}
+
+h1:is([data-title="setlist"])::after,
+h1:is([data-title="tunelist"])::after {
+  content: "";
+}
+
+.nss-tunebook-title {
+  font-size: 1.8rem;
 }
 
 h2 {
   font-size: 1.75rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 a,
 .nss-option-btn {
-  color: #ffd324;
+  color: var(--accent-color);
 }
 
 a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible),
 a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible) > *,
 .nss-option-btn:is(:hover, :focus, :focus-visible) {
-  color: #ff6699;
+  color: var(--accent-color-alt);
 }
 
-#fullscreenbutton {
+#fullScreenButton {
   position: absolute;
-  top: -0.65rem;
-  right: -0.65rem;
+  top: 1.15rem;
+  right: 1.15rem;
   padding: 0.625em 1.25em;
-  background-color: #ff6d9d;
+  background-color: var(--accent-color-alt-light);
   color: black;
-  border: 0.125rem solid #ffd324;
+  border: 0.125rem solid var(--accent-color);
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
 }
 
-#fullscreenbutton:is(:hover, :focus, :focus-visible) {
-  background-image: linear-gradient(to right, #ff6f9f, #ffd324);
-  border: 0.125rem solid #ff6699;
+#fullScreenButton:is(:hover, :focus, :focus-visible) {
+  background-image: linear-gradient(to right, var(--accent-color-alt-lighter), var(--accent-color));
+  border: 0.125rem solid var(--accent-color-alt);
 }
 
 select {
@@ -113,6 +187,11 @@ select {
 iframe {
   border: 1px solid #ccc;
   background-color: #ffffff;
+  min-width: 53.75rem;
+}
+
+.iframe-container {
+  /* width: 100svw; */
 }
 
 .nss-footer-tunebook {
@@ -120,12 +199,14 @@ iframe {
   font-size: 1.25rem;
   height: 3.65rem;
   padding: 0 0.5rem;
+  min-width: 53.75rem;
 }
 
-.nss-footer-launch {
+.nss-footer-launch,
+.nss-fs-popover-footer {
   width: 100%;
-  position: absolute;
-  padding: 0 1.75rem;
+  position: fixed;
+  padding: 0 1.5rem;
   bottom: 1.25rem;
   left: 0;
 }
@@ -140,8 +221,8 @@ a:focus-visible,
 iframe:focus-visible,
 select:is(:focus, :focus-visible),
 input:is(:focus-visible) + span,
-#fullscreenbutton:is(:focus, :focus-visible) {
-  outline: 0.2rem solid #ffd324;
+#fullScreenButton:is(:focus, :focus-visible) {
+  outline: 0.2rem solid var(--accent-color);
 }
 
 a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visible {
@@ -157,7 +238,7 @@ a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visib
   outline: none;
   text-decoration-style: dotted;
   text-decoration-thickness: 0.24rem;
-  text-decoration-color: #ff6699;
+  text-decoration-color: var(--accent-color-alt);
 }
 
 .nss-footer-link {
@@ -168,7 +249,7 @@ a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visib
   text-underline-offset: 0.14rem;
 }
 
-#fullscreenbutton:is(:hover, :focus, :focus-visible){ 
+#fullScreenButton:is(:hover, :focus, :focus-visible){ 
   outline-offset: 0.05rem;
 }
 
@@ -185,7 +266,7 @@ input:is([name="nss-radio-view"]) {
 }
 
 label:is([class*="radio-wrapper"]) {
-  color: #ff6699;
+  color: var(--accent-color-alt);
   cursor: pointer;
   height: 100%;
 }
@@ -207,7 +288,7 @@ input:is(:focus-visible) {
 }
 
 input:is([name="nss-radio-view"]):checked + span {
-  color: #ffd324;
+  color: var(--accent-color);
 }
 
 input:is([name="nss-radio-view"]):checked + span .nss-icon-hide {
@@ -243,12 +324,12 @@ option:is([disabled]) {
 .nss-switch-btn,
 .nss-link-filled {
   font-size: 2rem;
-  background-color: #ffd324;
+  background-color: var(--accent-color);
 }
 
 .nss-switch-btn > *,
 .nss-link-filled {
-  color: #663399;
+  color: var(--gradient-color-right);
   stroke: black;
   stroke-width: 0.2px;
 }
@@ -257,6 +338,8 @@ option:is([disabled]) {
 .nss-link-btn a,
 .nss-option-btn,
 .nss-switch-btn,
+.nss-theme-btn,
+.nss-control-btn,
 .nss-btn-x {
   border-radius: 50%;
   opacity: 0.9;
@@ -274,11 +357,21 @@ option:is([disabled]) {
   height: 3rem;
 }
 
-.nss-btn-x {
+.nss-fullscreen-popover .nss-btn-x,
+.nss-control-btn {
+  outline-offset: 0.25rem;
+}
+
+.nss-theme-btn {
+  outline-offset: 0.33rem;
+}
+
+.nss-btn-x,
+.nss-control-btn {
   font-size: 2.75rem;
   width: 2.75rem;
   height: 2.75rem;
-  color: #ff6d9d;
+  color: var(--accent-color-alt-light);
 }
 
 .nss-btn-x::after {
@@ -294,13 +387,15 @@ option:is([disabled]) {
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
 .nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
+.nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-theme-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-x:is(:hover, :focus, :focus-visible) {
-  outline: 0.2rem solid #ffd324;
+  outline: 0.2rem solid var(--accent-color);
   opacity: 1;
 }
 
 .nss-btn-abcraw a:is(:hover, :focus, :focus-visible) {
-  outline: 0.24rem solid #ffd324;
+  outline: 0.24rem solid var(--accent-color);
   outline-offset: 0.4rem;
 }
 
@@ -311,7 +406,7 @@ option:is([disabled]) {
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
 .nss-link-filled:is(:hover, :focus, :focus-visible) {
-  background-image: linear-gradient(to right, #ff4a86, #ffae00);
+  background-image: linear-gradient(to right, var(--accent-color-alt-contrast), var(--accent-color-contrast));
 }
 
 .nss-switch-container,
@@ -328,11 +423,11 @@ option:is([disabled]) {
 }
 
 .nss-switch-container {
-  left: 1.75rem;
+  left: 1.5rem;
 }
 
 .nss-abclink-container {
-  right: 1.75rem;
+  right: 1.5rem;
 }
 
 .nss-icon,
@@ -370,7 +465,8 @@ option:is([disabled]) {
 }
 
 .nss-launch-container {
-  width: calc(100vw - 3.5rem);
+  width: 20rem;
+  max-width: 70svw;
   padding-top: 1em;
   padding-bottom: 1em;
   margin-top: 0.9rem;
@@ -387,7 +483,7 @@ option:is([disabled]) {
   height: 7rem;
   flex-grow: 0;
   font-size: 1.4rem;
-  background-color: #ffd324;
+  background-color: var(--accent-color);
   border-radius: 0.5rem;
   display: flex;
 }
@@ -425,6 +521,21 @@ option:is([disabled]) {
 
 .nss-playalong-link-container {
   position: relative;
+  width: 100%;
+}
+
+.nss-playalong-link-container a { 
+  display: block;
+  color: #f0f0f0;
+}
+
+.nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) {
+  outline: 0.25rem solid var(--accent-color);
+  outline-offset: unset;
+}
+
+.nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) > * {
+  color: var(--accent-color);
 }
 
 .nss-playalong-link-container::after{
@@ -433,22 +544,8 @@ option:is([disabled]) {
   inset: 0;
   margin: -0.25rem;
   border-radius: 0.5rem;
-  background-image: linear-gradient(90deg, #ffd324 25%, #ff6699 100%);
+  background-image: linear-gradient(90deg, var(--accent-color) 25%, var(--accent-color-alt) 100%);
   z-index: -1;
-}
-
-.nss-playalong-link-container a {
-  display: block;
-  color: #f0f0f0;
-}
-
-.nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) {
-  outline: 0.25rem solid #ffd324;
-  outline-offset: unset;
-}
-
-.nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) > * {
-  color: #ffd324;
 }
 
 .nss-playalong-img-overlay {
@@ -471,6 +568,10 @@ option:is([disabled]) {
 .nss-playalong-container img,
 .nss-playalong-img-overlay {
   border-radius: 0.25rem;
+}
+
+.subtitle-wrapper {
+  width: 100%;
 }
 
 .flex-wrapper:not([hidden]) {
@@ -497,18 +598,27 @@ option:is([disabled]) {
 .nss-fullscreen-popover {
   width: 100svw;
   height: 100svh;
-  background-color: white;
   border: none;
   outline: none;
+  padding: 0;
+  scrollbar-gutter: stable;
+  background-color: var(--chords-bg-color);
+  color: var(--chords-font-color);
 }
 
-.nss-fs-popover-body {
-  margin: 2.25rem;
-  white-space: pre-wrap;
-  text-align: left;
-  display: flex;
-  justify-content: center;
-  font-size: 1.2rem;
+.nss-fullscreen-popover .nss-theme-btn,
+.nss-fullscreen-popover .nss-control-btn,
+.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .fs-popover-btn-x:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .fs-popover-btn-x {
+  color: var(--chords-ui-color);
+  outline-color: var(--chords-ui-color);
+}
+
+.nss-fs-popover-title {
+  width: calc(100svw - 7.2rem);
+  margin-top: 1.5rem;
 }
 
 .nss-fs-popover-title h2 {
@@ -516,12 +626,101 @@ option:is([disabled]) {
   text-align: center;
 }
 
-.fs-popover-btn-x {
-  color: black;
+.nss-fs-popover-body {
+  margin: 0 1rem;
+  /* white-space: pre-wrap; */
+  text-align: left;
 }
 
-.fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
-  outline-color: black;
+.nss-chords-container {
+  margin: 0 auto;
+  font-size: var(--chords-font-size);
+  line-height: var(--chords-line-height);
+  width: var(--chords-line-width);
+  max-width: var(--chords-max-width);
+}
+
+.nss-chords-body,
+.nss-chords-subtitle,
+.nss-fs-popover-header {
+  margin-bottom: var(--chords-block-margin);
+}
+
+.nss-chords-line,
+.nss-chords-partno {
+  margin-bottom: var(--chords-line-margin);
+}
+
+.nss-chords-line {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(var(--chords-min-bar-width), 1fr));
+  container-type: inline-size;
+  gap: 0;
+}
+
+.nss-chords-bar {
+  display: grid;
+  grid-template-columns: auto repeat(2, 1fr) auto;
+  align-items: center;
+  justify-items: center;
+  min-width: 0;
+}
+
+.nss-chords-bar-triple {
+  grid-template-columns: auto repeat(3, 1fr) auto;
+}
+
+.nss-chords-chord {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.nss-chords-combo-barline,
+.nss-chords-barline, 
+.nss-chords-volta,
+.nss-chords-partno {
+  color: var(--chords-barline-color);
+}
+
+.nss-chords-volta {
+  font-size: 90%;
+}
+
+.nss-chords-combo-barline {
+  padding: 0;
+}
+
+.nss-chords-slider {
+  position: fixed;
+  color: var(--chords-ui-color);
+  opacity: 0.4;
+  width: 12rem;
+  height: 5rem;
+}
+
+.nss-chords-slider:is(:hover, :focus, :focus-visible) {
+  opacity: 0.75;
+}
+
+.nss-slider-vertical {
+  right: 0.35rem;
+  top: 26%;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 5rem;
+  height: 12rem;
+}
+
+.nss-slider-horizontal {
+  left: calc((100% - 10rem) / 2);
+  top: 3rem;
+}
+
+.nss-fs-popover-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.5em;
+  bottom: 1rem;
 }
 
 .nss-popover {
@@ -529,22 +728,39 @@ option:is([disabled]) {
   width: min(calc(80svw - 3.7rem), 40rem);
   height: calc(80svh - 3rem);
   border-radius: 1.5rem;
-  border: 0.3rem solid #ffd324;
+  border: 0.3rem solid var(--accent-color);
+}
+
+.nss-popover-header {
+  margin-bottom: 2rem;
 }
 
 .nss-popover-header h2 {
   font-size: 2rem;
-  margin: 1rem;
 }
 
+.nss-popover-header-title-container {
+  margin: 1rem auto;
+  max-width: min(calc(80svw - 3.7rem - 5rem), 35rem);
+}
+
+.nss-theme-btn,
 .nss-header-x-container {
   position: absolute;
-  right: 1rem;
   top: 1rem;
 }
 
-.nss-popover-body {
-  margin: 2rem 5rem;
+.nss-header-x-container {
+  right: 1rem;
+}
+
+.nss-fullscreen-popover .nss-theme-btn,
+.nss-fullscreen-popover .nss-header-x-container {
+  top: 1.5rem;
+}
+
+.nss-fullscreen-popover .nss-theme-btn {
+  left: 1.5rem;
 }
 
 .nss-checkbox-container {
@@ -557,6 +773,7 @@ option:is([disabled]) {
   display: flex;
   font-size: 1.2rem;
   gap: 1rem;
+  text-align: left;
 }
 
 .nss-checkbox-label,
@@ -565,7 +782,7 @@ option:is([disabled]) {
 }
 
 input[type="checkbox"]:focus-visible {
-  outline: 0.15rem solid #ffd324;
+  outline: 0.15rem solid var(--accent-color);
   outline-style: solid;
   outline-offset: 0.25rem;
   border-radius: 0.25rem;
@@ -577,12 +794,12 @@ input[type="checkbox"]:focus-visible {
   display: inline-flex;
   width: 1.2rem;
   height: 1.2rem;
-  border: 0.12rem solid #ffd324;
+  border: 0.12rem solid var(--accent-color);
   border-radius: 0.26rem;
-  background-image: linear-gradient(90deg, #ffd324 25%, #ff6699 100%);
+  background-image: linear-gradient(90deg, var(--accent-color) 25%, var(--accent-color-alt) 100%);
   font: inherit;
   font-weight: bold;
-  color: #003300;
+  color: var(--gradient-color-left);
   align-items: center;
   margin-right: 0.13rem;
   margin-left: 0.8rem;
@@ -609,37 +826,9 @@ input[type="checkbox"]:focus-visible {
   }
 }
 
-/* @media screen (max-width: 858px) { */
-@media screen and (max-width: 53.625em) {
-  
-  h1 {
-    font-size: 2.8rem;
-  }
-
-  #title:is([data-title="launcher"])::after {
-    content: "N.S.S.S.";
-  }
-
-  #title:is([data-title="playalong"])::after {
-    content: "Play Along";
-  }
-
-  #title-encoder:is([data-title="encoder"])::after {
-    content: "ABC Encoder";
-  }
-
-  /* #filterOptions {
-    display: none;
-  }
-
-  #displayOptions {
-    display: none;
-  } */
-}
-
 /* @media screen and (max-height: 640px),
        screen and (max-width: 860px) { */
-@media screen and (max-height: 40em),
+       @media screen and (max-height: 40em),
        screen and (max-width: 53.75em) {
 
   .nss-popover {
@@ -650,11 +839,11 @@ input[type="checkbox"]:focus-visible {
 
   .nss-popover-header h2 {
     font-size: 3.5rem;
-    margin-top: 1.5rem;
   }
 
-  .nss-popover-body {
-    margin: 5rem 2rem 5rem 5rem;
+  .nss-popover-header-title-container {
+    margin: 3rem auto 5rem;
+    max-width: calc(100svw - 12.75rem);
   }
 
   .nss-checkbox-container {
@@ -663,7 +852,7 @@ input[type="checkbox"]:focus-visible {
 
   .nss-checkbox-label {
     font-size: 1.9rem;
-    gap: 2.5rem;
+    gap: 1.75rem;
   }
 
   .nss-popover .nss-btn-x {
@@ -678,70 +867,60 @@ input[type="checkbox"]:focus-visible {
   }
 }
 
-/* @media screen and (max-height: 960px) and (max-width: 860px) { */
-@media screen and ((max-height: 60em) and (max-width: 53.75em)) {
+/* @media screen (max-width: 800px) { */
+@media screen and (max-width: 50em) {
+
+  h1:is([data-title="launcher"])::after {
+    content: "N.S.S.S.";
+  }
+
+  h1:is([data-title="playalong"])::after {
+    content: "Play Along";
+  }
+
+  h1:is([data-title="encoder"])::after {
+    content: "ABC Encoder";
+  }
+}
+
+/* @media screen and (max-height: 720px),
+          screen and (max-height: 480px) { */
+@media screen and (max-height: 45em),
+       screen and (max-width: 30em) {
+
+  .nss-encoder-subhead-link {
+    display: none;
+  }
+}
+
+/* @media screen and (max-height: 576px) { */
+@media screen and (max-height: 36em) {
 
   .nss-launch {
     position: unset;
     transform: unset;
   }
+}
 
-  .nss-footer-launch {
-    position: unset;
-    margin: 1.75rem 0 1.5rem;
+/* @media screen and (max-width: 360px) { */
+@media screen and (max-width: 22.5em) {
+
+  html {
+    font-size: 75%;
   }
 }
 
-/* @media screen and (max-width: 860px) and (min-height: 860px) { */
-@media screen and (max-width: 53.75em) and (min-height: 53.75em) {
+/* Supports wrappers / Container queries */
 
-  h1 {
-    margin-top: 2.45rem;
-  }
-  
-  .nss-link-btn,
-  .nss-launcher-link,
-  .nss-option-btn,
-  .nss-playalong-el > .nss-switch-btn {
-    width: 5rem;
-    height: 5rem;
-  }
-
-  .nss-btn-launch {
-    width: 70%;
-    height: 14rem;
-    font-size: 3rem;
-    border-radius: 1rem;
-  }
-
-  .nss-launch-container {
-    gap: 2rem;
-  }
-
-  .nss-playalong-container {
-    gap: 4rem;
-  }
-
-  .nss-btn-text .nss-icon-container > * {
-    width: 4rem;
-    height: 4rem;
-  }
-
-  .nss-btn-launch:is(:hover, :focus, :focus-visible),
-  .nss-btn-x:is(:hover, :focus, :focus-visible) {
-    outline: 0.3rem solid #ffd324;
-  }
-
-  .fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
-    outline-color: black;
+@supports selector(:popover-open) {
+  html:has([popover]:popover-open) {
+    overflow: hidden;
   }
 }
-
-/* Style overrides */
 
 @supports (-webkit-background-clip: text) and (-webkit-text-fill-color: transparent) {
   .nss-gradient-text {
-    background: linear-gradient(to right, #ffd324 30%, #ff6699);
+    background: linear-gradient(to right, var(--accent-color) 30%, var(--accent-color-alt));
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
   }
@@ -749,8 +928,54 @@ input[type="checkbox"]:focus-visible {
 
 @supports (background-clip: text) {
   .nss-gradient-text {
-    background: linear-gradient(to right, #ffd324 30%, #ff6699);
+    background: linear-gradient(to right, var(--accent-color) 30%, var(--accent-color-alt));
     background-clip: text;
     color: transparent;
   }
+}
+
+@supports (container-type: inline-size) {
+
+  .title-wrapper,
+  .subtitle-wrapper,
+  .nss-launch-container,
+  .nss-playalong-link-container {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 36rem) {
+    .subtitle-wrapper h2 {
+      font-size: 7cqw;
+    }
+    .subtitle-wrapper a h2 {
+      margin-top: 0.5rem;
+      font-size: 5cqw;
+    }
+    .subtitle-wrapper .nss-fs-popover-title {
+      font-size: 4.9cqw;
+    }
+  }
+
+  @container (max-width: 20rem) {
+    .title-wrapper h1 {
+      font-size: 16cqw;
+    }
+  }
+  
+  @container (max-width: 18rem) {
+    .nss-btn-launch {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 18/7;
+      font-size: 8cqw;
+    }
+    .nss-btn-text .nss-icon-container > * {
+      width: auto;
+      height: 12cqw;
+      aspect-ratio: 1/1;
+    }
+  }
+
+
+
 }

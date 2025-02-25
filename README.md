@@ -13,6 +13,59 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.7.5: Generate Chordbook (Responsive Chords Popover & Launcher)
+
++ Project updates:
+  - Launcher, Encoder, Playalong: Responsive app layout separate from Tunebook
+  - Tunebook: Fullscreen Chords Popover reworked with responsive grid layout
+  - Tunebook: Chords Popover Slider proportionally adjusts Chords text scale
+  - Tunebook: Tunes and Chords toggle buttons remember user settings, more options
+  - Tunebook: Footer close button now enables manual mode for less cluttered Tunebook
+  - ABC Encoder: ABC Sort organises Chordbook data depending on number of beats
+  - ABC Encoder: Fixes and additions for better styling of titles and chords
+  - App and Tools scripts reworked to enable new control elements and responsive design
+  - Accessibility: App tabbing, focusing and elements receiving aria-hidden revisited
+  - New Icons added
+
++ HTML updates:
+  - Laucher, ABC Encoder and Tunebook headers refactored to separate responsive layout from fixed Tunebook
+  - Viewport settings now applied programmatically via meta tag content attribute on section swap
+  - Fullscreen Popover completed with additional control elements
+
++ CSS updates:
+  - Styles refactored: Global and local variables added for themes and dynamically adjusted settings
+  - Container queries added for more responsive menus (app header, Launcher buttons, Playalong subtitles)
+  - Media queries refactored: Cleanup after responsive design added & additional breakpoints
+  - Fullscreen Chords Popover styles tested and implemented
+
++ JavaScript updates:
+  - Chords Popover scripts: 
+    + Chords text generator: loadChordsToPopover rewritten, now uses Chords JSON to create a responsive grid
+    + Slider & Chords grid init: initPopoverSliders initialises values for Chords grid adjustable by Slider
+    + Slider: appChordSliderHandler handle Chord Popover Slider events with smart scaling, adjusting font size, line height, line width and max width proportional to the vertical slider setting
+    + Reset Slider Settings and show / hide slider control buttons added
+    + Dark / Light colour theme and Theme switch button added
+  - Main app scripts refactored (scripts-ns-sessions.js):
+    + launchTuneBook and section swap functions updated with tweaks and autofocusing
+    + initTunebookRadioBtns implemented for selection and storing of Full Screen Button setting (Open tune item in new page / Open chords in Chords Popover)
+    + ariaHideMe and ariaShowMe functions added, functions updated
+    + showRedOutlineWarning test function added for simple element error indication
+    + Closing Tunebook's footer will now switch it to manual mode, swapping Tunebook switch buttons with Return to Launch Screen button
+  - ABC Sort scripts updated with new Chordbook generation logic, title styling tweaks:
+    + getCompleteAbcChordBar now accounts for triple / duple meter, groups duple meter bars with over 2 chords in two groups 
+    + makeStringTitleCase accounts for [suffixes] in headers included in exceptions
+  - ABC tools scripts updated with more options and to account for Launcher's responsive design:
+    + User settings for Full Screen View button behavior and disabling auto-reload of Tunebook items added (localStorage variables: abcToolsFullScreenBtnShowsChords, abcToolsAllowTuneAutoReload)
+
++ Accessibility updates: 
+  - A11y: App elements now automatically receive focus on section swap as previous section is hidden
+  - A11y: Aria-hidden attribute is now applied to elements or blocks being hidden, removed as they are shown
+
++ Session DB updates:
+  - Session DB updated to 2025-02-25
+  - Chords added to Galtee Rangers Set to test both duple- and triple-time tunes in Chords Popover
+  - Minor ABC tweaks
+
 v.0.7.4: Generate Chordbook (Chords Popover Basic)
 
 + Project updates:

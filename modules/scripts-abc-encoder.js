@@ -1,5 +1,6 @@
 import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-title-case.js';
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
+import { showRedOutlineWarning } from './scripts-ns-sessions.js';
 
 ////////////////////////////////
 // ABC ENCODER GLOBAL SETTINGS
@@ -54,8 +55,7 @@ const makeTitleCaseExceptions = [
 const makeProperCaseExceptions = [
 
     { string: "three-two", override: "3/2 Hornpipe"},
-    { string: "three two", override: "3/2 Hornpipe"},
-    { string: "3/2", override: "3/2 Hornpipe"}
+    { string: "three two", override: "3/2 Hornpipe"}
 ];
 
 ////////////////////////////////
@@ -148,7 +148,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
 // Parse ABC Encoder input depending on task type
   
-export async function parseAbcFromFile(taskType) {
+export async function parseAbcFromFile(taskType, triggerBtn) {
 
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -171,6 +171,9 @@ export async function parseAbcFromFile(taskType) {
                 if (!validateAbcFile(rawAbcContent, taskType)) {
 
                     console.warn("ABC Encoder:\n\nInvalid data type or format!");
+
+                    showRedOutlineWarning(triggerBtn);
+
                     return;
                 }
 
@@ -179,6 +182,8 @@ export async function parseAbcFromFile(taskType) {
             } catch (error) {
 
                 console.error("ABC Encoder:\n\nError reading ABC file content:\n\n", error);
+
+                showRedOutlineWarning(triggerBtn);
             }
         }
         
@@ -187,6 +192,8 @@ export async function parseAbcFromFile(taskType) {
     } catch (error) {
 
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
+
+        showRedOutlineWarning(triggerBtn);
     }
 }
 
@@ -432,7 +439,7 @@ function removeTextAfterLineBreaksInAbc(sortedAbcArr) {
 function makeStringTitleCase(abcString) {
 
     let abcTitleCaseOutput = '';
-
+    
     let abcTitleArr = abcString.trim().split(/(?:[\s]*[^0-9]\/[\s]*)/);
 
     for (let i = 0; i < abcTitleArr.length; i++) {
@@ -440,10 +447,15 @@ function makeStringTitleCase(abcString) {
         let titleOverride = '';
         
         for (const caseObj of makeTitleCaseExceptions) {
-            
-            if (abcTitleArr[i].toLowerCase() === caseObj.string) {
-                
-                titleOverride = caseObj.override;
+
+            const excMatch = abcTitleArr[i].toLowerCase().match(caseObj.string);
+
+            if (excMatch) {
+
+                let titleSuffix = abcTitleArr[i].match(/(?:\([\s\S]*?\)[\s]*?)*\[[\s\S]*?\]/);
+    
+                titleOverride = `${caseObj.override}${titleSuffix? ' ' + titleSuffix[0] : ''}`;
+                console.warn(`Exception found! Output: ${titleOverride}`);
                 break;
             }
         }
@@ -1171,7 +1183,10 @@ function makeAbcChordBook(abcContent) {
 
     let chordBookOutput = '';
 
-    const splitAbcArr = abcContent.split(/X.*/gm).filter(abc => abc != '').map(abc => abc.trim());
+    const splitAbcArr = abcContent.split(/X.*/gm)
+                                  .filter(abc => abc != '')
+                                  .filter(abc => abc.match(/"[\S]?"/) != null)
+                                  .map(abc => abc.trim());
 
     const abcChordsArr = [];
 
@@ -1185,15 +1200,23 @@ function makeAbcChordBook(abcContent) {
         if (abc.match(/^T:/gm).length > 2) {
 
             const abcPrimaryTitle = abc.match(/(?<=^T:).*/m)[0].trim();
-            const abcTunesArr = abc.replace(/^T:.*/, '').trim().split('T:').filter(tune => tune != '');
+            const abcTunesArr = abc.replace(/^T:.*/, '')
+                                   .trim()
+                                   .split('T:')
+                                   .filter(tune => tune != '');
 
             abcChordsObj = { "setTitle": abcPrimaryTitle, "tuneChords": [] };
 
             abcTunesArr.forEach(tune => {
 
+                abcBody = tune.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
+
+                if (!abcBody.match(/"[\S]*"/)) {
+                    return;
+                }
+
                 abcTitle = tune.match(/^.*/)[0].split(' / ')[0].trim();
                 abcMeter = tune.match(/^M:/m)? tune.match(/(?<=^M:).*/m)[0].trim() : abc.match(/(?<=^M:).*/m)[0].trim();
-                abcBody = tune.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
 
                 const tuneChordObj = getChordsFromTune(abcBody, abcTitle, abcMeter);
 
@@ -1234,6 +1257,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
     const abcPrimaryTitle = abcTitle.replace(/T:[\s]*/, '');
 
     abcChordsObj.title = abcPrimaryTitle;
+    abcChordsObj.meter = abcMeter;
 
     const tuneMeter = abcMeter? abcMeter : "4/4";
     let minTuneBeats = 2;
@@ -1289,9 +1313,9 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
                 barCounter = 0;
             }
 
-            const abcBarChordsArr = abcBar.match(/"[\S]*"/g);
+            const abcBarChordsArr = abcBar.match(/"[\S]*?"/g);
 
-            abcPartChords += `|${voltaNo}\t${getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats)}`;
+            abcPartChords += `|${voltaNo}\t${getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats, abcMeter)}`;
 
             barCounter++;
         });
@@ -1306,7 +1330,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
 // Process an ABC bar of chords, completing missing beats if necessary
 
-function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats) {
+function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats, abcMeter) {
 
     let abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll('"', '')).filter(c => c != '');
 
@@ -1315,6 +1339,11 @@ function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats) {
         if (abcBarChordsInput.length === 1) {
 
             return `${abcBarChordsInput[0]}\t`.repeat(minTuneBeats);
+        }
+
+        if (abcBarChordsInput.length > 2 && !isTuneTripleMeter(abcMeter)) {
+
+            return `${abcBarChordsInput[0]}${abcBarChordsInput[1]}\t${abcBarChordsInput[2]}${abcBarChordsInput[3]? abcBarChordsInput[3] : ''}\t`;
         }
 
         if (abcBarChordsInput.length < minTuneBeats) {
@@ -1329,6 +1358,18 @@ function getCompleteAbcChordBar(abcBarChordsArr, minTuneBeats) {
         return '– ';
     }
 }
+
+// Check if the tune is in triple meter based on its M: text
+
+export function isTuneTripleMeter(tuneMeter) {
+
+    if (tuneMeter === "3/4" | tuneMeter === "3/2" | tuneMeter === "9/8") {
+  
+      return true;
+    }
+  
+    return false;
+  }
 
 ////////////////////////////////
 // EXPORT TUNELIST FUNCTIONS

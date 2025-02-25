@@ -1,29 +1,30 @@
 import { initAbcTools, initToolsOptions, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
-         populateTuneSelector, populateFilterOptions, sortFilterOptions } from './scripts-abc-tools.js';
-import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
+         populateTuneSelector, populateFilterOptions, sortFilterOptions, resetViewportWidth } from './scripts-abc-tools.js';
+import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults, isTuneTripleMeter } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NS Session Setlist Custom App Scripts
 //
 // Session DB and/or Code Contributors:
-// Anton Zille https://github.com/anton-bregolas/ - Code, ABC
+// Anton Zille https://github.com/anton-bregolas/ - Code, ABC, Chords
 // Mars Agliullin - ABC
 // Tania Sycheva - ABC
 //
-// App Version 0.7.3 / NS Session DB date: 2025-02-19
+// App Version 0.7.5 / NS Session DB date: 2025-02-25
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
 
 let tuneBookSetting = 1; // Tunebook loads Setlist by default
 let tuneBookInitialized = false; // Opening Tunebook will initialise ABC Tools and fetch Session DB data by default
+let isManualTunebookModeOn = false; // Hide switch buttons and use manual selection of Tunebook Type on Launch Screen
 
 // Define Session DB items
 
 export const tuneSets = [];
 export const tuneList = [];
-export let setChords = [];
-export let tuneChords = [];
+export const setChords = [];
+export const tuneChords = [];
 export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/sets.json"
 export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunes.json"
 export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
@@ -34,21 +35,25 @@ export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/
 const allCustomBtn = document.querySelectorAll('.nss-btn');
 const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
 const allLaunchEls = document.querySelectorAll('.nss-launch-el');
+const allThemeBtn = document.querySelectorAll('.nss-theme-btn');
 const allCheckBoxes = document.querySelectorAll('.nss-checkbox-btn');
 const allTuneBookEls = document.querySelectorAll('.nss-tunebook-el');
 const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
 const tuneSelectorTitle = document.querySelector('#tuneSelectorTitle');
 export const filterOptions = document.querySelector('#filterOptions');
-const tuneBookTitle = document.querySelector('#title');
+const tuneBookTitle = document.querySelector('#nss-tunebook-title');
+const appNavTitle = document.querySelector('#nss-appnav-title');
+const appHeader = document.querySelector('#nss-app-header');
 
 // Define App Menu elements
 
 const appOptionsPopover = document.querySelector('#nss-popover-options');
 const fullScreenPopover = document.querySelector('#nss-fullscreen-popover');
 const fullScreenPopoverTitle = document.querySelector('.nss-fs-popover-title');
-const fullScreenPopoverBody = document.querySelector('.nss-fs-popover-body');
-//const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
-//const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
+const fullScreenPopoverChords = document.querySelector('.nss-chords-container');
+const fullScreenPopoverSliderV = document.querySelector('#nss-chords-vertical-scale');
+const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
+const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
 
 ////////////////////////////////
 // APP LAUNCHERS
@@ -56,21 +61,33 @@ const fullScreenPopoverBody = document.querySelector('.nss-fs-popover-body');
 
 // Load Setlist or Tunelist interface, initiate ABC Tools
 
-async function launchTuneBook(dataType) {
+async function launchTuneBook(dataType, triggerBtn) {
 
   tuneBookSetting = dataType === "setlist"? 1 : 2;
 
   if (await tuneDataFetch() > 0) {
     
+    resetViewportWidth(860);
     hideLaunchers();
+    initTunebookRadioBtns();
     updateTuneBookTitles(dataType);
-    resizeTuneBookHeader(dataType);
     swapSwitchBtns(dataType);
+
+    appHeader.setAttribute("style", "display: none");
 
     allTuneBookEls.forEach(tuneBookEl => {
 
-      tuneBookEl.removeAttribute("hidden");
+      ariaShowMe(tuneBookEl);
     });
+
+    if (!document.querySelector('#nss-tunebook-exit').hasAttribute("hidden")) {
+
+      document.querySelector('#nss-tunebook-exit').focus();
+
+    } else {
+
+      document.querySelector(`#nss-tunebook-${dataType}-switch`).focus();
+    }
 
     if (tuneBookInitialized === false) {
 
@@ -95,6 +112,10 @@ async function launchTuneBook(dataType) {
 
       console.log(`NS Session App:\n\nTunebook has been reopened`);
     }
+
+  } else {
+
+    showRedOutlineWarning(triggerBtn);
   }
 }
 
@@ -104,12 +125,13 @@ function launchPlayAlong(dataType) {
 
   hideLaunchers();
   updateTuneBookTitles(dataType);
-  resizeTuneBookHeader(dataType);
 
   allPlayAlongEls.forEach(playalongEl => {
 
-    playalongEl.removeAttribute("hidden");
+    ariaShowMe(playalongEl);
   });
+
+  document.querySelector('#nss-playalong-exit').focus();
 }
 
 ////////////////////////////////
@@ -132,6 +154,8 @@ function switchTuneBookType(dataType) {
 
     refreshTuneBook();
 
+    document.querySelector(`#nss-tunebook-${dataType}-switch`).focus();
+
     return;
   }
 
@@ -144,9 +168,11 @@ function switchTuneBookType(dataType) {
 
   // Switch to Launch Screen by default
 
-  resizeTuneBookHeader(dataType);
+  resetViewportWidth();
   hideAllSectionsEls();
   showLaunchers();
+  appHeader.removeAttribute("style");
+  document.querySelector('#nss-launch-setlist').focus();
 }
 
 // Hide Launch Screen elements
@@ -155,7 +181,7 @@ function hideLaunchers() {
 
   allLaunchEls.forEach(launchEl => {
 
-    launchEl.setAttribute("hidden", "");
+    ariaHideMe(launchEl);
   });
 }
 
@@ -165,7 +191,7 @@ function showLaunchers() {
 
   allLaunchEls.forEach(launchEl => {
 
-    launchEl.removeAttribute("hidden");
+    ariaShowMe(launchEl);
   });
 }
 
@@ -173,15 +199,19 @@ function showLaunchers() {
 
 function swapSwitchBtns(dataType) {
 
+  if (isManualTunebookModeOn) return;
+
   allSwitchBtn.forEach(switchBtn => {
+
+    if (switchBtn.dataset.load === "launcher") return;
 
     if (switchBtn.dataset.load !== dataType) {
 
-      switchBtn.removeAttribute("hidden");
+      ariaShowMe(switchBtn);
 
     } else {
       
-      switchBtn.setAttribute("hidden", "");
+      ariaHideMe(switchBtn);
     }
   });
 }
@@ -192,17 +222,17 @@ function hideAllSectionsEls() {
 
   allTuneBookEls.forEach(tuneBookEl => {
 
-    tuneBookEl.setAttribute("hidden", "");
+    ariaHideMe(tuneBookEl);
   });
 
   allPlayAlongEls.forEach(playAlongEl => {
 
-    playAlongEl.setAttribute("hidden", "");
+    ariaHideMe(playAlongEl);
   });
 }
 
 ////////////////////////////////
-// POPOVER OPTIONS TRIGGERS
+// POPOVER LAUNCHERS
 ///////////////////////////////
 
 // Launch a Popover Options menu depending on dataType
@@ -243,30 +273,8 @@ abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLi
   }
 
   if (dataType === "fullscreen-popover") {
-
-    // setChords = [
-    //   {
-    //     "setTitle": "WALTZES: Munster Cloak Set",
-    //     "tuneChords": [
-    //       {
-    //         "title": "Flatwater Fran (Gmaj)",
-    //         "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tD7\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tC\tC\tC\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tEm\tEm\tEm\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD7\tD7\tD7\t|\tEm\tEm\tEm\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tD7\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
-    //       },
-    //       {
-    //         "title": "Flatwater Fran (Amaj)",
-    //         "chords": "PART 1:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tA\tA\tA\t|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tE\tE\tE\t|\n|\tD\tD\tD\t|\tA\tA\tA\t|\tE7\tE7\tE7\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
-    //       }
-    //     ]
-    //   }
-    // ]
-
-    // tuneChords = [
-    //   {
-    //     "title": "WALTZ: Flatwater Fran (Amaj)",
-    //     "chords": "PART 1:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tA\tA\tA\t|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tE\tE\tE\t|\n|\tD\tD\tD\t|\tA\tA\tA\t|\tE7\tE7\tE7\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
-    //   }
-    // ]
   
+    const fullScreenButton = document.querySelector('#fullScreenButton');
     const currentAbcTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
 
     const setMatch = setChords.find(set => set.setTitle === currentAbcTitle);
@@ -274,30 +282,184 @@ abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLi
 
     if (!setMatch && !tuneMatch) {
 
+      showRedOutlineWarning(fullScreenButton);
       return;
     }
     
     if (setMatch) {
 
-      let setChordsOutput = '';
-
-      setMatch.tuneChords.forEach(tune => {
-
-        setChordsOutput += `${tune.title}\n\n`;
-        setChordsOutput += `${tune.chords? tune.chords : '–'}\n\n`;
-      });
-
       fullScreenPopoverTitle.textContent = setMatch.setTitle;
-      fullScreenPopoverBody.textContent = setChordsOutput;
+      loadChordsToPopover(setMatch.tuneChords, "chords-set");
 
     } else if (tuneMatch) {
 
       fullScreenPopoverTitle.textContent = tuneMatch.title;
-      fullScreenPopoverBody.textContent = tuneMatch.chords;
+      loadChordsToPopover([tuneMatch], "chords-tune");
     }
 
     fullScreenPopover.showPopover();
+    initPopoverSliders();
   }
+}
+
+// Create responsive grid layout with chords data inside Chords Popover
+
+function loadChordsToPopover(chordsMatch, chordsType) {
+
+  fullScreenPopoverChords.textContent = '';
+
+  chordsMatch.forEach(tune => {
+            
+    if (!tune.chords) return;
+        
+    const tuneBlock = document.createElement('div');
+    tuneBlock.className = "nss-chords-tuneitem";
+
+    if (chordsType === "chords-set") {
+    
+      const titleBlock = document.createElement('div');
+      titleBlock.className = "nss-chords-subtitle";
+      titleBlock.textContent = tune.title;
+      tuneBlock.appendChild(titleBlock);
+    }
+    
+    const tunePartsArr = tune.chords.split('\n\n');
+
+    tunePartsArr.forEach(tunePart => {
+
+      if (!tunePart.trim()) return;
+
+      const partNoText = tunePart.match(/PART[\s]*[\d]*:/)[0];
+
+      const partNoBlock = document.createElement('div');
+      partNoBlock.className = "nss-chords-partno";
+      partNoBlock.textContent = partNoText;
+      
+      const tunePartBlock = document.createElement('div');
+      tunePartBlock.className = "nss-chords-body";
+      tunePartBlock.appendChild(partNoBlock);
+      
+      const partLinesArr = tunePart.split('\n')
+          .filter(line => line.trim() && !line.startsWith('PART'));
+      
+      partLinesArr.forEach(line => {
+
+          const lineBlock = document.createElement('div');
+          lineBlock.className = "nss-chords-line";
+          
+          const barPattern = /\|[\d]?|\|\|/g;
+          const lineBarsArr = line.split(barPattern)
+              .filter(bar => bar.trim());
+
+          const barSeparators = line.match(barPattern) || [];
+
+          let barCount = 0;
+
+          let isFinalBar = false;
+
+          let isVolta = false;
+          
+          lineBarsArr.forEach((tuneLineBar, lineBarIndex) => {
+
+            barCount++;
+
+            const barBlock = document.createElement('div');
+            barBlock.className =  isTuneTripleMeter(tune.meter)? "nss-chords-bar nss-chords-bar-triple" : "nss-chords-bar";
+            
+            const lineBarStartSpan = document.createElement('span');
+            lineBarStartSpan.className = "nss-chords-barline";
+            
+            const barSeparator = barSeparators[lineBarIndex] || '|';
+            
+            if (barSeparator.match(/\|[\d]+/)) {
+
+              isVolta = true;
+
+              lineBarStartSpan.textContent = '|';
+
+              const voltaSpan = document.createElement('span');
+              voltaSpan.className = "nss-chords-volta";
+              voltaSpan.textContent = barSeparator.substring(1);
+              
+              lineBarStartSpan.appendChild(voltaSpan);
+
+            } else {
+            
+              lineBarStartSpan.textContent = barSeparator;
+            }
+
+            barBlock.appendChild(lineBarStartSpan);
+
+            const tuneChords = tuneLineBar.split('\t')
+                .filter(chord => chord.trim());
+            
+            tuneChords.forEach(tuneChord => {
+                
+                const chordSpan = document.createElement('span');
+                chordSpan.className = "nss-chords-chord";
+                chordSpan.textContent = tuneChord.trim();
+                barBlock.appendChild(chordSpan);
+            });
+
+            isFinalBar = partLinesArr.indexOf(line) === partLinesArr.length - 1 && 
+                         barCount === lineBarsArr.length;
+
+            if (barCount === 4 && !isFinalBar) {
+
+              const lineBarEndSpan = document.createElement('span');
+              lineBarEndSpan.className = "nss-chords-barline";
+              lineBarEndSpan.textContent = '|';
+              barBlock.appendChild(lineBarEndSpan);
+            }
+
+            if (isFinalBar && !isVolta) {
+
+              const lineBarDoubleSpan = document.createElement('span');
+              lineBarDoubleSpan.className = "nss-chords-barline";
+              lineBarDoubleSpan.textContent = '||';
+              barBlock.appendChild(lineBarDoubleSpan);
+            }
+            
+            lineBlock.appendChild(barBlock);
+          });
+
+          if (isFinalBar && isVolta) {
+
+            const barFinBlock = document.createElement('div');
+            barFinBlock.className = isTuneTripleMeter(tune.meter)? "nss-chords-bar nss-chords-bar-triple" : "nss-chords-bar";
+
+            const lineBarDoubleSpan = document.createElement('span');
+            lineBarDoubleSpan.className = "nss-chords-barline";
+            lineBarDoubleSpan.textContent = '||';
+
+            barFinBlock.appendChild(lineBarDoubleSpan);
+            lineBlock.appendChild(barFinBlock);
+          }
+          
+          tunePartBlock.appendChild(lineBlock);
+      });
+      
+      tuneBlock.appendChild(tunePartBlock);
+    });
+    
+    fullScreenPopoverChords.appendChild(tuneBlock);
+  });
+}
+
+////////////////////////////////
+// ANIMATIONS & WARNINGS
+///////////////////////////////
+
+// Show a red warning outline around an active element
+
+export function showRedOutlineWarning(focusBtn) {
+
+  focusBtn.setAttribute("style", "outline-color: red");
+
+  setTimeout(() => {
+
+    focusBtn.removeAttribute("style");
+  }, 5000);
 }
 
 ////////////////////////////////
@@ -333,7 +495,10 @@ export function refreshTuneBook() {
     return;
   }
   
-  loadTuneBookItem(currentTuneBook, 0);
+  if (+localStorage?.abcToolsAllowTuneAutoReload === 1) {
+
+    loadTuneBookItem(currentTuneBook, 0);
+  }
 }
 
 // Clear the contents of custom Tunebook dropdown menus, reset to default options
@@ -360,12 +525,19 @@ function resetTuneBookFilters() {
   tuneSelector.querySelectorAll('option').forEach(tuneOption => {
           
     tuneOption.removeAttribute("hidden");
+    tuneOption.removeAttribute("disabled");
   });
 }
 
 // Update text content on page depending on data type shown
 
 function updateTuneBookTitles(dataType) {
+
+  if (dataType === "launcher" || dataType === "playalong") {
+
+    appNavTitle.dataset.title = dataType;
+    return;
+  }
 
   tuneBookTitle.textContent =
   dataType === "setlist"? "Novi Sad Session Setlist" : 
@@ -383,17 +555,17 @@ function updateTuneBookTitles(dataType) {
 
 // Change Tunebook header style depending on section shown
 
-function resizeTuneBookHeader(dataType) {
+// function resizeTuneBookHeader(dataType) {
 
-  if (dataType === "setlist" || dataType === "tunelist") {
+//   if (dataType === "setlist" || dataType === "tunelist") {
 
-    tuneBookTitle.setAttribute("style", "font-size: 1.8rem; margin-top: 1rem;")
+//     tuneBookTitle.setAttribute("style", "font-size: 1.8rem; margin-top: 1rem;")
     
-    return;
-  }
+//     return;
+//   }
 
-  tuneBookTitle.removeAttribute("style");
-}
+//   tuneBookTitle.removeAttribute("style");
+// }
 
 ////////////////////////////////
 // FETCHERS & DATA HANDLERS
@@ -521,6 +693,29 @@ export function clearData() {
 }
 
 ////////////////////////////////
+// ARIA HIDERS & REVEALERS
+////////////////////////////////
+
+// Hide an element via attribute hidden and set aria-hidden to true
+
+function ariaHideMe(el) {
+
+  el.setAttribute("hidden", "");
+  el.setAttribute("aria-hidden", "true");
+}
+
+// Remove attribute hidden from an element and set aria-hidden to false
+
+function ariaShowMe(el) {
+
+  if (!el.hasAttribute("inert")) {
+    
+      el.removeAttribute("hidden");
+      el.removeAttribute("aria-hidden");
+  }
+}
+
+////////////////////////////////
 // EVENT HANDLERS
 ////////////////////////////////
 
@@ -536,7 +731,7 @@ async function appButtonHandler() {
 
     if (this.dataset.load === "setlist" || this.dataset.load === "tunelist") {
 
-      launchTuneBook(this.dataset.load);
+      launchTuneBook(this.dataset.load, this);
     }
 
     if (this.dataset.load === "playalong") {
@@ -548,7 +743,7 @@ async function appButtonHandler() {
 
     if (this.dataset.load.startsWith("abc")) {
 
-      parseAbcFromFile(this.dataset.load);
+      parseAbcFromFile(this.dataset.load, this);
     }
   }
 
@@ -556,12 +751,16 @@ async function appButtonHandler() {
 
   if (this.classList.contains('nss-switch-btn')) {
 
+    // Section switchers
+
     if (this.classList.contains('nss-launcher-link')) {
 
       window.location.href = 'index.html';
 
       return;
     }
+
+    // Tunebook switchers
 
     switchTuneBookType(this.dataset.load);
   }
@@ -579,12 +778,66 @@ async function appButtonHandler() {
     openSettingsMenu(this.dataset.load);
   }
 
-  // Close Buttons: Hide parent element and resize ABC Tools
+  // Control Buttons: Open additional menus and reset settings
+
+  if (this.classList.contains('nss-control-btn')) {
+
+    if (this.dataset.trigger === 'slider-reset') {
+
+      fullScreenPopover.style.cssText = ''
+
+      localStorage.removeItem('chordsSliderVerticalValue_NSSSAPP');
+      localStorage.removeItem('chordsSliderLineWidthValue_NSSAPP');
+      localStorage.removeItem('chordsSliderMaxWidthValue_NSSAPP');
+
+      initPopoverSliders();
+    
+      return;
+    }
+
+    if (this.dataset.trigger === 'popover-sliders') {
+
+      [fullScreenPopoverSliderV].forEach(slider => {
+
+        if (slider.hasAttribute("hidden")) {
+
+          ariaShowMe(slider);
+
+        } else {
+
+          ariaHideMe(slider);
+        }
+      });
+    }
+  }
+
+  // Close Buttons: Hide parent element, show alternative navigation, resize ABC Tools
 
   if (this.classList.contains('footer-btn-x')) {
 
-    parentEl.setAttribute("hidden", "");
+    const switchContainer = document.querySelector('.nss-switch-container');
+    const allSwitchBtns = switchContainer.querySelectorAll('.nss-switch-btn');
+
+    ariaHideMe(parentEl);
+
+    isManualTunebookModeOn = true;
+
+    allSwitchBtns.forEach(switchBtn => {
+
+      if (switchBtn.dataset.load !== "launcher") {
+
+        ariaHideMe(switchBtn);
+        return;
+      }
+
+      ariaShowMe(switchBtn);
+    });
+
     resizeIframe();
+
+    document.querySelector('#nss-tunebook-exit').focus();
+    parentEl.setAttribute("inert", "");
+
     return;
   }
 
@@ -598,6 +851,28 @@ async function appButtonHandler() {
 
     fullScreenPopover.hidePopover();
     return;
+  }
+
+  // Theme buttons: Change color theme of document depending on the section
+
+  if (this.classList.contains('nss-theme-btn')) {
+
+    const appSectionHeader = this.parentElement.classList;
+
+    if (appSectionHeader.contains('nss-fs-popover-header')) {
+
+      fullScreenPopover.classList = `nss-fullscreen-popover ${this.dataset.theme}`;
+    }
+
+    allThemeBtn.forEach(themeBtn => {
+
+      if (themeBtn.parentElement.classList === appSectionHeader && themeBtn !== this) {
+
+        ariaShowMe(themeBtn);
+      }
+    });
+
+    ariaHideMe(this);
   }
 }
 
@@ -635,18 +910,13 @@ async function appDropDownHandler() {
 
         if (filterId !== tuneOption.dataset.tunetype && !tuneOption.dataset.leaders.split(', ').includes(filterId)) {
 
-        //   tuneOption.setAttribute("hidden", "");
-
-        // } else if (tuneOption.hasAttribute("hidden")) {
-
-        //   tuneOption.removeAttribute("hidden");
-
+          tuneOption.setAttribute("hidden", "");
           tuneOption.setAttribute("disabled", "");
 
         } else if (tuneOption.hasAttribute("disabled")) {
 
           tuneOption.removeAttribute("disabled");
-          
+          tuneOption.removeAttribute("hidden");
         }
       });
 
@@ -654,6 +924,47 @@ async function appDropDownHandler() {
 
       console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
     }
+  }
+}
+
+// Handle Chord Popover Slider events
+
+function appChordSliderHandler(event) {
+
+  // Slider defaults for calculations
+
+  const vMin = +fullScreenPopoverSliderV.min;
+  const vMax = +fullScreenPopoverSliderV.max;
+
+  if (event.type === 'input') {
+
+    let valueV = fullScreenPopoverSliderV.value;
+
+    if (this === fullScreenPopoverSliderV) {
+
+      // Define chords line width and max line width range
+
+      const lineWMin = 20;
+      const lineWMax = 50;
+
+      const maxWLows = 50;
+      const maxWTops = 90;
+
+      const maxLineWAddend = valueV > vInitVal? Math.round((valueV - vInitVal) * ((maxWTops - maxWInit) / (vMax - vInitVal))) : 
+                                                Math.round((valueV - vInitVal) * ((maxWInit - maxWLows) / (vInitVal - vMin)));
+
+      const lineWAddend = valueV > vInitVal? Math.round((valueV - vInitVal) * ((lineWMax - lineWInit) / (vMax - vInitVal))) :
+                                             Math.round((valueV - vInitVal) * ((lineWInit - lineWMin) / (vInitVal - vMin)));
+
+      localStorage.chordsSliderVerticalValue_NSSSAPP = valueV;
+      localStorage.chordsSliderMaxWidthValue_NSSAPP = maxWInit + maxLineWAddend;
+      localStorage.chordsSliderLineWidthValue_NSSAPP = lineWInit + lineWAddend;
+
+      fullScreenPopover.style.setProperty("--chords-font-size", `${valueV}%`);
+      fullScreenPopover.style.setProperty("--chords-line-height", `${valueV}%`);
+      fullScreenPopover.style.setProperty("--chords-max-width", `${maxWInit + maxLineWAddend}%`);
+      fullScreenPopover.style.setProperty("--chords-line-width", `${lineWInit + lineWAddend}rem`);
+    } 
   }
 }
 
@@ -704,6 +1015,71 @@ export function initAppCheckboxes() {
         localStorage[checkBox.dataset.option] = 1;
       } 
     });
+  });
+}
+
+// Initialize Tunebook Options radio buttons on page load
+
+function initTunebookRadioBtns() {
+
+  if(+localStorage?.abcToolsFullScreenBtnShowsChords === 1) {
+
+    fullScreenViewChordsRadioBtn.checked = true;
+
+  } else {
+
+    fullScreenViewTunesRadioBtn.checked = true;
+  }
+
+  fullScreenViewChordsRadioBtn.addEventListener('click', () => {
+
+    localStorage.abcToolsFullScreenBtnShowsChords = 1;
+  });
+
+  fullScreenViewTunesRadioBtn.addEventListener('click', () => {
+
+    localStorage.abcToolsFullScreenBtnShowsChords = 0;
+  });
+}
+
+// Initialize Chord Popover sliders
+
+const vInitVal = 120 // Global initial value for vertical slider
+const lineWInit = 40 // Global initial value for chords line width
+const maxWInit = 80 // Global initial value for chords line max width
+
+function initPopoverSliders() {
+
+  if (!localStorage.chordsSliderVerticalValue_NSSSAPP) {
+
+    localStorage.chordsSliderVerticalValue_NSSSAPP = vInitVal;
+  }
+
+  if (!localStorage.chordsSliderLineWidthValue_NSSAPP) {
+
+    localStorage.chordsSliderLineWidthValue_NSSAPP = lineWInit;
+  }
+
+  if (!localStorage.chordsSliderMaxWidthValue_NSSAPP) {
+
+    localStorage.chordsSliderMaxWidthValue_NSSAPP = maxWInit;
+  }
+
+  const valueV = localStorage.chordsSliderVerticalValue_NSSSAPP;
+  const lineWidth = localStorage.chordsSliderLineWidthValue_NSSAPP;
+  const maxWidth = localStorage.chordsSliderMaxWidthValue_NSSAPP;
+
+  fullScreenPopoverSliderV.value = valueV;
+
+  fullScreenPopover.style.setProperty("--chords-font-size", `${valueV}%`);
+  fullScreenPopover.style.setProperty("--chords-line-height", `${valueV}%`);
+  fullScreenPopover.style.setProperty("--chords-max-width", `${maxWidth}%`);
+  fullScreenPopover.style.setProperty("--chords-line-width", `${lineWidth}rem`); // rem!
+
+  [fullScreenPopoverSliderV].forEach(slider => {
+
+    slider.addEventListener('input', appChordSliderHandler);
+    slider.addEventListener('change', appChordSliderHandler);
   });
 }
 

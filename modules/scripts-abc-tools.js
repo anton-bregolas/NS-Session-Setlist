@@ -62,6 +62,16 @@ export function initToolsOptions() {
 
         localStorage.abcToolsAllowTabStyleChanges = 1;
     }
+
+    if (!localStorage?.abcToolsFullScreenBtnShowsChords) {
+
+        localStorage.abcToolsFullScreenBtnShowsChords = 1;
+    }
+
+    if (!localStorage?.abcToolsAllowTuneAutoReload) {
+
+        localStorage.abcToolsAllowTuneAutoReload = 1;
+    }
 }
 
 // Initialize ABC Transcription Tools, add event listeners to Tunebook elements
@@ -74,19 +84,19 @@ export function initAbcTools() {
 
     // Initialize the Full Screen Button
 
-    const fullScreenButton = document.getElementById('fullscreenbutton');
+    const fullScreenButton = document.getElementById('fullScreenButton');
 
     fullScreenButton.addEventListener('click', function() {
 
         const fullScreenSetting = +document.querySelector('input[name="nss-radio-view"]:checked').value;
 
-        if (fullScreenSetting === 1 && lastURL != "") {
+        if (fullScreenSetting === 0 && lastURL != "") {
 
             window.open(lastURL, '_blank');
             return;
         }
 
-        if (fullScreenSetting === 2) {
+        if (fullScreenSetting === 1) {
 
             openSettingsMenu(this.dataset.load);
         }
@@ -137,11 +147,15 @@ export function initAbcTools() {
 
         refreshTabsDisplayOptions();
 
-        setTimeout(function() {
+        if (+localStorage?.abcToolsAllowTuneAutoReload === 1) {
 
-            loadTuneBookItem(tunes, 0);
+            setTimeout(function() {
 
-        }, 150);
+                loadTuneBookItem(tunes, 0);
+
+            }, 150);
+
+        }
     }
 }
 
@@ -356,13 +370,16 @@ function loadTabsMidiOptions() {
             return;
         }
 
-        if (tuneSelector.value !== "") {
+        if (tuneSelector.value !== "" && +localStorage?.abcToolsAllowTuneAutoReload === 1) {
 
             loadTuneBookItem(tunes);
             return;
         }
 
-        loadTuneBookItem(tunes, 0);
+        if (+localStorage?.abcToolsAllowTuneAutoReload === 1) {
+
+            loadTuneBookItem(tunes, 0);
+        }
     }
 }
 
@@ -596,7 +613,7 @@ function extractLZWParameter(url) {
 
 function getElementsTotalHeight() {
 
-    const ids = ['title', 'subtitle', 'displayOptions', 'footer'];
+    const ids = ['nss-tunebook-header', 'nss-tunebook-footer'];
 
     let totalHeight = 0;
 
@@ -625,4 +642,20 @@ export function resizeIframe() {
     tuneFrame.style.width = (window.innerWidth-3) + 'px';
     const otherElementsHeight = getElementsTotalHeight();
     tuneFrame.style.height = (window.innerHeight-otherElementsHeight) + 'px';
+}
+
+// Set viewport width to a fixed value or reset it to device-width
+
+export function resetViewportWidth(fixedWidthPx) {
+
+    const viewPortMeta = document.querySelector("meta[name=viewport]");
+
+    if (fixedWidthPx) {
+
+        viewPortMeta.setAttribute("content", `width=${fixedWidthPx}`);
+
+    } else {
+
+        viewPortMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
+    }
 }
