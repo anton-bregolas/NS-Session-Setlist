@@ -13,6 +13,27 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.7.6: Generate Chordbook (Smart Chord-Beats Recovery)
+
++ Project updates:
+  - ABC Encoder: Chords extractor now detects and fills in the missing chords in incomplete bars
+  - ABC Encoder: Chords autocomplete now supports bars with 3 out of 4 chords in duple-time tunes and 2 out of 3 chords in triple-time tunes in addition to 1 out of N chords in all tunes
+  - Chords Viewer: Single chords in G (Em) format are no longer cloned but sliced and spread over the bar [G (Em) (Em)] to avoid clutter
+
++ HTML updates:
+  - Classes added for Chords Popover theme buttons
+
++ CSS updates:
+  - Hover & focus styles for Chords Popover buttons tweaked
+
++ JavaScript updates:
+  - Chords Popover scripts:
+    + Chord-beat count and recovery algorithm implemented (scripts-abc-encoder.js)
+    + countBeatsInsertChords recovers missing chord-beats by counting notes against beats and inserting the sufficient number of chords
+    + Note counting algorithm takes both note multipliers (numbers not preceded by /) and note divisors (/, //... or /Num) into the equation
+    + getCompleteAbcChordBar refactored, getChordsFromTune updated to support the new algorithm
+  - Theme and localStorage variable tweaks in main App scripts (scripts-ns-sessions.js)
+
 v.0.7.5: Generate Chordbook (Responsive Chords Popover & Launcher)
 
 + Project updates:

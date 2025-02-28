@@ -6,11 +6,12 @@ import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults, isTuneTriple
 // NS Session Setlist Custom App Scripts
 //
 // Session DB and/or Code Contributors:
-// Anton Zille https://github.com/anton-bregolas/ - Code, ABC, Chords
+// Anton Zille - https://github.com/anton-bregolas/ - Code, ABC, Chords
 // Mars Agliullin - ABC
 // Tania Sycheva - ABC
+// Oleg Naumov - Chords
 //
-// App Version 0.7.5 / NS Session DB date: 2025-02-25
+// App Version 0.7.6 / NS Session DB date: 2025-02-28
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -553,20 +554,6 @@ function updateTuneBookTitles(dataType) {
   tuneBookTitle.dataset.title = dataType;
 }
 
-// Change Tunebook header style depending on section shown
-
-// function resizeTuneBookHeader(dataType) {
-
-//   if (dataType === "setlist" || dataType === "tunelist") {
-
-//     tuneBookTitle.setAttribute("style", "font-size: 1.8rem; margin-top: 1rem;")
-    
-//     return;
-//   }
-
-//   tuneBookTitle.removeAttribute("style");
-// }
-
 ////////////////////////////////
 // FETCHERS & DATA HANDLERS
 ///////////////////////////////
@@ -786,7 +773,7 @@ async function appButtonHandler() {
 
       fullScreenPopover.style.cssText = ''
 
-      localStorage.removeItem('chordsSliderVerticalValue_NSSSAPP');
+      localStorage.removeItem('chordsSliderFontSizeValue_NSSSAPP');
       localStorage.removeItem('chordsSliderLineWidthValue_NSSAPP');
       localStorage.removeItem('chordsSliderMaxWidthValue_NSSAPP');
 
@@ -866,9 +853,11 @@ async function appButtonHandler() {
 
     allThemeBtn.forEach(themeBtn => {
 
-      if (themeBtn.parentElement.classList === appSectionHeader && themeBtn !== this) {
+      if (themeBtn.parentElement.classList === appSectionHeader &&
+          themeBtn.classList.contains(`nss-btn-${this.dataset.theme}`)) {
 
         ariaShowMe(themeBtn);
+        themeBtn.focus();
       }
     });
 
@@ -956,7 +945,7 @@ function appChordSliderHandler(event) {
       const lineWAddend = valueV > vInitVal? Math.round((valueV - vInitVal) * ((lineWMax - lineWInit) / (vMax - vInitVal))) :
                                              Math.round((valueV - vInitVal) * ((lineWInit - lineWMin) / (vInitVal - vMin)));
 
-      localStorage.chordsSliderVerticalValue_NSSSAPP = valueV;
+      localStorage.chordsSliderFontSizeValue_NSSSAPP = valueV;
       localStorage.chordsSliderMaxWidthValue_NSSAPP = maxWInit + maxLineWAddend;
       localStorage.chordsSliderLineWidthValue_NSSAPP = lineWInit + lineWAddend;
 
@@ -1050,9 +1039,9 @@ const maxWInit = 80 // Global initial value for chords line max width
 
 function initPopoverSliders() {
 
-  if (!localStorage.chordsSliderVerticalValue_NSSSAPP) {
+  if (!localStorage.chordsSliderFontSizeValue_NSSSAPP) {
 
-    localStorage.chordsSliderVerticalValue_NSSSAPP = vInitVal;
+    localStorage.chordsSliderFontSizeValue_NSSSAPP = vInitVal;
   }
 
   if (!localStorage.chordsSliderLineWidthValue_NSSAPP) {
@@ -1065,7 +1054,7 @@ function initPopoverSliders() {
     localStorage.chordsSliderMaxWidthValue_NSSAPP = maxWInit;
   }
 
-  const valueV = localStorage.chordsSliderVerticalValue_NSSSAPP;
+  const valueV = localStorage.chordsSliderFontSizeValue_NSSSAPP;
   const lineWidth = localStorage.chordsSliderLineWidthValue_NSSAPP;
   const maxWidth = localStorage.chordsSliderMaxWidthValue_NSSAPP;
 

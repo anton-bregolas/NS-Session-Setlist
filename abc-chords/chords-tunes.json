@@ -1,8 +1,13 @@
 [
   {
+    "title": "AIR: Inis Oírr",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\t(D/F#)\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\t(D/F#)\t|\tEm\tEm\tEm\t|\tC\tC\tD/F#\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tBm\tBm\tBm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tEm\tEm\tEm\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|\tG\tG\tG\t|\n|\tEm\tEm\tEm\t|\tBm\tBm\tBm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tEm\tEm\tEm\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|\tG\tG\tG\t||"
+  },
+  {
     "title": "REEL: Callaghan's",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tDG\tDA\t|\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tA\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tCA\tG\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||"
+    "chords": "PART 1:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tD G\tD A\t|\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tA\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tC A\tG G\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||"
   },
   {
     "title": "REEL: Galtee Rangers",
@@ -12,16 +17,81 @@
   {
     "title": "REEL: Glentaun",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\tD\t|\tG\tD\t|\tG\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tCD\tG\t|\n|\tG\tG\t|\tC\tD\t|\tC\tC\t|\tD\tC\t||"
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\tD\t|\tG\tD\t|\tG\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tC D\tG G\t|\n|\tG\tG\t|\tC\tD\t|\tC\tC\t|\tD\tC\t||"
+  },
+  {
+    "title": "SINGLE JIG: Bank of Turf",
+    "meter": "12/8",
+    "chords": "PART 1:\n|\tD D\tG D\t|\tD A\tD D\t|\tG\tD\t|1\tEm\tA\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tA\tD\t|\tG D\tA A\t|\tA\tD\t|1\tG D\tA A\t|\n|2\tG D\tA A\t||"
+  },
+  {
+    "title": "SLIDE: Denny Mescall's",
+    "meter": "12/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tG/B G/B\tC D\t|\tG\t(D)\t|\tEm D\tG (C)\t||\n\nPART 2:\n|\tG\tG/B\t|\tCadd9\tD\t|\tEm7\tD/B\t|\tC D\tG G\t||"
+  },
+  {
+    "title": "SLIDE: Kings of Kerry",
+    "meter": "12/8",
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tE\t|\tA\tA\t|1\tD E\tA A\t|\n|2\tD E\tA A\t||\n\nPART 2:\n|\tF#m\tD\t|\tA\tE\t|\tF#m\tD\t|\tD E\tA A\t|\n|\tF#m\tD\t|\tA\tE\t|\tBm7\tBm7\t|\tE\tE\t||"
+  },
+  {
+    "title": "SLIP JIG: Fig for a Kiss",
+    "meter": "9/8",
+    "chords": "PART 1:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tG\tD\tD\t|\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tG\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tG\t(Em)\tD\t|\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tD\tEm\t|\tG\tD\tEm\t||"
+  },
+  {
+    "title": "SLIP JIG: Foxhunter's",
+    "meter": "9/8",
+    "chords": "PART 1:\n|\tD\tD\tG\t|\tD\tD\tA\t|\tD\tD\tG\t|\tD\tD\tA\t||\n\nPART 2:\n|\tEm\tEm\tD\t|\tG\tG\tA\t|\tD\tD\tA\t|\tD\tD\tA\t||\n\nPART 3:\n|\tD\tD\tG\t|\tD\tD\tA\t|\tD\tD\tG\t|\tD\tD\tA\t||\n\nPART 4:\n|\tEm\tEm\tD\t|\tG\tG\tA\t|\tD\tD\tA\t|\tD\tD\tA\t||"
+  },
+  {
+    "title": "SLIP JIG: Snowy Path",
+    "meter": "9/8",
+    "chords": "PART 1:\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tG\tG\tG\t|\tBm\tBm\tBm\t|\tA\tA\tA\t||\n\nPART 2:\n|\tF#m\tF#m\tF#m\t|\tG\tG\tG\t|\tBm\tBm\tBm\t|\tD\tD\tD\t|\n|\tF#m\tF#m\tF#m\t|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t||"
+  },
+  {
+    "title": "WALTZ: Far Away",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tA\tA\tA\t|\n|\tG\t(Em)\t(Em)\t|\tA\tA\tA\t|\tG\tG\tA\tA\t|1\tBm\tBm\tBm\t|\n|2\tBm\tBm\tBm\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\n|\tBm\tBm\tA\tA\t|\tG\tG\tF#m\tF#m\t|\tBm\tBm\tF#m\t|1\tG\tG\tG\t|\n|2\tBm\tBm\tBm\t||"
   },
   {
     "title": "WALTZ: Flatwater Fran (Amaj)",
     "meter": "3/4",
-    "chords": "PART 1:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tA\tA\tA\t|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tE7\t*\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tE\tE\tE\t|\n|\tD\tD\tD\t|\tA\tA\tA\t|\tE7\tE7\tE7\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tE7\t*\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
+    "chords": "PART 1:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tA\tA\tA\t|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tE\tE\tE\t|\n|\tD\tD\tD\t|\tA\tA\tA\t|\tE7\tE7\tE7\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tD\tD\tE7\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
   },
   {
     "title": "WALTZ: Flatwater Fran (Gmaj)",
     "meter": "3/4",
-    "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tD7\t*\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tC\tC\tC\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tEm\tEm\tEm\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD7\tD7\tD7\t|\tEm\tEm\tEm\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tD7\t*\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tD7\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tC\tC\tC\t|\tG\tG\tG\t|\tC\tC\tC\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tEm\tEm\tEm\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD7\tD7\tD7\t|\tEm\tEm\tEm\t|\n|\tAm\tAm\tAm\t|\tEm\tEm\tEm\t|\tC\tC\tD7\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
+  },
+  {
+    "title": "WALTZ: Flatworld",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|1\tBm\tBm\tBm\t|\n|2\tBm\tBm\tBm\t||\n\nPART 2:\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\tF#m\tF#m\tF#m\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tF#m\tF#m\tF#m\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\tF#m\tF#m\tF#m\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tA\tA\tA\t|\tBm\tBm\tBm\t||"
+  },
+  {
+    "title": "WALTZ: Looking at a Rainbow",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tG\tG\tG\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tD/F#\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|1\tG\tG\tD/F#\t|\n|2\tC\tC\tC\t||"
+  },
+  {
+    "title": "WALTZ: Looking at a Rainbow",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tG\tG\tG\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tD/F#\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|1\tG\tG\tD/F#\t|\n|2\tC\tC\tC\t||"
+  },
+  {
+    "title": "WALTZ: Munster Cloak",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tG\tG\tG\t|\tC\tC\tD/F#\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tC\t(G)\t(G)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
+  },
+  {
+    "title": "WALTZ: Petranu-Valse",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tD/G\tD/G\tD/G\t|\tC/G\tC/G\tC/G\t|\tD/G\tD/G\tD/G\t|\n|\tG\tG\tG\t|\tD/G\tD/G\tD/G\t|\tC/G\tC/G\tC/G\t|\tD/G\tD/G\tD/G\t|\n|\tG\tG\tG\t|\tD/G\tD/G\tD/G\t|\tC/G\tC/G\tC/G\t|\tD/G\tD/G\tD/G\t|\n|\tG\tG\tG\t|\tD/G\tD/G\tD/G\t|\tC\tC\tD\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tC\tC\tC\t|\tD\tD\tD\t|\tEm7\tEm7\tEm7\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t|\tG\tD/F#\tD\t|\n|\tEm7\tEm7\tEm7\t|\tD\tD\tD\t|\tC\t(Cm)\t(Cm)\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tD\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tD\tD\tD\t|\tEm7\tEm7\tEm7\t|\tEm7\tEm7\tEm7\t|\n|\tC\tC\tC\t|\tD\tD\tD\t|\tEm7\tEm7\tEm7\t|\tG\tG\tD/F#\t|\n|\tEm7\tEm7\tEm7\t|\tD\tD\tD\t|\tC\t(Cm)\t(Cm)\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tD\t|\tG\tG\tG\t||"
+  },
+  {
+    "title": "WALTZ: Trip to Skye",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tA\tA\tA\t|\tG\tG\tG\t|\tA\tA\tA\t|\n|\tBm\tBm\tBm\t|\tA\tA\tA\t|\tG\tG\tG\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 2:\n|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tA\tA\tA\t|\tA\tA\tA\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tA\tA\tA\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||"
   }
 ]

@@ -190,9 +190,9 @@ iframe {
   min-width: 53.75rem;
 }
 
-.iframe-container {
-  /* width: 100svw; */
-}
+/*.iframe-container {
+  width: 100svw;
+}*/
 
 .nss-footer-tunebook {
   position: relative;
@@ -387,8 +387,6 @@ option:is([disabled]) {
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
 .nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
-.nss-control-btn:is(:hover, :focus, :focus-visible),
-.nss-theme-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-x:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid var(--accent-color);
   opacity: 1;
@@ -608,12 +606,24 @@ option:is([disabled]) {
 
 .nss-fullscreen-popover .nss-theme-btn,
 .nss-fullscreen-popover .nss-control-btn,
-.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
-.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
-.nss-fullscreen-popover .fs-popover-btn-x:is(:hover, :focus, :focus-visible),
 .nss-fullscreen-popover .fs-popover-btn-x {
   color: var(--chords-ui-color);
   outline-color: var(--chords-ui-color);
+}
+
+.nss-fullscreen-popover .nss-theme-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
+  color: var(--chords-font-color);
+  outline-color: var(--chords-font-color);
+}
+
+.nss-fullscreen-popover.dark .nss-theme-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover.dark .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover.dark .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover.dark .fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
+  opacity: 1;
 }
 
 .nss-fs-popover-title {
@@ -674,6 +684,10 @@ option:is([disabled]) {
   white-space: nowrap;
   overflow: hidden;
 }
+
+/*.nss-chords-barline {
+  margin: 0 0.5rem; 
+}*/
 
 .nss-chords-combo-barline,
 .nss-chords-barline, 
@@ -975,7 +989,4 @@ input[type="checkbox"]:focus-visible {
       aspect-ratio: 1/1;
     }
   }
-
-
-
 }
