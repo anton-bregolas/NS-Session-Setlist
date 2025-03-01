@@ -34,6 +34,11 @@ v.0.7.6: Generate Chordbook (Smart Chord-Beats Recovery)
     + getCompleteAbcChordBar refactored, getChordsFromTune updated to support the new algorithm
   - Theme and localStorage variable tweaks in main App scripts (scripts-ns-sessions.js)
 
++ Session DB updates:
+  - Session DB updated to 2025-02-28
+  - Chords from Oleg added to six sets
+  - Petranu-Valse and Trip to Skye set chords fixed
+
 v.0.7.5: Generate Chordbook (Responsive Chords Popover & Launcher)
 
 + Project updates:
