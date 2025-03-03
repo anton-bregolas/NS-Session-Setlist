@@ -1,5 +1,20 @@
 [
   {
+    "setTitle": "HORNPIPES: Chief O'Neill's Set",
+    "tuneChords": [
+      {
+        "title": "Little Beggarman",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA\tA\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA G\tA A\t||"
+      },
+      {
+        "title": "Chief O'Neill's Favourite",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tG\t|\tD\tD\t|\tC\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD\tG\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tF\tF\t|\tC\tC\t|\tD\tD\t|\tA\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD\tG\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "REELS: Galtee Rangers Set",
     "tuneChords": [
       {
@@ -125,7 +140,7 @@
       {
         "title": "Far Away",
         "meter": "3/4",
-        "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tA\tA\tA\t|\n|\tG\t(Em)\t(Em)\t|\tA\tA\tA\t|\tG\tG\tA\tA\t|1\tBm\tBm\tBm\t|\n|2\tBm\tBm\tBm\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\n|\tBm\tBm\tA\tA\t|\tG\tG\tF#m\tF#m\t|\tBm\tBm\tF#m\t|1\tG\tG\tG\t|\n|2\tBm\tBm\tBm\t||"
+        "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tA\tA\tA\t|\n|\tG\t(Em)\t(Em)\t|\tA\tA\tA\t|\tG\tA\t|1\tBm\tBm\tBm\t|\n|2\tBm\tBm\tBm\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\n|\tBm\tA\t|\tG\tF#m\t|\tBm\tBm\tF#m\t|1\tG\tG\tG\t|\n|2\tBm\tBm\tBm\t||"
       }
     ]
   }

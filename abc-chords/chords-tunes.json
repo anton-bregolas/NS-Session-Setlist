@@ -5,6 +5,16 @@
     "chords": "PART 1:\n|\tG\tG\t(D/F#)\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\t(D/F#)\t|\tEm\tEm\tEm\t|\tC\tC\tD/F#\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tBm\tBm\tBm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tEm\tEm\tEm\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|\tG\tG\tG\t|\n|\tEm\tEm\tEm\t|\tBm\tBm\tBm\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\n|\tEm\tEm\tEm\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|\tG\tG\tG\t||"
   },
   {
+    "title": "HORNPIPE: Chief O'Neill's Favourite",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tG\t|\tD\tD\t|\tC\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD\tG\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tF\tF\t|\tC\tC\t|\tD\tD\t|\tA\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD\tG\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
+    "title": "HORNPIPE: Little Beggarman",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA\tA\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA G\tA A\t||"
+  },
+  {
     "title": "REEL: Callaghan's",
     "meter": "4/4",
     "chords": "PART 1:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tD G\tD A\t|\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tA\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tC A\tG G\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||"
@@ -52,7 +62,7 @@
   {
     "title": "WALTZ: Far Away",
     "meter": "3/4",
-    "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tA\tA\tA\t|\n|\tG\t(Em)\t(Em)\t|\tA\tA\tA\t|\tG\tG\tA\tA\t|1\tBm\tBm\tBm\t|\n|2\tBm\tBm\tBm\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\n|\tBm\tBm\tA\tA\t|\tG\tG\tF#m\tF#m\t|\tBm\tBm\tF#m\t|1\tG\tG\tG\t|\n|2\tBm\tBm\tBm\t||"
+    "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tA\tA\tA\t|\n|\tG\t(Em)\t(Em)\t|\tA\tA\tA\t|\tG\tA\t|1\tBm\tBm\tBm\t|\n|2\tBm\tBm\tBm\t||\n\nPART 2:\n|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\n|\tBm\tA\t|\tG\tF#m\t|\tBm\tBm\tF#m\t|1\tG\tG\tG\t|\n|2\tBm\tBm\tBm\t||"
   },
   {
     "title": "WALTZ: Flatwater Fran (Amaj)",
@@ -68,11 +78,6 @@
     "title": "WALTZ: Flatworld",
     "meter": "3/4",
     "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|1\tBm\tBm\tBm\t|\n|2\tBm\tBm\tBm\t||\n\nPART 2:\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\tF#m\tF#m\tF#m\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tF#m\tF#m\tF#m\t|\tF#m\tF#m\tF#m\t|\n|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\tF#m\tF#m\tF#m\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tA\tA\tA\t|\tBm\tBm\tBm\t||"
-  },
-  {
-    "title": "WALTZ: Looking at a Rainbow",
-    "meter": "3/4",
-    "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tG\tG\tG\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tD/F#\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|1\tG\tG\tD/F#\t|\n|2\tC\tC\tC\t||"
   },
   {
     "title": "WALTZ: Looking at a Rainbow",
