@@ -1,6 +1,8 @@
 NS Session Setlist
 ========================================================================================
 
+A tunebook app for the Novi Sad Irish Traditional Music Session integrating Michael Eskin's ABC Transcription Tools. Contains Anton Zille's ABC Encoder for converting ABC Sets and Tunes into NS Session DB files and the Chord Viewer module for the simplified display of chords contained in ABC.
+
 🎵 [**TUNEBOOK APP**](https://anton-bregolas.github.io/NS-Session-Setlist/) 🎻 [**ABC ENCODER**](https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html) 🎵
 
 **NS Session Tunebook by Anton Zille & Novi Sad Trad Sessions** 👇
@@ -13,40 +15,7 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-v.0.7.7: Responsive Chordbook (Syncopation Handling & ABC Cleanup)
-
-+ Project updates:
-  - Chords Viewer: Proper handling of ABC bars with syncopated chord arrangements
-  - ABC Encoder: Input ABC now undergoes deep clean-up before Chordbook generation
-  - ABC Encoder: Sort now removes duplicate Sets and Tunes by using a Map of unique primary titles; items added at the bottom of the file are treated as newest
-  - Launcher & Encoder: Default settings are now loaded and logged from settings objects
-
-+ HTML updates (abc-encoder.html):
-  - Normalize ABC part endings option added to Encoder settings
-  - Encoder buttons reordered, Sort is now the top button
-
-+ JavaScript updates:
-  - App Launcher module (scripts-ns-sessions.js)
-    + initLocalStorage function added to initialize new localStorage items
-    + initSettingsFromObject added to initialize options in localStorage using settings objects
-    + printLocalStorageSettings added to log current settings, default and modified
-  - ABC Encoder & Chords Viewer module (scripts-abc-encoder.js)
-    + countBeatsInsertChords now handles syncopation by rounding the irregular number of beats in a fragment down (to a minimum of 1)
-    + countBeatsInsertChords now inserts '–' in place of a missing first chord-beat
-    + getCompleteAbcChordBar tweaked to handle missing first beat in a bar, such bars are now passed to countBeatsInsertChords
-    + makeAbcChordBook now passes ABC to several cleanup functions to make sure no text in inline fields, comments and decorations ends up being counted as notes
-      - removeAbcHeadersAndCommands: removes all header fields and inline commands and decorations
-      - convertAbcIntervalsToSingleNotes: strips all the intervals / chords down to a single note
-      - normalizeAbcTriplets: converts `(3ABC` triplets to `A/B/C` 
-    + addCustomAbcFields now passes ABC to processPartEndings to standardise the formatting of identifiable part endings to `||` if localStorage option abcSortNormalizesAbcPartEndings is 1
-    + processPartEndings also converts `::` to `:||\n|:`
-    + sortFilterAbc and makeTunesFromSets now create a Map of unique primary title & ABC pairs to remove duplicate Sets or Tunes
-    + makeStringTitleCase refactored to integrate toSortFriendlyTitle and prioritise title exceptions 
-  - ABC Tunebook module (scripts-abc-tools.js)
-    + abcTunebookDefaults settings object added
-    + initToolsOptions renamed to initTunebookOptions and now initialises settings via initSettingsFromObject
-
-v.0.7.6: Responsive Chordbook (Smart Chord-Beats Recovery)
+v.0.7.6: Generate Chordbook (Smart Chord-Beats Recovery)
 
 + Project updates:
   - ABC Encoder: Chords extractor now detects and fills in the missing chords in incomplete bars
@@ -72,7 +41,7 @@ v.0.7.6: Responsive Chordbook (Smart Chord-Beats Recovery)
   - Chords from Oleg added to six sets
   - Petranu-Valse and Trip to Skye set chords fixed
 
-v.0.7.5: Responsive Chordbook (Responsive Chords Popover & Launcher)
+v.0.7.5: Generate Chordbook (Responsive Chords Popover & Launcher)
 
 + Project updates:
   - Launcher, Encoder, Playalong: Responsive app layout separate from Tunebook
@@ -124,8 +93,7 @@ v.0.7.5: Responsive Chordbook (Responsive Chords Popover & Launcher)
   - Session DB updated to 2025-02-25
   - Chords added to Galtee Rangers Set to test both duple- and triple-time tunes in Chords Popover
   - Minor ABC tweaks
-<details>
-  <summary>v.0.7.*: Generate Chordbook</summary>
+
 v.0.7.4: Generate Chordbook (Chords Popover Basic)
 
 + Project updates:
@@ -259,8 +227,6 @@ v.0.7.0: Generate Chordbook
 + Session DB updates:
   - Session DB updated to 2025-02-17
   - Test Chords JSONs added (chords-sets.json, chords-tunes.json)
-
-</details>
 
 <details>
   <summary>v.0.6.* Convert Sets to Tunes</summary>
