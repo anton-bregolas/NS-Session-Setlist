@@ -1,13 +1,19 @@
+///////////////////////////////////////////////////////////////////////
+// Novi Sad Session ABC Encoder Module
+// https://github.com/anton-bregolas/
+// (c) Anton Zille 2024-2025
+///////////////////////////////////////////////////////////////////////
+
 import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-title-case.js';
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
-import { showRedOutlineWarning } from './scripts-ns-sessions.js';
+import { initSettingsFromObject, showRedOutlineWarning } from './scripts-ns-sessions.js';
 
 ////////////////////////////////
 // ABC ENCODER GLOBAL SETTINGS
 ///////////////////////////////
 
-// Default ABC Encoder Settings for reference
-// Set in initEncoderSettings on first load
+// Default ABC Encoder Settings
+// Set via initEncoderSettings on first load
 
 export const abcEncoderDefaults = {
 
@@ -15,8 +21,9 @@ export const abcEncoderDefaults = {
     abcEncoderSortsTuneBook: "0",
     abcSortExportsTunesFromSets: "1",
     abcSortExportsChordsFromTunes: "1",
+    abcSortNormalizesAbcPartEndings: "1",
     abcSortRemovesLineBreaksInAbc: "0",
-    abcSortRemovesTextAfterLineBreaksInAbc: "0" 
+    abcSortRemovesTextAfterLineBreaksInAbc: "0"
 };
 
 // List of basic Tune Types in Session DB
@@ -46,16 +53,18 @@ const abcBasicTuneTypes = [
 
 const makeTitleCaseExceptions = [
 
-    { string: "an súisin bán", override: "An Súisin Bán"},
-    { string: "casadh an tsúgáin", override: "Casadh an tSúgáin"},
-    { string: "dance ti' thy daddy", override: "Dance ti' Thy Daddy"},
-    { string: "tá an coileach ag fógairt an lae", override: "Tá an Coileach ag Fógairt an Lae"}
+    { string: "an súisin bán", override: "An Súisin Bán" },
+    { string: "casadh an tsúgáin", override: "Casadh an tSúgáin" },
+    { string: "dance ti' thy daddy", override: "Dance ti' Thy Daddy" },
+    { string: "tá an coileach ag fógairt an lae", override: "Tá an Coileach ag Fógairt an Lae" },
+    { string: "st. patrick's an dro set", override: "St. Patrick's An Dro Set" },
+    { string: "an dro de la saint-patrick", override: "An Dro de la Saint-Patrick" }
 ];
 
 const makeProperCaseExceptions = [
 
-    { string: "three-two", override: "3/2 Hornpipe"},
-    { string: "three two", override: "3/2 Hornpipe"}
+    { string: "three-two", override: "3/2 Hornpipe" },
+    { string: "three two", override: "3/2 Hornpipe" }
 ];
 
 ////////////////////////////////
@@ -343,15 +352,19 @@ export function sortFilterAbc(abcContent) {
 
         const filteredAbcArr = splitAbcArr.map(abc => abc.trim()).filter(abc => abc.startsWith("T:"));
 
-        const sortedAbcArr = filteredAbcArr.sort().map(abc => `X: ${filteredAbcArr.indexOf(abc) + 1}\n${addCustomAbcFields(abc)}`);
+        const uniqueAbcMap = new Map(filteredAbcArr.map(abc => ([abc.match(/^T:.*/)[0], abc])));
+
+        const uniqueAbcArr = Array.from(uniqueAbcMap.values());
+
+        const sortedAbcArr = uniqueAbcArr.sort().map(abc => `X: ${uniqueAbcArr.indexOf(abc) + 1}\n${addCustomAbcFields(abc)}`);
 
         let sortedAbcTunesArr = [];
 
         // Filter and sort an additional array of Tunes if abcContent contains Sets and abcSortExportsTunesFromSets setting is on
 
-        if (+localStorage.abcSortExportsTunesFromSets === 1 && filteredAbcArr[0].match(/^T:/gm).length > 2) {
+        if (+localStorage.abcSortExportsTunesFromSets === 1 && uniqueAbcArr[0].match(/^T:/gm).length > 2) {
 
-            const exportedTunesArr = makeTuneListFromSets(filteredAbcArr);
+            const exportedTunesArr = makeTunesFromSets(uniqueAbcArr);
 
             sortedAbcTunesArr = exportedTunesArr.sort().map(abc => `X: ${exportedTunesArr.indexOf(abc) + 1}\n${abc}`);
 
@@ -444,18 +457,19 @@ function makeStringTitleCase(abcString) {
 
     for (let i = 0; i < abcTitleArr.length; i++) {
 
+        let inputTitle = abcTitleArr[i];
         let titleOverride = '';
         
         for (const caseObj of makeTitleCaseExceptions) {
 
-            const excMatch = abcTitleArr[i].toLowerCase().match(caseObj.string);
+            const excMatch = inputTitle.toLowerCase().match(caseObj.string);
 
             if (excMatch) {
 
-                let titleSuffix = abcTitleArr[i].match(/(?:\(.*?\)[\s]*?)*\[.*?\]/);
+                let titleSuffix = inputTitle.match(/(?:\(.*?\)[\s]*?)*\[.*?\]/);
     
                 titleOverride = `${caseObj.override}${titleSuffix? ' ' + titleSuffix[0] : ''}`;
-                console.warn(`Exception found! Output: ${titleOverride}`);
+                // console.warn(`Exception found! Output: ${titleOverride}`);
                 break;
             }
         }
@@ -471,7 +485,8 @@ function makeStringTitleCase(abcString) {
 
         } else {
 
-            abcTitleCaseOutput += apStyleTitleCase(abcTitleArr[i]);
+            inputTitle = toSortFriendlyTitle(inputTitle);
+            abcTitleCaseOutput += apStyleTitleCase(inputTitle);
         }
     }
 
@@ -547,7 +562,7 @@ function makeTuneTypePlural(abcContent, abcR) {
 
 // Remove articles from the start of the ABC Title to make it sort-friendly
 
-function toSortFriendlyTitle(abcTitle) { 
+function toSortFriendlyTitle(abcTitle) {
     
     return abcTitle.replace(/^(?:(?:The|An|A)[\s]+)/, '').trim();
 }
@@ -574,7 +589,7 @@ function processAbcSubtitles(abcContent) {
 
     let processedAbcContent = abcContent.replace(/(?<=^T:).*/gm, 
         
-        match => ` ${makeStringTitleCase(toSortFriendlyTitle(match.trim()))}`
+        match => ` ${makeStringTitleCase(match.trim())}`
     );
 
     return processedAbcContent;
@@ -601,7 +616,7 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
         primaryTitle = primaryTitle.replace(/\.$/, '');
     }
 
-    let formattedTitle = makeStringTitleCase(toSortFriendlyTitle(primaryTitle));
+    let formattedTitle = makeStringTitleCase(primaryTitle);
 
     let formattedPrefix = abcTitlePrefix? `${abcTitlePrefix}: ` : '';
 
@@ -613,7 +628,7 @@ function processAbcTitle(abcTitle, abcTitlePrefix) {
 
             let secondaryTitle = abcTitleArr[i].match(/(?<=^T:).*/)[0].trim();
 
-            abcTitleOutput += `\nT: ${makeStringTitleCase(toSortFriendlyTitle(secondaryTitle))}`;
+            abcTitleOutput += `\nT: ${makeStringTitleCase(secondaryTitle)}`;
         }
     }
 
@@ -669,6 +684,22 @@ function processAbcZ(abcZ, abcIndex) {
     return `${abcEds? abcEds : '[Unedited]'}; ${abcTso}`;
 }
 
+// Replace several variants of ABC part separators with uniform style
+
+function processPartEndings(abcContent) {
+
+    let abcOutput = abcContent.replaceAll(/\|](?=\r?\n|$)/g, '||') // |AB cd|] > |AB cd||
+                           .replaceAll(/:\|(?=(?:\r?\n[^[]|$))/g, ':||') // |AB cd:| > |AB cd:||
+                           .replaceAll(/(?<=[^\\n])\|[ ]*\[(?=\d)/g, '|') // |[1 AB cd:|[2 ef g2|| > |1 AB cd:|2 ef g2||
+                           .replaceAll(/(?<=:\|\d[^|]*)\|(?=\r?\n|$)/g, '||') // |2 AB cd| > |2 AB cd||
+                           .replaceAll(/(?<=[^|])\|(?=\r?\nT|$)/g, '||') // |AB cd| + T: New Tune > |AB cd|| + T: New Tune
+                           .replaceAll(/:\|*:\r?\n/g, ':||\n|:') // |AB cd:: or |AB cd:|: > |AB cd:|| + |:
+                           .replaceAll(/:\|*:/g, ':||\n|:') // |AB cd::ef g2| > |AB cd:|| + |:ef g2|
+                           .replaceAll(/\|\|:/g, '|:') // ||:AB cd| > |:AB cd|
+
+    return abcOutput;
+}
+
 // Scan the selected Set or Tune for custom N.S.S.S. ABC fields and update mismatching ABCs
 // Process Set or Tune Title and Tune Type and replace them with the custom style format
 // Optional: Use abcMatch as template for ABC fields text
@@ -700,6 +731,13 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     let abcTuneType = abcR? makeStringProperCase(abcR) : makeTuneTypeSingular(abcTitlePrefix);
 
+    // Standardise format of part endings in ABC body
+
+    if (+localStorage.abcSortNormalizesAbcPartEndings === 1) {
+   
+        updatedAbc = processPartEndings(updatedAbc);
+    }
+        
     // QUICK EDIT CASE:
 
     const abcCustomFieldsLayout = /^C: C:.*[\s]*C: Set Leaders:.*[\s]*Z:.*[\s]*(N:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*K:.*[\s]*/gm;
@@ -792,6 +830,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
         
         switch (abcTuneType.toLowerCase()) {
             
+            case "an dro":
             case "barndance":
             case "fling":
             case "highland":
@@ -905,6 +944,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
                 break;
 
             case "reel":
+            case "an dro":
                 abcQ = "1/2=100";
                 break;
 
@@ -1140,11 +1180,11 @@ function getDecodedAbc(abcContent) {
 
 // Convert sets into separate tunes by adding missing ABC fields
 
-function makeTuneListFromSets(abcContentArr) {
+function makeTunesFromSets(abcSetsArr) {
 
     console.log(`ABC Encoder:\n\nConverting ABC Sets data into Tunes...`);
 
-    const abcSetsArr = abcContentArr.map(abcSet => {
+    const abcTuneGroupsArr = abcSetsArr.map(abcSet => {
 
         if (abcSet.match(/MEDLEY/gi)) {
 
@@ -1154,7 +1194,7 @@ function makeTuneListFromSets(abcContentArr) {
         return abcSet.replace(/^T:.*\s/, '').match(/T:[\s\S]*?(?=(?:T:|$))/g);
     });
 
-    const abcTunesArr = abcSetsArr.map(abcSetArr =>
+    const abcTunesArr = abcTuneGroupsArr.map(abcSetArr =>
 
         abcSetArr.map(tuneSet => {
 
@@ -1171,9 +1211,11 @@ function makeTuneListFromSets(abcContentArr) {
         })
     );
 
-    const abcTunesOutput = abcTunesArr.flat(Infinity);
+    const uniqueTunesMap = new Map(abcTunesArr.flat(Infinity).map(abc => ([abc.match(/^T:.*/)[0], abc])));
 
-    return abcTunesOutput;
+    const uniqueTunesArr = Array.from(uniqueTunesMap.values());
+
+    return uniqueTunesArr;
 }
 
 // Convert N.S.S.S. list of Sets or Tunes into a Chordbook JSON
@@ -1203,13 +1245,18 @@ function makeAbcChordBook(abcContent) {
             const abcTunesArr = abc.replace(/^T:.*/, '')
                                    .trim()
                                    .split('T:')
-                                   .filter(tune => tune != '');
+                                   .filter(Boolean)
+                                   .map(tune => `T:${tune}`);
 
             abcChordsObj = { "setTitle": abcPrimaryTitle, "tuneChords": [] };
 
             abcTunesArr.forEach(tune => {
 
-                abcBody = tune.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
+                abcBody = removeAbcHeadersAndCommands(tune);
+
+                // Optional steps (needed for correct calculations)
+                abcBody = convertAbcIntervalsToSingleNotes(abcBody);
+                abcBody = normalizeAbcTriplets(abcBody);
 
                 if (!abcBody.match(/".*"/)) {
                     return;
@@ -1227,7 +1274,10 @@ function makeAbcChordBook(abcContent) {
 
             abcTitle = abc.match(/(?<=^T:).*/m)[0].trim();
             abcMeter = abc.match(/(?<=^M:).*/m)[0].trim();
-            abcBody = abc.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
+
+            abcBody = removeAbcHeadersAndCommands(abc);
+            abcBody = convertAbcIntervalsToSingleNotes(abcBody);
+            abcBody = normalizeAbcTriplets(abcBody);
 
             abcChordsObj = getChordsFromTune(abcBody, abcTitle, abcMeter);
         }
@@ -1332,11 +1382,12 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
 function getCompleteAbcChordBar(abcBar, abcBarChordsArr, minTuneBeats, abcMeter) {
 
-    let abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#=_♯♭♮×/()]/g, '')).filter(Boolean);
+    let abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#=_♯♭♮×/()+]/g, '')).filter(Boolean);
 
     if (abcBarChordsArr && abcBarChordsInput.length > 0) {
 
-        if (abcBarChordsInput.length === 1) {
+        // Handle cases of single chord per bar, ignore bars where the first chord-beat is missing
+        if (abcBarChordsInput.length === 1 && abcBar.match(/^:*\d*[\s]*["]/)) {
 
             if (abcBarChordsInput[0].match(/\(.*\)/)) {
 
@@ -1346,6 +1397,7 @@ function getCompleteAbcChordBar(abcBar, abcBarChordsArr, minTuneBeats, abcMeter)
             return `${abcBarChordsInput[0]}\t${(abcBarChordsInput[0] + '\t').repeat(minTuneBeats - 1)}`;
         }
 
+        // Handle cases of fully-stacked chords per bar (3 chords for triple-time tunes, 2 or 4 chords for duple-time tunes)
         if (abcBarChordsInput.length === minTuneBeats || abcBarChordsInput.length === minTuneBeats * 2) {
 
             if (isTuneTripleMeter(abcMeter)) {
@@ -1361,11 +1413,13 @@ function getCompleteAbcChordBar(abcBar, abcBarChordsArr, minTuneBeats, abcMeter)
             return `${abcBarChordsInput[0]}\xa0${abcBarChordsInput[1]}\t${abcBarChordsInput[2]}\xa0${abcBarChordsInput[3]}\t`;
         }
 
+        // Handle cases of incomplete chord-beats per bar (2 out of 3 chords for triple-time tunes, missing first chord-beat for duple-time tunes)
         if (abcBarChordsInput.length < minTuneBeats) {
 
             return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter);
         }
 
+        // Handle cases of incomplete chord-beats per bar (3 out of 4 chords and/or missing first chord-beat for duple-/quadruple-time tunes)
         if (minTuneBeats < abcBarChordsInput.length < minTuneBeats * 2) {
 
             return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats * 2, abcMeter);
@@ -1387,7 +1441,18 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
     // Count the number of eighth notes per beat of tune
     const eightsPerBeat =  8 / splitMeterArr[1] * splitMeterArr[0] / minTuneBeats;
     // Filter the notes of the tune from chords, ABC notation symbols and spaces
-    const notesBetweenChords = abcBar.split(/"[^"]*"/).map(fr => fr.replaceAll(/[^a-gA-G0-9/]/g, '')).filter(fr => fr.match(/^[a-gA-G]/));
+    const notesBetweenChords = abcBar.split(/"[^"]*"/).map(fr => fr.replaceAll(/[^a-gxzA-G0-9/]/g, '')).filter(fr => fr.match(/^[a-gxzA-G]/));
+
+    let beatCount = 0;
+
+    let isMissingFirstBeat = abcBar.match(/^:*\d*[\s]*["]/)? 0 : 1;
+
+    // Add indicator of missing first beat if no opening chord found
+    if (isMissingFirstBeat) {
+
+        completeChordBar += `–${minTuneBeats > 3? '\xa0' : `\t`}`;
+        beatCount++;
+    }
 
     // Iterate between groups of notes preceded by chords in source ABC
     // Separate notes, note multipliers (numbers not preceded by /) and note divisors (/, //... or /Num)
@@ -1395,22 +1460,28 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
     // Insert a chord of the same index as the group at the start of each beat
     if (notesBetweenChords.length > 0) {
 
-        let beatCount = 0;
-
         notesBetweenChords.forEach(abcFragment => {
 
-            const countNotes = abcFragment.match(/[a-gA-G]/g).length;
+            const countNotes = abcFragment.match(/[a-gxzA-G]/g).length;
             const countExtraMultiplierSum = abcFragment.match(/[^/]\d+/)? abcFragment.match(/[^/]\d+/g)?.map(match => match.slice(1)).map(num => num - 1).reduce((a, b) => a + b) : 0;
             const extraDivisorArr = abcFragment.includes('/')? abcFragment.match(/[/]+\d*/g) : [];
             const countSimpleDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /[/](?=[^\d]|$)/.test(str))? extraDivisorArr.filter(str => str.match(/[/](?=[^\d]|$)/)).reduce((a, b) => a + (1 - (1 / Math.pow(2, b.length))), 0) : 0;
             const countAllExtraDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /\d/.test(str))? extraDivisorArr.map(str => str.replaceAll(/[^\d]/g, '')).reduce((a, b) => a + (1 - (1 / b)), 0) + countSimpleDivisorSum : countSimpleDivisorSum;
             const countEights = countNotes + countExtraMultiplierSum - countAllExtraDivisorSum;
-            const thisBeatCount = countEights / eightsPerBeat;
-            const relatedChord = abcBarChordsInput[notesBetweenChords.indexOf(abcFragment)]? abcBarChordsInput[notesBetweenChords.indexOf(abcFragment)] : '–';
+            const relatedChord = abcBarChordsInput[notesBetweenChords.indexOf(abcFragment)];
+            
+            let beatsInThisFragment = countEights / eightsPerBeat;
 
-            for (let n = 0; n < thisBeatCount; n++) {
+            // Handle chords placed with syncopation
+            if (beatsInThisFragment % 1 !== 0) {
+
+                beatsInThisFragment = beatsInThisFragment < 1? 1 : Math.floor(beatsInThisFragment);
+            }
+
+            // Add chords related to ABC fragment to completeChordBar string
+            for (let n = 0; n < beatsInThisFragment; n++) {
                 
-                completeChordBar += `${relatedChord}${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0? '\t' : '\xa0'}`;
+                completeChordBar += relatedChord? `${relatedChord}${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0? '\t' : '\xa0'}` : '';
                 beatCount++;
             }
         });
@@ -1440,7 +1511,40 @@ export function isTuneTripleMeter(tuneMeter) {
     }
   
     return false;
-  }
+}
+
+// Strip ABC of all header fields, commands and inline instructions (ornamentation, directions, lyrics etc.) 
+
+function removeAbcHeadersAndCommands(abcContent) {
+
+    let filteredAbc = abcContent.replaceAll(/^(?:[A-Za-z+]:.*\r?\n)*/gm, '')
+                                .replaceAll(/^(?:%.*\r?\n)*/gm, '')
+                                .replaceAll(/\[\w:.*?\]/g, '')
+                                .replaceAll(/<.*?>/g, '')
+                                .replaceAll(/!.*?!/g, '')
+                                .replaceAll(/\+.*?\+/g, '')
+                                .replaceAll(/{.*?}/g, '');
+    
+    return filteredAbc;
+}
+
+// Replace all ABC intervals / inline chords with a single highest note of the interval / chord
+
+function convertAbcIntervalsToSingleNotes(abcContent) {
+
+    let filteredAbc = abcContent.replaceAll(/\[([=_^.~]*[a-gA-G]+[,']*[0-9]*)*?\]/g, `$1`);
+
+    return filteredAbc;
+}
+
+// Replace ABC triplets and quadruplets in (3ABC format with A/B/c and A/B/cd
+
+function normalizeAbcTriplets(abcContent) {
+
+    let filteredAbc = abcContent.replaceAll(/\([34](\w)(\w)(\w)/g, `$1/$2/$3`);
+
+    return filteredAbc;
+}
 
 ////////////////////////////////
 // EXPORT TUNELIST FUNCTIONS
@@ -1477,33 +1581,5 @@ function exportPlainTuneList(abcContent) {
 
 export function initEncoderSettings() {
 
-    if (!localStorage?.abcEncoderExportsTuneList) {
-
-        localStorage.abcEncoderExportsTuneList = 1;
-    }
-
-    if (!localStorage?.abcEncoderSortsTuneBook) {
-
-        localStorage.abcEncoderSortsTuneBook = 0;
-    }
-
-    if (!localStorage?.abcSortExportsChordsFromTunes) {
-
-        localStorage.abcSortExportsChordsFromTunes = 1;
-    }
-
-    if (!localStorage?.abcSortExportsTunesFromSets) {
-
-        localStorage.abcSortExportsTunesFromSets = 1;
-    }
-
-    if (!localStorage?.abcSortRemovesLineBreaksInAbc) {
-
-        localStorage.abcSortRemovesLineBreaksInAbc = 0;
-    }
-
-    if (!localStorage?.abcSortRemovesTextAfterLineBreaksInAbc) {
-
-        localStorage.abcSortRemovesTextAfterLineBreaksInAbc = 0;
-    }
+    initSettingsFromObject(abcEncoderDefaults);
 }

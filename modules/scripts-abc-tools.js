@@ -1,15 +1,31 @@
-import { checkTuneBookSetting, tuneSets, tuneList, filterOptions, initCustomDropDownMenus, openSettingsMenu } from "./scripts-ns-sessions.js"; // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB 
-import { LZString } from "./scripts-3p/lz-string/lz-string.min.js"; // Import lz-string compression algorithm
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Michael Eskin's Export Tunebook Website Scripts (Modified and Refactored for Novi Sad Session Setlist)
+// Source file created with ABC Transcription Tools Website Builder: https://github.com/seisiuneer/abctools/blob/main/website_generator.js
+// OG Script Generation Date in ABC Transcription Tools: 2024-12-04
+// ABC Transcription Tools (c) 2023-2025 Michael Eskin
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Michael Eskin's Export Tunebook Website Scripts (Modified and Refactored)
-// Created with ABC Tools Player Website Generator: https://github.com/seisiuneer/abctools/blob/main/website_generator.js
-// Script Generation Date in ABC Transcription Tools: 2024-12-04
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB
+import { initSettingsFromObject, checkTuneBookSetting, tuneSets, tuneList, filterOptions, initCustomDropDownMenus, openSettingsMenu } from "./scripts-ns-sessions.js";
+// Import lz-string compression algorithm
+import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
-/////////////////////////////////////////////////////////////
-// Michael Eskin's Export Tunebook Website: Global Variables
-////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// ABC Tunebook Website: Default Settings
+/////////////////////////////////////////////////////////////////////////////
+
+export const abcTunebookDefaults = {
+
+    abcToolsSaveAndRestoreTunes: "1",
+    abcToolsAllowInstrumentChanges: "1",
+    abcToolsAllowTabStyleChanges: "1",
+    abcToolsFullScreenBtnShowsChords: "1",
+    abcToolsAllowTuneAutoReload: "1"
+};
+
+/////////////////////////////////////////////////////////////////////////////
+// ABC Tunebook Website: Global Variables
+/////////////////////////////////////////////////////////////////////////////
 
 let tunes = [];
 
@@ -28,17 +44,17 @@ let isPianoForced = false;
 
 let lastURL = "";
 
-/////////////////////////////////////////////////////////////
-// Michael Eskin's Export Tunebook Website: OG Page Elements
-////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// ABC Tunebook Website: OG Page Elements
+/////////////////////////////////////////////////////////////////////////////
 
 export const tuneFrame = document.querySelector('#tuneFrame');
 export const tuneSelector = document.querySelector('#tuneSelector');
 export const displayOptions = document.getElementById('displayOptions');
 
-///////////////////////////////////////////////////////////////
-// Michael Eskin's Export Tunebook Website: Refactored Scripts
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// ABC Tunebook Website: Refactored Scripts
+/////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////
 // TUNEBOOK LOAD FUNCTIONS
@@ -46,32 +62,9 @@ export const displayOptions = document.getElementById('displayOptions');
 
 // Initialize default Global settings for ABC Tools
 
-export function initToolsOptions() {
+export function initTunebookOptions() {
 
-    if (!localStorage?.abcToolsSaveAndRestoreTunes) {
-
-        localStorage.abcToolsSaveAndRestoreTunes = 1;
-    }
-
-    if (!localStorage?.abcToolsAllowInstrumentChanges) {
-
-        localStorage.abcToolsAllowInstrumentChanges = 1;
-    }
-
-    if (!localStorage?.abcToolsAllowTabStyleChanges) {
-
-        localStorage.abcToolsAllowTabStyleChanges = 1;
-    }
-
-    if (!localStorage?.abcToolsFullScreenBtnShowsChords) {
-
-        localStorage.abcToolsFullScreenBtnShowsChords = 1;
-    }
-
-    if (!localStorage?.abcToolsAllowTuneAutoReload) {
-
-        localStorage.abcToolsAllowTuneAutoReload = 1;
-    }
+    initSettingsFromObject(abcTunebookDefaults);
 }
 
 // Initialize ABC Transcription Tools, add event listeners to Tunebook elements
@@ -178,7 +171,7 @@ export function loadTuneBookItem(currentTuneBook, itemNumber) {
 
     if (+localStorage?.abcToolsAllowInstrumentChanges === 1) {
 
-      theURL = injectInstrument(theURL);
+        theURL = injectInstrument(theURL);
     }
 
     tuneFrame.src = theURL;

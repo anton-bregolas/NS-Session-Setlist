@@ -48,6 +48,13 @@
             
             <section class="nss-launch flex-wrapper">
                 <div class="nss-launch-container flex-wrapper">
+                    <button data-load="abc-sort" class="nss-btn nss-btn-launch flex-wrapper">
+                        <span class="nss-btn-text flex-wrapper">Sort ABC
+                            <span class="nss-icon-container flex-wrapper" aria-hidden="true">
+                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#action-icon-sort-az"></use></svg>
+                            </span>
+                        </span>
+                    </button>
                     <button data-load="abc-encode" class="nss-btn nss-btn-launch flex-wrapper">
                         <span class="nss-btn-text flex-wrapper">Encode ABC
                             <span class="nss-icon-container flex-wrapper" aria-hidden="true">
@@ -59,13 +66,6 @@
                         <span class="nss-btn-text flex-wrapper">Decode ABC
                             <span class="nss-icon-container flex-wrapper" aria-hidden="true">
                                 <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#action-icon-music"></use></svg>
-                            </span>
-                        </span>
-                    </button>
-                    <button data-load="abc-sort" class="nss-btn nss-btn-launch flex-wrapper">
-                        <span class="nss-btn-text flex-wrapper">Sort ABC
-                            <span class="nss-icon-container flex-wrapper" aria-hidden="true">
-                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#action-icon-sort-az"></use></svg>
                             </span>
                         </span>
                     </button>
@@ -98,6 +98,10 @@
                         <label for="sort-export-settunes" class="nss-checkbox-label">
                           <input type="checkbox" id="sort-export-settunes" data-option="abcSortExportsTunesFromSets" class="nss-checkbox-btn" value="1">
                             SORT exports Tunes ABC from Sets ABC
+                        </label>
+                        <label for="sort-normalize-partendings" class="nss-checkbox-label">
+                          <input type="checkbox" id="sort-normalize-partendings" data-option="abcSortNormalizesAbcPartEndings" class="nss-checkbox-btn" value="1">
+                            SORT normalizes ABC part endings
                         </label>
                         <label for="sort-remove-linebreaks" class="nss-checkbox-label">
                           <input type="checkbox" id="sort-remove-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">

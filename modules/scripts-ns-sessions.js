@@ -1,17 +1,19 @@
-import { initAbcTools, initToolsOptions, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
+import { initAbcTools, initTunebookOptions, abcTunebookDefaults, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
          populateTuneSelector, populateFilterOptions, sortFilterOptions, resetViewportWidth } from './scripts-abc-tools.js';
 import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults, isTuneTripleMeter } from './scripts-abc-encoder.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// NS Session Setlist Custom App Scripts
+// Novi Sad Session Setlist Custom App Scripts
+// https://github.com/anton-bregolas/
+// (c) Anton Zille 2024-2025
 //
 // Session DB and/or Code Contributors:
-// Anton Zille - https://github.com/anton-bregolas/ - Code, ABC, Chords
+// Anton Zille - Code, ABC, Chords
 // Mars Agliullin - ABC
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// App Version 0.7.6 / NS Session DB date: 2025-02-28
+// App Version 0.7.7 / NS Session DB date: 2025-03-05
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -242,33 +244,14 @@ export function openSettingsMenu(dataType) {
 
   if (dataType === "app-options") {
 
-    console.log(`NS Session App Options:
-
-abcToolsSaveAndRestoreTunes: ${localStorage.abcToolsSaveAndRestoreTunes}
-abcToolsAllowInstrumentChanges: ${localStorage.abcToolsSaveAndRestoreTunes}
-abcToolsAllowTabStyleChanges: ${localStorage.abcToolsAllowTabStyleChanges}`);
+    printLocalStorageSettings(abcTunebookDefaults);
 
     appOptionsPopover.showPopover();
   }
 
   if (dataType === "encoder-options") {
 
-    console.log(`ABC Encoder Settings:
-
-abcEncoderExportsTuneList: ${localStorage.abcEncoderExportsTuneList}
-abcEncoderSortsTuneBook: ${localStorage.abcEncoderSortsTuneBook}
-abcSortExportsChordsFromTunes: ${localStorage.abcSortExportsChordsFromTunes}
-abcSortExportsTunesFromSets: ${localStorage.abcSortExportsTunesFromSets}
-abcSortRemovesLineBreaksInAbc: ${localStorage.abcSortRemovesLineBreaksInAbc}
-abcSortRemovesTextAfterLineBreaksInAbc: ${localStorage.abcSortRemovesTextAfterLineBreaksInAbc}`);
-
-    for (const setting in abcEncoderDefaults) {
-
-      if (localStorage[setting] !== abcEncoderDefaults[setting]) {
-
-        console.log(`ABC Encoder:\n\n` + `${setting} has been modified\n\n[current: ${localStorage[setting]}, default: ${abcEncoderDefaults[setting]}]`);
-      };
-    };
+    printLocalStorageSettings(abcEncoderDefaults);
 
     appOptionsPopover.showPopover();
   }
@@ -961,6 +944,47 @@ function appChordSliderHandler(event) {
 // EVENT LISTENERS & SETTINGS
 ///////////////////////////////
 
+// Initialize previously not set local storage item
+
+export function initLocalStorage(locStorName, locStorValue) {
+
+  if (!localStorage?.getItem(locStorName)) {
+
+    localStorage.setItem(locStorName, locStorValue);
+  }
+}
+
+// Initialize settings stored in an object using key-value pairs
+
+export function initSettingsFromObject(settingsObj) {
+
+  const locStorKeys = Object.keys(settingsObj);
+
+  locStorKeys.forEach(key => {
+
+    initLocalStorage(key, settingsObj[key]);
+  });
+}
+
+// Log the current values of settings using keys listed in an object
+// Mark user-modified settings with a '*' indicator
+
+export function printLocalStorageSettings(settingsObj) {
+
+  const locStorKeys = Object.keys(settingsObj);
+
+  let settingsReport = "Settings ('*' marks modified):\n\n";
+
+  locStorKeys.forEach(key => {
+
+    let modIndicator = localStorage[key] !== settingsObj[key]? '*' : '';
+
+    settingsReport += `${key}: ${localStorage[key]}${modIndicator}\n`;
+  });
+
+  console.log(settingsReport);
+}
+
 // Add event listeners to custom app buttons
 
 function initAppButtons() {
@@ -1090,7 +1114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initPopoverWarning();
   initAppButtons();
-  initToolsOptions();
+  initTunebookOptions();
   initEncoderSettings();
   initAppCheckboxes();
 
