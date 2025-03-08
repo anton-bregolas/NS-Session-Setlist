@@ -13,7 +13,7 @@ import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults, isTuneTriple
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// App Version 0.7.7 / NS Session DB date: 2025-03-05
+// App Version 0.8.0 / NS Session DB date: 2025-03-08
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables

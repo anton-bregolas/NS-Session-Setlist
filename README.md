@@ -15,6 +15,44 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.8.0 Encoder Upgrade (Refactor, Automation & Metadata Fetching)
+
++ Project updates:
+  - ABC Encoder: New upgraded processing of import ABC fixing Sort-via-Encode issues
+  - ABC Encoder: Sort will now optionally fetch select metadata from The Session API
+  - ABC Encoder: Sort now supports fully automated conversion of The Session sets
+  - p-limit and p-throttle by Sindre Sorhus added to project to limit API request rates
+
++ HTML updates:
+  - ABC Encoder (abc-encoder.html):
+    + Added new Encoder settings option enabling Sort to fetch metadata from The Session
+
++ JavaScript updates ('*' indicates new function or variable):
+  - ABC Encoder module (scripts-abc-encoder.js):
+    + saveAbcEncoderOutput: Refactored to correctly handle Sort-via-Encode and async operations
+    + saveAbcEncoderOutput: Now returns an array containing abcEncoderOutput and abcEncoderTunesOutput
+    + saveAbcEncoderOutput: Optionally fetches metadata from The Session via preProcessAbcMetadata
+    + saveAbcEncoderOutput: Check for localStorage variable abcSortFetchesTsoMetaData* added
+    + preProcessAbcMetadata*: Fetches metadata from The Session, replaces or adds Z: field with data 
+    + fetchTsoMetadata*: Handles The Session API fetch requests for sets and settings metadata
+    + throttleTsoRequests*: Throttles promises using p+throttle if number of requests is 50 or more
+    + sortFilterAbc: Added removal of duplicate ABC fields if all fields of the kind are identical
+    + addCustomAbcFields: Now correctly adds first Set subtitle
+    + getEncodedAbc: Updated to handle async metadata fetching
+    + getDecodedAbc: Now supports both N.S.S.S. and Michael Eskin's style of JSON keys naming
+    + validateAbcFile: Now correctly validates JSON files encoded either by N.S.S.S. or ABC Tools
+    + exportPlainTuneList: Fallback placeholder values added for cases of missing data
+    + replaceDuplicateAbcFields*: Removes all but first repeating fields in ABC Sets, skips Medleys
+    + Sort utility functions areAllArrValsTheSame, reduceArrToSlashSeparatedList added
+
++ Session DB updates:
+  - Session DB updated to 2025-03-08
+  - Sets & Tunes from Anton added (v.2)
+  - Minor automated ABC tweaks
+
+<details>
+  <summary>v.0.7.*: Generate Chordbook</summary>
+  
 v.0.7.7: Responsive Chordbook (Syncopation Handling & ABC Cleanup)
 
 + Project updates:
@@ -47,6 +85,13 @@ v.0.7.7: Responsive Chordbook (Syncopation Handling & ABC Cleanup)
   - ABC Tunebook module (scripts-abc-tools.js)
     + abcTunebookDefaults settings object added
     + initToolsOptions renamed to initTunebookOptions and now initialises settings via initSettingsFromObject
+
++ Session DB updates:
+  - Session DB updated to 2025-03-03
+  - Sets & Tunes from Andrey added (v.1)
+  - Sets & Tunes from André added (v.1)
+  - Sets & Tunes from Vova added (v.1)
+  - Stick Across the Hob Set added (Oliushka)
 
 v.0.7.6: Responsive Chordbook (Smart Chord-Beats Recovery)
 
@@ -126,8 +171,7 @@ v.0.7.5: Responsive Chordbook (Responsive Chords Popover & Launcher)
   - Session DB updated to 2025-02-25
   - Chords added to Galtee Rangers Set to test both duple- and triple-time tunes in Chords Popover
   - Minor ABC tweaks
-<details>
-  <summary>v.0.7.*: Generate Chordbook</summary>
+
 v.0.7.4: Generate Chordbook (Chords Popover Basic)
 
 + Project updates:

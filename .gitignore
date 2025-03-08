@@ -5,6 +5,7 @@ bun.lock
 bunfig.toml
 diff.txt
 eslint.config.js
+git.diff
 happydom.ts
 package.json
 pnpm-lock.yaml

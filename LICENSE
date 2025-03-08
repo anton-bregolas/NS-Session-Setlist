@@ -2,8 +2,10 @@ MIT License
 
 NS-Session-Setlist: Copyright (c) 2024-2025 Anton Zille
 abctools: Copyright (c) 2023-2025 Michael Eskin
-lz-string: Copyright (c) 2013 Pieroxy
-ap-style-title-case: Copyright (c) 2016 Zeke Sikelianos
+lz-string: Copyright (c) 2013-2023 Pieroxy
+ap-style-title-case: Copyright (c) 2016-2022 Zeke Sikelianos
+p-limit: Copyright (c) 2018-2024 Sindre Sorhus
+p-throttle: Copyright (c) 2018-2024 Sindre Sorhus
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
