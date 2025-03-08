@@ -337,7 +337,7 @@ async function preProcessAbcMetadata(rawAbcContent) {
 
     console.log('ABC Encoder:\n\nChecking ABC for links to The Session with fetchable metadata...');
 
-    preProcessedAbcArr = await preProcessedAbcArr.map(async (abcItem) => {
+    preProcessedAbcArr = await Promise.all(preProcessedAbcArr.map(async (abcItem) => {
     
         if (!abcItem || abcItem.includes('at The Session')) {
             
@@ -375,7 +375,7 @@ async function preProcessAbcMetadata(rawAbcContent) {
 
             return abcItem.replace(/^R:/m, `${abcZString}\nR:`);
         }
-    });
+    }));
 
     return preProcessedAbcArr[1]? preProcessedAbcArr.join('X:') : rawAbcContent;
 }
