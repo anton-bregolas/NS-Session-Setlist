@@ -15,7 +15,13 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-v.0.8.0 Encoder Upgrade (Refactor, Automation & Metadata Fetching)
+v.0.8.1: Encoder Upgrade (Session DB Update)
+
++ Session DB updates:
+  - Session DB updated to 2025-03-09
+  - Chords from Oleg added to 25 sets (& Anton ed. arr.)
+
+v.0.8.0: Encoder Upgrade (Refactor, Automation & Metadata Fetching)
 
 + Project updates:
   - ABC Encoder: New upgraded processing of import ABC fixing Sort-via-Encode issues
