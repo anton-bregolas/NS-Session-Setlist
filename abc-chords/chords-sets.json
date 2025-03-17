@@ -415,6 +415,16 @@
     ]
   },
   {
+    "setTitle": "REELS: Rookery Set",
+    "tuneChords": [
+      {
+        "title": "Banshee",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tC\tC\t|\tC\tD\t|\n|\tG\tG\t|\tG\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tAm\tD\t|\tG\t(D)\t|\tEm\tD\t|\tEm\tD\t|\n|\tAm\tD\t|\tG\t(D)\t|\tC(G)\tD/B\t|1\tAm\tD\t|\n|2\tAm(D)\tD\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "REELS: Windbroke Set",
     "tuneChords": [
       {
@@ -515,6 +525,16 @@
     ]
   },
   {
+    "setTitle": "WALTZES: Ash Grove Set",
+    "tuneChords": [
+      {
+        "title": "Ash Grove",
+        "meter": "3/4",
+        "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG(Em)\tG(Em)\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "WALTZES: Munster Cloak Set",
     "tuneChords": [
       {
@@ -566,6 +586,16 @@
         "title": "Looking at a Rainbow",
         "meter": "3/4",
         "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tG\tG\tG\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tD/F#\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|1\tG\tG\tD/F#\t|\n|2\tC\tC\tC\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "WALTZES: Sí Bheag, Sí Mhór Set",
+    "tuneChords": [
+      {
+        "title": "Sí Bheag, Sí Mhór",
+        "meter": "3/4",
+        "chords": "PART 1:\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tA\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tD/A\tD/A\tD/A\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tD\tD\tD\t||\n\nPART 3:\n|\tD\tD\tD\t|\tA7\tA7\tA7\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tA7\tA7\tA7\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tG\tG\tG\t|\n|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA7\tA7\tA7\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tD\tD\tD\t||"
       }
     ]
   },

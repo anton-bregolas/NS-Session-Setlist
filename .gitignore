@@ -3,7 +3,7 @@ node_modules
 .npmrc
 bun.lock
 bunfig.toml
-diff.txt
+chords.diff
 eslint.config.js
 git.diff
 happydom.ts

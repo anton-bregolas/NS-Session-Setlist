@@ -15,6 +15,14 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.8.2: Encoder Upgrade (Session DB Update)
+
++ Session DB updates:
+  - Session DB updated to 2025-03-17
+  - Sets & Tunes from Alexey added (v.1)
+  - Sets & Tunes from Sophie added (v.1)
+  - Sets & Tunes from Oleg added (v.1)
+
 v.0.8.1: Encoder Upgrade (Session DB Update)
 
 + Session DB updates:

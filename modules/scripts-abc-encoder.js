@@ -6,7 +6,6 @@
 
 import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-title-case.js';
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
-import { limitFunction } from './scripts-3p/p-limit/p-limit.js'
 import { pThrottle } from './scripts-3p/p-throttle/p-throttle.js'
 import { fetchData, initSettingsFromObject, showRedOutlineWarning } from './scripts-ns-sessions.js';
 
@@ -56,8 +55,12 @@ const abcBasicTuneTypes = [
 
 const makeTitleCaseExceptions = [
 
+    { string: "an seanchaí muimhneach", override: "An Seanchaí Muimhneach" },
+    { string: "an tseanbhean bhocht", override: "An tSeanbhean Bhocht" },
     { string: "an súisin bán", override: "An Súisin Bán" },
+    { string: "bimíd ag ól", override: "Bimíd ag Ól" },
     { string: "casadh an tsúgáin", override: "Casadh an tSúgáin" },
+    { string: "cnoc na gclárac", override: "Cnoc na gClárac" },
     { string: "dance ti' thy daddy", override: "Dance ti' Thy Daddy" },
     { string: "tá an coileach ag fógairt an lae", override: "Tá an Coileach ag Fógairt an Lae" },
     { string: "st. patrick's an dro set", override: "St. Patrick's An Dro Set" },
@@ -1387,7 +1390,8 @@ function makeTunesFromSets(abcSetsArr) {
         }
 
         return abcSet.replace(/^T:.*\s/, '').match(/T:[\s\S]*?(?=(?:T:|$))/g);
-    });
+
+    }).filter(Boolean);
 
     const abcTunesArr = abcTuneGroupsArr.map(abcSetArr =>
 
@@ -1577,7 +1581,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
 function getCompleteAbcChordBar(abcBar, abcBarChordsArr, minTuneBeats, abcMeter) {
 
-    let abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#=_♯♭♮×/()+]/g, '')).filter(Boolean);
+    let abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#♯♭♮×/()+]/g, '')).filter(Boolean);
 
     if (abcBarChordsArr && abcBarChordsInput.length > 0) {
 
