@@ -1,0 +1,190 @@
+.nss-fullscreen-popover {
+  --chords-font-size: 1.2rem;
+  --chords-line-height: 1.25rem;
+  --chords-line-margin: 0.6rem;
+  --chords-block-margin: 1.5rem;
+  --chords-line-width: 42rem;
+  --chords-max-width: 80%;
+  --chords-min-bar-width: 5rem;
+}
+
+.nss-fullscreen-popover,
+.nss-fullscreen-popover.light {
+  --chords-bg-color: white;
+  --chords-ui-color: #555;
+  --chords-font-color: black;
+  --chords-barline-color: #555;
+}
+
+.nss-fullscreen-popover.dark {
+  --chords-bg-color: #181818;
+  --chords-ui-color: #999;
+  --chords-font-color: #e0e0e0;
+  --chords-barline-color: #777;
+}
+
+.nss-fullscreen-popover {
+  width: 100svw;
+  height: 100svh;
+  border: none;
+  outline: none;
+  padding: 0;
+  scrollbar-gutter: stable;
+  background-color: var(--chords-bg-color);
+  color: var(--chords-font-color);
+}
+
+.nss-fullscreen-popover .nss-theme-btn,
+.nss-fullscreen-popover .nss-control-btn,
+.nss-fullscreen-popover .fs-popover-btn-x {
+  color: var(--chords-ui-color);
+  outline-color: var(--chords-ui-color);
+}
+
+.nss-fullscreen-popover .nss-theme-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover .fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
+  color: var(--chords-font-color);
+  outline-color: var(--chords-font-color);
+}
+
+.nss-fullscreen-popover.dark .nss-theme-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover.dark .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover.dark .nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-fullscreen-popover.dark .fs-popover-btn-x:is(:hover, :focus, :focus-visible) {
+  opacity: 1;
+}
+
+.nss-fs-popover-title {
+  width: calc(100svw - 7.2rem);
+  margin-top: 1.5rem;
+}
+
+.nss-fs-popover-title h2 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.nss-fs-popover-body {
+  margin: 0 1rem;
+  /* white-space: pre-wrap; */
+  text-align: left;
+}
+
+.nss-chords-container {
+  margin: 0 auto;
+  font-size: var(--chords-font-size);
+  line-height: var(--chords-line-height);
+  width: var(--chords-line-width);
+  max-width: var(--chords-max-width);
+}
+
+.nss-chords-body,
+.nss-chords-subtitle,
+.nss-fs-popover-header {
+  margin-bottom: var(--chords-block-margin);
+}
+
+.nss-chords-line,
+.nss-chords-partno {
+  margin-bottom: var(--chords-line-margin);
+}
+
+.nss-chords-line {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(var(--chords-min-bar-width), 1fr));
+  container-type: inline-size;
+  gap: 0;
+}
+
+.nss-chords-bar {
+  display: grid;
+  grid-template-columns: auto repeat(2, 1fr) auto;
+  align-items: center;
+  justify-items: center;
+  min-width: 0;
+}
+
+.nss-chords-bar-triple {
+  grid-template-columns: auto repeat(3, 1fr) auto;
+}
+
+.nss-chords-chord {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/*.nss-chords-barline {
+  margin: 0 0.5rem; 
+}*/
+
+.nss-chords-combo-barline,
+.nss-chords-barline, 
+.nss-chords-volta,
+.nss-chords-partno {
+  color: var(--chords-barline-color);
+}
+
+.nss-chords-volta {
+  font-size: 90%;
+}
+
+.nss-chords-combo-barline {
+  padding: 0;
+}
+
+.nss-chords-slider {
+  position: fixed;
+  color: var(--chords-ui-color);
+  opacity: 0.4;
+  width: 12rem;
+  height: 5rem;
+}
+
+.nss-chords-slider:is(:hover, :focus, :focus-visible) {
+  opacity: 0.75;
+}
+
+.nss-slider-vertical {
+  right: 0.35rem;
+  top: 26%;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 5rem;
+  height: 12rem;
+}
+
+.nss-slider-horizontal {
+  left: calc((100% - 10rem) / 2);
+  top: 3rem;
+}
+
+.nss-fs-popover-footer {
+  width: 100%;
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  padding: 0 1.5em;
+  bottom: 1rem;
+  left: 0;
+}
+
+.nss-fullscreen-popover .nss-btn-x {
+  outline-offset: 0.25rem;
+}
+
+.nss-fullscreen-popover .nss-theme-btn,
+.nss-fullscreen-popover .nss-header-x-container {
+  top: 1.5rem;
+}
+
+.nss-fullscreen-popover .nss-theme-btn {
+  left: 1.5rem;
+}
+
+@container (max-width: 36rem) {
+  .subtitle-wrapper .nss-fs-popover-title {
+    font-size: 4.9cqw;
+  }
+}

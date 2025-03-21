@@ -18,14 +18,14 @@
     "setTitle": "HORNPIPES: Galtee Hunt Set",
     "tuneChords": [
       {
-        "title": "Súisin Bán",
+        "title": "Súisin Bán [Set Dance]",
         "meter": "4/4",
         "chords": "PART 1:\n|\tC\tC\t|\tG\tC\t|\tG\t(D)\t|\tAm\tD\t|\n|\tG\t(D)\t|1\tC D\tC |\n|2\tC D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tG\tC\t|\tG\t(D)\t|\tAm\tD\t|\n|\tG\t(D)\t|1\tC D\tG G\t|\n|2\tC D\tC ||"
       },
       {
         "title": "Galtee Hunt",
         "meter": "4/4",
-        "chords": "PART 1:\n|\tG\tG\t|\tC C\tC D\t|\tG\tG\t|\tC C\tC C\tD |\n|\tG\tD\t|\tC C\tC C\tD |\tG\tEm\t|\tC D\tG G\t||\n\nPART 2:\n|\tG\tG\t|\t– C\tD Em\tEm |\tC\tC\t|\tD\tD\t|\n|\tC\tC\t|\tG\tG\t|\tD\tC\t|\tEm Em\tEm Em\tD |\n|\tG\tEm\t|\tC C\tC C\tD |\tG\tEm\t|1\tC D\tG G\t|\n|2\tC D\tG ||"
+        "chords": "PART 1:\n|\tG\tG\t|\tC C\tC D\t|\tG\tG\t|\tC C\tC D\t|\n|\tG\tD\t|\tC C\tC D\t|\tG\tEm\t|\tC D\tG G\t||\n\nPART 2:\n|\tG\tG\t|\tC D\tEm Em\t|\tC\tC\t|\tD\tD\t|\n|\tC\tC\t|\tG\tG\t|\tD\tC\t|\tEm Em\tEm D\t|\n|\tG\tEm\t|\tC C\tC D\t|\tG\tEm\t|1\tC D\tG G\t|\n|2\tC D\tG ||"
       }
     ]
   },
@@ -105,6 +105,21 @@
     ]
   },
   {
+    "setTitle": "JIGS: Leitrim Fancy Set",
+    "tuneChords": [
+      {
+        "title": "Leitrim Fancy",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tEm\tD\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tD\t|\tEm\t(C)\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tD\tD\t|\tG\tG\t|\n|\tG\tBm\t|\tC\tC\t|\tD\tD\t||"
+      },
+      {
+        "title": "Merrily Kiss the Quaker",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tG G\t(C) (D)\t|\tG\tD\t|\tG G\tC D\t|1\tG D\tG G\t|\n|2\tG D\tG G\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|1\tC D\tG G\t|\n|2\tC D\tG G\t||\n\nPART 3:\n|\tG D\tG G\t|\tC\tD\t|\tEm D\tC C\t|1\tC D\tG G\t|\n|2\tC D\tG G\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "MEDLEY: Fishy Song Set",
     "tuneChords": [
       {
@@ -131,21 +146,6 @@
         "title": "Trip to Pakistan [Reel]",
         "meter": "4/4",
         "chords": "PART 1:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tEm\t||\n\nPART 2:\n|\tEm\tAm\t|\tG\t(D)\t|\tEm\tAm\t|\tG\tD\t||\n\nPART 3:\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tB7\tB7\t||"
-      }
-    ]
-  },
-  {
-    "setTitle": "MEDLEY: Leitrim Fancy Set",
-    "tuneChords": [
-      {
-        "title": "Leitrim Fancy [Jig]",
-        "meter": "6/8",
-        "chords": "PART 1:\n|\tEm\tD\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tD\t|\tEm\t(C)\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tD\tD\t|\tG\tG\t|\n|\tG\tBm\t|\tC\tC\t|\tD\tD\t||"
-      },
-      {
-        "title": "Merrily Kiss the Quaker [Slide]",
-        "meter": "12/8",
-        "chords": "PART 1:\n|\tG G\t(C) (D)\t|\tG\tD\t|\tG G\tC D\t|1\tG D\tG G\t|\n|2\tG D\tG G\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|1\tC D\tG G\t|\n|2\tC D\tG G\t||\n\nPART 3:\n|\tG D\tG G\t|\tC\tD\t|\tEm D\tC C\t|1\tC D\tG G\t|\n|2\tC D\tG G\t||"
       }
     ]
   },
@@ -223,7 +223,7 @@
         "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tA\tA\t|\tD\tE\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tD\tD\t|\tA\tE\t|1\tA\tA\t|\n|2\tA\tA\t||"
       },
       {
-        "title": "Britches Full of Stitches",
+        "title": "Britches Full of Stitches (Amaj)",
         "meter": "2/4",
         "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tD\tE\t|\n|\tA\tA\t|\t(F#m)\t(E)\t|\tD\tD\t|\tE\tE\t||\n\nPART 2:\n|\tA\t(Em)\t|\t(C)\tE\t|\tA\tA\t|\tD\tE\t|\n|\tF#m\tF#m\t|\tF#m\tE\t|\tD\tD\t|1\tD\tE\t|\n|2\tD\tE\t||"
       }
@@ -333,7 +333,7 @@
         "chords": "PART 1:\n|\tEm\tEm\t|\t\t(C)\t|\t\t(G)\t|\tG\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\t(C)\t|\tG\tD\t|\n|\tEm\tEm\t|\t\t(C)\t|\tG\tG\t|\tD\tD\t||"
       },
       {
-        "title": "Toss the Feathers",
+        "title": "Toss the Feathers (Edor)",
         "meter": "4/4",
         "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tBm\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tC\t|\tAm\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD/B\tD/B\t|\n|\tEm\tEm\t|\tD\tD\t|\tG\tD\t|\tC\tD\t||"
       }
@@ -508,7 +508,7 @@
         "chords": "PART 1:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tG\tD\tD\t|\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tG\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tG\t(Em)\tD\t|\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tEm\tD\tEm\t|\tG\tD\tEm\t||"
       },
       {
-        "title": "Foxhunter's",
+        "title": "Foxhunter's (Dmaj)",
         "meter": "9/8",
         "chords": "PART 1:\n|\tD\tD\tG\t|\tD\tD\tA\t|\tD\tD\tG\t|\tD\tD\tA\t||\n\nPART 2:\n|\tEm\tEm\tD\t|\tG\tG\tA\t|\tD\tD\tA\t|\tD\tD\tA\t||\n\nPART 3:\n|\tD\tD\tG\t|\tD\tD\tA\t|\tD\tD\tG\t|\tD\tD\tA\t||\n\nPART 4:\n|\tEm\tEm\tD\t|\tG\tG\tA\t|\tD\tD\tA\t|\tD\tD\tA\t||"
       }

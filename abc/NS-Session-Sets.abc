@@ -37,7 +37,7 @@ e>d|:(3BdB G>A B>de>f|(3gag f>g e>dB>A|F>Ad>A F>Ad>A|F>Ad>B A2 e>d|
 (3BdB G>A (3Bcd e>f|(3gag f>g e>dB>A|F>Ae>d B>GA>F|1 G2 G>F G2 e>d:|2 G2 G>F G2 e>f||
 |:(3gag e>g (3fgf d>f|(3efe c>e (3ded B>d|c>BA>G F>GA>B|(3Bcd e>d ^c>de>f|
 g>ea>g f>dg>f|e>df>e d>fe>d|c>BA>G (3EFG A>B|1 (3c^cd e>f g2 d2:|2 (3c^cd e>f g2||
-T: Callaghan's
+T: Callaghan's High
 K: Gmaj
 g>f|(3efg f>g e>AB>A|G>AB>d d>BG>E|D>EG>A B>GB>d|(3efg f>g e>dB>d|
 (3gag f>g e>dB>d|(3efg f>a g>fe>d|(3BdB G>B (3ABA F>A|G2 G>F G2 B>d|
@@ -73,27 +73,28 @@ de|:"D"~f3g afge|"D"fdef "G"dcAG|"D"FDAD (3EFG AB|"C"=cAd"A"^c A2 de|
 
 X: 4
 T: HORNPIPES: Galtee Hunt Set
-T: Súisin Bán / Casadh an tSúgáin
+T: Súisin Bán [Set Dance] / Casadh an tSúgáin
 C: C: Trad.; S: Jack Talty & Cormac Begley; Various
 C: Set Leaders: Tania, Anton
 Z: Anton Zille ed., Oleg Naumov arr.; Tommy McCarty / gian marco at The Session
 N: https://thesession.org/members/26966/sets/92417
-R: Hornpipe
+R: Set Dance
 M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Gmaj
 |:(3GAB|"C"cEED E2 GE|"G"DE (3GAB "C"c3A|"G"BAGE "(D)"D2 EG|
-"Am"A2 AB (3"D"ABA GA|"G"BAGE "(D)"DB,DE|1 "C"G2 "D"GF "G"G2:|2 "C"G2 "D"GF "G"GABd||
+"Am"A2 AB "D"(3ABA GA|"G"BAGE "(D)"DB,DE|1 "C"G2 "D"GF "G"G2:|2 "C"G2 "D"GF "G"GABd||
 |:"C"e2 ed efge|"G"dB (3GAB "C"c3A|"G"BAGE "(D)"D2 EG|
 "Am"A2 AB "D"ADGA|"G"BAGE "(D)"DB,DE|1 "C"G2 "D"GF "G"GABd:|2 "C"G2 "D"GF "G"G2||
 T: Galtee Hunt
+R: Hornpipe
 K: Gmaj
-D2|:"G"GABG AGED|"C"c2 cA "C"BG"D"ED|"G"G2 BG AGED|"C"EAAG "C"AB (3"D"cBA|
-"G"GABG "D"AGED|"C"cBcd "C"ef (3"D"gfe|"G"dB (3GAB "Em"AGED|"C"EG"D"GF "G"G3D:||
-|:"G"GABc d2 Bd|(3"C"efg "D"fd "Em"e2 d2|"C"e2 d2 g2 d2|"D"edBc dB (3GAB|
-"C"c2 cB ce g2|"G"B2 BA BcdB|(3"D"ABA AB "C"AGED|"Em"gfgb (3"Em"agf "D"ge|
-"G"dB (3GAB "Em"AGED|"C"cBcd "C"ef (3"D"gfe|"G"dB (3GAB "Em"AGED|1 "C"EG"D"GF "G"G3D:|2 "C"EG"D"GF "G"G2||
+D2|:"G"GABG AGED|"C"c2 cA "C"BG"D"ED|"G"G2 BG AGED|"C"EAAG "C"AB "D"(3cBA|
+"G"GABG "D"AGED|"C"cBcd "C"ef "D"(3gfe|"G"dB (3GAB "Em"AGED|"C"EG"D"GF "G"G3D:||
+|:"G"GABc d2 Bd|"C"(3efg "D"fd "Em"e2 d2|"C"e2 d2 g2 d2|"D"edBc dB (3GAB|
+"C"c2 cB ce g2|"G"B2 BA BcdB|"D"(3ABA AB "C"AGED|"Em"gfgb "Em"(3agf "D"ge|
+"G"dB (3GAB "Em"AGED|"C"cBcd "C"ef "D"(3gfe|"G"dB (3GAB "Em"AGED|1 "C"EG"D"GF "G"G3D:|2 "C"EG"D"GF "G"G2||
 
 X: 5
 T: HORNPIPES: Off to California Set
@@ -479,7 +480,7 @@ K: Emix
 ~E3 cEE|BEE ABc|d2f edB|BAF A:||
 |:de|fdf ece|edB ABd|fdf ece|edB B2d|
 fdf ece|edB ABc|d2f edB|BAF A:||
-T: Rolling Waves / Maguire's Clan March
+T: Rolling Waves or Lonesome / Maguire's Clan March
 K: Dmaj
 |:F2E EDE|F2D DED|F2E EFA|d2e fdA|
 F2E EDE|F2D DED|AFE EFA|1 BAB d2A:|2 BAB d3||
@@ -544,6 +545,33 @@ K: Dmaj
 AFA A2d|BGB B2d|cBc ABc|1 dfe dcB:|2 dfe dB=c||
 
 X: 21
+T: JIGS: Leitrim Fancy Set
+T: Leitrim Fancy
+C: C: Trad.; S: Various
+C: Set Leaders: Vova, Olya, Anton
+Z: Anton Zille ed., Oleg Naumov arr.; JACKB / Sean Perry at The Session
+N: https://thesession.org/members/26966/sets/96724
+R: Jig
+M: 6/8
+L: 1/8
+Q: 3/8=116
+K: Emin
+|:"Em"GBG "D"FAF|"Em"E2B BAB|"C"GBG FAF|"D"DFA AFD|
+"Em"GBG "D"FAF|"Em (C)"E2B BAB|"C"GAB dBG|"D"ABG FED:||
+|:"G"GAB dBd|edB dBA|"C"GAB dBG|"D"ABG FED|
+"G"GAB dBd|"G"edB "Bm"def|"C"gfe dBG|"D"ABG FED:||
+T: Merrily Kiss the Quaker
+R: Single Jig
+M: 12/8
+K: Gmaj
+|:"G"GAB D2B "(C)"c2A "(D)"BGE|"G"GAB DEG "D"A3 AGE|
+"G"GAB D2B "C"c2A "D"BGE|1 "G"GAB "D"DEF "G"G3 G2D:|2 "G"GAB "D"DEF "G"G3 G2A||
+|:"G"BGG AGG BGG AGE|"G"GAB DEG "D"A3 AGA|
+"G"BGG AGG BGG AGE|1 "C"GAB "D"DEF "G"G3 G2A:|2 "C"GAB "D"DEF "G"G3 GBd||
+|:"G"g3 "D"aga "G"bge dBd|"C"gfg gab "D"a3 agf|
+"Em"gbg "D"faf "C"e/f/ge dBA|1 "C"GAB "D"DEF "G"G3 GBd:|2 "C"GAB "D"DEF "G"G3 G2D||
+
+X: 22
 T: JIGS: Lounge Bar Set
 T: Henry Blogg
 C: C: Andy Cutting / Annlaug Børsheim; S: Leveret / Annlaug Børsheim & Rannveig Djönne
@@ -570,7 +598,7 @@ dBd c2B-|Bdf e2c|dcB AFD|1 E2D D2 c:|2 E2D DFA||
 |:d3 dcA|F3 FEF|GBd dcA|E3 EDE|
 F3 FED|B,3 B,A,B,|CDE EFE|1 D3 DFA:|2 D6||
 
-X: 22
+X: 23
 T: JIGS: Old Grey Goose Set
 T: Old Grey Goose
 C: C: Trad.; S: Denis Murphy
@@ -601,7 +629,7 @@ GBB dBG | FEF AFA | gfe dBA |1 BEE EED :|2 BEE E2e||
 |: geb geb | ~g3 bag | fda fda | fdf agf |
 ede gfg | baf gfe | gfe dBA |1 BEE E2e :|2 BEE EED||
 
-X: 23
+X: 24
 T: JIGS: Paddy Fahey's Set
 T: Paddy Fahey's (Gmin)
 C: C: Paddy Fahey / Seán Ryan; S: Martin Hayes
@@ -624,9 +652,9 @@ fed edc|dcA GEC|DED AcA|1 GEC D3:|2 GEC D2 F||
 FED ~d3|edc AGE|CEG cBc|CEG FED|
 ~F3 ~G3|AGA cde|dcA GEC|1 A,B,C D3:||
 
-X: 24
+X: 25
 T: JIGS: Scully Casey's Set
-T: Humours of Kiltyclogher / Humours of Kilclogher
+T: Humours of Kilclogher / Humours of Kiltyclogher
 C: C: Trad.; S: Liam O'Flynn / Bobby Casey & Tommy Keane
 C: Set Leaders: Alexey, Anton
 Z: Anton Zille ed.; NfldWhistler / Richie Davis / gian marco at The Session
@@ -661,7 +689,7 @@ DGA ~B3|cBc def|~g3 afd|cAF G2:||
 |:D|GBd ~g3|gfd ~f3|GBd ~g3|gfd cAF|
 GBd ~g3|gag efg|abg afd|cAF G2:||
 
-X: 25
+X: 26
 T: JIGS: Stick Across the Hob Set
 T: Stick Across the Hob / Tom Billy's Whelan's / O'Keeffe's Morrison's
 C: C: Trad.; S: Pádraig O'Keeffe & Denis Murphy / Various
@@ -690,7 +718,7 @@ G2A B2d|e/f/ge dBA|GED G2A|BGF GBd|
 e2e edB|ege edB|d2d def|gfe dBA|
 G2A B2d|e/f/ge dBA|GED G2A|BGF GFE||
 
-X: 26
+X: 27
 T: JIGS: Trip to Sligo Set
 T: Trip to Sligo
 C: C: Trad.; S: Various
@@ -720,7 +748,7 @@ eaa bag|eaf ged|c2A BAG|1 EFG A3:|2 EFG ABd||
 [1 e3 dBA|e/f/ge dBA|GAB dBG|EFG ABd:|
 [2 e2e dee|cee Bee|EFG BAG|EDB, A,3||
 
-X: 27
+X: 28
 T: MEDLEY: Fishy Song Set
 T: Fishy Song [3/2 Hornpipe] / Dance ti' Thy Daddy / You Can Have a Fishy
 C: C: Trad.; S: Various
@@ -747,7 +775,7 @@ K: Gmaj
 "Em"ef gf gA|"D"Bd dB d2|"C"ef gf gA|"D"Be ed e2|
 "Em"ef gf gA|"D"Bd dB d2|"C"eB BA GA|"D"Be ed ed||
 
-X: 28
+X: 29
 T: MEDLEY: La Sansonette Set
 T: La Sansonette [Schottische]
 C: C: Dominique Forges / Niall Kenny; S: Various
@@ -769,33 +797,6 @@ K: Emin
 |:"Em"EGBE G3 B|"D"A3 B AGFG|"Em"EGBE G3 B|"D"AGFG "Em"E4:||
 |:"Em"EGBG "Am"c3 A|"G"B3 d "(D)"AGFG|"Em"EGBG "Am"c3 A|"G"BAGB "D"A4:||
 |:"Em"FGBF GBGF|"C"EFGE FGFE|"D"DFAD FADF|"B7"AGFG E4:||
-
-X: 29
-T: MEDLEY: Leitrim Fancy Set
-T: Leitrim Fancy [Jig]
-C: C: Trad.; S: Various
-C: Set Leaders: Vova, Olya, Anton
-Z: Anton Zille ed., Oleg Naumov arr.; JACKB / Sean Perry at The Session
-N: https://thesession.org/members/26966/sets/96724
-R: Jig
-M: 6/8
-L: 1/8
-Q: 3/8=116
-K: Emin
-|:"Em"GBG "D"FAF|"Em"E2B BAB|"C"GBG FAF|"D"DFA AFD|
-"Em"GBG "D"FAF|"Em (C)"E2B BAB|"C"GAB dBG|"D"ABG FED:||
-|:"G"GAB dBd|edB dBA|"C"GAB dBG|"D"ABG FED|
-"G"GAB dBd|"G"edB "Bm"def|"C"gfe dBG|"D"ABG FED:||
-T: Merrily Kiss the Quaker [Slide]
-R: Slide
-M: 12/8
-K: Gmaj
-|:"G"GAB D2B "(C)"c2A "(D)"BGE|"G"GAB DEG "D"A3 AGE|
-"G"GAB D2B "C"c2A "D"BGE|1 "G"GAB "D"DEF "G"G3 G2D:|2 "G"GAB "D"DEF "G"G3 G2A||
-|:"G"BGG AGG BGG AGE|"G"GAB DEG "D"A3 AGA|
-"G"BGG AGG BGG AGE|1 "C"GAB "D"DEF "G"G3 G2A:|2 "C"GAB "D"DEF "G"G3 GBd||
-|:"G"g3 "D"aga "G"bge dBd|"C"gfg gab "D"a3 agf|
-"Em"gbg "D"faf "C"e/f/ge dBA|1 "C"GAB "D"DEF "G"G3 GBd:|2 "C"GAB "D"DEF "G"G3 G2D||
 
 X: 30
 T: MEDLEY: Lochaber Badger Set
@@ -1004,7 +1005,7 @@ K: Amaj
 "A"a2 a>f|"A"ec a2|"D"ce "E"B>c|1 "A"BA ce:|2 "A"BA A>B||
 |:"A"ce ec|"D"df fd|"A"ce eA/B/|"E"cB BA/B/|
 "A"ce ec|"D"df f>e|"A"ce "E"B>c|1 "A"BA A>B:|2 "A"BA ce||
-T: Britches Full of Stitches
+T: Britches Full of Stitches (Amaj)
 K: Amaj
 |:"A"A>B cA|"A"BA cA|"A"A>B cA|"D"BA "E"F2|
 "A"A>B cA|"(F#m)"BA "(E)"ce|"D"A>B AF|"E"FE E2:||
@@ -1376,7 +1377,7 @@ K: Edor
 |:"Em"BE~E2 BAGA|"(C)"BE~E2 ~G2 GA|"(G)"BE~E2 BABd|"G"gedB "D"A2 GA:||
 "Em"B2 eB gBeB|"Em"~B2 ed "D"BAGA|"Em (C)"B2 eB ~g3a|"G"gedB "D"A2 GA|
 "Em"B2 eB gBeB|"(C)"~B2 ed BAGA|"G"B/c/d ef ~g3a|"D"gedB A2 GA||
-T: Toss the Feathers
+T: Toss the Feathers (Edor)
 K: Edor
 "Em"EB~B2 dB~B2|"Em"EBBA "D"FEFA|"Em"BE~E2 B2 AB|"D"defe "Bm"dBAF|
 "Em"EB~B2 dB~B2|"Em"EBBA "D"FEFA|"C"BE~E2 B2 AB| "Am"defe "D"dB A2||
@@ -1413,7 +1414,7 @@ K: Edor
 
 X: 51
 T: REELS: Boys on the Hilltop Set
-T: Boys on the Hilltop
+T: Boy on the Hilltop
 C: C: Trad.; S: Various
 C: Set Leaders: Alexey, Anton
 Z: Anton Zille ed.; Thady Quill / JACKB at The Session
@@ -1998,7 +1999,7 @@ eaf g2e dBA G2A|1 B2e dBG A3 ABd:|2 B2e dBG A2B c2B||
 
 X: 72
 T: SLIDES: Dan Jeremiah O'Connor's Set
-T: If I Had a Wife
+T: If I Had a Wife or Mad Dancing / Nellie Mahony's
 C: C: Trad.; S: Denis Murphy / Emma O'Leary
 C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed.; Dr. Dow / Aidan Crossey / Smiley at The Session
@@ -2102,7 +2103,7 @@ A2G|:F2A AFA BdB AFE|F2E EDE F2D D2E|
 F2A AFA BdB AFA|Bcd efe|1 d2 A B2 A:|2 d3 d2 e||
 |:faf fed g3 gfe|faf fed f2 a b2 a|
 faf fed g2e edB|ABd efe|1 d3 d2 e:|2 d2 A B2 A||
-T: Hare in the Corn / Cat in the Corner
+T: Hare in the Corn (Gmaj) / Cat in the Corner
 K: Gmaj
 |:A|B2B A2G BdB AGA|B2e d2B A3 AGA|
 B3 AGA BdB AGA|B2e d2B G3 G2:||
@@ -2166,7 +2167,7 @@ K: Edor
 "Em"G2B E2B BAG|"D"F2A D2A AGF|"Em"G2B E2B BAG|"G"B/c/dB "D"AGF E3||
 "Em"g2e g2e edB|"D"f2d dcd fed|"Em"g2e g2e edB|"G"dBG "(Em)"GBd "D"e2f|
 "Em"g2e g2e edB|"D"f2d dcd fed|"Em"gfe "D"fed "Em"edA|"G"B/c/dB "D"AGF "Em"E2F||
-T: Foxhunter's
+T: Foxhunter's (Dmaj)
 K: Dmaj
 |:"D"FDF FDF "G"G2E|"D"FDF FED "A"E2D|"D"FDF FDF "G"G2B|"D"AFD DEF "A"E2D:||
 |:"Em"B3 BAG "D"FGA|"G"B2E E2F "A"G2B|"D"ABc dcB "A"ABc|"D"d2D DEF "A"E2D:||

@@ -1,6 +1,7 @@
 import { initAbcTools, initTunebookOptions, abcTunebookDefaults, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
          populateTuneSelector, populateFilterOptions, sortFilterOptions, resetViewportWidth } from './scripts-abc-tools.js';
-import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults, isTuneTripleMeter } from './scripts-abc-encoder.js';
+import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
+import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist Custom App Scripts
@@ -51,10 +52,6 @@ const appHeader = document.querySelector('#nss-app-header');
 // Define App Menu elements
 
 const appOptionsPopover = document.querySelector('#nss-popover-options');
-const fullScreenPopover = document.querySelector('#nss-fullscreen-popover');
-const fullScreenPopoverTitle = document.querySelector('.nss-fs-popover-title');
-const fullScreenPopoverChords = document.querySelector('.nss-chords-container');
-const fullScreenPopoverSliderV = document.querySelector('#nss-chords-vertical-scale');
 const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
 const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
 
@@ -257,177 +254,9 @@ export function openSettingsMenu(dataType) {
   }
 
   if (dataType === "fullscreen-popover") {
-  
-    const fullScreenButton = document.querySelector('#fullScreenButton');
-    const currentAbcTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
-
-    const setMatch = setChords.find(set => set.setTitle === currentAbcTitle);
-    const tuneMatch = tuneChords.find(tune => tune.title === currentAbcTitle);
-
-    if (!setMatch && !tuneMatch) {
-
-      showRedOutlineWarning(fullScreenButton);
-      return;
-    }
     
-    if (setMatch) {
-
-      fullScreenPopoverTitle.textContent = setMatch.setTitle;
-      loadChordsToPopover(setMatch.tuneChords, "chords-set");
-
-    } else if (tuneMatch) {
-
-      fullScreenPopoverTitle.textContent = tuneMatch.title;
-      loadChordsToPopover([tuneMatch], "chords-tune");
-    }
-
-    fullScreenPopover.showPopover();
-    initPopoverSliders();
+    openChordViewer(setChords, tuneChords);
   }
-}
-
-// Create responsive grid layout with chords data inside Chords Popover
-
-function loadChordsToPopover(chordsMatch, chordsType) {
-
-  fullScreenPopoverChords.textContent = '';
-
-  chordsMatch.forEach(tune => {
-            
-    if (!tune.chords) return;
-        
-    const tuneBlock = document.createElement('div');
-    tuneBlock.className = "nss-chords-tuneitem";
-
-    if (chordsType === "chords-set") {
-    
-      const titleBlock = document.createElement('div');
-      titleBlock.className = "nss-chords-subtitle";
-      titleBlock.textContent = tune.title;
-      tuneBlock.appendChild(titleBlock);
-    }
-    
-    const tunePartsArr = tune.chords.split('\n\n');
-
-    tunePartsArr.forEach(tunePart => {
-
-      if (!tunePart.trim()) return;
-
-      const partNoText = tunePart.match(/PART[\s]*[\d]*:/)[0];
-
-      const partNoBlock = document.createElement('div');
-      partNoBlock.className = "nss-chords-partno";
-      partNoBlock.textContent = partNoText;
-      
-      const tunePartBlock = document.createElement('div');
-      tunePartBlock.className = "nss-chords-body";
-      tunePartBlock.appendChild(partNoBlock);
-      
-      const partLinesArr = tunePart.split('\n')
-          .filter(line => line.trim() && !line.startsWith('PART'));
-      
-      partLinesArr.forEach(line => {
-
-          const lineBlock = document.createElement('div');
-          lineBlock.className = "nss-chords-line";
-          
-          const barPattern = /\|[\d]?|\|\|/g;
-          const lineBarsArr = line.split(barPattern)
-              .filter(bar => bar.trim());
-
-          const barSeparators = line.match(barPattern) || [];
-
-          let barCount = 0;
-
-          let isFinalBar = false;
-
-          let isVolta = false;
-          
-          lineBarsArr.forEach((tuneLineBar, lineBarIndex) => {
-
-            barCount++;
-
-            const barBlock = document.createElement('div');
-            barBlock.className =  isTuneTripleMeter(tune.meter)? "nss-chords-bar nss-chords-bar-triple" : "nss-chords-bar";
-            
-            const lineBarStartSpan = document.createElement('span');
-            lineBarStartSpan.className = "nss-chords-barline";
-            
-            const barSeparator = barSeparators[lineBarIndex] || '|';
-            
-            if (barSeparator.match(/\|[\d]+/)) {
-
-              isVolta = true;
-
-              lineBarStartSpan.textContent = '|';
-
-              const voltaSpan = document.createElement('span');
-              voltaSpan.className = "nss-chords-volta";
-              voltaSpan.textContent = barSeparator.substring(1);
-              
-              lineBarStartSpan.appendChild(voltaSpan);
-
-            } else {
-            
-              lineBarStartSpan.textContent = barSeparator;
-            }
-
-            barBlock.appendChild(lineBarStartSpan);
-
-            const tuneChords = tuneLineBar.split('\t')
-                .filter(chord => chord.trim());
-            
-            tuneChords.forEach(tuneChord => {
-                
-                const chordSpan = document.createElement('span');
-                chordSpan.className = "nss-chords-chord";
-                chordSpan.textContent = tuneChord.trim();
-                barBlock.appendChild(chordSpan);
-            });
-
-            isFinalBar = partLinesArr.indexOf(line) === partLinesArr.length - 1 && 
-                         barCount === lineBarsArr.length;
-
-            if (barCount === 4 && !isFinalBar) {
-
-              const lineBarEndSpan = document.createElement('span');
-              lineBarEndSpan.className = "nss-chords-barline";
-              lineBarEndSpan.textContent = '|';
-              barBlock.appendChild(lineBarEndSpan);
-            }
-
-            if (isFinalBar && !isVolta) {
-
-              const lineBarDoubleSpan = document.createElement('span');
-              lineBarDoubleSpan.className = "nss-chords-barline";
-              lineBarDoubleSpan.textContent = '||';
-              barBlock.appendChild(lineBarDoubleSpan);
-            }
-            
-            lineBlock.appendChild(barBlock);
-          });
-
-          if (isFinalBar && isVolta) {
-
-            const barFinBlock = document.createElement('div');
-            barFinBlock.className = isTuneTripleMeter(tune.meter)? "nss-chords-bar nss-chords-bar-triple" : "nss-chords-bar";
-
-            const lineBarDoubleSpan = document.createElement('span');
-            lineBarDoubleSpan.className = "nss-chords-barline";
-            lineBarDoubleSpan.textContent = '||';
-
-            barFinBlock.appendChild(lineBarDoubleSpan);
-            lineBlock.appendChild(barFinBlock);
-          }
-          
-          tunePartBlock.appendChild(lineBlock);
-      });
-      
-      tuneBlock.appendChild(tunePartBlock);
-    });
-    
-    fullScreenPopoverChords.appendChild(tuneBlock);
-  });
 }
 
 ////////////////////////////////
@@ -693,6 +522,11 @@ function ariaShowMe(el) {
 
 async function appButtonHandler() {
 
+  if (this.hasAttribute('data-action')) {
+
+    return;
+  }
+
   const parentEl = this.parentElement;
 
   // Launch Buttons: Run section Launcher depending on data type
@@ -752,33 +586,7 @@ async function appButtonHandler() {
 
   if (this.classList.contains('nss-control-btn')) {
 
-    if (this.dataset.trigger === 'slider-reset') {
-
-      fullScreenPopover.style.cssText = ''
-
-      localStorage.removeItem('chordsSliderFontSizeValue_NSSSAPP');
-      localStorage.removeItem('chordsSliderLineWidthValue_NSSAPP');
-      localStorage.removeItem('chordsSliderMaxWidthValue_NSSAPP');
-
-      initPopoverSliders();
-    
-      return;
-    }
-
-    if (this.dataset.trigger === 'popover-sliders') {
-
-      [fullScreenPopoverSliderV].forEach(slider => {
-
-        if (slider.hasAttribute("hidden")) {
-
-          ariaShowMe(slider);
-
-        } else {
-
-          ariaHideMe(slider);
-        }
-      });
-    }
+    //
   }
 
   // Close Buttons: Hide parent element, show alternative navigation, resize ABC Tools
@@ -817,22 +625,11 @@ async function appButtonHandler() {
     return;
   }
 
-  if (this.classList.contains('fs-popover-btn-x')) {
-
-    fullScreenPopover.hidePopover();
-    return;
-  }
-
   // Theme buttons: Change color theme of document depending on the section
 
   if (this.classList.contains('nss-theme-btn')) {
 
     const appSectionHeader = this.parentElement.classList;
-
-    if (appSectionHeader.contains('nss-fs-popover-header')) {
-
-      fullScreenPopover.classList = `nss-fullscreen-popover ${this.dataset.theme}`;
-    }
 
     allThemeBtn.forEach(themeBtn => {
 
@@ -896,47 +693,6 @@ async function appDropDownHandler() {
 
       console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
     }
-  }
-}
-
-// Handle Chord Popover Slider events
-
-function appChordSliderHandler(event) {
-
-  // Slider defaults for calculations
-
-  const vMin = +fullScreenPopoverSliderV.min;
-  const vMax = +fullScreenPopoverSliderV.max;
-
-  if (event.type === 'input') {
-
-    let valueV = fullScreenPopoverSliderV.value;
-
-    if (this === fullScreenPopoverSliderV) {
-
-      // Define chords line width and max line width range
-
-      const lineWMin = 20;
-      const lineWMax = 50;
-
-      const maxWLows = 50;
-      const maxWTops = 90;
-
-      const maxLineWAddend = valueV > vInitVal? Math.round((valueV - vInitVal) * ((maxWTops - maxWInit) / (vMax - vInitVal))) : 
-                                                Math.round((valueV - vInitVal) * ((maxWInit - maxWLows) / (vInitVal - vMin)));
-
-      const lineWAddend = valueV > vInitVal? Math.round((valueV - vInitVal) * ((lineWMax - lineWInit) / (vMax - vInitVal))) :
-                                             Math.round((valueV - vInitVal) * ((lineWInit - lineWMin) / (vInitVal - vMin)));
-
-      localStorage.chordsSliderFontSizeValue_NSSSAPP = valueV;
-      localStorage.chordsSliderMaxWidthValue_NSSAPP = maxWInit + maxLineWAddend;
-      localStorage.chordsSliderLineWidthValue_NSSAPP = lineWInit + lineWAddend;
-
-      fullScreenPopover.style.setProperty("--chords-font-size", `${valueV}%`);
-      fullScreenPopover.style.setProperty("--chords-line-height", `${valueV}%`);
-      fullScreenPopover.style.setProperty("--chords-max-width", `${maxWInit + maxLineWAddend}%`);
-      fullScreenPopover.style.setProperty("--chords-line-width", `${lineWInit + lineWAddend}rem`);
-    } 
   }
 }
 
@@ -1055,47 +811,6 @@ function initTunebookRadioBtns() {
   });
 }
 
-// Initialize Chord Popover sliders
-
-const vInitVal = 120 // Global initial value for vertical slider
-const lineWInit = 40 // Global initial value for chords line width
-const maxWInit = 80 // Global initial value for chords line max width
-
-function initPopoverSliders() {
-
-  if (!localStorage.chordsSliderFontSizeValue_NSSSAPP) {
-
-    localStorage.chordsSliderFontSizeValue_NSSSAPP = vInitVal;
-  }
-
-  if (!localStorage.chordsSliderLineWidthValue_NSSAPP) {
-
-    localStorage.chordsSliderLineWidthValue_NSSAPP = lineWInit;
-  }
-
-  if (!localStorage.chordsSliderMaxWidthValue_NSSAPP) {
-
-    localStorage.chordsSliderMaxWidthValue_NSSAPP = maxWInit;
-  }
-
-  const valueV = localStorage.chordsSliderFontSizeValue_NSSSAPP;
-  const lineWidth = localStorage.chordsSliderLineWidthValue_NSSAPP;
-  const maxWidth = localStorage.chordsSliderMaxWidthValue_NSSAPP;
-
-  fullScreenPopoverSliderV.value = valueV;
-
-  fullScreenPopover.style.setProperty("--chords-font-size", `${valueV}%`);
-  fullScreenPopover.style.setProperty("--chords-line-height", `${valueV}%`);
-  fullScreenPopover.style.setProperty("--chords-max-width", `${maxWidth}%`);
-  fullScreenPopover.style.setProperty("--chords-line-width", `${lineWidth}rem`); // rem!
-
-  [fullScreenPopoverSliderV].forEach(slider => {
-
-    slider.addEventListener('input', appChordSliderHandler);
-    slider.addEventListener('change', appChordSliderHandler);
-  });
-}
-
 // Initialize popover polyfill warning if the browser doesn't support Popover API
 
 function initPopoverWarning() {
@@ -1117,6 +832,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTunebookOptions();
   initEncoderSettings();
   initAppCheckboxes();
+  initChordViewer();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });

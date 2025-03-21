@@ -15,6 +15,57 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.8.3: Encoder Upgrade (Chord Viewer Module)
+
++ Project updates:
+  - Chord Viewer: All Chord Viewer scripts moved to separate module (first stage of migration)
+  - Chord Viewer: All Chord Viewer styles moved to separate stylesheet (first stage of migration)
+  - Chord Viewer: Three functions are now export functions for initializing Chord Viewer elements, opening Chord Viewer popover and generating Chordbook JSON
+  - ABC Encoder: Chord Viewer scripts moved to separate module, import makeAbcChordBook added
+  - Launcher: Chord Viewer scripts moved to separate module, imports initChordViewer and openChordViewer added
+
++ HTML updates 
+  - Main App (index.html):
+    + data-action attributes added to interactable Chord Viewer elements
+    + Chord Viewer stylesheet linked
+
++ CSS updates:
+  - App Styles (nss-styles.css):
+    + Full screen popover styles moved to Chord Viewer stylesheet, some shared classes remain
+  - Chord Viewer module (styles-chord-viewer.css)
+    + Separate styles for Chord Viewer elements added, shared classes to be migrated
+
++ JavaScript updates
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + Variables for Chord Viewer elements renamed using chordViewer* template
+    + All variables are now defined at the start of the file
+    + openChordViewer*: New export handler function showing Chord Viewer popover, loading Slider settings and Chords from ABC using data passed from main app
+    + initChordViewer*: New export function initializing Chord Viewer Popover
+    + handleChordViewerClick*: New function handling clicks on interactable Chord Viewer elements
+    + normalizeAbc*: New handler function calling cleanup ABC functions during Chord extraction
+  - App Launcher module (scripts-ns-sessions.js)
+    + initChordViewer and openChordViewer are now imported from Chord Viewer module
+    + openSettingsMenu now calls openChordViewer, passing current setChords and tuneChords arrays
+    + initChordViewer is now called on DOMContentLoaded
+    + appButtonHandler now returns if element has data-action attribute to handle Chord Viewer buttons separately
+  - ABC Encoder module (scripts-abc-encoder.js):
+    + makeAbcChordBook functions are now imported from Chord Viewer module
+
++ Session DB updates:
+  - Session DB updated to 2025-03-21
+  - Galtee Hunt Set updated
+  - Leitrim Fancy Set updated
+  - Minor ABC title tweaks
+    + appButtonHandler now returns if element has data-action attribute to handle Chord Viewer buttons separately
+  - ABC Encoder module (scripts-abc-encoder.js):
+    + makeAbcChordBook functions are now imported from Chord Viewer module
+
++ Session DB updates:
+  - Session DB updated to 2025-03-21
+  - Galtee Hunt Set updated
+  - Leitrim Fancy Set updated
+  - Minor ABC title tweaks
+
 v.0.8.2: Encoder Upgrade (Session DB Update)
 
 + Session DB updates:
