@@ -11,11 +11,11 @@ const tuneSelector = document.querySelector('#tuneSelector');
 
 // Define Chord Viewer Popover elements
 
-const chordViewerPopover = document.querySelector('#nss-fullscreen-popover');
-const chordViewerTitle = document.querySelector('.nss-fs-popover-title');
-const chordViewerChords = document.querySelector('.nss-chords-container');
-const chordViewerSlider = document.querySelector('#nss-chords-vertical-scale');
-const chordViewerThemeBtns = document.querySelectorAll('.nss-theme-btn');
+const chordViewerPopover = document.querySelector('[data-popover="chord-viewer"]');
+const chordViewerTitle = document.querySelector('[data-popover="title"]');
+const chordViewerChords = document.querySelector('[data-chords="container"]');
+const chordViewerSlider = document.querySelector('[data-controls="slider"]');
+const chordViewerThemeBtns = document.querySelectorAll('[data-controls="theme-btn"]');
 
 // Define initial Chord Popover slider settings
 
@@ -120,11 +120,11 @@ function handleChordViewerClick(event) {
 
   if (elAction === 'toggle-theme') {
 
-    chordViewerPopover.classList = `nss-fullscreen-popover ${actionTrigger.dataset.theme}`;
+    chordViewerPopover.className = actionTrigger.dataset.theme;
 
     chordViewerThemeBtns.forEach(themeBtn => {
 
-      if (themeBtn.classList.contains(`nss-btn-${actionTrigger.dataset.theme}`)) {
+      if (themeBtn.classList.contains(`btn-${actionTrigger.dataset.theme}`)) {
 
         ariaShowMe(themeBtn);
         themeBtn.focus();
@@ -190,12 +190,12 @@ function loadChordsToPopover(chordsMatch, chordsType) {
   if (!tune.chords) return;
     
   const tuneBlock = document.createElement('div');
-  tuneBlock.className = "nss-chords-tuneitem";
+  tuneBlock.dataset.chords = "tuneitem";
 
   if (chordsType === "chords-set") {
   
     const titleBlock = document.createElement('div');
-    titleBlock.className = "nss-chords-subtitle";
+    titleBlock.dataset.chords = "subtitle";
     titleBlock.textContent = tune.title;
     tuneBlock.appendChild(titleBlock);
   }
@@ -209,11 +209,11 @@ function loadChordsToPopover(chordsMatch, chordsType) {
     const partNoText = tunePart.match(/PART[\s]*[\d]*:/)[0];
 
     const partNoBlock = document.createElement('div');
-    partNoBlock.className = "nss-chords-partno";
+    partNoBlock.dataset.chords = "partno";
     partNoBlock.textContent = partNoText;
     
     const tunePartBlock = document.createElement('div');
-    tunePartBlock.className = "nss-chords-body";
+    tunePartBlock.dataset.chords = "body";
     tunePartBlock.appendChild(partNoBlock);
     
     const partLinesArr = tunePart.split('\n')
@@ -222,7 +222,7 @@ function loadChordsToPopover(chordsMatch, chordsType) {
     partLinesArr.forEach(line => {
 
       const lineBlock = document.createElement('div');
-      lineBlock.className = "nss-chords-line";
+      lineBlock.dataset.chords = "line";
       
       const barPattern = /\|[\d]?|\|\|/g;
       const lineBarsArr = line.split(barPattern)
@@ -241,10 +241,11 @@ function loadChordsToPopover(chordsMatch, chordsType) {
       barCount++;
 
       const barBlock = document.createElement('div');
-      barBlock.className =  isTuneTripleMeter(tune.meter)? "nss-chords-bar nss-chords-bar-triple" : "nss-chords-bar";
+      barBlock.classList.add('grid-center');
+      barBlock.dataset.chords =  isTuneTripleMeter(tune.meter)? "bar-triple" : "bar";
       
       const lineBarStartSpan = document.createElement('span');
-      lineBarStartSpan.className = "nss-chords-barline";
+      lineBarStartSpan.dataset.chords = "barline";
       
       const barSeparator = barSeparators[lineBarIndex] || '|';
       
@@ -255,7 +256,7 @@ function loadChordsToPopover(chordsMatch, chordsType) {
         lineBarStartSpan.textContent = '|';
 
         const voltaSpan = document.createElement('span');
-        voltaSpan.className = "nss-chords-volta";
+        voltaSpan.dataset.chords = "volta";
         voltaSpan.textContent = barSeparator.substring(1);
         
         lineBarStartSpan.appendChild(voltaSpan);
@@ -273,7 +274,7 @@ function loadChordsToPopover(chordsMatch, chordsType) {
       tuneChords.forEach(tuneChord => {
         
         const chordSpan = document.createElement('span');
-        chordSpan.className = "nss-chords-chord";
+        chordSpan.dataset.chords = "chord";
         chordSpan.textContent = tuneChord.trim();
         barBlock.appendChild(chordSpan);
       });
@@ -284,7 +285,7 @@ function loadChordsToPopover(chordsMatch, chordsType) {
       if (barCount === 4 && !isFinalBar) {
 
         const lineBarEndSpan = document.createElement('span');
-        lineBarEndSpan.className = "nss-chords-barline";
+        lineBarEndSpan.dataset.chords = "barline";
         lineBarEndSpan.textContent = '|';
         barBlock.appendChild(lineBarEndSpan);
       }
@@ -292,7 +293,7 @@ function loadChordsToPopover(chordsMatch, chordsType) {
       if (isFinalBar && !isVolta) {
 
         const lineBarDoubleSpan = document.createElement('span');
-        lineBarDoubleSpan.className = "nss-chords-barline";
+        lineBarDoubleSpan.dataset.chords = "barline";
         lineBarDoubleSpan.textContent = '||';
         barBlock.appendChild(lineBarDoubleSpan);
       }
@@ -303,10 +304,11 @@ function loadChordsToPopover(chordsMatch, chordsType) {
       if (isFinalBar && isVolta) {
 
       const barFinBlock = document.createElement('div');
-      barFinBlock.className = isTuneTripleMeter(tune.meter)? "nss-chords-bar nss-chords-bar-triple" : "nss-chords-bar";
+      barFinBlock.classList.add('grid-center');
+      barFinBlock.dataset.chords =  isTuneTripleMeter(tune.meter)? "bar-triple" : "bar";
 
       const lineBarDoubleSpan = document.createElement('span');
-      lineBarDoubleSpan.className = "nss-chords-barline";
+      lineBarDoubleSpan.dataset.chords = "barline";
       lineBarDoubleSpan.textContent = '||';
 
       barFinBlock.appendChild(lineBarDoubleSpan);
@@ -667,6 +669,7 @@ function normalizeAbc(abcContent) {
   let abcOutput = removeAbcHeadersAndCommands(abcContent);
   abcOutput = convertAbcIntervalsToSingleNotes(abcOutput);
   abcOutput = normalizeAbcTriplets(abcOutput);
+  abcOutput = normalizeAbcChordOrder(abcOutput);
 
   return abcOutput;
 }
@@ -701,6 +704,15 @@ function convertAbcIntervalsToSingleNotes(abcContent) {
 function normalizeAbcTriplets(abcContent) {
 
   let filteredAbc = abcContent.replaceAll(/\([34](\w)(\w)(\w)/g, `$1/$2/$3`);
+
+  return filteredAbc;
+}
+
+// Fix instances of ABC chords breaking up elements such as triplets
+
+function normalizeAbcChordOrder(abcContent) {
+
+  let filteredAbc = abcContent.replaceAll(/(\([34])(".*?")/g, `$2$1`);
 
   return filteredAbc;
 }

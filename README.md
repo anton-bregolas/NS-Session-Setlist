@@ -15,6 +15,35 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.8.4: Encoder Upgrade (Chord Viewer Module)
+
++ Project updates:
+  - Chord Viewer: All Chord Viewer styles moved to separate stylesheet (second stage of migration)
+  - Chord Viewer: Data attributes are now primarily used in scripts and styles instead of classes
+  - Chord Viewer icons file added to assets folder
+
++ HTML updates 
+  - Main App (index.html):
+    + Data attributes added to Chord Viewer Popover
+    + Chord Viewer Popover elements are now split between the following categories:
+      - data-popover for top level elements / sections
+      - data-chords for chord elements
+      - data-controls for interactable elements
+      - data-ui for non-interactable elements / icons
+
++ CSS updates:
+  - Chord Viewer module (styles-chord-viewer.css)
+    + Chord Viewer styles now primarily rely on data attributes
+    + Utility classes grid-center, flex-center, flex-between and wrapper-container added
+
++ JavaScript updates
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + loadChordsToPopover, handleChordViewerClick and variables linking to Chord Viewer elements now all primarily use data attributes
+    + normalizeAbcChordOrder function added for fixing cases of bad ABC chord input before calculations
+
++ Session DB updates:
+  - Session DB updated to 2025-03-22
+
 v.0.8.3: Encoder Upgrade (Chord Viewer Module)
 
 + Project updates:

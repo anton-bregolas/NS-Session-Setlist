@@ -218,38 +218,38 @@
                 </div>
             </article>
 
-            <article id="nss-fullscreen-popover" popover class="nss-fullscreen-popover dark" aria-label="Full Screen View">
-                <header class="nss-fs-popover-header flex-wrapper">
-                    <button class="nss-btn nss-theme-btn nss-btn-dark flex-wrapper" data-action="toggle-theme" data-theme="light" title="Switch to light theme" aria-title="Switch to light theme">
-                        <svg class="nss-switch-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#theme-icon-moon"></use>
+            <article popover data-popover="chord-viewer" class="dark" aria-label="Full Screen View">
+                <header data-popover="header" class="wrapper-container flex-center">
+                    <button data-action="toggle-theme" data-controls="theme-btn" data-theme="light" class="btn btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
+                        <svg data-ui="icon-fixed-size" aria-hidden="true">
+                            <use href="assets/icons/icons-chord-viewer.svg#theme-icon-dark"></use>
                         </svg>
                     </button>
-                    <button class="nss-btn nss-theme-btn nss-btn-light flex-wrapper" data-action="toggle-theme" data-theme="dark" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden>
-                        <svg class="nss-switch-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#theme-icon-sun"></use>
+                    <button data-action="toggle-theme" data-controls="theme-btn" data-theme="dark" class="btn btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden>
+                        <svg data-ui="icon-fixed-size" aria-hidden="true">
+                            <use href="assets/icons/icons-chord-viewer.svg#theme-icon-light"></use>
                         </svg>
                     </button>
-                    <div class="subtitle-wrapper flex-wrapper">
-                        <h2 class="nss-fs-popover-title"></h2>
+                    <div class="wrapper-container flex-center">
+                        <h2 data-popover="title"></h2>
                     </div>
-                    <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-fs-popover-close" data-action="close-chord-viewer" class="nss-btn nss-btn-x fs-popover-btn-x flex-wrapper" title="Close Full Screen View" aria-title="Close Full Screen View"></button>
+                    <div data-popover="x-container" class="flex-center">
+                        <button autofocus data-action="close-chord-viewer" data-controls="btn-x" class="btn btn-x flex-center" title="Close Full Screen View" aria-title="Close Full Screen View"></button>
                     </div>
                 </header>
-                <div class="nss-fs-popover-body">
-                    <input type="range" id="nss-chords-vertical-scale" class="nss-chords-slider nss-slider-vertical" name="chords-v-scale" min="75" max="185" value="120" step="1" />
-                    <div class="nss-chords-container"></div>
+                <div data-popover="body">
+                    <input type="range" data-controls="slider" name="chords-slider" min="75" max="185" value="120" step="1" />
+                    <div data-chords="container"></div>
                 </div>
-                <footer class="nss-fs-popover-footer">
-                    <button data-action="reset-slider" class="nss-btn nss-control-btn flex-wrapper" title="Reset slider settings" aria-title="Reset slider settings">
-                        <svg class="nss-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#action-icon-revert"></use>
+                <footer data-popover="footer" class="flex-between">
+                    <button data-action="reset-slider" data-controls="control-btn" class="btn flex-center" title="Reset slider settings" aria-title="Reset slider settings">
+                        <svg data-ui="icon" aria-hidden="true">
+                            <use href="assets/icons/icons-chord-viewer.svg#action-icon-reset"></use>
                         </svg>
                     </button>
-                    <button data-action="toggle-slider" class="nss-btn nss-control-btn flex-wrapper" title="Show text scaling sliders" aria-title="Show text scaling sliders">
-                        <svg class="nss-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#action-icon-sliders"></use>
+                    <button data-action="toggle-slider" data-controls="control-btn" class="btn flex-center" title="Show text scaling sliders" aria-title="Show text scaling sliders">
+                        <svg data-ui="icon" aria-hidden="true">
+                            <use href="assets/icons/icons-chord-viewer.svg#action-icon-sliders"></use>
                         </svg>
                     </button>
                 </footer>
