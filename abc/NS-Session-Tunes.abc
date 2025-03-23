@@ -10,8 +10,8 @@ M: 3/4
 L: 1/8
 Q: 1/4=144
 K: Gmaj
-|:"G"B3 A "^(D/F#)"Bd|"Em"B2 BA Bd|"C"E3 B AB|"D"D3 B AG|
-"G"B3 A "^(D/F#)"Bd|"Em"B2 BA Bd|"C"G3 B "D/F#"A/G/F|1 "G"G3 D ED:|2 "G"G3 A Bd||
+|:"G"B3 A "(D/F#)"Bd|"Em"B2 BA Bd|"C"E3 B AB|"D"D3 B AG|
+"G"B3 A "(D/F#)"Bd|"Em"B2 BA Bd|"C"G3 B "D/F#"A/G/F|1 "G"G3 D ED:|2 "G"G3 A Bd||
 "Em"e3 f ed|"Bm"B3 A Bd|"Em"ef ed B/c/d|
 "C"e3 A Bd|"Em"e2 ef ed|"G"B3 A Bd|"D"G3 B "D/F#"A/G/F|
 "G"G2 GA Bd|"Em"e2 ef ed|"Bm"B2 BA Bd|"Em"gf ed B/c/d|
@@ -1278,7 +1278,7 @@ K: Gmaj
 |:"G"GB BA/c/|"G"BG G>D|"C"GB B/c/d/B/|"D"AD FA|
 "G"GB BA/c/|"G"BG G/A/B/c/|"C"dd B/c/d/B/|"D"AD FA :||
 |:"Em"Be ef/e/|d/e/f/a/ g2|"C"Be ed/B/|"D"AD FA |
-"Em"Be ef/e/|"D/F#"d/e/f/a/ g2|"G"g/a/g/e/ "C"d/e/d/B/|"D"AD "^(D/F#)"FA :||
+"Em"Be ef/e/|"D/F#"d/e/f/a/ g2|"G"g/a/g/e/ "C"d/e/d/B/|"D"AD "(D/F#)"FA :||
 
 X: 76
 T: POLKA: Britches Full of Stitches (Amaj)
@@ -1298,7 +1298,7 @@ K: Amaj
 
 X: 77
 T: POLKA: Britches Full of Stitches (Gmaj)
-C: C: Trad.; S: Jackie Daly & Séamus Creagh (Amaj)
+C: C: Trad.; S: Jackie Daly & Séamus Creagh
 C: Set Leaders: Tania, Anton
 Z: Anton Zille ed. arr., Oleg Naumov arr.; benhockenberry at The Session
 N: https://www.soundslice.com/slices/CLHRc/
@@ -1673,13 +1673,13 @@ M: 2/4
 L: 1/8
 Q: 1/4=140
 K: Bmin
-"Bm"d2 BA|"Bm (G)"Bd "Bm"B2|AB df|"Em"e/f/e/d/ "A"BA|
-"Bm (Em)"d2 "^(A/F#)"BA|"Bm (G)"Bd "Em"e2-|ed ef/a/|"G"b"(Bm)"a/f/ "A"af/e/|
-"Bm"d2 BA|"Bm"Bd "Bm"B2|AB df|"Em"e/f/e/d/ "G"BA|
-"Bm"d2 BA|"Bm"Bd "Em"e2-|ed ef|"A"af "^(A/F#)"ad'||
+"Bm"d2 BA|"Bm (G)"Bd B2|"Bm (G)"AB df|"Em"e/f/e/d/ "A"BA|
+"Bm"d2 BA|"Bm"Bd "Em"e2-|"Em"ed ef/a/|"G"b"(Bm)"a/f/ "A"af/e/|
+"Bm"d2 BA|"Bm"Bd B2|"Bm (G)"AB df|"Em"e/f/e/d/ "A"BA|
+"Bm"d2 BA|"Bm"Bd "Em"e2-|"Em"ed ef|"A"af "(A/F#)"ad'||
 "G"b2 af|"D"ab f2|"A"e2 de|"Bm"fd cd|
 "G"B2 AF|"D"AB df|"A"e2 de|"Bm"fd fa|
-"G"b2 af|"D"ab f2|"A"e2 "^(A/F#)"a>g|"Bm"fd cd|
+"G"b2 af|"D"ab f2|"A"e2 "(A/F#)"a>g|"Bm"fd cd|
 "G"B2 AF|"G"AB df|"G"e2 de|"(A)"fd ec||
 
 X: 99
@@ -2067,7 +2067,7 @@ K: Dmaj
 |:"D"DFAB AFAB|"D/F#"d2 fe "G"dBAF|"D/F#"DFAF "D/B"BFAF|"Em"EGFD "A"E3F|
 "D"AFAB AFAB|"D/F#"defe "G"dBAf|"D/F#"efdB "D/B"AF~F2|"Em"AFEG "A"FD D2:||
 |:"D"faab afdf|"D/F#"a/b/a fd "G"edBd|"D"ABde "D/F#"fd~d2|"Em"edfd "A"edBd|
-"D"ABde "^(D/B)"fd~d2|"G"e/f/g fd "(A)"edBd|"D"ABdB AF~F2|"A"AFEG "(D)"FD D2:||
+"D"ABde "(D/B)"fd~d2|"G"e/f/g fd "(A)"edBd|"D"ABdB AF~F2|"A"AFEG "(D)"FD D2:||
 
 X: 122
 T: REEL: Dick Gossip's
@@ -2146,7 +2146,7 @@ K: Dmaj
 |:"G"B2 dB BAFA|"G"~B2 dB "(A)"BAFB|"D"AF~F2 DF~F2|"D"AFdB ADFA|
 "G"B2 dB BAFA|"G"~B2 dB "A"BAFB|"D"A3B defd|1 "A"edef "D"d3A:|2 "A"edef "D"d3f||
 |:"A"e3f "D"d2 Bd|"A"edef "D/B"dB A2|"A"~e3f "D"dcde|"D"fedB ADFA|
-"Em"e2 ef "^(D/F#)"dB~B2|"G"gB~B2 defg|"D"afbf afeg|"A (G)"fedB "D/F#"ADFA:||
+"Em"e2 ef "(D/F#)"dB~B2|"G"gB~B2 defg|"D"afbf afeg|"A (G)"fedB "D/F#"ADFA:||
 
 X: 127
 T: REEL: Fermoy Lasses
@@ -2825,7 +2825,7 @@ K: Gmaj
 |:"G"B2d ded BAB G2B|"C"AGE DEG "D"AGE D3|
 "G"Bdd ded BAB G2B|"C"AGE DEG "D"AGF G2A:||
 |:"G"BAB GAB "C"cBc ABc|"G (Em)"B2G GFG "D"ABc d2c|
-"G"B2G GAB "C"cec "^(G/B)"BdB|"Am"AGE DEG "D"AGF G2A:||
+"G"B2G GAB "C"cec "(G/B)"BdB|"Am"AGE DEG "D"AGF G2A:||
 
 X: 169
 T: SINGLE JIG: Merrily Kiss the Quaker
