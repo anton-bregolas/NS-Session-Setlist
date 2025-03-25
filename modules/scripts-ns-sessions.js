@@ -1,6 +1,6 @@
 import { initAbcTools, initTunebookOptions, abcTunebookDefaults, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
          populateTuneSelector, populateFilterOptions, sortFilterOptions, resetViewportWidth } from './scripts-abc-tools.js';
-import { parseAbcFromFile, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
+import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,7 +272,7 @@ export function showRedOutlineWarning(focusBtn) {
   setTimeout(() => {
 
     focusBtn.removeAttribute("style");
-  }, 5000);
+  }, 2500);
 }
 
 ////////////////////////////////
@@ -546,7 +546,7 @@ async function appButtonHandler() {
     // Handle ABC Encoder buttons
 
     if (this.dataset.load.startsWith("abc")) {
-
+      
       parseAbcFromFile(this.dataset.load, this);
     }
   }
@@ -582,11 +582,14 @@ async function appButtonHandler() {
     openSettingsMenu(this.dataset.load);
   }
 
-  // Control Buttons: Open additional menus and reset settings
+  // Control Buttons: Open additional menus and modify settings
 
   if (this.classList.contains('nss-control-btn')) {
 
-    //
+    if (this.dataset.load === "session-survey") {
+
+      parseSessionSurveyData(this);
+    }
   }
 
   // Close Buttons: Hide parent element, show alternative navigation, resize ABC Tools

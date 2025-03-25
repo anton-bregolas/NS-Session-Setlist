@@ -15,6 +15,41 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+v.0.8.5: Encoder Upgrade (Add & Apply Session Survey Data)
+
++ Project updates:
+  - ABC Encoder: Session Survey Data in .tsv format can now be added in Encoder Settings
+  - ABC Encoder: ABC Sort now modifies output with available Session Survey Data
+  - ABC Encoder: When applied, Sort adds or removes Set Leaders according to Session Survey Data
+
++ HTML updates
+  - Main App (index.html):
+    + Changed nav container enveloping h1 title to div to comply with the standard
+    + Meta tags updated
+  - ABC Encoder (abc-encoder.html):
+    + Add Session Survey Data button added to Encoder Settings popover
+    + Meta tags updated
+
++ CSS updates:
+  - App Styles (nss-styles.css):
+    + nss-btn-plus styles added
+
++ JavaScript updates
+  - App Launcher module (scripts-ns-sessions.js)
+    + Add Session Survey button handled
+    + Import parseSessionSurveyData added
+  - ABC Encoder module (scripts-abc-encoder.js):
+    + sessionSurveyData array added as global variable
+    + saveAbcEncoderOutput now passes Sort output to applySessionSurveyResults if sessionSurveyData is not empty
+    + parseSessionSurveyData*: Read .tsv file via File Reader API and pass data to fillSurveyDataArray if it passes validation
+    + fillSurveyDataArray*: Process raw Session Survey Data, push an array of headers and an array of responses to sessionSurveyData array
+    + applySessionSurveyResults*: Modify abcContent with Session Survey Data by adding or removing Set Leaders according to survey results
+
++ Session DB updates:
+  - Session DB updated to 2025-03-23
+  - Removed commenting from chords ("^) after ABC Tools update
+  - Minor ABC tweaks
+
 v.0.8.4: Encoder Upgrade (Chord Viewer Module)
 
 + Project updates:

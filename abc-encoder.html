@@ -5,8 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore tunes played at the Novi Sad traditional Irish music session using a new app developed by Anton Zille and Michael Eskin's ABC Transcription Tools.">
-    <meta name="description" content="Convert raw ABCs of tunes played at the Novi Sad traditional Irish music session to encoded format exportable to Michael Eskin's ABC Transcription Tools.">
+    <meta name="description" content="Sort tunes in ABC notation and create an online database of sets played at your local Irish music session using NS Session Setlist's ABC Encoder">
+    <meta property="og:title" content="ABC Encoder: Convert ABC tunes to Novi Sad Irish Session DB">
+    <meta property="og:description" content="Sort tunes in ABC notation and create an online database of sets played at your local Irish music session using NS Session Setlist's ABC Encoder">
+    <meta property="og:url" content="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html">
+    <meta property="og:image" content="">
     <title>N.S.S.S. ABC Encoder</title>
     <link rel="stylesheet" href="./styles/nss-styles.css">
     <script type="module" src="./modules/scripts-3p/popover-polyfill/popover.min.js"></script>
@@ -74,11 +77,14 @@
 
             <article id="nss-popover-options" popover="manual" class="nss-popover" aria-label="Encoder Settings Menu">
                 <header class="nss-popover-header">
-                    <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
+                    <div class="flex-wrapper nss-header-left-btn-container">
+                        <button button data-load="session-survey" class="nss-btn nss-btn-plus nss-control-btn flex-wrapper" title="Add Session Survey Data" aria-title="Add Session Survey Data"></button>
                     </div>
                     <div class="nss-popover-header-title-container flex-wrapper">
                         <h2 class="nss-popover-title">Encoder Settings</h2>
+                    </div>
+                    <div class="flex-wrapper nss-header-x-container">
+                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
                     </div>
                 </header>
                 <div class="nss-popover-body flex-wrapper">

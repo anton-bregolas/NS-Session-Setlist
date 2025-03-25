@@ -29,6 +29,12 @@ export const abcEncoderDefaults = {
     abcSortRemovesTextAfterLineBreaksInAbc: "0"
 };
 
+// Define an additional array of Session Survey Data
+// When not empty, its data will be used to modify ABC Sort output
+// Use parseSessionSurveyData to fill it with data from a .tsv file
+
+const sessionSurveyData = [];
+
 // List of basic Tune Types in Session DB
 // Other tunes will be prefixed by Various
 
@@ -146,7 +152,13 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
         }
 
         abcEncoderOutput = abcSortedOutput[0];
-        abcEncoderTunesOutput = abcSortedOutput[1]
+        abcEncoderTunesOutput = abcSortedOutput[1];
+
+        if (sessionSurveyData.length > 0) {
+
+            abcEncoderOutput = applySessionSurveyResults(abcEncoderOutput);
+            abcEncoderTunesOutput = applySessionSurveyResults(abcEncoderTunesOutput);
+        }
 
         // Optional: Save additional ABC file containing all individual Setlist Tunes
 
@@ -208,6 +220,7 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
                     return;
                 }
 
+                // Process and save ABC Encoder input
                 saveAbcEncoderOutput(rawAbcContent, rawAbcFile.name, taskType);
 
             } catch (error) {
@@ -217,6 +230,58 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
                 showRedOutlineWarning(triggerBtn);
             }
         }
+        
+        fileInput.click();
+
+    } catch (error) {
+
+        console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
+
+        showRedOutlineWarning(triggerBtn);
+    }
+}
+
+// Parse Session Survey Data from .tsv file
+  
+export async function parseSessionSurveyData(triggerBtn) {
+
+    try {
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.tsv';
+
+        fileInput.onchange = async function() {
+
+            console.log("ABC Encoder:\n\nParsing Session Survey Data...");
+
+            const rawSurveyData = this.files[0];
+
+            try {
+
+                const surveyDataOutput = await readFileContent(rawSurveyData);
+
+                console.log("ABC Encoder:\n\nSession Survey Data contents read");
+
+                if (!surveyDataOutput.startsWith("Timestamp\tI am...\tI can start...")) {
+
+                    console.warn("ABC Encoder:\n\nInvalid Session Survey Data file!");
+
+                    showRedOutlineWarning(triggerBtn);
+
+                    return;
+                }
+
+                // Process Survey Data and fill sessionSurveyData array
+                fillSurveyDataArray(surveyDataOutput);
+
+            } catch (error) {
+
+                console.error("ABC Encoder:\n\nError reading Session Survey Data file:\n\n", error);
+
+                showRedOutlineWarning(triggerBtn);
+            }
+        };
         
         fileInput.click();
 
@@ -1443,6 +1508,105 @@ function exportPlainTuneList(abcContent) {
     });
 
     return tuneListStr;
+}
+
+////////////////////////////////
+// SESSION SURVEY FUNCTIONS
+///////////////////////////////
+
+// Process raw Session Survey Data
+// Push an array of headers to sessionSurveyData array
+// Push a nested array of responses to sessionSurveyData array
+
+function fillSurveyDataArray(surveyData) {
+
+    // Empty the existing Survey Data array
+    sessionSurveyData.length = 0;
+
+    const surveyDataLines = surveyData.split('\n');
+
+    const surveyDataHeaders = 
+        surveyDataLines[0].split('\t')
+        .map(header => header.replace(/.*\[(.*)]$/, `$1`))
+        .slice(1);
+
+    const surveyDataResponses = [];
+
+    for (let i = 1; i < surveyDataLines.length; i++) {
+
+        surveyDataResponses.push(surveyDataLines[i].split('\t').slice(1));
+    }
+
+    // Update Session Survey Data array
+    sessionSurveyData.push(surveyDataHeaders);
+    sessionSurveyData.push(surveyDataResponses);
+
+    console.log("ABC Encoder:\n\nSession Survey Data added to Encoder");
+}
+
+// Modify abcContent with Session Survey Data:
+// Find Survey Data header matching ABC title
+// Add or remove Leaders in C: Set Leaders: field
+// Return an updated abcContent string
+
+function applySessionSurveyResults(abcContent) {
+
+    const splitAbcArr = abcContent.split('X: ');
+    let updatedAbcContent = '';
+
+    console.log("ABC Encoder:\n\nUpdating ABC output with Session Survey Data...");
+
+    splitAbcArr.forEach(abc => {
+
+        if (!abc) return;
+
+        const abcTitle = abc.match(/(?<=^T:).*/m)[0].trim();
+        const abcTitleArr = abcTitle.split(': ');
+        const titlePrefix = abcTitleArr[0];
+        const titleName = abcTitleArr[1];
+        let updatedAbc = '';
+
+        // Create an array of current Set Leaders
+        const abcSetLeadersArr = abc.match(/(?<=^C: Set Leaders:).*/m)[0].trim().split(', ');
+
+        // Search Survey Data headers for the current Tune / Set
+        const surveyHeader = sessionSurveyData[0].find(header => 
+                             header.toLowerCase().startsWith(titlePrefix.toLowerCase()) &&
+                             header.endsWith(titleName));
+        
+        if (surveyHeader) {
+
+            const headerIndex = sessionSurveyData[0].indexOf(surveyHeader);
+
+            // Update the array of Set Leaders
+            sessionSurveyData[1].forEach(response => {
+
+                const leaderName = response[0];
+                const responseData = response[headerIndex];
+
+                if (!abcSetLeadersArr.includes(leaderName) && 
+                    responseData === 'Yes') {
+
+                    console.log(`${leaderName} wants to be added to ${abcTitle}`);
+                    abcSetLeadersArr.push(leaderName);
+                }
+
+                if (abcSetLeadersArr.includes(leaderName) &&
+                   (!responseData || responseData === 'No')) {
+
+                    console.warn(`${leaderName} wants to be removed from ${abcTitle}`);
+                    const leaderIndex = abcSetLeadersArr.indexOf(leaderName);
+                    abcSetLeadersArr.splice(leaderIndex, 1);
+                }
+            });
+            // Update current ABC with new Set Leaders data
+            updatedAbc = abc.replace(/(?<=^C: Set Leaders:).*/m, ` ${abcSetLeadersArr.join(', ')}`);
+        }
+        // Add updated or unmodified ABC to output string
+        updatedAbcContent += `X: ${updatedAbc || abc}`;
+    });
+
+    return updatedAbcContent;
 }
 
 ////////////////////////////////

@@ -331,7 +331,7 @@ option:is([disabled]) {
   height: 3rem;
 }
 
-.nss-control-btn {
+.nss-control-btn:not(.nss-btn-plus) {
   outline-offset: 0.25rem;
 }
 
@@ -340,6 +340,7 @@ option:is([disabled]) {
 }
 
 .nss-btn-x,
+.nss-btn-plus,
 .nss-control-btn {
   font-size: 2.75rem;
   width: 2.75rem;
@@ -347,9 +348,14 @@ option:is([disabled]) {
   color: var(--accent-color-alt-light);
 }
 
+.nss-btn-plus::after,
 .nss-btn-x::after {
   content: "\00d7";
   padding-bottom: 0.35rem;
+}
+
+.nss-btn-plus::after {
+  transform: rotate(45deg) scale(0.9);
 }
 
 .footer-btn-x {
@@ -360,6 +366,7 @@ option:is([disabled]) {
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
 .nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
+.nss-btn-plus:is(:hover, :focus, :focus-visible),
 .nss-btn-x:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid var(--accent-color);
   opacity: 1;
@@ -588,9 +595,14 @@ option:is([disabled]) {
 }
 
 .nss-theme-btn,
-.nss-header-x-container {
+.nss-header-x-container,
+.nss-header-left-btn-container {
   position: absolute;
   top: 1rem;
+}
+
+.nss-header-left-btn-container {
+  left: 1rem;
 }
 
 .nss-header-x-container {
@@ -672,32 +684,33 @@ input[type="checkbox"]:focus-visible {
   }
 
   .nss-popover-header h2 {
-    font-size: 3.5rem;
+    font-size: 3.25rem;
   }
 
   .nss-popover-header-title-container {
-    margin: 3rem auto 5rem;
+    margin: 1.75rem auto 3rem;
     max-width: calc(100svw - 12.75rem);
   }
 
   .nss-checkbox-container {
-    gap: 3.75rem;
+    gap: 3.25rem;
   }
 
   .nss-checkbox-label {
-    font-size: 1.9rem;
+    font-size: 1.75rem;
     gap: 1.75rem;
   }
 
+  .nss-popover .nss-btn-plus,
   .nss-popover .nss-btn-x {
-    font-size: 5rem;
-    width: 5rem;
-    height: 5rem;
+    font-size: 3.75rem;
+    width: 3.75rem;
+    height: 3.75rem;
   }
 
   .nss-checkbox-btn {
-    width: 1.9rem;
-    height: 1.9rem;
+    width: 1.75rem;
+    height: 1.75rem;
   }
 }
 
