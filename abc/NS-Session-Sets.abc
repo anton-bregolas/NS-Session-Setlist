@@ -1,25 +1,25 @@
 X: 1
 T: BARNDANCES: Hills of Tara Set
-T: Hills of Tara / If There Weren't Any Men
-C: C: Trad.; S: Various
+T: Hills of Tara / If There Weren't Any Men in the World
+C: C: Trad.; S: Various / Harry Bradley
 C: Set Leaders: Mars, Tania
-Z: [Unedited]; Joseph Chordmichael / glauber at The Session
+Z: Mars Agliullin ed.; Joseph Chordmichael / glauber at The Session
 N: https://thesession.org/members/26966/sets/94259
 R: Barndance
 M: 4/4
 L: 1/8
 Q: 1/2=86
 K: Gmaj
-|:Bc|d2G2 GBAB|c2E2 A2AG|FGAB cBcd|e2d2 ~B3c|
-d2G2 GBAB|c2E2 A2AG|FGAB cADF|A2G2 G2:||
-(3Bcd|:g2ge ~f3d|efec A2AG|FGAB cBcd|e2d2 B2(3Bcd|
-g2ge ~f3d|efec A2AG|FGAB cADF|A2G2 G2:||
-T: If There Weren't Any Women / If There Weren't Any Women in the World
+|:Bc|d2 G2 GB AB|c2 E2 E2 AG|FG AB cB cd|e2 d2 B2 Bc|
+d2 G2 GB AB|c2 E2 A2 AG|FG AB cA DF|A2 G2 FG:||
+|:Bd|g2 g2 f2 f2|ef ec A2 AG|FG AB cB cd|e2 d2 B2 Bd|
+g2 g2 f2 f2|e2 ec A2 AG|FG AB cA DF|A2 G2 G2:||
+T: If There Weren't Any Women in the World
 K: Gmaj
-Bc|:de dB GA BG|EA GE D3 A|BG Bd ge dB|A2 AG A2 Bc|
-de dB GA BG|EA GE D3 A|B d2 B AG AB|1 G2 GF G2 Bc:|2 G2 GF GGBd||
-|:e2 ef g2 gf|ed dB d2 (3Bcd|ed Bd ge dB|A2 AG A2 Bc|
-de dB GA BG|EA GE D3 A|B d2 B AG AB|1 G2 GF GABd:|2 G2 GF G2 Bc||
+|:Bc|de dB GA BG|EA GE D3 c|BG Bd ge dB|A2 AB A2 Bc|
+de dB GA BG|EA GE D3 c|Bd dB AG AB|1 G2 GF G2:|2 G2 GF GABd||
+|:e2 ef g2 gf|ed dB d2 (3Bcd|ed Bd ge dB|A2 AB A2 Bc|
+de dB GA BG|EA GE D3 c|Bd dB AG AB|1 G2 GF GABd:|2 G2 GF G2||
 
 X: 2
 T: HORNPIPES: Callaghan's Set
@@ -130,7 +130,7 @@ T: HORNPIPES: Plains of Boyle Set
 T: Plains of Boyle
 C: C: Trad.; S: Various
 C: Set Leaders: Mars, Tania
-Z: [Unedited]; JHowley / Finnbarr at The Session
+Z: Mars Agliullin ed.; JHowley / Finnbarr at The Session
 N: https://thesession.org/members/26966/sets/94258
 R: Hornpipe
 M: 4/4
@@ -143,10 +143,10 @@ AFDE FEDF|(3ABA GB AF D2|fedc ABAG|F2D2 D2:||
 afdf g2 fe|dfed BAFG|~A2 FG ABAG|F2D2 D2:||
 T: Liverpool
 K: Dmaj
-|:AG|FDFA dfaf|gfec dcBA|G2BG F2AF|EDEF GFED|
-FDFA dfaf|gfec dcBA|dfaf bgec|d2 d2 d2:||
-|:A2|d2fd c2dc|BABc dcBA|G2BG F2AF|EDEF GFED|
-FDFA dfaf|gfec dcBA|dfaf bgec|d2 d2 d2:||
+|:AG|FD FA df af|gf ec dc BA|G2 BG F2 AF|ED EF GB AG|
+FD FA df af|gf ec dc BA|df af bg ec|d2 dc d2:||
+|:(3ABc|d2 fd c2 dc|BA Bc dc BA|G2 BG F2 AF|ED EF GB AG|
+FD FA df af|gf ec dc BA|df af bg ec|d2 dc d2:||
 
 X: 7
 T: HORNPIPES: Seanbhean Bhocht Set
@@ -176,31 +176,31 @@ g2 gf (3efg ed|BGAG EGDG|BGAG EGDE|1 G2 GF G2 (3ABc:|2 G2 GF G4||
 X: 8
 T: HORNPIPES: Sonny Murray's Set
 T: Sonny Murray's
-C: C: Trad. / Frank McCollum / Trad.; S: Various
+C: C: Trad. / Frank McCollum / Trad.; S: Drunken Gaugers / Various
 C: Set Leaders: Mars, Tania, Anton
-Z: [Unedited]; Jdharv / Jdharv / Bannerman at The Session
+Z: Mars Agliullin ed.; Jdharv / Jdharv / Bannerman at The Session
 N: https://thesession.org/members/26966/sets/94256
 R: Hornpipe
 M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Dmaj
-|:FG|ABAF DEFG|AG (3FED =c2 (3AB^c|dcde fdAF|G2GF G2FG|
-ABAF DEFG|AG (3FED =c2 (3AB^c|dcde fdAG|F2D2 D2:||
-|:de|f2fd ecAF|Gggf g2fg|a2ab agec|dcAF G2FG|
-ABAF DEFG|AG (3FED =c2 (3AB^c|dcde fdAG|F2D2 D2:||
+|:FG|AB AF DE FG|AG (3FED =c2 (3AB^c|dc de fd AF|G2 GF G2 FG|
+AB AF DE FG|AG (3FED =c2 (3AB^c|dc de fd AG|F2 D2 D2:||
+|:de|f2 fd ec AF|Gg gf g2 fg|a2 ab ag ec|dc AF G2 FG|
+AB AF DE FG|AG (3FED =c2 (3AB^c|dc de fd AG|F2 D2 D2:||
 T: Home Ruler
 K: Dmaj
-|:AF|D2FA DAFA|dfed B2dB|A2AB AFDE|(3FED ED B,DA,B,|
-D2FA DAFA|dfed B2dB|A2AB AFDE|F2D2 D2:||
-|:dB|Addc d3 f|afbf afed|efed BAFA|fded BdA2|
-Addc d3 f|afbf afed|efed BAdB|AFEF D2:||
+|:A,B,|D2 FA D2 FA|df ed Bd dB|AA AB AF DE|(3FED ED B,D A,B,|
+D2 FA D2 FA|df ed B2 dB|A2 AB AF EG|F2 D2 D2:||
+|:dB|Ad dc de fg|af bf af ed|ef ed B2 de|fd ed Bd A2|
+Ad dc de fg|af bf af ed|ef ed Bd dB|AF EF D2:||
 T: Kitty's Wedding
 K: Dmaj
-|:fe|d2Bd A2FA|BAFA D2 ED|B,DA,D DFBF|AFDF E2fe|
-d2Bd A2FA|BAFA D2 ED|B,DA,D DFBF|AFEF D2:||
-|:fg|afed bafd|Adfd edBd|DFAd FAde|fdgf e2fg|
-afed bafd|Adfd edBd|DFAd FAdf|eABc d2:||
+|:fe|d2 Bd A2 FA|BA FE D2 ED|B,D A,B, DE FB|AF DF E2 fe|
+d2 Bd A2 FA|BA FE D2 ED|B,D A,B, DE FB|AF EF D2:||
+|:fg|af ed ba fd|Ad fd ed Bd|DF Ad FA de|fd gf e2 fg|
+af ed ba fd|Ad fd ed Bd|DF Ad FA df|eA Bc d2:||
 
 X: 9
 T: JIGS: Banish Misfortune Set
@@ -409,31 +409,31 @@ T: JIGS: Humours of Glendart Set
 T: Humours of Glendart
 C: C: Trad.; S: Various
 C: Set Leaders: Mars, Tania, Sophie, Anton
-Z: [Unedited]; Will Harmon / JACKB / Phantom Button at The Session
+Z: Mars Agliullin ed.; Will Harmon / JACKB / Phantom Button at The Session
 N: https://thesession.org/members/26966/sets/94272
 R: Jig
 M: 6/8
 L: 1/8
 Q: 3/8=116
 K: Dmaj
-BAF AFD|FEF DFA|BAF AFD|FEE E2 A|
-BAF AFD|FEF DFA|dcB AFE|FDD D2 A:||
-def d2 B|~A3 AFA|def d2 f|ede fdB|
-def d2 B|~A3 ABc|dcB AFE|FDD D2 A:||
+|:BAF AFD|FEF DFA|BAF AFD|FED E2A|
+BAF AFD|FEF DFA|dcB AFE|FDD D2A:||
+|:def d2B|AFA AFA|def def|ede fdB|
+def d2B|AFA ABc|dcB AFE|FDD D2A:||
 T: Battering Ram
 K: Gmaj
-|:dBG BAG|dBG G2g|dBG AGE|GED D2B|
-dBG BAG|B/c/dB BAG|A3 BAB|1 GED D2B:|2 GED D2d||
-|:deg aga|bge edB|deg a3|bge ega|
-bag age|ged e/f/ge|dBG AGE|GED D2d:||
-|:B2G A2G|B2D D3|BAG AGE|GED Ddc|
-B2G A2G|B/c/dB BAG|AGA BAB|GED D2d:||
-T: Jimmy Ward's
+|:dBG BAG|dBG G2B|dBG AGE|GED D2B|
+dBG BAG|BdB BAG|AGA BAB|1 GED D2B:|2 GED D2B||
+|:deg aga|bge edB|deg aga|bge e2a|
+bag age|ged ege|dBG AGE|1 GED D2B:|2 GED D2c||
+|:B2G A2G|B2D D2c|BAG AGE|GED D2c|
+B2G A2G|BdB BAG|AGA BAB|1 GED D2c:|2 GED D2B ||
+T: Jimmy Ward's / Jim Ward's
 K: Gmaj
-|:G3 GAB|AGE GED|~G3 AGE|GED DEF|
-G3 GAB|AGE GAB|cBA BGE|1 DED DEF:|2 DED D3||
-|:cBA BAG|ABA AGE|cBA BGE|EDE GAB|
-cBA BAG|AAA ABc|dcA AGE|1 GED DAB:|2 GED DEF||
+|:~G3 GAB|AGE GED|~G3 AGE|GED DEF|
+~G3 GAB|AGE GAB|cBA BGE|1 DED DEF:|2 DED D2B||
+|:cBA BAG|ABA AGE|cBA BGE|DED D2B|
+cBA BAG|~A3 ABc|dcB AGE|1 GED D2B:|2 GED DEF||
 
 X: 17
 T: JIGS: Humours of Killarney Set
@@ -523,26 +523,26 @@ K: Edor
 X: 20
 T: JIGS: Kilmovee Set
 T: Kilmovee
-C: C: Trad.; S: Various
+C: C: Trad.; S: Conal O'Grada
 C: Set Leaders: Mars, Tania
-Z: [Unedited]; Phantom Button / Jeremy at The Session
+Z: Mars Agliullin ed.; Phantom Button / Jeremy at The Session
 N: https://thesession.org/members/26966/sets/94271
 R: Jig
 M: 6/8
 L: 1/8
 Q: 3/8=116
 K: Gmaj
-|:~G3 ~B3|GAB AGE|DEG B/c/d g|ege dBA|
-~G3 ~B3|ded AGE|DEG B/c/d g|1 edB G3:|2 edB G B/c/d||
-|:g2B dBG|AGE GED|G B/c/d ~g3|eag fed|
-~B3 dBA|GBG AGE|DEG B/c/d g|1 edB G B/c/d:|2 edB G||
+D|:~G3 ~B3|GAB AGE|DGB deg|ege edB|
+~G3 Bge|dBG AGE|DGB deg|1 edB G2D:|2 edB G3||
+|:~g3 dBG|ABA AGE|GBd g2f|eag fed|
+B2e dBA|GAB GED|GAB deg|1 edB G3:|2 edB G2||
 T: Lilting Fisherman
 K: Gmaj
-Bc|:dBG GBd|~g3 ege|dBG GFG|AFD cBA|
-dBG GBd|~g3 ege|dBG FGA|BGF G2B:||
+|:dBG GBd|~g3 ~e3|dBG GFG|AFD cBA|
+dBG GBd|~g3 ~e3|dBG FGA|1 BGF G2B:|2 BGF G3||
 K: Dmaj
-|:ABA AFA|~f3 f2e|dce dcB|AFF F2G|
-AFA A2d|BGB B2d|cBc ABc|1 dfe dcB:|2 dfe dB=c||
+|:~A3 AFA|~f3 f2e|dce dcB|AFF F2G|
+~A3 AFA|~B3 B2e|cec ABc|1 dfe d2B:|2 dfe dfe||
 
 X: 21
 T: JIGS: Leitrim Fancy Set
@@ -932,33 +932,33 @@ c>AB>G A>GE>D|c>de>c d2 e>g|a>ge>d c>AG>E|A2 A2 A2:||
 X: 35
 T: POLKAS: Ballinafad Set
 T: Ballinafad
-C: C: Trad. / Niel Gow / Trad.; S: Various
+C: C: Trad. / Niel Gow / Trad.; S: Seamus Hernon / Ann Kelsey; James Morrison & John McKenna
 C: Set Leaders: Mars, Anton
-Z: [Unedited]; gian marco / ceolachan at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; gian marco / ceolachan at The Session
 N: https://thesession.org/members/26966/sets/94260
 R: Polka
 M: 2/4
 L: 1/8
 Q: 1/4=140
 K: Gmaj
-B/c/B/A/ B/c/B/A/|BG G>B|AG FG|AB cd|
-B/c/B/A/ B/c/B/A/|BG GA/B/|AG FE|D2 DB/c/|
-d>e dB|cA A>c|BG EF|GF ED|
-B/c/B/A/ B/c/B/A/|BG G>B|AG FA|G2 Gg/a/||
-|:b2 b/a/g/f/|g2gd|f2 f/e/d/B/|c2cd/c/|
-BG gd|cA B/c/d|1 e2 f2|g2 d/e/g/a/:|2 ec fa|g2 d>c||
+BB/A/ BB/A/|BG G>B|AG FG|AB cd|
+B/c/B/A/ B/c/B/A/|BG G>B|AG FE|D2 DB/c/|
+de d>B|cA d2|BG EF|GF ED|
+B/c/B/A/ B/c/B/A/|BG GG/E/|DG F/G/A/F/|G2 G2||
+|:b2 b/a/g/f/|g2ge|f2 f/e/d/B/|c2cd/c/|
+BG gd|cA B/c/d|1 e2 f2|g2 d2:|2 e2 f2|g2 g2||
 T: Farewell to Whiskey
 K: Gmaj
-|:DG B/A/G/A/|BE E/F/G/E/|DG B/A/G/B/|dB Bd|
-e/f/g/e/ dB|c/B/A/G/ AB|DG B/A/G/A/|1 BG G>E:|2 BG G>B||
-|:dB gd|e/f/g/e/ dB/c/|dB gd|ef g2|
-e/f/g/e/ dB|c/B/A/G/ AB|DG B/A/G/A/|1 BG G>B:|2 BG G>E||
+|:DG B/A/G/A/|BE EG/E/|DG B/A/G/B/|dB Bd|
+e/f/g/e/ dB|c/B/A/G/ AB|DG B/A/G/A/|1 BG GG/E/:|2 BG G2||
+|:dB/d/ g>d|e/f/g/e/ dB|dB/d/ gd|ef g>d|
+e/f/g/e/ dB|c/B/A/G/ AB|DG B/A/G/A/|1 BG G2:|2 BG G2||
 T: Dark Girl Dressed in Blue
 K: Dmaj
-|:FA Ad|Bd A>F|GB AF/A/|BE G/F/E/D/|
-FA Ad|B/c/d/B/ A/B/A/F/|GB A/B/A/G/|FD D>E:||
-|:FA A/B/d/e/|f/e/f/d/ ed|Bd/B/ A/D/F/A/|BE G/F/E/D/|
-FA A/B/d/e/|f/e/f/d/ ed|Bd/B/ A/B/A/G/|FD D>E:||
+|:FA A>d|Bd A>F|GB AF/A/|BE G/F/E/D/|
+FA Ad|Bd AF|GB A/B/A/G/|1 FD D>E:|2 FD D2 ||
+|:FA A/B/d/e/|ff/d/ ed|B/c/d/B/ AF/A/|BE G/F/E/D/|
+FA A/B/d/e/|ff/d/ ed|BB A/B/A/G/|1 FD D2 :|2 FD D>E||
 
 X: 36
 T: POLKAS: Ballydesmond Set
@@ -1696,30 +1696,30 @@ T: REELS: Maids of Mount Kisco Set
 T: Maud Millar
 C: C: Trad. / Paddy Killoran (?) / Trad.; S: Various
 C: Set Leaders: Mars, Anton
-Z: [Unedited]; slainte / Torc / leprecawn at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; slainte / Torc / leprecawn at The Session
 N: https://thesession.org/members/26966/sets/94255
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Gmaj
-gf|edBA GEDE|G2BG dGBd|e2dB A2GA|Beed efgf|
-edBA GEDE|G2BG dGBd|e2dB A2GA|Beed e2ge||
-dega bgg2|agef g3e|dega bgg2|aged eage|
-dega bgg2|agef g3a|bgaf gfed|Beed e4||
+gf|edBA GEDE|G2BG d2Bd|eBdB A2GA|Beed efgf|
+edBA GEDE|G2BG d2Bd|eBdB A2GA|Beed efge||
+dega bg~g2|agef g2ge|dega bg~g2|aged eage|
+dega bg~g2|agef ~g3a|bgaf gfed|Beed ef||
 T: Maids of Mount Kisco
 K: Ador
-|:EA~A2 BGAG|EA~A2 BGAG|EG~G2 AG~G2|EG~G2 EGDG|
-EA~A2 BGAG|EA~A2 BABd|e~g3 afge|1 dBGB ~A3G:|2 dBGB A2dB||
-|:~A3B dBAB|G2BG DGBG|~A3B dGBd|1 efge dBGB:|2 efge d2 Bd||
-|:ea~a2 bgaf|gedB GABd|ea~a2 bgaf|gede g2eg|
-~a3f ~g3e|dedB GABd|eA~A2 efge|1 dBGB A2 Bd:|2 dBGB ~A3G||
+AG|:EA~A2 B2AG|EA~A2 BGAG|EG~G2 AG~G2|EG~G2 EGDG|
+EA~A2 B2AG|EA~A2 BABd|eg~g2 a2ge|1 dBGB A2AG:|2 dBGB ABdB||
+|:AGAB dBAB|G2BG DGBG|AGAB d2Bd|1 eg~g2 gedB:|2 eg~g2 egdg||
+|:ea~a2 b2af|gedB GABd|ea~a2 b2af|gede g2eg|
+a2ae ~g3e|dedB GABd|eA~A2 efge|1 dBGB A2Bd:|2 dBGB A2||
 T: Red-Haired Lass
 K: Gmaj
-DGGF G2 BG|G2 BG AGEG|DGGF GABd|egdB c2 BA|
-DGGF G2 BG|G2 BG AGEG|DGGF GABd|gedB c2 Bc||
-d2 gd edgd|d2 gd BABc|d2 gd edef|gedB c2 Bc|
-d2 gd edgd|d2 gd BABd|c3A B3A|GABd egdB||
+DGGF ~G2BG|~G2BG AGEG|DGGF GABd|egdB cBAG|
+DGGF ~G2BG|~G2BG AGEG|DGGF GABd|gedB cABc||
+d2gd edgd|d2gd BGBc|d2gd edef|gedB cABc|
+d2gd edgd|d2gd BGAB|c2cA B2BA|GA (3Bcd (3efg dB||
 
 X: 62
 T: REELS: Mulqueeney's Set
@@ -1779,66 +1779,64 @@ ABAF DFAF|G2BG dGBG|ABAF DFAF|GBAF E2 D2:||
 X: 64
 T: REELS: Torn Jacket Set
 T: Torn Jacket
-C: C: Connie O'Connell / Trad.; S: Tommy Guihen; Connie O'Connell / Bothy Band / Shaskeen
+C: C: Connie O'Connell / Trad.; S: Tommy Guihen; Connie O'Connell / Various / Shaskeen
 C: Set Leaders: Mars, Anton
-Z: Anton Zille ed.; Mars / UPipes & harp / DanG at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; Mars / UPipes & harp / DanG at The Session
 N: https://thesession.org/members/26966/sets/94278
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Dmaj
-|:~F3A d2 ed|cAAB cd e2|~F3A dfed|cAGE EDDE|
-~F3A dfed|cA~A2 B/c/d ec|dcde fded|cAGE ED D2:||
-|:FAdf ~a3f|g2 gf gfed|cA~A2 B/c/d ef|gfed cAGE|
-FAdf ~a3f|~g3a gfef|g2ba gfed|cAGE ED D2:||
+|:~F3A dfed|cAAB cdeA|~F3A dfed|cAGE EDDE|
+~F3A dfed|cAAB cdec|d2de fded|cAGE EDD2:||
+|:FAdf ~a3f|~g3g gfed|cA~A2 (3Bcd ef|gfed cAGE|
+FAdf ~a3f|~g3g gfef|~g2ba gfed|cAGE EDD2:||
 T: Morning Star
 K: Gmaj
-B2 BA BGEF|G2 Bd efgd|~B3A BGEF|GBAF G3A|
-~B3A BGEF|GABd efge|dBAc BGEF|GBAF G3A||
-Bdef g2 eg|f2 df eBBA|B/c/d ef g2 eg|fedf e2 ed|
-B/c/d ef ~g2 eg|~f2 df eBBA|Bdef g2 bg|faaf gfed||
+~B2 Ad BGED|GA (3Bcd edgd|~B2Ad BGED|GBAF ~G3A|
+~B3A BGEF|GABd efge|dBAc BGEF|GBAF ~G3A||
+(3Bcd ef g2 eg|fedf edBA|(3Bcd ef g2eg|fedf e2ed|
+(3Bcd ef ~g2 eg|fedf edBA|Bdd^c d3g|fgaf gfed||
 T: Shaskeen
 K: Gmaj
-|:DG~G2 ABcA|dfed cAAc|~B3G ~A3F|GBAG FGEF|
-DG~G2 ABcA|dfed cAAe|~f3g fdcA|1 AGFA G2 GF:|2 AGFA G2B||
-dggf g2 fg|abag fddc|~B3G ~A3F|GBAG FD D2|
-dggf g2 fg|abag fdde|fd~d2 edcA|AGFA G3B|
-dggf ~g2 fg|~a3g fddc|~B2 GB ~A2 FA|GBAG FD D2|
-BG~G2 AF~F2|dB~B2 cA~A2|fd~d2 edcA|AGFA G4||
+|:DG~G2 ABcA|dged cA~A2|~B2GB ADFA|GBAG FGEF|
+DG~G2 ABcA|dged cA~A2|~f2eg fdcA|1 AGFA ~G3E:|2 AGFA ~G2Bc||
+|: dggf ~g2fg|abag fddc|~B2GB ADFA|GBAG FDD2|
+|1 dggf ~g2fg|~a3g fdde|(3fga eg fdcA|AGFA ~G2Bc:||
+|2 BG~G2 AF~F2|dB~B2 cA~A2|~f2ea fdcA|AGFA G3||
 
 X: 65
 T: REELS: Trip to Birmingham Set
 T: Trip to Birmingham
 C: C: Josie McDermott / Dan Cleary / Phil Murphy; S: Various
 C: Set Leaders: Mars, Tania, Anton
-Z: [Unedited]; slainte / SPeak / Kenny at The Session
+Z: Mars Agliullin ed., Anton Zille ed.; slainte / SPeak / Kenny at The Session
 N: https://thesession.org/members/26966/sets/94276
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Gmaj
-|:DGGF G2Bd|~e3d edBA|~G3B dGBG|ABAG EFGE|
-DGGF G2Bd|~e3d efga|bg~g2 ageg|dBAB G3:||
-e|dggf g2 ga|bg~g2 edBA|~G3B dGBG|ABAG EFG2|
-dggf g2 ga|bg~g2 edBA|~G3B dGBG|AGFA G3e|
-dggf g2 ga|bg~g2 edBA|~G3B dGBG|ABAG EFG2|
-dg~g2 ag~g2|bg~g2 edBA|~G3B dGBG|AGFA G3||
+E|:DGGF G2Bd|e2ed edBA|~G2BG dGBG|ABAG EGDE|
+DGGF G2Bd|~e3d efga|bg~g2 ageg|1 dBAB ~G3E:|2 dBAB ~G3z ||
+|:dggf g2ga|~b2ag edBA|G2BG dGBG|ABAG EGD2|
+|1 dggf ~g3a|~b2ag edBA|~G3B d2BG|AGFA ~G3z:||
+|2 dg~g2 ag~g2|~b2ag edBA|~G3B d2BG|AGFA ~G3||
 T: Trip to Durrow
 K: Dmaj
-|:D2DF ADFA|dfed B3c|dBBA dBBA|FADE FE E2|
-D2DF ADFA|dfed B3c|dBBA FAdB|AFEG FD D2:||
-|:dcde fefg|afdf gfed|B/c/d ef gebe|gebe gfef|
-d2de fefg|afdf gfed|B/c/d ef gbag|fdec d2de|
-fdec d2de|fded B3c|dBBA dBBA|FADE FE E2|
-D2DF ADFA|dfed B3c|dBBA FAdB|AFEG FD D2:||
+|:D2DF ADFA|dfed ~B3c|dB~B2 dB~B2|ABDE FEEF|
+D2DF ADFA|dfed ~B3c|dB~B2 ABdB|AFEG FDD2:||
+|:d2de ~f3a|afdf gfed|(3Bcd ef gebe|gebe gfef|
+d2de ~f3a|afdf gfed|(3Bcd ef gbag|fgef d2de|
+fdec d2de|fdec B2Bc|dB~B2 dB~B2|ABDE FEEF|
+D2DF ADFA|dfed ~B3c|dB~B2 ABdB|AFEG FDD2:||
 T: Trip to Cullenstown (Gmaj)
 K: Gmaj
-|:d2 de dBGA|B2 BG AGEG|d2 de dBGA|BAAG A4|
-BABd e2 dB|dedB AGEG|B2 BG AGEG|1 DGGF GABc:|2 DGGF G3 A||
-|:Bd d2 ce e2|d2 de dBGA|Bd d2 ed d2|gedB A4|
-BABd e2 dB|dedB AGEG|B2 BG AGEG|DGGF G4:||
+|:d2de dBGA|B2BG AGEG|~d3e dBGA|BAAG A2GA|
+Bddd e2dB|dedB AGEA|~B3G AGEG|1 DGGF ~G3B:|2 DGGF ~G3A||
+|:Bd~d2 edge|d2de dBGA|Bd~d2 e2de|gedB ~A2GA|
+Bd~d2 e2dB|dedB AGEA|~B3G AGEG|1 DGGF ~G3A:|2 DGGF ~G3B||
 
 X: 66
 T: REELS: Tune for the Girls Set
@@ -2029,7 +2027,7 @@ bbb b2a b2a f2e|1 def a2f e2e efa:|2 def a2f g2f e2d||
 X: 73
 T: SLIDES: Denny Mescall's Set
 T: Bank of Turf [Single Jig]
-C: C: Trad. / Trad. / Mike Scott; S: Various
+C: C: Trad. / Trad. / Mike Scott; S: Aoife Granville; Denis Murphy / Various / Jonas Sarajarvi; Séamus Begley
 C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed., Anton Zille ed., Oleg Naumov arr.; Mars at The Session
 N: https://thesession.org/members/26966/sets/94265
@@ -2038,17 +2036,17 @@ M: 12/8
 L: 1/8
 Q: 3/8=130
 K: Dmaj
-d2 B|:"D"ABA DFA "G"BAF "D"DFA|"D"dcd "A"ede "D"~f3 def|
-"G"~g3 gab "D"afd Bcd|1 "Em"efe e2d "A"cBA Bcd:|2 "A"ABA efe "D"d3 dcd||
+d2 B|:"D"ABA DFA "G"BAF "D"DFA|"D"dAA "A"eAA "D"~f3 def|
+"G"~g3 gab "D"afd Bcd|1 "Em"efe ~e2d "A"cBA Bcd:|2 "A"ABA efe "D"d3 dcd||
 |:"A"e2A efg "D"f2d fga|"G"gfe "D"fed "A"edB ABd|
 "A"eAA efg "D"fdd fga|1 "G"gfe "D"dcB "A"A3 ABd:|2 "G"gfe "D"dcB "A"AFA Bcd||
 T: Denny Mescall's [Slide]
 R: Slide
 K: Gmaj
-|:"G"B3 BAB dBA G3|"G/B"GBd g2e "C"d2B "D"A2G|
-"G"B3 BAB dBA "(D)"G2B|"Em"ded "D"cBA "G"G3 "(C)"G3:||
-|:"G"g2g gfe d2B "G/B"c2d|"Cadd9"e2a a2b "D"a2g e2f|
-"Em"g2g gfe "D/B"d2B c2d|"C"efg "D"fgf "G"g3 g3:||
+|:"G"~B3 BAB dBA G3|"G/B"GBd g2e "C"d2B "D"A2G|
+"G"~B3 BAB dBA "(D)"G2B|1 "Em"ded "D"cBA "G"G3 "(C)"G3:|2 "Em"ded "D"cBA "G"G3 GBd||
+|: "G"~g3 gfe d2B "G/B"c2d|"Cadd9"e2a "D"a2b a2g e2f|
+"Em"~g3 gfe "D/B"d2B c2d|"C"efg "D"fga "G"g3 g3:||
 T: Kings of Kerry [Slide]
 K: Amaj
 "A"c3 cBA F2A E2A|"A"F2A E2c "E"B3 BAB|

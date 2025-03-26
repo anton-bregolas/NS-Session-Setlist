@@ -245,7 +245,7 @@
       {
         "title": "Pop No. 3",
         "meter": "2/4",
-        "chords": "PART 1:\n|\tBm\tBm\t|\tBm(G)\tBm\t|\tEm\tA\t|\tBm(Em)\t(A/F#)\t|\n|\tBm(G)\tEm\t|\tG (Bm)\tA A\t|\tBm\tBm\t|\tBm\tBm\t|\n|\tEm\tG\t|\tBm\tBm\t|\tBm\tEm\t|\tA\t(A/F#)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\t(A/F#)\t|\tBm\tBm\t|\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\t\t(A)\t||"
+        "chords": "PART 1:\n|\tBm\tBm\t|\tBm\t(G)\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tG (Bm)\tA A\t|\n|\tBm\tBm\t|\tBm\tBm\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tA\t(A/F#)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\t(A/F#)\t|\tBm\tBm\t|\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\t\t(A)\t||"
       }
     ]
   },
@@ -465,7 +465,7 @@
       {
         "title": "Denny Mescall's [Slide]",
         "meter": "12/8",
-        "chords": "PART 1:\n|\tG\tG\t|\tG/B G/B\tC D\t|\tG\t(D)\t|\tEm D\tG (C)\t||\n\nPART 2:\n|\tG\tG/B\t|\tCadd9\tD\t|\tEm\tD/B\t|\tC D\tG G\t||"
+        "chords": "PART 1:\n|\tG\tG\t|\tG/B G/B\tC D\t|\tG\t(D)\t|1\tEm D\tG (C)\t|\n|2\tEm D\tG G\t||\n\nPART 2:\n|\tG\tG/B\t|\tCadd9\tD\t|\tEm\tD/B\t|\tC D\tG G\t||"
       },
       {
         "title": "Kings of Kerry [Slide]",

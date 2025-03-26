@@ -15,7 +15,20 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-v.0.8.5: Encoder Upgrade (Add & Apply Session Survey Data)
+<details>
+  <summary>v.0.8: Encoder Upgrade</summary>
+
+<details>
+<summary>v.0.8.6: Encoder Upgrade (Session DB Update)</summary>
+
++ Session DB updates:
+  - Session DB updated to 2025-03-26
+  - Sets & Tunes from Mars added (v.2)
+  - Minor tweaks to Sets & Tunes from Mars
+</details>
+
+<details>
+<summary>v.0.8.5: Encoder Upgrade (Add & Apply Session Survey Data)</summary>
 
 + Project updates:
   - ABC Encoder: Session Survey Data in .tsv format can now be added in Encoder Settings
@@ -49,8 +62,9 @@ v.0.8.5: Encoder Upgrade (Add & Apply Session Survey Data)
   - Session DB updated to 2025-03-23
   - Removed commenting from chords ("^) after ABC Tools update
   - Minor ABC tweaks
-
-v.0.8.4: Encoder Upgrade (Chord Viewer Module)
+</details>
+<details>
+<summary>v.0.8.4: Encoder Upgrade (Chord Viewer Module Styles)</summary>
 
 + Project updates:
   - Chord Viewer: All Chord Viewer styles moved to separate stylesheet (second stage of migration)
@@ -78,8 +92,9 @@ v.0.8.4: Encoder Upgrade (Chord Viewer Module)
 
 + Session DB updates:
   - Session DB updated to 2025-03-22
-
-v.0.8.3: Encoder Upgrade (Chord Viewer Module)
+</details>
+<details>
+<summary>v.0.8.3: Encoder Upgrade (Chord Viewer Module Migration)</summary>
 
 + Project updates:
   - Chord Viewer: All Chord Viewer scripts moved to separate module (first stage of migration)
@@ -129,22 +144,25 @@ v.0.8.3: Encoder Upgrade (Chord Viewer Module)
   - Galtee Hunt Set updated
   - Leitrim Fancy Set updated
   - Minor ABC title tweaks
-
-v.0.8.2: Encoder Upgrade (Session DB Update)
+</details>
+<details>
+<summary>v.0.8.2: Encoder Upgrade (Session DB Update)</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-03-17
   - Sets & Tunes from Alexey added (v.1)
   - Sets & Tunes from Sophie added (v.1)
   - Sets & Tunes from Oleg added (v.1)
-
-v.0.8.1: Encoder Upgrade (Session DB Update)
+</details>
+<details>
+<summary>v.0.8.1: Encoder Upgrade (Session DB Update)</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-03-09
   - Chords from Oleg added to 25 sets (& Anton ed. arr.)
-
-v.0.8.0: Encoder Upgrade (Refactor, Automation & Metadata Fetching)
+</details>
+<details>
+<summary>v.0.8.0: Encoder Upgrade (Refactor, Automation & Metadata Fetching)</summary>
 
 + Project updates:
   - ABC Encoder: New upgraded processing of import ABC fixing Sort-via-Encode issues
@@ -178,11 +196,13 @@ v.0.8.0: Encoder Upgrade (Refactor, Automation & Metadata Fetching)
   - Session DB updated to 2025-03-08
   - Sets & Tunes from Anton added (v.2)
   - Minor automated ABC tweaks
+</details>
+</details>
+<details>
+  <summary>v.0.7: Generate Chordbook</summary>
 
 <details>
-  <summary>v.0.7.*: Generate Chordbook</summary>
-  
-v.0.7.7: Responsive Chordbook (Syncopation Handling & ABC Cleanup)
+<summary>v.0.7.7: Responsive Chordbook (Syncopation Handling & ABC Cleanup)</summary>
 
 + Project updates:
   - Chords Viewer: Proper handling of ABC bars with syncopated chord arrangements
@@ -221,8 +241,9 @@ v.0.7.7: Responsive Chordbook (Syncopation Handling & ABC Cleanup)
   - Sets & Tunes from André added (v.1)
   - Sets & Tunes from Vova added (v.1)
   - Stick Across the Hob Set added (Oliushka)
-
-v.0.7.6: Responsive Chordbook (Smart Chord-Beats Recovery)
+</details>
+<details>
+<summary>v.0.7.6: Responsive Chordbook (Smart Chord-Beats Recovery)</summary>
 
 + Project updates:
   - ABC Encoder: Chords extractor now detects and fills in the missing chords in incomplete bars
@@ -247,8 +268,9 @@ v.0.7.6: Responsive Chordbook (Smart Chord-Beats Recovery)
   - Session DB updated to 2025-02-28
   - Chords from Oleg added to six sets
   - Petranu-Valse and Trip to Skye set chords fixed
-
-v.0.7.5: Responsive Chordbook (Responsive Chords Popover & Launcher)
+</details>
+<details>
+<summary>v.0.7.5: Responsive Chordbook (Responsive Chords Popover & Launcher)</summary>
 
 + Project updates:
   - Launcher, Encoder, Playalong: Responsive app layout separate from Tunebook
@@ -300,8 +322,9 @@ v.0.7.5: Responsive Chordbook (Responsive Chords Popover & Launcher)
   - Session DB updated to 2025-02-25
   - Chords added to Galtee Rangers Set to test both duple- and triple-time tunes in Chords Popover
   - Minor ABC tweaks
-
-v.0.7.4: Generate Chordbook (Chords Popover Basic)
+</details>
+<details>
+<summary>v.0.7.4: Generate Chordbook (Chords Popover Basic)</summary>
 
 + Project updates:
   - Basic implementation of fullscreen Chords Popover with tabulation
@@ -317,8 +340,9 @@ v.0.7.4: Generate Chordbook (Chords Popover Basic)
 
 + Session DB updates:
   - Session DB updated to 2025-02-19
-
-v.0.7.3: Generate Chordbook (Bug Fixes, 3p Modules & Popover Polyfill)
+</details>
+<details>
+<summary>v.0.7.3: Generate Chordbook (Bug Fixes, 3p Modules & Popover Polyfill)</summary>
 
 + Project updates:
   - ABC Encoder scripts refactored
@@ -346,8 +370,9 @@ v.0.7.3: Generate Chordbook (Bug Fixes, 3p Modules & Popover Polyfill)
 
 + Session DB updates:
   - Session DB updated to 2025-02-19
-
-v.0.7.2: Generate Chordbook (Popovers For Options & Chords)
+</details>
+<details>
+<summary>v.0.7.2: Generate Chordbook (Popovers For Options & Chords)</summary>
 
 + Project updates:
   - Launcher: Menu Popover with App Options checkboxes added with styles and scripts
@@ -376,8 +401,9 @@ v.0.7.2: Generate Chordbook (Popovers For Options & Chords)
 
 + Session DB updates:
   - Session DB updated to 2025-02-18
-
-v.0.7.1: Generate Chordbook (Chordbook Tweaks & Naming Update)
+</details>
+<details>
+<summary>v.0.7.1: Generate Chordbook (Chordbook Tweaks & Naming Update)</summary>
 
 + Project updates:
   - Naming convention update: All JSONs now use camelCase in object key names for consistency
@@ -398,8 +424,9 @@ v.0.7.1: Generate Chordbook (Chordbook Tweaks & Naming Update)
   - Sets and Tunes JSON objects now use key names "name", "leaders", "type", "url"
   - Chords JSONs now use key names "title", "chords" for Tune object and "setTitle", "tuneChords" for Set object
   - tunesets.json renamed to sets.json
-
-v.0.7.0: Generate Chordbook
+</details>
+<details>
+<summary>v.0.7.0: Generate Chordbook</summary>
 
 + Project updates:
   - ABC Encoder: ABC Sort now generates Chords JSONs for Tunes and Sets
@@ -434,13 +461,13 @@ v.0.7.0: Generate Chordbook
 + Session DB updates:
   - Session DB updated to 2025-02-17
   - Test Chords JSONs added (chords-sets.json, chords-tunes.json)
-
 </details>
+</details>
+<details>
+  <summary>v.0.6: Convert Sets to Tunes</summary>
 
 <details>
-  <summary>v.0.6.* Convert Sets to Tunes</summary>
-
-v.0.6.6: Convert Sets to Tunes (Testing Medley Splitting)
+<summary>v.0.6.6: Convert Sets to Tunes (Testing Medley Splitting)</summary>
 
 + Project updates:
   - ABC and ABC Encoder Tests converted to LF for consistency
@@ -452,8 +479,9 @@ v.0.6.6: Convert Sets to Tunes (Testing Medley Splitting)
 
 + Session DB updates:
   - Session DB updated to 2025-02-15
-
-v.0.6.5: Convert Sets to Tunes (Fixes & DB Update)
+</details>
+<details>
+<summary>v.0.6.5: Convert Sets to Tunes (Fixes & DB Update)</summary>
 
 + Project updates:
   - ABC Encoder: Fixes and improvements for ABC field value handler functions
@@ -466,8 +494,9 @@ v.0.6.5: Convert Sets to Tunes (Fixes & DB Update)
 + Session DB updates:
   - Session DB updated to 2025-02-12
   - Formatting of multiple value C: C: S: and Z: fields standartised
-
-v.0.6.4: Convert Sets to Tunes (Correct ABC Field Splitting)
+</details>
+<details>
+<summary>v.0.6.4: Convert Sets to Tunes (Correct ABC Field Splitting)</summary>
 
 + Project updates:
   - ABC Encoder: ABC Sort now passes Z: and C: C: S: field values for processing when splitting Sets into Tunes
@@ -482,8 +511,9 @@ v.0.6.4: Convert Sets to Tunes (Correct ABC Field Splitting)
 
 + Tests updates:
   - Minor fixes in expected test output ABCs
-
-v.0.6.3: Convert Sets to Tunes (Testing ABC Field Splitting)
+</details>
+<details>
+<summary>v.0.6.3: Convert Sets to Tunes (Testing ABC Field Splitting)</summary>
 
 + Project updates:
   - Tests: Additional tests for handling of custom ABC fields set up in Vitest
@@ -491,8 +521,9 @@ v.0.6.3: Convert Sets to Tunes (Testing ABC Field Splitting)
 + Tests updates:
   - New tests added for checking if ABC Sort correctly splits custom C: C: S: and Z: field values of a Set between several Tunes
   - Variations of N.S.S.S. Sets of Tunes added for testing (abcImportProcessedNsssSet, abcImportMultiComposerNsssSet, abcImportMultiZNsssSet, abcImportMultiZAndComposerNsssSet)
-
-v.0.6.2: Convert Sets to Tunes (Setting up Tests)
+</details>
+<details>
+<summary>v.0.6.2: Convert Sets to Tunes (Setting up Tests)</summary>
 
 + Project updates:
   - ABC Encoder: Fine-tuning ABC Sort scripts with help of unit tests
@@ -508,8 +539,9 @@ v.0.6.2: Convert Sets to Tunes (Setting up Tests)
   - ABC Encoder tests file created (scripts-abc-encoder.test.js)
   - Sample TSO Set of Tunes added for testing (abcImportRawTsoSet)
   - Tests checking how ABC Sort handles addition of custom fields and Sets to Tunes conversion added
-
-v.0.6.1: Convert Sets to Tunes (Set to Tunes Tweaks)
+</details>
+<details>
+<summary>v.0.6.1: Convert Sets to Tunes (Set to Tunes Tweaks)</summary>
 
 + Project updates:
   - ABC Encoder: Title Case formatting in Sort refactored to allow for exceptions (titles in Irish etc.)
@@ -526,8 +558,9 @@ v.0.6.1: Convert Sets to Tunes (Set to Tunes Tweaks)
   - Session DB updated to 2025-02-05
   - Sets & Tunes from Oliushka added (v.1)
   - Sets & Tunes from Anton added (v.1)
-
-v.0.6.0: Convert Sets to Tunes
+</details>
+<details>
+<summary>v.0.6.0: Convert Sets to Tunes</summary>
 
 + Project updates:
   - ABC Encoder: Sort now automatically generates ABC Tunebook from Sets
@@ -566,13 +599,13 @@ v.0.6.0: Convert Sets to Tunes
   - Tune Type in T: fields is now indicated in []
   - Tune Keys in T: are now (Amaj) instead of (A)
   - Z: field standard fixed for auto-sorting: "Editor 1, Editor 2; TSO Source 1 / TSO Source N"
-
 </details>
+</details>
+<details>
+  <summary>v.0.5: Save & Restore Tunes</summary>
 
 <details>
-  <summary>v.0.5.* Save & Restore Tunes</summary>
-
-v.0.5.5: Session DB Update
+<summary>v.0.5.5: Session DB Update</summary>
 
 + Project updates:
   - ABC Encoder: Now exports tab-separated plain text Tunelist in addition to JSON file
@@ -588,26 +621,30 @@ v.0.5.5: Session DB Update
 + Session DB updates:
   - Session DB updated to 2025-01-31
   - Sets & Tunes from Olya added (v.1)
-
-v.0.5.4: Session DB Update
+</details>
+<details>
+<summary>v.0.5.4: Session DB Update</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-01-28
   - Sets & Tunes from Tania added (v.1)
   - Minor fixes in Mars and Tania Sets & Tunes
-
-v.0.5.3: Session DB Update
+</details>
+<details>
+<summary>v.0.5.3: Session DB Update</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-01-26
   - Sets & Tunes from Mars added (v.1)
-
-v.0.5.2: Session DB Update
+</details>
+<details>
+<summary>v.0.5.2: Session DB Update</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-01-25
-
-v.0.5.1: Save & Restore Tunes (Save Last Set & Last Tune)
+</details>
+<details>
+<summary>v.0.5.1: Save & Restore Tunes (Save Last Set & Last Tune)</summary>
 
 + Project updates:
   - Tunebook:	Sets and Tunes are now saved and restored separately on Tunebook launch and switch 
@@ -627,8 +664,9 @@ v.0.5.1: Save & Restore Tunes (Save Last Set & Last Tune)
   - Session DB updated to 2025-01-24
   - Proper Case tune type naming tweak
   - ABC fixes & tweaks (added to encoded tunes)
-
-v.0.5.0: Save & Restore Tunes
+</details>
+<details>
+<summary>v.0.5.0: Save & Restore Tunes</summary>
 
 + Project updates:
   - Tune items are now saved and restored on Tunebook launch
@@ -652,13 +690,13 @@ v.0.5.0: Save & Restore Tunes
   - Session DB updated to 2025-01-22
   - ABC fixes & tweaks
   - Soundslice links added
-
 </details>
+</details>
+<details>
+  <summary>v.0.4: Tunebook Filter Options</summary>
 
 <details>
-  <summary>v.0.4.* Tunebook Filter Options</summary>
-
-v.0.4.4: Filter Options (Tune Load Tweaks)
+<summary>v.0.4.4: Filter Options (Tune Load Tweaks)</summary>
 
 + Project updates:
   - Tunebook now loads the first Set or Tune item into ABC Tools on launch or section switch
@@ -672,21 +710,24 @@ v.0.4.4: Filter Options (Tune Load Tweaks)
   - Session DB updated to 2025-01-21
   - Sources added to new tunes & sets
   - ABC fixes & tweaks
-
-v.0.4.3: Filter Options (Session DB Update)
+</details>
+<details>
+<summary>v.0.4.3: Filter Options (Session DB Update)</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-01-20
   - Tempos (Q:) standardised
   - ABC fixes & tweaks
-
-v.0.4.2: Filter Options (Session DB Update)
+</details>
+<details>
+<summary>v.0.4.2: Filter Options (Session DB Update)</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-01-18
   - Four draft sets of various tune types added for Filter Options testing
-
-v.0.4.1: Filter Options (Menu Fixes)
+</details>
+<details>
+<summary>v.0.4.1: Filter Options (Menu Fixes)</summary>
 
 + Project updates:
   - Rolled back and fixed some changes causing errors in Tabs / MIDI menu after refactoring
@@ -700,8 +741,9 @@ v.0.4.1: Filter Options (Menu Fixes)
   - ABC Tools: injectInstrument refactored, errors fixed
   - Launcher: Fixed tuneSelector values being set to -1
   - Launcher: refreshTabsDisplayOptions added
-
-v.0.4.0: Filter Options (Initial commit)
+</details>
+<details>
+<summary>v.0.4.0: Filter Options (Initial commit)</summary>
 
 + Project updates:
 	- Tunebook:	Filter options implemented, Tunebook can now be filtered by Tune Type or Set Leader
@@ -726,13 +768,13 @@ v.0.4.0: Filter Options (Initial commit)
 + Session DB updates:
   - Session DB updated to 2025-01-17
   - Encoded ABCs now include Type and Leaders keys
-
 </details>
+</details>
+<details>
+  <summary>v.0.3: ABC Encoder</summary>
 
 <details>
-  <summary>v.0.3.* ABC Encoder</summary>
-
-v.0.3.2: ABC Encoder (Encoder tweaks)
+<summary>v.0.3.2: ABC Encoder (Encoder tweaks)</summary>
 
 + Project updates:
 	- ABC Encoder: ABC cleanup logic tweaked, optional algorithms added, documentation improved
@@ -745,8 +787,9 @@ v.0.3.2: ABC Encoder (Encoder tweaks)
 		- Regex and step-by-step implementations added to removeTextAfterLineBreaksInAbc
 		- Custom Type JSON key naming fixed in encodeTunesForAbcTools
 		- Subheaders and comments added to scripts-abc-encoder.js
-
-v.0.3.1: ABC Encoder (Encoder scripts)
+</details>
+<details>
+<summary>v.0.3.1: ABC Encoder (Encoder scripts)</summary>
 
 + Project updates:
 	- ABC Encoder: 
@@ -770,8 +813,9 @@ v.0.3.1: ABC Encoder (Encoder scripts)
   - Session DB updated to 2025-01-16
   - Missing R fields added to tunes and sets
   - Order of R: -> M: -> L: -> Q -> K standardised
-
-v.0.3.0: ABC Encoder (Initial commit)
+</details>
+<details>
+<summary>v.0.3.0: ABC Encoder (Initial commit)</summary>
 
 + Project updates:
 	- ABC Encoder:
@@ -812,20 +856,21 @@ v.0.3.0: ABC Encoder (Initial commit)
 
 + Session DB updates:
   - Session DB updated to 2025-01-15
-  - MIDI instructions removed from encoded data files, to be injected dynamically (injectInstrument)
+  - MIDI instructions removed from encoded data files, to be injected dynamically (injectInstrument)</details>
 </details>
+<details>
+  <summary>v.0.2: Play Along Page</summary>
 
 <details>
-  <summary>v.0.2.* Play Along Page</summary>
-
-v.0.2.3: Session DB Update
+<summary>v.0.2.3: Session DB Update</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-01-12
   - Spaces added between ABCs
   - Titles updated to restore "unsafe" characters
-
-v.0.2.2: Play Along Page (Styles updated)
+</details>
+<details>
+<summary>v.0.2.2: Play Along Page (Styles updated)</summary>
 
 + HTML updates:
   - Playalong page: 
@@ -837,8 +882,9 @@ v.0.2.2: Play Along Page (Styles updated)
   - Playalong page:
     - Outline gradient added via div with abs positioning & negative margins
     - Link hover styles updated
-
-v.0.2.1: Play Along Page (Basic HTML)
+</details>
+<details>
+<summary>v.0.2.1: Play Along Page (Basic HTML)</summary>
 
 + Project updates:
   - Playalong page: Thumbnails updated
@@ -848,25 +894,27 @@ v.0.2.1: Play Along Page (Basic HTML)
 
 + CSS updates:
   - Playalong page: Basic styles added
-
-v.0.2.0: Play Along Page (Initial commit)
+</details>
+<details>
+<summary>v.0.2.0: Play Along Page (Initial commit)</summary>
 
 + Project updates:
-  - Playalong thumbnails added
-</details>
+  - Playalong thumbnails added</details></details>
 
 <details>
-  <summary>v.0.1.* Initial App Outline</summary>
+  <summary>v.0.1: Initial App Outline</summary>
 
-v.0.1.1: Session DB Update
+<details>
+<summary>v.0.1.1: Session DB Update</summary>
 
 + Session DB updates:
   - Session DB updated to 2024-12-22
   - Naming format changed for C: / S: fields
   - Naming format standardised for C: Set Leaders field
   - Z: [Transcription By] and N: [Link to the Set] fields added
-
-v.0.1.0: Initial App Version 
+</details>
+<details>
+<summary>v.0.1.0: Initial App Version </summary>
 
 + Project updates:
   - Project structure reorganised to suit transition to Progressive Web App (PWA)
@@ -898,8 +946,9 @@ v.0.1.0: Initial App Version
 
 + Session DB updates: 
   - Session DB updated to 2024-12-06
-
-v.0.0.2
+</details>
+<details>
+<summary>v.0.0.2: Tunebook Outline</summary>
 
 + Basic session page customizations:
 
@@ -921,9 +970,8 @@ v.0.0.2
 
 + Session DB updates: 
   - Session DB updated to 2024-12-05
-
-v.0.0.1
-
-+ Initial commit of raw export website file from Michael Eskin's ABC Transcription Tools.
-
 </details>
+<details>
+<summary>v.0.0.1: Initial Commit</summary>
+
++ Initial commit of raw export website file from Michael Eskin's ABC Transcription Tools.</details></details>
