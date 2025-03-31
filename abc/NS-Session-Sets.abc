@@ -122,8 +122,8 @@ T: Rights of Man
 K: Emin
 |:GA|"Em"BcAB GAFG|"Em"EFGA B2 ef|"C"gfed edBd|"D"cBAG A2GA|
 "Em"BcAB GAFG|"Em"EFGA B2ef|"C"gfed "D"Bgfg|"Em"e2 E2 E2:||
-|:ga|"Em"babg efga |"Em"babg "A"egfe |"D"d2d^c defg|"D"afdf "Bm"a2 gf|
-"Em (C)"edef "(D)"gfga |"Em (G)"bg"(D)"af "D (C)"gfef|"C (Am)"gfed "Bm"Bgfg|"Em"e2 E2 E2:||
+|:ga|"Em"babg efga |"Em"babg "A"egfe |"D"d2d^c defg|"D"afdf "(Bm)"a2 gf|
+"Em (C)"edef "(D)"gfga |"(G)"bg"(D)"af "D (C)"gfef|"C (Am)"gfed "Bm"Bgfg|"Em"e2 E2 E2:||
 
 X: 6
 T: HORNPIPES: Plains of Boyle Set
@@ -388,7 +388,7 @@ L: 1/8
 Q: 3/8=116
 K: Gmaj
 |:GBA G2B|def gdB|GBA G2B|AFD AFD|
-GBA G2B|def gfg|e/f/ge dBA|BGG G2D:||
+GBA G2B|def gfg|e/f/ge dBA|1 BGG G2D:|2 BGG GBd||
 |:efe edB|def gfg|efe edB|dBA ABd|
 efe edB|def gfg|e/f/ge dBA|1 BGG G2d:|2 BGG G2D||
 T: Frieze Breeches / Cúnla
@@ -576,7 +576,7 @@ T: JIGS: Lounge Bar Set
 T: Henry Blogg
 C: C: Andy Cutting / Annlaug Børsheim; S: Leveret / Annlaug Børsheim & Rannveig Djönne
 C: Set Leaders: Sophie, Anton
-Z: [Unedited]; Bregolas / Tom L at The Session
+Z: Anton Zille ed.; Bregolas / Tom L at The Session
 N: https://thesession.org/members/26966/sets/92009
 R: Jig
 M: 6/8
@@ -672,7 +672,7 @@ T: Scully Casey's
 R: Single Jig
 M: 12/8
 K: Dmaj
-A|dcd AGE =F2G A2B|=cBc A2c cBc ABc|
+dcd AGE =F2G A2B|=cBc A2c cBc ABc|
 dcd AGE =F2G A2g|fed edc d2e f2e|
 dcd AGE =F2G A2B|=cBc A2c cBc ABc|
 dcd AGE =F2G A2g|fed edc d3 d2A||
@@ -681,13 +681,12 @@ d2e f2g ~a3 agf|ecA ABc d3 d2A|
 d2e ~f2g ~a3 afd|B=cd e2f ~g3 ge/f/g|
 agf gfe fed edc|dcA ABc d2e f2e||
 T: Bimíd ag Ól
-R: Jig
 M: 6/8
 K: Gmaj
-|:F|DGA ~B3|cBc ~d3|DGA B2 d|cAG AGF|
-DGA ~B3|cBc def|~g3 afd|cAF G2:||
-|:D|GBd ~g3|gfd ~f3|GBd ~g3|gfd cAF|
-GBd ~g3|gag efg|abg afd|cAF G2:||
+|:DGA ~B3|cBc ~d3|DGA B2 d|cAG AGF|
+DGA ~B3|cBc def|~g3 afd|cAF G2D:||
+|:GBd ~g3|gfd =f3|GBd ~g3|gfd cAF|
+GBd ~g3|gag f2g|abg afd|cAF G3:||
 
 X: 26
 T: JIGS: Stick Across the Hob Set
@@ -1036,7 +1035,7 @@ ef/e/ ce|fe a2|ef/e/ ce|fe c/B/A|
 ef/e/ ce|fe a2|ef/e/ dB|BA A2:||
 T: Cobbler's
 K: Bmin
-Bc|:dB bB|de f>e|dB bB|c/B/A/c/ ef/e/|
+B>c|:dB bB|de f>e|dB bB|c/B/A/c/ ef/e/|
 dB bB|de f>e|d>e f/e/d|1  B2 B>c:|2  B2B2||
 |:fe/f/ ba|fe f>e|dB bB|c/B/A/c/ ed/e/|
 fe/f/ ba|fe f>e|d>e f/e/d|1  B2 B2:|2 B2 B>c||
@@ -1324,8 +1323,8 @@ Q: 1/4=140
 K: Dmaj
 |:AG|"D"FG/F/ ED|"D"dc/d/ "D/F#"e>d|"G"cA AF|"A"G2 AG|
 "D"FG/F/ ED|"D"dc/d/ "D/F#"e/f/e/d/|"G"cA Bd|1 "A"A2:|2 "A"A2 Af/g/||
-|:"D"af ge|"D"fd "D/F#"e>d|"G"cd ef|"A"g2 gf/g/|
-"D"af ge|"D"fd "D/F#"e/f/e/d/|"G"cA Bd|1 "A"A2 Af/g/:|2 "A"A4||
+|:"D"a>f ge|"D"fd "D/F#"e>d|"G"cd ef|"A"g2 gf/g/|
+"D (Bm)"a>f ge|"D (Bm)"fd "(A)"e/f/e/d/|"G"cA Bd|1 "A"A2 Af/g/:|2 "A"AB AG||
 T: Bridgie Con Matt's
 K: Gmaj
 |:"G"GB BA/c/|"G"BG G>D|"C"GB B/c/d/B/|"D"AD FA|
@@ -1536,22 +1535,22 @@ M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Dmaj
-dB|"D"AFFE F2DE|"G"F2FE "A"FAdB|"D"AFFE F2DE|"G"FABA "A"FE E2|
-"D"AF~F2 FEDE|"G"~F3E "A"FAdB|"Bm"AF~F2 FEDE|"G"FAEG "A"FD E/F/G||
+dB|"D"AFFE F2DE|"(G)"F2FE "A"FAdB|"D"AFFE F2DE|"G"FABA "A"FE E2|
+"D"AF~F2 FEDE|"(G)"~F3E "A"FAdB|"D (Bm)"AF~F2 FEDE|"G"FAEG "A"FD E/F/G||
 "D"A3B AGFG|"G"ABde "A"fee2|"D"fedc BcdB|"G"ABde "A"fd~d2|
-"D"~A3B AF~F2|"G"ABde "A"fe~e2|"Bm"fedc "G"BcdB|"A"A/B/c de fedB||
+"D"~A3B AF~F2|"G"ABde "A"fe~e2|"D (Bm)"fedc "G"BcdB|"A"A/B/c de fedB||
 T: Glentaun / Glountane / Gleanntán
 K: Gmaj
 "G"DGBG AGBG|"G"DGBG "D"AE~E2|"G"DGBG AGAB|"C"d2ed "D"BG~G2|
-"G"DGBG "D"AGBG|"G"DGBG "D"AE~E2|"G"DGBG "C"A2 A/B/c|"D"d2ed BG~G2||
+"G"DGBG "(D)"AGBG|"G"DGBG "(D)"AE~E2|"G"DGBG "C"A2 A/B/c|"D"d2ed "(G)"BG~G2||
 "G"Bd~d2 d2 ef|"C"g2fg "D"eA~A2|"G"Bd~d2 d2 gd|"C"Bd"D"Ac "G"BG~G2|
-"G"Bd~d2 d2 ef|"C"g2fg "D"eA~A2|"C"B/c/d ef gage|"D"dBAc "C"BGGE||
+"G"Bd~d2 d2 ef|"C"g2fg "D"eA~A2|"C"B/c/d ef gage|"D"dBAc "G"BG"C"GE||
 T: Callaghan's / Cal Callaghan's
 K: Dmaj
-"D"F2 AF "G"GE~E2|"D"FDDF "A"ABAG|"D"F2 AF "G"GE~E2|"D"FA"G"GE "D"DF"A"AG|
+"D"F2 AF "G"GE~E2|"D"FDDF "(A)"ABAG|"D"F2 AF "G"GE~E2|"A"FA"(G)"GE "(D)"DF"(A)"AG|
 "D"F2~F2 "G"GEEG|"D"FDDF "A"ABAG|"D"EFAF "G"GE~E2|"A"AFGE "D"D2 A/B/c||
-"D"d2 fd dcAB|"G"AG E/F/G "A"A2 Bc|"D"d2~d2 dcAB|"C"=cd"A"AB "G"~G2 FG|
-"D"Ad~d2 dcAB|"G"AG E/F/G "A"ABcA|"Bm"d2~d2 defd|"G"defd "A"dcAG||
+"D"d2 fd dcAB|"G"AG E/F/G "A"A2 Bc|"D"d2~d2 dcAB|"C"=cd"(A)"AB "G"~G2 FG|
+"D"Ad~d2 dcAB|"G"AG E/F/G "A"ABcA|"D (Bm)"d2~d2 defd|"G"defd "A"dcAG||
 
 X: 56
 T: REELS: Golden Keyboard Set
@@ -1959,7 +1958,7 @@ K: Gmaj
 "G"D2G G2A BAB d2B|1 "D"A2D FED "G"G2G GFE:|2 "D"A2D FED "G"G2G GBd||
 |:"Em"g2f efg "Bm"f2e d2B|"C"c2B A2B "C"c2d "D"e2f|
 "Em"g2f efg "Bm"f2e d2B|1 "C"c2A "D"F2A "G"G2G GBd:|2 "C"c2A "D"F2A "G"G2G GFE||
-T: Dan O'Keeffe's / Danny Ab's
+T: Dan O'Keeffe's / Danny Ab's No. 2
 K: Ador
 |:"Am"A2e e2d BAB "G"d2B|"Am"A2e e2d "G"B2G GFG|
 "Am"A2e e2d BAB d3|1 "G"BAB d2e "Em"B2A A2G:|2 "G"BAB d2e "Em"B2A A2e||
@@ -2011,13 +2010,13 @@ K: Gmaj
 B2A ABd e2d d2B|1 AGA B2A G3 G2A:|2 AGA B2A G3 G2B||
 |:d2g gfg age dBd|e2a aba g2a bge|
 d2g gfg age dBd|1 efg aba g3 gfe:|2 efg aba g3 g3||
-T: Dan Jeremiah's
+T: Dan Jeremiah's No. 1 / Dan Jeremiah O'Connor's No. 1
 K: Dmaj
 |:F2A dBA B2A F2A|B2E EDE F2E D2E|
 F2A dBA B2A F2A|1 ~B3 cBc d3 d2A:|2 ~B3 cBc d3 d2B||
 |:A2d dcd B2A F2A|B3 BAB c2A F2G|
 A2d dcd B2A F2A|1 B2e e2c d3 dcB:|2 Bcd edc d3 d2A||
-T: Dan O'Keeffe's
+T: Dan Jeremiah's No. 2 / Dan Jeremiah O'Connor's No. 2
 K: Edor
 |:B2e e2f e2d B2A|~B2d dBA ~B2d dBA|
 B2e e2f e2d B2A|1 def a2f e3 e2d:|2 def a2f e2e efa||

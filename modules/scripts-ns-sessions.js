@@ -14,7 +14,7 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// App Version 0.8.2 / NS Session DB date: 2025-03-17
+// App Version 0.8.7 / NS Session DB date: 2025-03-31
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables

@@ -15,8 +15,54 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
+NS Session Setlist v.0.8.7: Encoder Upgrade (Mute Chords & DB Fixes)
+
++ Project updates:
+  - Launcher: Mute Chords checkbox added to Tunebook Options
+  - Tunebook: Adds override for MIDI Bass & Chords if active Mute Chords option is on
+
++ HTML updates
+  - Main App (index.html):
+    + "MIDI: Always mute chords in playback" checkbox added with default state unchecked
+  
++ JavaScript updates
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + abcToolsAlwaysMuteChords* localStorage variable added
+    + muteChordsPlayback*: Decompress encoded ABC, inject MIDI instructions with 0 volume for bass & chords, re-encode update ABC
+    + loadTuneBookItem now checks for Mute Chords option and passes the item's URL to muteChordsPlayback if the option is on
+    + injectInstrument: Minor cleanup & refactoring to replace confusing variable name
+
++ Session DB updates:
+  - Session DB updated to 2025-03-31
+  - Dan Jeremiah's No. 2 restored in tunes, duplicated name fixed
+  - Minor fixes in ABC & Chords for Sets & Tunes
+
 <details>
   <summary>v.0.8: Encoder Upgrade</summary>
+
+<details>
+<summary>v.0.8.7: Encoder Upgrade (Mute Chords & DB Fixes)</summary>
+
++ Project updates:
+  - Launcher: Mute Chords checkbox added to Tunebook Options
+  - Tunebook: Adds override for MIDI Bass & Chords if active Mute Chords option is on
+
++ HTML updates
+  - Main App (index.html):
+    + "MIDI: Always mute chords in playback" checkbox added with default state unchecked
+  
++ JavaScript updates
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + abcToolsAlwaysMuteChords* localStorage variable added
+    + muteChordsPlayback*: Decompress encoded ABC, inject MIDI instructions with 0 volume for bass & chords, re-encode update ABC
+    + loadTuneBookItem now checks for Mute Chords option and passes the item's URL to muteChordsPlayback if the option is on
+    + injectInstrument: Minor cleanup & refactoring to replace confusing variable name
+
++ Session DB updates:
+  - Session DB updated to 2025-03-31
+  - Dan Jeremiah's No. 2 restored in tunes, duplicated name fixed
+  - Minor fixes in ABC & Chords for Sets & Tunes
+</details>
 
 <details>
 <summary>v.0.8.6: Encoder Upgrade (Session DB Update)</summary>
