@@ -14,7 +14,7 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// App Version 0.8.7 / NS Session DB date: 2025-03-31
+// App Version 0.8.8 / NS Session DB date: 2025-04-02
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -115,7 +115,7 @@ async function launchTuneBook(dataType, triggerBtn) {
 
   } else {
 
-    showRedOutlineWarning(triggerBtn);
+    displayWarningEffect(triggerBtn);
   }
 }
 
@@ -265,7 +265,7 @@ export function openSettingsMenu(dataType) {
 
 // Show a red warning outline around an active element
 
-export function showRedOutlineWarning(focusBtn) {
+export function displayWarningEffect(focusBtn) {
 
   focusBtn.setAttribute("style", "outline-color: red");
 

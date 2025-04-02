@@ -21,7 +21,8 @@ export const abcTunebookDefaults = {
     abcToolsAllowTabStyleChanges: "1",
     abcToolsFullScreenBtnShowsChords: "1",
     abcToolsAllowTuneAutoReload: "1",
-    abcToolsAlwaysMuteChords: "0"
+    abcToolsAlwaysMuteChords: "0",
+    chordViewerAllowDynamicChords: "0"
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -613,11 +614,12 @@ function setSelectedTuneByName(optionText) {
 // ENCODE & DECODE FUNCTIONS
 ///////////////////////////////
 
-// Decompress the tune LZW, replace the instrument and volumes
+// Extract the LZW-compressed string containing ABC from a URL
 
 function extractLZWParameter(url) {
-    // Use a regular expression to find the part starting with &lzw= followed by any characters until the next &
-    const match = url.match(/lzw=([^&]*)/);
+
+    // Find the part of URL starting with &lzw= followed by any characters until the next &
+    const match = url.match(/lzw=(?:[^&]*)/);
 
     // If a match is found, return the part after &lzw=
     return match ? match[0] : null;

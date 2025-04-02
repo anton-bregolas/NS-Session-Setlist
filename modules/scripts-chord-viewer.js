@@ -1,8 +1,16 @@
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 // Novi Sad Session Chord Viewer Module
 // https://github.com/anton-bregolas/
 // (c) Anton Zille 2024-2025
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+// Import lz-string compression algorithm (for dynamic chord generation)
+
+import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
+
+// Import functions handling warning messages (for user notifications)
+
+// import { displayWarningEffect, displayWarningMessage } from "./scripts-ns-sessions";
 
 // Define required app elements
 
@@ -35,35 +43,71 @@ const maxWTops = 90; // Highest max-width value for chords, rem
 //////////////////////////////////
 
 // Open Chord Viewer:
-// Load Chords from ABC using data passed from main app
+// Extract Chords from ABC if dynamic chord generation is on
+// Load Chordbook chords into the Chord Viewer Popover
 // Show Chord Viewer Popover using Popover API
-// Load Chord Viewer Slider settings
+// Initiate Chord Viewer Slider settings
 
 export function openChordViewer(setChords, tuneChords) {
   
-  const currentAbcTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
+  const isDynamicChordsMode = localStorage?.chordViewerAllowDynamicChords;
 
-  if (setChords && tuneChords) {
+  if (!setChords && !tuneChords && !isDynamicChordsMode) return;
 
-    const setMatch = setChords.find(set => set.setTitle === currentAbcTitle);
-    const tuneMatch = tuneChords.find(tune => tune.title === currentAbcTitle);
+  if (isDynamicChordsMode) {
 
-    if (!setMatch && !tuneMatch) {
+    const abcUrl = tuneSelector.value;
+    const abcInLzw = abcUrl.match(/(?<=lzw=)(?:[^&]*)/)[0];
 
-      //showRedOutlineWarning(launchButton);
+    if (!abcUrl || !abcInLzw) {
+
+      //displayWarningEffect(launchButton);
       return;
     }
-    
-    if (setMatch) {
 
-      chordViewerTitle.textContent = setMatch.setTitle;
-      loadChordsToPopover(setMatch.tuneChords, "chords-set");
+    const abcContent = LZString.decompressFromEncodedURIComponent(abcInLzw);
+    const extractedChordsArr = extractChordsFromAbc(abcContent);
 
-    } else if (tuneMatch) {
+    if (extractedChordsArr === null) {
 
-      chordViewerTitle.textContent = tuneMatch.title;
-      loadChordsToPopover([tuneMatch], "chords-tune");
+      //displayWarningEffect(launchButton);
+      return;
     }
+
+    if (extractedChordsArr.length < 1) {
+
+      //displayWarningEffect(launchButton);
+      return;
+    }
+
+    // console.log(`Chord Viewer Module:\n\nChords successfully extracted from ABC`);
+
+    const isAbcSet = extractedChordsArr[0].setTitle? true : false;
+
+    setChords = isAbcSet? extractedChordsArr : [];
+    tuneChords = isAbcSet? [] : extractedChordsArr;
+  }
+
+  const currentAbcTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
+
+  const setMatch = setChords.find(set => set.setTitle === currentAbcTitle);
+  const tuneMatch = tuneChords.find(tune => tune.title === currentAbcTitle);
+
+  if (!setMatch && !tuneMatch) {
+
+    //displayWarningEffect(launchButton);
+    return;
+  }
+  
+  if (setMatch) {
+
+    chordViewerTitle.textContent = setMatch.setTitle;
+    loadChordsToPopover(setMatch.tuneChords, "chords-set");
+
+  } else if (tuneMatch) {
+
+    chordViewerTitle.textContent = tuneMatch.title;
+    loadChordsToPopover([tuneMatch], "chords-tune");
   }
 
   chordViewerPopover.showPopover();
@@ -364,6 +408,22 @@ function appChordSliderHandler(event) {
 // CHORD EXTRACTION FUNCTIONS
 //////////////////////////////////
 
+// Make Chordbook JSON from string in ABC notation
+// Validate JSON and return the Chords Array or []
+
+function extractChordsFromAbc(abcContent) {
+
+  if (!validateAbcChordsContent(abcContent)) return null;
+
+  console.log(`Chord Viewer Module:\n\nExtracting chords from ABC...`);
+
+  const chordBook = makeAbcChordBook(abcContent);
+
+  const chordsArray = getValidChordsArray(chordBook);
+
+  return chordsArray || [];
+}
+
 // Convert a list of ABC Sets or Tunes into a Chordbook JSON
 // Extract chords from each ABC item via getChordsFromTune
 
@@ -436,7 +496,7 @@ export function makeAbcChordBook(abcContent) {
   if (abcChordsArr.length > 0) {
     
     chordBookOutput = JSON.stringify(abcChordsArr, null, 2);
-    
+
     console.log(`Chord Viewer Module:\n\nChordbook generated!`);
   }
     
@@ -715,6 +775,50 @@ function normalizeAbcChordOrder(abcContent) {
   let filteredAbc = abcContent.replaceAll(/(\([34])(".*?")/g, `$2$1`);
 
   return filteredAbc;
+}
+
+///////////////////////////////////
+// VALIDATION FUNCTIONS
+//////////////////////////////////
+
+// Check if ABC contains at least one valid X: header
+// Check if ABC contains at least one valid "chord"
+
+function validateAbcChordsContent(abcContent) {
+
+  const matchAbc = abcContent.match(/^X:/m);
+  const matchAbcChord = abcContent.match(/"[a-zA-Z0-9#♯♭♮×/()+]+?"/m);
+
+  return matchAbc && matchAbcChord;
+}
+
+// Parse Chordbook safely:
+// Return valid Chords Array parsed from Chordbook
+// Return false if the JSON passed is invalid
+// Return false if parsing triggers an error
+
+function getValidChordsArray(chordBookJson) {
+
+  try {
+
+    const chordsArrOutput = JSON.parse(chordBookJson);
+
+    if (Object.keys(chordsArrOutput[0]).join(', ') === "setTitle, tuneChords" ||
+        Object.keys(chordsArrOutput[0]).join(', ') === "title, meter, chords") {
+
+      return chordsArrOutput;
+
+    } else {
+
+      return false;
+    }
+
+  } catch (error) {
+
+    console.warn(error);
+
+    return false;
+  }
 }
 
 ///////////////////////////////////

@@ -15,37 +15,73 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.8.7: Encoder Upgrade (Mute Chords & DB Fixes)
+NS Session Setlist v.0.8.8: Encoder Upgrade (Dynamic Chords Generation)
 
 + Project updates:
-  - Launcher: Mute Chords checkbox added to Tunebook Options
-  - Tunebook: Adds override for MIDI Bass & Chords if active Mute Chords option is on
+  - Launcher: Dynamic Chords checkbox added to Tunebook Options
+  - Chord Viewer: Generates chords directly from ABC if Dynamic Chords option is on
 
 + HTML updates
   - Main App (index.html):
-    + "MIDI: Always mute chords in playback" checkbox added with default state unchecked
+    + "Chord Viewer: Generate chords dynamically" checkbox added with default state unchecked
   
 + JavaScript updates
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + openChordViewer function refactored to account for dynamic chords extraction
+    + openChordViewer now retrieves ABC from tuneSelector value, decodes it and passes an ABC string to extractChordsFromAbc if chordViewerAllowDynamicChords is 1
+    + openChordViewer now sets setChords and tuneChords depending on extractChordsFromAbc output if chordViewerAllowDynamicChords is 1
+    + extractChordsFromAbc*: Validates abcContent, passes it to makeAbcChordBook then getValidChordsArray, returns chordsArray or empty array
+    + validateAbcChordsContent*: Checks if ABC contents X: field and valid chords
+    + getValidChordsArray*: Safely parses Chordbook and returns Chords Array or false if it doesn't pass validation
+    + LZString import added for dynamic chord extraction from ABC
+  - App Launcher module & ABC Encoder module (scripts-ns-sessions.js, scripts-abc-encoder.js)
+    + showRedOutlineWarning renamed to displayWarningEffect
   - ABC Tunebook module (scripts-abc-tools.js)
-    + abcToolsAlwaysMuteChords* localStorage variable added
-    + muteChordsPlayback*: Decompress encoded ABC, inject MIDI instructions with 0 volume for bass & chords, re-encode update ABC
-    + loadTuneBookItem now checks for Mute Chords option and passes the item's URL to muteChordsPlayback if the option is on
-    + injectInstrument: Minor cleanup & refactoring to replace confusing variable name
+    + abcToolsAllowDynamicChords* localStorage variable added
 
 + Session DB updates:
-  - Session DB updated to 2025-03-31
-  - Dan Jeremiah's No. 2 restored in tunes, duplicated name fixed
+  - Session DB updated to 2025-04-02
   - Minor fixes in ABC & Chords for Sets & Tunes
 
 <details>
   <summary>v.0.8: Encoder Upgrade</summary>
 
 <details>
+<summary>v.0.8.8: Encoder Upgrade (Dynamic Chords Generation)</summary>
+
++ Project updates:
+  - Launcher: Dynamic Chords checkbox added to Tunebook Options
+  - Chord Viewer: Generates chords directly from ABC if Dynamic Chords option is on
+
++ HTML updates
+  - Main App (index.html):
+    + "Chord Viewer: Generate chords dynamically" checkbox added with default state unchecked
+  
++ JavaScript updates
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + openChordViewer function refactored to account for dynamic chords extraction
+    + openChordViewer now retrieves ABC from tuneSelector value, decodes it and passes an ABC string to extractChordsFromAbc if chordViewerAllowDynamicChords is 1
+    + openChordViewer now sets setChords and tuneChords depending on extractChordsFromAbc output if chordViewerAllowDynamicChords is 1
+    + extractChordsFromAbc*: Validates abcContent, passes it to makeAbcChordBook then getValidChordsArray, returns chordsArray or empty array
+    + validateAbcChordsContent*: Checks if ABC contents X: field and valid chords
+    + getValidChordsArray*: Safely parses Chordbook and returns Chords Array or false if it doesn't pass validation
+    + LZString import added for dynamic chord extraction from ABC
+  - App Launcher module & ABC Encoder module (scripts-ns-sessions.js, scripts-abc-encoder.js)
+    + showRedOutlineWarning renamed to displayWarningEffect
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + abcToolsAllowDynamicChords* localStorage variable added
+
++ Session DB updates:
+  - Session DB updated to 2025-04-02
+  - Minor fixes in ABC & Chords for Sets & Tunes
+<details>
 <summary>v.0.8.7: Encoder Upgrade (Mute Chords & DB Fixes)</summary>
+
+</details>
 
 + Project updates:
   - Launcher: Mute Chords checkbox added to Tunebook Options
-  - Tunebook: Adds override for MIDI Bass & Chords if active Mute Chords option is on
+  - Tunebook: Adds override for MIDI Bass & Chords if Mute Chords option is on
 
 + HTML updates
   - Main App (index.html):

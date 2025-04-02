@@ -8,7 +8,7 @@ import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-titl
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
 import { pThrottle } from './scripts-3p/p-throttle/p-throttle.js'
 import { makeAbcChordBook } from './scripts-chord-viewer.js'
-import { fetchData, initSettingsFromObject, showRedOutlineWarning } from './scripts-ns-sessions.js';
+import { fetchData, initSettingsFromObject, displayWarningEffect } from './scripts-ns-sessions.js';
 
 ////////////////////////////////
 // ABC ENCODER GLOBAL SETTINGS
@@ -215,7 +215,7 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
 
                     console.warn("ABC Encoder:\n\nInvalid data type or format!");
 
-                    showRedOutlineWarning(triggerBtn);
+                    displayWarningEffect(triggerBtn);
 
                     return;
                 }
@@ -227,7 +227,7 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
 
                 console.error("ABC Encoder:\n\nError reading ABC file content:\n\n", error);
 
-                showRedOutlineWarning(triggerBtn);
+                displayWarningEffect(triggerBtn);
             }
         }
         
@@ -237,7 +237,7 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
 
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
 
-        showRedOutlineWarning(triggerBtn);
+        displayWarningEffect(triggerBtn);
     }
 }
 
@@ -267,7 +267,7 @@ export async function parseSessionSurveyData(triggerBtn) {
 
                     console.warn("ABC Encoder:\n\nInvalid Session Survey Data file!");
 
-                    showRedOutlineWarning(triggerBtn);
+                    displayWarningEffect(triggerBtn);
 
                     return;
                 }
@@ -279,7 +279,7 @@ export async function parseSessionSurveyData(triggerBtn) {
 
                 console.error("ABC Encoder:\n\nError reading Session Survey Data file:\n\n", error);
 
-                showRedOutlineWarning(triggerBtn);
+                displayWarningEffect(triggerBtn);
             }
         };
         
@@ -289,7 +289,7 @@ export async function parseSessionSurveyData(triggerBtn) {
 
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
 
-        showRedOutlineWarning(triggerBtn);
+        displayWarningEffect(triggerBtn);
     }
 }
 
@@ -1400,11 +1400,11 @@ function getDecodedAbc(abcContent) {
 
         if (Object.hasOwn(abcObject, "url")) {
 
-            encodedAbcString = abcObject.url?.match(/lzw=([^&]*)/)[0];
+            encodedAbcString = abcObject.url?.match(/lzw=(?:[^&]*)/)[0];
 
         } else if (Object.hasOwn(abcObject, "URL")) {
 
-            encodedAbcString = abcObject.URL?.match(/lzw=([^&]*)/)[0];
+            encodedAbcString = abcObject.URL?.match(/lzw=(?:[^&]*)/)[0];
         }
 
         if (encodedAbcString) {
