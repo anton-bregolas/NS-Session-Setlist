@@ -39,6 +39,8 @@ NS Session Setlist v.0.8.9: Session Survey Applied
   - DB sorted & encoded with loaded Session Survey Data
   - Set Leaders metadata updated in ABC Sets & Tunes
 </details>
+
+<details>
 <summary>v.0.8.8: Encoder Upgrade (Dynamic Chords Mode)</summary>
 
 + Project updates:
@@ -67,9 +69,9 @@ NS Session Setlist v.0.8.9: Session Survey Applied
   - Session DB updated to 2025-04-02
   - Minor fixes in ABC & Chords for Sets & Tunes
 </details>
-<summary>v.0.8.7: Encoder Upgrade (Mute Chords & DB Fixes)</summary>
 
-</details>
+<details>
+<summary>v.0.8.7: Encoder Upgrade (Mute Chords & DB Fixes)</summary>
 
 + Project updates:
   - Launcher: Mute Chords checkbox added to Tunebook Options
