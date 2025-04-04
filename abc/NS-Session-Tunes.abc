@@ -2,7 +2,7 @@ X: 1
 T: AIR: Inis Oírr
 T: Inisheer
 C: C: Tommy Walsh; S: Various
-C: Set Leaders: Tania, Anton, Mars, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; laura nesbit at The Session
 N: https://thesession.org/members/26966/sets/92389
 R: Air
@@ -20,7 +20,7 @@ K: Gmaj
 X: 2
 T: AIR: Mountains of Pomeroy
 C: C: Trad.; S: Séamus Begley; Noel Hill
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Oleg, Olya
 Z: Anton Zille ed., Oleg Naumov arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/92425
 R: Air
@@ -36,7 +36,7 @@ B>c|"G"d2 de d>c BA|"G"G2 A>G "C"E2 G>E|"G"D3E G2 A>B|"C"c6 "D"B>c|
 X: 3
 T: AIR: Planxty Irwin
 C: C: Turlough O'Carolan; S: Various
-C: Set Leaders: Alexey, Sophie, Anton
+C: Set Leaders: Alexey, Sophie, Anton, Tania
 Z: Anton Zille ed. arr.; Shablabar at The Session
 N: https://thesession.org/members/26966/sets/99352
 R: Air
@@ -56,7 +56,7 @@ c4 A2|B3c d2|G2 A2 F2|1 G4 d2:|2 G6||
 X: 4
 T: AIR: Sí Bheag, Sí Mhór
 C: C: Turlough O'Carolan; S: Various
-C: Set Leaders: Oleg, Tania
+C: Set Leaders: Oleg, Tania, Mars, Oliushka, André
 Z: [Unedited]; JACKB at The Session
 N: https://thesession.org/members/26966/sets/99684
 R: Air
@@ -77,7 +77,7 @@ X: 5
 T: BARNDANCE: Hills of Tara
 T: If There Weren't Any Men in the World
 C: C: Trad.; S: Various
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars
 Z: Mars Agliullin ed.; Joseph Chordmichael at The Session
 N: https://thesession.org/members/26966/sets/94259
 R: Barndance
@@ -94,7 +94,7 @@ X: 6
 T: BARNDANCE: If There Weren't Any Women
 T: If There Weren't Any Women in the World
 C: C: Trad.; S: Harry Bradley
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed.; glauber at The Session
 N: https://thesession.org/members/26966/sets/94259
 R: Barndance
@@ -111,7 +111,7 @@ X: 7
 T: HOP JIG: Cucanandy
 T: Dance to Your Daddy / She Didn't Dance and Dance
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Tania, Anton
+C: Set Leaders: Anton
 Z: Anton Zille ed., Oleg Naumov arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/92388
 R: Hop Jig
@@ -144,7 +144,7 @@ g2 gf (3efg ed|BGAG EGDG|BGAG EGDE|1 G2 GF G2 (3ABc:|2 G2 GF G4||
 X: 9
 T: HORNPIPE: Callaghan's High
 C: C: Trad.; S: Pádraig O'Keeffe
-C: Set Leaders: Anton, Sophie
+C: Set Leaders: Anton
 Z: Anton Zille ed.; brailsford at The Session
 N: https://thesession.org/members/26966/sets/94459
 R: Hornpipe
@@ -164,7 +164,7 @@ a>fg>e d>eg>a|b>BB>A G>ef>g|(3agf (3gfe d>eg>a|b2 e2 e3g|
 X: 10
 T: HORNPIPE: Chief O'Neill's Favourite
 C: C: Trad.; S: Various
-C: Set Leaders: André, Sophie, Anton
+C: Set Leaders: Sophie, Anton
 Z: Anton Zille ed.; leprecawn at The Session
 N: https://thesession.org/members/26966/sets/96711
 R: Hornpipe
@@ -180,7 +180,7 @@ de|:"D"~f3g afge|"D"fdef "G"dcAG|"D"FDAD (3EFG AB|"C"=cAd"A"^c A2 de|
 X: 11
 T: HORNPIPE: Frisco
 C: C: Trad.; S: Julia Clifford
-C: Set Leaders: Anton, Sophie
+C: Set Leaders: Anton
 Z: Anton Zille ed.; Daemco at The Session
 N: https://thesession.org/members/26966/sets/94459
 R: Hornpipe
@@ -213,7 +213,7 @@ D2|:"G"GABG AGED|"C"c2 cA "C"BG"D"ED|"G"G2 BG AGED|"C"EAAG "C"AB "D"(3cBA|
 X: 13
 T: HORNPIPE: Harvest Home
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Olya, Vova, Tania, Mars, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/92386
 R: Hornpipe
@@ -229,7 +229,7 @@ K: Dmaj
 X: 14
 T: HORNPIPE: Home Ruler
 C: C: Frank McCollum; S: Various
-C: Set Leaders: Mars, Tania, Anton
+C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed.; Jdharv at The Session
 N: https://thesession.org/members/26966/sets/94256
 R: Hornpipe
@@ -245,7 +245,7 @@ Ad dc de fg|af bf af ed|ef ed Bd dB|AF EF D2:||
 X: 15
 T: HORNPIPE: Kitty's Wedding
 C: C: Trad.; S: Various
-C: Set Leaders: Mars, Tania, Anton
+C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed.; Bannerman at The Session
 N: https://thesession.org/members/26966/sets/94256
 R: Hornpipe
@@ -261,7 +261,7 @@ af ed ba fd|Ad fd ed Bd|DF Ad FA df|eA Bc d2:||
 X: 16
 T: HORNPIPE: Little Beggarman
 C: C: Trad.; S: Various
-C: Set Leaders: André, Sophie, Anton
+C: Set Leaders: André, Sophie, Anton, Tania
 Z: Anton Zille ed.; Logan Green at The Session
 N: https://thesession.org/members/26966/sets/96711
 R: Hornpipe
@@ -277,7 +277,7 @@ K: Amix
 X: 17
 T: HORNPIPE: Liverpool
 C: C: Trad.; S: Various
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars
 Z: Mars Agliullin ed.; Finnbarr at The Session
 N: https://thesession.org/members/26966/sets/94258
 R: Hornpipe
@@ -293,7 +293,7 @@ FD FA df af|gf ec dc BA|df af bg ec|d2 dc d2:||
 X: 18
 T: HORNPIPE: Off to California
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Olya, Tania, Mars, André
 Z: Anton Zille ed., Oleg Naumov arr.; Mix O'Lydian at The Session
 N: https://thesession.org/members/26966/sets/92386
 R: Hornpipe
@@ -309,7 +309,7 @@ K: Gmaj
 X: 19
 T: HORNPIPE: Plains of Boyle
 C: C: Trad.; S: Various
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars
 Z: Mars Agliullin ed.; JHowley at The Session
 N: https://thesession.org/members/26966/sets/94258
 R: Hornpipe
@@ -325,7 +325,7 @@ afdf g2 fe|dfed BAFG|~A2 FG ABAG|F2D2 D2:||
 X: 20
 T: HORNPIPE: Rights of Man
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Vova, Anton, Tania, Mars, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; Martial at The Session
 N: https://thesession.org/members/26966/sets/92386
 R: Hornpipe
@@ -360,7 +360,7 @@ dggf g2BA|GDBD GBdB|ceaf gedc|1 B2 G2 G2:|2 B2 G2 G2 dc||
 X: 22
 T: HORNPIPE: Sonny Murray's
 C: C: Trad.; S: Drunken Gaugers
-C: Set Leaders: Mars, Tania, Anton
+C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed.; Jdharv at The Session
 N: https://thesession.org/members/26966/sets/94256
 R: Hornpipe
@@ -396,7 +396,7 @@ cAc cAc|dcd Bcd|eae fed|cdB A3:||
 X: 24
 T: JIG: Banish Misfortune
 C: C: Trad.; S: Various
-C: Set Leaders: Oliushka, Anton, Sophie
+C: Set Leaders: Oliushka, Anton, Sophie, Tania, Mars, André
 Z: [Unedited]; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/95963
 R: Jig
@@ -414,7 +414,7 @@ c3 cAG|AGA cde|fed cAG|Ad^c d3:||
 X: 25
 T: JIG: Battering Ram
 C: C: Trad.; S: Various
-C: Set Leaders: Mars, Tania, Sophie, Anton
+C: Set Leaders: Mars, Sophie, Anton
 Z: Mars Agliullin ed.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/94272
 R: Jig
@@ -433,7 +433,7 @@ X: 26
 T: JIG: Behind the Haystack
 T: Munster Buttermilk No. 2
 C: C: Trad.; S: Polca an Rí
-C: Set Leaders: Sophie, Anton
+C: Set Leaders: Sophie, Anton, Tania, Mars
 Z: [Unedited]; stutty at The Session
 N: https://thesession.org/members/26966/sets/99584
 R: Jig
@@ -467,7 +467,7 @@ GBd ~g3|gag f2g|abg afd|cAF G3:||
 X: 28
 T: JIG: Black Rogue
 C: C: Trad.; S: Various
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: [Unedited]; Mladenski at The Session
 N: https://thesession.org/members/26966/sets/99413
 R: Jig
@@ -483,7 +483,7 @@ agf gfe|fed e2d|cAA BAG|1 AFD D2g:|2 AFD D3||
 X: 29
 T: JIG: Blarney Pilgrim
 C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Tania, Anton, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/92421
 R: Jig
@@ -549,7 +549,7 @@ FED ~d3|edc AGE|CEG cBc|CEG FED|
 X: 33
 T: JIG: Cliffs of Moher
 C: C: Trad.; S: Various
-C: Set Leaders: André, Sophie, Anton
+C: Set Leaders: André, Sophie, Anton, Tania, Oliushka
 Z: Anton Zille ed.; NfldWhistler at The Session
 N: https://thesession.org/members/26966/sets/96712
 R: Jig
@@ -566,7 +566,7 @@ eaa bag|eaf ged|c2A BAG|1 EFG A3:|2 EFG ABd||
 X: 34
 T: JIG: Connaughtman's Rambles
 C: C: Trad.; S: ThZCh; Various
-C: Set Leaders: Oliushka, Anton
+C: Set Leaders: Oliushka, Anton, Tania, Mars, André
 Z: Anton Zille ed.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/71901
 R: Jig
@@ -582,7 +582,7 @@ fbb faf|fed def|gfe ~f2e|1 dBB Bde:|2 dBB BAG||
 X: 35
 T: JIG: Cook in the Kitchen
 C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Tania, Anton, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/92421
 R: Jig
@@ -600,7 +600,7 @@ K: Gmaj
 X: 36
 T: JIG: Cordal
 C: C: Trad.; S: Various
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: [Unedited]; JACKB at The Session
 N: https://thesession.org/members/26966/sets/99413
 R: Jig
@@ -617,7 +617,7 @@ X: 37
 T: JIG: Donncha Lynch's
 T: Donncha Ó Loinsigh's
 C: C: Trad.; S: ThZCh; Méabh & Clíodhna Begley
-C: Set Leaders: Oliushka, Anton
+C: Set Leaders: Oliushka, Anton, Mars
 Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71901
 R: Jig
@@ -651,7 +651,7 @@ ABA gAf|ABA efg|age dBG|BAG A3:||
 X: 39
 T: JIG: Fanning's
 C: C: Trad.; S: Denis Murphy
-C: Set Leaders: Anton, Oliushka
+C: Set Leaders: Anton
 Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/90908
 R: Jig
@@ -668,7 +668,7 @@ X: 40
 T: JIG: Frieze Breeches
 T: Cúnla
 C: C: Trad.; S: Various
-C: Set Leaders: Oleg, Anton, Tania
+C: Set Leaders: Oleg, Anton, André
 Z: Anton Zille ed.; ceolachan at The Session
 N: https://thesession.org/members/26966/sets/99682
 R: Jig
@@ -691,7 +691,7 @@ X: 41
 T: JIG: Frost Is All Over
 T: Kitty Lie Over
 C: C: Trad.; S: Various
-C: Set Leaders: Oliushka, Anton, Sophie
+C: Set Leaders: Oliushka, Anton, Sophie, Tania, Mars, André
 Z: [Unedited]; uilleannpipes at The Session
 N: https://thesession.org/members/26966/sets/95963
 R: Jig
@@ -707,7 +707,7 @@ afd B2A|AdF G2B|ABA F2E|EDD D2:||
 X: 42
 T: JIG: Have a Drink With Me
 C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Anton
 Z: Anton Zille ed., Oleg Naumov arr.; Phantom Button at The Session
 N: https://thesession.org/members/26966/sets/92421
 R: Jig
@@ -824,7 +824,7 @@ X: 49
 T: JIG: Kesh
 T: Kerrigan's
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Vova, Olya
+C: Set Leaders: Andrey, Vova, Olya, Oleg, Mars, Oliushka, André
 Z: Oleg Naumov arr.; Sean Comiskey at The Session
 N: https://thesession.org/members/26966/sets/96718
 R: Jig
@@ -840,7 +840,7 @@ K: Gmaj
 X: 50
 T: JIG: Kilmovee
 C: C: Trad.; S: Conal O'Grada
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars
 Z: Mars Agliullin ed.; Phantom Button at The Session
 N: https://thesession.org/members/26966/sets/94271
 R: Jig
@@ -856,7 +856,7 @@ B2e dBA|GAB GED|GAB deg|1 edB G3:|2 edB G2||
 X: 51
 T: JIG: Leitrim Fancy
 C: C: Trad.; S: Various
-C: Set Leaders: Vova, Olya, Anton
+C: Set Leaders: Vova, Anton, Andrey, Mars, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/96724
 R: Jig
@@ -872,7 +872,7 @@ K: Emin
 X: 52
 T: JIG: Lilting Fisherman
 C: C: Trad.; S: Conal O'Grada
-C: Set Leaders: Mars, Tania
+C: Set Leaders: Mars
 Z: Mars Agliullin ed.; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/94271
 R: Jig
@@ -910,7 +910,7 @@ X: 54
 T: JIG: Morrison's
 T: Maurice Carmody's Favourite / Stick Across the Hob
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Vova, Olya
+C: Set Leaders: Andrey, Vova, Oleg, Mars, Oliushka, André
 Z: Oleg Naumov arr.; Zara at The Session
 N: https://thesession.org/members/26966/sets/96718
 R: Jig
@@ -928,7 +928,7 @@ K: Edor
 X: 55
 T: JIG: My Darling Asleep
 C: C: Trad.; S: Various
-C: Set Leaders: André, Sophie, Anton
+C: Set Leaders: André, Sophie, Anton, Tania
 Z: Anton Zille ed.; Umo at The Session
 N: https://thesession.org/members/26966/sets/96712
 R: Jig
@@ -944,7 +944,7 @@ fdd cAA|BGG A2G|FAA def|1 gec d2A:|2 gec d2e||
 X: 56
 T: JIG: Old Grey Goose
 C: C: Trad.; S: Denis Murphy
-C: Set Leaders: Anton, Oliushka
+C: Set Leaders: Anton
 Z: Anton Zille ed.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/90908
 R: Jig
@@ -968,7 +968,7 @@ gbg faf|edB ~g3|edB BAF|GEE E2e:||
 X: 57
 T: JIG: Out on the Ocean
 C: C: Trad.; S: Various
-C: Set Leaders: Oliushka, Anton
+C: Set Leaders: Oliushka, Anton, Tania, Andrey, Oleg, Mars, André, Olya, Vova
 Z: Anton Zille ed.; xikay01 at The Session
 N: https://thesession.org/members/26966/sets/76537
 R: Jig
@@ -1003,7 +1003,7 @@ X: 59
 T: JIG: Rolling Waves or Lonesome
 T: Maguire's Clan March
 C: C: Trad.; S: Polca an Rí
-C: Set Leaders: Sophie, Anton
+C: Set Leaders: Sophie, Anton, Mars
 Z: [Unedited]; NfldWhistler at The Session
 N: https://thesession.org/members/26966/sets/99584
 R: Jig
@@ -1019,7 +1019,7 @@ AB/c/d ede|fdB BAF|AFE EFA|1 BAB d3:|2 d2e fdA||
 X: 60
 T: JIG: Saddle the Pony
 C: C: Trad.; S: Various
-C: Set Leaders: Oleg, Anton, Tania
+C: Set Leaders: Oleg, Anton, Tania, Andrey, Mars, André
 Z: Anton Zille ed.; Jdharv at The Session
 N: https://thesession.org/members/26966/sets/99682
 R: Jig
@@ -1056,7 +1056,7 @@ gfe fed|edB d2e|~f3 def|edB AFD:||
 X: 62
 T: JIG: Swallowtail
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Andrey
+C: Set Leaders: Olya, Andrey, André, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; fidicen at The Session
 N: https://thesession.org/members/26966/sets/92387
 R: Jig
@@ -1088,7 +1088,7 @@ aba age|ged ^cde|eag edB|1 BAG ABd:|2 BAG A2g||
 X: 64
 T: JIG: Trip to Sligo
 C: C: Trad.; S: Various
-C: Set Leaders: André, Sophie, Anton
+C: Set Leaders: André, Sophie, Anton, Tania
 Z: Anton Zille ed.; Fernando Durbán Galnares at The Session
 N: https://thesession.org/members/26966/sets/96712
 R: Jig
@@ -1104,7 +1104,7 @@ f/g/af gfe|dcB AFD|EFG ABc|BGF E3:||
 X: 65
 T: JIG: Tripping up the Stairs
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Andrey
+C: Set Leaders: Tania, Mars, André
 Z: Anton Zille ed., Oleg Naumov arr.; NfldWhistler at The Session
 N: https://thesession.org/members/26966/sets/92387
 R: Jig
@@ -1121,7 +1121,7 @@ X: 66
 T: JIG: Tá an Coileach ag Fógairt an Lae
 T: When the Cock Crows It Is Day
 C: C: Trad.; S: Séamus Begley; Séamus Ennis
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/92425
 R: Jig
@@ -1169,7 +1169,7 @@ c>AB>G A>GE>D|c>de>c d2 e>g|a>ge>d c>AG>E|A2 A2 A2:||
 X: 69
 T: MARCH: Snow on the Tracks
 C: C: Rachel Darling; S: Leveret
-C: Set Leaders: Sophie, Tania, Anton
+C: Set Leaders: Sophie, Tania, Anton, Oleg
 Z: Anton Zille ed.; bdh at The Session
 N: https://thesession.org/members/26966/sets/92013
 R: March
@@ -1203,7 +1203,7 @@ BG gd|cA B/c/d|1 e2 f2|g2 d2:|2 e2 f2|g2 g2||
 X: 71
 T: POLKA: Ballydesmond No. 1
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Olya, Vova, Anton
+C: Set Leaders: Andrey, Vova, Anton, Mars, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; ceolachan at The Session
 N: https://thesession.org/members/26966/sets/96720
 R: Polka
@@ -1219,7 +1219,7 @@ K: Ador
 X: 72
 T: POLKA: Ballydesmond No. 2
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Olya, Vova, Anton
+C: Set Leaders: Andrey, Vova, Anton, Mars, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; ceolachan at The Session
 N: https://thesession.org/members/26966/sets/96720
 R: Polka
@@ -1235,7 +1235,7 @@ K: Ador
 X: 73
 T: POLKA: Ballydesmond No. 3
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Olya, Vova, Anton
+C: Set Leaders: Andrey, Vova, Anton, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; Mix O'Lydian at The Session
 N: https://thesession.org/members/26966/sets/96720
 R: Polka
@@ -1252,7 +1252,7 @@ X: 74
 T: POLKA: Bill Sullivan's (Amaj)
 T: Mickey Chewing Bubblegum
 C: C: Terry Teahan; S: Jackie Daly & Séamus Creagh
-C: Set Leaders: Vova, Anton, Tania
+C: Set Leaders: Vova, Anton, André
 Z: Anton Zille ed., Oleg Naumov arr.; JHowley at The Session
 N: https://thesession.org/members/26966/sets/96723
 R: Polka
@@ -1268,7 +1268,7 @@ K: Amaj
 X: 75
 T: POLKA: Bridgie Con Matt's
 C: C: Trad.; S: Julia & Billy Clifford
-C: Set Leaders: Olya, Anton
+C: Set Leaders: Anton
 Z: Anton Zille ed., Oleg Naumov arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71310
 R: Polka
@@ -1284,7 +1284,7 @@ K: Gmaj
 X: 76
 T: POLKA: Britches Full of Stitches (Amaj)
 C: C: Trad.; S: Jackie Daly & Séamus Creagh
-C: Set Leaders: Vova, Anton, Tania
+C: Set Leaders: Vova, Anton, Oleg, Mars, Olya
 Z: Anton Zille ed., Oleg Naumov arr.; gian marco at The Session
 N: https://thesession.org/members/26966/sets/96723
 R: Polka
@@ -1300,7 +1300,7 @@ K: Amaj
 X: 77
 T: POLKA: Britches Full of Stitches (Gmaj)
 C: C: Trad.; S: Jackie Daly & Séamus Creagh
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Anton, Oleg, Mars, André, Olya, Vova
 Z: Anton Zille ed. arr., Oleg Naumov arr.; benhockenberry at The Session
 N: https://www.soundslice.com/slices/CLHRc/
 N: https://thesession.org/members/26966/sets/89997
@@ -1349,7 +1349,7 @@ FA A/B/d/e/|ff/d/ ed|BB A/B/A/G/|1 FD D2 :|2 FD D>E||
 X: 80
 T: POLKA: Denis Murphy's
 C: C: Trad.; S: Denis Murphy & Johnny O'Leary
-C: Set Leaders: Olya, Anton
+C: Set Leaders: Anton, Oliushka, André, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71310
 R: Polka
@@ -1399,7 +1399,7 @@ X: 83
 T: POLKA: Green Cottage No. 1
 T: Glen Cottage No. 1
 C: C: Trad.; S: Polca an Rí
-C: Set Leaders: Oleg, Anton, Oliushka, Sophie
+C: Set Leaders: Oleg, Anton, Sophie
 Z: Anton Zille ed.; Thady Quill at The Session
 N: https://thesession.org/members/26966/sets/99681
 R: Polka
@@ -1416,7 +1416,7 @@ X: 84
 T: POLKA: Green Cottage No. 2
 T: Glen Cottage No. 2
 C: C: Trad.; S: Polca an Rí
-C: Set Leaders: Oleg, Anton, Oliushka, Sophie
+C: Set Leaders: Oleg, Anton, Sophie
 Z: Anton Zille ed.; ceili at The Session
 N: https://thesession.org/members/26966/sets/99681
 R: Polka
@@ -1433,7 +1433,7 @@ X: 85
 T: POLKA: John Walsh's No. 1
 T: Goblachan / Derrygallen Bridge
 C: C: John Walsh; S: Polca an Rí; John Walsh
-C: Set Leaders: Anton, Sophie
+C: Set Leaders: Anton, Sophie, Mars, Oliushka
 Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/47PCc/
 N: https://thesession.org/members/26966/sets/7124
@@ -1450,7 +1450,7 @@ g>g fg|ag g/a/g/e/|dB BA|1 G2 Bd:|2 G2 GD||
 X: 86
 T: POLKA: John Walsh's or Daly's Mill
 C: C: John Walsh; S: Polca an Rí; John Walsh
-C: Set Leaders: Anton, Sophie
+C: Set Leaders: Anton, Sophie, Oliushka
 Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/47PCc/
 N: https://thesession.org/members/26966/sets/7124
@@ -1487,7 +1487,7 @@ dg g>a|bg gd|e/f/g ed|g2 g/a/g/e/!coda!:||dB B/c/B/A/!D.S.!||
 X: 88
 T: POLKA: Johnny I Do Miss You
 C: C: Trad.; S: De Danann; Johnny O'Leary
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: [Unedited]; jr347 at The Session
 N: https://thesession.org/members/26966/sets/99393
 R: Polka
@@ -1505,7 +1505,7 @@ AF ED|F2 A,F|GEFE|D2||
 X: 89
 T: POLKA: Kerry Cow
 C: C: Trad.; S: Brendan & Séamus Begley
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; Northcregg at The Session
 N: https://thesession.org/members/26966/sets/92029
 R: Polka
@@ -1524,7 +1524,7 @@ X: 90
 T: POLKA: Maids of Ardagh
 T: Toormore No. 2 / Tuar Mór No. 2
 C: C: Trad.; S: De Danann; Johnny O'Leary
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: [Unedited]; Musicalbison at The Session
 N: https://thesession.org/members/26966/sets/99393
 R: Polka
@@ -1559,7 +1559,7 @@ X: 92
 T: POLKA: Neilí
 T: Ó Neilí, Neilí an Fuacht
 C: C: Trad.; S: Brendan & Séamus Begley
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed., Oleg Naumov arr.; Alistair Cassidy at The Session
 N: https://thesession.org/members/26966/sets/92029
 R: Polka
@@ -1578,7 +1578,7 @@ X: 93
 T: POLKA: Nell Fee's (Dmaj)
 T: John Brosnan's No. 2
 C: C: Trad.; S: Timmy O'Connor
-C: Set Leaders: Anton, Sophie, Tania
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed.; slainte at The Session
 N: https://thesession.org/members/26966/sets/92004
 R: Polka
@@ -1597,7 +1597,7 @@ X: 94
 T: POLKA: Nell Fee's (Gmaj)
 T: John Brosnan's No. 2
 C: C: Trad.; S: Timmy O'Connor
-C: Set Leaders: Anton, Sophie, Tania
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed.; slainte at The Session
 N: https://thesession.org/members/26966/sets/92004
 R: Polka
@@ -1615,7 +1615,7 @@ eg/e/ dB|eg/e/ dB|dB AB|1 GA Bd:|2 GD EF||
 X: 95
 T: POLKA: P&O (Dmin)
 C: C: Christy Leahy; S: ThZCh; Polca an Rí; Brendan Begley
-C: Set Leaders: Oliushka, Anton, Sophie
+C: Set Leaders: Oliushka, Anton, Sophie, Tania, Mars, Vova
 Z: Anton Zille ed.; Bregolas at The Session
 N: https://www.soundslice.com/slices/R1QCc/
 N: https://thesession.org/members/26966/sets/76527
@@ -1632,7 +1632,7 @@ fd ec|dc AG|FA Gc|1 d2 de:|2 d2 dA||
 X: 96
 T: POLKA: Pop No. 1
 C: C: Damien Mullane; S: Damien Mullane
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Olya, Vova, Anton, André
 Z: Oleg Naumov arr.; jeff_lindqvist at The Session
 N: https://thesession.org/members/26966/sets/92364
 R: Polka
@@ -1650,7 +1650,7 @@ K: Gmaj
 X: 97
 T: POLKA: Pop No. 2
 C: C: Damien Mullane; S: Damien Mullane
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Olya, Vova, Anton, André
 Z: Oleg Naumov arr.; jeff_lindqvist at The Session
 N: https://thesession.org/members/26966/sets/92364
 R: Polka
@@ -1666,7 +1666,7 @@ K: Amaj
 X: 98
 T: POLKA: Pop No. 3
 C: C: Damien Mullane; S: Damien Mullane
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Vova, Anton
 Z: Oleg Naumov arr.; jeff_lindqvist at The Session
 N: https://thesession.org/members/26966/sets/92364
 R: Polka
@@ -1686,7 +1686,7 @@ K: Bmin
 X: 99
 T: POLKA: Ray's Classic
 C: C: Willie Hunter; S: Polca an Rí
-C: Set Leaders: Oleg, Anton, Oliushka, Sophie
+C: Set Leaders: Oleg, Anton, Sophie
 Z: Anton Zille ed.; David Sweenie at The Session
 N: https://thesession.org/members/26966/sets/99681
 R: Polka
@@ -1702,7 +1702,7 @@ Bf Bf|g2 f>e|dB AG/A/|1 BG G/A/B/c/:|2 BG BA||
 X: 100
 T: POLKA: Roundabout
 C: C: Dave Hennessy; S: Various
-C: Set Leaders: Sophie, Anton
+C: Set Leaders: Sophie, Anton, Oleg
 Z: Anton Zille ed.; gian marco at The Session
 N: https://thesession.org/members/26966/sets/99417
 R: Polka
@@ -1719,7 +1719,7 @@ X: 101
 T: POLKA: Siege of Ennis
 T: Banks of Inverness
 C: C: Trad.; S: Séamus Begley
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Tania, Anton, Mars, Vova
 Z: Anton Zille ed. arr., Oleg Naumov arr.; CreadurMawnOrganig at The Session
 N: https://www.soundslice.com/slices/CLHRc/
 N: https://thesession.org/members/26966/sets/89997
@@ -1743,7 +1743,7 @@ X: 102
 T: POLKA: Timmy O'Connor's
 T: John Brosnan's No. 1
 C: C: Trad.; S: Timmy O'Connor
-C: Set Leaders: Anton, Sophie, Tania
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed.; slainte at The Session
 N: https://thesession.org/members/26966/sets/92004
 R: Polka
@@ -1796,7 +1796,7 @@ X: 105
 T: POLKA: Toormore No. 1
 T: Tuar Mór No. 1
 C: C: Trad.; S: De Danann; Johnny O'Leary
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: [Unedited]; Northcregg at The Session
 N: https://thesession.org/members/26966/sets/99393
 R: Polka
@@ -1813,7 +1813,7 @@ X: 106
 T: POLKA: Toureendarby
 T: Curragh Races
 C: C: Trad.; S: Timmy O'Connor; Laoise Kelly
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Tania, Anton, Mars, Oliushka, Vova
 Z: Anton Zille ed. arr., Oleg Naumov arr.; Weejie at The Session
 N: https://www.soundslice.com/slices/CLHRc/
 N: https://thesession.org/members/26966/sets/89997
@@ -1830,7 +1830,7 @@ K: Edor
 X: 107
 T: POLKA: We Won't Go Home Til' Morning
 C: C: Trad.; S: Brendan & Séamus Begley
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Andrey, Mars, Oliushka
 Z: Anton Zille ed., Oleg Naumov arr.; ceolachan at The Session
 N: https://thesession.org/members/26966/sets/92029
 R: Polka
@@ -1846,7 +1846,7 @@ A,|:"D"D>E FG|"D"Ad A2|"G"BG G>B|"A"cA Ad|
 X: 108
 T: POLKA: Weaver's Delight
 C: C: Trad.; S: Denis Murphy
-C: Set Leaders: Olya, Anton
+C: Set Leaders: Anton
 Z: Anton Zille ed., Oleg Naumov arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/71310
 R: Polka
@@ -1862,7 +1862,7 @@ K: Dmaj
 X: 109
 T: REEL: Alice's
 C: C: Frankie Gavin; S: Various
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Tania, Anton, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/92420
 R: Reel
@@ -1878,7 +1878,7 @@ K: Bmin
 X: 110
 T: REEL: Ashplant
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Anton, Mars
+C: Set Leaders: Andrey, Anton, Mars, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; Sergei Ejov at The Session
 N: https://thesession.org/members/26966/sets/96716
 R: Reel
@@ -1910,7 +1910,7 @@ X: 112
 T: REEL: Banshee
 T: McMahon's
 C: C: James McMahon; S: Various
-C: Set Leaders: Oleg, Anton, Mars, Tania
+C: Set Leaders: Oleg, Anton, Mars, Tania, André, Vova
 Z: Oleg arr.; slainte at The Session
 N: https://thesession.org/members/26966/sets/99683
 R: Reel
@@ -1991,7 +1991,7 @@ faaf dcde|faaf g3a|bgaf gfed|B/c/d ef g2||
 X: 117
 T: REEL: Brenda Stubbert's
 C: C: Jerry Holland; S: Various
-C: Set Leaders: André, Anton, Sophie
+C: Set Leaders: André, Anton, Sophie, Tania
 Z: [Unedited]; seara at The Session
 N: https://thesession.org/members/26966/sets/96708
 R: Reel
@@ -2025,7 +2025,7 @@ X: 119
 T: REEL: Callaghan's
 T: Cal Callaghan's
 C: C: Trad.; S: Denis Murphy & Julia Clifford
-C: Set Leaders: Anton, Oliushka, Sophie
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed. arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/63225
 R: Reel
@@ -2041,7 +2041,7 @@ K: Dmaj
 X: 120
 T: REEL: Cooley's
 C: C: Trad.; S: Joe Cooley
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Vova, Mars, André
 Z: Anton Zille ed., Oleg Naumov arr.; ceolachan at The Session
 N: https://thesession.org/members/26966/sets/92367
 R: Reel
@@ -2073,7 +2073,7 @@ K: Dmaj
 X: 122
 T: REEL: Dick Gossip's
 C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton
+C: Set Leaders: Tania, Anton, Oliushka, André, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; Will Harmon at The Session
 N: https://thesession.org/members/26966/sets/92420
 R: Reel
@@ -2089,7 +2089,7 @@ K: Dmaj
 X: 123
 T: REEL: Drowsy Maggie
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Vova
+C: Set Leaders: Vova, Mars, André
 Z: Anton Zille ed., Oleg Naumov arr.; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/92367
 R: Reel
@@ -2120,7 +2120,7 @@ Beed e2de|f2df efdB|A2Bc dfec|dBAF E4:||
 X: 125
 T: REEL: Dunmore Lasses
 C: C: Trad.; S: Various
-C: Set Leaders: André, Anton, Sophie
+C: Set Leaders: André, Anton, Sophie, Tania, Mars
 Z: [Unedited]; Tania Sycheva at The Session
 N: https://thesession.org/members/26966/sets/96708
 R: Reel
@@ -2136,7 +2136,7 @@ gfeg fedc|Beed e2 ef|gefd eBdB|A2 BA GE E2:||
 X: 126
 T: REEL: Earl's Chair
 C: C: Pakie Moloney; S: Various
-C: Set Leaders: Vova, Anton, Sophie
+C: Set Leaders: Vova, Anton, Sophie, Tania, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; Ian Varley, slainte at The Session
 N: https://thesession.org/members/26966/sets/96725
 R: Reel
@@ -2184,7 +2184,7 @@ K: Edor
 X: 129
 T: REEL: Galtee Rangers
 C: C: Trad.; S: Denis Murphy & Julia Clifford
-C: Set Leaders: Anton, Oliushka, Sophie
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed. arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/63225
 R: Reel
@@ -2200,7 +2200,7 @@ dB|"D"AFFE F2DE|"(G)"F2FE "A"FAdB|"D"AFFE F2DE|"G"FABA "A"FE E2|
 X: 130
 T: REEL: Garrett Barry's
 C: C: Trad.; S: Planxty
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: Anton Zille ed.; JACKB at The Session
 N: https://thesession.org/members/26966/sets/99412
 R: Reel
@@ -2216,7 +2216,7 @@ bg~g2 abge|dBAB GA B/c/d|edcB cdef|1 gedB A2 ef:|2 gedB AdBA||
 X: 131
 T: REEL: Girls of Farranfore
 C: C: Trad.; S: Máire O'Keeffe; Paddy Cronin; Denis Murphy
-C: Set Leaders: Anton, Mars
+C: Set Leaders: Anton
 Z: Anton Zille ed.; gian marco at The Session
 N: https://thesession.org/members/26966/sets/94457
 R: Reel
@@ -2249,7 +2249,7 @@ K: Gmaj
 X: 133
 T: REEL: Golden Keyboard
 C: C: Martin Mulhaire; S: Various
-C: Set Leaders: André, Sophie, Anton
+C: Set Leaders: André, Sophie, Anton, Tania
 Z: [Unedited]; Benjamin Glauser at The Session
 N: https://thesession.org/members/26966/sets/96714
 R: Reel
@@ -2312,7 +2312,7 @@ K: Bdor
 X: 137
 T: REEL: Jenny's Wedding
 C: C: Trad.; S: Planxty
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: Anton Zille ed.; Owen H at The Session
 N: https://thesession.org/members/26966/sets/99412
 R: Reel
@@ -2328,7 +2328,7 @@ d2fd adfd|cd ef g2fg|af ge d2cA|B/c/d AG FD D2:||
 X: 138
 T: REEL: Lad O'Beirne's
 C: C: Lad O'Beirne (?); S: Tulla Céilí Band
-C: Set Leaders: Anton, Sophie
+C: Set Leaders: Anton, Sophie, Mars
 Z: Anton Zille ed.; Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/74251
 R: Reel
@@ -2344,7 +2344,7 @@ Bd~d2 d2 ef|g2 fa gedB|DEGA ~B3c|1 dBAc BGGA:|2 dBAc BGGE||
 X: 139
 T: REEL: Lochaber Badger
 C: C: Fred Morrison; S: Various
-C: Set Leaders: Andrey, Vova
+C: Set Leaders: Andrey, Vova, Oleg
 Z: Oleg Naumov arr.; MikkinNotts at The Session
 N: https://thesession.org/members/26966/sets/96721
 R: Reel
@@ -2375,7 +2375,7 @@ a2ae ~g3e|dedB GABd|eA~A2 efge|1 dBGB A2Bd:|2 dBGB A2||
 X: 141
 T: REEL: Maud Millar
 C: C: Trad.; S: Various
-C: Set Leaders: Mars, Anton
+C: Set Leaders: Mars, Anton, André
 Z: Mars Agliullin ed., Anton Zille ed.; slainte at The Session
 N: https://thesession.org/members/26966/sets/94255
 R: Reel
@@ -2424,7 +2424,7 @@ X: 144
 T: REEL: Mulqueeney's
 T: Mulqueen's / Spindle Shanks
 C: C: Trad.; S: Various
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton, André
 Z: Anton Zille ed.; Jamie at The Session
 N: https://thesession.org/members/26966/sets/74626
 R: Reel
@@ -2440,7 +2440,7 @@ e2 ed efed|cdef gefg|a~f3 g~e3|dfec dBAG||
 X: 145
 T: REEL: Musical Priest
 C: C: Trad.; S: Various
-C: Set Leaders: Oliushka, Anton
+C: Set Leaders: Oliushka, Anton, Tania, Mars, André, Vova
 Z: [Unedited]; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/95965
 R: Reel
@@ -2456,7 +2456,7 @@ dB B2 bafb|afec ABce|dcBc defb|afec B2||
 X: 146
 T: REEL: New Mown Meadows (Amix)
 C: C: Trad.; S: Noel Hill
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; Kenny at The Session
 N: https://thesession.org/members/26966/sets/92390
 R: Reel
@@ -2489,7 +2489,7 @@ X: 148
 T: REEL: Pride of Rathmore
 T: Gneeveguilla
 C: C: Trad.; S: Máire O'Keeffe; Paddy Cronin; Denis Murphy
-C: Set Leaders: Anton, Mars
+C: Set Leaders: Anton
 Z: Anton Zille ed.; jaychoons at The Session
 N: https://thesession.org/members/26966/sets/94457
 R: Reel
@@ -2537,7 +2537,7 @@ K: Dmaj
 X: 151
 T: REEL: Rolling in the Ryegrass
 C: C: Trad.; S: Various
-C: Set Leaders: Oleg, Anton, Mars, Tania
+C: Set Leaders: Oleg, Anton, Mars, Tania, Andrey, Oliushka, André, Vova
 Z: Oleg arr.; Connor Hickey at The Session
 N: https://thesession.org/members/26966/sets/99683
 R: Reel
@@ -2551,7 +2551,7 @@ ABAF DFAF|G2BG dGBG|ABAF DFAF|GBAF E2 D2:||
 X: 152
 T: REEL: Rookery
 C: C: Vincent Broderick; S: Various
-C: Set Leaders: Oleg, Anton, Mars, Tania
+C: Set Leaders: Oleg, Anton, Mars
 Z: Oleg arr.; thomdecarlo at The Session
 N: https://thesession.org/members/26966/sets/99683
 R: Reel
@@ -2567,7 +2567,7 @@ G2 GA B2 Bd|e2 ed efga|bgag egge|d2 Ac BG G2:||
 X: 153
 T: REEL: Saint Anne's
 C: C: Trad.; S: Various
-C: Set Leaders: André, Sophie, Anton
+C: Set Leaders: André, Sophie, Anton, Mars, Oliushka
 Z: [Unedited]; Benjamin Glauser at The Session
 N: https://thesession.org/members/26966/sets/96714
 R: Reel
@@ -2583,7 +2583,7 @@ f2fg fedc|Bggf g2gf|edcB ABcd|eddc d2 de:||
 X: 154
 T: REEL: Sally Gardens
 C: C: Trad.; S: Various
-C: Set Leaders: André, Anton, Sophie
+C: Set Leaders: André, Anton, Sophie, Tania
 Z: [Unedited]; slainte at The Session
 N: https://thesession.org/members/26966/sets/96708
 R: Reel
@@ -2617,7 +2617,7 @@ X: 156
 T: REEL: Tommy Peoples' (Gmaj)
 T: Milkmaid
 C: C: Trad.; S: Various
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton, Mars
 Z: Anton Zille ed.; DaveF at The Session
 N: https://thesession.org/members/26966/sets/74626
 R: Reel
@@ -2648,7 +2648,7 @@ FAdf ~a3f|~g3g gfef|~g2ba gfed|cAGE EDD2:||
 X: 158
 T: REEL: Toss the Feathers (Edor)
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Anton, Mars
+C: Set Leaders: Andrey, Anton, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; Benjamin Glauser at The Session
 N: https://thesession.org/members/26966/sets/96716
 R: Reel
@@ -2664,7 +2664,7 @@ K: Edor
 X: 159
 T: REEL: Trip to Birmingham
 C: C: Josie McDermott; S: Various
-C: Set Leaders: Mars, Tania, Anton
+C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed., Anton Zille ed.; slainte at The Session
 N: https://thesession.org/members/26966/sets/94276
 R: Reel
@@ -2681,7 +2681,7 @@ DGGF G2Bd|~e3d efga|bg~g2 ageg|1 dBAB ~G3E:|2 dBAB ~G3z ||
 X: 160
 T: REEL: Trip to Cullenstown (Gmaj)
 C: C: Phil Murphy; S: Various
-C: Set Leaders: Mars, Tania, Anton
+C: Set Leaders: Mars, Anton
 Z: Mars Agliullin ed., Anton Zille ed.; Kenny at The Session
 N: https://thesession.org/members/26966/sets/94276
 R: Reel
@@ -2715,7 +2715,7 @@ D2DF ADFA|dfed ~B3c|dB~B2 ABdB|AFEG FDD2:||
 X: 162
 T: REEL: Trip to Pakistan
 C: C: Niall Kenny; S: Various
-C: Set Leaders: Olya, Andrey
+C: Set Leaders: Olya, Oliushka, André, Vova
 Z: Oleg Naumov arr.; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/92365
 R: Reel
@@ -2749,7 +2749,7 @@ A,EAd c2A,E|AcB2 G,B,DB,|A,EAd cAB2|G,B,DG E3D||
 X: 164
 T: REEL: Virginia
 C: C: Trad.; S: Planxty
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: Anton Zille ed.; James Dumbelton at The Session
 N: https://thesession.org/members/26966/sets/99412
 R: Reel
@@ -2781,7 +2781,7 @@ FAdA BAdA|FAdA BEE2|dcBA BcdB|AFEG FDD2||
 X: 166
 T: REEL: Windbroke
 C: C: Michael McGoldrick; S: Various
-C: Set Leaders: Vova, Anton
+C: Set Leaders: Vova, Andrey, Oleg
 Z: Oleg Naumov arr.; Donough at The Session
 N: https://thesession.org/members/26966/sets/96726
 R: Reel
@@ -2813,7 +2813,7 @@ d2 B|:"D"ABA DFA "G"BAF "D"DFA|"D"dAA "A"eAA "D"~f3 def|
 X: 168
 T: SINGLE JIG: Kevin McHugh's
 C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed., Oleg Naumov arr.; R-O-I-S-I-N at The Session
 N: https://thesession.org/members/26966/sets/92422
 R: Single Jig
@@ -2829,7 +2829,7 @@ K: Gmaj
 X: 169
 T: SINGLE JIG: Merrily Kiss the Quaker
 C: C: Trad.; S: Various
-C: Set Leaders: Vova, Olya, Anton
+C: Set Leaders: Vova, Anton, Tania, Mars, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; Sean Perry at The Session
 N: https://thesession.org/members/26966/sets/96724
 R: Single Jig
@@ -2847,7 +2847,7 @@ K: Gmaj
 X: 170
 T: SINGLE JIG: Old Favourite
 C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Mars, Oliushka, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; shanachie at The Session
 N: https://thesession.org/members/26966/sets/92422
 R: Single Jig
@@ -2922,7 +2922,7 @@ efe efe efe edB|1 EFG BdB AFD E3:|2 EFG BdB AFD E2 B,||
 X: 174
 T: SLIDE: Brosna No. 1
 C: C: Trad.; S: Denis Murphy & Julia Clifford
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Tania, Anton, Sophie, Andrey, Mars, André
 Z: Anton Zille ed., Oleg Naumov arr.; fidicen at The Session
 N: https://thesession.org/members/26966/sets/92423
 R: Slide
@@ -3009,7 +3009,7 @@ X: 179
 T: SLIDE: Dan O'Keeffe's
 T: Danny Ab's No. 2
 C: C: Trad.; S: Denis Murphy & Julia Clifford
-C: Set Leaders: Tania, Anton, Sophie
+C: Set Leaders: Anton, Sophie, Andrey, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/92423
 R: Slide
@@ -3128,7 +3128,7 @@ X: 186
 T: SLIDE: Priest
 T: Is It the Priest You Want?
 C: C: Trad.; S: Bothy Band; Denis Murphy
-C: Set Leaders: Oliushka, Anton
+C: Set Leaders: Anton
 Z: Anton Zille ed.; Kuddel at The Session
 N: https://thesession.org/members/26966/sets/63219
 R: Slide
@@ -3161,7 +3161,7 @@ faf fed g2e edB|ABd efe|1 d3 d2 e:|2 d2 A B2 A||
 X: 188
 T: SLIDE: Road to Lisdoonvarna
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Andrey
+C: Set Leaders: Olya, Andrey, Anton, Tania, André, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; birlibirdie at The Session
 N: https://thesession.org/members/26966/sets/92387
 R: Slide
@@ -3227,7 +3227,7 @@ K: Gmaj
 X: 192
 T: SLIP JIG: Butterfly
 C: C: Tommy Potts; S: Various
-C: Set Leaders: Andrey, Anton
+C: Set Leaders: Andrey, Mars, Oliushka, André, Olya, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; James Dumbelton at The Session
 N: https://thesession.org/members/26966/sets/96719
 R: Slip Jig
@@ -3242,7 +3242,7 @@ K: Emin
 X: 193
 T: SLIP JIG: Fig for a Kiss
 C: C: Trad.; S: Altan
-C: Set Leaders: Olya, Tania, Anton
+C: Set Leaders: Tania, Anton, Andrey, Mars, Oliushka, André, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/76538
 R: Slip Jig
@@ -3258,7 +3258,7 @@ K: Edor
 X: 194
 T: SLIP JIG: Foxhunter's (Dmaj)
 C: C: Trad.; S: Various
-C: Set Leaders: Olya, Tania, Anton
+C: Set Leaders: Tania, Anton, Mars
 Z: Anton Zille ed., Oleg Naumov arr.; Netallica at The Session
 N: https://thesession.org/members/26966/sets/76538
 R: Slip Jig
@@ -3274,7 +3274,7 @@ K: Dmaj
 X: 195
 T: SLIP JIG: Kid on the Mountain
 C: C: Trad.; S: Various
-C: Set Leaders: Andrey, Vova
+C: Set Leaders: Tania
 Z: Oleg Naumov arr.; Benjamin Glauser at The Session
 N: https://thesession.org/members/26966/sets/96721
 R: Slip Jig
@@ -3306,7 +3306,7 @@ K: Ador
 X: 197
 T: SLIP JIG: Snowy Path
 C: C: Mark Kelly; S: Altan
-C: Set Leaders: Olya, Tania, Anton
+C: Set Leaders: Olya, Tania, Anton, Andrey, Oleg, André, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; Shawn Cassady at The Session
 N: https://thesession.org/members/26966/sets/76538
 R: Slip Jig
@@ -3457,7 +3457,7 @@ K: Gmaj
 X: 206
 T: WALTZ: Far Away
 C: C: Pete Jung; S: Various
-C: Set Leaders: Olya, Tania, Oliushka, Andrey
+C: Set Leaders: Olya, Tania, Oliushka, Mars, André, Vova
 Z: Oleg Naumov arr.; Thistledowne at The Session
 N: https://thesession.org/members/26966/sets/92071
 R: Waltz
@@ -3473,7 +3473,7 @@ K: Bmin
 X: 207
 T: WALTZ: Flatwater Fran (Amaj)
 C: C: Phil Cunningham; S: Various
-C: Set Leaders: Tania, Anton, Mars, Sophie
+C: Set Leaders: Anton, Sophie, André, Olya, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; Sergei Ejov at The Session
 N: https://thesession.org/members/26966/sets/92389
 R: Waltz
@@ -3493,7 +3493,7 @@ EF|:"A"A2 A2 EF|"A"A2 A2 ce|"D"f2 e2 A2|"A"c4 EF|
 X: 208
 T: WALTZ: Flatwater Fran (Gmaj)
 C: C: Phil Cunningham; S: Various
-C: Set Leaders: Tania, Anton, Mars, Sophie
+C: Set Leaders: Tania, Anton, Mars, Sophie, Andrey, André, Olya, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; onscuba at The Session
 N: https://thesession.org/members/26966/sets/92389
 R: Waltz
@@ -3513,7 +3513,7 @@ DE|:"G"G2 G2 DE|"G"G2 G2 Bd|"C"e2 d2 G2|"G"B4 DE|
 X: 209
 T: WALTZ: Flatworld
 C: C: Andy Cutting; S: Various
-C: Set Leaders: Olya, Tania
+C: Set Leaders: Tania
 Z: Anton Zille ed., Oleg Naumov arr.; Mario at The Session
 N: https://thesession.org/members/26966/sets/92070
 R: Waltz
@@ -3532,7 +3532,7 @@ X: 210
 T: WALTZ: Looking at a Rainbow
 T: Looking at a Rainbow Through a Dirty Window
 C: C: Calum Stewart; S: Various
-C: Set Leaders: Olya, Tania
+C: Set Leaders: Olya, Tania, Anton, Andrey, Mars, Oliushka, André, Vova
 Z: Anton Zille ed., Oleg Naumov arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/92070
 R: Waltz
@@ -3588,7 +3588,7 @@ D GA|:"G"B2 BA B/c/d|"D/G"A4 BA|"C/G"G2 FG E2|"D/G"D4 GA|
 X: 213
 T: WALTZ: Trip to Skye
 C: C: John Whelan; S: Various
-C: Set Leaders: Olya, Tania, Oliushka, Andrey
+C: Set Leaders: Olya, Tania, Oliushka, Andrey, Mars, André, Vova
 Z: Oleg Naumov arr.; shanachie at The Session
 N: https://thesession.org/members/26966/sets/92071
 R: Waltz

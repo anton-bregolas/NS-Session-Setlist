@@ -15,39 +15,31 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.8.8: Encoder Upgrade (Dynamic Chords Generation)
+NS Session Setlist v.0.8.9: Session Survey Applied
 
 + Project updates:
-  - Launcher: Dynamic Chords checkbox added to Tunebook Options
-  - Chord Viewer: Generates chords directly from ABC if Dynamic Chords option is on
-
-+ HTML updates
-  - Main App (index.html):
-    + "Chord Viewer: Generate chords dynamically" checkbox added with default state unchecked
-  
-+ JavaScript updates
-  - Chord Viewer module (scripts-chord-viewer.js):
-    + openChordViewer function refactored to account for dynamic chords extraction
-    + openChordViewer now retrieves ABC from tuneSelector value, decodes it and passes an ABC string to extractChordsFromAbc if chordViewerAllowDynamicChords is 1
-    + openChordViewer now sets setChords and tuneChords depending on extractChordsFromAbc output if chordViewerAllowDynamicChords is 1
-    + extractChordsFromAbc*: Validates abcContent, passes it to makeAbcChordBook then getValidChordsArray, returns chordsArray or empty array
-    + validateAbcChordsContent*: Checks if ABC contents X: field and valid chords
-    + getValidChordsArray*: Safely parses Chordbook and returns Chords Array or false if it doesn't pass validation
-    + LZString import added for dynamic chord extraction from ABC
-  - App Launcher module & ABC Encoder module (scripts-ns-sessions.js, scripts-abc-encoder.js)
-    + showRedOutlineWarning renamed to displayWarningEffect
-  - ABC Tunebook module (scripts-abc-tools.js)
-    + abcToolsAllowDynamicChords* localStorage variable added
+  - Tunebook: Session Survey Data applied to DB, Set Leaders updated
 
 + Session DB updates:
-  - Session DB updated to 2025-04-02
-  - Minor fixes in ABC & Chords for Sets & Tunes
+  - Session DB updated to 2025-04-04
+  - DB sorted & encoded with loaded Session Survey Data
+  - Set Leaders metadata updated in ABC Sets & Tunes
 
 <details>
   <summary>v.0.8: Encoder Upgrade</summary>
 
 <details>
-<summary>v.0.8.8: Encoder Upgrade (Dynamic Chords Generation)</summary>
+<summary>v.0.8.9: Session DB Update (Session Survey Applied)</summary>
+
++ Project updates:
+  - Tunebook: Session Survey Data applied to DB, Set Leaders updated
+
++ Session DB updates:
+  - Session DB updated to 2025-04-04
+  - DB sorted & encoded with loaded Session Survey Data
+  - Set Leaders metadata updated in ABC Sets & Tunes
+</details>
+<summary>v.0.8.8: Encoder Upgrade (Dynamic Chords Mode)</summary>
 
 + Project updates:
   - Launcher: Dynamic Chords checkbox added to Tunebook Options
@@ -74,7 +66,7 @@ NS Session Setlist v.0.8.8: Encoder Upgrade (Dynamic Chords Generation)
 + Session DB updates:
   - Session DB updated to 2025-04-02
   - Minor fixes in ABC & Chords for Sets & Tunes
-<details>
+</details>
 <summary>v.0.8.7: Encoder Upgrade (Mute Chords & DB Fixes)</summary>
 
 </details>
