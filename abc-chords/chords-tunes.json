@@ -130,14 +130,29 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tD\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\t(Em)\t|\t(C)\tD\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tC\t|1\tC\tD\t|\n|2\tC\tD\t||"
   },
   {
+    "title": "POLKA: Cobbler's",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tBm\tBm\t|\tBm\tBm\t|\tBm\tBm\t|\tA\tA\t|\n|\tBm\t(G)\t|\tBm(G)\t(G)\t|\tA\t(F#m)\t|1\tBm\t(F#m)\t|\n|2\tBm\t(F#m)\t||\n\nPART 2:\n|\tBm\tBm\t|\tBm\tBm\t|\tA\tA\t|\tA\tA\t|\n|\tG\tG\t|\tEm\tEm\t|\tF#m\tF#m\t|1\tF#m\t(Esus4)\t|\n|2\tF#m\t(Esus4)\t||"
+  },
+  {
     "title": "POLKA: Denis Murphy's",
     "meter": "2/4",
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tG\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
   },
   {
+    "title": "POLKA: Johnny I Do Miss You",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tBm\t(G)\t|\tBm\t(G)\t|\tG\tA\t|\tD\tD\t||"
+  },
+  {
     "title": "POLKA: Kerry Cow",
     "meter": "2/4",
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|\tD\tD\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|\tD\tD\t||"
+  },
+  {
+    "title": "POLKA: Maids of Ardagh",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|\tA\tD\t||\n\nPART 2:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tA\tG\t|\n|\tA\tA\t|\tA\tA\t|\tG\tG\t|\t(E5)\t(E5)\t||"
   },
   {
     "title": "POLKA: Neilí",
@@ -163,6 +178,11 @@
     "title": "POLKA: Siege of Ennis",
     "meter": "2/4",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tC\tC\t|\tG\tD/F#\t|\tEm\tEm\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tD\t|\tG\tG\t||\n\nPART 3:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tD\t|\tG\tG\t||\n\nPART 4:\n|\tG\tG\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\t(Em)\t|\tC\tC\t|\tC\t(G)\t|1\tD\tD\t|\n|2\tC\tD\t||"
+  },
+  {
+    "title": "POLKA: Toormore No. 1",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tG\t|\tA5\tA5\t|\tA5\tG\t|\n|\tA5\tA5\t|\tA5\tG\t|\t(E5)\t(E5)\t|1\tD\tD\t|\n|2\tG\t(A5)\t||\n\nPART 2:\n|\tD\tD\t|\tD/F#\tD/F#\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD/F#\tD/F#\t|\tG\tA\t|1\tA\tD\t|\n|2\tD\tD\t||"
   },
   {
     "title": "POLKA: Toureendarby",

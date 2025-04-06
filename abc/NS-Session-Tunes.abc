@@ -1318,17 +1318,17 @@ X: 78
 T: POLKA: Cobbler's
 C: C: Trad.; S: De Danann; Johnny O'Leary
 C: Set Leaders: Sophie, Anton, Tania
-Z: [Unedited]; Nutty Nessie at The Session
+Z: Anton Zille ed., Oleg Naumov arr.; Nutty Nessie at The Session
 N: https://thesession.org/members/26966/sets/99393
 R: Polka
 M: 2/4
 L: 1/8
 Q: 1/4=140
 K: Bmin
-B>c|:dB bB|de f>e|dB bB|c/B/A/c/ ef/e/|
-dB bB|de f>e|d>e f/e/d|1  B2 B>c:|2  B2 B2||
-|:fe/f/ ba|fe f>e|dB bB|c/B/A/c/ ed/e/|
-fe/f/ ba|fe f>e|d>e f/e/d|1  B2 B2:|2 B2||
+B>c|:"Bm"dB bB|de f>e|dB bB|"A"c/B/A/c/ ef/e/|
+"Bm (G)"dB bB|de f>e|"A (F#m)"d>e f/e/d|1  "Bm (F#m)"B2 B>c:|2  "Bm (F#m)"B2 B2||
+|:"Bm"fe/f/ ba|fe f>e|"A"dB bB|c/B/A/c/ ed/e/|
+"G" fe/f/ ba|"Em" fe f>e|"F#m" d>e f/e/d|1  "F#m (Esus4)"B2 B2:|2 "F#m (Esus4)"B2||
 
 X: 79
 T: POLKA: Dark Girl Dressed in Blue
@@ -1488,19 +1488,19 @@ X: 88
 T: POLKA: Johnny I Do Miss You
 C: C: Trad.; S: De Danann; Johnny O'Leary
 C: Set Leaders: Sophie, Anton
-Z: [Unedited]; jr347 at The Session
+Z: Anton Zille ed., Oleg Naumov arr.; jr347 at The Session
 N: https://thesession.org/members/26966/sets/99393
 R: Polka
 M: 2/4
 L: 1/8
 Q: 1/4=140
 K: Dmaj
-d>B|:AF ED|F2 A,F|GB AF|E2 d>B|
-AF ED|F2 A,F|GEFE|D2:||
-A>G|FA A/B/A/G/|FA A>G|FA Bc|d2 dA|
-FA A/B/A/G/|FA de|fe ed|e2 eA|
-FA A/B/A/G/|FA A>G|FA Bc|d2 d>B|
-AF ED|F2 A,F|GE FE|D2||
+d>B|:"D"AF ED|F2 A,F|"G"GB AF|"A"E2 d>B|
+"D"AF ED|F2 A,F|"G"GE "A"FE|1 "D"D2 d>B:|2 "D"D2 D>E||
+"D"FA A/B/A/G/|FA A>G|FA Bc|"G"d2 dA|
+"D"FA A/B/A/G/|FA de|"G"fe ed|"A"e2 eA|
+"D"FA A/B/A/G/|FA A>G|FA Bc|"G"d2 d>B|
+"Bm (G)"AF ED|"Bm (G)"F2 A,F|"G"GE "A"FE|"D"D2||
 
 X: 89
 T: POLKA: Kerry Cow
@@ -1525,17 +1525,18 @@ T: POLKA: Maids of Ardagh
 T: Toormore No. 2 / Tuar Mór No. 2
 C: C: Trad.; S: De Danann; Johnny O'Leary
 C: Set Leaders: Sophie, Anton
-Z: [Unedited]; Musicalbison at The Session
+Z: Anton Zille ed., Oleg Naumov arr.; Musicalbison at The Session
 N: https://thesession.org/members/26966/sets/99393
 R: Polka
 M: 2/4
 L: 1/8
 Q: 1/4=140
+K: Dmaj
+|:"D"F>A BA|de f2|"G"fe/f/ gc|"A"ed BA|
+"D"F>A BA|de f2|"G"fe/f/ "A"gc|e"D"d d2:||
 K: Amix
-F>A BA|de f2|fe/f/ gc|ed BA|
-F>A BA|de f2|fe/f/ gc|ed d2:||
-ef/e/ ce|fe a2|ef/e/ ce|fe c/B/A|
-ef/e/ ce|fe a2|ef/e/ dB|BA A2:||
+|:"A"ef/e/ ce|fe a2|ef/e/ ce|f"G"e c/B/A|
+"A"ef/e/ ce|fe a2|"G"ef/e/ dB|"(E5)"BA A2:||
 
 X: 91
 T: POLKA: Many a Wild Night
@@ -1797,17 +1798,18 @@ T: POLKA: Toormore No. 1
 T: Tuar Mór No. 1
 C: C: Trad.; S: De Danann; Johnny O'Leary
 C: Set Leaders: Sophie, Anton
-Z: [Unedited]; Northcregg at The Session
+Z: Anton Zille ed., Oleg Naumov arr.; Northcregg at The Session
 N: https://thesession.org/members/26966/sets/99393
 R: Polka
 M: 2/4
 L: 1/8
 Q: 1/4=140
+K: Amix
+|:"A5"ef/e/ dB|BA "G"B/c/d|"A5"ef/e/ dB|B"G"A A2|
+"A5"ef/e/ dB|B"G"A B/c/d|"(E5)"af/a/ gc|1 "D"ed d2:|2 "G"ed "(A5)"de||
 K: Dmaj
-ef/e/ dB|BA B/c/d|ef/e/ dB|BA A2|
-ef/e/ dB|BA B/c/d|af/a/ gc|1 ed d2:|2 ed de||
-|:f>e fA|B/c/d ef|g>f ga|ba f/g/a|
-f>e fA|B/c/d ef|af/a/ gc|1 ed de:|2 ed d2||
+|:"D"f>e fA|"D/F#"B/c/d ef|"G"g>f ga|"A"ba f/g/a|
+"D"f>e fA|"D/F#"B/c/d ef|"G"af/a/ "A"gc|1 e"D"d de:|2 e"D"d d2||
 
 X: 106
 T: POLKA: Toureendarby
