@@ -42,12 +42,12 @@
   {
     "title": "HORNPIPE: Rights of Man",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tD\t|\tEm\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tA\t|\tD\tD\t|\tD\t(Bm)\t|\n|\tEm(C)\t(D)\t|\t(G) (D)\tD(C) D(C)\t|\tC(Am)\tBm\t|\tEm\tEm\t||"
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tD\t|\tEm\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tA\t|\tD\tD\t|\tD\t(Bm)\t|\n|\tEm(C)\t(D)\t|\t(G) (D)\tD(C) (C)\t|\tC(Am)\tBm\t|\tEm\tEm\t||"
   },
   {
     "title": "JIG: Blarney Pilgrim",
     "meter": "6/8",
-    "chords": "PART 1:\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\tC\tD\t|\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\t\t(D)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tG\tG\t|\tD\tC\t|\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\t\t(D)\t||\n\nPART 3:\n|\tD\tD/B\t|\tD\tD\t|\tAm\tAm\t|\tG/B\tG\t|\n|\tD\tD/B\t|\tD\tD\t|\tAm\tAm\t|\tC\t(D)\t||"
+    "chords": "PART 1:\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\tC\tD\t|\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\t(D)\t(D)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tG\tG\t|\tD\tC\t|\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\t(D)\t(D)\t||\n\nPART 3:\n|\tD\tD/B\t|\tD\tD\t|\tAm\tAm\t|\tG/B\tG\t|\n|\tD\tD/B\t|\tD\tD\t|\tAm\tAm\t|\tC\t(D)\t||"
   },
   {
     "title": "JIG: Carraroe",
@@ -72,7 +72,7 @@
   {
     "title": "JIG: Leitrim Fancy",
     "meter": "6/8",
-    "chords": "PART 1:\n|\tEm\tD\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tD\t|\tEm\t(C)\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tD\tD\t|\tG\tG\t|\n|\tG\tBm\t|\tC\tC\t|\tD\tD\t||"
+    "chords": "PART 1:\n|\tEm\tD\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tD\t|\tEm\t(C)\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tBm\t|\tC\tC\t|\tD\tD\t||"
   },
   {
     "title": "JIG: Morrison's",
@@ -117,7 +117,7 @@
   {
     "title": "POLKA: Bridgie Con Matt's",
     "meter": "2/4",
-    "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tEm\tEm\t|\n|\tD/F#\tD/F#\t|\tG\tC\t|\tD\t(D/F#)\t||"
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tD/F#\tD/F#\t|\tG\tC\t|\tD\t(D/F#)\t||"
   },
   {
     "title": "POLKA: Britches Full of Stitches (Amaj)",
@@ -152,12 +152,12 @@
   {
     "title": "POLKA: Pop No. 2",
     "meter": "2/4",
-    "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tD\tD\t|\tF#m\tF#m\t|\n|\tF#m\tE\t|\tE\tE\t||\n\nPART 2:\n|\tA\tA\t|\tC#m\tC#m\t|\tD\tD\t|\tE\tE\t|\n|\tF#m\t(A)\t|\tC#m\tC#m\t|\tD\tD\t|1\tE\tE\t|\n|2\tE\tE\t||"
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tD\tD\t|\tD\tD\t|\n|\tF#m\tF#m\t|\tF#m\tE\t|\tE\tE\t|\tE\tE\t||\n\nPART 2:\n|\tA\tA\t|\tC#m\tC#m\t|\tD\tD\t|\tE\tE\t|\n|\tF#m\t(A)\t|\tC#m\tC#m\t|\tD\tD\t|1\tE\tE\t|\n|2\tE\tE\t||"
   },
   {
     "title": "POLKA: Pop No. 3",
     "meter": "2/4",
-    "chords": "PART 1:\n|\tBm\tBm\t|\tBm\t(G)\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tG (Bm)\tA A\t|\n|\tBm\tBm\t|\tBm\tBm\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tA\t(A/F#)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\t(A/F#)\t|\tBm\tBm\t|\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\t\t(A)\t||"
+    "chords": "PART 1:\n|\tBm\tBm\t|\tBm\t(G)\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tG (Bm)\tA A\t|\n|\tBm\tBm\t|\tBm\tBm\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tA\t(A/F#)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\t(A/F#)\t|\tBm\tBm\t|\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\t(A)\t(A)\t||"
   },
   {
     "title": "POLKA: Siege of Ennis",
@@ -177,7 +177,7 @@
   {
     "title": "POLKA: Weaver's Delight",
     "meter": "2/4",
-    "chords": "PART 1:\n|\tD\tD\t|\tD\tD/F#\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD/F#\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD/F#\t|\tG\tG\t|\tA\tA\t|\n|\tD\t(Bm)\t|\tD(Bm)\t(A)\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||"
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD/F#\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD/F#\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD/F#\t|\tG\tG\t|\tA\tA\t|\n|\tD\t(Bm)\t|\tD(Bm)\t(A)\t|\tG\tG\t|1\tA\tA\t||"
   },
   {
     "title": "REEL: Alice's",
@@ -187,7 +187,7 @@
   {
     "title": "REEL: Ashplant",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tEm\tEm\t|\t\t(C)\t|\t\t(G)\t|\tG\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\t(C)\t|\tG\tD\t|\n|\tEm\tEm\t|\t\t(C)\t|\tG\tG\t|\tD\tD\t||"
+    "chords": "PART 1:\n|\tEm\tEm\t|\t(C)\t(C)\t|\t(G)\t(G)\t|\tG\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\t(C)\t|\tG\tD\t|\n|\tEm\tEm\t|\t(C)\t(C)\t|\tG\tG\t|\tD\tD\t||"
   },
   {
     "title": "REEL: Banshee",
@@ -267,7 +267,7 @@
   {
     "title": "REEL: Windbroke",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tAm\t|\t–\tBm7\t|\tEm\tEm\t|\n|\t– D\tBm7 Am\t|\t–\tBm7\t||\n\nPART 2:\n|\tEm\tEm\t|\t–\tAm\t|\t–\tBm7\t|\tEm(C)\tEm\t|\n|\tAm\t(G)\t|\tD/F#\t(Bm7)\t||"
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tAm\t|\tAm\tBm7\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tEm D\tBm7 Am\t|\tAm\tBm7\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tAm\t|\tAm\tBm7\t|\n|\tEm(C)\tEm\t|\tEm\tEm\t|\tAm\t(G)\t|\tD/F#\t(Bm7)\t||"
   },
   {
     "title": "SINGLE JIG: Bank of Turf",
@@ -372,7 +372,7 @@
   {
     "title": "WALTZ: Ash Grove",
     "meter": "3/4",
-    "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG(Em)\tG(Em)\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG(Em)\t(Em)\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
   },
   {
     "title": "WALTZ: Far Away",

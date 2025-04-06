@@ -1036,9 +1036,9 @@ ef/e/ ce|fe a2|ef/e/ dB|BA A2:||
 T: Cobbler's
 K: Bmin
 B>c|:dB bB|de f>e|dB bB|c/B/A/c/ ef/e/|
-dB bB|de f>e|d>e f/e/d|1  B2 B>c:|2  B2B2||
+dB bB|de f>e|d>e f/e/d|1  B2 B>c:|2  B2 B2||
 |:fe/f/ ba|fe f>e|dB bB|c/B/A/c/ ed/e/|
-fe/f/ ba|fe f>e|d>e f/e/d|1  B2 B2:|2 B2 B>c||
+fe/f/ ba|fe f>e|d>e f/e/d|1  B2 B2:|2 B2||
 T: Johnny I Do Miss You
 K: Dmaj
 d>B|:AF ED|F2 A,F|GB AF|E2 d>B|
@@ -1046,7 +1046,7 @@ AF ED|F2 A,F|GEFE|D2:||
 A>G|FA A/B/A/G/|FA A>G|FA Bc|d2 dA|
 FA A/B/A/G/|FA de|fe ed|e2 eA|
 FA A/B/A/G/|FA A>G|FA Bc|d2 d>B|
-AF ED|F2 A,F|GEFE|D2||
+AF ED|F2 A,F|GE FE|D2||
 
 X: 39
 T: POLKAS: Green Cottage Set
@@ -1324,7 +1324,7 @@ K: Dmaj
 |:AG|"D"FG/F/ ED|"D"dc/d/ "D/F#"e>d|"G"cA AF|"A"G2 AG|
 "D"FG/F/ ED|"D"dc/d/ "D/F#"e/f/e/d/|"G"cA Bd|1 "A"A2:|2 "A"A2 Af/g/||
 |:"D"a>f ge|"D"fd "D/F#"e>d|"G"cd ef|"A"g2 gf/g/|
-"D (Bm)"a>f ge|"D (Bm)"fd "(A)"e/f/e/d/|"G"cA Bd|1 "A"A2 Af/g/:|2 "A"AB AG||
+"D (Bm)"a>f ge|"D (Bm)"fd "(A)"e/f/e/d/|"G"cA Bd|1 "A"A2 Af/g/:|2 AB AG||
 T: Bridgie Con Matt's
 K: Gmaj
 |:"G"GB BA/c/|"G"BG G>D|"C"GB B/c/d/B/|"D"AD FA|
@@ -1456,8 +1456,8 @@ K: Ador
 |:A/A/A BA GAAB|A/A/A BA edde|G2 BA BGGB|c2 BA BGGB|
 A/A/A BA GAAB|A/A/A Bd edda|gedB GABd|e2 dB eAAB:||
 |:A/A/A a2 A/A/A g2|Aage ageg|G2 BA BGGB|c2 BA BGGB|
-[1A/A/A a2 A/A/A g2|Aage agea|gedB GABd|e2 dB eAAG:|
-[2A/A/A BA GAAB|A/A/A BA edda|gedB GABd|e2 dB eAAB||
+[1 A/A/A a2 A/A/A g2|Aage agea|gedB GABd|e2 dB eAAG:|
+[2 A/A/A BA GAAB|A/A/A BA edda|gedB GABd|e2 dB eAAB||
 T: Dunmore Lasses
 K: Emin
 |:E2 EF G2 GA|Beed Beed|EDEF GABG|A2 BA GEFD|
@@ -1910,10 +1910,10 @@ K: Edor
 "Em"EG G/G/G "D"AG G/G/G|"C"B/d/e dB AGEG|"Am"DEGB "D"AGAB|1 "G"G/G/G GF GA B/c/d:|2 "Am"G2 GF "Bm"G2EG||
 T: Windbroke
 K: Emin
-|:"Em"BE~E2 GAB"Em"E-|EGAd B2 AG|"Em"BE~E2 GAB"Am"c-|cBAG "Bm7"ABAG|
-"Em"BE~E2 GAB"Em"E-|EGAd B2 AG|e"D"dde "Bm7"~B2 A"Am"G|A2 AG "Bm7"FGAc:||
+|:"Em"BE~E2 GAB"Em"E-|EGAd "Em"B2 AG|BE~E2 GAB"Am"c-|cBAG "Bm7"ABAG|
+"Em"BE~E2 GAB"Em"E-|EGAd "Em"B2 AG|e"D"dde "Bm7"~B2 A"Am"G|A2 AG "Bm7"FGAc:||
 |:"Em"Begf efd"Em"e-|eedf e2 eA|Begf efg"Am"a-|a a2 g "Bm7"fede|
-"Em (C)"Begf efd"Em"e-|e edf e2 eB|"Am"~c3 A "(G)"~B3 G|"D/F#"A2 AG "(Bm7)"FGAc:||
+"Em (C)"Begf efd"Em"e-|eedf e2 eB|"Am"~c3 A "(G)"~B3 G|"D/F#"A2 AG "(Bm7)"FGAc:||
 
 X: 69
 T: SINGLE JIGS: Tonn Clíodhna Set
