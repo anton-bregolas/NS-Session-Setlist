@@ -32,7 +32,7 @@ body {
 }
 
 body,
-[popover]:not([data-popover="chord-viewer"]) {
+[popover] {
   background-image: linear-gradient(90deg, var(--gradient-color-left) 25%, var(--gradient-color-right) 100%);
   color: var(--accent-color);
 }
@@ -358,6 +358,11 @@ option:is([disabled]) {
   transform: rotate(45deg) scale(0.9);
 }
 
+.nss-btn-plus[data-state="filled"] {
+  color: var(--accent-color);
+  opacity: 1;
+}
+
 .footer-btn-x {
   top: 0.05rem;
 }
@@ -660,6 +665,37 @@ input[type="checkbox"]:focus-visible {
 
 .nss-checkbox-btn:checked::before {
   opacity: 1;
+}
+
+[data-popover="notification-popup"] {
+  width: 100%;
+  min-height: 4.5rem;
+  font-size: 1.4rem;
+  inset: unset;
+  position: fixed;
+  padding: 0 3.75rem;
+  border: none;
+  bottom: 0;
+  left: 0;
+  background-image: none;
+}
+
+[data-popover="notification-popup"]:popover-open {
+  display: flex;
+}
+
+[data-popover="notification-popup"].info {
+  background-color: #003300;
+}
+
+[data-popover="notification-popup"].warning {
+  background-color: #ffae00;
+  color: black;
+}
+
+[data-popover="notification-popup"].error {
+  background-color: #ff4a86;
+  color: black;
 }
 
 /* Media queries */

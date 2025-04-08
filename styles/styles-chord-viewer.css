@@ -30,6 +30,7 @@
   outline: none;
   padding: 0;
   scrollbar-gutter: stable;
+  background-image: none;
   background-color: var(--chords-bg-color);
   color: var(--chords-font-color);
 }

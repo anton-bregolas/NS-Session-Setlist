@@ -8,7 +8,7 @@ import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-titl
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
 import { pThrottle } from './scripts-3p/p-throttle/p-throttle.js'
 import { makeAbcChordBook } from './scripts-chord-viewer.js'
-import { fetchData, initSettingsFromObject, displayWarningEffect } from './scripts-ns-sessions.js';
+import { fetchData, initSettingsFromObject, displayWarningEffect, displayNotification } from './scripts-ns-sessions.js';
 
 ////////////////////////////////
 // ABC ENCODER GLOBAL SETTINGS
@@ -215,6 +215,7 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
 
                     console.warn("ABC Encoder:\n\nInvalid data type or format!");
 
+                    displayNotification("Invalid data type or format", "warning");
                     displayWarningEffect(triggerBtn);
 
                     return;
@@ -227,6 +228,7 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
 
                 console.error("ABC Encoder:\n\nError reading ABC file content:\n\n", error);
 
+                displayNotification("Error reading file content", "error");
                 displayWarningEffect(triggerBtn);
             }
         }
@@ -237,6 +239,7 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
 
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
 
+        displayNotification("Failed to parse file", "error");
         displayWarningEffect(triggerBtn);
     }
 }
@@ -267,6 +270,7 @@ export async function parseSessionSurveyData(triggerBtn) {
 
                     console.warn("ABC Encoder:\n\nInvalid Session Survey Data file!");
 
+                    displayNotification("Not a valid session survey file", "warning");
                     displayWarningEffect(triggerBtn);
 
                     return;
@@ -274,11 +278,13 @@ export async function parseSessionSurveyData(triggerBtn) {
 
                 // Process Survey Data and fill sessionSurveyData array
                 fillSurveyDataArray(surveyDataOutput);
+                triggerBtn.dataset.state = "filled";
 
             } catch (error) {
 
                 console.error("ABC Encoder:\n\nError reading Session Survey Data file:\n\n", error);
 
+                displayNotification("Error reading session survey file", "error");
                 displayWarningEffect(triggerBtn);
             }
         };
@@ -289,6 +295,7 @@ export async function parseSessionSurveyData(triggerBtn) {
 
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
 
+        displayNotification("Error parsing session survey file", "error");
         displayWarningEffect(triggerBtn);
     }
 }
@@ -1542,6 +1549,7 @@ function fillSurveyDataArray(surveyData) {
     sessionSurveyData.push(surveyDataResponses);
 
     console.log("ABC Encoder:\n\nSession Survey Data added to Encoder");
+    displayNotification("Session Survey Data added to Encoder");
 }
 
 // Modify abcContent with Session Survey Data:

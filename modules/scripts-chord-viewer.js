@@ -10,7 +10,7 @@ import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
 // Import functions handling warning messages (for user notifications)
 
-// import { displayWarningEffect, displayWarningMessage } from "./scripts-ns-sessions";
+import { displayWarningEffect, displayNotification } from "./scripts-ns-sessions.js";
 
 // Define required app elements
 
@@ -50,37 +50,52 @@ const maxWTops = 90; // Highest max-width value for chords, rem
 
 export function openChordViewer(setChords, tuneChords) {
   
-  const isDynamicChordsMode = localStorage?.chordViewerAllowDynamicChords;
+  const isDynamicChordsMode = +localStorage?.chordViewerAllowDynamicChords;
 
-  if (!setChords && !tuneChords && !isDynamicChordsMode) return;
+  if (!setChords && !tuneChords && !isDynamicChordsMode) {
+
+    displayNotification("Chordbook missing or empty: Use Dynamic Mode", "error");
+    displayWarningEffect(launchButton);
+    return;
+  }
 
   if (isDynamicChordsMode) {
 
-    const abcUrl = tuneSelector.value;
-    const abcInLzw = abcUrl.match(/(?<=lzw=)(?:[^&]*)/)[0];
+    let abcContent = '';
 
-    if (!abcUrl || !abcInLzw) {
+    // Try looking for accessible ABC input to get current ABC
 
-      //displayWarningEffect(launchButton);
-      return;
+    const abcInput = document.querySelector('#abc');
+
+    if (abcInput && abcInput.value) {
+
+      abcContent = abcInput.value;
+
+    // Otherwise get ABC from current Tune Selector value
+
+    } else {
+
+      const abcUrl = tuneSelector.value;
+      const abcInLzw = abcUrl.match(/(?<=lzw=)(?:[^&]*)/)? abcUrl.match(/(?<=lzw=)(?:[^&]*)/)[0] : null;
+  
+      if (!abcUrl || !abcInLzw) {
+  
+        displayNotification("Select an item in Tune Selector", "warning");
+        displayWarningEffect(launchButton);
+        return;
+      }
+  
+      abcContent = LZString.decompressFromEncodedURIComponent(abcInLzw);
     }
 
-    const abcContent = LZString.decompressFromEncodedURIComponent(abcInLzw);
     const extractedChordsArr = extractChordsFromAbc(abcContent);
 
-    if (extractedChordsArr === null) {
+    if (!extractedChordsArr || extractedChordsArr.length < 1) {
 
-      //displayWarningEffect(launchButton);
+      displayNotification("No chords to view in this ABC", "warning");
+      displayWarningEffect(launchButton);
       return;
     }
-
-    if (extractedChordsArr.length < 1) {
-
-      //displayWarningEffect(launchButton);
-      return;
-    }
-
-    // console.log(`Chord Viewer Module:\n\nChords successfully extracted from ABC`);
 
     const isAbcSet = extractedChordsArr[0].setTitle? true : false;
 
@@ -95,7 +110,8 @@ export function openChordViewer(setChords, tuneChords) {
 
   if (!setMatch && !tuneMatch) {
 
-    //displayWarningEffect(launchButton);
+    displayNotification("No Chordbook entry for this ABC", "warning");
+    displayWarningEffect(launchButton);
     return;
   }
   
@@ -444,6 +460,7 @@ export function makeAbcChordBook(abcContent) {
     let abcChordsObj;
     let abcTitle = '';
     let abcMeter = '';
+    let abcNoteLength = '';
     let abcBody = '';
 
     // Generate Sets Chordbook if ABC has more than two T: fields (including Set Title)
@@ -470,8 +487,9 @@ export function makeAbcChordBook(abcContent) {
 
         abcTitle = tune.match(/^.*/)[0].split(' / ')[0].trim();
         abcMeter = tune.match(/^M:/m)? tune.match(/(?<=^M:).*/m)[0].trim() : abc.match(/(?<=^M:).*/m)[0].trim();
+        abcNoteLength = tune.match(/^L:/m)? tune.match(/(?<=^L:).*/m)[0].trim() : abc.match(/(?<=^L:).*/m)[0].trim();
 
-        const tuneChordObj = getChordsFromTune(abcBody, abcTitle, abcMeter);
+        const tuneChordObj = getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength);
 
         abcChordsObj.tuneChords.push(tuneChordObj);
       });
@@ -482,9 +500,10 @@ export function makeAbcChordBook(abcContent) {
 
       abcTitle = abc.match(/(?<=^T:).*/m)[0].trim();
       abcMeter = abc.match(/(?<=^M:).*/m)[0].trim();
+      abcNoteLength = abc.match(/(?<=^L:).*/m)[0].trim();
       abcBody = normalizeAbc(abc);
 
-      abcChordsObj = getChordsFromTune(abcBody, abcTitle, abcMeter);
+      abcChordsObj = getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength);
     }
 
     if (abcChordsObj) {
@@ -505,7 +524,7 @@ export function makeAbcChordBook(abcContent) {
 
 // Extract chords from ABC Tune and return a single Chordbook object
 
-function getChordsFromTune(abcBody, abcTitle, abcMeter) {
+function getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength) {
 
   const abcChordsObj = {};
 
@@ -538,8 +557,11 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
   let partCounter = 0;
   let barCounter;
   let abcChords = '';
+  let lastChord = '';
 
   abcPartsArr.forEach(abcPart => {
+
+    if (!abcPart || !abcPart.trim()) return;
 
     partCounter++;
     barCounter = 0;
@@ -550,10 +572,8 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
     abcBarsArr.forEach(abcBar => {
 
-      if (!abcBar.match(/".+"/)) {
-
-        return;
-      }
+      // Discard strings like "\n", ":", "|", "A"
+      if (abcBar.trim().length <= 1) return;
 
       let voltaNo = '';
 
@@ -568,9 +588,25 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
 
         barCounter = 0;
       }
-      const abcBarChordsArr = abcBar.match(/".*?"/g);
+
+      // Flag final bars of tune parts to account for potentially incomplete chord-beats
+      const isFinalBar = abcBarsArr.indexOf(abcBar) === abcBarsArr.length - 1? true : false;
+
+      const abcBarChordsArr = abcBar.match(/".*?"/g) ?? [];
       
-      abcPartChords += `|${voltaNo}\t${getCompleteAbcChordBar(abcBar, abcBarChordsArr, minTuneBeats, abcMeter)}`;
+      // Clean up chord contents, filtering out all invalid characters
+      const abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#♯♭♮×/()+]/g, '')).filter(Boolean);
+      
+      const processedChordsArr = getCompleteAbcChordBar(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength);
+      
+      // Discard invalid bars (bars without notes, anacruses)
+      if (!processedChordsArr) return;
+
+      const currentChordsBar = processedChordsArr[0];
+
+      lastChord = processedChordsArr[1];
+
+      abcPartChords += `|${voltaNo}\t${currentChordsBar}`;
 
       barCounter++;
     });
@@ -583,127 +619,151 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter) {
   return abcChordsObj;
 }
 
-// Process an ABC bar of chords, completing missing chord-beats if necessary
+// Process an ABC bar and return an array with chords and lastChord, filling in missing chord-beats
 
-function getCompleteAbcChordBar(abcBar, abcBarChordsArr, minTuneBeats, abcMeter) {
+function getCompleteAbcChordBar(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength) {
 
-  let abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#♯♭♮×/()+]/g, '')).filter(Boolean);
+  // Handle cases of single chord per bar, ignore bars where the first chord-beat is missing
+  if (abcBarChordsInput.length === 1 && abcBar.match(/^:*\d*[\s]*["]/)) {
 
-  if (abcBarChordsArr && abcBarChordsInput.length > 0) {
+    const singleBarChord = abcBarChordsInput[0];
 
-    // Handle cases of single chord per bar, ignore bars where the first chord-beat is missing
-    if (abcBarChordsInput.length === 1 && abcBar.match(/^:*\d*[\s]*["]/)) {
+    if (abcBarChordsInput[0].match(/.+\(.+\)/)) {
 
-      if (abcBarChordsInput[0].match(/\(.*\)/)) {
+      const primaryChord = singleBarChord.replaceAll(/\(.*?\)/g, '');
+      const alternateChord = singleBarChord.match(/\(.*\)/)[0];
 
-        return `${abcBarChordsInput[0].replaceAll(/\(.*?\)/g, '')}\t${(abcBarChordsInput[0].match(/\(.*\)/)[0] + '\t').repeat(minTuneBeats - 1)}`;
-      }
-
-      return `${abcBarChordsInput[0]}\t${(abcBarChordsInput[0] + '\t').repeat(minTuneBeats - 1)}`;
+      return [`${primaryChord}\t${(alternateChord + '\t').repeat(minTuneBeats - 1)}`, singleBarChord];
     }
 
-    // Handle cases of fully-stacked chords per bar (3 chords for triple-time tunes, 2 or 4 chords for duple-time tunes)
-    if (abcBarChordsInput.length === minTuneBeats || abcBarChordsInput.length === minTuneBeats * 2) {
+    return [`${(singleBarChord + '\t').repeat(minTuneBeats)}`, singleBarChord];
+  }
 
-      if (isTuneTripleMeter(abcMeter)) {
+  // Handle cases of fully-stacked chords per bar (3 chords for triple-time tunes, 2 or 4 chords for duple-time tunes)
+  if (abcBarChordsInput.length === minTuneBeats || abcBarChordsInput.length === minTuneBeats * 2) {
 
-        return `${abcBarChordsInput.join('\t')}\t`;
-      }
+    if (isTuneTripleMeter(abcMeter)) {
 
-      if (abcBarChordsInput.length === minTuneBeats) {
-
-        return `${abcBarChordsInput[0]}\t${abcBarChordsInput[1]}\t`;
-      }
-      
-      return `${abcBarChordsInput[0]}\xa0${abcBarChordsInput[1]}\t${abcBarChordsInput[2]}\xa0${abcBarChordsInput[3]}\t`;
+      return [`${abcBarChordsInput.join('\t')}\t`, abcBarChordsInput[abcBarChordsInput.length - 1]];
     }
 
-    // Handle cases of incomplete chord-beats per bar (2 out of 3 chords for triple-time tunes, missing first chord-beat for duple-time tunes)
-    if (abcBarChordsInput.length < minTuneBeats) {
+    if (abcBarChordsInput.length === minTuneBeats) {
 
-      return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter);
+      return [`${abcBarChordsInput[0]}\t${abcBarChordsInput[1]}\t`, abcBarChordsInput[1]];
     }
+    
+    return [`${abcBarChordsInput[0]}\xa0${abcBarChordsInput[1]}\t${abcBarChordsInput[2]}\xa0${abcBarChordsInput[3]}\t`, abcBarChordsInput[3]];
+  }
 
-    // Handle cases of incomplete chord-beats per bar (3 out of 4 chords and/or missing first chord-beat for duple-/quadruple-time tunes)
-    if (minTuneBeats < abcBarChordsInput.length < minTuneBeats * 2) {
+  // Handle cases of zero or incomplete chord-beats per bar (2 out of 3 chords for triple-time tunes, missing first chord-beat for duple-time tunes)
+  if (abcBarChordsInput.length < minTuneBeats) {
 
-      return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats * 2, abcMeter);
-    }
+    return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength);
+  }
 
-  } else {
+  // Handle cases of incomplete chord-beats per bar (3 out of 4 chords and/or missing first chord-beat for quadruple-time tunes)
+  // Handle cases of oversaturated chord-beats (time signature change etc.)
+  if (abcBarChordsInput.length > minTuneBeats) {
 
-    return '–\t';
+    return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats * 2, abcMeter, lastChord, isFinalBar, abcNoteLength);
   }
 }
 
 // Recover missing chord-beats by counting notes against beats and inserting the sufficient number of chords
+// Account for bars where chord input was skipped or the first chord-beat is missing, fill them in using lastChord
 
-function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter) {
+function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength) {
 
   let completeChordBar = '';
 
   const splitMeterArr = abcMeter.split('/');
+  // Count the number of eighth notes per bar
+  const eightsPerBar = 8 / splitMeterArr[1] * splitMeterArr[0];
   // Count the number of eighth notes per beat of tune
-  const eightsPerBeat =  8 / splitMeterArr[1] * splitMeterArr[0] / minTuneBeats;
-  // Filter the notes of the tune from chords, ABC notation symbols and spaces
-  const notesBetweenChords = abcBar.split(/"[^"]*"/).map(fr => fr.replaceAll(/[^a-gxzA-G0-9/]/g, '')).filter(fr => fr.match(/^[a-gxzA-G]/));
+  const eightsPerBeat =  eightsPerBar / minTuneBeats;
+  // Filter the notes of the tune, removing chords, volta numbers, symbols and spaces
+  const notesBetweenChords = abcBar.split(/"[^"]*"/)
+                             .map(str => str.replaceAll(/[^a-gxzA-G0-9/]/g, ''))
+                             .map(str => str.replaceAll(/^[^a-gxzA-G]/g, ''))
+                             .filter(Boolean);
 
+  // Only process bars with notes in them
+  if (notesBetweenChords.length === 0) return null;
+
+  // Initiate counters for number of beats and notes
   let beatCount = 0;
+  let noteCount = 0;
 
+  // Account for L: values other than 1/8
+  const noteCoef = abcNoteLength === "1/8" || !abcNoteLength? 1 : 8 / abcNoteLength[0]/abcNoteLength[2];
+  // Account for potentially incomplete bars with volta brackets
+  const isVoltaBar = abcBar.match(/^[\d]/)? true : false;
+
+  // Account for non-empty bars where first chord-beat is missing
   let isMissingFirstBeat = abcBar.match(/^:*\d*[\s]*["]/)? 0 : 1;
+  // Pre-fill the missing first chord-beat with lastChord
+  if (isMissingFirstBeat && abcBarChordsInput.length !== 0) {
 
-  // Add indicator of missing first beat if no opening chord found
-  if (isMissingFirstBeat) {
-
-    completeChordBar += `–${minTuneBeats > 3? '\xa0' : `\t`}`;
+    completeChordBar += `${lastChord}${minTuneBeats > 3? '\xa0' : `\t`}`;
     beatCount++;
+  }
+  // Account for bars where chords were skipped
+  // Fill empty chords array with lastChord
+  if (abcBarChordsInput.length === 0) {
+
+    abcBarChordsInput.length = minTuneBeats;
+    abcBarChordsInput.fill(lastChord);
   }
 
   // Iterate between groups of notes preceded by chords in source ABC
   // Separate notes, note multipliers (numbers not preceded by /) and note divisors (/, //... or /Num)
   // Calculate the total worth of eighth notes and count the beats for each group
   // Insert a chord of the same index as the group at the start of each beat
-  if (notesBetweenChords.length > 0) {
 
-    notesBetweenChords.forEach(abcFragment => {
+  notesBetweenChords.forEach(abcFragment => {
 
-      const countNotes = abcFragment.match(/[a-gxzA-G]/g).length;
-      const countExtraMultiplierSum = abcFragment.match(/[^/]\d+/)? abcFragment.match(/[^/]\d+/g)?.map(match => match.slice(1)).map(num => num - 1).reduce((a, b) => a + b) : 0;
-      const extraDivisorArr = abcFragment.includes('/')? abcFragment.match(/[/]+\d*/g) : [];
-      const countSimpleDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /[/](?=[^\d]|$)/.test(str))? extraDivisorArr.filter(str => str.match(/[/](?=[^\d]|$)/)).reduce((a, b) => a + (1 - (1 / Math.pow(2, b.length))), 0) : 0;
-      const countAllExtraDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /\d/.test(str))? extraDivisorArr.map(str => str.replaceAll(/[^\d]/g, '')).reduce((a, b) => a + (1 - (1 / b)), 0) + countSimpleDivisorSum : countSimpleDivisorSum;
-      const countEights = countNotes + countExtraMultiplierSum - countAllExtraDivisorSum;
-      const relatedChord = abcBarChordsInput[notesBetweenChords.indexOf(abcFragment)];
-      
-      let beatsInThisFragment = countEights / eightsPerBeat;
+    const countNotes = abcFragment.match(/[a-gxzA-G]/g).length;
+    const countExtraMultiplierSum = abcFragment.match(/[^/]\d+/)? abcFragment.match(/[^/]\d+/g)?.map(match => match.slice(1)).map(num => num - 1).reduce((a, b) => a + b) : 0;
+    const extraDivisorArr = abcFragment.includes('/')? abcFragment.match(/[/]+\d*/g) : [];
+    const countSimpleDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /[/](?=[^\d]|$)/.test(str))? extraDivisorArr.filter(str => str.match(/[/](?=[^\d]|$)/)).reduce((a, b) => a + (1 - (1 / Math.pow(2, b.length))), 0) : 0;
+    const countAllExtraDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /\d/.test(str))? extraDivisorArr.map(str => str.replaceAll(/[^\d]/g, '')).reduce((a, b) => a + (1 - (1 / b)), 0) + countSimpleDivisorSum : countSimpleDivisorSum;
+    const countEights = countNotes + countExtraMultiplierSum - countAllExtraDivisorSum;
+    const relatedChord = abcBarChordsInput[notesBetweenChords.indexOf(abcFragment)];
+    let previousChord = '';
 
-      // Handle chords placed with syncopation
-      if (beatsInThisFragment % 1 !== 0) {
-
-        beatsInThisFragment = beatsInThisFragment < 1? 1 : Math.floor(beatsInThisFragment);
-      }
-
-      // Add chords related to ABC fragment to completeChordBar string
-      for (let n = 0; n < beatsInThisFragment; n++) {
-        
-        completeChordBar += relatedChord? `${relatedChord}${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0? '\t' : '\xa0'}` : '';
-        beatCount++;
-      }
-    });
+    noteCount += noteCoef * countEights;
     
-    return completeChordBar;
+    let beatsInThisFragment = countEights / eightsPerBeat;
 
-  // If no notes found between chords (empty bar, no beats to count), return the chords plus '*' indicator
+    // Handle chords placed with syncopation
+    if (beatsInThisFragment % 1 !== 0) {
 
-  } else {
-
-    if (isTuneTripleMeter(abcMeter)) {
-
-      return `${abcBarChordsInput.join('\t')}*\t`;
+      beatsInThisFragment = beatsInThisFragment < 1? 1 : Math.floor(beatsInThisFragment);
     }
-    
-    return `${abcBarChordsInput[0]}\xa0${abcBarChordsInput[1]}\t${abcBarChordsInput[2]}\xa0*\t`;
-  }
+
+    // Add chords related to ABC fragment to completeChordBar string
+    for (let n = 0; n < beatsInThisFragment; n++) {
+
+      let currentChord = relatedChord? relatedChord : '';
+      // console.warn(previousChord, currentChord, currentChord.match(/\(.*\)/), abcBarChordsInput);
+      if ((previousChord && currentChord) && 
+        currentChord === previousChord && 
+        currentChord.match(/.+\(.*\)/)) {
+
+        currentChord = currentChord.match(/\(.*\)/)[0];
+      }
+      
+      completeChordBar += currentChord? `${currentChord}${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0 || beatsInThisFragment === minTuneBeats? '\t' : '\xa0'}` : '';
+      previousChord = currentChord;
+      beatCount++;
+    }
+  });
+
+  // Only return chords for bars that are over 1/2 length of a bar
+  // Always return chords for bars that are inside voltas
+  if (noteCount <= eightsPerBar / 2 && !isVoltaBar && !isFinalBar) return null;
+
+  return [completeChordBar, abcBarChordsInput[abcBarChordsInput.length - 1]];
 }
 
 ///////////////////////////////////
@@ -726,12 +786,30 @@ function isTuneTripleMeter(tuneMeter) {
 
 function normalizeAbc(abcContent) {
 
-  let abcOutput = removeAbcHeadersAndCommands(abcContent);
+  let abcOutput = processPartEndingsForChordBook(abcContent);
+  abcOutput = removeAbcHeadersAndCommands(abcContent);
   abcOutput = convertAbcIntervalsToSingleNotes(abcOutput);
   abcOutput = normalizeAbcTriplets(abcOutput);
   abcOutput = normalizeAbcChordOrder(abcOutput);
 
   return abcOutput;
+}
+
+// Replace several variants of ABC part separators and voltas with uniform style
+
+function processPartEndingsForChordBook(abcContent) {
+
+  let filteredAbc = 
+    abcContent.replaceAll(/\|](?=\r?\n|$)/g, '||') // |AB cd|] > |AB cd||
+              .replaceAll(/(?<!^\|*\[.*):\|(?=(?:\r?\n[^[]|$))/g, ':||') // |AB cd:| > |AB cd:||
+              .replaceAll(/\[(?=\d)/g, '') // |[1 AB cd:| > |1 AB cd:| // [1 AB cd:| > 1 AB cd:|
+              .replaceAll(/(?<=:\|\d[^|]*)\|(?=\r?\n|$)/g, '||') // |2 AB cd| > |2 AB cd||
+              .replaceAll(/(?<=[^|])\|(?=\r?\nT|$)/g, '||') // |AB cd| + T: New Tune > |AB cd|| + T: New Tune
+              .replaceAll(/:\|*:\r?\n/g, ':||\n|:') // |AB cd:: or |AB cd:|: > |AB cd:|| + |:
+              .replaceAll(/:\|*:/g, ':||\n|:') // |AB cd::ef g2| > |AB cd:|| + |:ef g2|
+              .replaceAll(/\|\|:/g, '|:') // ||:AB cd| > |:AB cd|
+
+  return filteredAbc;
 }
 
 // Strip ABC of all header fields, commands and inline instructions (ornamentation, directions, lyrics etc.) 
@@ -843,3 +921,41 @@ function ariaShowMe(el) {
       el.removeAttribute("aria-hidden");
   }
 }
+
+///////////////////////////////////
+// PLACEHOLDER FUNCTIONS
+//////////////////////////////////
+
+// Use these functions as placeholders in place of imports
+
+// Show notification with the status of the latest action
+
+// function displayNotification(msgText, msgType) {
+
+//   if (msgType === "warning") {
+
+//     console.warn(msgText);
+//   }
+
+//   if (msgType === "error") {
+
+//     console.error(msgText);
+//   }
+
+//   if (!msgType || msgType === "info") {
+
+//     console.log(msgText);
+//   } 
+// }
+
+// Show a warning outline around the target button
+
+// function displayWarningEffect(focusBtn) {
+
+//   focusBtn.setAttribute("style", "outline-color: red");
+
+//   setTimeout(() => {
+
+//     focusBtn.removeAttribute("style");
+//   }, 2500);
+// }

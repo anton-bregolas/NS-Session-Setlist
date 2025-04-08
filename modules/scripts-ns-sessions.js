@@ -14,7 +14,7 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// App Version 0.8.9 / NS Session DB date: 2025-04-04
+// App Version 0.9.0 / NS Session DB date: 2025-04-06
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
@@ -54,6 +54,8 @@ const appHeader = document.querySelector('#nss-app-header');
 const appOptionsPopover = document.querySelector('#nss-popover-options');
 const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
 const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
+const notificationPopup = document.querySelector('[data-popover="notification-popup"]');
+const notificationMessage = document.querySelector('[data-popover="notification-message"]');
 
 ////////////////////////////////
 // APP LAUNCHERS
@@ -100,6 +102,12 @@ async function launchTuneBook(dataType, triggerBtn) {
       if (window.localStorage) {
 
         localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
+
+        if (!localStorage?.tuneBookInitialized_NSSSAPP) {
+
+          displayNotification("First time loading Tunebook: Please wait for ABC Tools to load");
+          localStorage.tuneBookInitialized_NSSSAPP = 1;
+        }
       }
 
       return;
@@ -115,6 +123,7 @@ async function launchTuneBook(dataType, triggerBtn) {
 
   } else {
 
+    displayNotification("Network error trying to load Tunebook", "error");
     displayWarningEffect(triggerBtn);
   }
 }
@@ -263,7 +272,25 @@ export function openSettingsMenu(dataType) {
 // ANIMATIONS & WARNINGS
 ///////////////////////////////
 
-// Show a red warning outline around an active element
+// Display Notification Popup Popover with a message to the user
+// Adjust popover's behavior and style depending on message type
+
+export function displayNotification(msgText, msgType) {
+
+  notificationMessage.textContent = msgText;
+  notificationPopup.className = msgType ?? "info";
+  notificationPopup.showPopover();
+
+  if (!msgType || msgType === "info") {
+
+    setTimeout(() => {
+
+      notificationPopup.hidePopover();
+    }, 3500);
+  }
+}
+
+// Show a warning outline around the target button
 
 export function displayWarningEffect(focusBtn) {
 
@@ -625,6 +652,12 @@ async function appButtonHandler() {
   if (this.classList.contains('popover-btn-x')) {
 
     appOptionsPopover.hidePopover();
+    return;
+  }
+
+  if (this.classList.contains('popup-btn-x')) {
+
+    notificationPopup.hidePopover();
     return;
   }
 

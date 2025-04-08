@@ -78,7 +78,7 @@
             <article id="nss-popover-options" popover="manual" class="nss-popover" aria-label="Encoder Settings Menu">
                 <header class="nss-popover-header">
                     <div class="flex-wrapper nss-header-left-btn-container">
-                        <button button data-load="session-survey" class="nss-btn nss-btn-plus nss-control-btn flex-wrapper" title="Add Session Survey Data" aria-title="Add Session Survey Data"></button>
+                        <button button data-load="session-survey" data-state="empty" class="nss-btn nss-btn-plus nss-control-btn flex-wrapper" title="Add Session Survey Data" aria-title="Add Session Survey Data"></button>
                     </div>
                     <div class="nss-popover-header-title-container flex-wrapper">
                         <h2 class="nss-popover-title">Encoder Settings</h2>
@@ -122,6 +122,15 @@
                             SORT removes text after line breaks in ABC
                         </label>
                     </div>
+                </div>
+            </article>
+
+            <article popover data-popover="notification-popup" class="info" aria-label="Notification Popup">
+                <div class="nss-header-x-container">
+                    <button class="nss-btn nss-btn-x popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification"></button>
+                </div>
+                <div class="flex-wrapper subtitle-wrapper">
+                    <p data-popover="notification-message">Notification Message Test</p>
                 </div>
             </article>
 
