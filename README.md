@@ -56,7 +56,7 @@ NS Session Setlist v.0.9.1: UI/UX Upgrade (Popup Notifications)
   <summary>v.0.9: UI/UX Upgrade</summary>
 
 <details>
-<summary>v.0.9.0: UI/UX Upgrade (Chordbook Refactor & Notification Popup)</summary>
+<summary>v.0.9.1: UI/UX Upgrade (Popup Notifications)</summary>
 
 + Project updates:
   - Launcher: Popup notifications styled and expanded
