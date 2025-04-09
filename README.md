@@ -15,62 +15,84 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.0: UI/UX Upgrade (Chordbook Refactor & Notification Popup)
+NS Session Setlist v.0.9.1: UI/UX Upgrade (Popup Notifications)
 
 + Project updates:
-  - Chord Viewer: Chord extraction sequence refactored to support skipped bars and direct ABC input
-  - Chord Viewer: Now checks if an ABC input element is available on the page in Dynamic Chords Mode
-  - Chord Viewer: Now remembers last chord used in previous bar, uses it to fill in missing chord-beats
-  - Chord Viewer: Now passes more flags (final bar, volta) down the extraction sequence for accurate filtering
-  - Chord Viewer: Now accounts for Note Length value for accurate calculations
-  - Chord Viewer: Now warns user if no chords found in ABC or Chordbook, suggests using Dynamic Mode if DB missing
-  - Launcher: Notification Popup Popover added with function styling popup banner according to message type
-  - Launcher: Now warns user of network error and when ABC Tools are loading for the first time
-  - ABC Encoder: Now warns user about parsing and validation errors, TO DO: general status messages
-  - ABC Encoder: Now notifies user about Session Survey Data status and styles add button when filled
+  - Launcher: Popup notifications styled and expanded
+  - Launcher: Notification types now include success, warning, error, status and report
+  - Launcher, Tunebook, ABC Encoder: Notification messages customized for all types
+  - Tunebook: Can now optionally display status report at launch listing Session DB version and Tunebook size
+  - Chord Viewer: Tweaked messaging for Chordbook Mode
 
 + HTML updates
-  - Main App & ABC Encoder (index.html, abc-encoder.html):
-    + Notification Popup Popover added
-    + Data-state added for Encoder's Add Session Survey Data button
+  - Main App (index.html):
+    + "Tunes: Show Tunebook report at launch" checkbox added with default state unchecked
 
 + CSS updates:
   - App Styles (nss-styles.css):
-    + Notification Popup popover styles added
-    + Notification Popup classes styling the popover added
-    + Global Popover styles tweaked to reduce specificity
-    + Plus button with data-state attribute styles added
-  - Chord Viewer module (styles-chord-viewer.css)
-    + Popover style tweaked to account for background-image
-
+    + Notification Popup styles tweaked and expanded
+    + --notification-color variables added
+  
 + JavaScript updates
-  - Chord Viewer module (scripts-chord-viewer.js):
-    + openChordViewer: Refactored algorithm checks for ABC input in Dynamic Mode before checking for existing Tune Selector value with LZW-compressed ABC; this input can only be accessed for same-origin requests - script falls back to Tune Selector for cross-origin requests with ABC Tools embedded in iframe on a third-party site
-    + makeAbcChordBook: Now passes Note Length down the Chord Extraction sequence
-    + getChordsFromTune: Now passes lastChord, isFinalBar, abcNoteLength to getCompleteAbcChordBar and expects an array
-    + getChordsFromTune: Refactored filtering of incomplete bars - bars with no chords can now be filled by countBeatsInsertChords which also calculates whether a bar should be discarded as incomplete by returning null
-    + getChordsFromTune: Now stores lastChord for calculations in the next bar
-    + getCompleteAbcChordBar: Refactored, now returns an array with chords-data and lastChord
-    + getCompleteAbcChordBar: Now passes bars with chords skipped as well as bars with incomplete and oversaturated chord-beats to countBeatsInsertChords
-    + countBeatsInsertChords: Refactored, now handles empty bars and counts the number of eighth notes per bar to accurately filter out anacruses and other incomplete bars (expected eight notes number: 0.5*N or fewer)
-    + countBeatsInsertChords: Now fills empty bars and missing first chord-beats with lastChord
-    + countBeatsInsertChords: Now accounts for final bars and voltas that may contain less notes than expected
-    + countBeatsInsertChords: Now accounts for non-standard Note Length in calculations
-    + countBeatsInsertChords: Now returns null for invalid bars or an array with chord-data and lastChord
-    + displayNotification import function added with messages for Chordbook warnings and errors
   - App Launcher module (scripts-ns-sessions.js)
-    + displayNotification*: Notification Popup handler function prefilling message text, changing popover style-class and launching popover; automatically hides messages with low priority after timeout
-    + displayNotification messages added for Tunebook launch warnings and errors
-    + appButtonHandler updated to include Notification Popup
+    + APP_VERSION and notificationTimeoutId global variables added
+    + displayNotification: Now keeps track of last Timeout and checks for open Popup Popover
+    + tuneDataFetch: Now sends an optional user notification with Session DB version and Tunebook size info
+    + fetchData: Now notifies user of fetch errors separating known network errors from other errors
+    + appDropDownHandler: Status type notifications added for Tunebook Filters
+    + appDropDownHandler: Tune Selector now automatically comes into focus on Filter selection
   - ABC Encoder module (scripts-abc-encoder.js)
-    + parseSessionSurveyData now changes data-state attribute of Add Session Survey Data button
-    + displayNotification import function added with messages for Encoder warnings and errors
+    + Notification messages added, types tweaked
+    + preProcessAbcMetadata: Tweaked Z: field data copying to keep pre-existing non-N.S.S.S. specific strings
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + tuneBookShowStatusReport* localStorage variable added for optional Session DB version & status report
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + openChordViewer: Fixed empty Tune Selector warning notification in Chordbook Mode
 
 + Session DB updates:
-  - Session DB updated to 2025-04-08
+  - Session DB updated to 2025-04-09
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
+
+<details>
+<summary>v.0.9.0: UI/UX Upgrade (Chordbook Refactor & Notification Popup)</summary>
+
++ Project updates:
+  - Launcher: Popup notifications styled and expanded
+  - Launcher: Notification types now include success, warning, error, status and report
+  - Launcher, Tunebook, ABC Encoder: Notification messages customized for all types
+  - Tunebook: Can now optionally display status report at launch listing Session DB version and Tunebook size
+  - Chord Viewer: Tweaked messaging for Chordbook Mode
+
++ HTML updates
+  - Main App (index.html):
+    + "Tunes: Show Tunebook report at launch" checkbox added with default state unchecked
+
++ CSS updates:
+  - App Styles (nss-styles.css):
+    + Notification Popup styles tweaked and expanded
+    + --notification-color variables added
+  
++ JavaScript updates
+  - App Launcher module (scripts-ns-sessions.js)
+    + APP_VERSION and notificationTimeoutId global variables added
+    + displayNotification: Now keeps track of last Timeout and checks for open Popup Popover
+    + tuneDataFetch: Now sends an optional user notification with Session DB version and Tunebook size info
+    + fetchData: Now notifies user of fetch errors separating known network errors from other errors
+    + appDropDownHandler: Status type notifications added for Tunebook Filters
+    + appDropDownHandler: Tune Selector now automatically comes into focus on Filter selection
+  - ABC Encoder module (scripts-abc-encoder.js)
+    + Notification messages added, types tweaked
+    + preProcessAbcMetadata: Tweaked Z: field data copying to keep pre-existing non-N.S.S.S. specific strings
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + tuneBookShowStatusReport* localStorage variable added for optional Session DB version & status report
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + openChordViewer: Fixed empty Tune Selector warning notification in Chordbook Mode
+
++ Session DB updates:
+  - Session DB updated to 2025-04-09
+</details>
 
 <details>
 <summary>v.0.9.0: UI/UX Upgrade (Chordbook Refactor & Notification Popup)</summary>

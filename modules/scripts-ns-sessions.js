@@ -14,14 +14,17 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// App Version 0.9.0 / NS Session DB date: 2025-04-06
+// NS Session DB date: 2025-04-09
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const APP_VERSION = "0.9.1";
 
 // Define Global Variables
 
 let tuneBookSetting = 1; // Tunebook loads Setlist by default
 let tuneBookInitialized = false; // Opening Tunebook will initialise ABC Tools and fetch Session DB data by default
 let isManualTunebookModeOn = false; // Hide switch buttons and use manual selection of Tunebook Type on Launch Screen
+let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
 
 // Define Session DB items
 
@@ -123,7 +126,7 @@ async function launchTuneBook(dataType, triggerBtn) {
 
   } else {
 
-    displayNotification("Network error trying to load Tunebook", "error");
+    displayNotification("Error trying to load Tunebook", "error");
     displayWarningEffect(triggerBtn);
   }
 }
@@ -278,12 +281,21 @@ export function openSettingsMenu(dataType) {
 export function displayNotification(msgText, msgType) {
 
   notificationMessage.textContent = msgText;
-  notificationPopup.className = msgType ?? "info";
-  notificationPopup.showPopover();
+  notificationPopup.className = msgType ?? "status";
 
-  if (!msgType || msgType === "info") {
+  if (!notificationPopup.matches(':popover-open')) {
 
-    setTimeout(() => {
+    notificationPopup.showPopover();
+  }
+
+  if (notificationTimeoutId) {
+    
+    clearTimeout(notificationTimeoutId);
+  }
+
+  if (msgType === "success" || msgType === "status") {
+    
+    notificationTimeoutId = setTimeout(() => {
 
       notificationPopup.hidePopover();
     }, 3500);
@@ -410,7 +422,12 @@ async function tuneDataFetch() {
       if (tuneDataSize[0] > 0) {
 
         console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
+        
+        if (+localStorage?.tuneBookShowStatusReport === 1) {
 
+          displayNotification(`Session DB v.${APP_VERSION} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
+        }
+        
         return tuneDataSize[0];
       }
 
@@ -442,8 +459,6 @@ export async function fetchData(url, type) {
 
     if (type === "json") {
 
-      // console.log("Fetching data from Session DB...");
-
       data = await response.json();
 
     } else if (type === "text") {
@@ -458,6 +473,15 @@ export async function fetchData(url, type) {
     return data;
 
   } catch (error) {
+
+    if (error.message.startsWith("NetworkError") || error.cause?.status) {
+
+      displayNotification("Network error trying to fetch data", "error");
+    
+    } else {
+
+      displayNotification("Error trying to fetch data", "error");
+    }
 
     throw new Error(`[${error}\n\nHTTP error code: ${error.cause?.status}]`);
   }
@@ -699,6 +723,10 @@ async function appDropDownHandler() {
     
         console.log("NS Session App:\n\nTunebook filters cleared");
 
+        displayNotification("Tunebook filters cleared", "status");
+
+        tuneSelector.focus();
+
         return;
       }
 
@@ -727,7 +755,11 @@ async function appDropDownHandler() {
 
       tuneSelector.options[0].selected = "selected";
 
+      tuneSelector.focus();
+
       console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
+
+      displayNotification(`Tunebook filtered by "${filterId}"`, "status")
     }
   }
 }

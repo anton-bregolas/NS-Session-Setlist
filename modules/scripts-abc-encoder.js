@@ -184,6 +184,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
     // Save main ABC Encoder output file
     downloadAbcFile(abcEncoderOutput, fileName, taskType);
+    displayNotification("Encoder task completed", "success")
 
     // Return an array containing Encoder Output and optional Encoder Tunes Output
     return [abcEncoderOutput, abcEncoderTunesOutput];
@@ -428,7 +429,7 @@ async function preProcessAbcMetadata(rawAbcContent) {
             return abcItem;
         }
         
-        let abcZString = abcItem.match(/^Z:.*ed\.;/m)? `${abcItem.match(/^Z:.*ed\.;/m)[0]} ` : 'Z: [Unedited]; ';
+        let abcZString = abcItem.match(/^Z:.+/m)? `${abcItem.match(/^Z:[^;\r\n]+/m)[0]}; ` : 'Z: [Unedited]; ';
         
         // Process links to TSO settings via fetchTsoMetadata: fetch JSON data to an array, reduce it to string
 
@@ -474,6 +475,8 @@ async function fetchTsoMetadata(urlArr, urlType) {
         console.log('ABC Encoder:\n\nFetching metadata from The Session...');
         // console.log('ABC Encoder:\n\nFetching metadata from The Session for...' + '\n\n' + url);
 
+        displayNotification("Fetching metadata from The\xa0Session...");
+
         let tsoMetaData = '';
 
         const tsoJsonObj = await fetchData(tsoJsonUrl, "json");
@@ -513,6 +516,8 @@ function getSortedAbc(abcContent) {
 
     console.log("ABC Encoder:\n\nSorting ABC file contents...");
 
+    displayNotification("Sorting ABC file contents...");
+
     const sortedAbcContentArr = sortFilterAbc(abcContent);
 
     if (sortedAbcContentArr[0]?.length > 0) {
@@ -528,6 +533,8 @@ function getSortedAbc(abcContent) {
         if (+localStorage.abcSortExportsChordsFromTunes === 1) {
 
             console.log(`ABC Encoder:\n\nExtracting Chords from ABC...`);
+
+            displayNotification("Extracting Chords from ABC...");
 
             sortedAbcChords = makeAbcChordBook(sortedAbcOutput);
         }
@@ -549,6 +556,7 @@ function getSortedAbc(abcContent) {
     } else {
 
         console.warn("ABC Encoder:\n\nNo valid ABC data found after sorting");
+        displayNotification("No valid ABC data found", "warning");
         return;
     }
 }
@@ -615,6 +623,7 @@ export function sortFilterAbc(abcContent) {
 
     } catch (error) {
 
+        displayNotification("Failed to sort ABC", "error");
         throw new Error("ABC Encoder:\n\nFailed to sort ABC\n\n", { cause: error });
     }
 }
@@ -1303,6 +1312,8 @@ async function getEncodedAbc(abcContent, fileName) {
 
         console.log("ABC Encoder:\n\nEncoding ABC file contents...\n\n" + `[Source: ${fileName}]`);
 
+        displayNotification("Encoding ABC file contents...");
+
         const encodedAbcJson = JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[0]), null, 2);
 
         let encodedAbcTunesJson = '';
@@ -1384,6 +1395,8 @@ function encodeTunesForAbcTools(abcContent) {
     } catch (error) {
 
         console.warn("ABC Encoder:\n\nFailed to encode ABC!\n\n", { cause: error });
+
+        displayNotification("Failed to encode ABC", "error");
     }
 }
 
@@ -1400,6 +1413,8 @@ function getDecodedAbc(abcContent) {
     let decodedAbcOutput = "";
 
     console.log("ABC Encoder:\n\nDecoding ABC file contents...");
+
+    displayNotification("Decoding file contents...");
 
     encodedAbcJson.forEach(abcObject => {
 
@@ -1440,7 +1455,8 @@ function getDecodedAbc(abcContent) {
         
     } else {
 
-        console.warn("ABC Encoder:\n\nNo valid ABC data found after sorting");
+        console.warn("ABC Encoder:\n\nNo valid ABC data found after decoding");
+        displayNotification("No valid ABC data found", "warning");
         return;
     }
 }
@@ -1549,7 +1565,7 @@ function fillSurveyDataArray(surveyData) {
     sessionSurveyData.push(surveyDataResponses);
 
     console.log("ABC Encoder:\n\nSession Survey Data added to Encoder");
-    displayNotification("Session Survey Data added to Encoder");
+    displayNotification("Session Survey Data added to Encoder", "success");
 }
 
 // Modify abcContent with Session Survey Data:

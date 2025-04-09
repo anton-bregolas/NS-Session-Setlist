@@ -110,7 +110,10 @@ export function openChordViewer(setChords, tuneChords) {
 
   if (!setMatch && !tuneMatch) {
 
-    displayNotification("No Chordbook entry for this ABC", "warning");
+    const userWarning = 
+      tuneSelector.value? "No Chordbook entry for this ABC" : "Select an item in Tune Selector";
+      
+    displayNotification(userWarning, "warning");
     displayWarningEffect(launchButton);
     return;
   }
@@ -942,7 +945,7 @@ function ariaShowMe(el) {
 //     console.error(msgText);
 //   }
 
-//   if (!msgType || msgType === "info") {
+//   if (!msgType || msgType === "success") {
 
 //     console.log(msgText);
 //   } 

@@ -22,6 +22,7 @@ export const abcTunebookDefaults = {
     abcToolsFullScreenBtnShowsChords: "1",
     abcToolsAllowTuneAutoReload: "1",
     abcToolsAlwaysMuteChords: "0",
+    tuneBookShowStatusReport: "0",
     chordViewerAllowDynamicChords: "0"
 };
 
