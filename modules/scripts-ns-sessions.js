@@ -14,10 +14,10 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: 2025-04-09
+// NS Session DB date: 2025-04-10
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const APP_VERSION = "0.9.1";
+const APP_VERSION = "0.9.2";
 
 // Define Global Variables
 
@@ -361,12 +361,19 @@ export function resetTuneBookMenus() {
 
     localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
   }
+
+  while (tuneSelector.children.length > 1) {
+
+    tuneSelector.removeChild(tuneSelector.lastChild);
+  }
+
+  while (filterOptions.children.length > 2) {
+    
+    filterOptions.removeChild(filterOptions.lastChild);
+  }
   
-  tuneSelector.options.length = 1;
-  tuneSelector.options[0].selected = "selected";
-  
-  filterOptions.options.length = 2;
-  filterOptions.options[0].selected = "selected";
+  tuneSelector.selectedIndex = 0;
+  filterOptions.selectedIndex = 0;
   filterOptions.value = "-1";
 }
 
@@ -374,10 +381,16 @@ export function resetTuneBookMenus() {
 
 function resetTuneBookFilters() {
 
-  tuneSelector.querySelectorAll('option').forEach(tuneOption => {
+  const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
+  const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
+
+  [tuneGroups, tuneOptions].forEach(tuneSelectorItem => {
+
+    tuneSelectorItem.forEach(item => {
           
-    tuneOption.removeAttribute("hidden");
-    tuneOption.removeAttribute("disabled");
+      item.removeAttribute("hidden");
+      item.removeAttribute("disabled");
+    });
   });
 }
 
@@ -670,6 +683,8 @@ async function appButtonHandler() {
     document.querySelector('#nss-tunebook-exit').focus();
     parentEl.setAttribute("inert", "");
 
+    displayNotification("Compact mode enabled: Top left button to exit, refresh app to reset", "success");
+
     return;
   }
 
@@ -707,41 +722,60 @@ async function appButtonHandler() {
 
 // Handle custom dropdown menu events
 
-async function appDropDownHandler() { 
+async function appDropDownHandler() {
 
   if (this === filterOptions) {
 
-    const tuneOptions = tuneSelector.querySelectorAll('[data-tunetype]');
     const filterId = filterOptions.value;
 
-    if (Math.abs(+filterId) >= 0) {
+    if (filterId === "-1") return;
 
-      if (filterId === "0") {
+    const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
+    const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
+    const activeFilter = filterOptions.querySelector('option:checked')
+    const activeFilterGroup = activeFilter.closest('optgroup');
 
-        resetTuneBookFilters();
-        tuneSelector.options[0].selected = "selected";
-    
-        console.log("NS Session App:\n\nTunebook filters cleared");
+    if (filterId === "0") {
 
-        displayNotification("Tunebook filters cleared", "status");
+      resetTuneBookFilters();
+      tuneSelector.selectedIndex = 0;
 
-        tuneSelector.focus();
-
-        return;
-      }
-
-      filterOptions.options[0].selected = "selected";
-  
       filterOptions.value = "-1";
+  
+      console.log("NS Session App:\n\nTunebook filters cleared");
+
+      displayNotification("Tunebook filters cleared", "status");
+
+      tuneSelector.focus();
 
       return;
     }
 
-    if (filterId) {
+    if (filterId && activeFilterGroup.label.includes("Tune Type")) {
+
+      [tuneGroups, tuneOptions].forEach(tuneSelectorItemCat => {
+
+        tuneSelectorItemCat.forEach(item => {
+
+          if (filterId !== item.dataset.tunetype) {
+  
+            item.setAttribute("hidden", "");
+            item.setAttribute("disabled", "");
+  
+          } else if (item.hasAttribute("disabled")) {
+  
+            item.removeAttribute("disabled");
+            item.removeAttribute("hidden");
+          }
+        });
+      });
+    }
+
+    if (filterId && activeFilterGroup.label.includes("Set Leader")) {
 
       tuneOptions.forEach(tuneOption => {
 
-        if (filterId !== tuneOption.dataset.tunetype && !tuneOption.dataset.leaders.split(', ').includes(filterId)) {
+        if (!tuneOption.dataset.leaders.split(', ').includes(filterId)) {
 
           tuneOption.setAttribute("hidden", "");
           tuneOption.setAttribute("disabled", "");
@@ -753,14 +787,31 @@ async function appDropDownHandler() {
         }
       });
 
-      tuneSelector.options[0].selected = "selected";
+      tuneGroups.forEach(tuneGroup => {
 
-      tuneSelector.focus();
+        tuneGroup.setAttribute("hidden", "");
+        tuneGroup.setAttribute("disabled", "");
 
-      console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
+        tuneGroup.querySelectorAll('option').forEach(option => {
 
-      displayNotification(`Tunebook filtered by "${filterId}"`, "status")
+          if (!option.hasAttribute("disabled")) {
+
+            tuneGroup.removeAttribute("disabled");
+            tuneGroup.removeAttribute("hidden");
+
+            return;
+          }
+        });
+      });
     }
+
+    tuneSelector.selectedIndex = 0;
+
+    tuneSelector.focus();
+
+    console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
+
+    displayNotification(`Tunebook filtered by "${filterId}"`, "status")
   }
 }
 

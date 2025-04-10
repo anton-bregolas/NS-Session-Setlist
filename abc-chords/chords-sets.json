@@ -120,6 +120,16 @@
     ]
   },
   {
+    "setTitle": "MEDLEY: Ash Grove Set",
+    "tuneChords": [
+      {
+        "title": "Ash Grove",
+        "meter": "3/4",
+        "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG(Em)\t(Em)\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "MEDLEY: Fishy Song Set",
     "tuneChords": [
       {
@@ -546,16 +556,6 @@
         "title": "Wren [An Dro]",
         "meter": "4/4",
         "chords": "PART 1:\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tD\tD\t||"
-      }
-    ]
-  },
-  {
-    "setTitle": "WALTZES: Ash Grove Set",
-    "tuneChords": [
-      {
-        "title": "Ash Grove",
-        "meter": "3/4",
-        "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG(Em)\t(Em)\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
       }
     ]
   },

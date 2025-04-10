@@ -15,45 +15,58 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.1: UI/UX Upgrade (Popup Notifications)
+NS Session Setlist v.0.9.2: UI/UX Upgrade (Tunebook Filter Groups)
 
 + Project updates:
-  - Launcher: Popup notifications styled and expanded
-  - Launcher: Notification types now include success, warning, error, status and report
-  - Launcher, Tunebook, ABC Encoder: Notification messages customized for all types
-  - Tunebook: Can now optionally display status report at launch listing Session DB version and Tunebook size
-  - Chord Viewer: Tweaked messaging for Chordbook Mode
-
-+ HTML updates
-  - Main App (index.html):
-    + "Tunes: Show Tunebook report at launch" checkbox added with default state unchecked
-
-+ CSS updates:
-  - App Styles (nss-styles.css):
-    + Notification Popup styles tweaked and expanded
-    + --notification-color variables added
+  - Tunebook: Filters and Tune Selector items are now organised using option groups
+  - Launcher, Tunebook: Tune Selector population and filtering functions refactored to support option groups
   
 + JavaScript updates
-  - App Launcher module (scripts-ns-sessions.js)
-    + APP_VERSION and notificationTimeoutId global variables added
-    + displayNotification: Now keeps track of last Timeout and checks for open Popup Popover
-    + tuneDataFetch: Now sends an optional user notification with Session DB version and Tunebook size info
-    + fetchData: Now notifies user of fetch errors separating known network errors from other errors
-    + appDropDownHandler: Status type notifications added for Tunebook Filters
-    + appDropDownHandler: Tune Selector now automatically comes into focus on Filter selection
-  - ABC Encoder module (scripts-abc-encoder.js)
-    + Notification messages added, types tweaked
-    + preProcessAbcMetadata: Tweaked Z: field data copying to keep pre-existing non-N.S.S.S. specific strings
   - ABC Tunebook module (scripts-abc-tools.js)
-    + tuneBookShowStatusReport* localStorage variable added for optional Session DB version & status report
-  - Chord Viewer module (scripts-chord-viewer.js):
-    + openChordViewer: Fixed empty Tune Selector warning notification in Chordbook Mode
+    + populateFilterOptions: Filters are now grouped using optgroups with non-selectable headers
+    + populateTuneSelector: Sets and Tunes are now grouped using optgroups
+    + populateTuneSelector: An optgroup is created for each Tune Type when tuneSelector is populated
+  - App Launcher module (scripts-ns-sessions.js)
+    + appDropDownHandler: Refactored to handle both optgroups and separate options simultaneously
+    + appDropDownHandler: Tune Type filters now hide and show optgroups in tuneSelector as well as options
+    + appDropDownHandler: Set Leader filters now hide and disable those optgroups where no active tunes are present after filtering
+    + resetTuneBookMenus, resetTuneBookFilters refactored to handle optgroups
+    + appButtonHandler: Now explains user compact Tunebook Mode controls in notification
+  - ABC Encoder module (scripts-abc-encoder.js)
+    + addCustomAbcFields: Tweaked the default mazurka tempo
 
 + Session DB updates:
-  - Session DB updated to 2025-04-09
+  - Session DB updated to 2025-04-10
+  - Ash Grove Set tweaked (Now a Medley)
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
+
+<details>
+<summary>v.0.9.2: UI/UX Upgrade (Tunebook Filter Groups)</summary>
+
++ Project updates:
+  - Tunebook: Filters and Tune Selector items are now organised using option groups
+  - Launcher, Tunebook: Tune Selector population and filtering functions refactored to support option groups
+  
++ JavaScript updates
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + populateFilterOptions: Filters are now grouped using optgroups with non-selectable headers
+    + populateTuneSelector: Sets and Tunes are now grouped using optgroups
+    + populateTuneSelector: An optgroup is created for each Tune Type when tuneSelector is populated
+  - App Launcher module (scripts-ns-sessions.js)
+    + appDropDownHandler: Refactored to handle both optgroups and separate options simultaneously
+    + appDropDownHandler: Tune Type filters now hide and show optgroups in tuneSelector as well as options
+    + appDropDownHandler: Set Leader filters now hide and disable those optgroups where no active tunes are present after filtering
+    + resetTuneBookMenus, resetTuneBookFilters refactored to handle optgroups
+    + appButtonHandler: Now explains user compact Tunebook Mode controls in notification
+  - ABC Encoder module (scripts-abc-encoder.js)
+    + addCustomAbcFields: Tweaked the default mazurka tempo
+
++ Session DB updates:
+  - Session DB updated to 2025-04-10
+  - Ash Grove Set tweaked (Now a Medley)
+</details>
 
 <details>
 <summary>v.0.9.1: UI/UX Upgrade (Popup Notifications)</summary>

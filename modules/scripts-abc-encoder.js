@@ -1160,13 +1160,16 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
                 break;
 
             case "hop jig":
-            case "mazurka":
                 abcQ = "1/4=146";
                 break;
 
             case "jig":
             case "single jig":
                 abcQ = "3/8=116";
+                break;
+
+            case "mazurka":
+                abcQ = "1/4=136";
                 break;
 
             case "polka":

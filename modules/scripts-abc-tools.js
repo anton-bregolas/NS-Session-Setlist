@@ -200,13 +200,30 @@ export function loadTuneBookItem(currentTuneBook, itemNumber) {
 
 export function populateTuneSelector(tuneBook) {
 
+    let currentTuneType = '';
+
     tuneBook.forEach(tune => {
+
         const option = document.createElement('option');
         option.value = tune.url;
         option.textContent = tune.name;
         option.dataset.tunetype = tune.type;
         option.dataset.leaders = tune.leaders;
-        tuneSelector.appendChild(option);
+
+        if (currentTuneType !== tune.type) {
+
+            const tuneGroup = document.createElement('optgroup');
+            tuneGroup.label = tune.type;
+            tuneGroup.dataset.tunetype = tune.type;
+            currentTuneType = tune.type;
+            tuneGroup.appendChild(option);
+            tuneSelector.appendChild(tuneGroup);
+
+        } else {
+
+            const lastOptGroup = tuneSelector.querySelector('optgroup:last-of-type');
+            lastOptGroup.appendChild(option);
+        }
     });
 }
 
@@ -218,30 +235,28 @@ export function populateFilterOptions(filters) {
 
         if (filterList.id) {
 
-            const filterHeader = document.createElement('option');
+            const filterGroup = document.createElement('optgroup');
 
             if (filterList.id === "tuneTypes") {
                 
-                filterHeader.value = 1;
-                filterHeader.textContent = "👇 Tune Type 👇";
-                filterOptions.appendChild(filterHeader);
+                filterGroup.label = "👇 Tune Type:👇";
+                filterOptions.appendChild(filterGroup);
             }
 
             if (filterList.id === "setLeaders") {
                 
-                filterHeader.value = 2;
-                filterHeader.textContent = "👇 Set Leader 👇";
-                filterOptions.appendChild(filterHeader);
+                filterGroup.label = "👇 Set Leader:👇";
+                filterOptions.appendChild(filterGroup);
             }
+
+            filterList.list?.forEach(filter => {
+
+                const filterOption = document.createElement('option');
+                filterOption.value = filter;
+                filterOption.textContent = `🎻 ${filter}`;
+                filterGroup.appendChild(filterOption);
+            });
         }
-
-        filterList.list?.forEach(filter => {
-
-            const filterOption = document.createElement('option');
-            filterOption.value = filter;
-            filterOption.textContent = `🎻 ${filter}`;
-            filterOptions.appendChild(filterOption);
-        });
     });
 }
 
@@ -488,7 +503,7 @@ function muteChordsPlayback(theURL) {
 
 function refreshTabsDisplayOptions() {
 
-    displayOptions.options[0].selected = "selected";
+    displayOptions.selectedIndex = 0;
     displayOptions.value = "-1";
 }
 
