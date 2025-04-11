@@ -213,7 +213,7 @@ export function populateTuneSelector(tuneBook) {
         if (currentTuneType !== tune.type) {
 
             const tuneGroup = document.createElement('optgroup');
-            tuneGroup.label = tune.type;
+            tuneGroup.label = `${tune.type} 🎵`;
             tuneGroup.dataset.tunetype = tune.type;
             currentTuneType = tune.type;
             tuneGroup.appendChild(option);

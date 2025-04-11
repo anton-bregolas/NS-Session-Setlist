@@ -90,6 +90,41 @@
     ]
   },
   {
+    "setTitle": "JIGS: Frieze Breeches Set",
+    "tuneChords": [
+      {
+        "title": "Frieze Breeches",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tC\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tA\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tC\t|\tC\tC\t|\tD\t(G/B)\t|\tD(G)\tA\t|\n|\tD\tC\t|\tC\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tD\tD\t|\tD\tD\t|\tAsus4\tAsus4\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tG(Dsus2)\t|1\tA\tA\t|\n|2\tA\tD\t||\n\nPART 5:\n|\tD\tD\t|\tD/B\tD/B\t|\tD/F#\tD/F#\t|\tG\tA\t|\n|\tD\tD\t|\tBm\tBm\t|\tAsus4\tAsus4\t|1\tA\tD\t|\n|2\tA\tD\t||"
+      },
+      {
+        "title": "Saddle the Pony",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\t(Em)\t|\tG\t(C)\t|\tAm\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tC(Am)\tBm\t|1\tC\tD\t|\n|2\tC\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "JIGS: Humours of Killarney Set",
+    "tuneChords": [
+      {
+        "title": "Humours of Killarney",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\t(B5)\t(B5)\t|\tEm\tEm\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tEm\tEm\t|\tAm\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tD\t|1\tG\tD\t|\n|2\tG\tG\t||"
+      },
+      {
+        "title": "Connaughtman's Rambles",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tG\t(Bm)\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tBm\tBm\t|\tA\tA\t|\tBm\tBm\t|\tG\tA\t|\n|\tBm\tBm\t|\tA\tA\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||"
+      },
+      {
+        "title": "Donncha Lynch's",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tA\tA\t|\tD\tE\t|\tE\tE\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tE\tE\t|\tE\tE\t|\n|\tA\t(F#m)\t|\tD\t(Bm)\t|\t(D)\tE\t|\tE\tE\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "JIGS: Kesh Set",
     "tuneChords": [
       {
@@ -116,6 +151,21 @@
         "title": "Merrily Kiss the Quaker",
         "meter": "12/8",
         "chords": "PART 1:\n|\tG G\t(C) (D)\t|\tG\tD\t|\tG G\tC D\t|1\tG D\tG G\t|\n|2\tG D\tG G\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|1\tC D\tG G\t|\n|2\tC D\tG G\t||\n\nPART 3:\n|\tG D\tG G\t|\tC\tD\t|\tEm D\tC C\t|1\tC D\tG G\t|\n|2\tC D\tG G\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "JIGS: Stick Across the Hob Set",
+    "tuneChords": [
+      {
+        "title": "Stick Across the Hob",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tG\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tG\tG\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tD/F#\t|\tEm\tD\t|\tAsus4\tAsus4\t|\tA\tA\t|\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tD/F#\t|\tEm\tD\t|\tA\tA\t|\tAsus4\tAsus4\t||\n\nPART 3:\n|\tG\tD/F#\t|\tEm\tD\t|\t(Asus4)\t(Asus4)\t|\tA\tA\t|\n|\tG\tD/F#\t|\tEm\tD\t|\t(Asus4)\t(Asus4)\t|\tAsus4\tAsus4\t||"
+      },
+      {
+        "title": "Out on the Ocean",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tC\tC\t|\tC\tC\t|\tBm7\tBm7\t|\tEm\tEm\t|\n|\tG\tD\t|\tC\tC\t|\tD\tD\t|\tC\tD\t|\n|\tC\t(Em)\t|\tC(Em)\t(Em)\t|\tBm7\tBm7\t|\tEm\tEm\t|\n|\tG\tD\t|\tC\tC\t|\tD\tD\t|\tC\tD\t||"
       }
     ]
   },
@@ -163,9 +213,14 @@
     "setTitle": "MEDLEY: Lochaber Badger Set",
     "tuneChords": [
       {
+        "title": "Lochaber Badger [Reel]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tEm\tC\t|\tC\tC\t|\tBm\tEm\t|\t(G/B)\tEm\t||\n\nPART 2:\n|\tEm\tAm\t|\tAm\tBm\t|\tBm\tC\t|\tG\tEm\t||"
+      },
+      {
         "title": "Kid on the Mountain [Slip Jig]",
         "meter": "9/8",
-        "chords": "PART 1:\n|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tG\tD\tD\t||\n\nPART 2:\n|\tG(C)\tD\tG\t|\tG\tG\tG\t|\tG(C)\tD\tG\t|\tG\tG\tD\t||\n\nPART 3:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 4:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 5:\n|\tG(C)\tD\tG\t|\tG\tG\tG\t|\tG(C)\tD\tG\t|\tG\tD\tD\t||"
+        "chords": "PART 1:\n|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tG\tD\tD\t||\n\nPART 2:\n|\tG(C)\tD\tG\t|\tG\tG\tG\t|\tG(C)\tD\tG\t|\tG\tG\tD\t||\n\nPART 3:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 4:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 5:\n|\tC\tD\tG\t|\tG\tG\tG\t|\tC\tD\tG\t|\tG\tD\tD\t||"
       }
     ]
   },
@@ -261,6 +316,46 @@
         "title": "Johnny I Do Miss You",
         "meter": "2/4",
         "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tBm\t(G)\t|\tBm\t(G)\t|\tG\tA\t|\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "POLKAS: Green Cottage Set",
+    "tuneChords": [
+      {
+        "title": "Green Cottage No. 1",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||\n\nPART 2:\n|\tEm\t(C)\t|\tEm(C)\t(C)\t|\tG\t(A5)\t|\tBm\tBm\t|\n|\tA5\t(Em)\t|\tA5(Em)\t(Em)\t|\tCadd9\t(G)\t|1\tD\tD\t|\n|2\tD\t(D/B)\t||"
+      },
+      {
+        "title": "Green Cottage No. 2",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tA5\t|\tA5\tA5\t|\tG\tG\t|\n|\tA5\tA5\t|\tA5\tA5\t|\tG\tG\t|1\tD\tG\t|\n|2\tD\tG\t||\n\nPART 2:\n|\tA5\tA5\t|\tA5\tA5\t|\tD\tD\t|\tG\tG\t|\n|\tA5\tA5\t|\tA5\tA5\t|\tEm\tEm\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      },
+      {
+        "title": "Ray's Classic",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tG/B\tG/B\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tC\tAm\t|1\tD\tD\t|\n|2\tD\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tAm\tAm\t|\tD\tD\t|\n|\tD/F#\tD/F#\t|\tEm\tD\t|\tC\tC\t|1\tD\tG\t|\n|2\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "POLKAS: P&O Set",
+    "tuneChords": [
+      {
+        "title": "P&O (Dmin)",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tD5\tD5\t|\tDm\tDm\t|\tC\tC\t|\tC\tC\t|\n|\tD5\tD5\t|\tDm\t(C)\t|\tD5\tC\t|1\tD5\tD5\t|\n|2\tD5\tD5\t||\n\nPART 2:\n|\tDm\tC\t|\tD5\tD5\t|\tC\tC\t|\tAm\tAm\t|\n|\tDm\tC\t|\tD5\t(F)\t|\tBb\tC\t|1\tD5\tD5\t|\n|2\tD5\tD5\t||"
+      },
+      {
+        "title": "Tom Mhic's No. 1",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tD(Bm)\t(A)\t|\t(G)\t(D)\t|\tG\tG\t|\tG\tA\t|\n|\tD(Bm)\t(A)\t|\t(G)\t(D)\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\t(G)\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      },
+      {
+        "title": "Tom Mhic's No. 2",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tA\t|\tG\tG\t|1\tD\tG\t||\n\nPART 2:\n|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tA\tA\t||"
       }
     ]
   },
@@ -450,12 +545,42 @@
     ]
   },
   {
+    "setTitle": "REELS: Lad O'Beirne's Set",
+    "tuneChords": [
+      {
+        "title": "Lad O'Beirne's",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tCadd9\tCadd9\t|\tG\t(G/B)\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tG/B\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      },
+      {
+        "title": "Molly Bán",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tEm\t|\n|\tD\tD\t|\tC\tC\t|\tD/B\tD/B\t||"
+      },
+      {
+        "title": "Ballinamore",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tA\t|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\n|\tG\tA\t|\tD\tD\t|\tG\tA\t|\tD/B\tD/B\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD/F#\t|\tG\tBm7\t|\n|\tC\tC\t|\tD\tD\t|\tG\t(Em)\t|\tD\t(Bm)\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "REELS: Rookery Set",
     "tuneChords": [
+      {
+        "title": "Rookery",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tC\t|\tD\tD\t||"
+      },
       {
         "title": "Banshee",
         "meter": "4/4",
         "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tC\tC\t|\tC\tD\t|\n|\tG\tG\t|\tG\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tAm\tD\t|\tG\t(D)\t|\tEm\tD\t|\tEm\tD\t|\n|\tAm\tD\t|\tG\t(D)\t|\tC(G)\tD/B\t|1\tAm\tD\t|\n|2\tAm(D)\tD\t||"
+      },
+      {
+        "title": "Rolling in the Ryegrass",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tA\tA\t||"
       }
     ]
   },
@@ -552,6 +677,11 @@
   {
     "setTitle": "VARIOUS: St. Patrick's An Dro Set",
     "tuneChords": [
+      {
+        "title": "St. Patrick's [An Dro]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tEm\t|\tEm\tD(G)\t|\tD(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tEm\tG\t|\tG\tAm\t|\tD\tEm\t||\n\nPART 2:\n|\tD\tEm\t|\tD\tEm(G)\t|\tEm(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tD\tG\t|\tG\tAm\t|\tBm\tEm\t||"
+      },
       {
         "title": "Wren [An Dro]",
         "meter": "4/4",

@@ -55,14 +55,34 @@
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tG\tAsus4\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tG\tAsus4\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD/F#\tD/F#\t|\tA\tA\t|\n|\tD\tD\t|\tG\tG\t|\tEm\tD/F#\t|1\tG\tA\t|\n|2\tG\tA\t||"
   },
   {
+    "title": "JIG: Connaughtman's Rambles",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tG\t(Bm)\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tBm\tBm\t|\tA\tA\t|\tBm\tBm\t|\tG\tA\t|\n|\tBm\tBm\t|\tA\tA\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||"
+  },
+  {
     "title": "JIG: Cook in the Kitchen",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tD\tF\t|\tG\tG\t|\tD\tC\t|\n|\tG\tG\t|\tD\tF\t|\tC\tD\t|\tG\tG\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tG\tG\t|\tD\tC\t|\n|\tG\tG\t|\tD\tD\t|\tC\tD\t|\tG\tG\t||\n\nPART 3:\n|\tD\tD\t|\tD\tD\t|\tC\tD/B\t|\tG\tC\t|\n|\tD\tD\t|\tD\tD\t|\tC\tD/B\t|\tG\t(D)\t||"
   },
   {
+    "title": "JIG: Donncha Lynch's",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tA\tA\t|\tD\tE\t|\tE\tE\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tE\tE\t|\tE\tE\t|\n|\tA\t(F#m)\t|\tD\t(Bm)\t|\t(D)\tE\t|\tE\tE\t||"
+  },
+  {
+    "title": "JIG: Frieze Breeches",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tC\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tA\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tC\t|\tC\tC\t|\tD\t(G/B)\t|\tD(G)\tA\t|\n|\tD\tC\t|\tC\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tD\tD\t|\tD\tD\t|\tAsus4\tAsus4\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tG(Dsus2)\t|1\tA\tA\t|\n|2\tA\tD\t||\n\nPART 5:\n|\tD\tD\t|\tD/B\tD/B\t|\tD/F#\tD/F#\t|\tG\tA\t|\n|\tD\tD\t|\tBm\tBm\t|\tAsus4\tAsus4\t|1\tA\tD\t|\n|2\tA\tD\t||"
+  },
+  {
     "title": "JIG: Have a Drink With Me",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\t(Em)\t|\tG(Em)\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
+    "title": "JIG: Humours of Killarney",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\t(B5)\t(B5)\t|\tEm\tEm\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tEm\tEm\t|\tAm\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tD\t|1\tG\tD\t|\n|2\tG\tG\t||"
   },
   {
     "title": "JIG: Kesh",
@@ -78,6 +98,21 @@
     "title": "JIG: Morrison's",
     "meter": "6/8",
     "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tG\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tG\tG\t|\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tC\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tG\tG\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tG\t|\tD\tG\t|\tAm\tBm\t|\tC\tD\t||"
+  },
+  {
+    "title": "JIG: Out on the Ocean",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tC\tC\t|\tC\tC\t|\tBm7\tBm7\t|\tEm\tEm\t|\n|\tG\tD\t|\tC\tC\t|\tD\tD\t|\tC\tD\t|\n|\tC\t(Em)\t|\tC(Em)\t(Em)\t|\tBm7\tBm7\t|\tEm\tEm\t|\n|\tG\tD\t|\tC\tC\t|\tD\tD\t|\tC\tD\t||"
+  },
+  {
+    "title": "JIG: Saddle the Pony",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\t(Em)\t|\tG\t(C)\t|\tAm\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tC(Am)\tBm\t|1\tC\tD\t|\n|2\tC\tD\t||"
+  },
+  {
+    "title": "JIG: Stick Across the Hob",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tG\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tG\tG\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tD/F#\t|\tEm\tD\t|\tAsus4\tAsus4\t|\tA\tA\t|\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tD/F#\t|\tEm\tD\t|\tA\tA\t|\tAsus4\tAsus4\t||\n\nPART 3:\n|\tG\tD/F#\t|\tEm\tD\t|\t(Asus4)\t(Asus4)\t|\tA\tA\t|\n|\tG\tD/F#\t|\tEm\tD\t|\t(Asus4)\t(Asus4)\t|\tAsus4\tAsus4\t||"
   },
   {
     "title": "JIG: Swallowtail",
@@ -145,6 +180,16 @@
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tG\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
   },
   {
+    "title": "POLKA: Green Cottage No. 1",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||\n\nPART 2:\n|\tEm\t(C)\t|\tEm(C)\t(C)\t|\tG\t(A5)\t|\tBm\tBm\t|\n|\tA5\t(Em)\t|\tA5(Em)\t(Em)\t|\tCadd9\t(G)\t|1\tD\tD\t|\n|2\tD\t(D/B)\t||"
+  },
+  {
+    "title": "POLKA: Green Cottage No. 2",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tA5\t|\tA5\tA5\t|\tG\tG\t|\n|\tA5\tA5\t|\tA5\tA5\t|\tG\tG\t|1\tD\tG\t|\n|2\tD\tG\t||\n\nPART 2:\n|\tA5\tA5\t|\tA5\tA5\t|\tD\tD\t|\tG\tG\t|\n|\tA5\tA5\t|\tA5\tA5\t|\tEm\tEm\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
     "title": "POLKA: Johnny I Do Miss You",
     "meter": "2/4",
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tBm\t(G)\t|\tBm\t(G)\t|\tG\tA\t|\tD\tD\t||"
@@ -165,6 +210,11 @@
     "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tG\tG\t||\n\nPART 2:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tA\t|\tG\tG\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||\n\nPART 3:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tA\tG\t|\tAsus4\tAsus4\t|\tAsus4\tG\t||"
   },
   {
+    "title": "POLKA: P&O (Dmin)",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tD5\tD5\t|\tDm\tDm\t|\tC\tC\t|\tC\tC\t|\n|\tD5\tD5\t|\tDm\t(C)\t|\tD5\tC\t|1\tD5\tD5\t|\n|2\tD5\tD5\t||\n\nPART 2:\n|\tDm\tC\t|\tD5\tD5\t|\tC\tC\t|\tAm\tAm\t|\n|\tDm\tC\t|\tD5\t(F)\t|\tBb\tC\t|1\tD5\tD5\t|\n|2\tD5\tD5\t||"
+  },
+  {
     "title": "POLKA: Pop No. 1",
     "meter": "2/4",
     "chords": "PART 1:\n|\tG\tG\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tC\tC\t|\tG\tC\t|\t(G)\tD\t|\n|\tG\tG\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG\t(C)\t|\tD(Am)\tD/B\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tEm\t(D)\t|\tC\tC\t|\tG\tG\t|1\tD\tD\t|\n|2\tD\tD\t||"
@@ -180,9 +230,24 @@
     "chords": "PART 1:\n|\tBm\tBm\t|\tBm\t(G)\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tG (Bm)\tA A\t|\n|\tBm\tBm\t|\tBm\tBm\t|\tBm\t(G)\t|\tEm\tA\t|\n|\tBm\tBm\t|\tBm\tEm\t|\tEm\tEm\t|\tA\t(A/F#)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\n|\tG\tG\t|\tD\tD\t|\tA\t(A/F#)\t|\tBm\tBm\t|\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\t(A)\t(A)\t||"
   },
   {
+    "title": "POLKA: Ray's Classic",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG/B\tG/B\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tC\tAm\t|1\tD\tD\t|\n|2\tD\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tAm\tAm\t|\tD\tD\t|\n|\tD/F#\tD/F#\t|\tEm\tD\t|\tC\tC\t|1\tD\tG\t|\n|2\tD\tD\t||"
+  },
+  {
     "title": "POLKA: Siege of Ennis",
     "meter": "2/4",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tC\tC\t|\tG\tD/F#\t|\tEm\tEm\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tD\t|\tG\tG\t||\n\nPART 3:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tG\t|\tC\tD\t|\tG\tG\t||\n\nPART 4:\n|\tG\tG\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\t(Em)\t|\tC\tC\t|\tC\t(G)\t|1\tD\tD\t|\n|2\tC\tD\t||"
+  },
+  {
+    "title": "POLKA: Tom Mhic's No. 1",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tD(Bm)\t(A)\t|\t(G)\t(D)\t|\tG\tG\t|\tG\tA\t|\n|\tD(Bm)\t(A)\t|\t(G)\t(D)\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\t(G)\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
+    "title": "POLKA: Tom Mhic's No. 2",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tA\t|\tG\tG\t|1\tD\tG\t||\n\nPART 2:\n|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tA\tA\t||"
   },
   {
     "title": "POLKA: Toormore No. 1",
@@ -213,6 +278,11 @@
     "title": "REEL: Ashplant",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\t(C)\t(C)\t|\t(G)\t(G)\t|\tG\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\t(C)\t|\tG\tD\t|\n|\tEm\tEm\t|\t(C)\t(C)\t|\tG\tG\t|\tD\tD\t||"
+  },
+  {
+    "title": "REEL: Ballinamore",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tA\t|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\n|\tG\tA\t|\tD\tD\t|\tG\tA\t|\tD/B\tD/B\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD/F#\t|\tG\tBm7\t|\n|\tC\tC\t|\tD\tD\t|\tG\t(Em)\t|\tD\t(Bm)\t||"
   },
   {
     "title": "REEL: Banshee",
@@ -265,6 +335,21 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\t(D)\t|\tG\t(D)\t|\tG\tC\t|\tD\t(G)\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tC D\tG G\t|\n|\tG\tG\t|\tC\tD\t|\tC\tC\t|\tD D\tG C\t||"
   },
   {
+    "title": "REEL: Lad O'Beirne's",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tCadd9\tCadd9\t|\tG\t(G/B)\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tG/B\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
+    "title": "REEL: Lochaber Badger",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tEm\tC\t|\tC\tC\t|\tBm\tEm\t|\t(G/B)\tEm\t||\n\nPART 2:\n|\tEm\tAm\t|\tAm\tBm\t|\tBm\tC\t|\tG\tEm\t||"
+  },
+  {
+    "title": "REEL: Molly Bán",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tEm\t|\n|\tD\tD\t|\tC\tC\t|\tD/B\tD/B\t||"
+  },
+  {
     "title": "REEL: New Mown Meadows (Amix)",
     "meter": "4/4",
     "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tG\t|\tA5\tA5\t|\tG\tG\t|\n|\tA5\tA5\t|\tA5\tA5\t|\tG\tD/F#\t|\tG\tEm(A)\t||\n\nPART 2:\n|\tD\tD\t|\tD\tG\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tG\t|\tG\tD/F#\t|\tEm\tD(A)\t||"
@@ -278,6 +363,16 @@
     "title": "REEL: Rip the Calico",
     "meter": "4/4",
     "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tG\tG\t|\tA\tA\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||"
+  },
+  {
+    "title": "REEL: Rolling in the Ryegrass",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tA\tA\t||"
+  },
+  {
+    "title": "REEL: Rookery",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tC\t|\tD\tD\t||"
   },
   {
     "title": "REEL: Toss the Feathers (Edor)",
@@ -362,7 +457,7 @@
   {
     "title": "SLIP JIG: Kid on the Mountain",
     "meter": "9/8",
-    "chords": "PART 1:\n|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tG\tD\tD\t||\n\nPART 2:\n|\tG(C)\tD\tG\t|\tG\tG\tG\t|\tG(C)\tD\tG\t|\tG\tG\tD\t||\n\nPART 3:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 4:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 5:\n|\tG(C)\tD\tG\t|\tG\tG\tG\t|\tG(C)\tD\tG\t|\tG\tD\tD\t||"
+    "chords": "PART 1:\n|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tEm\tEm\tEm\t|\tG\tD\tD\t||\n\nPART 2:\n|\tG(C)\tD\tG\t|\tG\tG\tG\t|\tG(C)\tD\tG\t|\tG\tG\tD\t||\n\nPART 3:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 4:\n|\tEm\tEm\tEm\t|\tEm\tEm\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 5:\n|\tC\tD\tG\t|\tG\tG\tG\t|\tC\tD\tG\t|\tG\tD\tD\t||"
   },
   {
     "title": "SLIP JIG: Rocky Road to Dublin",
@@ -383,6 +478,11 @@
     "title": "VARIOUS: La Sansonette [Schottische]",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tD\t|\tD\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tD\t|\tD\tC\t|\tC\tC\t|\tD\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\tD\tD\t|\n|\tC\tC\t|\tAm\tAm\t|\tD\tBm\t|\tC\tD\t||"
+  },
+  {
+    "title": "VARIOUS: St. Patrick's [An Dro]",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tEm\t|\tEm\tD(G)\t|\tD(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tEm\tG\t|\tG\tAm\t|\tD\tEm\t||\n\nPART 2:\n|\tD\tEm\t|\tD\tEm(G)\t|\tEm(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tD\tG\t|\tG\tAm\t|\tBm\tEm\t||"
   },
   {
     "title": "VARIOUS: Súisin Bán [Set Dance]",

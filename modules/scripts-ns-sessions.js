@@ -108,7 +108,7 @@ async function launchTuneBook(dataType, triggerBtn) {
 
         if (!localStorage?.tuneBookInitialized_NSSSAPP) {
 
-          displayNotification("First time loading Tunebook: Please wait for ABC Tools to load");
+          displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "status");
           localStorage.tuneBookInitialized_NSSSAPP = 1;
         }
       }

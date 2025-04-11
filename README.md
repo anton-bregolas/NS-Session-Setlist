@@ -15,32 +15,30 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.2: UI/UX Upgrade (Tunebook Filter Groups)
-
-+ Project updates:
-  - Tunebook: Filters and Tune Selector items are now organised using option groups
-  - Launcher, Tunebook: Tune Selector population and filtering functions refactored to support option groups
+NS Session Setlist v.0.9.3: UI/UX Upgrade (Session DB Update)
   
 + JavaScript updates
   - ABC Tunebook module (scripts-abc-tools.js)
-    + populateFilterOptions: Filters are now grouped using optgroups with non-selectable headers
-    + populateTuneSelector: Sets and Tunes are now grouped using optgroups
-    + populateTuneSelector: An optgroup is created for each Tune Type when tuneSelector is populated
-  - App Launcher module (scripts-ns-sessions.js)
-    + appDropDownHandler: Refactored to handle both optgroups and separate options simultaneously
-    + appDropDownHandler: Tune Type filters now hide and show optgroups in tuneSelector as well as options
-    + appDropDownHandler: Set Leader filters now hide and disable those optgroups where no active tunes are present after filtering
-    + resetTuneBookMenus, resetTuneBookFilters refactored to handle optgroups
-    + appButtonHandler: Now explains user compact Tunebook Mode controls in notification
-  - ABC Encoder module (scripts-abc-encoder.js)
-    + addCustomAbcFields: Tweaked the default mazurka tempo
+    + Tune Selector optgroup label tweaked
 
 + Session DB updates:
-  - Session DB updated to 2025-04-10
-  - Ash Grove Set tweaked (Now a Medley)
+  - Session DB updated to 2025-04-11
+  - Chords from Oleg added to 9 sets (& Anton ed. arr.)
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
+
+<details>
+<summary>v.0.9.3: UI/UX Upgrade (Session DB Update)</summary>
+  
++ JavaScript updates
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + Tune Selector optgroup label tweaked
+
++ Session DB updates:
+  - Session DB updated to 2025-04-11
+  - Chords from Oleg added to 9 sets (& Anton ed. arr.)
+</details>
 
 <details>
 <summary>v.0.9.2: UI/UX Upgrade (Tunebook Filter Groups)</summary>
