@@ -15,18 +15,24 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.3: UI/UX Upgrade (Session DB Update)
-  
-+ JavaScript updates
-  - ABC Tunebook module (scripts-abc-tools.js)
-    + Tune Selector optgroup label tweaked
+NS Session Setlist v.0.9.4: UI/UX Upgrade (Session DB Update)
 
 + Session DB updates:
-  - Session DB updated to 2025-04-11
-  - Chords from Oleg added to 9 sets (& Anton ed. arr.)
+  - Session DB updated to 2025-04-15
+  - Chords from Oleg added to 6 sets (& Anton ed. arr.)
+  - Minor tweaks in chords & ABCs
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
+
+<details>
+<summary>v.0.9.4: UI/UX Upgrade (Session DB Update)</summary>
+
++ Session DB updates:
+  - Session DB updated to 2025-04-15
+  - Chords from Oleg added to 6 sets (& Anton ed. arr.)
+  - Minor tweaks in chords & ABCs
+</details>
 
 <details>
 <summary>v.0.9.3: UI/UX Upgrade (Session DB Update)</summary>

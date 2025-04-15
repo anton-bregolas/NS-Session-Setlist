@@ -95,7 +95,7 @@
       {
         "title": "Frieze Breeches",
         "meter": "6/8",
-        "chords": "PART 1:\n|\tD\tD\t|\tD\tC\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tA\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tC\t|\tC\tC\t|\tD\t(G/B)\t|\tD(G)\tA\t|\n|\tD\tC\t|\tC\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tD\tD\t|\tD\tD\t|\tAsus4\tAsus4\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tG(Dsus2)\t|1\tA\tA\t|\n|2\tA\tD\t||\n\nPART 5:\n|\tD\tD\t|\tD/B\tD/B\t|\tD/F#\tD/F#\t|\tG\tA\t|\n|\tD\tD\t|\tBm\tBm\t|\tAsus4\tAsus4\t|1\tA\tD\t|\n|2\tA\tD\t||"
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tA\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tC\t|\tC\tC\t|\tD\t(G/B)\t|\tD(G)\tA\t|\n|\tD\tC\t|\tC\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tD\tD\t|\tD\tD\t|\tAsus4\tAsus4\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tG(Dsus2)\t|1\tA\tA\t|\n|2\tA\tD\t||\n\nPART 5:\n|\tD\tD\t|\tD/B\tD/B\t|\tD/F#\tD/F#\t|\tG\tA\t|\n|\tD\tD\t|\tBm\tBm\t|\tAsus4\tAsus4\t|1\tA\tD\t|\n|2\tA\tD\t||"
       },
       {
         "title": "Saddle the Pony",
@@ -215,7 +215,7 @@
       {
         "title": "Lochaber Badger [Reel]",
         "meter": "4/4",
-        "chords": "PART 1:\n|\tEm\tC\t|\tC\tC\t|\tBm\tEm\t|\t(G/B)\tEm\t||\n\nPART 2:\n|\tEm\tAm\t|\tAm\tBm\t|\tBm\tC\t|\tG\tEm\t||"
+        "chords": "PART 1:\n|\tEm\tC\t|\tC\tC\t|\tBm\tEm\t|\t(G/B)\tEm\t||\n\nPART 2:\n|\tEm\tAm\t|\tAm\tBm\t|\tBm\tC(Em)\t|\tG\tEm\t||"
       },
       {
         "title": "Kid on the Mountain [Slip Jig]",
@@ -256,6 +256,21 @@
         "title": "Tripping up the Stairs [Jig]",
         "meter": "6/8",
         "chords": "PART 1:\n|\tD\tG\t|\tD\tD\t|\tA\tA\t|\tD\tD\t|\n|\tD\tG\t|\tD\tD\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tBm\tBm\t|\tBm\tBm\t|\tA\tA\t|\tA\tA\t|\n|\tBm\tBm\t|\tBm\tBm\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "MEDLEY: Snow on the Tracks Set",
+    "tuneChords": [
+      {
+        "title": "Hessian Camp [Country Dance]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tA\t|\tD\tD\t|\tD\tG\t|\tD\tD\t|\n|\tD\tD\t|\tA\tA\t|\tD\tG\t|\tA\tA\t||\n\nPART 2:\n|\tD\t(Bm)\t|\tA\tA\t|\tD\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||"
+      },
+      {
+        "title": "Snow on the Tracks [March]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\t D\tA D\t|\tG\tD\t|\tD\tD\t|\tA\tA\t|\n|\tD D\tA D\t|\tG\tD\t|\tD\tD\t|\tA\tA\t|1\tD D\tA D\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tG\tA\t|\tD\tD\t|\n|\tA\tA\t|\tD\t(Bm)\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
       }
     ]
   },
@@ -315,7 +330,7 @@
       {
         "title": "Johnny I Do Miss You",
         "meter": "2/4",
-        "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tBm\t(G)\t|\tBm\t(G)\t|\tG\tA\t|\tD\tD\t||"
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD5\t(Bm)\t|\tD\t(Bm)\t|\tG\tA\t|\tD\tD\t||"
       }
     ]
   },
@@ -465,7 +480,7 @@
       {
         "title": "Toss the Feathers (Edor)",
         "meter": "4/4",
-        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tBm\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tC\t|\tAm\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD/B\tD/B\t|\n|\tEm\tEm\t|\tD\tD\t|\tG\tD\t|\tC\tD\t||"
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\t(Bm)\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tC\t|\tAm\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD/B\tD/B\t|\n|\tEm\tEm\t|\tD\tD\t|\tG\tD\t|\tC\tD\t||"
       }
     ]
   },
@@ -565,6 +580,26 @@
     ]
   },
   {
+    "setTitle": "REELS: Mulqueeney's Set",
+    "tuneChords": [
+      {
+        "title": "Mulqueeney's",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tD\tG\t|\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tG\t||\n\nPART 2:\n|\tA\tA\t|\tA\tG\t|\tA\tA\t|\tA\tD\t|\n|\tA\tA\t|\tA\tG\t|\tD\tG\t|\tD\tA\t||"
+      },
+      {
+        "title": "Tommy Peoples' (Gmaj)",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG G/B\tC G/B\t|\tD\tD\t|\tG G\tC G/B\t|\tD\tD\t|\n|\tG G/B\tC G/B\t|\tD\tD\t|\tG G\tC G/B\t|\tD\tD\t||\n\nPART 2:\n|\tG\tD\t|\tD/B\tC\t|\tG/B\tEm\t|1\tAm\tD\t|\n|2\tAm\tD\t||"
+      },
+      {
+        "title": "Fermoy Lasses",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tG\tG\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tG\tC\t|\tAm7\tAm7\t|\tD\tD\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "REELS: Rookery Set",
     "tuneChords": [
       {
@@ -581,6 +616,26 @@
         "title": "Rolling in the Ryegrass",
         "meter": "4/4",
         "chords": "PART 1:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD\tD\t|\tA\tA\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "REELS: Walter Sammon's Grandma Set",
+    "tuneChords": [
+      {
+        "title": "Walter Sammon's Grandmother",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tA\t|\tD\tD\t|\tG A\tD D\t||\n\nPART 2:\n|\tD Bm\tD |\tD\tA\t|\tD\tD\t|\tA\tD\t|\n|\tD G\tD/F# |\tD/F#\tD/F#\t|\tG\tG\t|\tA\tA\t||"
+      },
+      {
+        "title": "Broken Pledge (Ddor)",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD5\tD5\t|\tD5\tD5\t|\tD5\tD5\t|\tD5\tCadd9\t|\n|\tD5\tD5\t|\tD5\tD5\t|\tCadd9\tAm\t|\tAm\t(G5)\t||\n\nPART 2:\n|\tD5\t(Bb)\t|\tBb\tBb\t|\tCadd9\tCadd9\t|\tCadd9\t(Am)\t|\n|\tD5\t(G5)\t|\tBb\t(G5)\t|\tCadd9\tCadd9\t|\tCadd9\tAm\t||"
+      },
+      {
+        "title": "Blackhaired Lass",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tG\t|\tA5\tA5\t|\tA5\tD\t|\n|\tA5\tA5\t|\tA5\tG\t|\tA5\tA5\t|\tA5\tD\t||\n\nPART 2:\n|\tA5\tG\t|\tG\tG\t|\tA5 A5\tG D\t|\tD\tG\t|\n|\tA5\tG\t|\tG\tG\t|\t(D)\tEm\t|\tEm\tG\t||"
       }
     ]
   },
@@ -615,6 +670,26 @@
     ]
   },
   {
+    "setTitle": "SLIDES: Cat's Rambles Set",
+    "tuneChords": [
+      {
+        "title": "Priest",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tD\t|\tG D/F#\tEm Em\t|\tC D\tG ||"
+      },
+      {
+        "title": "Cat's Rambles to the Child's Saucepan",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tD\tD/B\t|\tA5/E A5/E\tA5 A\t|\tD\tD/B\t|\tA5/E A5/E\tD A\t||\n\nPART 2:\n|\tD D\tD A\t|\tA5/E A5/E\tA5 A\t|\tD\tD/F#\t|\tA\tD\t||"
+      },
+      {
+        "title": "This Is My Love, Do You Like Her?",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tA5\t|\tD/F#\tG\t|1\tEm Em\tCsus2 (D)\t|\n|2\tEm Em\tCsus2 D\t||\n\nPART 2:\n|\tA5\tG\t|\tA5\tG\t|\tD/F#\tG\t|1\tEm\tEm\t|\n|2\tEm Em\tCsus2 D\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "SLIDES: Denny Mescall's Set",
     "tuneChords": [
       {
@@ -631,6 +706,46 @@
         "title": "Kings of Kerry [Slide]",
         "meter": "12/8",
         "chords": "PART 1:\n|\tA\tA\t|\tA\tE\t|\tA\tA\t|1\tD E\tA A\t|\n|2\tD E\tA A\t||\n\nPART 2:\n|\tF#m\tD\t|\tA\tE\t|\tF#m\tD\t|\tD E\tA A\t|\n|\tF#m\tD\t|\tA\tE\t|\tF#m\tD\t|\tE\tE\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "SLIDES: Echoes of Killarney Set",
+    "tuneChords": [
+      {
+        "title": "Seán Dan Neil",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tEm\tD\t|\tEm\tD\t|\tEm\tD\t|\tEm(Bm) D\tEm Em\t||\n\nPART 2:\n|\tG(Em)\tD\t|\tD/B\tA\t|\tEm(G)\tD\t|\tBm\tA\t||"
+      },
+      {
+        "title": "Denis Murphy's No. 2 (Amaj)",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tBm Bm\tC#m A\t|\tD\tA\t|\tBm Bm\tC#m A\t|\tBm\tE\t|\n|2\tD/F#\tE\t||\n\nPART 2:\n|\tE E\tA D/F#\t|\tD\tA\t|\tE E\tA D/F#\t|\tD\tE\t|\n|2\tD\tE\t||"
+      },
+      {
+        "title": "Echoes of Killarney (Amaj)",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tA A\tA D\t|\tA A\tD E\t|\tA\tA/C#\t|1\tD E\tA A\t|\n|2\tD E\tA A\t||\n\nPART 2:\n|\tF#m\tE\t|\tA\tE/C#\t|\tF#m\tD\t|1\tD E\tA A\t|\n|2\tD\tE\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "SLIDES: Hare in the Corn Set",
+    "tuneChords": [
+      {
+        "title": "Rathawaun",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tD D\tG A\t|\tD(Bm) A\tD D\t|\tD D/F#\tG G\t|\t(Em)\tA\t|1\tD\tA\t|\n|2\tD\tA\t||\n\nPART 2:\n|\tD\tG\t|\tD/F#\tA\t|\tD(Bm)\tG\t|\tEm\tA\t|1\tD\tA\t|\n|2\tD\tA\t||"
+      },
+      {
+        "title": "Hare in the Corn (Gmaj)",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tG G/C\tG G/C\tG |\tG/C\tD\t|\tG G/C\tG G/C\tG |\tG/C D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tEm G\tD D\t|\tC\tC\t|\tD\t(G)\t||"
+      },
+      {
+        "title": "Brosna No. 3",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tA5\tA5\t|\tG\tD\t|\tA5\tD\t|\tA\tG\t||\n\nPART 2:\n|\tA5\tG\t|\tA5 G\tD |\tA5\tA\t|\tD\tG\t|\n|\tA5\tG\t|\tA5\tG\t|\tA5 A5\tA G\t|\tD\tG\t||"
       }
     ]
   },
