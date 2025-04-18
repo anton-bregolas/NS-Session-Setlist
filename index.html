@@ -75,40 +75,62 @@
                 </div>
 
                 <div class="nss-header-vertical-container">
-                    <h1 id="nss-tunebook-title" class="nss-tunebook-title nss-gradient-text" data-title="tunebook" aria-title="Novi Sad Session Tunebook"></h1>
+                    <div class="nss-tunebook-title-nav">
+                        <button data-load="prev" data-size="small" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load previous Set or Tune" aria-title="Load previous Set or Tune">
+                            <span class="nss-arrow nss-arrow-left"></span>
+                        </button>
+
+                        <h1 id="nss-tunebook-title" class="nss-tunebook-title nss-gradient-text" data-title="tunebook" data-type="Set" aria-title="Novi Sad Session Tunebook"></h1>
+                        
+                        <button data-load="next" data-size="small" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load next Set or Tune" aria-title="Load next Set or Tune">
+                            <span class="nss-arrow nss-arrow-right"></span>
+                        </button>
+                    </div>
                     
                     <section class="nss-select">
                         <div class="nss-select-container flex-wrapper">
-                            <select id="filterOptions" class="nss-select-options" title="Filter tunes by tune type or players" aria-title="Filter tunes by tune type or players">
-                                <option value="-1">✨ Filter by...</option>
-                                <option value="0">😎 Show All 😎</option>
-                            </select>
-                            <select id="tuneSelector" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
-                                <option id="tuneSelectorTitle" data-title="setlist" value=""></option>
-                            </select>
-                            <select id="displayOptions" class="nss-select-options" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
-                               <option value="-1">🎹 Tabs & MIDI</option>
-                               <option value="0">Default (ABC Tools)</option>
-                               <option value="13">Notes (Piano)</option>
-                               <option value="1">ABC (Concertina)</option>
-                               <option value="2">Tin Whistle Tabs</option>
-                               <option value="3">Irish Flute Tabs</option>
-                               <option value="4">GDAD Bouzouki Tabs</option>
-                               <option value="5">EADGBE Guitar Tabs</option>
-                               <option value="6">DADGAD Guitar Tabs</option>
-                               <option value="7">Mandolin Tabs</option>
-                               <option value="8">Tenor Banjo Tabs</option>
-                               <option value="9">Hammered Dulcimer</option>
-                               <option value="10">Uilleann Pipes</option>
-                               <option value="11">Melodeon</option>
-                               <option value="12">Solfège </option>
-                            </select>
+                            <div class="select-wrapper" data-select="filter">
+                                <select id="filterOptions" class="nss-tunebook-selector nss-select-options" title="Filter tunes by tune type or players" aria-title="Filter tunes by tune type or players">
+                                    <option data-select="filter-header" value="-1">✨ Filter by...</option>
+                                    <option value="0">😎 Show All 😎</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper" data-select="tunes">
+                                <select id="tuneSelector" class="nss-tunebook-selector" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
+                                    <option id="tuneSelectorTitle" data-select="tunes-header" data-title="setlist" value=""></option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper" data-select="display">
+                                <select id="displayOptions" class="nss-tunebook-selector nss-select-options" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
+                                   <option data-select="display-header" value="-1">🎹 Tabs & MIDI</option>
+                                   <option value="0">Default (ABC Tools)</option>
+                                   <option value="13">Notes (Piano)</option>
+                                   <option value="1">ABC (Concertina)</option>
+                                   <option value="2">Tin Whistle Tabs</option>
+                                   <option value="3">Irish Flute Tabs</option>
+                                   <option value="4">GDAD Bouzouki Tabs</option>
+                                   <option value="5">EADGBE Guitar Tabs</option>
+                                   <option value="6">DADGAD Guitar Tabs</option>
+                                   <option value="7">Mandolin Tabs</option>
+                                   <option value="8">Tenor Banjo Tabs</option>
+                                   <option value="9">Hammered Dulcimer</option>
+                                   <option value="10">Uilleann Pipes</option>
+                                   <option value="11">Melodeon</option>
+                                   <option value="14">ClaviZouki</option>
+                                   <option value="12">Solfège </option>
+                                </select>
+                            </div>
                         </div>
                     </section>
                 </div>
 
-                <button id="fullScreenButton" data-load="fullscreen-popover" class="nss-tunebook-el" title="View current item in full screen on a new page" aria-title="View current item in full screen on a new page">
-                    Full<br>Screen<br>View
+                <button id="fullScreenButton" data-load="fullscreen-popover" class="nss-tunebook-el flex-wrapper" title="View current item in full screen mode" aria-title="View current item in full screen on a new page">
+                    <span data-label="fs"></span>
+                    <span class="nss-icon-show nss-footer-icon">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-view"></use>
+                        </svg>
+                    </span>
                 </button>
             </nav>
 
@@ -144,7 +166,15 @@
 
             <section class="nss-abctools-embed nss-tunebook-el" aria-hidden="true" hidden>
                 <div class="iframe-container">
+                    <button data-load="prev" data-size="large" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load previous Set or Tune" aria-title="Load previous Set or Tune">
+                        <span class="nss-arrow nss-arrow-left"></span>
+                    </button>
+
                     <iframe id="tuneFrame" src=""></iframe>
+
+                    <button data-load="next" data-size="large" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load next Set or Tune" aria-title="Load next Set or Tune">
+                        <span class="nss-arrow nss-arrow-right"></span>
+                    </button>
                 </div>
             </section>
 
@@ -200,31 +230,39 @@
                 <div class="nss-popover-body flex-wrapper">
                     <div class="nss-checkbox-container">
                         <label for="tools-save-restore-tunes" class="nss-checkbox-label">
-                          <input type="checkbox" id="tools-save-restore-tunes" data-option="abcToolsSaveAndRestoreTunes" class="nss-checkbox-btn" value="1">
+                            <input type="checkbox" id="tools-save-restore-tunes" data-option="abcToolsSaveAndRestoreTunes" class="nss-checkbox-btn" value="1">
                             Save & load last opened Set or Tune
                         </label>
+                        <label for="tunebook-use-mobile-mode" class="nss-checkbox-label">
+                            <input type="checkbox" id="tunebook-use-mobile-mode" data-option="tuneBookAlwaysUseMobileMode" class="nss-checkbox-btn" value="1">
+                            Always open Tunebook in Mobile Mode
+                        </label>
+                        <!-- <label for="tunebook-use-compact-mode" class="nss-checkbox-label">
+                            <input type="checkbox" id="tunebook-use-compact-mode" data-option="tuneBookAlwaysUseCompactMode" class="nss-checkbox-btn" value="1">
+                            Always open Tunebook in Compact Mode
+                        </label> -->
                         <label for="tools-allow-midi-change" class="nss-checkbox-label">
-                          <input type="checkbox" id="tools-allow-midi-change" data-option="abcToolsAllowInstrumentChanges" class="nss-checkbox-btn" value="1">
+                            <input type="checkbox" id="tools-allow-midi-change" data-option="abcToolsAllowInstrumentChanges" class="nss-checkbox-btn" value="1">
                             MIDI: Allow changing playback instrument
                         </label>
                         <label for="tools-always-mute-chords" class="nss-checkbox-label">
-                          <input type="checkbox" id="tools-always-mute-chords" data-option="abcToolsAlwaysMuteChords" class="nss-checkbox-btn" value="1">
+                            <input type="checkbox" id="tools-always-mute-chords" data-option="abcToolsAlwaysMuteChords" class="nss-checkbox-btn" value="1">
                             MIDI: Always mute chords in playback
                         </label>
                         <label for="tools-allow-tab-change" class="nss-checkbox-label">
-                          <input type="checkbox" id="tools-allow-tab-change" data-option="abcToolsAllowTabStyleChanges" class="nss-checkbox-btn" value="1">
+                            <input type="checkbox" id="tools-allow-tab-change" data-option="abcToolsAllowTabStyleChanges" class="nss-checkbox-btn" value="1">
                             Tabs: Allow adding Tablature to notes
                         </label>
                         <label for="tools-allow-auto-reload" class="nss-checkbox-label">
-                          <input type="checkbox" id="tools-allow-auto-reload" data-option="abcToolsAllowTuneAutoReload" class="nss-checkbox-btn" value="1">
+                            <input type="checkbox" id="tools-allow-auto-reload" data-option="abcToolsAllowTuneAutoReload" class="nss-checkbox-btn" value="1">
                             Tunes: Allow automatic Tunebook reload
                         </label>
-                        <label for="tools-allow-status-report" class="nss-checkbox-label">
-                          <input type="checkbox" id="tools-allow-status-report" data-option="tuneBookShowStatusReport" class="nss-checkbox-btn" value="1">
+                        <label for="tunebook-show-status-report" class="nss-checkbox-label">
+                            <input type="checkbox" id="tunebook-show-status-report" data-option="tuneBookShowStatusReport" class="nss-checkbox-btn" value="1">
                             Tunes: Show Tunebook report at launch
-                          </label>
-                        <label for="tools-allow-dynamic-chords" class="nss-checkbox-label">
-                          <input type="checkbox" id="tools-allow-dynamic-chords" data-option="chordViewerAllowDynamicChords" class="nss-checkbox-btn" value="1">
+                        </label>
+                        <label for="cv-allow-dynamic-chords" class="nss-checkbox-label">
+                            <input type="checkbox" id="cv-allow-dynamic-chords" data-option="chordViewerAllowDynamicChords" class="nss-checkbox-btn" value="1">
                             Chord Viewer: Generate chords dynamically
                         </label>
                     </div>
@@ -306,10 +344,9 @@
                 </button>
 
                 <div class="flex-wrapper footer-link-wrapper">
-                    <label for="nss-radio-view-tunes" class="radio-wrapper flex-wrapper">
+                    <label for="nss-radio-view-tunes" class="radio-wrapper flex-wrapper" title="Full Screen button opens current Set or Tune">
                         <input type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0">
                         <span class="flex-wrapper">
-                            Full Screen: Tunes
                             <div class="nss-footer-icon nss-icon-show">
                                 <svg class="nss-icon" aria-hidden="true">
                                     <use href="assets/icons/icons.svg#action-icon-view"></use>
@@ -322,12 +359,34 @@
                             </div>
                         </span>
                     </label>
-                    <a href="https://t.me/irish_sessions_ns" target="_blank" class="nss-footer-link flex-wrapper" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">
-                        <span class="nss-gradient-text">
-                            Follow Trad Sessions NS
-                        </span>
-                    </a>
-                    <label for="nss-radio-view-chords" class="radio-wrapper flex-wrapper">
+                    <div class="footer-link-container flex-wrapper">
+                        <a data-type="telegram-link" href="https://t.me/irish_sessions_ns" target="_blank" class="nss-footer-link flex-wrapper" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">
+                            <span class="nss-gradient-text">
+                                Follow Trad Sessions NS
+                            </span>
+                        </a>
+                        <button data-controls="mode" data-type="mobile-switch" class="nss-btn" title="Switch to mobile Tunebook mode" aria-title="Switch to mobile Tunebook mode">
+                            <span class="nss-gradient-text flex-wrapper">
+                                MOBILE
+                            </span>
+                            <div class="nss-footer-icon">
+                                <svg class="nss-icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#nav-icon-mobile"></use>
+                                </svg>
+                            </div>
+                            <span class="nss-gradient-text flex-wrapper">
+                                MODE
+                            </span>
+                        </button>
+                        <button data-controls="mode" data-type="desktop-switch" class="nss-btn" title="Switch to desktop mode" aria-title="Switch to desktop mode">
+                            <div class="nss-footer-icon">
+                                <svg class="nss-icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#action-icon-archives"></use>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                    <label for="nss-radio-view-chords" class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
                         <input type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1" checked>
                         <span class="flex-wrapper">
                             <div class="nss-footer-icon nss-icon-show">
@@ -340,7 +399,6 @@
                                     <use href="assets/icons/icons.svg#action-icon-unview"></use>
                                 </svg>
                             </div>
-                            Full Screen: Chords
                         </span>
                     </label>
                 </div>

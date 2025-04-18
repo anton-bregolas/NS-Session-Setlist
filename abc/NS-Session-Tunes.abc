@@ -145,21 +145,21 @@ X: 9
 T: HORNPIPE: Callaghan's High
 C: C: Trad.; S: Pádraig O'Keeffe
 C: Set Leaders: Anton
-Z: Anton Zille ed.; brailsford at The Session
+Z: Anton Zille ed. arr.; brailsford at The Session
 N: https://thesession.org/members/26966/sets/94459
 R: Hornpipe
 M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Gmaj
-g>f|(3efg f>g e>AB>A|G>AB>d d>BG>E|D>EG>A B>GB>d|(3efg f>g e>dB>d|
-(3gag f>g e>dB>d|(3efg f>a g>fe>d|(3BdB G>B (3ABA F>A|G2 G>F G2 B>d|
-e>gf>g e>dB>A|G>AB>e d>BG>E|D>EG>A ~B3d|(3efg f>g e>dB>d|
-(3gag f>g e>dB>d|(3efg a>f g>fe>d|(3BdB G>B (3ABA F>A|G2 G>F G2 (3efg||
-a>fg>e d>eg>a|b>BB>A G2 f>g|(3agf (3gfe d>eg>a|b2 e2 e3g|
-(3faf (3def g>fe>g|f>e (3def g>fe>f|(3gab a>f g>fe>d|B>AB>d e2 f>g|
-a>fg>e d>eg>a|b>BB>A G>ef>g|(3agf (3gfe d>eg>a|b2 e2 e3g|
-(3faf (3def g>fe>g|f>e (3def g>fe>f|(3gab (3agf (3gfe (3fed|B>de>f g2 f>g||
+g>f|"C"(3efg f>g "D"e>AB>A|"G"G>AB>d "(D)"d>BG>E|"(G)"D>EG>A "Em"B>GB>d|"C"(3efg f>g "D"e>dB>d|
+"Em"(3gag "(D)"f>g "(C)"e>dB>d|"C"(3efg f>a "(D)"g>fe>d|"G"(3BdB G>B "D"(3ABA F>A|"C"G2 "D"G>F "G"G2 B>d|
+"Em"e>gf>g e>dB>A|"C"G>AB>e d>BG>E|"G"D>EG>A ~B3d|"C"(3efg f>g "D"e>dB>d|
+"Em"(3gag "(D)"f>g "(C)"e>dB>d|"C"(3efg a>f "(D)"g>fe>d|"G"(3BdB G>B "D"(3ABA F>A|"C"G2 "D"G>F "G"G2 (3efg||
+"D"a>fg>e d>eg>a|"Em"b>BB>A G2 f>g|"D"(3agf (3gfe d>eg>a|"Em"b2 e2 e3g|
+"D"(3faf (3def "C"g>fe>g|"D"f>e (3def "C"g>fe>f|(3gab a>f g>fe>d|"D"B>AB>d "Em"e2 f>g|
+"D"a>fg>e d>eg>a|"Em"b>BB>A G>ef>g|"D"(3agf (3gfe d>eg>a|"C"b2 e2 e3g|
+"D"(3faf (3def "C"g>fe>g|"D"f>e (3def "C"g>fe>f|"(Em)"(3gab "(D)"(3agf "(C)"(3gfe (3fed|"D"B>de>f "C"g2||
 
 X: 10
 T: HORNPIPE: Chief O'Neill's Favourite
@@ -181,17 +181,17 @@ X: 11
 T: HORNPIPE: Frisco
 C: C: Trad.; S: Julia Clifford
 C: Set Leaders: Anton
-Z: Anton Zille ed.; Daemco at The Session
+Z: Anton Zille ed. arr.; Daemco at The Session
 N: https://thesession.org/members/26966/sets/94459
 R: Hornpipe
 M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Gmaj
-e>d|:(3BdB G>A B>de>f|(3gag f>g e>dB>A|F>Ad>A F>Ad>A|F>Ad>B A2 e>d|
-(3BdB G>A (3Bcd e>f|(3gag f>g e>dB>A|F>Ae>d B>GA>F|1 G2 G>F G2 e>d:|2 G2 G>F G2 e>f||
-|:(3gag e>g (3fgf d>f|(3efe c>e (3ded B>d|c>BA>G F>GA>B|(3Bcd e>d ^c>de>f|
-g>ea>g f>dg>f|e>df>e d>fe>d|c>BA>G (3EFG A>B|1 (3c^cd e>f g2 d2:|2 (3c^cd e>f g2||
+e>d|:"G"(3BdB G>A B>de>f|(3gag f>g e>dB>A|"D"F>Ad>A F>Ad>A|F>Ad>B "D7"A2 e>d|
+"G"(3BdB G>A (3Bcd e>f|(3gag f>g e>dB>A|"D"F>Ae>d B>GA>F|1 "G"G2 "D"G>F "G"G2 e>d:|2 "G"G2 "D"G>F "G"G2 e>f||
+|:"Em"(3gag e>g "D"(3fgf d>f|"C"(3efe c>e "G"(3ded B>d|"C"c>BA>G F>GA>B|""(3Bcd e>d "D7"^c>de>f|
+"G"g>ea>g "D"f>dg>f|"C"e>df>e "G (Bm7)"d>fe>d|"C"c>BA>G (3EFG A>B|1 "D7"(3c^cd e>f "G"g2 d2:|2 "D7"(3c^cd e>f "G"g2||
 
 X: 12
 T: HORNPIPE: Galtee Hunt
@@ -2986,9 +2986,9 @@ M: 12/8
 L: 1/8
 Q: 3/8=130
 K: Dmaj
-A|:"D"d2 ef2 e dcd "D/B"~B3|"A5/E"g2 A cBA "A5"e2 A "A"cBA|
-"D"d2 ef2 e dcd "D/B"~B3|"A5/E"g2 A cBA "D"d3 "A"d2 A:||
-|:"D"d2 ef2 a "D"baf "A"a2 f|"A5/E"e2 A cBA "A5"efe "A"cBA|
+A|:"D"d2 ef2 e dcd "D/B"~B3|"G"g2 A cBA "A"e2 A cBA|
+"D"d2 ef2 e dcd "D/B"~B3|"G"g2 A cBA "D"d3 "A"d2 A:||
+|:"D"d2 ef2 a "D"baf "A"a2 f|"A/E"e2 A cBA "A"efe cBA|
 "D"d2 ef2 a "D/F#"baf a2 f|"A"e2 A cBA "D"d3 d2 A:||
 
 X: 178
@@ -3104,8 +3104,8 @@ M: 12/8
 L: 1/8
 Q: 3/8=116
 K: Gmaj
-|:"G"B2B "G/C"A2"G"G BdB "G/C"AG"G"A|B2e "G/C"d2B "D"A3 AGA|
-"G"B3 "G/C"AG"G"A Bd"G/C"B A"G"GA|"G/C"B2e "D"d2B "G"G3 G3:||
+|:"G"B2B "G/C"A2G BdB AG"G"A|B2e "G/C"d2B "D"A3 AGA|
+"G"B3 "G/C"AGA Bd"G/C"B A"G"GA|"G/C"B2e "D"d2B "G"G3 G3:||
 |:"C"e2e edB def g3|"Em"BAB "G"d2B "D"A3 ABd|
 "C"e3 edB e2f g3|"D"BAB d2B "(G)"G3 G3:||
 
@@ -3207,7 +3207,7 @@ L: 1/8
 Q: 3/8=130
 K: Edor
 |:"Em"B2E EDE B2A "D"F2A|"Em"B2E EDE "D"D2E F2A|
-"Em"B2E EDE B2A "D"F2A|"Em (Bm)"B2A "D"d2F "Em"E3 E3:||
+"Em"B2E EDE B2A "D"F2A|"Bm"B2A "D"d2F "Em"E3 E3:||
 |:"G (Em)"B2A B2c "D"d2d dcB|"D/B"ABA A2d "A"e3 e2d|
 "Em (G)"B2 A B2c "D"dfe dcB|"Bm"A2F D2F "A"E3 E3:||
 

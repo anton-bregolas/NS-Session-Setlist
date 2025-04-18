@@ -15,18 +15,164 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.4: UI/UX Upgrade (Session DB Update)
+NS Session Setlist v.0.9.5: UI/UX Upgrade (Tunebook Mobile Mode Fixed)
+
++ Project updates:
+  - Tunebook: User-selectable Mobile Mode implemented using new ABC Tools no-UI share link parameter
+  - Tunebook: Mobile Mode styles implemented for breakpoints between 860 and 480 (TO DO: 360 and smaller)
+  - Tunebook: Settings option and manual switch between Desktop and Mobile versions added (appears at 860)
+  - Tunebook: Currently uses fixed viewport for mobile devices; fully available for testing in browsers
+  - Tunebook: Mobile design includes enlarged selectors and simplified footer / Full Screen Button controls
+  - Tunebook: Experimental JS-enabled design of selectors under 768 with enlarged header option fonts
+  - Tunebook: Navigation buttons added for Desktop and Mobile for quick switching between Sets or Tunes
+  - Tunebook: New ClaviZouki MIDI option for playback of ABCs with chords (Bouzouki + Clavinet)
+  - Launcher: Persistent Mobile Mode setting added, persistent Compact Mode setting drafted
+  - Icons tweaked
+
++ HTML updates
+  - Main App (index.html):
+    + Select elements are now enveloped in wrappers
+    + Desktop tune navigation buttons added to Tunebook header
+    + Mobile tune navigation buttons added to iframe container
+    + Mode Switcher buttons added to Tunebook footer
+    + More data attributes added for JS & CSS
+    + ClaviZouki option added to displayOptions
+    + "Always open Tunebook in Mobile Mode" checkbox added with default state unchecked
+    + "Always open Tunebook in Compact Mode" checkbox drafted with default state unchecked
+
++ CSS updates:
+  - App Styles (nss-styles.css):
+    + Mobile Mode Styles implemented with multiple breakpoints
+    + Breakpoints 860, 768, 668 and 480 added (360 pending)
+    + Mobile Switch button and large transparent selectors kick in at 860
+    + Compact selectors kick in at 768, html scale and footer are reduced at 480
+    + `body[data-mode="mobile"]` styles added
+    + Tunebook `h1` content swap reworked
+    + `h1` swap for mobile version implemented via `attr(data-type)`
+    + fullScreenButton reworked, now has mobile version with an eye
+    + fullScreenButton radio controls now have mobile version 
+    + Select elements reworked with responsive wrappers
+    + Tunebook selectors now change depending on viewport
+    + Gradient border for selectors with transparent background implemented via `mask` on pseudo-element (tablet viewports)
+    + Gradient border for selectors with filled white background implemented via background-image on pseudo-element (desktop and smaller mobile viewports)
+    + Tunebook Mode control buttons added (viewports <= 860)
+    + Arrow navigation buttons added
+  
++ JavaScript updates
+  - App Launcher module (scripts-ns-sessions.js)
+    + initTunebookMode*: Initializes current Tunebook Mode via localStorage variable tuneBookAlwaysUseMobileMode
+    + isManualTunebookModeOn, isMobileTunebookModeOn, doesTuneBookNeedResize global variables added (all false by default)
+    + checkIfMobileMode*: Return up-to-date isMobileTunebookModeOn value
+    + switchTunebookMode*: Sets data-mode attribute on the body and isMobileTunebookModeOn flag depending on the switcher pressed
+    + switchTuneBookItem*: Navigates between Tunebook items, loops back to first or last Set or Tune
+    + appButtonHandler: Mode Togglers (data-controls) and Tune Switchers (nss-arrow-btn) button types added
+    + appDropDownHandler now accounts for event type and dispatches events for selector label updating
+    + initAppCheckboxes now handles Always Use Mobile Mode checkbox behavior
+    + updateTuneBookTitles now sets data-type attribute for CSS controls, redundant data-title change removed 
+    + refreshTuneBook updated with isSoftRefresh flag and check (for cases where only item reload is needed)
+    + handleSelectorLabels imported, calls added to account for Mobile Mode changes to Tunebook selectors
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + handleFullScreenButton*: Now handles fullScreenButton clicks
+    + handleResizeWindow*: Handler function for changing window size added
+    + handleSelectorLabels*: Experimental handler function for changing appearance of Tunebook Selector Headers
+    + handleSelectorLabels: Adds or removes label attribute for Header option
+    + handleSelectorLabels: Resizes Selector font depending on Header / item selected
+    + handleSelectorLabels: init, resize and select actionTypes handled
+    + removeMobileSelectorStyles, setMobileSelectorStyles helper functions added
+    + loadTuneBookItem: Now handles &noui links in Mobile Mode
+    + loadTabsMidiOptions: ClaviZouki option added with Bouzouki + Clavinet MIDI patch
+    + injectInstrument: ClaviZouki settings added
+    + injectInstrument: %abcjs_soundfont replaced with %soundfont in line with the latest ABC Tools specs
+    + tuneBookAlwaysUseMobileMode and tuneBookAlwaysUseCompactMode localStorage variables added to Tunebook settings
 
 + Session DB updates:
-  - Session DB updated to 2025-04-15
-  - Chords from Oleg added to 6 sets (& Anton ed. arr.)
+  - Session DB updated to 2025-04-18
+  - Chords for Callaghan's HP Set added
   - Minor tweaks in chords & ABCs
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
 
 <details>
-<summary>v.0.9.4: UI/UX Upgrade (Session DB Update)</summary>
+<summary>v.0.9.5: UI/UX Upgrade (Tunebook Mobile Mode Fixed)</summary>
+
++ Project updates:
+  - Tunebook: User-selectable Mobile Mode implemented using new ABC Tools no-UI share link parameter
+  - Tunebook: Mobile Mode styles implemented for breakpoints between 860 and 480 (TO DO: 360 and smaller)
+  - Tunebook: Settings option and manual switch between Desktop and Mobile versions added (appears at 860)
+  - Tunebook: Currently uses fixed viewport for mobile devices; fully available for testing in browsers
+  - Tunebook: Mobile design includes enlarged selectors and simplified footer / Full Screen Button controls
+  - Tunebook: Experimental JS-enabled design of selectors under 768 with enlarged header option fonts
+  - Tunebook: Navigation buttons added for Desktop and Mobile for quick switching between Sets or Tunes
+  - Tunebook: New ClaviZouki MIDI option for playback of ABCs with chords (Bouzouki + Clavinet)
+  - Launcher: Persistent Mobile Mode setting added, persistent Compact Mode setting drafted
+  - Icons tweaked
+
++ HTML updates
+  - Main App (index.html):
+    + Select elements are now enveloped in wrappers
+    + Desktop tune navigation buttons added to Tunebook header
+    + Mobile tune navigation buttons added to iframe container
+    + Mode Switcher buttons added to Tunebook footer
+    + More data attributes added for JS & CSS
+    + ClaviZouki option added to displayOptions
+    + "Always open Tunebook in Mobile Mode" checkbox added with default state unchecked
+    + "Always open Tunebook in Compact Mode" checkbox drafted with default state unchecked
+
++ CSS updates:
+  - App Styles (nss-styles.css):
+    + Mobile Mode Styles implemented with multiple breakpoints
+    + Breakpoints 860, 768, 668 and 480 added (360 pending)
+    + Mobile Switch button and large transparent selectors kick in at 860
+    + Compact selectors kick in at 768, html scale and footer are reduced at 480
+    + `body[data-mode="mobile"]` styles added
+    + Tunebook `h1` content swap reworked
+    + `h1` swap for mobile version implemented via `attr(data-type)`
+    + fullScreenButton reworked, now has mobile version with an eye
+    + fullScreenButton radio controls now have mobile version 
+    + Select elements reworked with responsive wrappers
+    + Tunebook selectors now change depending on viewport
+    + Gradient border for selectors with transparent background implemented via `mask` on pseudo-element (tablet viewports)
+    + Gradient border for selectors with filled white background implemented via background-image on pseudo-element (desktop and smaller mobile viewports)
+    + Tunebook Mode control buttons added (viewports <= 860)
+    + Arrow navigation buttons added
+  
++ JavaScript updates
+  - App Launcher module (scripts-ns-sessions.js)
+    + initTunebookMode*: Initializes current Tunebook Mode via localStorage variable tuneBookAlwaysUseMobileMode
+    + isManualTunebookModeOn, isMobileTunebookModeOn, doesTuneBookNeedResize global variables added (all false by default)
+    + checkIfMobileMode*: Return up-to-date isMobileTunebookModeOn value
+    + switchTunebookMode*: Sets data-mode attribute on the body and isMobileTunebookModeOn flag depending on the switcher pressed
+    + switchTuneBookItem*: Navigates between Tunebook items, loops back to first or last Set or Tune
+    + appButtonHandler: Mode Togglers (data-controls) and Tune Switchers (nss-arrow-btn) button types added
+    + appDropDownHandler now accounts for event type and dispatches events for selector label updating
+    + initAppCheckboxes now handles Always Use Mobile Mode checkbox behavior
+    + updateTuneBookTitles now sets data-type attribute for CSS controls, redundant data-title change removed 
+    + refreshTuneBook updated with isSoftRefresh flag and check (for cases where only item reload is needed)
+    + handleSelectorLabels imported, calls added to account for Mobile Mode changes to Tunebook selectors
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + handleFullScreenButton*: Now handles fullScreenButton clicks
+    + handleResizeWindow*: Handler function for changing window size added
+    + handleSelectorLabels*: Experimental handler function for changing appearance of Tunebook Selector Headers
+    + handleSelectorLabels: Adds or removes label attribute for Header option
+    + handleSelectorLabels: Resizes Selector font depending on Header / item selected
+    + handleSelectorLabels: init, resize and select actionTypes handled
+    + removeMobileSelectorStyles, setMobileSelectorStyles helper functions added
+    + loadTuneBookItem: Now handles &noui links in Mobile Mode
+    + loadTabsMidiOptions: ClaviZouki option added with Bouzouki + Clavinet MIDI patch
+    + injectInstrument: ClaviZouki settings added
+    + injectInstrument: %abcjs_soundfont replaced with %soundfont in line with the latest ABC Tools specs
+    + tuneBookAlwaysUseMobileMode and tuneBookAlwaysUseCompactMode localStorage variables added to Tunebook settings
+
++ Session DB updates:
+  - Session DB updated to 2025-04-18
+  - Chords for Callaghan's HP Set added
+  - Minor tweaks in chords & ABCs
+</details>
+
+<details>
+<details>
+<summary>v.0.9.4: Session DB Update</summary>
 
 + Session DB updates:
   - Session DB updated to 2025-04-15

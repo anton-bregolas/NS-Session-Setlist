@@ -1,5 +1,5 @@
 import { initAbcTools, initTunebookOptions, abcTunebookDefaults, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
-         populateTuneSelector, populateFilterOptions, sortFilterOptions, resetViewportWidth } from './scripts-abc-tools.js';
+         populateTuneSelector, populateFilterOptions, sortFilterOptions, resetViewportWidth, handleSelectorLabels } from './scripts-abc-tools.js';
 import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 
@@ -14,16 +14,18 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: 2025-04-10
+// NS Session DB date: 2025-04-18
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const APP_VERSION = "0.9.2";
+const APP_VERSION = "0.9.5";
 
 // Define Global Variables
 
 let tuneBookSetting = 1; // Tunebook loads Setlist by default
 let tuneBookInitialized = false; // Opening Tunebook will initialise ABC Tools and fetch Session DB data by default
-let isManualTunebookModeOn = false; // Hide switch buttons and use manual selection of Tunebook Type on Launch Screen
+let isManualTunebookModeOn = false; // Hide footer and switch buttons, use manual selection of Tunebook Type on Launch Screen
+let isMobileTunebookModeOn = false; // Simplified Tunebook look with larger buttons, fewer controls and view-only tunes
+let doesTuneBookNeedResize = false; // Keep track of changes that require an iframe resize on next Tunebook opening 
 let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
 
 // Define Session DB items
@@ -71,8 +73,12 @@ async function launchTuneBook(dataType, triggerBtn) {
   tuneBookSetting = dataType === "setlist"? 1 : 2;
 
   if (await tuneDataFetch() > 0) {
+
+    // if (!isMobileTunebookModeOn) {
     
-    resetViewportWidth(860);
+      resetViewportWidth(860);
+    // }
+
     hideLaunchers();
     initTunebookRadioBtns();
     updateTuneBookTitles(dataType);
@@ -93,6 +99,15 @@ async function launchTuneBook(dataType, triggerBtn) {
 
       document.querySelector(`#nss-tunebook-${dataType}-switch`).focus();
     }
+
+    if (doesTuneBookNeedResize && isMobileTunebookModeOn) {
+
+      resizeIframe();
+
+      doesTuneBookNeedResize === false;
+    }
+
+    handleSelectorLabels("init");
 
     if (tuneBookInitialized === false) {
 
@@ -187,6 +202,31 @@ function switchTuneBookType(dataType) {
   document.querySelector('#nss-launch-setlist').focus();
 }
 
+// Load previous or next Tunebook item depending on data-load type
+
+function switchTuneBookItem(loadDir) {
+
+  const currentTuneBook = checkTuneBookSetting() === 1? tuneSets : tuneList;
+
+  const currentTuneIndex = tuneSelector.selectedIndex;
+
+  let targetTuneIndex = 
+    loadDir === "prev"? currentTuneIndex - 1 : currentTuneIndex + 1;
+
+  if (targetTuneIndex > currentTuneBook.length) {
+
+    targetTuneIndex = 1;
+
+  } else if (targetTuneIndex < 1) {
+
+    targetTuneIndex = currentTuneBook.length;
+  }
+
+  tuneSelector.selectedIndex = targetTuneIndex;
+  
+  tuneSelector.dispatchEvent(new Event('change'));
+}
+
 // Hide Launch Screen elements
 
 function hideLaunchers() {
@@ -241,6 +281,34 @@ function hideAllSectionsEls() {
 
     ariaHideMe(playAlongEl);
   });
+}
+
+// Switch Tunebook between the default Desktop and Mobile Mode optimized for smaller screens
+
+function switchTunebookMode(targetMode) {
+
+  const docBody = document.querySelector('body');
+
+  if (targetMode === "mobile-switch") {
+
+    docBody.setAttribute("data-mode", "mobile");
+
+    isMobileTunebookModeOn = true;
+
+    // resetViewportWidth();
+  }
+
+  if (targetMode === "desktop-switch") {
+
+    docBody.removeAttribute("data-mode");
+
+    isMobileTunebookModeOn = false;
+
+    // resetViewportWidth(860);
+  }
+
+  refreshTuneBook(true);
+  handleSelectorLabels("init");
 }
 
 ////////////////////////////////
@@ -325,19 +393,29 @@ export function checkTuneBookSetting() {
   return tuneBookSetting;
 }
 
+// Return up-to-date isMobileTunebookModeOn value (for use in external modules)
+
+export function checkIfMobileMode() {
+
+  return isMobileTunebookModeOn;
+}
+
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
 
-export function refreshTuneBook() {
+export function refreshTuneBook(isSoftRefresh) {
 
   const currentTuneBook = checkTuneBookSetting() === 1? tuneSets : tuneList;
 
-  resetTuneBookMenus();
-  resetTuneBookFilters();
+  if (!isSoftRefresh) {
 
-  populateTuneSelector(currentTuneBook);
-  populateFilterOptions(sortFilterOptions(currentTuneBook));
+    resetTuneBookMenus();
+    resetTuneBookFilters();
 
-  console.log(`NS Session App:\n\nTunebook has been refreshed`);
+    populateTuneSelector(currentTuneBook);
+    populateFilterOptions(sortFilterOptions(currentTuneBook));
+
+    console.log(`NS Session App:\n\nTunebook has been refreshed`);
+  }
 
   if (+localStorage?.abcToolsSaveAndRestoreTunes === 1
       && ((currentTuneBook === tuneSets && localStorage?.lastTuneBookSet_NSSSAPP)
@@ -375,6 +453,9 @@ export function resetTuneBookMenus() {
   tuneSelector.selectedIndex = 0;
   filterOptions.selectedIndex = 0;
   filterOptions.value = "-1";
+
+  tuneSelector.dispatchEvent(new Event('change'));
+  filterOptions.dispatchEvent(new Event('change'));
 }
 
 // Clear the effects of all custom Tunebook filter options
@@ -404,10 +485,6 @@ function updateTuneBookTitles(dataType) {
     return;
   }
 
-  tuneBookTitle.textContent =
-  dataType === "setlist"? "Novi Sad Session Setlist" : 
-  dataType === "tunelist"? "Novi Sad Session Tunelist" : "";
-
   if (dataType === "setlist" || dataType === "tunelist") {
 
     tuneSelectorTitle.textContent = 
@@ -415,7 +492,8 @@ function updateTuneBookTitles(dataType) {
     "\u{1F3BC} Select a SET";
   }
 
-  tuneBookTitle.dataset.title = dataType;
+  tuneBookTitle.dataset.type = dataType === "setlist"? "Set" : "Tune";
+  tuneBookTitle.setAttribute("aria-title", `Novi Sad Session ${tuneBookTitle.dataset.type}list`);
 }
 
 ////////////////////////////////
@@ -593,6 +671,14 @@ async function appButtonHandler() {
 
   const parentEl = this.parentElement;
 
+  // Mode Togglers: Switch between Desktop and Mobile Tunebook mode
+
+  if (this.hasAttribute('data-controls') && this.dataset.type) {
+
+    switchTunebookMode(this.dataset.type);
+    return;
+  }
+
   // Launch Buttons: Run section Launcher depending on data type
 
   if (this.classList.contains('nss-btn-launch')) {
@@ -625,6 +711,15 @@ async function appButtonHandler() {
 
       window.location.href = 'index.html';
 
+      return;
+    }
+
+    // Tune switchers
+
+    if (this.classList.contains('nss-arrow-btn')) {
+
+      switchTuneBookItem(this.dataset.load);
+      
       return;
     }
 
@@ -722,9 +817,11 @@ async function appButtonHandler() {
 
 // Handle custom dropdown menu events
 
-async function appDropDownHandler() {
+async function appDropDownHandler(event) {
 
-  if (this === filterOptions) {
+  if (event.type === 'change' && this === filterOptions) {
+
+    handleSelectorLabels("select", filterOptions.id, filterOptions.selectedIndex);
 
     const filterId = filterOptions.value;
 
@@ -738,9 +835,14 @@ async function appDropDownHandler() {
     if (filterId === "0") {
 
       resetTuneBookFilters();
+
       tuneSelector.selectedIndex = 0;
 
       filterOptions.value = "-1";
+
+      tuneSelector.dispatchEvent(new Event('change'));
+      
+      filterOptions.dispatchEvent(new Event('change'));
   
       console.log("NS Session App:\n\nTunebook filters cleared");
 
@@ -807,12 +909,23 @@ async function appDropDownHandler() {
 
     tuneSelector.selectedIndex = 0;
 
+    tuneSelector.dispatchEvent(new Event('change'));
+
     tuneSelector.focus();
 
     console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
 
     displayNotification(`Tunebook filtered by "${filterId}"`, "status")
   }
+
+  // if (event.type === 'click') {
+
+  //   handleSelectorLabels("select", this.id, 1);
+  // }
+
+  // if (event.type === 'blur') {
+
+  // }
 }
 
 ////////////////////////////////
@@ -875,6 +988,12 @@ function initAppButtons() {
 export function initCustomDropDownMenus() {
 
   filterOptions.addEventListener('change', appDropDownHandler);
+
+  // [filterOptions, tuneSelector, displayOptions].forEach(selector => {
+
+  //   selector.addEventListener('click', appDropDownHandler);
+  //   selector.addEventListener('blur', appDropDownHandler);
+  // });
 }
 
 // Initialize App & Encoder Settings checkboxes on page load
@@ -903,6 +1022,29 @@ export function initAppCheckboxes() {
         localStorage[checkBox.dataset.option] = 1;
       } 
     });
+
+    if (checkBox.id === 'tunebook-use-mobile-mode') {
+
+      checkBox.addEventListener('click', () => {
+
+        const docBody = document.querySelector('body');
+
+        if (checkBox.checked) {
+
+          docBody.setAttribute("data-mode", "mobile");
+
+          isMobileTunebookModeOn = true;
+          
+        } else {
+      
+          docBody.removeAttribute("data-mode");
+      
+          isMobileTunebookModeOn = false;
+        }
+
+        doesTuneBookNeedResize = true;
+      });
+    }
   });
 }
 
@@ -930,6 +1072,18 @@ function initTunebookRadioBtns() {
   });
 }
 
+// Initialize Tunebook Mobile Mode settings
+
+function initTunebookMode() {
+
+  if (+localStorage?.tuneBookAlwaysUseMobileMode === 1) {
+
+    isMobileTunebookModeOn = true;
+
+    document.querySelector('body').setAttribute("data-mode", "mobile");
+  }
+}
+
 // Initialize popover polyfill warning if the browser doesn't support Popover API
 
 function initPopoverWarning() {
@@ -951,6 +1105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTunebookOptions();
   initEncoderSettings();
   initAppCheckboxes();
+  initTunebookMode();
   initChordViewer();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);

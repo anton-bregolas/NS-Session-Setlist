@@ -15,9 +15,19 @@
     "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tD\t|\tG\tG\tG\t|\tC\tC\tD\t|\n|\tG\tG\tG\t|\tG\tG\tD/F#\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t||"
   },
   {
+    "title": "HORNPIPE: Callaghan's High",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tC\tD\t|\tG\t(D)\t|\t(G)\tEm\t|\tC\tD\t|\n|\tEm (D)\t(C) (C)\t|\tC\t(D)\t|\tG\tD\t|\tC D\tG G\t|\n|\tEm\tEm\t|\tC\tC\t|\tG\tG\t|\tC\tD\t|\n|\tEm (D)\t(C) (C)\t|\tC\t(D)\t|\tG\tD\t|\tC D\tG G\t||\n\nPART 2:\n|\tD\tD\t|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\n|\tD\tC\t|\tD\tC\t|\tC\tC\t|\tD\tEm\t|\n|\tD\tD\t|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\n|\tD\tC\t|\tD\tC\t|\t(Em) (D)\t(C) (C)\t|\tD\tC\t||"
+  },
+  {
     "title": "HORNPIPE: Chief O'Neill's Favourite",
     "meter": "4/4",
     "chords": "PART 1:\n|\tD\tD\t|\tD\tG\t|\tD\tD\t|\tC\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD\tG\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tF\tF\t|\tC\tC\t|\tD\tD\t|\tA\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD\tG\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
+    "title": "HORNPIPE: Frisco",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|\tD\tD7\t|\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|1\tG D\tG G\t|\n|2\tG D\tG G\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tG\t|\tC\tC\t|\tD7\tD7\t|\n|\tG\tD\t|\tC\tG(Bm7)\t|\tC\tC\t|1\tD7\tG\t|\n|2\tD7\tG\t||"
   },
   {
     "title": "HORNPIPE: Galtee Hunt",
@@ -452,7 +462,7 @@
   {
     "title": "SLIDE: Cat's Rambles to the Child's Saucepan",
     "meter": "12/8",
-    "chords": "PART 1:\n|\tD\tD/B\t|\tA5/E A5/E\tA5 A\t|\tD\tD/B\t|\tA5/E A5/E\tD A\t||\n\nPART 2:\n|\tD D\tD A\t|\tA5/E A5/E\tA5 A\t|\tD\tD/F#\t|\tA\tD\t||"
+    "chords": "PART 1:\n|\tD\tD/B\t|\tG\tA\t|\tD\tD/B\t|\tG G\tD A\t||\n\nPART 2:\n|\tD D\tD A\t|\tA/E\tA\t|\tD\tD/F#\t|\tA\tD\t||"
   },
   {
     "title": "SLIDE: Dan O'Keeffe's",
@@ -477,7 +487,7 @@
   {
     "title": "SLIDE: Hare in the Corn (Gmaj)",
     "meter": "12/8",
-    "chords": "PART 1:\n|\tG G/C\tG G/C\tG |\tG/C\tD\t|\tG G/C\tG G/C\tG |\tG/C D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tEm G\tD D\t|\tC\tC\t|\tD\t(G)\t||"
+    "chords": "PART 1:\n|\tG G/C\tG/C G\t|\tG/C\tD\t|\tG G/C\tG/C G\t|\tG/C D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tEm G\tD D\t|\tC\tC\t|\tD\t(G)\t||"
   },
   {
     "title": "SLIDE: Kings of Kerry",
@@ -502,7 +512,7 @@
   {
     "title": "SLIDE: Seán Dan Neil",
     "meter": "12/8",
-    "chords": "PART 1:\n|\tEm\tD\t|\tEm\tD\t|\tEm\tD\t|\tEm(Bm) D\tEm Em\t||\n\nPART 2:\n|\tG(Em)\tD\t|\tD/B\tA\t|\tEm(G)\tD\t|\tBm\tA\t||"
+    "chords": "PART 1:\n|\tEm\tD\t|\tEm\tD\t|\tEm\tD\t|\tBm D\tEm Em\t||\n\nPART 2:\n|\tG(Em)\tD\t|\tD/B\tA\t|\tEm(G)\tD\t|\tBm\tA\t||"
   },
   {
     "title": "SLIDE: This Is My Love, Do You Like Her?",

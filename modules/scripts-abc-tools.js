@@ -6,7 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB
-import { initSettingsFromObject, checkTuneBookSetting, tuneSets, tuneList, filterOptions, initCustomDropDownMenus, openSettingsMenu } from "./scripts-ns-sessions.js";
+import { initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
+        filterOptions, initCustomDropDownMenus, openSettingsMenu } from "./scripts-ns-sessions.js";
 // Import lz-string compression algorithm
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
@@ -22,6 +23,8 @@ export const abcTunebookDefaults = {
     abcToolsFullScreenBtnShowsChords: "1",
     abcToolsAllowTuneAutoReload: "1",
     abcToolsAlwaysMuteChords: "0",
+    tuneBookAlwaysUseMobileMode: "0",
+    tuneBookAlwaysUseCompactMode: "0",
     tuneBookShowStatusReport: "0",
     chordViewerAllowDynamicChords: "0"
 };
@@ -39,7 +42,7 @@ let tabStyle = "noten";
 let isBanjo = false;
 let isFlute = false;
 let isDulcimer = false;
-
+let isClaviZouki = false;
 let isUPipes = false;
 let isMelodeon = false;
 let isSolfege = false;
@@ -53,7 +56,7 @@ let lastURL = "";
 
 export const tuneFrame = document.querySelector('#tuneFrame');
 export const tuneSelector = document.querySelector('#tuneSelector');
-export const displayOptions = document.getElementById('displayOptions');
+export const displayOptions = document.querySelector('#displayOptions');
 
 /////////////////////////////////////////////////////////////////////////////
 // ABC Tunebook Website: Refactored Scripts
@@ -82,21 +85,7 @@ export function initAbcTools() {
 
     const fullScreenButton = document.getElementById('fullScreenButton');
 
-    fullScreenButton.addEventListener('click', function() {
-
-        const fullScreenSetting = +document.querySelector('input[name="nss-radio-view"]:checked').value;
-
-        if (fullScreenSetting === 0 && lastURL != "") {
-
-            window.open(lastURL, '_blank');
-            return;
-        }
-
-        if (fullScreenSetting === 1) {
-
-            openSettingsMenu(this.dataset.load);
-        }
-    });
+    fullScreenButton.addEventListener('click', handleFullScreenButton);
     
     // Populate the selector with options from JSON
 
@@ -123,7 +112,7 @@ export function initAbcTools() {
     displayOptions.addEventListener('change', loadTabsMidiOptions);
 
     // Resize the iframe on window resize
-    window.addEventListener('resize', resizeIframe);
+    window.addEventListener('resize', handleResizeWindow);
 
     // Initial call to ensure it fits when the page loads
     resizeIframe();
@@ -159,17 +148,24 @@ export function initAbcTools() {
 
 export function loadTuneBookItem(currentTuneBook, itemNumber) {
 
+    handleSelectorLabels("select", tuneSelector.id, tuneSelector.selectedIndex);
+
     let theURL = itemNumber >= 0? currentTuneBook[itemNumber].url : tuneSelector.value;
 
     if (theURL == "") return;
 
+    if (checkIfMobileMode() === true) {
+
+        theURL = theURL.replace("&name=", "&noui&name=");
+    }
+
     if (+localStorage?.abcToolsAllowTabStyleChanges === 1) {
 
-        theURL = theURL.replace(/&format=([^&]+)/g,"&format="+tabStyle);
+        theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format="+tabStyle);
 
     } else {
 
-        theURL = theURL.replace(/&format=([^&]+)/g,"&format=noten");
+        theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format=noten");
     }
 
     if (+localStorage?.abcToolsAllowInstrumentChanges === 1) {
@@ -303,6 +299,8 @@ export function sortFilterOptions(currentTuneBook) {
 
 function loadTabsMidiOptions() {
 
+    handleSelectorLabels("select", displayOptions.id, displayOptions.selectedIndex);
+
     // Set tabStyle setting depending on displayOptions value
 
     if (displayOptions.value === "-1" && !isFirstTuneBookLoad) {
@@ -315,6 +313,7 @@ function loadTabsMidiOptions() {
         isBanjo = false;
         isFlute = false;
         isDulcimer = false;
+        isClaviZouki = false;
         isUPipes = false;
         isMelodeon = false;
         isSolfege = false;
@@ -366,6 +365,9 @@ function loadTabsMidiOptions() {
             case "13": // Piano voice only
                     isPianoForced = true;
             // falls through
+            case "14": // Bouzouki backed by Clavinet
+                    isClaviZouki = true;
+            // falls through
             default: // Standard notation
                     tabStyle = "noten";
                     break;
@@ -409,17 +411,17 @@ function injectInstrument(theURL) {
 
     let abcContent = LZString.decompressFromEncodedURIComponent(encodedAbcContent);
 
-    let injectMidiString = `%abcjs_soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 55\n%%MIDI chordvol 40`;
+    let injectMidiString = `%soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 55\n%%MIDI chordvol 40`;
 
     // Inject a template MIDI string into the ABC if no MIDI instructions found
 
-    if (!abcContent.includes("%abcjs_soundfont")) {
+    if (!abcContent.includes("%soundfont")) {
 
         abcContent = abcContent.replace(`K:`, `${injectMidiString}\nK:`);
 
     } else {
 
-        abcContent.replace(/(%abcjs_soundfont)[\s\S]*?(K:)/gm, `${injectMidiString}\nK:`);
+        abcContent.replace(/(%soundfont)[\s\S]*?(K:)/gm, `${injectMidiString}\nK:`);
     }
     
     // Update the decompressed ABC with the new MIDI settings
@@ -457,7 +459,12 @@ function injectInstrument(theURL) {
             break;
         case "noten":
             if (isDulcimer) {
-                abcContent = abcContent.replace("%%MIDI program 0","%%MIDI program 15").replace("%%MIDI bassvol 55","%%MIDI bassvol 40").replace("%%MIDI chordvol 40","%%MIDI chordvol 30");
+                abcContent = abcContent.replace("%%MIDI program 0","%%MIDI program 15").
+                                        replace("%%MIDI bassvol 55","%%MIDI bassvol 40").replace("%%MIDI chordvol 40","%%MIDI chordvol 30");
+            }
+            else if (isClaviZouki) {
+                abcContent = abcContent.replace("%%MIDI program 0","%%MIDI program 139").replace("%%MIDI bassprog 0", "%%MIDI bassprog 7").
+                                        replace("%%MIDI chordprog 0", "%%MIDI chordprog 7").replace("%%MIDI chordvol 40","%%MIDI chordvol 25");
             }
             else if (isUPipes) {
                 abcContent = abcContent.replace("%%MIDI program 0","%%MIDI program 129");
@@ -505,6 +512,7 @@ function refreshTabsDisplayOptions() {
 
     displayOptions.selectedIndex = 0;
     displayOptions.value = "-1";
+    handleSelectorLabels("select", displayOptions.id, 0);
 }
 
 ////////////////////////////////
@@ -690,8 +698,169 @@ export function resetViewportWidth(fixedWidthPx) {
 
         viewPortMeta.setAttribute("content", `width=${fixedWidthPx}`);
 
-    } else {
+    } else if (viewPortMeta.getAttribute("content") !== "width=device-width, initial-scale=1.0") {
 
         viewPortMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
     }
+}
+
+////////////////////////////////
+// HANDLER FUNCTIONS
+///////////////////////////////
+
+// Handle full screen action depending on user-defined settings
+
+function handleFullScreenButton() {
+
+    const fullScreenSetting = +document.querySelector('input[name="nss-radio-view"]:checked').value;
+
+    // Open ABC Tools in new window
+
+    if (fullScreenSetting === 0 && lastURL != "") {
+
+        window.open(lastURL, '_blank');
+        return;
+    }
+
+    // Open Chord Viewer
+
+    if (fullScreenSetting === 1) {
+
+        openSettingsMenu(this.dataset.load);
+        return;
+    }
+}
+
+// Handle window resize action depending on the current Tunebook mode
+
+function handleResizeWindow() {
+
+    // Readjust ABC Tools embed size
+
+    resizeIframe();
+
+    // Change Tunebook selector labels
+
+    handleSelectorLabels("resize");
+}
+
+// Handle automatic renaming of Tunebook selector labels in Mobile Mode
+
+export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex) {
+
+    const body = document.querySelector('body');
+
+    if (!body.hasAttribute('data-mode') && actionType !== "init") return;
+
+    const filterHeader = filterOptions.options[0];
+    const tunesHeader = tuneSelector.options[0];
+    const tabsHeader = displayOptions.options[0];
+
+    const tuneBookSelectors = ['#filterOptions', '#tuneSelector', '#displayOptions'];
+    const tuneBookSelectorHeaders = [filterHeader, tunesHeader, tabsHeader];
+
+    const newSelectorLabels = ['✨', '🎼', '🎹'];
+
+    if (actionType === "init") {
+
+        if (window.innerWidth > 768 || !body.hasAttribute('data-mode')) {
+            
+            removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
+            
+            return;
+        }
+
+        if (body.hasAttribute('data-mode')) {
+            
+            setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels);
+        }
+    }
+
+    if (actionType === "resize") {
+
+        if (window.innerWidth > 768) {
+
+            removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
+        }
+
+        if (window.innerWidth <= 768) {
+
+            if (filterHeader.hasAttribute('label') && 
+                tunesHeader.hasAttribute('label') && 
+                tabsHeader.hasAttribute('label')) {
+
+                return;
+            }
+
+            setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels);
+        }
+
+        return;
+    }
+
+    if (actionType === "select") {
+
+        const parentSelector = document.getElementById(parentSelectorId);
+
+        if (parentSelector.hasAttribute('style')) {
+
+            if (selectedIndex != 0 || window.innerWidth > 768) {
+
+                parentSelector.removeAttribute('style');
+
+                return
+            } 
+
+            return;
+        }
+
+        if (selectedIndex != 0 || !body.hasAttribute('data-mode') || window.innerWidth > 768) return;
+
+        parentSelector.setAttribute('style', 'font-size: 2.4rem');
+    }
+}
+
+// Set selector attributes associated with the mobile mode
+
+function setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels) {
+
+    tuneBookSelectorHeaders.forEach(header => {
+
+        const newLabel = newSelectorLabels[tuneBookSelectorHeaders.indexOf(header)];
+
+        header.setAttribute('label', newLabel);
+    });
+
+    tuneBookSelectors.forEach(selectorId => {
+
+        const selectorEl = document.querySelector(selectorId);
+
+        if (selectorEl.selectedIndex === 0) {
+
+            selectorEl.setAttribute('style', 'font-size: 2.4rem');
+        }
+    });
+}
+
+// Clear all selector styles and labels previously set via attributes for mobile mode
+
+function removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders) {
+
+    tuneBookSelectors.forEach(selectorId => {
+
+        const selectorEl = document.querySelector(selectorId);
+        
+        if (selectorEl.hasAttribute('style')) {
+            
+            selectorEl.removeAttribute('style');
+        }
+    });
+
+    tuneBookSelectorHeaders.forEach(header => {
+    
+        if (header.hasAttribute('label')) {
+    
+            header.removeAttribute('label');
+        }
+    });
 }
