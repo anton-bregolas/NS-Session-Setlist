@@ -171,7 +171,6 @@ NS Session Setlist v.0.9.5: UI/UX Upgrade (Tunebook Mobile Mode Fixed)
 </details>
 
 <details>
-<details>
 <summary>v.0.9.4: Session DB Update</summary>
 
 + Session DB updates:
