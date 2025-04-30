@@ -1,5 +1,6 @@
-import { initAbcTools, initTunebookOptions, abcTunebookDefaults, resizeIframe, tuneSelector, loadTuneBookItem, restoreLastTunebookItem,
-         populateTuneSelector, populateFilterOptions, sortFilterOptions, resetViewportWidth, handleSelectorLabels } from './scripts-abc-tools.js';
+import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, loadTuneBookItem, 
+         restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, handleSelectorLabels, 
+         resetViewportWidth, getViewportWidth, getViewportHeight, handleFullScreenChange } from './scripts-abc-tools.js';
 import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 
@@ -14,18 +15,16 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: 2025-04-18
+// NS Session DB date: 2025-04-30
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const APP_VERSION = "0.9.5";
+const APP_VERSION = "0.9.6";
 
 // Define Global Variables
 
 let tuneBookSetting = 1; // Tunebook loads Setlist by default
-let tuneBookInitialized = false; // Opening Tunebook will initialise ABC Tools and fetch Session DB data by default
-let isManualTunebookModeOn = false; // Hide footer and switch buttons, use manual selection of Tunebook Type on Launch Screen
-let isMobileTunebookModeOn = false; // Simplified Tunebook look with larger buttons, fewer controls and view-only tunes
-let doesTuneBookNeedResize = false; // Keep track of changes that require an iframe resize on next Tunebook opening 
+let isTuneBookInitialized = false; // If false, opening Tunebook will initialise ABC Tools and fetch Session DB data
+let isManualTunebookModeOn = false; // If true, Tunebook footer and Tunelist / Setlist switch buttons are hidden
 let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
 
 // Define Session DB items
@@ -74,10 +73,10 @@ async function launchTuneBook(dataType, triggerBtn) {
 
   if (await tuneDataFetch() > 0) {
 
-    // if (!isMobileTunebookModeOn) {
-    
-      resetViewportWidth(860);
-    // }
+    if (getViewportWidth() < 870 && !checkIfMobileMode()) {
+
+      resetViewportWidth(1080);
+    }
 
     hideLaunchers();
     initTunebookRadioBtns();
@@ -100,22 +99,15 @@ async function launchTuneBook(dataType, triggerBtn) {
       document.querySelector(`#nss-tunebook-${dataType}-switch`).focus();
     }
 
-    if (doesTuneBookNeedResize && isMobileTunebookModeOn) {
-
-      resizeIframe();
-
-      doesTuneBookNeedResize === false;
-    }
-
     handleSelectorLabels("init");
 
-    if (tuneBookInitialized === false) {
+    if (isTuneBookInitialized === false) {
 
       initAbcTools();
       
       console.log(`NS Session App:\n\nABC Tools initialized`);
 
-      tuneBookInitialized = true;
+      isTuneBookInitialized = true;
 
       if (window.localStorage) {
 
@@ -292,19 +284,19 @@ function switchTunebookMode(targetMode) {
   if (targetMode === "mobile-switch") {
 
     docBody.setAttribute("data-mode", "mobile");
+    
+    displayNotification("Mobile mode enabled: Double tap on tune to play, long press to rewind", "success");
 
-    isMobileTunebookModeOn = true;
-
-    // resetViewportWidth();
+    resetViewportWidth();
   }
 
   if (targetMode === "desktop-switch") {
 
-    docBody.removeAttribute("data-mode");
+    docBody.setAttribute("data-mode", "desktop");
+    
+    displayNotification("Desktop mode enabled: Navigate between items in header, use ABC Tools buttons for playback", "success");
 
-    isMobileTunebookModeOn = false;
-
-    // resetViewportWidth(860);
+    if (getViewportWidth() < 870) resetViewportWidth(1080);
   }
 
   refreshTuneBook(true);
@@ -366,7 +358,7 @@ export function displayNotification(msgText, msgType) {
     notificationTimeoutId = setTimeout(() => {
 
       notificationPopup.hidePopover();
-    }, 3500);
+    }, 5000);
   }
 }
 
@@ -393,11 +385,27 @@ export function checkTuneBookSetting() {
   return tuneBookSetting;
 }
 
-// Return up-to-date isMobileTunebookModeOn value (for use in external modules)
+// Return true if Tunebook menu elements are currently displayed
+
+export function checkIfTunebookOpen() {
+
+  let isTuneBookOpen = false;
+
+  const abcContainer = document.querySelector('.nss-abctools-embed');
+
+  if (abcContainer && !abcContainer.hasAttribute("hidden")) {
+
+    isTuneBookOpen = true;
+  }
+
+  return isTuneBookOpen;
+}
+
+// Return true if app is currently in mobile mode
 
 export function checkIfMobileMode() {
 
-  return isMobileTunebookModeOn;
+  return document.querySelector('body').getAttribute("data-mode") === "mobile";
 }
 
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
@@ -504,7 +512,7 @@ function updateTuneBookTitles(dataType) {
 
 async function tuneDataFetch() {
 
-  if (tuneBookInitialized === false) {
+  if (isTuneBookInitialized === false) {
 
     try {
 
@@ -751,12 +759,13 @@ async function appButtonHandler() {
     }
   }
 
-  // Close Buttons: Hide parent element, show alternative navigation, resize ABC Tools
+  // Close Buttons: Hide parent element, show alternative navigation
 
   if (this.classList.contains('footer-btn-x')) {
 
     const switchContainer = document.querySelector('.nss-switch-container');
     const allSwitchBtns = switchContainer.querySelectorAll('.nss-switch-btn');
+    const abcToolsFrame = document.querySelector('#tuneFrame');
 
     ariaHideMe(parentEl);
 
@@ -773,10 +782,10 @@ async function appButtonHandler() {
       ariaShowMe(switchBtn);
     });
 
-    resizeIframe();
-
     document.querySelector('#nss-tunebook-exit').focus();
     parentEl.setAttribute("inert", "");
+
+    abcToolsFrame.setAttribute("style", "width: 100svw; height: calc(100svh - 7.375rem - 0.25rem);")
 
     displayNotification("Compact mode enabled: Top left button to exit, refresh app to reset", "success");
 
@@ -928,6 +937,93 @@ async function appDropDownHandler(event) {
   // }
 }
 
+// Handle app menu adjustments on window resize
+// Set HTML font size depending on current viewport
+// Adjust viewport and selectors if Tunebook is open
+
+export function appWindowResizeHandler() {
+
+  // Handle global font size adjustments
+
+  const docHtml = document.querySelector('html');
+  const viewPortW = getViewportWidth();
+  const viewPortH = getViewportHeight();
+
+  // Clear font size scaling if device viewport fits
+  // app menu in both landscape and portrait mode
+
+  if (viewPortW >= 1080 && viewPortH > 768) {
+
+    docHtml.removeAttribute("style");
+
+    return;
+  }
+
+  let newFontSize = 100;
+
+  // Calculate font size for tablets and mobile devices in portrait mode
+
+  if (viewPortW < 1080 && viewPortW >= 360) {
+
+    const maxViewPort = 1080;
+    const minViewPort = 360;
+    const maxFontSize = 100;
+    const minFontSize = 70;
+
+    newFontSize = maxFontSize - (maxViewPort - viewPortW) * (maxFontSize - minFontSize) / (maxViewPort - minViewPort);
+  }
+
+  // Calculate font size for mobile devices in landscape mode  
+
+  if (viewPortH <= 768 && viewPortW > 480) {
+
+    const maxViewPort = 768;
+    const minViewPort = 420;
+    const maxFontSize = 85;
+    const minFontSize = 75;
+
+    newFontSize = maxFontSize - (maxViewPort - viewPortH) * (maxFontSize - minFontSize) / (maxViewPort - minViewPort);
+  }
+
+  // Calculate font size for small screen devices in portrait mode
+
+  if (viewPortW < 360) {
+
+    const maxFontSize = 60;
+
+    newFontSize = maxFontSize - (360 - viewPortW) * 0.125;
+  }
+
+  // Set HTML font size in %
+
+  docHtml.setAttribute("style", `font-size: ${newFontSize.toFixed(2)}%`);
+
+  // Handle Tunebook adjustments
+
+  // If Tunebook menu is currently hidden, do nothing
+
+  if (!checkIfTunebookOpen()) return;
+
+  // Change Tunebook selector labels
+
+  handleSelectorLabels("resize");
+
+  // If app is in mobile mode, do not adjust viewport
+
+  if (checkIfMobileMode()) return;
+
+  // If Tunebook is displayed in desktop mode on a narrow screen, switch to fixed viewport
+
+  const viewPortMeta = document.querySelector("meta[name=viewport]");
+  const isFixedViewport = viewPortMeta.getAttribute("content") !== "width=device-width, initial-scale=1.0";
+
+  if (getViewportWidth() < 870 && !isFixedViewport) {
+
+      resetViewportWidth(1080);
+      return;
+  }  
+}
+
 ////////////////////////////////
 // EVENT LISTENERS & SETTINGS
 ///////////////////////////////
@@ -1033,16 +1129,14 @@ export function initAppCheckboxes() {
 
           docBody.setAttribute("data-mode", "mobile");
 
-          isMobileTunebookModeOn = true;
+          displayNotification("Persistent mobile mode enabled", "success");
           
         } else {
       
-          docBody.removeAttribute("data-mode");
-      
-          isMobileTunebookModeOn = false;
-        }
+          docBody.setAttribute("data-mode", "desktop");
 
-        doesTuneBookNeedResize = true;
+          displayNotification("Persistent mobile mode disabled", "success");
+        }
       });
     }
   });
@@ -1076,12 +1170,41 @@ function initTunebookRadioBtns() {
 
 function initTunebookMode() {
 
-  if (+localStorage?.tuneBookAlwaysUseMobileMode === 1) {
-
-    isMobileTunebookModeOn = true;
+  if (getViewportWidth() < 870 || +localStorage?.tuneBookAlwaysUseMobileMode === 1) {
 
     document.querySelector('body').setAttribute("data-mode", "mobile");
+
+  } else {
+
+    document.querySelector('body').setAttribute("data-mode", "desktop");
   }
+}
+
+// Initialize app menus depending on viewport size, add event listeners to window 
+
+function initWindowEvents() {
+
+  appWindowResizeHandler();
+
+  window.addEventListener('resize', appWindowResizeHandler);
+
+  window.addEventListener('beforeunload', () => { resetViewportWidth() });
+}
+
+// Listen to Full Screen mode events in browsers supporting Fullscreen API
+
+function initFullScreenEvents() {
+
+  const docBody = document.querySelector('body');
+
+  if (!docBody.requestFullscreen && 
+      !docBody.webkitRequestFullscreen && 
+      !docBody.msRequestFullscreen) {
+
+    return;
+  }
+
+  document.addEventListener('fullscreenchange', handleFullScreenChange);
 }
 
 // Initialize popover polyfill warning if the browser doesn't support Popover API
@@ -1101,6 +1224,8 @@ function initPopoverWarning() {
 document.addEventListener('DOMContentLoaded', () => {
 
   initPopoverWarning();
+  initWindowEvents();
+  initFullScreenEvents();
   initAppButtons();
   initTunebookOptions();
   initEncoderSettings();

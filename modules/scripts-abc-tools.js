@@ -7,7 +7,7 @@
 
 // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB
 import { initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
-        filterOptions, initCustomDropDownMenus, openSettingsMenu } from "./scripts-ns-sessions.js";
+        filterOptions, initCustomDropDownMenus, openSettingsMenu, checkIfTunebookOpen } from "./scripts-ns-sessions.js";
 // Import lz-string compression algorithm
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
@@ -110,12 +110,6 @@ export function initAbcTools() {
 
     // Initialize the Tabs & MIDI dropdown menu
     displayOptions.addEventListener('change', loadTabsMidiOptions);
-
-    // Resize the iframe on window resize
-    window.addEventListener('resize', handleResizeWindow);
-
-    // Initial call to ensure it fits when the page loads
-    resizeIframe();
     
     // Restore last saved Tunebook options & trigger last saved item load
 
@@ -203,6 +197,7 @@ export function populateTuneSelector(tuneBook) {
         const option = document.createElement('option');
         option.value = tune.url;
         option.textContent = tune.name;
+        option.label = tune.name.split(': ')[1];
         option.dataset.tunetype = tune.type;
         option.dataset.leaders = tune.leaders;
 
@@ -650,43 +645,8 @@ function extractLZWParameter(url) {
 }
 
 ////////////////////////////////
-// RESIZE TOOLS FRAME FUNCTIONS
+// RESIZE VIEWPORT FUNCTIONS
 ///////////////////////////////
-
-// Calculate sizes of Tunebook section elements
-
-function getElementsTotalHeight() {
-
-    const ids = ['nss-tunebook-header', 'nss-tunebook-footer'];
-
-    let totalHeight = 0;
-
-    ids.forEach(id => {
-
-        const element = document.getElementById(id);
-
-        if (element && (element.textContent.trim() !== "")) {
-
-            const elementHeight = element.offsetHeight;
-            const computedStyle = window.getComputedStyle(element);
-
-            // Include margins
-            const marginTop = parseFloat(computedStyle.marginTop);
-            const marginBottom = parseFloat(computedStyle.marginBottom);
-            totalHeight += elementHeight + marginTop + marginBottom + 1;
-        }
-    });
-    return totalHeight + 5;
-}
-
-// Resize the embedded ABC Tools iframe
-
-export function resizeIframe() {
-
-    tuneFrame.style.width = (window.innerWidth-3) + 'px';
-    const otherElementsHeight = getElementsTotalHeight();
-    tuneFrame.style.height = (window.innerHeight-otherElementsHeight) + 'px';
-}
 
 // Set viewport width to a fixed value or reset it to device-width
 
@@ -704,44 +664,134 @@ export function resetViewportWidth(fixedWidthPx) {
     }
 }
 
+// Calculate the current visual viewport height
+// Return innerHeight if browser does not support Visual Viewport API
+
+export function getViewportHeight() {
+
+    if (window.visualViewport) {
+
+        return Math.floor(window.visualViewport.height);
+    }
+
+    return window.innerHeight;
+}
+
+// Calculate the current visual viewport width to account for scrollbars
+// Return innerWidth if browser does not support Visual Viewport API
+
+export function getViewportWidth() {
+
+    if (window.visualViewport) {
+
+        return Math.floor(window.visualViewport.width);
+    }
+
+    return window.innerWidth;
+}
+
 ////////////////////////////////
 // HANDLER FUNCTIONS
 ///////////////////////////////
 
-// Handle full screen action depending on user-defined settings
+// Handle Full Screen Button action depending on app settings
 
-function handleFullScreenButton() {
+async function handleFullScreenButton() {
 
     const fullScreenSetting = +document.querySelector('input[name="nss-radio-view"]:checked').value;
+    
+    // View ABC Tools frame in Full Screen using Fullscreen API
 
-    // Open ABC Tools in new window
+    if (fullScreenSetting === 0) {
 
-    if (fullScreenSetting === 0 && lastURL != "") {
+        const abcToolsContainer = document.querySelector('.nss-abctools-embed');
 
-        window.open(lastURL, '_blank');
-        return;
+        if (abcToolsContainer.requestFullscreen || 
+            abcToolsContainer.webkitRequestFullscreen || 
+            abcToolsContainer.msRequestFullscreen) {
+
+            try {
+
+                if (abcToolsContainer.requestFullscreen) {
+
+                    await abcToolsContainer.requestFullscreen();
+        
+                } else if (abcToolsContainer.webkitRequestFullscreen) {
+        
+                    await abcToolsContainer.webkitRequestFullscreen();
+        
+                } else if (abcToolsContainer.msRequestFullscreen) {
+        
+                    await abcToolsContainer.msRequestFullscreen();
+                }
+
+            } catch {
+
+                console.log(`NS Session App:\n\nFull Screen mode not available. Opening tune in new window...`);
+                
+                openInAbcTools();
+            }
+
+            return;
+
+        // If browser does not support Fullscreen API, open ABC Tools in new window
+
+        } else {
+
+            openInAbcTools();
+            return;
+        }
     }
 
     // Open Chord Viewer
-
+    
     if (fullScreenSetting === 1) {
-
+        
         openSettingsMenu(this.dataset.load);
+        return;
+    }
+
+    // Open ABC Tools in new window
+
+    if (fullScreenSetting === 2) {
+
+        openInAbcTools();
         return;
     }
 }
 
-// Handle window resize action depending on the current Tunebook mode
+// Open last ABC Tools tune link in new window or browser tab
 
-function handleResizeWindow() {
+function openInAbcTools() {
 
-    // Readjust ABC Tools embed size
+    if (lastURL != "") {
 
-    resizeIframe();
+        window.open(lastURL, '_blank');
+    }
+}
 
-    // Change Tunebook selector labels
+// Handle enter and exit Full Screen events
 
-    handleSelectorLabels("resize");
+export function handleFullScreenChange() {
+
+    // Do nothing if Tunebook is not open
+
+    if (!checkIfTunebookOpen()) return;
+
+    const abcToolsFrame = document.querySelector('#tuneFrame');
+
+    // Execute right after entering fullscreen
+
+    if (document.fullscreenElement) {
+
+        abcToolsFrame.setAttribute("style", "width: 100vw; height: 100vh;");
+
+    // Execute right after exiting fullscreen
+
+    } else {
+
+        abcToolsFrame.removeAttribute("style");
+    }
 }
 
 // Handle automatic renaming of Tunebook selector labels in Mobile Mode
@@ -750,7 +800,7 @@ export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex
 
     const body = document.querySelector('body');
 
-    if (!body.hasAttribute('data-mode') && actionType !== "init") return;
+    if (body.getAttribute('data-mode') === "desktop" && actionType !== "init") return;
 
     const filterHeader = filterOptions.options[0];
     const tunesHeader = tuneSelector.options[0];
@@ -763,14 +813,14 @@ export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex
 
     if (actionType === "init") {
 
-        if (window.innerWidth > 768 || !body.hasAttribute('data-mode')) {
+        if (getViewportWidth() > 768 || body.getAttribute('data-mode') === "desktop") {
             
             removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
             
             return;
         }
 
-        if (body.hasAttribute('data-mode')) {
+        if (body.getAttribute('data-mode') === "mobile") {
             
             setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels);
         }
@@ -778,12 +828,12 @@ export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex
 
     if (actionType === "resize") {
 
-        if (window.innerWidth > 768) {
+        if (getViewportWidth() > 768) {
 
             removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
         }
 
-        if (window.innerWidth <= 768) {
+        if (getViewportWidth() <= 768) {
 
             if (filterHeader.hasAttribute('label') && 
                 tunesHeader.hasAttribute('label') && 
@@ -804,7 +854,7 @@ export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex
 
         if (parentSelector.hasAttribute('style')) {
 
-            if (selectedIndex != 0 || window.innerWidth > 768) {
+            if (selectedIndex != 0 || getViewportWidth() > 768) {
 
                 parentSelector.removeAttribute('style');
 
@@ -814,7 +864,7 @@ export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex
             return;
         }
 
-        if (selectedIndex != 0 || !body.hasAttribute('data-mode') || window.innerWidth > 768) return;
+        if (selectedIndex != 0 || body.getAttribute('data-mode') === "desktop" || getViewportWidth() > 768) return;
 
         parentSelector.setAttribute('style', 'font-size: 2.4rem');
     }

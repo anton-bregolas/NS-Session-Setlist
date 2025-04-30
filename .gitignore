@@ -10,4 +10,5 @@ git.diff
 happydom.ts
 package.json
 pnpm-lock.yaml
+README-TEMPLATE.txt
 vitest.config.js

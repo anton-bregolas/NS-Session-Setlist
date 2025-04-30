@@ -17,7 +17,7 @@
     <script type="module" src="./modules/scripts-ns-sessions.js"></script>
 </head>
 
-<body>
+<body data-mode="desktop">
 
     <div class="body-container">
 
@@ -170,7 +170,7 @@
                         <span class="nss-arrow nss-arrow-left"></span>
                     </button>
 
-                    <iframe id="tuneFrame" src=""></iframe>
+                    <iframe id="tuneFrame" src="" tabindex="-1"></iframe>
 
                     <button data-load="next" data-size="large" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load next Set or Tune" aria-title="Load next Set or Tune">
                         <span class="nss-arrow nss-arrow-right"></span>
@@ -327,6 +327,11 @@
                         <use href="assets/icons/icons.svg#action-icon-options"></use>
                     </svg>
                 </button>
+                <a data-type="telegram-link" href="https://t.me/irish_sessions_ns" target="_blank" class="nss-footer-link flex-wrapper" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">
+                    <span class="nss-gradient-text">
+                        Follow NS Sessions
+                    </span>
+                </a>
                 <button class="nss-btn nss-link-btn flex-wrapper" tabindex="-1">
                     <a href="abc-encoder.html" class="nss-icon-container" title="Launch ABC Encoder" aria-title="Launch ABC Encoder">
                         <svg class="nss-icon" aria-hidden="true">
@@ -360,11 +365,6 @@
                         </span>
                     </label>
                     <div class="footer-link-container flex-wrapper">
-                        <a data-type="telegram-link" href="https://t.me/irish_sessions_ns" target="_blank" class="nss-footer-link flex-wrapper" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">
-                            <span class="nss-gradient-text">
-                                Follow Trad Sessions NS
-                            </span>
-                        </a>
                         <button data-controls="mode" data-type="mobile-switch" class="nss-btn" title="Switch to mobile Tunebook mode" aria-title="Switch to mobile Tunebook mode">
                             <span class="nss-gradient-text flex-wrapper">
                                 MOBILE
