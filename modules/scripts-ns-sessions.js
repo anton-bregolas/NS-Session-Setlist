@@ -1,6 +1,6 @@
 import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, loadTuneBookItem, 
-         restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, handleSelectorLabels, 
-         resetViewportWidth, getViewportWidth, getViewportHeight, handleFullScreenChange } from './scripts-abc-tools.js';
+         restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, 
+         handleSelectorLabels, resetViewportWidth, getViewportWidth, getViewportHeight } from './scripts-abc-tools.js';
 import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 
@@ -75,7 +75,7 @@ async function launchTuneBook(dataType, triggerBtn) {
 
     if (getViewportWidth() < 870 && !checkIfMobileMode()) {
 
-      resetViewportWidth(1080);
+      resetViewportWidth(870);
     }
 
     hideLaunchers();
@@ -296,7 +296,7 @@ function switchTunebookMode(targetMode) {
     
     displayNotification("Desktop mode enabled: Navigate between items in header, use ABC Tools buttons for playback", "success");
 
-    if (getViewportWidth() < 870) resetViewportWidth(1080);
+    if (getViewportWidth() < 870) resetViewportWidth(870);
   }
 
   refreshTuneBook(true);
@@ -785,7 +785,7 @@ async function appButtonHandler() {
     document.querySelector('#nss-tunebook-exit').focus();
     parentEl.setAttribute("inert", "");
 
-    abcToolsFrame.setAttribute("style", "width: 100svw; height: calc(100svh - 7.375rem - 0.25rem);")
+    abcToolsFrame.setAttribute("style", "width: 100svw; height: calc(100svh - 7.375rem - 0.25rem);");
 
     displayNotification("Compact mode enabled: Top left button to exit, refresh app to reset", "success");
 
@@ -1019,9 +1019,41 @@ export function appWindowResizeHandler() {
 
   if (getViewportWidth() < 870 && !isFixedViewport) {
 
-      resetViewportWidth(1080);
+      resetViewportWidth(870);
       return;
   }  
+}
+
+// Handle enter and exit Full Screen events
+
+export function handleFullScreenChange() {
+
+  // Do nothing if Tunebook is not open
+
+  if (!checkIfTunebookOpen()) return;
+
+  const abcToolsFrame = document.querySelector('#tuneFrame');
+
+  // Execute right after entering fullscreen
+
+  if (document.fullscreenElement) {
+
+    abcToolsFrame.setAttribute("style", "width: 100vw; height: 100vh;");
+    return;
+
+  // Execute right after exiting fullscreen
+
+  } else {
+
+    if (isManualTunebookModeOn) {
+
+      abcToolsFrame.setAttribute("style", "width: 100svw; height: calc(100svh - 7.375rem - 0.25rem);");
+      return;
+    }
+
+    abcToolsFrame.removeAttribute("style");
+    return;
+  }
 }
 
 ////////////////////////////////

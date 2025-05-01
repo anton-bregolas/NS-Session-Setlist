@@ -5,7 +5,7 @@
   --chords-block-margin: 1.5rem;
   --chords-line-width: 42rem;
   --chords-max-width: 80%;
-  --chords-min-bar-width: 5rem;
+  --chords-min-bar-width: 1rem;
 }
 
 [data-popover="chord-viewer"], 
@@ -44,7 +44,7 @@
 }
 
 [data-popover="title"] {
-  width: calc(100svw - 7.2rem);
+  width: calc(100svw - 12rem);
   font-size: 1.75rem;
   font-weight: bold;
   text-align: center;

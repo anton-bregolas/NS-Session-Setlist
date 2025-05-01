@@ -25,12 +25,16 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
   - Tunebook: Switching to Desktop mode on narrow viewports now automatically sets fixed viewport size
   - Tunebook: ABC Full Screen mode reworked using Fullscreen API with fallback to open tunes in new window
   - Tunebook: ABC Tools responsive iframe scaling now fully handled by CSS instead of JS
+  - Chord Viewer: Toggle slider button now shows or hides all GUI elements and main title
+  - Chord Viewer: Styles tweaked to fix mobile viewport issues
 
 + HTML updates:
   - Main App (index.html)
     + Body element now uses data-mode="desktop" by default
+    + Full Screen opens ABC radio button now checked by default
     + Follow NS Sessions link moved to launch screen footer
     + ABC Tools iframe tabindex set to -1 to prevent focus
+    + Chord Viewer elements tweaked
 
 + CSS updates:
   - App Styles (nss-styles.css)
@@ -38,6 +42,8 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + Responsive @media breakpoints reworked, font-size scaling offloaded to JS
     + Follow NS Sessions link styles adjusted for launch screen footer
     + Arrow buttons redesigned using CSS triangles
+  - Chord Viewer module (styles-chord-viewer.css)
+    + Tweaked --chords-min-bar-width and main title width to fix mobile display issues
   
 + JavaScript updates:
   - App Launcher module (scripts-ns-sessions.js)
@@ -48,21 +54,26 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + initWindowEvents*: App will now listen to resize window events in all menus
     + initWindowEvents*: App will now listen to beforeunload events to reset fixed viewport mode on exit
     + initFullScreenEvents*: Adds Fullscreen API event listeners if supported by browser
+    + handleFullScreenChange*: Handle enter and exit events from Fullscreen API (* moved from Tunebook module)
+    + handleFullScreenChange*: Restore Tunebook compact mode on exit from Fullscreen API
     + checkIfTunebookOpen*: Return true if Tunebook menu elements are currently displayed
     + checkIfMobileMode: Now checks body data-mode attribute instead of using global flag
     + switchTunebookMode: Now displays info notifications when switching modes
     + displayNotification: Success message timeout increased to 5 seconds
     + isTuneBookInitialized: Variable renamed from tuneBookInitialized
     + Global flags removed: isMobileTunebookModeOn, doesTuneBookNeedResize
+    + Fixed viewport size for resetViewportWidth() reset from 1080 to 870
   - ABC Tunebook module (scripts-abc-tools.js)
     + ABC Tools iframe resize functions removed, now handled by CSS
     + Window resize event listeners removed, now handled by App Launcher
     + handleFullScreenButton: Now uses Fullscreen API with fallback to new window
-    + handleFullScreenChange*: Handle enter and exit events from Fullscreen API
     + openInAbcTools*: Opening last tune link in new window moved to separate reusable function
     + getViewportWidth*: Return current visual viewport width using Visual Viewport API or innerWidth value fallback
     + getViewportHeight*: Return current visual viewport height using Visual Viewport API or innerHeight value fallback
     + handleSelectorLabels: Now uses getViewportWidth instead of innerWidth
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + handleChordViewerClick: Now disables and hides all other GUI elements
+    + chordViewerGui*: Global variable added for all data-controls elements
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
@@ -78,12 +89,16 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
   - Tunebook: Switching to Desktop mode on narrow viewports now automatically sets fixed viewport size
   - Tunebook: ABC Full Screen mode reworked using Fullscreen API with fallback to open tunes in new window
   - Tunebook: ABC Tools responsive iframe scaling now fully handled by CSS instead of JS
+  - Chord Viewer: Toggle slider button now shows or hides all GUI elements and main title
+  - Chord Viewer: Styles tweaked to fix mobile viewport issues
 
 + HTML updates:
   - Main App (index.html)
     + Body element now uses data-mode="desktop" by default
+    + Full Screen opens ABC radio button now checked by default
     + Follow NS Sessions link moved to launch screen footer
     + ABC Tools iframe tabindex set to -1 to prevent focus
+    + Chord Viewer elements tweaked
 
 + CSS updates:
   - App Styles (nss-styles.css)
@@ -91,6 +106,8 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + Responsive @media breakpoints reworked, font-size scaling offloaded to JS
     + Follow NS Sessions link styles adjusted for launch screen footer
     + Arrow buttons redesigned using CSS triangles
+  - Chord Viewer module (styles-chord-viewer.css)
+    + Tweaked --chords-min-bar-width and main title width to fix mobile display issues
   
 + JavaScript updates:
   - App Launcher module (scripts-ns-sessions.js)
@@ -101,21 +118,26 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + initWindowEvents*: App will now listen to resize window events in all menus
     + initWindowEvents*: App will now listen to beforeunload events to reset fixed viewport mode on exit
     + initFullScreenEvents*: Adds Fullscreen API event listeners if supported by browser
+    + handleFullScreenChange*: Handle enter and exit events from Fullscreen API (* moved from Tunebook module)
+    + handleFullScreenChange*: Restore Tunebook compact mode on exit from Fullscreen API
     + checkIfTunebookOpen*: Return true if Tunebook menu elements are currently displayed
     + checkIfMobileMode: Now checks body data-mode attribute instead of using global flag
     + switchTunebookMode: Now displays info notifications when switching modes
     + displayNotification: Success message timeout increased to 5 seconds
     + isTuneBookInitialized: Variable renamed from tuneBookInitialized
     + Global flags removed: isMobileTunebookModeOn, doesTuneBookNeedResize
+    + Fixed viewport size for resetViewportWidth() reset from 1080 to 870
   - ABC Tunebook module (scripts-abc-tools.js)
     + ABC Tools iframe resize functions removed, now handled by CSS
     + Window resize event listeners removed, now handled by App Launcher
     + handleFullScreenButton: Now uses Fullscreen API with fallback to new window
-    + handleFullScreenChange*: Handle enter and exit events from Fullscreen API
     + openInAbcTools*: Opening last tune link in new window moved to separate reusable function
     + getViewportWidth*: Return current visual viewport width using Visual Viewport API or innerWidth value fallback
     + getViewportHeight*: Return current visual viewport height using Visual Viewport API or innerHeight value fallback
     + handleSelectorLabels: Now uses getViewportWidth instead of innerWidth
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + handleChordViewerClick: Now disables and hides all other GUI elements
+    + chordViewerGui*: Global variable added for all data-controls elements
 </details>
 
 <details>

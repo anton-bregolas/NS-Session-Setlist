@@ -22,21 +22,22 @@ const tuneSelector = document.querySelector('#tuneSelector');
 const chordViewerPopover = document.querySelector('[data-popover="chord-viewer"]');
 const chordViewerTitle = document.querySelector('[data-popover="title"]');
 const chordViewerChords = document.querySelector('[data-chords="container"]');
+const chordViewerGui = document.querySelectorAll('[data-controls]');
 const chordViewerSlider = document.querySelector('[data-controls="slider"]');
 const chordViewerThemeBtns = document.querySelectorAll('[data-controls="theme-btn"]');
 
 // Define initial Chord Popover slider settings
 
-const vInitVal = 120 // Global initial value for vertical slider
-const lineWInit = 40 // Global initial value for chords line width
-const maxWInit = 80 // Global initial value for chords line max width
+const vInitVal = 120 // Global initial value for vertical slider (%)
+const lineWInit = 40 // Global initial value for chords line width (rem)
+const maxWInit = 80 // Global initial value for chords line max width (%)
 
 // Define ranges for chords line width and max line width
 
-const lineWMin = 20; // Minimum line width of chords, rem
-const lineWMax = 50; // Maximum line width of chords, rem
-const maxWLows = 50; // Lowest max-width value for chords, rem
-const maxWTops = 90; // Highest max-width value for chords, rem
+const lineWMin = 20; // Minimum line width of chords (rem)
+const lineWMax = 50; // Maximum line width of chords (rem)
+const maxWLows = 50; // Lowest max-width value for chords (%)
+const maxWTops = 90; // Highest max-width value for chords (%)
 
 ///////////////////////////////////
 // CHORD VIEWER LAUNCH FUNCTIONS
@@ -169,16 +170,32 @@ function handleChordViewerClick(event) {
     return;
   }
 
-  if (elAction === 'toggle-slider') {
+  if (elAction === 'toggle-gui') {
 
-    if (chordViewerSlider.hasAttribute("hidden")) {
+    if (chordViewerTitle.hasAttribute("hidden")) {
 
-      ariaShowMe(chordViewerSlider);
+      ariaShowMe(chordViewerTitle);
 
     } else {
 
-      ariaHideMe(chordViewerSlider);
+      ariaHideMe(chordViewerTitle);
     }
+
+    chordViewerGui.forEach(guiElem => {
+
+      if (guiElem === actionTrigger) return;
+
+      if (guiElem.hasAttribute("disabled")) {
+
+        guiElem.removeAttribute("disabled");
+        guiElem.removeAttribute("style", "visibility: hidden;");
+
+      } else {
+
+        guiElem.setAttribute("disabled", "");
+        guiElem.setAttribute("style", "visibility: hidden;");
+      }
+    });
   }
 
   if (elAction === 'toggle-theme') {
@@ -223,6 +240,8 @@ function initPopoverSlider() {
     localStorage.chordViewerSliderMaxWidthValue = maxWInit;
   }
 
+  // Set default slider values to be applied on load
+
   const valueV = localStorage.chordViewerSliderFontSizeValue;
   const lineWidth = localStorage.chordViewerSliderLineWidthValue;
   const maxWidth = localStorage.chordViewerSliderMaxWidthValue;
@@ -235,7 +254,6 @@ function initPopoverSlider() {
   chordViewerPopover.style.setProperty("--chords-line-width", `${lineWidth}rem`); // rem!
 
   chordViewerSlider.addEventListener('input', appChordSliderHandler);
-  chordViewerSlider.addEventListener('change', appChordSliderHandler);
 }
 
 ///////////////////////////////////
@@ -396,6 +414,8 @@ function appChordSliderHandler(event) {
 
   const vMin = +chordViewerSlider.min;
   const vMax = +chordViewerSlider.max;
+
+  // Handle slider value input event
 
   if (event.type === 'input') {
 

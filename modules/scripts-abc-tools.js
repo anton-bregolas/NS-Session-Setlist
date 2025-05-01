@@ -770,30 +770,6 @@ function openInAbcTools() {
     }
 }
 
-// Handle enter and exit Full Screen events
-
-export function handleFullScreenChange() {
-
-    // Do nothing if Tunebook is not open
-
-    if (!checkIfTunebookOpen()) return;
-
-    const abcToolsFrame = document.querySelector('#tuneFrame');
-
-    // Execute right after entering fullscreen
-
-    if (document.fullscreenElement) {
-
-        abcToolsFrame.setAttribute("style", "width: 100vw; height: 100vh;");
-
-    // Execute right after exiting fullscreen
-
-    } else {
-
-        abcToolsFrame.removeAttribute("style");
-    }
-}
-
 // Handle automatic renaming of Tunebook selector labels in Mobile Mode
 
 export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex) {
