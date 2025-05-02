@@ -42,6 +42,7 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + Responsive @media breakpoints reworked, font-size scaling offloaded to JS
     + Follow NS Sessions link styles adjusted for launch screen footer
     + Arrow buttons redesigned using CSS triangles
+    + Button text color explicitly defined for .nss-btn-text to fix Safari display issue
   - Chord Viewer module (styles-chord-viewer.css)
     + Tweaked --chords-min-bar-width and main title width to fix mobile display issues
   
@@ -106,6 +107,7 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + Responsive @media breakpoints reworked, font-size scaling offloaded to JS
     + Follow NS Sessions link styles adjusted for launch screen footer
     + Arrow buttons redesigned using CSS triangles
+    + Button text color explicitly defined for .nss-btn-text to fix Safari display issue
   - Chord Viewer module (styles-chord-viewer.css)
     + Tweaked --chords-min-bar-width and main title width to fix mobile display issues
   

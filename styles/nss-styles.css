@@ -697,6 +697,10 @@ body[data-mode="mobile"] .nss-footer-icon {
   display: flex;
 }
 
+.nss-btn-text {
+  color: black;
+}
+
 .nss-btn-text .nss-icon-container > * {
   width: 2.25rem;
   height: 2.25rem;
