@@ -72,6 +72,7 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + getViewportWidth*: Return current visual viewport width using Visual Viewport API or innerWidth value fallback
     + getViewportHeight*: Return current visual viewport height using Visual Viewport API or innerHeight value fallback
     + handleSelectorLabels: Now uses getViewportWidth instead of innerWidth
+    + abcToolsFullScreenBtnShowsChords local storage variable default value changed to 0
   - Chord Viewer module (scripts-chord-viewer.js):
     + handleChordViewerClick: Now disables and hides all other GUI elements
     + chordViewerGui*: Global variable added for all data-controls elements
@@ -137,6 +138,7 @@ NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
     + getViewportWidth*: Return current visual viewport width using Visual Viewport API or innerWidth value fallback
     + getViewportHeight*: Return current visual viewport height using Visual Viewport API or innerHeight value fallback
     + handleSelectorLabels: Now uses getViewportWidth instead of innerWidth
+    + abcToolsFullScreenBtnShowsChords local storage variable default value changed to 0
   - Chord Viewer module (scripts-chord-viewer.js):
     + handleChordViewerClick: Now disables and hides all other GUI elements
     + chordViewerGui*: Global variable added for all data-controls elements

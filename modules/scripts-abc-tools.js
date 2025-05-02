@@ -7,7 +7,7 @@
 
 // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB
 import { initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
-        filterOptions, initCustomDropDownMenus, openSettingsMenu, checkIfTunebookOpen } from "./scripts-ns-sessions.js";
+        filterOptions, initCustomDropDownMenus, openSettingsMenu } from "./scripts-ns-sessions.js";
 // Import lz-string compression algorithm
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
@@ -20,7 +20,7 @@ export const abcTunebookDefaults = {
     abcToolsSaveAndRestoreTunes: "1",
     abcToolsAllowInstrumentChanges: "1",
     abcToolsAllowTabStyleChanges: "1",
-    abcToolsFullScreenBtnShowsChords: "1",
+    abcToolsFullScreenBtnShowsChords: "0",
     abcToolsAllowTuneAutoReload: "1",
     abcToolsAlwaysMuteChords: "0",
     tuneBookAlwaysUseMobileMode: "0",
