@@ -15,70 +15,90 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)
+NS Session Setlist v.0.9.7: UI/UX Upgrade (Preload Scripts & Chord Viewer Tweaks)
 
 + Project updates:
-  - Launcher: App will now auto-scale fonts and menus based on viewport size of mobile devices
-  - Launcher: App will now auto-switch to Desktop or Mobile mode on launch based on viewport size
-  - Tunebook: Fully responsive design for all common viewport ranges including narrow mobile screens
-  - Tunebook: Launching Tunebook in Desktop mode on narrow viewports now auto-sets fixed viewport size
-  - Tunebook: Switching to Desktop mode on narrow viewports now automatically sets fixed viewport size
-  - Tunebook: ABC Full Screen mode reworked using Fullscreen API with fallback to open tunes in new window
-  - Tunebook: ABC Tools responsive iframe scaling now fully handled by CSS instead of JS
-  - Chord Viewer: Toggle slider button now shows or hides all GUI elements and main title
-  - Chord Viewer: Styles tweaked to fix mobile viewport issues
+  - Preload Scripts: Module added, app will now initiate root font-size setting before CSS loads
+  - Launcher: Root font-size setting functions refactored, calculations moved to Preload Scripts
+  - Tunebook: Now exports lastURL value for use in external modules
+  - Chord Viewer: Now gets ABC Title in all modes and extracts it from lastURL if other methods are not available
+  - Chord Viewer: Now accounts for modified root font size and adjusts chords font-size accordingly
 
-+ HTML updates:
-  - Main App (index.html)
-    + Body element now uses data-mode="desktop" by default
-    + Full Screen opens ABC radio button now checked by default
-    + Follow NS Sessions link moved to launch screen footer
-    + ABC Tools iframe tabindex set to -1 to prevent focus
-    + Chord Viewer elements tweaked
++ HTML updates
+  - Main App (index.html):
+    + Added Preload Scripts module to <head>
+  - ABC Encoder (abc-encoder.html):
+    + Added Preload Scripts module to <head>
 
 + CSS updates:
-  - App Styles (nss-styles.css)
-    + Responsive ABC Tools iframe styles added, fixed width replaced with 100svw
-    + Responsive @media breakpoints reworked, font-size scaling offloaded to JS
-    + Follow NS Sessions link styles adjusted for launch screen footer
-    + Arrow buttons redesigned using CSS triangles
-    + Button text color explicitly defined for .nss-btn-text to fix Safari display issue
+  - App Styles (nss-styles.css):
+    + Full screen popover width and height changed to vw and vh for testing
   - Chord Viewer module (styles-chord-viewer.css)
-    + Tweaked --chords-min-bar-width and main title width to fix mobile display issues
+    + Chord Viewer popover width and height changed to vw and vh for testing
   
-+ JavaScript updates:
-  - App Launcher module (scripts-ns-sessions.js)
-    + appWindowResizeHandler*: New handler function adjusts HTML font size depending on viewport size
-    + launchTuneBook: Now applies fixed viewport width if desktop mode is on and current viewport is narrower than ABC Tools embed
-    + initTunebookMode: Now checks viewport width before applying mobile mode
-    + initWindowEvents*: Initializes viewport size handlers and window event listeners
-    + initWindowEvents*: App will now listen to resize window events in all menus
-    + initWindowEvents*: App will now listen to beforeunload events to reset fixed viewport mode on exit
-    + initFullScreenEvents*: Adds Fullscreen API event listeners if supported by browser
-    + handleFullScreenChange*: Handle enter and exit events from Fullscreen API (* moved from Tunebook module)
-    + handleFullScreenChange*: Restore Tunebook compact mode on exit from Fullscreen API
-    + checkIfTunebookOpen*: Return true if Tunebook menu elements are currently displayed
-    + checkIfMobileMode: Now checks body data-mode attribute instead of using global flag
-    + switchTunebookMode: Now displays info notifications when switching modes
-    + displayNotification: Success message timeout increased to 5 seconds
-    + isTuneBookInitialized: Variable renamed from tuneBookInitialized
-    + Global flags removed: isMobileTunebookModeOn, doesTuneBookNeedResize
-    + Fixed viewport size for resetViewportWidth() reset from 1080 to 870
-  - ABC Tunebook module (scripts-abc-tools.js)
-    + ABC Tools iframe resize functions removed, now handled by CSS
-    + Window resize event listeners removed, now handled by App Launcher
-    + handleFullScreenButton: Now uses Fullscreen API with fallback to new window
-    + openInAbcTools*: Opening last tune link in new window moved to separate reusable function
-    + getViewportWidth*: Return current visual viewport width using Visual Viewport API or innerWidth value fallback
-    + getViewportHeight*: Return current visual viewport height using Visual Viewport API or innerHeight value fallback
-    + handleSelectorLabels: Now uses getViewportWidth instead of innerWidth
-    + abcToolsFullScreenBtnShowsChords local storage variable default value changed to 0
++ JavaScript updates
+  - Preload Scripts module (scripts-preload-nssapp.js) 
+    + Preload HTML font-size value calculated by adjustHtmlFontSize for small and medium-sized screens
+    + adjustHtmlFontSize*: Get HTML font-size value based on current viewport size (moved from App Launcher module)
   - Chord Viewer module (scripts-chord-viewer.js):
-    + handleChordViewerClick: Now disables and hides all other GUI elements
-    + chordViewerGui*: Global variable added for all data-controls elements
+    + openChordViewer: Now gets currentAbcTitle in all Dynamic and Chordbook Mode scenarios
+    + openChordViewer: Now extracts currentAbcTitle from lastUrl if Tune selector value is empty
+    + appChordSliderHandler: Now modifies chords font-size using getRootFontSizeModifier value
+    + initPopoverSlider: Now modifies initial chords font-size using getRootFontSizeModifier value
+    + getLastTunebookUrl* import function from ABC Tunebook module added
+    + getRootFontSizeModifier*: Gets root font-size modifier for chord display calculations
+  - App Launcher module (scripts-ns-sessions.js)
+    + initWindowEvents: Font-size initialization moved to Preload Scripts module
+    + appWindowResizeHandler: HTML font-size value calculations moved to Preload Scripts module
+    + appWindowResizeHandler: Now sets and clears root font-size via setProperty and removeProperty methods
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + getLastTunebookUrl*: Export function added getting lastURL value for use in Chord Viewer
+    + handleSelectorLabels: Now sets and clears CSS styles via setProperty and removeProperty methods
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
+
+<details>
+<summary>v.0.9.7: UI/UX Upgrade (Preload Scripts & Chord Viewer Tweaks)</summary>
+
++ Project updates:
+  - Preload Scripts: Module added, app will now initiate root font-size setting before CSS loads
+  - Launcher: Root font-size setting functions refactored, calculations moved to Preload Scripts
+  - Tunebook: Now exports lastURL value for use in external modules
+  - Chord Viewer: Now gets ABC Title in all modes and extracts it from lastURL if other methods are not available
+  - Chord Viewer: Now accounts for modified root font size and adjusts chords font-size accordingly
+
++ HTML updates
+  - Main App (index.html):
+    + Added Preload Scripts module to <head>
+  - ABC Encoder (abc-encoder.html):
+    + Added Preload Scripts module to <head>
+
++ CSS updates:
+  - App Styles (nss-styles.css):
+    + Full screen popover width and height changed to vw and vh for testing
+  - Chord Viewer module (styles-chord-viewer.css)
+    + Chord Viewer popover width and height changed to vw and vh for testing
+  
++ JavaScript updates
+  - Preload Scripts module (scripts-preload-nssapp.js) 
+    + Preload HTML font-size value calculated by adjustHtmlFontSize for small and medium-sized screens
+    + adjustHtmlFontSize*: Get HTML font-size value based on current viewport size (moved from App Launcher module)
+  - Chord Viewer module (scripts-chord-viewer.js):
+    + openChordViewer: Now gets currentAbcTitle in all Dynamic and Chordbook Mode scenarios
+    + openChordViewer: Now extracts currentAbcTitle from lastUrl if Tune selector value is empty
+    + appChordSliderHandler: Now modifies chords font-size using getRootFontSizeModifier value
+    + initPopoverSlider: Now modifies initial chords font-size using getRootFontSizeModifier value
+    + getLastTunebookUrl* import function from ABC Tunebook module added
+    + getRootFontSizeModifier*: Gets root font-size modifier for chord display calculations
+  - App Launcher module (scripts-ns-sessions.js)
+    + initWindowEvents: Font-size initialization moved to Preload Scripts module
+    + appWindowResizeHandler: HTML font-size value calculations moved to Preload Scripts module
+    + appWindowResizeHandler: Now sets and clears root font-size via setProperty and removeProperty methods
+  - ABC Tunebook module (scripts-abc-tools.js)
+    + getLastTunebookUrl*: Export function added getting lastURL value for use in Chord Viewer
+    + handleSelectorLabels: Now sets and clears CSS styles via setProperty and removeProperty methods
+</details>
 
 <details>
 <summary>v.0.9.6: UI/UX Upgrade (Responsive Viewport-Based Scaling)</summary>

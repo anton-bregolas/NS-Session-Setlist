@@ -3,6 +3,7 @@ import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, l
          handleSelectorLabels, resetViewportWidth, getViewportWidth, getViewportHeight } from './scripts-abc-tools.js';
 import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
+import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist Custom App Scripts
@@ -15,10 +16,10 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: 2025-04-30
+// NS Session DB date: 2025-05-03
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const APP_VERSION = "0.9.6";
+const APP_VERSION = "0.9.7";
 
 // Define Global Variables
 
@@ -943,62 +944,25 @@ async function appDropDownHandler(event) {
 
 export function appWindowResizeHandler() {
 
-  // Handle global font size adjustments
+  // Handle global font size adjustments >>>
 
-  const docHtml = document.querySelector('html');
   const viewPortW = getViewportWidth();
   const viewPortH = getViewportHeight();
 
-  // Clear font size scaling if device viewport fits
-  // app menu in both landscape and portrait mode
+  // Adjust font-size value based on viewport size for small and medium-sized screens
 
-  if (viewPortW >= 1080 && viewPortH > 768) {
+  if (viewPortW < 1080 || viewPortH <= 768) {
 
-    docHtml.removeAttribute("style");
+    document.documentElement.style.fontSize = adjustHtmlFontSize(viewPortW, viewPortH);
+  
+  // Otherwise clear the previously set font-size value
 
-    return;
+  } else if (document.documentElement.style.fontSize) {
+
+    document.documentElement.style.removeProperty('font-size');
   }
 
-  let newFontSize = 100;
-
-  // Calculate font size for tablets and mobile devices in portrait mode
-
-  if (viewPortW < 1080 && viewPortW >= 360) {
-
-    const maxViewPort = 1080;
-    const minViewPort = 360;
-    const maxFontSize = 100;
-    const minFontSize = 70;
-
-    newFontSize = maxFontSize - (maxViewPort - viewPortW) * (maxFontSize - minFontSize) / (maxViewPort - minViewPort);
-  }
-
-  // Calculate font size for mobile devices in landscape mode  
-
-  if (viewPortH <= 768 && viewPortW > 480) {
-
-    const maxViewPort = 768;
-    const minViewPort = 420;
-    const maxFontSize = 85;
-    const minFontSize = 75;
-
-    newFontSize = maxFontSize - (maxViewPort - viewPortH) * (maxFontSize - minFontSize) / (maxViewPort - minViewPort);
-  }
-
-  // Calculate font size for small screen devices in portrait mode
-
-  if (viewPortW < 360) {
-
-    const maxFontSize = 60;
-
-    newFontSize = maxFontSize - (360 - viewPortW) * 0.125;
-  }
-
-  // Set HTML font size in %
-
-  docHtml.setAttribute("style", `font-size: ${newFontSize.toFixed(2)}%`);
-
-  // Handle Tunebook adjustments
+  // Handle Tunebook adjustments >>>
 
   // If Tunebook menu is currently hidden, do nothing
 
@@ -1212,11 +1176,9 @@ function initTunebookMode() {
   }
 }
 
-// Initialize app menus depending on viewport size, add event listeners to window 
+// Add event listeners related to viewport size to the window object
 
 function initWindowEvents() {
-
-  appWindowResizeHandler();
 
   window.addEventListener('resize', appWindowResizeHandler);
 

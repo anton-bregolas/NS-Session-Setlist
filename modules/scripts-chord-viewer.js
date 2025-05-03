@@ -4,6 +4,10 @@
 // (c) Anton Zille 2024-2025
 ////////////////////////////////////////////////////////////////////////
 
+// Import function to get last Tunebook URL (use with embedded ABC Tools)
+
+import { getLastTunebookUrl } from "./scripts-abc-tools.js";
+
 // Import lz-string compression algorithm (for dynamic chord generation)
 
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
@@ -44,7 +48,7 @@ const maxWTops = 90; // Highest max-width value for chords (%)
 //////////////////////////////////
 
 // Open Chord Viewer:
-// Extract Chords from ABC if dynamic chord generation is on
+// Extract Chords from ABC or URL if dynamic chord mode is on
 // Load Chordbook chords into the Chord Viewer Popover
 // Show Chord Viewer Popover using Popover API
 // Initiate Chord Viewer Slider settings
@@ -59,6 +63,10 @@ export function openChordViewer(setChords, tuneChords) {
     displayWarningEffect(launchButton);
     return;
   }
+
+  let currentAbcTitle;
+
+  // Dynamic Mode: Attempt to extract ABC & chords
 
   if (isDynamicChordsMode) {
 
@@ -76,9 +84,10 @@ export function openChordViewer(setChords, tuneChords) {
 
     } else {
 
-      const abcUrl = tuneSelector.value;
+      const abcUrl = tuneSelector.value || getLastTunebookUrl();
+
       const abcInLzw = abcUrl.match(/(?<=lzw=)(?:[^&]*)/)? abcUrl.match(/(?<=lzw=)(?:[^&]*)/)[0] : null;
-  
+
       if (!abcUrl || !abcInLzw) {
   
         displayNotification("Select an item in Tune Selector", "warning");
@@ -102,9 +111,42 @@ export function openChordViewer(setChords, tuneChords) {
 
     setChords = isAbcSet? extractedChordsArr : [];
     tuneChords = isAbcSet? [] : extractedChordsArr;
+
+    currentAbcTitle = abcContent.match(/(?<=^T:).*/m)? abcContent.match(/(?<=^T:).*/m)[0].trim() : null;
   }
 
-  const currentAbcTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
+  // Chordbook Mode: Use pre-generated chords data passed to openChordViewer
+  // Continue with extracted data if Dynamic Mode is on
+
+  if (!currentAbcTitle) {
+
+    // Get ABC title from selected item in Tune Selector
+
+    const selectedTuneTitle = tuneSelector.options[tuneSelector.selectedIndex].text;
+
+    // Failing that, extract ABC title from last Tunebook URL
+
+    let extractedTuneTitle;
+
+    if (!selectedTuneTitle || selectedTuneTitle.toLowerCase().includes("select")) {
+
+      const lastUrl = getLastTunebookUrl();
+      const abcInLzw = lastUrl.match(/(?<=lzw=)(?:[^&]*)/)? lastUrl.match(/(?<=lzw=)(?:[^&]*)/)[0] : null;
+
+      if (!lastUrl || !abcInLzw) {
+
+        displayNotification("Select an item in Tune Selector", "warning");
+        displayWarningEffect(launchButton);
+        return;
+      }
+
+      const abcContent = LZString.decompressFromEncodedURIComponent(abcInLzw);
+
+      extractedTuneTitle = abcContent.match(/(?<=^T:).*/m)? abcContent.match(/(?<=^T:).*/m)[0].trim() : null;
+    }
+
+    currentAbcTitle = extractedTuneTitle || selectedTuneTitle;
+  }
 
   const setMatch = setChords.find(set => set.setTitle === currentAbcTitle);
   const tuneMatch = tuneChords.find(tune => tune.title === currentAbcTitle);
@@ -112,7 +154,7 @@ export function openChordViewer(setChords, tuneChords) {
   if (!setMatch && !tuneMatch) {
 
     const userWarning = 
-      tuneSelector.value? "No Chordbook entry for this ABC" : "Select an item in Tune Selector";
+      currentAbcTitle? "No Chordbook entry for this ABC" : "Select an item in Tune Selector";
       
     displayNotification(userWarning, "warning");
     displayWarningEffect(launchButton);
@@ -246,12 +288,20 @@ function initPopoverSlider() {
   const lineWidth = localStorage.chordViewerSliderLineWidthValue;
   const maxWidth = localStorage.chordViewerSliderMaxWidthValue;
 
+  // Get font-size value modifier (equals to 1 if root font size is 16px)
+
+  const fontSizeMod = getRootFontSizeModifier();
+
+  // Set initial style property values for chords
+
   chordViewerSlider.value = valueV;
 
-  chordViewerPopover.style.setProperty("--chords-font-size", `${valueV}%`);
+  chordViewerPopover.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
   chordViewerPopover.style.setProperty("--chords-line-height", `${valueV}%`);
   chordViewerPopover.style.setProperty("--chords-max-width", `${maxWidth}%`);
   chordViewerPopover.style.setProperty("--chords-line-width", `${lineWidth}rem`); // rem!
+
+  // Listen to slider input events
 
   chordViewerSlider.addEventListener('input', appChordSliderHandler);
 }
@@ -435,7 +485,13 @@ function appChordSliderHandler(event) {
       localStorage.chordViewerSliderMaxWidthValue = maxWInit + maxLineWAddend;
       localStorage.chordViewerSliderLineWidthValue = lineWInit + lineWAddend;
 
-      chordViewerPopover.style.setProperty("--chords-font-size", `${valueV}%`);
+      // Get font-size value modifier (equals to 1 if root font size is 16px)
+
+      const fontSizeMod = getRootFontSizeModifier();
+
+      // Set adjusted style property values for chords
+
+      chordViewerPopover.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
       chordViewerPopover.style.setProperty("--chords-line-height", `${valueV}%`);
       chordViewerPopover.style.setProperty("--chords-max-width", `${maxWInit + maxLineWAddend}%`);
       chordViewerPopover.style.setProperty("--chords-line-width", `${lineWInit + lineWAddend}rem`);
@@ -926,6 +982,28 @@ function getValidChordsArray(chordBookJson) {
 // UTILITY FUNCTIONS
 //////////////////////////////////
 
+// Check if root font-size value differs from default (16px)
+// Get root font-size modifier for chord display calculations
+
+function getRootFontSizeModifier(baseFontSize) {
+
+  const defaultFontSize = baseFontSize || 16;
+  const rootFontSizeVal = window.getComputedStyle(document.documentElement).fontSize;
+  console.warn(rootFontSizeVal)
+  // Return modifier if font-size value does not match base font size
+
+  if (rootFontSizeVal && rootFontSizeVal !== `${defaultFontSize}px`) {
+
+    const fontSizeModifier = rootFontSizeVal.slice(0, -2) / 16;
+
+    return fontSizeModifier;
+  }
+
+  // Return 1 if font-size value matches base font size
+
+  return 1;
+}
+
 // Hide an element via attribute hidden and set aria-hidden to true
 
 function ariaHideMe(el) {
@@ -981,4 +1059,13 @@ function ariaShowMe(el) {
 
 //     focusBtn.removeAttribute("style");
 //   }, 2500);
+// }
+
+// Get last ABC Tools URL (for use in ABC Tools scripts)
+// Copy as export function if scripts are in a separate module
+// Replace lastURL with custom logic if used outside of ABC Tools scripts
+
+// function getLastTunebookUrl() {
+
+//     return lastURL;
 // }

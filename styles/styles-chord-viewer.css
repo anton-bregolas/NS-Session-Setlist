@@ -24,8 +24,8 @@
 }
 
 [data-popover="chord-viewer"] {
-  width: 100svw;
-  height: 100svh;
+  width: 100vw;
+  height: 100vh;
   border: none;
   outline: none;
   padding: 0;
@@ -44,7 +44,7 @@
 }
 
 [data-popover="title"] {
-  width: calc(100svw - 12rem);
+  width: calc(100vw - 12rem);
   font-size: 1.75rem;
   font-weight: bold;
   text-align: center;

@@ -968,8 +968,8 @@ input[type="checkbox"]:focus-visible {
        screen and (max-width: 53.75em) {
 
   .nss-popover {
-    width: 100svw;
-    height: 100svh;
+    width: 100vw;
+    height: 100vh;
     border-radius: 0;
   }
 
@@ -979,7 +979,7 @@ input[type="checkbox"]:focus-visible {
 
   .nss-popover-header-title-container {
     margin: 1.75rem auto 3rem;
-    max-width: calc(100svw - 12.75rem);
+    max-width: calc(100vw - 12.75rem);
   }
 
   .nss-checkbox-container {

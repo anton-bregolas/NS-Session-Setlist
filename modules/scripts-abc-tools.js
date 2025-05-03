@@ -770,6 +770,13 @@ function openInAbcTools() {
     }
 }
 
+// Get last ABC Tools URL (for use in external modules)
+
+export function getLastTunebookUrl() {
+
+    return lastURL;
+}
+
 // Handle automatic renaming of Tunebook selector labels in Mobile Mode
 
 export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex) {
@@ -842,7 +849,7 @@ export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex
 
         if (selectedIndex != 0 || body.getAttribute('data-mode') === "desktop" || getViewportWidth() > 768) return;
 
-        parentSelector.setAttribute('style', 'font-size: 2.4rem');
+        parentSelector.style.fontSize = "2.4rem";
     }
 }
 
@@ -863,7 +870,7 @@ function setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, new
 
         if (selectorEl.selectedIndex === 0) {
 
-            selectorEl.setAttribute('style', 'font-size: 2.4rem');
+            selectorEl.style.fontSize = "2.4rem";
         }
     });
 }
@@ -876,9 +883,9 @@ function removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders) 
 
         const selectorEl = document.querySelector(selectorId);
         
-        if (selectorEl.hasAttribute('style')) {
+        if (selectorEl.style.fontSize) {
             
-            selectorEl.removeAttribute('style');
+            selectorEl.style.removeProperty('font-size');
         }
     });
 
