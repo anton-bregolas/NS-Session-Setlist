@@ -219,6 +219,10 @@
   left: 0;
 }
 
+[data-controls] {
+  z-index: 1;
+}
+
 [data-controls="btn-x"] {
   outline-offset: 0.25rem;
 }

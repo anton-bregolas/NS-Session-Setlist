@@ -35,7 +35,8 @@ NS Session Setlist v.0.9.7: UI/UX Upgrade (Preload Scripts & Chord Viewer Tweaks
     + Full screen popover width and height changed to vw and vh for testing
   - Chord Viewer module (styles-chord-viewer.css)
     + Chord Viewer popover width and height changed to vw and vh for testing
-  
+    + Added z-index value to control buttons to fix Safari bug
+
 + JavaScript updates
   - Preload Scripts module (scripts-preload-nssapp.js) 
     + Preload HTML font-size value calculated by adjustHtmlFontSize for small and medium-sized screens
@@ -79,7 +80,8 @@ NS Session Setlist v.0.9.7: UI/UX Upgrade (Preload Scripts & Chord Viewer Tweaks
     + Full screen popover width and height changed to vw and vh for testing
   - Chord Viewer module (styles-chord-viewer.css)
     + Chord Viewer popover width and height changed to vw and vh for testing
-  
+    + Added z-index value to control buttons to fix Safari bug
+
 + JavaScript updates
   - Preload Scripts module (scripts-preload-nssapp.js) 
     + Preload HTML font-size value calculated by adjustHtmlFontSize for small and medium-sized screens

@@ -988,8 +988,9 @@ function getValidChordsArray(chordBookJson) {
 function getRootFontSizeModifier(baseFontSize) {
 
   const defaultFontSize = baseFontSize || 16;
+  
   const rootFontSizeVal = window.getComputedStyle(document.documentElement).fontSize;
-  console.warn(rootFontSizeVal)
+
   // Return modifier if font-size value does not match base font size
 
   if (rootFontSizeVal && rootFontSizeVal !== `${defaultFontSize}px`) {
