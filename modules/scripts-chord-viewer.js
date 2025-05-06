@@ -8,6 +8,10 @@
 
 import { getLastTunebookUrl } from "./scripts-abc-tools.js";
 
+// Import function for checking whether localStorage is available and writeable
+
+import { storageAvailable } from "./scripts-3p/storage-available/storage-available.js";
+
 // Import lz-string compression algorithm (for dynamic chord generation)
 
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
@@ -23,12 +27,10 @@ const tuneSelector = document.querySelector('#tuneSelector');
 
 // Define Chord Viewer Popover elements
 
-const chordViewerPopover = document.querySelector('[data-popover="chord-viewer"]');
-const chordViewerTitle = document.querySelector('[data-popover="title"]');
-const chordViewerChords = document.querySelector('[data-chords="container"]');
-const chordViewerGui = document.querySelectorAll('[data-controls]');
-const chordViewerSlider = document.querySelector('[data-controls="slider"]');
-const chordViewerThemeBtns = document.querySelectorAll('[data-controls="theme-btn"]');
+const chordViewerDialog = document.querySelector('[data-chord-viewer="dialog"]');
+const chordViewerTitle = document.querySelector('[data-chord-viewer="title"]');
+const chordViewerChords = document.querySelector('[data-chord-viewer="chords-container"]');
+const chordViewerSlider = document.querySelector('[data-controls="chord-viewer-slider"]');
 
 // Define initial Chord Popover slider settings
 
@@ -55,7 +57,7 @@ const maxWTops = 90; // Highest max-width value for chords (%)
 
 export function openChordViewer(setChords, tuneChords) {
   
-  const isDynamicChordsMode = +localStorage?.chordViewerAllowDynamicChords;
+  const isDynamicChordsMode = isLocalStorageOk()? +localStorage.chordViewerAllowDynamicChords : false;
 
   if (!setChords && !tuneChords && !isDynamicChordsMode) {
 
@@ -172,7 +174,7 @@ export function openChordViewer(setChords, tuneChords) {
     loadChordsToPopover([tuneMatch], "chords-tune");
   }
 
-  chordViewerPopover.showPopover();
+  chordViewerDialog.showModal();
   initPopoverSlider();
 }
 
@@ -184,9 +186,9 @@ export function openChordViewer(setChords, tuneChords) {
 
 export function initChordViewer() {
 
-  if (!chordViewerPopover) return;
+  if (!chordViewerDialog) return;
 
-  chordViewerPopover.addEventListener('click', handleChordViewerClick);
+  chordViewerDialog.addEventListener('click', handleChordViewerClick);
 }
 
 // Handle clicks on interactable Chord Viewer elements
@@ -197,15 +199,21 @@ function handleChordViewerClick(event) {
 
   if (!actionTrigger) return;
 
+  const chordViewerGui = chordViewerDialog.querySelectorAll('[data-controls]');
+  const chordViewerThemeBtns = chordViewerDialog.querySelectorAll('[data-controls="theme-btn"]');
+
   const elAction = actionTrigger.dataset.action;
 
   if (elAction === 'reset-slider') {
 
-    chordViewerPopover.style.cssText = ''
+    chordViewerDialog.style.cssText = ''
 
-    localStorage.removeItem('chordViewerSliderFontSizeValue');
-    localStorage.removeItem('chordViewerSliderLineWidthValue');
-    localStorage.removeItem('chordViewerSliderMaxWidthValue');
+    if (isLocalStorageOk()) {
+
+      localStorage.removeItem('chordViewerSliderFontSizeValue');
+      localStorage.removeItem('chordViewerSliderLineWidthValue');
+      localStorage.removeItem('chordViewerSliderMaxWidthValue');
+    }
 
     initPopoverSlider();
   
@@ -225,40 +233,40 @@ function handleChordViewerClick(event) {
 
     chordViewerGui.forEach(guiElem => {
 
-      if (guiElem === actionTrigger) return;
+      if (guiElem === actionTrigger || guiElem.dataset.controls === "btn-x") return;
 
-      if (guiElem.hasAttribute("disabled")) {
+      if (guiElem.hasAttribute("hidden")) {
 
-        guiElem.removeAttribute("disabled");
-        guiElem.removeAttribute("style", "visibility: hidden;");
+        ariaShowMe(guiElem);
 
       } else {
 
-        guiElem.setAttribute("disabled", "");
-        guiElem.setAttribute("style", "visibility: hidden;");
+        ariaHideMe(guiElem);
       }
     });
   }
 
   if (elAction === 'toggle-theme') {
 
-    chordViewerPopover.className = actionTrigger.dataset.theme;
+    chordViewerDialog.className = actionTrigger.dataset.theme;
 
     chordViewerThemeBtns.forEach(themeBtn => {
 
       if (themeBtn.classList.contains(`btn-${actionTrigger.dataset.theme}`)) {
 
+        themeBtn.removeAttribute("inert");
         ariaShowMe(themeBtn);
         themeBtn.focus();
       }
     });
 
     ariaHideMe(actionTrigger);
+    actionTrigger.setAttribute("inert", "");
   }
 
   if (elAction === 'close-chord-viewer') {
 
-    chordViewerPopover.hidePopover();
+    chordViewerDialog.close();
     return;
   }
 }
@@ -267,26 +275,38 @@ function handleChordViewerClick(event) {
 
 function initPopoverSlider() {
 
-  if (!localStorage.chordViewerSliderFontSizeValue) {
+  if (isLocalStorageOk()) {
 
-    localStorage.chordViewerSliderFontSizeValue = vInitVal;
-  }
+    if (!localStorage.chordViewerSliderFontSizeValue) {
 
-  if (!localStorage.chordViewerSliderLineWidthValue) {
+      localStorage.chordViewerSliderFontSizeValue = vInitVal;
+    }
 
-    localStorage.chordViewerSliderLineWidthValue = lineWInit;
-  }
+    if (!localStorage.chordViewerSliderLineWidthValue) {
 
-  if (!localStorage.chordViewerSliderMaxWidthValue) {
+      localStorage.chordViewerSliderLineWidthValue = lineWInit;
+    }
 
-    localStorage.chordViewerSliderMaxWidthValue = maxWInit;
+    if (!localStorage.chordViewerSliderMaxWidthValue) {
+
+      localStorage.chordViewerSliderMaxWidthValue = maxWInit;
+    }
   }
 
   // Set default slider values to be applied on load
 
-  const valueV = localStorage.chordViewerSliderFontSizeValue;
-  const lineWidth = localStorage.chordViewerSliderLineWidthValue;
-  const maxWidth = localStorage.chordViewerSliderMaxWidthValue;
+  let valueV = vInitVal;
+  let lineWidth = lineWInit;
+  let maxWidth = maxWInit;
+
+  // Restore slider values from localStorage (if available)
+
+  if (isLocalStorageOk()) {
+
+    valueV = localStorage.chordViewerSliderFontSizeValue;
+    lineWidth = localStorage.chordViewerSliderLineWidthValue;
+    maxWidth = localStorage.chordViewerSliderMaxWidthValue;
+  }
 
   // Get font-size value modifier (equals to 1 if root font size is 16px)
 
@@ -296,10 +316,10 @@ function initPopoverSlider() {
 
   chordViewerSlider.value = valueV;
 
-  chordViewerPopover.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
-  chordViewerPopover.style.setProperty("--chords-line-height", `${valueV}%`);
-  chordViewerPopover.style.setProperty("--chords-max-width", `${maxWidth}%`);
-  chordViewerPopover.style.setProperty("--chords-line-width", `${lineWidth}rem`); // rem!
+  chordViewerDialog.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
+  chordViewerDialog.style.setProperty("--chords-line-height", `${valueV}%`);
+  chordViewerDialog.style.setProperty("--chords-max-width", `${maxWidth}%`);
+  chordViewerDialog.style.setProperty("--chords-line-width", `${lineWidth}rem`); // rem!
 
   // Listen to slider input events
 
@@ -481,9 +501,12 @@ function appChordSliderHandler(event) {
         valueV > vInitVal? Math.round((valueV - vInitVal) * ((lineWMax - lineWInit) / (vMax - vInitVal))) :
                            Math.round((valueV - vInitVal) * ((lineWInit - lineWMin) / (vInitVal - vMin)));
 
-      localStorage.chordViewerSliderFontSizeValue = valueV;
-      localStorage.chordViewerSliderMaxWidthValue = maxWInit + maxLineWAddend;
-      localStorage.chordViewerSliderLineWidthValue = lineWInit + lineWAddend;
+      if (isLocalStorageOk()) {
+
+        localStorage.chordViewerSliderFontSizeValue = valueV;
+        localStorage.chordViewerSliderMaxWidthValue = maxWInit + maxLineWAddend;
+        localStorage.chordViewerSliderLineWidthValue = lineWInit + lineWAddend;
+      }
 
       // Get font-size value modifier (equals to 1 if root font size is 16px)
 
@@ -491,10 +514,10 @@ function appChordSliderHandler(event) {
 
       // Set adjusted style property values for chords
 
-      chordViewerPopover.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
-      chordViewerPopover.style.setProperty("--chords-line-height", `${valueV}%`);
-      chordViewerPopover.style.setProperty("--chords-max-width", `${maxWInit + maxLineWAddend}%`);
-      chordViewerPopover.style.setProperty("--chords-line-width", `${lineWInit + lineWAddend}rem`);
+      chordViewerDialog.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
+      chordViewerDialog.style.setProperty("--chords-line-height", `${valueV}%`);
+      chordViewerDialog.style.setProperty("--chords-max-width", `${maxWInit + maxLineWAddend}%`);
+      chordViewerDialog.style.setProperty("--chords-line-width", `${lineWInit + lineWAddend}rem`);
     }
   }
 }
@@ -982,32 +1005,41 @@ function getValidChordsArray(chordBookJson) {
 // UTILITY FUNCTIONS
 //////////////////////////////////
 
+// Check if localStorage is available and writable
+
+function isLocalStorageOk() {
+
+  return storageAvailable('localStorage');
+}
+
 // Check if root font-size value differs from default (16px)
 // Get root font-size modifier for chord display calculations
 
 function getRootFontSizeModifier(baseFontSize) {
 
   const defaultFontSize = baseFontSize || 16;
-  
+
   const rootFontSizeVal = window.getComputedStyle(document.documentElement).fontSize;
 
-  // Return modifier if font-size value does not match base font size
+  let fontSizeModifier;
+
+  // Calculate modifier if font-size value does not match base font size
 
   if (rootFontSizeVal && rootFontSizeVal !== `${defaultFontSize}px`) {
 
-    const fontSizeModifier = rootFontSizeVal.slice(0, -2) / 16;
-
-    return fontSizeModifier;
+    fontSizeModifier = rootFontSizeVal.slice(0, -2) / 16;
   }
 
-  // Return 1 if font-size value matches base font size
+  // Return modifier or 1 if font-size value matches base font size
 
-  return 1;
+  return fontSizeModifier || 1;
 }
 
 // Hide an element via attribute hidden and set aria-hidden to true
 
 function ariaHideMe(el) {
+
+  if (el.hasAttribute("inert")) return;
 
   el.setAttribute("hidden", "");
   el.setAttribute("aria-hidden", "true");
@@ -1017,11 +1049,10 @@ function ariaHideMe(el) {
 
 function ariaShowMe(el) {
 
-  if (!el.hasAttribute("inert")) {
+  if (el.hasAttribute("inert")) return;
     
-      el.removeAttribute("hidden");
-      el.removeAttribute("aria-hidden");
-  }
+  el.removeAttribute("hidden");
+  el.removeAttribute("aria-hidden");
 }
 
 ///////////////////////////////////

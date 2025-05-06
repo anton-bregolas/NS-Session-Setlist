@@ -1,6 +1,7 @@
-import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, loadTuneBookItem, 
+import { storageAvailable } from './scripts-3p/storage-available/storage-available.js';
+import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, displayOptions,
          restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, 
-         handleSelectorLabels, resetViewportWidth, getViewportWidth, getViewportHeight } from './scripts-abc-tools.js';
+         resetViewportWidth, getViewportWidth, getViewportHeight, tuneFrame } from './scripts-abc-tools.js';
 import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
@@ -16,16 +17,17 @@ import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: 2025-05-03
+// NS Session DB date: 2025-05-05
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const APP_VERSION = "0.9.7";
+const APP_VERSION = "0.9.8";
 
 // Define Global Variables
 
 let tuneBookSetting = 1; // Tunebook loads Setlist by default
 let isTuneBookInitialized = false; // If false, opening Tunebook will initialise ABC Tools and fetch Session DB data
 let isManualTunebookModeOn = false; // If true, Tunebook footer and Tunelist / Setlist switch buttons are hidden
+let lastTuneBookOpened = 1; // Keep track of the latest Tunebook opened (fallback global variable)
 let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
 
 // Define Session DB items
@@ -39,7 +41,7 @@ export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS
 export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
 export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-tunes.json";
 
-// Define Main Page elements
+// Define common app elements
 
 const allCustomBtn = document.querySelectorAll('.nss-btn');
 const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
@@ -53,6 +55,8 @@ export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#nss-tunebook-title');
 const appNavTitle = document.querySelector('#nss-appnav-title');
 const appHeader = document.querySelector('#nss-app-header');
+
+const abcContainer = document.querySelector('.nss-abctools-embed');
 
 // Define App Menu elements
 
@@ -110,11 +114,13 @@ async function launchTuneBook(dataType, triggerBtn) {
 
       isTuneBookInitialized = true;
 
-      if (window.localStorage) {
+      lastTuneBookOpened = tuneBookSetting;
+
+      if (localStorageOk()) {
 
         localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
 
-        if (!localStorage?.tuneBookInitialized_NSSSAPP) {
+        if (!localStorage.tuneBookInitialized_NSSSAPP) {
 
           displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "status");
           localStorage.tuneBookInitialized_NSSSAPP = 1;
@@ -123,7 +129,8 @@ async function launchTuneBook(dataType, triggerBtn) {
 
       return;
 
-    } else if (+localStorage?.tuneBookLastOpened_NSSSAPP !== tuneBookSetting) {
+    } else if ((localStorageOk() && +localStorage.tuneBookLastOpened_NSSSAPP !== tuneBookSetting) ||
+              (!localStorageOk() && lastTuneBookOpened !== tuneBookSetting)) {
 
       refreshTuneBook();
     
@@ -164,7 +171,7 @@ function switchTuneBookType(dataType) {
 
   updateTuneBookTitles(dataType);
 
-  // Switch between Setlist and Tunelist interface
+  // Tunebook Type Switcher: Switch between Setlist and Tunelist interface
 
   if (dataType === "setlist" || dataType === "tunelist") {
 
@@ -181,18 +188,23 @@ function switchTuneBookType(dataType) {
 
   // Save last opened Tunebook section
 
-  if (window.localStorage) {
+  if (localStorageOk()) {
 
     localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
   }
 
-  // Switch to Launch Screen by default
+  lastTuneBookOpened = tuneBookSetting;
+
+  // Launch Button: Switch to Launch Screen by default
 
   resetViewportWidth();
   hideAllSectionsEls();
   showLaunchers();
   appHeader.removeAttribute("style");
-  document.querySelector('#nss-launch-setlist').focus();
+
+  const lastTuneBookBtn = lastTuneBookOpened === 1? "#nss-launch-setlist" : "#nss-launch-tunelist";
+
+  document.querySelector(lastTuneBookBtn).focus();
 }
 
 // Load previous or next Tunebook item depending on data-load type
@@ -203,21 +215,90 @@ function switchTuneBookItem(loadDir) {
 
   const currentTuneIndex = tuneSelector.selectedIndex;
 
-  let targetTuneIndex = 
-    loadDir === "prev"? currentTuneIndex - 1 : currentTuneIndex + 1;
+  const stepVal = loadDir === "prev"? -1 : 1;
 
-  if (targetTuneIndex > currentTuneBook.length) {
+  let targetTuneIndex = currentTuneIndex + stepVal;
 
-    targetTuneIndex = 1;
+  // Loop to list's end or to the first Tunebook item if switch reaches boundary
 
-  } else if (targetTuneIndex < 1) {
+  if (targetTuneIndex < 1) {
 
     targetTuneIndex = currentTuneBook.length;
+
+  } else if (targetTuneIndex > currentTuneBook.length) {
+
+    targetTuneIndex = 1;
   }
 
+  // Check if target Tunebook item is disabled by filters, look for the closest active item
+
+  if (tuneSelector.options[targetTuneIndex]?.disabled) {
+
+    let switchAttempts = 0;
+
+    while (tuneSelector.options[targetTuneIndex].disabled && switchAttempts < currentTuneBook.length) {
+
+      targetTuneIndex += stepVal;
+    
+      if (targetTuneIndex < 1) {
+
+        targetTuneIndex = currentTuneBook.length;
+    
+      } else if (targetTuneIndex > currentTuneBook.length) {
+    
+        targetTuneIndex = 1;
+      }
+
+      switchAttempts++;
+    }
+
+    // Return if the loaded Tunebook item is the only filtered item
+
+    if (switchAttempts === currentTuneBook.length) return;
+  }
+
+  // Load new Tunebook item (reload if single filtered item remains)
+
   tuneSelector.selectedIndex = targetTuneIndex;
-  
   tuneSelector.dispatchEvent(new Event('change'));
+}
+
+// Zoom in or zoom out of Tunebook item depending on data-load type
+
+function zoomTuneBookItem(zoomDir) {
+
+  const zoomValue = zoomDir === "zoom-in"? 10 : -10;
+
+  // Desktop Mode
+
+  if (!checkIfMobileMode()) {
+
+    const currentPageZoom = abcContainer.style.zoom || "100%";
+
+    let newPageZoom = +currentPageZoom.slice(0, -1) + zoomValue;
+
+    if (newPageZoom > 100 || newPageZoom < 50) return;
+
+    abcContainer.style.zoom = `${newPageZoom}%`;
+
+    if (localStorageOk()) localStorage.tuneBookFullScreenZoom = `${newPageZoom}%`;
+    
+    return;
+  }
+
+  // Mobile Mode
+
+  const currentAbcFrameWidth = tuneFrame.style.width || "100%";
+
+  let newAbcFrameWidth = +currentAbcFrameWidth.slice(0, -1) + zoomValue;
+
+  if (newAbcFrameWidth > 100 || newAbcFrameWidth < 30) return;
+
+  tuneFrame.style.width = `${newAbcFrameWidth}%`;
+
+  if (localStorageOk()) localStorage.tuneBookFullScreenWidth = `${newAbcFrameWidth}%`;
+
+  return;
 }
 
 // Hide Launch Screen elements
@@ -284,7 +365,7 @@ function switchTunebookMode(targetMode) {
 
   if (targetMode === "mobile-switch") {
 
-    docBody.setAttribute("data-mode", "mobile");
+    docBody.dataset.mode = "mobile";
     
     displayNotification("Mobile mode enabled: Double tap on tune to play, long press to rewind", "success");
 
@@ -293,7 +374,7 @@ function switchTunebookMode(targetMode) {
 
   if (targetMode === "desktop-switch") {
 
-    docBody.setAttribute("data-mode", "desktop");
+    docBody.dataset.mode = "desktop";
     
     displayNotification("Desktop mode enabled: Navigate between items in header, use ABC Tools buttons for playback", "success");
 
@@ -304,13 +385,91 @@ function switchTunebookMode(targetMode) {
   handleSelectorLabels("init");
 }
 
+// Hide or show GUI elements depending on toggle element type
+
+function toggleFullScreenGui(toggleEl) {
+
+  let guiElsToToggle;
+
+  if (toggleEl === "toggle-gui-fullscreen") {
+
+    guiElsToToggle = abcContainer.querySelectorAll('nss-iframe-gui-container');
+
+    if (abcContainer.style.getPropertyValue("--fullscreen-gui-display") === "none") {
+
+      abcContainer.style.setProperty("--fullscreen-gui-display", "flex");
+
+      if (localStorageOk()) localStorage.tuneBookFullScreenGuiDisplay = "flex";
+
+      return;
+    } 
+
+    abcContainer.style.setProperty("--fullscreen-gui-display", "none");
+
+    if (localStorageOk()) localStorage.tuneBookFullScreenGuiDisplay = "none";
+    
+    return;
+  }
+
+  if (!guiElsToToggle) return;
+
+  guiElsToToggle.forEach(guiEl => {
+
+    if (guiEl.dataset.load === toggleEl || guiEl.dataset.load === "exit-fullscreen") return;
+
+    if (guiEl.hasAttribute("hidden")) {
+
+      ariaShowMe(guiEl);
+      return;
+    }
+
+    ariaHideMe(guiEl);
+  });
+}
+
+// Exit Full Screen mode
+
+async function exitFullScreenMode() {
+
+  const exitFullScreen = 
+    document.exitFullscreen || 
+    document.webkitExitFullscreen || 
+    document.mozCancelFullScreen || 
+    document.msExitFullscreen;
+
+  try {
+
+    await exitFullScreen.call(document);
+
+    document.querySelector('#fullScreenButton').focus();
+
+  } catch {
+
+    console.warn(`NS Session App:\n\nTrying to exit fullscreen while not in Full Screen mode`);
+  }
+
+  return;
+}
+
 ////////////////////////////////
-// POPOVER LAUNCHERS
+// POPOVER & DIALOG LAUNCHERS
 ///////////////////////////////
 
 // Launch a Popover Options menu depending on dataType
 
 export function openSettingsMenu(dataType) {
+
+  if (dataType === "fullscreen-view") {
+    
+    openChordViewer(setChords, tuneChords);
+    return;
+  }
+
+  if (!localStorageOk()) {
+
+    displayNotification("Enable Local Storage or change browser mode to use custom settings", "warning");
+    return;
+  }
 
   if (dataType === "app-options") {
 
@@ -324,11 +483,6 @@ export function openSettingsMenu(dataType) {
     printLocalStorageSettings(abcEncoderDefaults);
 
     appOptionsPopover.showPopover();
-  }
-
-  if (dataType === "fullscreen-popover") {
-    
-    openChordViewer(setChords, tuneChords);
   }
 }
 
@@ -392,7 +546,7 @@ export function checkIfTunebookOpen() {
 
   let isTuneBookOpen = false;
 
-  const abcContainer = document.querySelector('.nss-abctools-embed');
+  // const abcContainer = document.querySelector('.nss-abctools-embed');
 
   if (abcContainer && !abcContainer.hasAttribute("hidden")) {
 
@@ -406,7 +560,7 @@ export function checkIfTunebookOpen() {
 
 export function checkIfMobileMode() {
 
-  return document.querySelector('body').getAttribute("data-mode") === "mobile";
+  return document.querySelector('body').dataset.mode === "mobile";
 }
 
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
@@ -414,6 +568,8 @@ export function checkIfMobileMode() {
 export function refreshTuneBook(isSoftRefresh) {
 
   const currentTuneBook = checkTuneBookSetting() === 1? tuneSets : tuneList;
+
+  // Repopulate Tunebook selectors and reset all menus and active filters
 
   if (!isSoftRefresh) {
 
@@ -426,17 +582,29 @@ export function refreshTuneBook(isSoftRefresh) {
     console.log(`NS Session App:\n\nTunebook has been refreshed`);
   }
 
-  if (+localStorage?.abcToolsSaveAndRestoreTunes === 1
-      && ((currentTuneBook === tuneSets && localStorage?.lastTuneBookSet_NSSSAPP)
-      || (currentTuneBook === tuneList && localStorage?.lastTuneBookTune_NSSSAPP))) {
+  // Simply load the first Tunebook item if localStorage is unavailable
+
+  if (!localStorageOk()) {
+
+    tuneSelector.selectedIndex = 1;
+    tuneSelector.dispatchEvent(new Event('change'));
+    return;
+  }
+
+  // Load the last saved Tunebook item by Tunebook type
+
+  if (+localStorage.abcToolsSaveAndRestoreTunes === 1
+      && ((currentTuneBook === tuneSets && localStorage.lastTuneBookSet_NSSSAPP)
+      || (currentTuneBook === tuneList && localStorage.lastTuneBookTune_NSSSAPP))) {
 
     restoreLastTunebookItem();
     return;
   }
   
-  if (+localStorage?.abcToolsAllowTuneAutoReload === 1) {
+  if (+localStorage.abcToolsAllowTuneAutoReload === 1) {
 
-    loadTuneBookItem(currentTuneBook, 0);
+    tuneSelector.selectedIndex = 1;
+    tuneSelector.dispatchEvent(new Event('change'));
   }
 }
 
@@ -444,10 +612,12 @@ export function refreshTuneBook(isSoftRefresh) {
 
 export function resetTuneBookMenus() {
 
-  if (window.localStorage) {
+  if (localStorageOk()) {
 
     localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
   }
+
+  lastTuneBookOpened = tuneBookSetting;
 
   while (tuneSelector.children.length > 1) {
 
@@ -523,7 +693,7 @@ async function tuneDataFetch() {
 
         console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
         
-        if (+localStorage?.tuneBookShowStatusReport === 1) {
+        if (localStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
 
           displayNotification(`Session DB v.${APP_VERSION} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
         }
@@ -650,6 +820,8 @@ export function clearData() {
 
 function ariaHideMe(el) {
 
+  if (el.hasAttribute("inert")) return;
+
   el.setAttribute("hidden", "");
   el.setAttribute("aria-hidden", "true");
 }
@@ -658,11 +830,10 @@ function ariaHideMe(el) {
 
 function ariaShowMe(el) {
 
-  if (!el.hasAttribute("inert")) {
+  if (el.hasAttribute("inert")) return;
     
-      el.removeAttribute("hidden");
-      el.removeAttribute("aria-hidden");
-  }
+  el.removeAttribute("hidden");
+  el.removeAttribute("aria-hidden");
 }
 
 ////////////////////////////////
@@ -682,7 +853,7 @@ async function appButtonHandler() {
 
   // Mode Togglers: Switch between Desktop and Mobile Tunebook mode
 
-  if (this.hasAttribute('data-controls') && this.dataset.type) {
+  if (this.dataset.controls && this.dataset.controls === "mode" && this.dataset.type) {
 
     switchTunebookMode(this.dataset.type);
     return;
@@ -732,6 +903,33 @@ async function appButtonHandler() {
       return;
     }
 
+    // Zoom in and zoom out
+
+    if (this.classList.contains('nss-zoom-btn')) {
+
+      zoomTuneBookItem(this.dataset.load);
+      
+      return;
+    }
+
+    // GUI switchers
+
+    if (this.dataset.load.startsWith("toggle-gui")) {
+
+      toggleFullScreenGui(this.dataset.load);
+
+      return;
+    }
+
+    // Full Screen switchers
+
+    if (this.dataset.load === "exit-fullscreen") {
+
+      exitFullScreenMode();
+      
+      return;
+    }
+
     // Tunebook switchers
 
     switchTuneBookType(this.dataset.load);
@@ -766,7 +964,6 @@ async function appButtonHandler() {
 
     const switchContainer = document.querySelector('.nss-switch-container');
     const allSwitchBtns = switchContainer.querySelectorAll('.nss-switch-btn');
-    const abcToolsFrame = document.querySelector('#tuneFrame');
 
     ariaHideMe(parentEl);
 
@@ -785,8 +982,6 @@ async function appButtonHandler() {
 
     document.querySelector('#nss-tunebook-exit').focus();
     parentEl.setAttribute("inert", "");
-
-    abcToolsFrame.setAttribute("style", "width: 100svw; height: calc(100svh - 7.375rem - 0.25rem);");
 
     displayNotification("Compact mode enabled: Top left button to exit, refresh app to reset", "success");
 
@@ -816,12 +1011,14 @@ async function appButtonHandler() {
       if (themeBtn.parentElement.classList === appSectionHeader &&
           themeBtn.classList.contains(`nss-btn-${this.dataset.theme}`)) {
 
+        themeBtn.removeAttribute("inert");
         ariaShowMe(themeBtn);
         themeBtn.focus();
       }
     });
 
     ariaHideMe(this);
+    this.setAttribute("inert", "");
   }
 }
 
@@ -829,113 +1026,279 @@ async function appButtonHandler() {
 
 async function appDropDownHandler(event) {
 
-  if (event.type === 'change' && this === filterOptions) {
+  if (event.type === 'change') {
+    
+    if (this === filterOptions) {
 
-    handleSelectorLabels("select", filterOptions.id, filterOptions.selectedIndex);
+      handleSelectorLabels("select", filterOptions, filterOptions.selectedIndex);
 
-    const filterId = filterOptions.value;
+      filterTuneBook();
+    }
+  }
 
-    if (filterId === "-1") return;
+  if (getViewportWidth() > 768) return;
 
-    const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
-    const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
-    const activeFilter = filterOptions.querySelector('option:checked')
-    const activeFilterGroup = activeFilter.closest('optgroup');
+  if (event.type === 'mousedown' || event.type === 'keydown' || event.type === 'touchstart') {
 
-    if (filterId === "0") {
+    // console.log(event.type);
 
-      resetTuneBookFilters();
+    handleSelectorLabels("clearone", this);
+  }
 
-      tuneSelector.selectedIndex = 0;
+  if (event.type === 'blur' || event.type === 'keyup' || event.type === 'touchend') {
 
-      filterOptions.value = "-1";
+    // console.log(event.type);
 
-      tuneSelector.dispatchEvent(new Event('change'));
+    handleSelectorLabels("setone", this);
+  }
+}
+
+// Filter Tune Selector by selected Tune Type or Set Leader
+
+function filterTuneBook() {
+
+  const filterId = filterOptions.value;
+
+  if (filterId === "-1") return;
+
+  const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
+  const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
+  const activeFilter = filterOptions.querySelector('option:checked')
+  const activeFilterGroup = activeFilter.closest('optgroup');
+
+  if (filterId === "0") {
+
+    resetTuneBookFilters();
+
+    tuneSelector.selectedIndex = 0;
+
+    filterOptions.value = "-1";
+
+    tuneSelector.dispatchEvent(new Event('change'));
+    
+    filterOptions.dispatchEvent(new Event('change'));
+
+    console.log("NS Session App:\n\nTunebook filters cleared");
+
+    displayNotification("Tunebook filters cleared", "status");
+
+    tuneSelector.focus();
+
+    return;
+  }
+
+  if (filterId && activeFilterGroup.label.includes("Tune Type")) {
+
+    [tuneGroups, tuneOptions].forEach(tuneSelectorItemCat => {
+
+      tuneSelectorItemCat.forEach(item => {
+
+        if (filterId !== item.dataset.tunetype) {
+
+          item.setAttribute("hidden", "");
+          item.setAttribute("disabled", "");
+
+        } else if (item.hasAttribute("disabled")) {
+
+          item.removeAttribute("disabled");
+          item.removeAttribute("hidden");
+        }
+      });
+    });
+  }
+
+  if (filterId && activeFilterGroup.label.includes("Set Leader")) {
+
+    tuneOptions.forEach(tuneOption => {
+
+      if (!tuneOption.dataset.leaders.split(', ').includes(filterId)) {
+
+        tuneOption.setAttribute("hidden", "");
+        tuneOption.setAttribute("disabled", "");
+
+      } else if (tuneOption.hasAttribute("disabled")) {
+
+        tuneOption.removeAttribute("disabled");
+        tuneOption.removeAttribute("hidden");
+      }
+    });
+
+    tuneGroups.forEach(tuneGroup => {
+
+      tuneGroup.setAttribute("hidden", "");
+      tuneGroup.setAttribute("disabled", "");
+
+      tuneGroup.querySelectorAll('option').forEach(option => {
+
+        if (!option.hasAttribute("disabled")) {
+
+          tuneGroup.removeAttribute("disabled");
+          tuneGroup.removeAttribute("hidden");
+
+          return;
+        }
+      });
+    });
+  }
+
+  tuneSelector.selectedIndex = 0;
+
+  tuneSelector.dispatchEvent(new Event('change'));
+
+  console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
+
+  displayNotification(`Tunebook filtered by "${filterId}"`, "status")
+
+  tuneSelector.focus();
+}
+
+// Handle automatic renaming of Tunebook selector labels in Mobile Mode
+
+export function handleSelectorLabels(actionType, parentSelector, selectedIndex) {
+
+  const body = document.querySelector('body');
+
+  if (body.dataset.mode === "desktop" && actionType !== "init") return;
+
+  const filterHeader = filterOptions.options[0];
+  const tunesHeader = tuneSelector.options[0];
+  const tabsHeader = displayOptions.options[0];
+
+  const tuneBookSelectors = ['filterOptions', 'tuneSelector', 'displayOptions'];
+  const tuneBookSelectorHeaders = [filterHeader, tunesHeader, tabsHeader];
+
+  const newSelectorLabels = ['✨', '🎼', '🎹'];
+
+  if (actionType === "init") {
+
+    if (getViewportWidth() > 768 || body.dataset.mode === "desktop") {
       
-      filterOptions.dispatchEvent(new Event('change'));
-  
-      console.log("NS Session App:\n\nTunebook filters cleared");
+      removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
+      return;
+    }
 
-      displayNotification("Tunebook filters cleared", "status");
+    if (body.dataset.mode === "mobile") {
+      
+      setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels);
+      return;
+    }
+  }
 
-      tuneSelector.focus();
+  if (actionType === "resize") {
+
+    if (getViewportWidth() > 768 &&
+      (filterHeader.hasAttribute('label') || 
+      tunesHeader.hasAttribute('label') || 
+      tabsHeader.hasAttribute('label'))) {
+
+      removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
+      return;
+    }
+
+    if (getViewportWidth() <= 768) {
+
+      if (filterHeader.hasAttribute('label') && 
+        tunesHeader.hasAttribute('label') && 
+        tabsHeader.hasAttribute('label')) {
+
+        return;
+      }
+
+      setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels);
+      return;
+    }
+
+    return;
+  }
+
+  const selectorIndex = tuneBookSelectors.indexOf(parentSelector.id);
+  const selectedOption = parentSelector.selectedOptions[0].label;
+  const selectorLabelTxt = parentSelector.options[0].textContent;
+  const selectorLabelPic = newSelectorLabels[selectorIndex];
+
+  if (actionType === "select") {
+
+    if (parentSelector.style.fontSize) {
+
+      if (selectedIndex !== 0 || getViewportWidth() > 768) {
+
+        parentSelector.style.removeProperty('font-size');
+        return
+      }
 
       return;
     }
 
-    if (filterId && activeFilterGroup.label.includes("Tune Type")) {
+    if (selectedIndex !== 0 || body.dataset.mode === "desktop" || getViewportWidth() > 768) return;
 
-      [tuneGroups, tuneOptions].forEach(tuneSelectorItemCat => {
+    parentSelector.style.fontSize = "2.4rem";
 
-        tuneSelectorItemCat.forEach(item => {
-
-          if (filterId !== item.dataset.tunetype) {
-  
-            item.setAttribute("hidden", "");
-            item.setAttribute("disabled", "");
-  
-          } else if (item.hasAttribute("disabled")) {
-  
-            item.removeAttribute("disabled");
-            item.removeAttribute("hidden");
-          }
-        });
-      });
-    }
-
-    if (filterId && activeFilterGroup.label.includes("Set Leader")) {
-
-      tuneOptions.forEach(tuneOption => {
-
-        if (!tuneOption.dataset.leaders.split(', ').includes(filterId)) {
-
-          tuneOption.setAttribute("hidden", "");
-          tuneOption.setAttribute("disabled", "");
-
-        } else if (tuneOption.hasAttribute("disabled")) {
-
-          tuneOption.removeAttribute("disabled");
-          tuneOption.removeAttribute("hidden");
-        }
-      });
-
-      tuneGroups.forEach(tuneGroup => {
-
-        tuneGroup.setAttribute("hidden", "");
-        tuneGroup.setAttribute("disabled", "");
-
-        tuneGroup.querySelectorAll('option').forEach(option => {
-
-          if (!option.hasAttribute("disabled")) {
-
-            tuneGroup.removeAttribute("disabled");
-            tuneGroup.removeAttribute("hidden");
-
-            return;
-          }
-        });
-      });
-    }
-
-    tuneSelector.selectedIndex = 0;
-
-    tuneSelector.dispatchEvent(new Event('change'));
-
-    tuneSelector.focus();
-
-    console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
-
-    displayNotification(`Tunebook filtered by "${filterId}"`, "status")
+    // Fall through >>>>
   }
 
-  // if (event.type === 'click') {
+  if (actionType === "select" || actionType === "setone") {
 
-  //   handleSelectorLabels("select", this.id, 1);
-  // }
+    if (selectedOption === selectorLabelTxt) {
 
-  // if (event.type === 'blur') {
+      setMobileSelectorStyles([parentSelector.id], [parentSelector.options[0]], [selectorLabelPic]);
+    }     
 
-  // }
+    return;
+  }
+
+  if (actionType === "clearone") {
+
+    const selectorHeader = tuneBookSelectorHeaders[selectorIndex];
+
+    removeMobileSelectorStyles([parentSelector.id], [selectorHeader]);
+
+    return;
+  }
+}
+
+// Set selector attributes associated with the mobile mode
+
+function setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels) {
+
+  tuneBookSelectorHeaders.forEach(header => {
+
+    const newLabel = newSelectorLabels[tuneBookSelectorHeaders.indexOf(header)];
+
+    header.setAttribute('label', newLabel);
+  });
+
+  tuneBookSelectors.forEach(selectorId => {
+
+    const selectorEl = document.getElementById(selectorId);
+
+    if (selectorEl.selectedIndex === 0) {
+
+      selectorEl.style.fontSize = "2.4rem";
+    }
+  });
+}
+
+// Clear all selector styles and labels previously set via attributes for mobile mode
+
+function removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders) {
+
+  tuneBookSelectors.forEach(selectorId => {
+
+    const selectorEl = document.getElementById(selectorId);
+    
+    if (selectorEl.style.fontSize) {
+      
+      selectorEl.style.removeProperty('font-size');
+    }
+  });
+
+  tuneBookSelectorHeaders.forEach(header => {
+  
+    if (header.hasAttribute('label')) {
+  
+      header.removeAttribute('label');
+    }
+  });
 }
 
 // Handle app menu adjustments on window resize
@@ -962,6 +1325,10 @@ export function appWindowResizeHandler() {
     document.documentElement.style.removeProperty('font-size');
   }
 
+  // Dynamically switch between desktop and mobile mode until Tunebook is first opened
+
+  if (!isTuneBookInitialized) initTunebookMode();
+
   // Handle Tunebook adjustments >>>
 
   // If Tunebook menu is currently hidden, do nothing
@@ -983,9 +1350,9 @@ export function appWindowResizeHandler() {
 
   if (getViewportWidth() < 870 && !isFixedViewport) {
 
-      resetViewportWidth(870);
-      return;
-  }  
+    resetViewportWidth(870);
+    return;
+  } 
 }
 
 // Handle enter and exit Full Screen events
@@ -996,39 +1363,119 @@ export function handleFullScreenChange() {
 
   if (!checkIfTunebookOpen()) return;
 
-  const abcToolsFrame = document.querySelector('#tuneFrame');
+  const iframeControls = abcContainer.querySelectorAll('[data-controls]');
 
   // Execute right after entering fullscreen
 
   if (document.fullscreenElement) {
 
-    abcToolsFrame.setAttribute("style", "width: 100vw; height: 100vh;");
+    iframeControls.forEach(controlEl => {
+
+      ariaShowMe(controlEl);
+    });
+
+    if (localStorageOk() && localStorage.tuneBookFullScreenGuiDisplay) {
+      
+      abcContainer.style.setProperty("--fullscreen-gui-display", localStorage.tuneBookFullScreenGuiDisplay);
+    }
+
+    // Desktop Mode
+
+    if (!checkIfMobileMode()) {
+     
+      if (localStorageOk() && localStorage.tuneBookFullScreenZoom) {
+
+        abcContainer.style.zoom = localStorage.tuneBookFullScreenZoom;
+      }
+
+      return;
+    }
+
+    // Mobile Mode
+
+    abcContainer.style.width = "100vw";
+    abcContainer.style.height = "100vh";
+    abcContainer.style.backgroundColor = "white";
+    tuneFrame.style.border = "unset";
+      
+    if (localStorageOk() && localStorage.tuneBookFullScreenWidth) {
+
+      tuneFrame.style.width = localStorage.tuneBookFullScreenWidth;
+    }
+
     return;
 
   // Execute right after exiting fullscreen
 
   } else {
 
-    if (isManualTunebookModeOn) {
+    abcContainer.removeAttribute("style");
+    tuneFrame.removeAttribute("style");
 
-      abcToolsFrame.setAttribute("style", "width: 100svw; height: calc(100svh - 7.375rem - 0.25rem);");
-      return;
-    }
+    iframeControls.forEach(controlEl => {
 
-    abcToolsFrame.removeAttribute("style");
+      if (controlEl.dataset.controls === "iframe-nav") {
+
+        if (controlEl.hasAttribute("hidden")) {
+
+          ariaShowMe(controlEl);
+        } 
+
+        return;
+      }
+
+      ariaHideMe(controlEl);
+    });
+
     return;
   }
+}
+
+// Handle all app click events
+
+function appWindowClickHandler(event) {
+
+  const interactableEl = 'button, select, input[type="checkbox"], input[type="radio"]';
+  const triggerEl = event.target.closest(interactableEl);
+
+  if (!triggerEl) return;
+
 }
 
 ////////////////////////////////
 // EVENT LISTENERS & SETTINGS
 ///////////////////////////////
 
+// Initialize custom settings in app menus (requires localStorage)
+
+function initAppSettings() {
+
+  if (!localStorageOk()) {
+  
+    console.warn(`NS Session App:\n\nThis browser does not support Local Storage. Custom settings will not be saved`);
+    displayNotification("This browser does not support Local Storage: Settings won't be saved", "warning");
+    return;
+  }
+
+  initTunebookOptions();
+  initEncoderSettings();
+  initAppCheckboxes();
+}
+
+// Check if localStorage is available and writable
+
+export function localStorageOk() {
+
+  return storageAvailable('localStorage');
+}
+
 // Initialize previously not set local storage item
 
 export function initLocalStorage(locStorName, locStorValue) {
 
-  if (!localStorage?.getItem(locStorName)) {
+  if (!localStorageOk()) return;
+
+  if (!localStorage.getItem(locStorName)) {
 
     localStorage.setItem(locStorName, locStorValue);
   }
@@ -1037,6 +1484,8 @@ export function initLocalStorage(locStorName, locStorValue) {
 // Initialize settings stored in an object using key-value pairs
 
 export function initSettingsFromObject(settingsObj) {
+  
+  if (!localStorageOk()) return;
 
   const locStorKeys = Object.keys(settingsObj);
 
@@ -1050,6 +1499,8 @@ export function initSettingsFromObject(settingsObj) {
 // Mark user-modified settings with a '*' indicator
 
 export function printLocalStorageSettings(settingsObj) {
+
+  if (!localStorageOk()) return;
 
   const locStorKeys = Object.keys(settingsObj);
 
@@ -1081,16 +1532,20 @@ export function initCustomDropDownMenus() {
 
   filterOptions.addEventListener('change', appDropDownHandler);
 
-  // [filterOptions, tuneSelector, displayOptions].forEach(selector => {
+  [filterOptions, tuneSelector, displayOptions].forEach(selector => {
 
-  //   selector.addEventListener('click', appDropDownHandler);
-  //   selector.addEventListener('blur', appDropDownHandler);
-  // });
+    ['mousedown', 'keydown', 'touchstart', 'touchend', 'keyup', 'blur'].forEach(eventType => {
+
+      selector.addEventListener(eventType, appDropDownHandler);
+    });
+  });
 }
 
 // Initialize App & Encoder Settings checkboxes on page load
 
 export function initAppCheckboxes() {
+
+  if (!localStorageOk()) return;
 
   allCheckBoxes.forEach(checkBox => {
 
@@ -1123,13 +1578,13 @@ export function initAppCheckboxes() {
 
         if (checkBox.checked) {
 
-          docBody.setAttribute("data-mode", "mobile");
+          docBody.dataset.mode = "mobile";
 
           displayNotification("Persistent mobile mode enabled", "success");
           
         } else {
       
-          docBody.setAttribute("data-mode", "desktop");
+          docBody.dataset.mode = "desktop";
 
           displayNotification("Persistent mobile mode disabled", "success");
         }
@@ -1142,7 +1597,9 @@ export function initAppCheckboxes() {
 
 function initTunebookRadioBtns() {
 
-  if(+localStorage?.abcToolsFullScreenBtnShowsChords === 1) {
+  if (!localStorageOk()) return;
+
+  if(+localStorage.abcToolsFullScreenBtnShowsChords === 1) {
 
     fullScreenViewChordsRadioBtn.checked = true;
 
@@ -1166,23 +1623,15 @@ function initTunebookRadioBtns() {
 
 function initTunebookMode() {
 
-  if (getViewportWidth() < 870 || +localStorage?.tuneBookAlwaysUseMobileMode === 1) {
+  if (getViewportWidth() < 870 || 
+     (localStorageOk() && +localStorage.tuneBookAlwaysUseMobileMode === 1)) {
 
-    document.querySelector('body').setAttribute("data-mode", "mobile");
+    document.querySelector('body').dataset.mode = "mobile";
 
   } else {
 
-    document.querySelector('body').setAttribute("data-mode", "desktop");
+    document.querySelector('body').dataset.mode = "desktop";
   }
-}
-
-// Add event listeners related to viewport size to the window object
-
-function initWindowEvents() {
-
-  window.addEventListener('resize', appWindowResizeHandler);
-
-  window.addEventListener('beforeunload', () => { resetViewportWidth() });
 }
 
 // Listen to Full Screen mode events in browsers supporting Fullscreen API
@@ -1193,6 +1642,7 @@ function initFullScreenEvents() {
 
   if (!docBody.requestFullscreen && 
       !docBody.webkitRequestFullscreen && 
+      !docBody.mozRequestFullScreen &&
       !docBody.msRequestFullscreen) {
 
     return;
@@ -1213,6 +1663,18 @@ function initPopoverWarning() {
   }
 }
 
+// Add global event listeners to the app's window object
+// Delegate each type of event to specialized handler functions
+
+function initWindowEvents() {
+
+  window.addEventListener('click', appWindowClickHandler);
+
+  window.addEventListener('resize', appWindowResizeHandler);
+
+  window.addEventListener('beforeunload', () => { resetViewportWidth() });
+}
+
 // Initialize event listeners and settings on Launch Screen load
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1220,10 +1682,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initPopoverWarning();
   initWindowEvents();
   initFullScreenEvents();
+  initAppSettings();
   initAppButtons();
-  initTunebookOptions();
-  initEncoderSettings();
-  initAppCheckboxes();
   initTunebookMode();
   initChordViewer();
 

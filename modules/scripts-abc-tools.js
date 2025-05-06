@@ -6,8 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB
-import { initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
-        filterOptions, initCustomDropDownMenus, openSettingsMenu } from "./scripts-ns-sessions.js";
+import { localStorageOk, initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
+        filterOptions, initCustomDropDownMenus, openSettingsMenu, handleSelectorLabels } from "./scripts-ns-sessions.js";
 // Import lz-string compression algorithm
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
@@ -105,44 +105,45 @@ export function initAbcTools() {
 
             loadTuneBookItem(tunes);
         });
-
     }
 
     // Initialize the Tabs & MIDI dropdown menu
     displayOptions.addEventListener('change', loadTabsMidiOptions);
-    
+
     // Restore last saved Tunebook options & trigger last saved item load
 
-    if (+localStorage?.abcToolsSaveAndRestoreTunes === 1
-        && localStorage?.lastTabMidiOption_NSSSAPP 
-        || (localStorage?.lastTuneBookSet_NSSSAPP
-        || localStorage?.lastTuneBookTune_NSSSAPP)) {
+    if (localStorageOk()) {
 
-        restoreTuneBookOptions();
+        if (+localStorage.abcToolsSaveAndRestoreTunes === 1 &&
+            localStorage.lastTabMidiOption_NSSSAPP || 
+            (localStorage.lastTuneBookSet_NSSSAPP ||
+            localStorage.lastTuneBookTune_NSSSAPP)) {
+
+            restoreTuneBookOptions();
+            
+            return;
+        }
+    }
 
     // Load the first Set or Tune into the Tuneframe
 
-    } else {
+    refreshTabsDisplayOptions();
 
-        refreshTabsDisplayOptions();
+    isFirstTuneBookLoad = false;
 
-        if (+localStorage?.abcToolsAllowTuneAutoReload === 1) {
+    setTimeout(function() {
 
-            setTimeout(function() {
+        tuneSelector.selectedIndex = 1;
+        tuneSelector.dispatchEvent(new Event('change'));
 
-                loadTuneBookItem(tunes, 0);
-
-            }, 150);
-
-        }
-    }
+    }, 150);
 }
 
 // Load a Set or a Tune into the Tuneframe
 
 export function loadTuneBookItem(currentTuneBook, itemNumber) {
 
-    handleSelectorLabels("select", tuneSelector.id, tuneSelector.selectedIndex);
+    handleSelectorLabels("select", tuneSelector, tuneSelector.selectedIndex);
 
     let theURL = itemNumber >= 0? currentTuneBook[itemNumber].url : tuneSelector.value;
 
@@ -153,30 +154,39 @@ export function loadTuneBookItem(currentTuneBook, itemNumber) {
         theURL = theURL.replace("&name=", "&noui&name=");
     }
 
-    if (+localStorage?.abcToolsAllowTabStyleChanges === 1) {
+    if (localStorageOk()) {
 
-        theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format="+tabStyle);
+        if (+localStorage.abcToolsAllowTabStyleChanges === 1) {
 
+            theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format="+tabStyle);
+
+        } else {
+
+            theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format=noten");
+        }
+
+        if (+localStorage.abcToolsAllowInstrumentChanges === 1) {
+
+            theURL = injectInstrument(theURL);
+        }
+
+        if (+localStorage.abcToolsAlwaysMuteChords === 1) {
+
+            theURL = muteChordsPlayback(theURL);
+        }
+
+    // Fallback logic if localStorage is unavailable
+    
     } else {
 
-        theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format=noten");
-    }
-
-    if (+localStorage?.abcToolsAllowInstrumentChanges === 1) {
-
-        theURL = injectInstrument(theURL);
-    }
-
-    if (+localStorage?.abcToolsAlwaysMuteChords === 1) {
-
-        theURL = muteChordsPlayback(theURL);
+        theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format="+tabStyle);
     }
 
     tuneFrame.src = theURL;
     lastURL = theURL;
 
     // Save last Tunebook item loaded
-    if (+localStorage?.abcToolsSaveAndRestoreTunes === 1) {
+    if (localStorageOk() && +localStorage.abcToolsSaveAndRestoreTunes === 1) {
 
         setTimeout(() => {
 
@@ -294,7 +304,7 @@ export function sortFilterOptions(currentTuneBook) {
 
 function loadTabsMidiOptions() {
 
-    handleSelectorLabels("select", displayOptions.id, displayOptions.selectedIndex);
+    handleSelectorLabels("select", displayOptions, displayOptions.selectedIndex);
 
     // Set tabStyle setting depending on displayOptions value
 
@@ -371,28 +381,45 @@ function loadTabsMidiOptions() {
 
     // Trigger the (re)loading of Tunebook item
 
-    if (tunes.length > 1) {
+    tunes = checkTuneBookSetting() === 1? tuneSets : tuneList;
+
+    if (tunes.length > 1 && localStorageOk()) {
 
         if (isFirstTuneBookLoad === true 
-            && +localStorage?.abcToolsSaveAndRestoreTunes === 1
-            && ((checkTuneBookSetting() === 1 && localStorage?.lastTuneBookSet_NSSSAPP)
-            || (checkTuneBookSetting() === 2 && localStorage?.lastTuneBookTune_NSSSAPP))) {
+            && +localStorage.abcToolsSaveAndRestoreTunes === 1
+            && ((checkTuneBookSetting() === 1 && localStorage.lastTuneBookSet_NSSSAPP)
+            || (checkTuneBookSetting() === 2 && localStorage.lastTuneBookTune_NSSSAPP))) {
 
             isFirstTuneBookLoad = false;
             restoreLastTunebookItem();
             return;
         }
 
-        if (tuneSelector.value !== "" && +localStorage?.abcToolsAllowTuneAutoReload === 1) {
+        if (tuneSelector.value !== "" && +localStorage.abcToolsAllowTuneAutoReload === 1) {
 
             loadTuneBookItem(tunes);
             return;
         }
 
-        if (+localStorage?.abcToolsAllowTuneAutoReload === 1) {
+        if (+localStorage.abcToolsAllowTuneAutoReload === 1) {
 
-            loadTuneBookItem(tunes, 0);
+            tuneSelector.selectedIndex = 1;
+            tuneSelector.dispatchEvent(new Event('change'));
+            return;
         }
+
+    // Fallback logic if localStorage is unavailable
+
+    } else if (tunes.length > 1) {
+
+        if (tuneSelector.value !== "") {
+            
+            loadTuneBookItem(tunes); 
+            return;
+        }
+
+        tuneSelector.selectedIndex = 1;
+        tuneSelector.dispatchEvent(new Event('change'));
     }
 }
 
@@ -507,7 +534,7 @@ function refreshTabsDisplayOptions() {
 
     displayOptions.selectedIndex = 0;
     displayOptions.value = "-1";
-    handleSelectorLabels("select", displayOptions.id, 0);
+    // handleSelectorLabels("setone", displayOptions);
 }
 
 ////////////////////////////////
@@ -518,38 +545,37 @@ function refreshTabsDisplayOptions() {
 
 function saveLastTuneBookItem() {
 
-    if (window.localStorage) {
+    if (!localStorageOk()) return;
 
-        if (tunes.length > 1) {
+    if (tunes.length > 1) {
 
-            console.log(`NS Session App:\n\nSaving current Tunebook item...`);
+        console.log(`NS Session App:\n\nSaving current Tunebook item...`);
 
-            if (tuneSelector.value !== "") {
+        if (tuneSelector.value !== "") {
 
-                const currentTuneName = tuneSelector.options[tuneSelector.selectedIndex].text;
+            const currentTuneName = tuneSelector.options[tuneSelector.selectedIndex].text;
 
-                checkTuneBookSetting() === 1?
-                localStorage.lastTuneBookSet_NSSSAPP = currentTuneName :
-                localStorage.lastTuneBookTune_NSSSAPP = currentTuneName;
+            checkTuneBookSetting() === 1?
+            localStorage.lastTuneBookSet_NSSSAPP = currentTuneName :
+            localStorage.lastTuneBookTune_NSSSAPP = currentTuneName;
 
-            } else {
+        } else {
 
-                const defaultTuneName = tuneSelector.options[1].text
-                
-                checkTuneBookSetting() === 1?
-                localStorage.lastTuneBookSet_NSSSAPP = defaultTuneName :
-                localStorage.lastTuneBookTune_NSSSAPP = defaultTuneName;
-            }
+            const defaultTuneName = tuneSelector.options[1].text
+            
+            checkTuneBookSetting() === 1?
+            localStorage.lastTuneBookSet_NSSSAPP = defaultTuneName :
+            localStorage.lastTuneBookTune_NSSSAPP = defaultTuneName;
         }
-        
-        const theLastTuneTab = document.getElementById('displayOptions').value;
+    }
+    
+    const theLastTuneTab = document.getElementById('displayOptions').value;
 
-        if (+theLastTuneTab > -1) {
+    if (+theLastTuneTab > -1) {
 
-            console.log(`NS Session App:\n\nSaving Tab & MIDI setting...`);
+        console.log(`NS Session App:\n\nSaving Tab & MIDI setting...`);
 
-            localStorage.lastTabMidiOption_NSSSAPP = theLastTuneTab;
-        }
+        localStorage.lastTabMidiOption_NSSSAPP = theLastTuneTab;
     }
 }
 
@@ -558,52 +584,50 @@ function saveLastTuneBookItem() {
 
 function restoreTuneBookOptions() {
 
-    if (window.localStorage) {
+    if (!localStorageOk()) return;
 
-        let theLastTuneTab = localStorage.lastTabMidiOption_NSSSAPP;
-            
-        if (!theLastTuneTab || theLastTuneTab === "" || theLastTuneTab === "0") {
+    let theLastTuneTab = localStorage.lastTabMidiOption_NSSSAPP;
+        
+    if (!theLastTuneTab || theLastTuneTab === "" || theLastTuneTab === "0") {
 
-            theLastTuneTab = "-1";
-            localStorage.lastTabMidiOption_NSSSAPP = "-1";
-            refreshTabsDisplayOptions();
-        }
-
-        if (theLastTuneTab !== "-1") {
-
-            console.log(`NS Session App:\n\nRestoring last saved Tab & MIDI setting [${theLastTuneTab}]`);
-        }
-
-        displayOptions.value = theLastTuneTab;
-
-        displayOptions.dispatchEvent(new Event('change'));
+        theLastTuneTab = "-1";
+        localStorage.lastTabMidiOption_NSSSAPP = "-1";
+        refreshTabsDisplayOptions();
     }
+
+    if (theLastTuneTab !== "-1") {
+
+        console.log(`NS Session App:\n\nRestoring last saved Tab & MIDI setting [${theLastTuneTab}]`);
+    }
+
+    displayOptions.value = theLastTuneTab;
+
+    displayOptions.dispatchEvent(new Event('change'));
 }
 
 // Restore the last selected Set or Tune from user's local storage
 
 export function restoreLastTunebookItem() {
 
-    if (window.localStorage) {
+    if (!localStorageOk()) return;
 
-        setTimeout(function() {
+    setTimeout(function() {
 
-            if (tunes.length > 1) {
+        if (tunes.length > 1) {
 
-                const theLastTuneName = checkTuneBookSetting() === 1? 
-                                        localStorage?.lastTuneBookSet_NSSSAPP :
-                                        localStorage?.lastTuneBookTune_NSSSAPP;
+            const theLastTuneName = checkTuneBookSetting() === 1? 
+                                    localStorage.lastTuneBookSet_NSSSAPP :
+                                    localStorage.lastTuneBookTune_NSSSAPP;
 
-                    if (theLastTuneName && (theLastTuneName != "")) {
+                if (theLastTuneName && (theLastTuneName != "")) {
 
-                        console.log(`NS Session App:\n\nRestoring last Tunebook item saved:\n\n[${theLastTuneName}]`);
+                    console.log(`NS Session App:\n\nRestoring last Tunebook item saved:\n\n[${theLastTuneName}]`);
 
-                        setSelectedTuneByName(theLastTuneName);
-                    }
+                    setSelectedTuneByName(theLastTuneName);
                 }
+            }
 
-        }, 250);
-    }
+    }, 250);
 }
 
 // Check if Tunebook contains an item with the name passed
@@ -704,43 +728,43 @@ async function handleFullScreenButton() {
 
     if (fullScreenSetting === 0) {
 
-        const abcToolsContainer = document.querySelector('.nss-abctools-embed');
-
-        if (abcToolsContainer.requestFullscreen || 
-            abcToolsContainer.webkitRequestFullscreen || 
-            abcToolsContainer.msRequestFullscreen) {
-
-            try {
-
-                if (abcToolsContainer.requestFullscreen) {
-
-                    await abcToolsContainer.requestFullscreen();
-        
-                } else if (abcToolsContainer.webkitRequestFullscreen) {
-        
-                    await abcToolsContainer.webkitRequestFullscreen();
-        
-                } else if (abcToolsContainer.msRequestFullscreen) {
-        
-                    await abcToolsContainer.msRequestFullscreen();
-                }
-
-            } catch {
-
-                console.log(`NS Session App:\n\nFull Screen mode not available. Opening tune in new window...`);
-                
-                openInAbcTools();
-            }
-
-            return;
-
+        // If Tunebook is in desktop mode on a narrow device, open ABC Tools in new window
         // If browser does not support Fullscreen API, open ABC Tools in new window
 
-        } else {
+        const body = document.querySelector('body');
+
+        if ((body.dataset.mode &&
+            body.dataset.mode === "desktop" &&
+            getViewportWidth() <= 870) ||
+            
+            (!body.requestFullscreen && 
+            !body.webkitRequestFullscreen && 
+            !body.mozRequestFullScreen &&
+            !body.msRequestFullscreen)) {
 
             openInAbcTools();
             return;
         }
+
+        const abcToolsContainer = document.querySelector('.nss-abctools-embed');
+
+        const requestFullScreen = abcToolsContainer.requestFullscreen ||
+                                  abcToolsContainer.webkitRequestFullScreen ||
+                                  abcToolsContainer.mozRequestFullScreen ||
+                                  abcToolsContainer.msRequestFullScreen;
+
+        try {
+
+            await requestFullScreen.call(abcToolsContainer);
+
+        } catch {
+
+            console.log(`NS Session App:\n\nFull Screen mode not available. Opening tune in new window...`);
+            
+            openInAbcTools();
+        }
+
+        return;
     }
 
     // Open Chord Viewer
@@ -775,125 +799,4 @@ function openInAbcTools() {
 export function getLastTunebookUrl() {
 
     return lastURL;
-}
-
-// Handle automatic renaming of Tunebook selector labels in Mobile Mode
-
-export function handleSelectorLabels(actionType, parentSelectorId, selectedIndex) {
-
-    const body = document.querySelector('body');
-
-    if (body.getAttribute('data-mode') === "desktop" && actionType !== "init") return;
-
-    const filterHeader = filterOptions.options[0];
-    const tunesHeader = tuneSelector.options[0];
-    const tabsHeader = displayOptions.options[0];
-
-    const tuneBookSelectors = ['#filterOptions', '#tuneSelector', '#displayOptions'];
-    const tuneBookSelectorHeaders = [filterHeader, tunesHeader, tabsHeader];
-
-    const newSelectorLabels = ['✨', '🎼', '🎹'];
-
-    if (actionType === "init") {
-
-        if (getViewportWidth() > 768 || body.getAttribute('data-mode') === "desktop") {
-            
-            removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
-            
-            return;
-        }
-
-        if (body.getAttribute('data-mode') === "mobile") {
-            
-            setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels);
-        }
-    }
-
-    if (actionType === "resize") {
-
-        if (getViewportWidth() > 768) {
-
-            removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
-        }
-
-        if (getViewportWidth() <= 768) {
-
-            if (filterHeader.hasAttribute('label') && 
-                tunesHeader.hasAttribute('label') && 
-                tabsHeader.hasAttribute('label')) {
-
-                return;
-            }
-
-            setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels);
-        }
-
-        return;
-    }
-
-    if (actionType === "select") {
-
-        const parentSelector = document.getElementById(parentSelectorId);
-
-        if (parentSelector.hasAttribute('style')) {
-
-            if (selectedIndex != 0 || getViewportWidth() > 768) {
-
-                parentSelector.removeAttribute('style');
-
-                return
-            } 
-
-            return;
-        }
-
-        if (selectedIndex != 0 || body.getAttribute('data-mode') === "desktop" || getViewportWidth() > 768) return;
-
-        parentSelector.style.fontSize = "2.4rem";
-    }
-}
-
-// Set selector attributes associated with the mobile mode
-
-function setMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders, newSelectorLabels) {
-
-    tuneBookSelectorHeaders.forEach(header => {
-
-        const newLabel = newSelectorLabels[tuneBookSelectorHeaders.indexOf(header)];
-
-        header.setAttribute('label', newLabel);
-    });
-
-    tuneBookSelectors.forEach(selectorId => {
-
-        const selectorEl = document.querySelector(selectorId);
-
-        if (selectorEl.selectedIndex === 0) {
-
-            selectorEl.style.fontSize = "2.4rem";
-        }
-    });
-}
-
-// Clear all selector styles and labels previously set via attributes for mobile mode
-
-function removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders) {
-
-    tuneBookSelectors.forEach(selectorId => {
-
-        const selectorEl = document.querySelector(selectorId);
-        
-        if (selectorEl.style.fontSize) {
-            
-            selectorEl.style.removeProperty('font-size');
-        }
-    });
-
-    tuneBookSelectorHeaders.forEach(header => {
-    
-        if (header.hasAttribute('label')) {
-    
-            header.removeAttribute('label');
-        }
-    });
 }

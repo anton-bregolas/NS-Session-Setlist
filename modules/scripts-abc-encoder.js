@@ -8,7 +8,7 @@ import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-titl
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
 import { pThrottle } from './scripts-3p/p-throttle/p-throttle.js'
 import { makeAbcChordBook } from './scripts-chord-viewer.js'
-import { fetchData, initSettingsFromObject, displayWarningEffect, displayNotification } from './scripts-ns-sessions.js';
+import { localStorageOk, fetchData, initSettingsFromObject, displayWarningEffect, displayNotification } from './scripts-ns-sessions.js';
 
 ////////////////////////////////
 // ABC ENCODER GLOBAL SETTINGS
@@ -105,24 +105,27 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
         abcEncoderOutput = abcEncodedOutput[0];
         abcEncoderTunesOutput = abcEncodedOutput[1];
 
-        // Optional: Save plain text Tunelist generated from source ABC
+        if (localStorageOk()) {
 
-        if (+localStorage.abcEncoderExportsTuneList === 1) {
-
-            downloadAbcFile(exportPlainTuneList(abcEncoderOutput), "Tunelist[Source].txt");
-        }
-
-        // Optional: Save additional JSON array of objects containing all individual Setlist Tunes encoded
-
-        if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncoderTunesOutput !== '') {
-
-            downloadAbcFile(abcEncoderTunesOutput, "tunes.json");
-
-            // Optional: Save plain text Tunelist of all individual Setlist Tunes from source ABC
+            // Optional: Save plain text Tunelist generated from source ABC
 
             if (+localStorage.abcEncoderExportsTuneList === 1) {
 
-                downloadAbcFile(exportPlainTuneList(abcEncoderTunesOutput), "Tunelist[Tunes].txt");
+                downloadAbcFile(exportPlainTuneList(abcEncoderOutput), "Tunelist[Source].txt");
+            }
+
+            // Optional: Save additional JSON array of objects containing all individual Setlist Tunes encoded
+
+            if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncoderTunesOutput !== '') {
+
+                downloadAbcFile(abcEncoderTunesOutput, "tunes.json");
+
+                // Optional: Save plain text Tunelist of all individual Setlist Tunes from source ABC
+
+                if (+localStorage.abcEncoderExportsTuneList === 1) {
+
+                    downloadAbcFile(exportPlainTuneList(abcEncoderTunesOutput), "Tunelist[Tunes].txt");
+                }
             }
         }
     }
@@ -140,7 +143,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
         let abcSortedOutput = [];
 
-        if (+localStorage.abcSortFetchesTsoMetaData === 1) {
+        if (localStorageOk() && +localStorage.abcSortFetchesTsoMetaData === 1) {
 
             let preProcessedAbc = await preProcessAbcMetadata(rawAbcContent);
 
@@ -160,25 +163,28 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
             abcEncoderTunesOutput = applySessionSurveyResults(abcEncoderTunesOutput);
         }
 
-        // Optional: Save additional ABC file containing all individual Setlist Tunes
+        if (localStorageOk()) {
 
-        if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncoderTunesOutput !== '') {
-            
-            downloadAbcFile(abcEncoderTunesOutput, "NS-Session-Tunes.abc");
+            // Optional: Save additional ABC file containing all individual Setlist Tunes
 
-            // Optional: Save additional Chordbook JSON containing extracted chords arranged as Tunelist
+            if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncoderTunesOutput !== '') {
+                
+                downloadAbcFile(abcEncoderTunesOutput, "NS-Session-Tunes.abc");
 
-            if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[3] !== '') {
+                // Optional: Save additional Chordbook JSON containing extracted chords arranged as Tunelist
 
-                downloadAbcFile(abcSortedOutput[3], "chords-tunes.json", "abc-extract-chords");
+                if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[3] !== '') {
+
+                    downloadAbcFile(abcSortedOutput[3], "chords-tunes.json", "abc-extract-chords");
+                }
             }
-        }
 
-        // Optional: Save additional Chordbook JSON containing extracted chords arranged as Setlist
+            // Optional: Save additional Chordbook JSON containing extracted chords arranged as Setlist
 
-        if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
+            if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
 
-            downloadAbcFile(abcSortedOutput[2], "chords.json", "abc-extract-chords");
+                downloadAbcFile(abcSortedOutput[2], "chords.json", "abc-extract-chords");
+            }
         }
     }
 
@@ -530,7 +536,7 @@ function getSortedAbc(abcContent) {
 
         console.log("ABC Encoder:\n\nABC file contents sorted!");
 
-        if (+localStorage.abcSortExportsChordsFromTunes === 1) {
+        if (localStorageOk() && +localStorage.abcSortExportsChordsFromTunes === 1) {
 
             console.log(`ABC Encoder:\n\nExtracting Chords from ABC...`);
 
@@ -543,7 +549,7 @@ function getSortedAbc(abcContent) {
 
             sortedAbcTunes = sortedAbcContentArr[1].join('\n\n');
 
-            if (+localStorage.abcSortExportsChordsFromTunes === 1) {
+            if (localStorageOk() && +localStorage.abcSortExportsChordsFromTunes === 1) {
 
                 console.log(`ABC Encoder:\n\nExtracting Chords from ABC Tunes...`);
 
@@ -583,7 +589,7 @@ export function sortFilterAbc(abcContent) {
 
         let sortedAbcTunesArr = [];
         
-        if (+localStorage.abcSortExportsTunesFromSets === 1 && uniqueAbcArr[0].match(/^T:/gm).length > 2) {
+        if (localStorageOk() && +localStorage.abcSortExportsTunesFromSets === 1 && uniqueAbcArr[0].match(/^T:/gm).length > 2) {
 
             const exportedTunesArr = makeTunesFromSets(uniqueAbcArr);
 
@@ -603,20 +609,23 @@ export function sortFilterAbc(abcContent) {
             abc)
         );
 
-        // Option A: Also remove all empty lines inside ABCs
+        if (localStorageOk()) {
 
-        if (+localStorage.abcSortRemovesLineBreaksInAbc === 1) {
+            // Option A: Also remove all empty lines inside ABCs
 
-            return [removeLineBreaksInAbc(sortedTidyAbcArr), removeLineBreaksInAbc(sortedAbcTunesArr)];
+            if (+localStorage.abcSortRemovesLineBreaksInAbc === 1) {
+
+                return [removeLineBreaksInAbc(sortedTidyAbcArr), removeLineBreaksInAbc(sortedAbcTunesArr)];
+            }
+
+            // Option B: Also remove all text separated by empty lines inside ABCs
+
+            if (+localStorage.abcSortRemovesTextAfterLineBreaksInAbc === 1) {
+
+                return [removeTextAfterLineBreaksInAbc(sortedTidyAbcArr), removeTextAfterLineBreaksInAbc(sortedAbcTunesArr)];
+            }
         }
-
-        // Option B: Also remove all text separated by empty lines inside ABCs
-
-        if (+localStorage.abcSortRemovesTextAfterLineBreaksInAbc === 1) {
-
-            return [removeTextAfterLineBreaksInAbc(sortedTidyAbcArr), removeTextAfterLineBreaksInAbc(sortedAbcTunesArr)];
-        }
-
+        
         // Default option: Return sorted ABCs as is (everything in-between X: fields)
 
         return [sortedTidyAbcArr, sortedAbcTunesArr];
@@ -966,7 +975,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     // Standardise format of part endings in ABC body
 
-    if (+localStorage.abcSortNormalizesAbcPartEndings === 1) {
+    if (localStorageOk() && +localStorage.abcSortNormalizesAbcPartEndings === 1) {
    
         updatedAbc = processPartEndings(updatedAbc);
     }
@@ -1302,7 +1311,7 @@ async function getEncodedAbc(abcContent, fileName) {
 
     let sortedAbcContent = [];
 
-    if (+localStorage.abcEncoderSortsTuneBook === 1) {
+    if (localStorageOk() && +localStorage.abcEncoderSortsTuneBook === 1) {
 
         sortedAbcContent = await saveAbcEncoderOutput(abcContent, fileName, "abc-sort");
 
@@ -1321,7 +1330,7 @@ async function getEncodedAbc(abcContent, fileName) {
 
         let encodedAbcTunesJson = '';
 
-        if (+localStorage.abcSortExportsTunesFromSets === 1 && sortedAbcContent[1]?.length > 0) {
+        if (localStorageOk() && +localStorage.abcSortExportsTunesFromSets === 1 && sortedAbcContent[1]?.length > 0) {
 
             encodedAbcTunesJson = JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[1]), null, 2);
         }

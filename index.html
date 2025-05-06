@@ -21,11 +21,11 @@
 
 <body data-mode="desktop">
 
-    <div class="body-container">
+    <div class="body-container flex-column">
 
         <header class="nss-header-container">
 
-            <div id="nss-app-header" class="nss-header-app nss-header">
+            <div id="nss-app-header" class="nss-header-app flex-align-center">
                 <button id="website_help" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
                     <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank" class="nss-icon-container" title="Visit GitHub page with tunebook info" aria-title="Visit GitHub page with tunebook info">
                         <svg class="nss-icon github-icon-dark" aria-hidden="true">
@@ -57,7 +57,7 @@
                 </button>
             </div>
 
-            <nav id="nss-tunebook-header" class="nss-header-tunebook nss-header nss-tunebook-el" aria-hidden="true" hidden>
+            <nav id="nss-tunebook-header" class="nss-header-tunebook nss-tunebook-el flex-align-center" aria-hidden="true" hidden>
                 <div class="nss-switch-container">
                     <button id="nss-tunebook-exit" data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen" aria-hidden="true" hidden>
                         <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
@@ -76,8 +76,8 @@
                     </button>
                 </div>
 
-                <div class="nss-header-vertical-container">
-                    <div class="nss-tunebook-title-nav">
+                <div class="flex-column">
+                    <div class="nss-tunebook-title-nav flex-wrapper-space-between">
                         <button data-load="prev" data-size="small" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load previous Set or Tune" aria-title="Load previous Set or Tune">
                             <span class="nss-arrow nss-arrow-left"></span>
                         </button>
@@ -126,7 +126,7 @@
                     </section>
                 </div>
 
-                <button id="fullScreenButton" data-load="fullscreen-popover" class="nss-tunebook-el flex-wrapper" title="View current item in full screen mode" aria-title="View current item in full screen on a new page">
+                <button id="fullScreenButton" data-load="fullscreen-view" class="nss-tunebook-el flex-wrapper" title="View current item in full screen mode" aria-title="View current item in full screen on a new page">
                     <span data-label="fs"></span>
                     <span class="nss-icon-show nss-footer-icon">
                         <svg class="nss-icon" aria-hidden="true">
@@ -138,7 +138,7 @@
 
         </header>
 
-        <main>
+        <main class="flex-column">
             
             <section class="nss-launch nss-launch-el flex-wrapper">
                 <div class="nss-launch-container flex-wrapper">
@@ -166,22 +166,42 @@
                 </div>
             </section>
 
-            <section class="nss-abctools-embed nss-tunebook-el" aria-hidden="true" hidden>
-                <div class="iframe-container">
+            <section class="nss-abctools-embed nss-tunebook-el flex-align-center flex-column" aria-hidden="true" hidden>
+                <div data-controls="iframe-zoom" class="nss-iframe-gui-container flex-wrapper-space-between" aria-hidden="true" hidden>
+                    <button data-load="zoom-in" class="nss-btn nss-switch-btn nss-zoom-btn" title="Zoom In" aria-title="Zoom In">
+                        <span class="nss-bar-x"></span>
+                        <span class="nss-bar-y"></span>
+                    </button>
+                    <button data-load="zoom-out" class="nss-btn nss-switch-btn nss-zoom-btn" title="Zoom Out" aria-title="Zoom Out">
+                        <span class="nss-bar-x"></span>
+                    </button>
+                </div>
+                <div data-controls="iframe-nav" class="nss-iframe-gui-container flex-wrapper-space-between">
                     <button data-load="prev" data-size="large" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load previous Set or Tune" aria-title="Load previous Set or Tune">
                         <span class="nss-arrow nss-arrow-left"></span>
                     </button>
-
-                    <iframe id="tuneFrame" src="" tabindex="-1"></iframe>
-
                     <button data-load="next" data-size="large" class="nss-btn nss-switch-btn nss-arrow-btn flex-wrapper" title="Load next Set or Tune" aria-title="Load next Set or Tune">
                         <span class="nss-arrow nss-arrow-right"></span>
                     </button>
                 </div>
+                <div data-controls="iframe-gui" class="nss-iframe-gui-container flex-wrapper-space-between" aria-hidden="true" hidden>
+                    <button data-load="toggle-gui-fullscreen" class="nss-btn nss-switch-btn flex-wrapper" title="Show or hide GUI" aria-title="Show or hide GUI">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons-chord-viewer.svg#action-icon-sliders"></use>
+                        </svg>
+                    </button>
+                    <button data-load="exit-fullscreen" class="nss-btn nss-switch-btn flex-wrapper" title="Exit Full Screen" aria-title="Exit Full Screen">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-unview"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <iframe id="tuneFrame" src="" tabindex="-1"></iframe>
             </section>
 
             <section class="nss-playalong nss-playalong-el flex-wrapper" aria-hidden="true" hidden>
-                <div class="nss-playalong-container">
+                <div class="nss-playalong-container flex-column">
                     <div class="nss-playalong-link-container">
                         <a href="https://www.soundslice.com/slices/CLHRc/" target="_blank" title="Open play along notation for Toureendarby Polka Set" aria-title="Open play along notation for Toureendarby Polka Set">
                             <div class="nss-playalong-img-overlay">
@@ -230,7 +250,7 @@
                     </div>
                 </header>
                 <div class="nss-popover-body flex-wrapper">
-                    <div class="nss-checkbox-container">
+                    <div class="nss-checkbox-container flex-column">
                         <label for="tools-save-restore-tunes" class="nss-checkbox-label">
                             <input type="checkbox" id="tools-save-restore-tunes" data-option="abcToolsSaveAndRestoreTunes" class="nss-checkbox-btn" value="1">
                             Save & load last opened Set or Tune
@@ -271,42 +291,42 @@
                 </div>
             </article>
 
-            <article popover data-popover="chord-viewer" class="dark" aria-label="Full Screen View">
-                <header data-popover="header" class="wrapper-container flex-center">
+            <dialog id="chord-viewer" data-chord-viewer="dialog" class="dark" aria-label="Full Screen View">
+                <header data-chord-viewer="header" class="wrapper-container flex-between">
                     <button data-action="toggle-theme" data-controls="theme-btn" data-theme="light" class="btn btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
                         <svg data-ui="icon-fixed-size" aria-hidden="true">
                             <use href="assets/icons/icons-chord-viewer.svg#theme-icon-dark"></use>
                         </svg>
                     </button>
-                    <button data-action="toggle-theme" data-controls="theme-btn" data-theme="dark" class="btn btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden>
+                    <button data-action="toggle-theme" data-controls="theme-btn" data-theme="dark" class="btn btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
                         <svg data-ui="icon-fixed-size" aria-hidden="true">
                             <use href="assets/icons/icons-chord-viewer.svg#theme-icon-light"></use>
                         </svg>
                     </button>
                     <div class="wrapper-container flex-center">
-                        <h2 data-popover="title"></h2>
+                        <h2 data-chord-viewer="title"></h2>
                     </div>
-                    <div data-popover="x-container" class="flex-center">
+                    <div data-chord-viewer="x-container" class="flex-center">
                         <button autofocus data-action="close-chord-viewer" data-controls="btn-x" class="btn btn-x flex-center" title="Close Chord Viewer" aria-title="Close Chord Viewer"></button>
                     </div>
                 </header>
-                <div data-popover="body">
-                    <input type="range" data-controls="slider" name="chords-slider" min="75" max="185" value="120" step="1" />
-                    <div data-chords="container"></div>
+                <div data-chord-viewer="body">
+                    <input type="range" data-controls="chord-viewer-slider" name="chords-slider" min="75" max="185" value="120" step="1" />
+                    <div data-chord-viewer="chords-container"></div>
                 </div>
-                <footer data-popover="footer" class="flex-between">
-                    <button data-action="reset-slider" data-controls="control-btn" class="btn flex-center" title="Reset slider settings" aria-title="Reset slider settings">
-                        <svg data-ui="icon" aria-hidden="true">
-                            <use href="assets/icons/icons-chord-viewer.svg#action-icon-reset"></use>
-                        </svg>
-                    </button>
+                <footer data-chord-viewer="footer" class="flex-between">
                     <button data-action="toggle-gui" data-controls="control-btn" class="btn flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
                         <svg data-ui="icon" aria-hidden="true">
                             <use href="assets/icons/icons-chord-viewer.svg#action-icon-sliders"></use>
                         </svg>
                     </button>
+                    <button data-action="reset-slider" data-controls="control-btn" class="btn flex-center" title="Reset slider settings" aria-title="Reset slider settings">
+                        <svg data-ui="icon" aria-hidden="true">
+                            <use href="assets/icons/icons-chord-viewer.svg#action-icon-reset"></use>
+                        </svg>
+                    </button>
                 </footer>
-            </article>
+            </dialog>
 
             <article popover data-popover="notification-popup" class="info" aria-label="Notification Popup">
                 <div class="nss-header-x-container">
@@ -323,7 +343,7 @@
 
         <footer class="nss-footers">
 
-            <section class="nss-footer-launch nss-launch-el footer-wrapper">
+            <section class="nss-footer-launch nss-launch-el flex-wrapper-space-between">
                 <button class="nss-btn nss-option-btn flex-wrapper" data-load="app-options" title="Open N.S.S.S. App Options" aria-title="Open N.S.S.S. App Options">
                     <svg class="nss-icon" aria-hidden="true">
                         <use href="assets/icons/icons.svg#action-icon-options"></use>
@@ -343,7 +363,7 @@
                 </button>
             </section>
 
-            <section id="nss-tunebook-footer" class="nss-footer-tunebook nss-tunebook-el footer-wrapper" hidden>
+            <section id="nss-tunebook-footer" class="nss-footer-tunebook nss-tunebook-el flex-wrapper-space-between" hidden>
                 <button data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
                     <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
                         <use href="assets/icons/icons.svg#action-icon-launch"></use>
