@@ -101,6 +101,9 @@ NS Session Setlist v.0.9.8: UI/UX Upgrade (Better Navigation & Refactoring)
   - Minor ABC tweaks
 
 <details>
+  <summary>v.0.9: UI/UX Upgrade</summary>
+
+<details>
 <summary>v.0.9.8: UI/UX Upgrade (Better Navigation & Refactoring)</summary>
 
 + Project updates:
@@ -186,9 +189,6 @@ NS Session Setlist v.0.9.8: UI/UX Upgrade (Better Navigation & Refactoring)
   - Session DB updated to 2025-05-05
   - Minor ABC tweaks
 </details>
-
-<details>
-  <summary>v.0.9: UI/UX Upgrade</summary>
 
 <details>
 <summary>v.0.9.7: UI/UX Upgrade (Preload Scripts & Chord Viewer Tweaks)</summary>
