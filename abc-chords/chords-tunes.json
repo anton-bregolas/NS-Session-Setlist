@@ -10,9 +10,24 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tG\tC\t|\tG G\tC D\t|\tG\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tG\tEm\t|\tC\tD\t|\n|\tG\tG\t|\tG\tC\t|\tG G\tC D\t|\tG\tG\t||"
   },
   {
+    "title": "BARNDANCE: Hills of Tara",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG/B\t|\tC\tA5\t|\tD\tC\t|\tD\tD/F#\t|\n|\tG\tG/B\t|\tC\tA5\t|\tD\tD/F#\t|\tG D\tG ||\n\nPART 2:\n|\tG\tD/F#\t|\tC\tA5\t|\tD\tC\t|\tD\tD/F#\t|\n|\tG\tD/F#\t|\tC\tA5\t|\tD\tD/F#\t|\tG D\tD ||"
+  },
+  {
+    "title": "BARNDANCE: If There Weren't Any Women",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG/B\t|\tC\tG/B\t|\tG\tEm\t|\tA\tD\t|\n|\tG\tG/B\t|\tC\tG/B\t|\tA A\tD D/F#\t|1\tG C\tG/B A\t|\n|2\tG D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tG/B\tG/B\t|\tG\tEm\t|\tA A\tD D/F#\t|\n|\tG\tG/B\t|\tC\tG/B\t|\tA A\tD D/F#\t|1\tG D\tG G\t|\n|2\tG C\t(G/B) (A)\t||"
+  },
+  {
     "title": "HOP JIG: Cucanandy",
     "meter": "3/4",
     "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tD\t|\tG\tG\tG\t|\tC\tC\tD\t|\n|\tG\tG\tG\t|\tG\tG\tD/F#\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t||"
+  },
+  {
+    "title": "HORNPIPE: Bantry Bay",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tC\t|\tG/B\t(G)\t|\tC\tG/B\t|\tAm\tD\t|\n|\tC\tG/B\t|\tAm\tEm\t|\tG/B\tC\t|1\tG/B\tG\t|\n|2\tG/B\tG\t||\n\nPART 2:\n|\tG\tG\t|\tEm\tEm\t|\tC\tG/B\t|\tC D\tEm Em\t|\n|\tG(C)\tC\t|\tG/B\tAm\t|\tG/B\tC\t|1\tG/B D\tG G\t|\n|2\tG/B D\tG G\t||"
   },
   {
     "title": "HORNPIPE: Callaghan's High",
@@ -40,9 +55,24 @@
     "chords": "PART 1:\n|\tD\tD\t|\tD\t(G)\t|\tA\tA\t|\tA\tA\t|\n|\tD\tD\t|\tD\tG\t|\tA\tA\t|\tD A\tD ||\n\nPART 2:\n|\tA\tA\t|\tG D\tA A\t|\tA\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tG\t|\tA\tA\t|\tD A\tD ||"
   },
   {
+    "title": "HORNPIPE: Home Ruler",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD/F#\tG\t|\tD\t(D/B)\t|\tA\tG\t|\n|\tD\tD\t|\tD/F#\tG\t|\tD\t(D/B)\t|\tD/F#\tD\t||\n\nPART 2:\n|\tD\tD\t|\tBm\tBm\t|\tG\tG\t|\tA\tG\t|\n|\tD\tD\t|\tBm\t(D/F#)\t|\tG\t(Em)\t|\tA\t(D)\t||"
+  },
+  {
+    "title": "HORNPIPE: Kitty's Wedding",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD/B\tD/B\t|\tG\tG\t|\tA\tA\t|\n|\tD\tA\t|\tD/B\tA\t|\tG\tD/F#\t|\tA\tD\t||\n\nPART 2:\n|\tD\tEm\t|\tD/F#\tG\t|\tD/F#\tD\t|\tG/B\tA\t|\n|\tBm\tA\t|\tG\tD/F#\t|\tEm\tG\t|\tD/F# A\t(D) ||"
+  },
+  {
     "title": "HORNPIPE: Little Beggarman",
     "meter": "4/4",
     "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|1\tA G\tA A\t|\n|2\tA\tA\t||"
+  },
+  {
+    "title": "HORNPIPE: Liverpool",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD/F#\t|\tG\tD/F#\t|\tEm\tA\t|\n|\tD\t(D/F#)\t|\tG\tD/F#\t|\tEm\tA\t|\tD A\tD ||\n\nPART 2:\n|\tD\tD/F#\t|\tBm\tA\t|\tG\tD/F#\t|\tEm\tA\t|\n|\tD\t(D/F#)\t|\tG\tD/F#\t|\tEm\tA\t|\tD A\tD ||"
   },
   {
     "title": "HORNPIPE: Off to California",
@@ -50,14 +80,54 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG\tEm\t|\tAm\tD\t|\n|\tG\tG\t|\tG\tC\t|\tG\tEm\t|\tC D\tG ||\n\nPART 2:\n|\tEm\tD\t|\tEm(C)\tD(C)\t|\tG\tEm(G)\t|\tAm(C)\tD\t|\n|\tG\tC(G)\t|\tG(C)\tC(D)\t|\tG\tEm(C)\t|\tAm D\tG ||"
   },
   {
+    "title": "HORNPIPE: Plains of Boyle",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tG\t|\tD/F#\t(Em)\t|\tD/B\tC\t|\n|\tD\tD\t|\tD\tG\t|\tD/F#\tEm\t|\tD/F# D\tD ||\n\nPART 2:\n|\tD\tG\t|\tD/F#\tA\t|\tD\tBm\t|\tEm\tA\t|\n|\tD\tEm\t|\tD/F#\tG\t|\tD/F#\tEm\t|\tD/F# D\tD ||"
+  },
+  {
     "title": "HORNPIPE: Rights of Man",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC\tD\t|\tEm\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tA\t|\tD\tD\t|\tD\t(Bm)\t|\n|\tEm(C)\t(D)\t|\t(G) (D)\tD(C) (C)\t|\tC(Am)\tBm\t|\tEm\tEm\t||"
   },
   {
+    "title": "HORNPIPE: Seanbhean Bhocht",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG/B\tG\t|\tAm\tAm\t|\tC\tD\t|\n|\tG D\tG G\t|\tG/B C\tG/B G/B\t|\tC\tD\t|1\tG/B\tG\t|\n|2\tG/B\tG\t||\n\nPART 2:\n|\tG\tC\t|\tG/B\tG\t|\tAm\tAm\t|\tC\tD\t|\n|\tG D\tG G\t|\tG/B C\tG/B G/B\t|\tC\tD\t|1\tG/B\tG\t|\n|2\tG/B\tG\t||\n\nPART 3:\n|\tG/B G/B\tG C\t|\tG/B\tG/B\t|\tAm\tAm\t|\tC\tD\t|\n|\tG D\tG G\t|\tG/B C\tG/B G/B\t|\tC\tD\t|1\tG/B\tG\t|\n|2\tG/B\tG\t||"
+  },
+  {
+    "title": "HORNPIPE: Sonny Murray's",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tC\t|\tD\tD/B\t|\tG\tA\t|\n|\tD\tD\t|\tD\tC\t|\tD\tD/B\t|\tD/F#\tD\t||\n\nPART 2:\n|\tD\tA\t|\tC\tG\t|\tD/F#\tD/B\t|\tG(Em)\tA\t|\n|\tD\tD\t|\tD A\tC C\tC C\tC C\tC C\tC C\tC C\tC |\tD\tD/B\t|\tD/F#\tD\t||"
+  },
+  {
+    "title": "JIG: Atholl Highlanders",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tE\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tA\tE\t|\tA\tD\t|\tE\t(A)\t||\n\nPART 2:\n|\tA\tA\t|\tD\t(D/F#)\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tD\t(D/F#)\t|\tA\tD\t|\tE\t(A)\t||\n\nPART 3:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tA\tA\t|\tA\tD\t|\tE\t(A)\t||\n\nPART 4:\n|\tA\tA\t|\tD\t(Bm)\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tD\t(Bm)\t|\tA\tD\t|\tE\t(A)\t||"
+  },
+  {
+    "title": "JIG: Banish Misfortune",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tD\t(Em)\t|\n|\tD/F#\tD/F#\t|\tD\t(G)\t|\tD/F#\tC\t|\tA\t(D)\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tC\tC\t|\tC\tC\t|\n|\tD\tD\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||\n\nPART 3:\n|\tD\t(Dsus4)\t|\tD\t(G)\t|\t(D/F#)\t(G)\t|\t(D/F#)\t(G/B)\t|\n|\tC\tC\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||"
+  },
+  {
+    "title": "JIG: Battering Ram",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\t(G/B)\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tAm\tG/B\t|\tC\tG/B\t|\tAm\tAm\t|\tD\tD\t|\n|\tEm\tEm\t|\tG/B\tG/B\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tG\tG\t|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\n|\tG/B\tG/B\t|\tC\tC\t|\tAm\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
+    "title": "JIG: Black Rogue",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tA5\tG\t|\tA5\tA5\t|\tA5\tG\t|\tD\tD\t|\n|\tA5\tG\t|\tA5\tA5\t|\tG\tG\t|1\tD\tD\t|\n|2\tA5\tA5\t||\n\nPART 2:\n|\tD\tEm\t|\tD/F#\tAsus4\t|\tD/F#\tG\t|\tA5\tA5\t|\n|\tD\tEm\t|\tD/F#\tG\t|\tAsus4\tG\t|1\tD/F#\tD\t|\n|2\tD/F#\tD\t||"
+  },
+  {
     "title": "JIG: Blarney Pilgrim",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\tC\tD\t|\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\t(D)\t(D)\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tG\tG\t|\tD\tC\t|\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\t(D)\t(D)\t||\n\nPART 3:\n|\tD\tD/B\t|\tD\tD\t|\tAm\tAm\t|\tG/B\tG\t|\n|\tD\tD/B\t|\tD\tD\t|\tAm\tAm\t|\tC\t(D)\t||"
+  },
+  {
+    "title": "JIG: Breeches Mary",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tAm\tAm\t|\tG\tG\t|\tEm\tD/F#\t|\tEm\tG\t|\n|\tAm\tAm\t|\tG\tG\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tC\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tD\t|1\tG\t(Em)\t|\n|2\tG\t(Em)\t||"
   },
   {
     "title": "JIG: Carraroe",
@@ -75,9 +145,24 @@
     "chords": "PART 1:\n|\tG\tG\t|\tD\tF\t|\tG\tG\t|\tD\tC\t|\n|\tG\tG\t|\tD\tF\t|\tC\tD\t|\tG\tG\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tG\tG\t|\tD\tC\t|\n|\tG\tG\t|\tD\tD\t|\tC\tD\t|\tG\tG\t||\n\nPART 3:\n|\tD\tD\t|\tD\tD\t|\tC\tD/B\t|\tG\tC\t|\n|\tD\tD\t|\tD\tD\t|\tC\tD/B\t|\tG\t(D)\t||"
   },
   {
+    "title": "JIG: Cordal",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tA\t|\tA\tD\t|\tD\tD\t|\tG\tG\t|\n|\tG\tA\t|\tA\tD\t|\tG\tG\t|\tG\t(A)\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tA\tA\t|\tG\t(D/F#)\t|\tG\tA\t||"
+  },
+  {
     "title": "JIG: Donncha Lynch's",
     "meter": "6/8",
     "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tA\tA\t|\tD\tE\t|\tE\tE\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tE\tE\t|\tE\tE\t|\n|\tA\t(F#m)\t|\tD\t(Bm)\t|\t(D)\tE\t|\tE\tE\t||"
+  },
+  {
+    "title": "JIG: Dusty Windowsills",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tAm\tAm\t|\t(C)\t(C)\t|\tG\tG\t|\tD D\tC G/B\t|\n|\tAm\tAm\t|\t(C)\t(C)\t|\tEm\tEm\t|\tD\tD\t||\n\nPART 2:\n|\tAm\tAm\t|\t(D)\t(G)\t|\t(Em)\tEm\t|\tD\tD\t|\n|\tEm\t(D)\t|\tG\tG\t|\tC\tC\t|\tD\tD\t||\n\nPART 3:\n|\tAm Am\tG Am\t|\tAm\tAm\t|\tG G\tG/C G\t|\tG\t(Em)\t|\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tC\t|\tD\tD\t||"
+  },
+  {
+    "title": "JIG: Fanning's",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tD/F#\tD/F#\t|\tEm\tEm\t|\tEm\tD\t|\n|\tG\tG\t|\tD/F#\tD/F#\t|\tC\tG/B\t|1\tEm\tD\t|\n|2\tEm\tEm\t||\n\nPART 2:\n|\tEm\t(C)\t|\tEm(C)\tA\t|\tD\tD\t|\tD/F#\tD/F#\t|\n|\tEm\t(C)\t|\tC\tC\t|\tC\tG/B\t|1\tEm\tEm\t|\n|2\tEm\tD\t||"
   },
   {
     "title": "JIG: Frieze Breeches",
@@ -85,9 +170,19 @@
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tA\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tC\t|\tC\tC\t|\tD\t(G/B)\t|\tD(G)\tA\t|\n|\tD\tC\t|\tC\tC\t|\tD/F# D/F#\tG A\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tD\tD\t|\tD\tD\t|\tAsus4\tAsus4\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tD\tG(Dsus2)\t|1\tA\tA\t|\n|2\tA\tD\t||\n\nPART 5:\n|\tD\tD\t|\tD/B\tD/B\t|\tD/F#\tD/F#\t|\tG\tA\t|\n|\tD\tD\t|\tBm\tBm\t|\tAsus4\tAsus4\t|1\tA\tD\t|\n|2\tA\tD\t||"
   },
   {
+    "title": "JIG: Frost Is All Over",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD/B\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tD\tD/B\t|\tD\tA\t|1\tEm\tD\t|\n|2\tEm\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tG\tG\t|\tD\tA\t|\tEm\tD\t||"
+  },
+  {
     "title": "JIG: Have a Drink With Me",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\t(Em)\t|\tG(Em)\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
+    "title": "JIG: Humours of Glendart",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tA\tA\t|\n|\tD\tD\t|\tG\tG\t|\tA\tA\t|\tD\tD\t||\n\nPART 2:\n|\tD\t(Bm)\t|\tD\tG\t|\tD\t(G)\t|\tA\tA\t|\n|\tD\tD\t|\tG\tG\t|\tEm(A)\tA\t|\tD\tD\t||"
   },
   {
     "title": "JIG: Humours of Killarney",
@@ -95,9 +190,19 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\t(B5)\t(B5)\t|\tEm\tEm\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tEm\tEm\t|\tAm\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tD\t|1\tG\tD\t|\n|2\tG\tG\t||"
   },
   {
+    "title": "JIG: Jimmy Ward's",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tD\tD\t|\n|\tG\tG\t|\t(Am)\t(Am)\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tAm\tAm\t|\tAm\tD\t|\tAm\t(C)\t|\tD\tD\t|\n|\tAm\tAm\t|\tD\tD\t|\tC\t(G/B)\t|1\tAm\tD\t|\n|2\tAm\tD\t||"
+  },
+  {
     "title": "JIG: Kesh",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tD\tD\t|\tC\tG\t|\tC\tD\t|\n|\tG\tG\t|\tD\tD\t|\tC\tG\t|1\tD\tG\t|\n|2\tD\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tG\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tC\tG\t|\tC\tD\t|\tG\tG\t||"
+  },
+  {
+    "title": "JIG: Kilmovee",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\t(Em)\t(Em)\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\t(Em)\t(Em)\t|\tC\tC\t|1\tD\t(Em)\t|\n|2\tD\t(G)\t||\n\nPART 2:\n|\tG\t(Em)\t|\tEm\t(D)\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tBm\tBm\t|\tC\tC\t|1\tD\tG\t|\n|2\tD\tG\t||"
   },
   {
     "title": "JIG: Leitrim Fancy",
@@ -105,9 +210,19 @@
     "chords": "PART 1:\n|\tEm\tD\t|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tD\t|\tEm\t(C)\t|\tC\tC\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\tG\t|\tG\tBm\t|\tC\tC\t|\tD\tD\t||"
   },
   {
+    "title": "JIG: Lilting Fisherman",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\t(C)\t|\tC\t(G)\t|\tD\tD\t|\n|\tG\t(Em)\t|\tG(Em)\t(Em)\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tG\tG\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\t(A)\t||"
+  },
+  {
     "title": "JIG: Morrison's",
     "meter": "6/8",
     "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tG\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tG\tG\t|\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tC\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tG\tG\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tG\t|\tD\tG\t|\tAm\tBm\t|\tC\tD\t||"
+  },
+  {
+    "title": "JIG: Old Grey Goose",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tEm(G)\t(D/F#)\t|\tEm\tEm\t|\tD\tD\t|\t(Bm)\t(Bm)\t|\n|\tEm\tD/F#\t|\tG\tG\t|\tBm\tBm\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||\n\nPART 2:\n|\tG\tG\t|\tG\tG\t|\tAm\tAm\t|\tD\tD\t|\n|\tG\tAm\t|\tD/B\tD/B\t|\tD\tD\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||\n\nPART 3:\n|\tEm\tEm\t|\tEm\tA\t|\tD\tD\t|\tD/F#\tD\t|\n|\tEm\tEm\t|\tEm\tA\t|\tD/B\tD/B\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||\n\nPART 4:\n|\tEm\tA\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\t(D/F#)\t|\t(G)\t(G)\t|\tBm\tBm\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||\n\nPART 5:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tA\t|\tD\tD\t|\n|\tEm\tD/F#\t|\tG\tG\t|\tBm\tBm\t|\tEm\tEm\t||\n\nPART 6:\n|\tG\tG\t|\tG\tG\t|\tG/B\tA\t|\tD\tD\t|\n|\tEm\tD/F#\t|\tG\tD\t|\tBm\tBm\t|1\tEm\tEm\t|\n|2\tEm\tEm\t||"
   },
   {
     "title": "JIG: Out on the Ocean",
@@ -130,6 +245,11 @@
     "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\tD\tBm\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tBm\t|\tEm\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tEm\tD\t|\n|\tEm\tEm\t|\tA\tA\t|\tD\tBm\t|\tEm\tEm\t||"
   },
   {
+    "title": "JIG: Tenpenny Bit",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tG\t|\tG\tG\t|\tC\tG/B\t|\tD\tD\t|\n|\tG\t(Em)\t|\tG(Em)\tEm\t|\tC\tG/B\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tA5\t(Em)\t|\t(D)\t(D)\t|\tA5\t(C)\t|\t(D)\tD/F#\t|\n|\tA5(G)\t(D)\t|\tG\tA5\t|\t(C)\t(C)\t|1\tD\tD\t|\n|2\tD\tD\t||"
+  },
+  {
     "title": "JIG: Tripping up the Stairs",
     "meter": "6/8",
     "chords": "PART 1:\n|\tD\tG\t|\tD\tD\t|\tA\tA\t|\tD\tD\t|\n|\tD\tG\t|\tD\tD\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tBm\tBm\t|\tBm\tBm\t|\tA\tA\t|\tA\tA\t|\n|\tBm\tBm\t|\tBm\tBm\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
@@ -138,6 +258,11 @@
     "title": "JIG: Tá an Coileach ag Fógairt an Lae",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tD\tD\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tC\tC\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tC\tC\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||"
+  },
+  {
+    "title": "JIG: Winnie Hayes'",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tD\t(G)\t|\tD/B\tD\t||\n\nPART 2:\n|\tEm(D)\tEm\t|\t(C)\t(C)\t|\tAm\tAm\t|\tD/F#\t(Bm)\t|\n|\tG\tD/F#\t|\tEm\t(G/B)\t|\tAm\tAm\t|\tD\t(Bm)\t||"
   },
   {
     "title": "MARCH: Snow on the Tracks",
