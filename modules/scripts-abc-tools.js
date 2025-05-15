@@ -26,7 +26,8 @@ export const abcTunebookDefaults = {
     tuneBookAlwaysUseMobileMode: "0",
     tuneBookAlwaysUseCompactMode: "0",
     tuneBookShowStatusReport: "0",
-    chordViewerAllowDynamicChords: "0"
+    tuneBookAllowLoadFromHashLink: "1",
+    chordViewerAllowDynamicChords: "0",
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,7 +80,7 @@ export function initAbcTools() {
 
     // Select Session DB JSON to open in ABC Tools
 
-    tunes = checkTuneBookSetting() === 1? tuneSets : tuneList;
+    tunes = checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
 
     // Initialize the Full Screen Button
 
@@ -381,14 +382,14 @@ function loadTabsMidiOptions() {
 
     // Trigger the (re)loading of Tunebook item
 
-    tunes = checkTuneBookSetting() === 1? tuneSets : tuneList;
+    tunes = checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
 
     if (tunes.length > 1 && localStorageOk()) {
 
         if (isFirstTuneBookLoad === true 
             && +localStorage.abcToolsSaveAndRestoreTunes === 1
-            && ((checkTuneBookSetting() === 1 && localStorage.lastTuneBookSet_NSSSAPP)
-            || (checkTuneBookSetting() === 2 && localStorage.lastTuneBookTune_NSSSAPP))) {
+            && ((checkTuneBookSetting() === "setlist" && localStorage.lastTuneBookSet_NSSSAPP)
+            || (checkTuneBookSetting() === "tunelist" && localStorage.lastTuneBookTune_NSSSAPP))) {
 
             isFirstTuneBookLoad = false;
             restoreLastTunebookItem();
@@ -555,7 +556,7 @@ function saveLastTuneBookItem() {
 
             const currentTuneName = tuneSelector.options[tuneSelector.selectedIndex].text;
 
-            checkTuneBookSetting() === 1?
+            checkTuneBookSetting() === "setlist"?
             localStorage.lastTuneBookSet_NSSSAPP = currentTuneName :
             localStorage.lastTuneBookTune_NSSSAPP = currentTuneName;
 
@@ -563,7 +564,7 @@ function saveLastTuneBookItem() {
 
             const defaultTuneName = tuneSelector.options[1].text
             
-            checkTuneBookSetting() === 1?
+            checkTuneBookSetting() === "setlist"?
             localStorage.lastTuneBookSet_NSSSAPP = defaultTuneName :
             localStorage.lastTuneBookTune_NSSSAPP = defaultTuneName;
         }
@@ -615,7 +616,7 @@ export function restoreLastTunebookItem() {
 
         if (tunes.length > 1) {
 
-            const theLastTuneName = checkTuneBookSetting() === 1? 
+            const theLastTuneName = checkTuneBookSetting() === "setlist"? 
                                     localStorage.lastTuneBookSet_NSSSAPP :
                                     localStorage.lastTuneBookTune_NSSSAPP;
 
@@ -731,16 +732,14 @@ async function handleFullScreenButton() {
         // If Tunebook is in desktop mode on a narrow device, open ABC Tools in new window
         // If browser does not support Fullscreen API, open ABC Tools in new window
 
-        const body = document.querySelector('body');
-
-        if ((body.dataset.mode &&
-            body.dataset.mode === "desktop" &&
+        if ((document.body.dataset.mode &&
+            document.body.dataset.mode === "desktop" &&
             getViewportWidth() <= 870) ||
             
-            (!body.requestFullscreen && 
-            !body.webkitRequestFullscreen && 
-            !body.mozRequestFullScreen &&
-            !body.msRequestFullscreen)) {
+            (!document.body.requestFullscreen && 
+            !document.body.webkitRequestFullscreen && 
+            !document.body.mozRequestFullScreen &&
+            !document.body.msRequestFullscreen)) {
 
             openInAbcTools();
             return;

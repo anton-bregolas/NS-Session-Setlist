@@ -23,6 +23,17 @@
   --chords-barline-color: #777;
 }
 
+@supports (selector(:has(*))) {
+
+  body:has([data-chord-viewer="dialog"].light:open) {
+    background-color: white;
+  }
+
+  body:has([data-chord-viewer="dialog"].dark:open) {
+    background-color: #181818;
+  }
+}
+
 [data-chord-viewer="dialog"] {
   width: 100dvw;
   height: 100dvh;
@@ -31,14 +42,23 @@
   border: none;
   outline: none;
   padding: 0;
-  scrollbar-gutter: stable;
   background-image: none;
   background-color: var(--chords-bg-color);
   color: var(--chords-font-color);
+  overflow: hidden;
 }
 
 [data-chord-viewer="dialog"] * {
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+
+[data-chord-viewer="container"] {
+  width: 100svw;
+  height: 100svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-gutter: stable both-edges;
 }
 
 [data-chord-viewer="header"] {

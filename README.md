@@ -15,93 +15,27 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.8: UI/UX Upgrade (Better Navigation & Refactoring)
+NS Session Setlist v.0.9.9: UI/UX Upgrade (Routing, Mobile Nav & Animations)
 
 + Project updates:
-  - Tunebook: Navigation buttons now respect filter settings with boundary checks supported
-  - Tunebook: Full Screen mode Zoom controls, exit button and GUI switcher implemented
-  - Tunebook: Zoom and GUI switcher settings are now remembered between sessions and auto-restored
-  - Tunebook: Zoom behavior now varies between Desktop (CSS Zoom) and Mobile (Tune Frame width) modes
-  - Tunebook: Dynamic Selector labels reimplemented with new set and clear logic for title emoji labels
-  - Tunebook: Fixed Tabs & MIDI bug that forced Setlist item to load with auto-restore mode turned off 
-  - Chord Viewer: Refactored as Dialog element to replace Popover issues on touch screens
-  - Chord Viewer: Now opens in full screen as modal dialog, making background elements inert
-  - Chord Viewer: Additional GUI improvements introduced
-  - Launcher: New event listeners added, first stage of event delegation refactoring
-  - Launcher, Tunebook, Encoder: Robust Local Storage availability checks added via storage-available.js module
-
-+ HTML updates:
-  - Main App (index.html)
-    + Full Screen GUI controls added to ABC Tools embed container
-    + Full Screen Button dataset load changed to "fullscreen-view"
-    + Flex layout classes added for more transparent structure
-    + Chord Viewer element converted from popover to dialog
-    + Chord Viewer GUI elements reordered for better UX
-  - ABC Encoder (abc-encoder.html)
-    + Flex layout classes added for more transparent structure
-
-+ CSS updates:
-  - App Styles (nss-styles.css)
-    + Full Screen GUI styles added with dynamic :fullscreen display
-    + Zoom button styles added with CSS-drawn shapes in place of icons
-    + Tunebook header and footer heights added as CSS variables
-    + Flex wrappers reorganized, new subtypes introduced
-    + Focus styles improved for better accessibility
-    + Viewport units changed from svw/svh to dvw/dvh (experimental)
-  - Chord Viewer module (styles-chord-viewer.css)
-    + Naming updates after popover to dialog refactoring
-    + Close Chord Viewer button is now position: fixed
-    + GUI controls z-index added as fix for Safari
-    + Styles partly reorganized with repetition removed
-    + Viewport units changed from svw/svh to dvw/dvh (experimental)
-  
-+ JavaScript updates:
-  - App Launcher module (scripts-ns-sessions.js)
-    + handleFullScreenChange: This and other Full Screen handlers now have separate Desktop & Mobile logic
-    + zoomTuneBookItem*: Handle Zoom controls in Full Screen (depending on Desktop or Mobile mode)
-    + toggleFullScreenGui*: Handle GUI visibility in Full Screen
-    + exitFullScreenMode*: Handle exit from Full Screen
-    + handleSelectorLabels*: Refactored with clearer more efficient structure (* moved from Tunebook module)
-    + handleSelectorLabels*: New paramaters "setone" and "clearone" introduced with respective if blocks
-    + handleSelectorLabels calls tweaked, parentSelector (not id) now passed as parameter
-    + setMobileSelectorStyles, removeMobileSelectorStyles* moved from Tunebook module
-    + appDropDownHandler: Refactored with new selector label handling logic, new event type checks added
-    + appDropDownHandler: Now resets selector labels on 'mousedown', 'keydown' and 'touchstart' events
-    + appDropDownHandler: Now clears selector labels on 'blur', 'keyup' and 'touchend' events
-    + initCustomDropDownMenus: Now adds listeners for 'mousedown', 'keydown', 'touchstart', 'touchend', 'keyup', 'blur' events to each Tunebook selector
-    + switchTuneBookItem: Improved navigation and boundary checks logic with disabled options skipped
-    + switchTuneBookType: Now focuses on last Tunebook opened button after Launch Screen is pressed
-    + localStorageOk*: Returns true if localStorage is available by calling storage-available.js
-    + lastTuneBookOpened*: Global variable added as fallback for localStorage variable
-    + localStorage operations now wrapped by localStorageOk() checks
-    + localStorage unavailable warnings added to console and UI notifications
-    + initAppSettings*: Initializes all app settings, runs initial localStorage check
-    + ariaHideMe, ariaShowMe: Now return immediately if the element is inert
-    + appWindowClickHandler*: New event delegation handler function added (TO DO)
-  - ABC Tunebook module (scripts-abc-tools.js)
-    + loadTabsMidiOptions: Missing checkTuneBookSetting() check added for loading item from correct list with auto-restore functionality disabled
-    + loadTuneBookItem(tunes, 0) calls replaced with explicit selectedIndex setting and dispatchEvent calls
-    + Now imports handleSelectorLabels from App Launcher module
-    + handleSelectorLabels calls tweaked, parentSelector (not id) now passed as parameter
-    + localStorage operations now wrapped by localStorageOk() checks
-  - Chord Viewer module (scripts-chord-viewer.js)
-    + openChordViewer: Modal Dialog replaces Popover API implementation
-    + initChordViewer: Updated with Dialog event handling logic
-    + handleChordViewerClick: Updated for Dialog controls
-    + handleChordViewerClick: Toggle GUI events limited to Chord Viewer element
-    + handleChordViewerClick: Close Chord Viewer button now remains visible after GUI toggling
-    + Now imports storage-available.js module for better localStorage checks
-    + isLocalStorageOk*: New utility function for checking localStorage availability
-    + localStorage operations now wrapped by localStorageOk() checks
-    + ariaHideMe, ariaShowMe: Now return immediately if the element is inert
-    + getRootFontSizeModifier: Improved logic for calculating font size modifier
+  - Launcher: Basic hash routing implemented for app sections (launcher, playalong, setlist & tunelist)
+  - Tunebook: Tunebook action popup for mobile mode implemented (TO DO: List Viewer)
+  - Launcher, Encoder: CSS fix implemented to prevent background jump on scroll
+  - Chord Viewer: CSS fix implemented to prevent background jump on scroll
     
 + Session DB updates:
-  - Session DB updated to 2025-05-05
-  - Minor ABC tweaks
+  - Session DB updated to 2025-05-15
+  - Chords from Oleg added to 11 sets (& Anton ed. arr.)
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>
+
+<details>
+<summary>v.0.9.8: UI/UX Upgrade (Better Navigation & Refactoring)</summary>
+
+
+
+</details>
 
 <details>
 <summary>v.0.9.8: UI/UX Upgrade (Better Navigation & Refactoring)</summary>
