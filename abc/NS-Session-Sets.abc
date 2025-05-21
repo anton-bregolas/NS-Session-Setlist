@@ -268,17 +268,17 @@ M: 6/8
 L: 1/8
 Q: 3/8=116
 K: Ador
-|:"Am"eAA BAB|"G"GBd dBd|"Em"egg "D/F#"dgg|"Em"BAB "G"GBd|
+|:"Am"eAA BAB|"G"GBd dBd|"Em"egg "(D/F#)"dgg|"Em"BAB "G"GBd|
 "Am"eAA BAB|"G"GBd dBd|"C"e/f/ge "D"dBA|1 "G"BGG G2g:|2 "G"BGG G2d||
 K: Gmaj
 |:"Am"e2a bag|"G/B"egg ged|"C"egg dgg|"Em"BAB GBd|
 "Am"eaa bag|"G/B"egg ged|"C"e/f/ge "D"dBA|1 "G"BGG "(Em)"G2d:|2 "G"BGG "(Em)"G2g||
 T: Tenpenny Bit
 K: Gmaj
-|:"D"edB "G"G2A|Bed Bcd|"C"edB "G/B"G2A|"D"BAB gfg|
-"G (Em)"edB G2A|Bed "Em"Bcd|"C"eag "G/B"edB|1 "D"BAG A2g:|2 "D"BAG ABd||
-|:"A5 (Em)"e2f gfg|"(D)"eaa ged|"A5 (C)"e2f gfg|"(D)"efg "D/F#"a3|
-"A5 (G)"aba "(D)"age|"G"ged "A5"^cde|"(C)"eag edB|1 "D"BAG ABd:|2 "D"BAG A2g||
+|:"D"edB "G"G2A|Bed Bcd|"C"edB G2A|"D"BAB gfg|
+"G (Em)"edB G2A|Bed "Em"Bcd|"C"eag edB|1 "D"BAG A2g:|2 "D"BAG ABd||
+|:"Em (A5)"e2f gfg|"D (A5)"eaa ged|"C (A5)"e2f gfg|"D (A5)"efg "D/F# (D)"a3|
+"G (A5)"aba "D (A5)"age|"G"ged "A5"^cde|"C"eag edB|1 "D"BAG ABd:|2 "D"BAG A2g||
 
 X: 12
 T: JIGS: Carraroe Set
@@ -372,7 +372,7 @@ K: Ador
 |:"Am"A2B cBA|"(C)"eAB cBA|"G"GAG EGG|"D"DGG "C"EG"G/B"G|
 "Am"A2B cBA|"(C)"e2d efg|"Em"age dBG|"D"BAG A3:||
 |:"Am"aba age|"(D)"def "(G)"gfg|"(Em)"gag "Em"gfe|"D"dBA GFG|
-"Em"EGG "(D)"DGG|"G"EGG ABc|"C"Bed ,BAG|"D"BAG A3:||
+"Em"EGG "(D)"DGG|"G"EGG ABc|"C"Bed BAG|"D"BAG A3:||
 |:"Am"ABA "G"gA"Am"f|ABA edB|"G"GFG "G/C"eG"G"d|GFG "(Em)"edB|
 "Am"ABA gAf|"G/B"ABA efg|"C"age dBG|"D"BAG A3:||
 

@@ -7,7 +7,8 @@
 
 // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB
 import { localStorageOk, initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
-        filterOptions, initCustomDropDownMenus, openSettingsMenu, handleSelectorLabels } from "./scripts-ns-sessions.js";
+        filterOptions, resetTuneBookFilters, initCustomDropDownMenus, openSettingsMenu, handleSelectorLabels, 
+        switchTuneBookItem, sanitizeQueryParam, displayNotification} from "./scripts-ns-sessions.js";
 // Import lz-string compression algorithm
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
@@ -16,17 +17,18 @@ import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 /////////////////////////////////////////////////////////////////////////////
 
 export const abcTunebookDefaults = {
-
+    // Tunebook options
     abcToolsSaveAndRestoreTunes: "1",
-    abcToolsAllowInstrumentChanges: "1",
-    abcToolsAllowTabStyleChanges: "1",
-    abcToolsFullScreenBtnShowsChords: "0",
-    abcToolsAllowTuneAutoReload: "1",
-    abcToolsAlwaysMuteChords: "0",
     tuneBookAlwaysUseMobileMode: "0",
     tuneBookAlwaysUseCompactMode: "0",
+    abcToolsFullScreenOpensNewWindow: "0",
+    // Advanced Tunebook options
     tuneBookShowStatusReport: "0",
     tuneBookAllowLoadFromHashLink: "1",
+    abcToolsAllowInstrumentChanges: "1",
+    abcToolsAlwaysMuteChords: "0",
+    abcToolsAllowTabStyleChanges: "1",
+    abcToolsAllowTuneAutoReload: "1",
     chordViewerAllowDynamicChords: "0",
 };
 
@@ -37,6 +39,7 @@ export const abcTunebookDefaults = {
 let tunes = [];
 
 let isFirstTuneBookLoad = true;
+let isTuneRestorePaused = false;
 
 let tabStyle = "noten";
 
@@ -76,21 +79,19 @@ export function initTunebookOptions() {
 
 // Initialize ABC Transcription Tools, add event listeners to Tunebook elements
 
-export function initAbcTools() {
+export function initAbcTools(itemQuery) {
 
     // Select Session DB JSON to open in ABC Tools
 
     tunes = checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
-
-    // Initialize the Full Screen Button
-
-    const fullScreenButton = document.getElementById('fullScreenButton');
-
-    fullScreenButton.addEventListener('click', handleFullScreenButton);
     
     // Populate the selector with options from JSON
 
     if (tunes.length > 1) {
+
+        // Check if restoring and loading Tunebook items needs to be paused
+
+        if (itemQuery) isTuneRestorePaused = true;
 
         // Populate Tunebook menu with Sets or Tunes
         populateTuneSelector(tunes);
@@ -106,12 +107,21 @@ export function initAbcTools() {
 
             loadTuneBookItem(tunes);
         });
+
+        // Initialize the Tabs & MIDI dropdown menu
+        displayOptions.addEventListener('change', loadTabsMidiOptions);
+
+    } else {
+
+        console.warn(`NS Session App:\n\nTunebook appears empty, reload the app`);
+        displayNotification("No Tunebook items found. Reload the app to try again", "error");
+        return;
     }
 
-    // Initialize the Tabs & MIDI dropdown menu
-    displayOptions.addEventListener('change', loadTabsMidiOptions);
+    // Restore last saved Tunebook options
+    // Trigger last saved item load if no query available
 
-    // Restore last saved Tunebook options & trigger last saved item load
+    let isTuneBookItemLoading;
 
     if (localStorageOk()) {
 
@@ -120,13 +130,27 @@ export function initAbcTools() {
             (localStorage.lastTuneBookSet_NSSSAPP ||
             localStorage.lastTuneBookTune_NSSSAPP)) {
 
-            restoreTuneBookOptions();
-            
-            return;
+            restoreTuneBookDisplayOptions();
+            isTuneBookItemLoading = true;
         }
     }
 
-    // Load the first Set or Tune into the Tuneframe
+    // Load a Tunebook item using query params
+
+    if (itemQuery) {
+
+        setTimeout(() => {
+            
+            loadFromQueryString(itemQuery);
+        
+        }, 150);
+
+        return;
+    }
+
+    if (isTuneBookItemLoading) return;
+
+    // Load the first Tunebook item by default
 
     refreshTabsDisplayOptions();
 
@@ -142,11 +166,20 @@ export function initAbcTools() {
 
 // Load a Set or a Tune into the Tuneframe
 
-export function loadTuneBookItem(currentTuneBook, itemNumber) {
+export function loadTuneBookItem(currentTuneBook, itemNumber, passedUrl) {
 
     handleSelectorLabels("select", tuneSelector, tuneSelector.selectedIndex);
 
-    let theURL = itemNumber >= 0? currentTuneBook[itemNumber].url : tuneSelector.value;
+    let theURL;
+
+    if (passedUrl) {
+
+        theURL = passedUrl;
+
+    } else {
+
+        theURL = itemNumber >= 0? currentTuneBook[itemNumber].url : tuneSelector.value;
+    }
 
     if (theURL == "") return;
 
@@ -185,6 +218,18 @@ export function loadTuneBookItem(currentTuneBook, itemNumber) {
 
     tuneFrame.src = theURL;
     lastURL = theURL;
+
+    // Clear item query params
+
+    // if (window.location.hash.includes("?type=")) {
+
+    //     setTimeout(() => {
+
+    //         const currentSection = checkTuneBookSetting();
+    //         window.location.hash = `#${currentSection}`;
+
+    //     }, 400);
+    // }
 
     // Save last Tunebook item loaded
     if (localStorageOk() && +localStorage.abcToolsSaveAndRestoreTunes === 1) {
@@ -297,6 +342,44 @@ export function sortFilterOptions(currentTuneBook) {
     return [allTuneTypes, allTuneLeaders];
 }
 
+// Handle Tunebook item loading using query param text
+// Handle Tunebook filter loading using query param text
+
+export function loadFromQueryString(queryString) {
+
+  const tuneBookItemMatch = /type=(.+)&name=(.+)/;
+
+  const tuneBookFilterMatch = /filter=(.+)/;
+
+  if (queryString.match(tuneBookItemMatch)) {
+
+    const itemType = sanitizeQueryParam(queryString.replace(tuneBookItemMatch, `$1`));
+
+    const itemName = sanitizeQueryParam(queryString.replace(tuneBookItemMatch, `$2`));
+
+    setSelectedTuneByQuery(itemType, itemName);
+
+    return;
+  }
+
+  if (queryString.match(tuneBookFilterMatch)) {
+
+    const filterParam = sanitizeQueryParam(queryString.replace(tuneBookFilterMatch, `$1`));
+
+    setFilterByQuery(filterParam);
+
+    return;
+  }
+
+  console.warn(`NS Session App:\n\nInvalid params passed in user query`);
+
+  displayNotification("Invalid query provided, check input URL", "warning");
+
+  isTuneRestorePaused = false;
+
+  return;
+}
+
 ////////////////////////////////
 // MIDI & INSTRUMENTS FUNCTIONS
 ///////////////////////////////
@@ -379,6 +462,8 @@ function loadTabsMidiOptions() {
                     break;
         }
     }
+
+    if (isTuneRestorePaused) return;
 
     // Trigger the (re)loading of Tunebook item
 
@@ -535,7 +620,6 @@ function refreshTabsDisplayOptions() {
 
     displayOptions.selectedIndex = 0;
     displayOptions.value = "-1";
-    // handleSelectorLabels("setone", displayOptions);
 }
 
 ////////////////////////////////
@@ -583,7 +667,7 @@ function saveLastTuneBookItem() {
 // Look for saved Tunebook options in user's local storage, fire displayOptions change event
 // Trigger the loading of last saved Tab & MIDI options and Tunebook item via loadTabsMidiOptions
 
-function restoreTuneBookOptions() {
+function restoreTuneBookDisplayOptions() {
 
     if (!localStorageOk()) return;
 
@@ -610,7 +694,7 @@ function restoreTuneBookOptions() {
 
 export function restoreLastTunebookItem() {
 
-    if (!localStorageOk()) return;
+    if (!localStorageOk() || isTuneRestorePaused === true) return;
 
     setTimeout(function() {
 
@@ -652,6 +736,92 @@ function setSelectedTuneByName(optionText) {
 
         tuneSelector.dispatchEvent(new Event('change'));
     }
+}
+
+// Check if Tunebook contains an item matching the query text passed
+// Fire a change event on tuneSelector if a match is found
+// Refresh Tunebook item if no match is found
+
+export function setSelectedTuneByQuery(itemType, itemName) {
+
+    const itemTitle = `${itemType}_${itemName}`;
+
+    let gotMatch = false;
+
+    for (let i = 0; i < tuneSelector.options.length; i++) {
+
+        if (sanitizeQueryParam(tuneSelector.options[i].text) === itemTitle) {
+
+            tuneSelector.selectedIndex = i;
+            gotMatch = true;
+            break;
+        }
+    }
+
+    isFirstTuneBookLoad = false;
+
+    // Load matching Tunebook item if match found
+
+    if (gotMatch) {
+
+        tuneSelector.dispatchEvent(new Event('change'));
+        isTuneRestorePaused = false;
+        return;
+    }
+
+    // Display warning and clear hash if no match
+
+    console.warn(`NS Session App:\n\nInvalid item params in user query`);
+    displayNotification("Invalid query provided, check input URL", "warning");
+
+    isTuneRestorePaused = false;
+
+    const currentSection = checkTuneBookSetting();
+    window.location.hash = `#${currentSection}`;
+}
+
+// Check if Filter dropdown contains a filter matching the query param
+// Clear filters and fire a change event on filterOptions if a match is found
+
+export function setFilterByQuery(filterParam) {
+
+    let gotMatch = false;
+
+    for (let i = 0; i < filterOptions.options.length; i++) {
+
+        if (sanitizeQueryParam(filterOptions.options[i].text.slice(2)) === filterParam) {
+
+            filterOptions.selectedIndex = i;
+            gotMatch = true;
+            break;
+        }
+    }
+
+    isFirstTuneBookLoad = false;
+
+    // Load matching Tunebook filter if match found
+
+    if (gotMatch) {
+
+        setTimeout(() => {
+
+            filterOptions.dispatchEvent(new Event('change'));
+
+            switchTuneBookItem("next");
+            
+            isTuneRestorePaused = false;
+            
+        }, 250);
+
+        return;
+    }
+
+    // Display warning if no match
+
+    console.warn(`NS Session App:\n\nInvalid filter params in user query`);
+    displayNotification("Invalid query provided, check input URL", "warning");
+
+    isTuneRestorePaused = false;
 }
 
 ////////////////////////////////
@@ -721,21 +891,19 @@ export function getViewportWidth() {
 
 // Handle Full Screen Button action depending on app settings
 
-async function handleFullScreenButton() {
+export async function handleFullScreenButton(dataLoad) {
 
     const fullScreenSetting = +document.querySelector('input[name="nss-radio-view"]:checked').value;
+    
+    const isAlwaysOpenInAbcTools = localStorageOk()? !!+localStorage.abcToolsFullScreenOpensNewWindow : false;
     
     // View ABC Tools frame in Full Screen using Fullscreen API
 
     if (fullScreenSetting === 0) {
 
-        // If Tunebook is in desktop mode on a narrow device, open ABC Tools in new window
         // If browser does not support Fullscreen API, open ABC Tools in new window
 
-        if ((document.body.dataset.mode &&
-            document.body.dataset.mode === "desktop" &&
-            getViewportWidth() <= 870) ||
-            
+        if (isAlwaysOpenInAbcTools === true ||
             (!document.body.requestFullscreen && 
             !document.body.webkitRequestFullscreen && 
             !document.body.mozRequestFullScreen &&
@@ -770,15 +938,7 @@ async function handleFullScreenButton() {
     
     if (fullScreenSetting === 1) {
         
-        openSettingsMenu(this.dataset.load);
-        return;
-    }
-
-    // Open ABC Tools in new window
-
-    if (fullScreenSetting === 2) {
-
-        openInAbcTools();
+        openSettingsMenu(dataLoad);
         return;
     }
 }

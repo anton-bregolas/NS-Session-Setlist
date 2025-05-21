@@ -1,3 +1,5 @@
+/* N.S.S.S. App Styles */
+
 @supports not selector(:popover-open) {
   [popover]:not(.\:popover-open) {
     display: none;
@@ -27,11 +29,6 @@ body {
   /* outline: 0.1rem solid red; */
 }
 
-html {
-  /* height: 100dvh; */
-  /* background-attachment: fixed; */
-}
-
 body * {
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
@@ -48,8 +45,13 @@ body,
   background-color: var(--gradient-color-left);
 }
 
-.background-container {
+.background-container,
+.nss-footer-tunebook {
+  background-color: var(--gradient-color-left);
   background-image: linear-gradient(90deg, var(--gradient-color-left) 25%, var(--gradient-color-right) 100%);
+}
+
+.background-container {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -82,6 +84,19 @@ body,
 
 body[data-mode="mobile"] .nss-header-tunebook {
   min-width: unset;
+}
+
+.nss-select-container [data-load="share-link"] {
+  margin-right: 2rem;
+}
+
+.nss-select-container [data-load="list-viewer"] {
+  margin-left: 2rem;
+}
+
+body[data-mode="mobile"] .nss-select-container [data-load="share-link"],
+body[data-mode="mobile"] .nss-select-container [data-load="list-viewer"] {
+  display: none;
 }
 
 .title-wrapper {
@@ -145,13 +160,15 @@ h2 {
 
 a,
 .nss-option-btn,
+.nss-control-btn,
 .nss-gradient-text {
   color: var(--accent-color);
 }
 
 a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible),
 a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible) > *,
-.nss-option-btn:is(:hover, :focus, :focus-visible) {
+.nss-option-btn:is(:hover, :focus, :focus-visible),
+.nss-control-btn:is(:hover, :focus, :focus-visible) {
   color: var(--accent-color-alt);
 }
 
@@ -294,13 +311,14 @@ iframe {
 a:focus-visible,
 input:is(:focus-visible) + span,
 #fullScreenButton:is(:focus, :focus-visible),
-[data-controls="mode"]:is(:focus, :focus-visible),
-[data-controls="footer-popup"]:is(:focus, :focus-visible) {
+[data-controls="mode"]:is(:focus-visible),
+[data-controls="footer-popup"]:is(:focus-visible) {
   outline: 0.2rem solid var(--accent-color);
 }
 
 select:is(:focus, :focus-visible) {
   outline: 0.25rem solid var(--accent-color);
+  filter: drop-shadow(1px 1px 4px var(--accent-color));
 }
 
 body[data-mode="mobile"] .nss-tunebook-selector:is(:focus, :focus-visible) {
@@ -341,6 +359,11 @@ a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visib
   text-underline-offset: 0.14rem;
 }
 
+.nss-subhead-link:is(:hover, :active, :focus, :focus-visible),
+.nss-footer-link:is(:hover, :active, :focus, :focus-visible) {
+  filter: drop-shadow(1px 1px 13px var(--accent-color));
+}
+
 body[data-mode="mobile"] [data-controls="footer-popup"],
 body[data-mode="desktop"] [data-type="mobile-switch"] {
   display: flex;
@@ -362,11 +385,11 @@ label:is([class*="radio-wrapper"]) {
   height: 100%;
 }
 
-label:is([class*="radio-wrapper"]) span {
+label:is([class*="radio-wrapper"]) > span {
   gap: 1rem;
 }
 
-label:is([class*="radio-wrapper"]) span,
+label:is([class*="radio-wrapper"]) > span,
 [data-controls="footer-popup"],
 [data-type="mobile-switch"],
 .nss-footer-link {
@@ -390,6 +413,10 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-hide {
 
 .nss-icon-show {
   display: none;
+}
+
+.nss-mini-icon.nss-icon-hide {
+  color: var(--accent-color-alt);
 }
 
 [data-load="fullscreen-view"] .nss-icon-show {
@@ -417,13 +444,16 @@ body[data-mode="mobile"] #nss-radio-view-chords + span::after {
   content: '"Em"';
 }
 
-body[data-mode="mobile"] label:is([class*="radio-wrapper"]),
-body[data-mode="mobile"] [data-type="desktop-switch"] span {
+body[data-mode="mobile"] label:is([class*="radio-wrapper"]) {
   font-size: 1.7rem;
 }
 
 [data-controls="footer-popup"] svg {
   transform: rotate(180deg);
+}
+
+[data-load="share-link"] svg {
+  transform: rotate(-20deg);
 }
 
 option:is([disabled]) {
@@ -470,6 +500,7 @@ option:is([disabled]) {
 
 .nss-link-btn,
 .nss-option-btn,
+.nss-control-btn,
 .nss-switch-btn {
   width: 3.25rem;
   height: 3.25rem;
@@ -593,7 +624,7 @@ body[data-mode="desktop"] .nss-abctools-embed:is(:fullscreen, :-webkit-full-scre
 }
 
 [data-controls="footer-popup"],
-[data-controls="mode"] svg {
+[data-controls="mode"] .nss-mini-icon {
   color: var(--accent-color);
 }
 
@@ -620,8 +651,7 @@ body[data-mode="desktop"] .nss-abctools-embed:is(:fullscreen, :-webkit-full-scre
 }
 
 .nss-btn-x,
-.nss-btn-plus,
-.nss-control-btn {
+.nss-btn-plus {
   font-size: 2.75rem;
   width: 2.75rem;
   height: 2.75rem;
@@ -649,12 +679,30 @@ body[data-mode="desktop"] .nss-abctools-embed:is(:fullscreen, :-webkit-full-scre
 
 .nss-link-btn a:is(:hover, :focus, :focus-visible),
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
-.nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
 .nss-btn-plus:is(:hover, :focus, :focus-visible),
 .nss-btn-x:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid var(--accent-color);
   opacity: 1;
+}
+
+.nss-option-btn:is(:hover, :focus, :focus-visible),
+.nss-control-btn:is(:hover, :focus, :focus-visible) {
+  opacity: 1;
+}
+
+.nss-link-btn a:is(:hover, :focus, :focus-visible),
+.nss-option-btn:is(:hover, :focus, :focus-visible),
+.nss-control-btn:is(:hover, :focus, :focus-visible),
+.nss-btn-launch:is(:hover, :focus, :focus-visible),
+.nss-btn-plus:is(:hover, :focus, :focus-visible),
+.nss-btn-x:is(:hover, :focus, :focus-visible) {
+  filter: drop-shadow(1px 1px 8px var(--accent-color));
+}
+
+#fullScreenButton:is(:hover, :focus, :focus-visible),
+.nss-switch-btn:is(:hover, :focus, :focus-visible) {
+  filter: drop-shadow(1px 1px 4px var(--accent-color));
 }
 
 .popup-btn-x {
@@ -668,10 +716,6 @@ body[data-mode="desktop"] .nss-abctools-embed:is(:fullscreen, :-webkit-full-scre
 .nss-btn-abcraw a:is(:hover, :focus, :focus-visible) {
   outline: 0.24rem solid var(--accent-color);
   outline-offset: 0.4rem;
-}
-
-.nss-option-btn:is(:hover, :focus, :focus-visible) {
-  outline: none;
 }
 
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
@@ -899,7 +943,7 @@ body[data-mode="mobile"] .nss-select-container {
 }
 
 .nss-tunebook-title-nav {
-  margin: 0 4rem;
+  margin: 0 10rem;
 }
 
 .subtitle-wrapper {
@@ -932,10 +976,11 @@ body[data-mode="mobile"] .nss-select-container {
 
 .nss-popover-menu .nss-popover-body {
   width: 100%;
-  height: calc(100% - 3.5rem);
+  height: calc(100% - 5.5rem);
   align-items: flex-start;
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
 }
 
 .nss-popover-header {
@@ -947,7 +992,7 @@ body[data-mode="mobile"] .nss-select-container {
 }
 
 .nss-popover-header-title-container {
-  margin: 1.17rem auto 0;
+  margin: 1.17rem auto 2rem;
   max-width: min(calc(80svw - 3.7rem - 5rem), 35rem);
 }
 
@@ -967,8 +1012,12 @@ body[data-mode="mobile"] .nss-select-container {
 }
 
 .nss-checkbox-container {
+  margin: 1rem 1rem 2.5rem;
+}
+
+.nss-checkbox-container,
+.nss-advanced-options-container {
   gap: 1.9rem;
-  margin: 3rem 1rem 2.5rem;
 }
 
 .nss-checkbox-label {
@@ -1018,6 +1067,21 @@ input[type="checkbox"]:focus-visible {
   opacity: 1;
 }
 
+.nss-btn-advanced-options {
+  width: 65%;
+  margin: 1rem auto 0;
+  padding: 1.25em;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  border: 0.2rem solid;
+  border-radius: 0.75rem;
+  opacity: 0.85;
+}
+
+.nss-btn-advanced-options:is(:hover, :focus, :focus-visible) {
+  filter: drop-shadow(1px 1px 7px var(--accent-color));
+}
+
 [data-popover="tunebook-actions-popup"],
 [data-popover="notification-popup"] {
   background-image: linear-gradient(90deg, var(--gradient-color-left) 25%, var(--gradient-color-right) 100%);
@@ -1033,15 +1097,13 @@ input[type="checkbox"]:focus-visible {
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* min-height: 7.25rem; */
   inset: unset;
   position: fixed;
   left: 0;
   bottom: 0;
   border: 0.2rem solid var(--accent-color);
   border-radius: 0.75rem;
-  padding: 1.75em 0 0.75em;
-  gap: 1rem;
+  padding: 2.25em 0 1.25em;
 }
 
 [data-popover="tunebook-actions-popup"] .popup-btn-x {
@@ -1049,11 +1111,31 @@ input[type="checkbox"]:focus-visible {
   color: var(--accent-color);
 }
 
-.tunebook-actions-row {
-  width: 100%;
+.tunebook-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem;
+  width: calc(100% - 1.5rem);
+  justify-items: center;
 }
 
-.tunebook-actions-row .nss-option-btn:is(:focus, :focus-visible) {
+.tunebook-actions-grid > button:nth-child(6) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.tunebook-actions-grid > button:nth-child(7) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.tunebook-actions-grid > button:nth-child(8) {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.tunebook-actions-grid .nss-option-btn:is(:focus-visible) {
   outline: 0.25rem solid var(--accent-color);
   outline-offset: 0.5rem;
 }
@@ -1072,7 +1154,13 @@ input[type="checkbox"]:focus-visible {
 }
 
 [data-popover="notification-popup"].status .popup-btn-x {
-  display: none;
+  color: var(--accent-color);
+  outline-color: var(--accent-color);
+  opacity: 0.7;
+}
+
+[data-popover="notification-popup"] .popup-btn-x:is(:hover, :focus, :focus-visible) {
+  opacity: 1;
 }
 
 [data-popover="notification-popup"].report .popup-btn-x {
@@ -1103,6 +1191,15 @@ input[type="checkbox"]:focus-visible {
 
 /* @media screen and (max-width: 1120px) { */
 @media screen and (max-width: 70em) {
+  
+  .nss-select-container [data-load="share-link"],
+  .nss-select-container [data-load="list-viewer"] {
+    display: none;
+  }
+
+  .nss-tunebook-title-nav {
+    margin: 0 4rem;
+  }
 
   .nss-footer-tunebook .footer-link-wrapper {
     justify-content: space-around;
@@ -1124,7 +1221,7 @@ input[type="checkbox"]:focus-visible {
 
   .nss-popover-menu .nss-popover-body {
     width: 100%;
-    height: calc(100svh - 12rem);
+    height: calc(100svh - 7.75rem);
     align-items: flex-start;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -1144,8 +1241,20 @@ input[type="checkbox"]:focus-visible {
   }
 
   .nss-checkbox-container {
-    gap: 3.25rem;
-    margin: 2.5rem 1rem;
+    margin: 2.75rem 1rem;
+  }
+
+  .nss-checkbox-container,
+  .nss-advanced-options-container {
+    gap: 3.15rem;
+  }
+
+  .nss-btn-advanced-options {
+    width: calc(100% - 1.6rem);
+    font-size: 1.75rem;
+    color: var(--accent-color);
+    border: 0.25rem dotted;
+    border-radius: 0.25rem;
   }
 
   .nss-checkbox-label {
@@ -1215,7 +1324,7 @@ input[type="checkbox"]:focus-visible {
 /* @media screen and (max-width: 528px) { */
 @media screen and (max-width: 33em) {
 
-  body[data-mode="mobile"] .select-wrapper:last-child {
+  body[data-mode="mobile"] .select-wrapper:last-of-type {
     display: none;
   }
 }
@@ -1235,6 +1344,10 @@ input[type="checkbox"]:focus-visible {
 
 /* @media screen and (max-width: 480px) { */
 @media screen and (max-width: 30em) {
+
+  .nss-popover-menu .nss-popover-body {
+    height: calc(100svh - 11.75rem);
+  }
 
   body[data-mode="mobile"] .footer-btn-x,
   body[data-mode="mobile"] .nss-footer-tunebook [data-load="launcher"] {
@@ -1270,6 +1383,16 @@ input[type="checkbox"]:focus-visible {
   }
 }
 
+@supports (color: color-mix(in srgb, #000 50%, #fff)) {
+
+  .nss-btn-advanced-options:is(:hover, :focus, :focus-visible),
+  .nss-option-btn:not([data-state="filled"]):is(:hover, :focus, :focus-visible),
+  .nss-control-btn:is(:hover, :focus, :focus-visible),
+  .popover-btn-x:is(:hover, :focus, :focus-visible) {
+    color: color-mix(in srgb, var(--accent-color) 60%, var(--accent-color-alt));
+  }
+}
+
 @supports (-webkit-tap-highlight-color: rgba(0,0,0,0)) {
   a, iframe, .nss-btn {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -1285,7 +1408,6 @@ input[type="checkbox"]:focus-visible {
 
   body[data-mode="mobile"] .nss-tunebook-selector:is(:focus, :focus-visible) {
     color: color-mix(in srgb, var(--accent-color) 90%, var(--accent-color-alt));
-    filter: drop-shadow(1px 1px 4px var(--accent-color));
   }
   
   body[data-mode="mobile"] .nss-tunebook-selector option,

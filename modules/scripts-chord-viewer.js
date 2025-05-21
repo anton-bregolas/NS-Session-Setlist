@@ -25,14 +25,14 @@ import { displayWarningEffect, displayNotification } from "./scripts-ns-sessions
 const launchButton = document.querySelector('#fullScreenButton');
 const tuneSelector = document.querySelector('#tuneSelector');
 
-// Define Chord Viewer Popover elements
+// Define Chord Viewer Dialog elements
 
 const chordViewerDialog = document.querySelector('[data-chord-viewer="dialog"]');
 const chordViewerTitle = document.querySelector('[data-chord-viewer="title"]');
 const chordViewerChords = document.querySelector('[data-chord-viewer="chords-container"]');
 const chordViewerSlider = document.querySelector('[data-controls="chord-viewer-slider"]');
 
-// Define initial Chord Popover slider settings
+// Define initial Chord Dialog slider settings
 
 const vInitVal = 120 // Global initial value for vertical slider (%)
 const lineWInit = 40 // Global initial value for chords line width (rem)
@@ -51,9 +51,8 @@ const maxWTops = 90; // Highest max-width value for chords (%)
 
 // Open Chord Viewer:
 // Extract Chords from ABC or URL if dynamic chord mode is on
-// Load Chordbook chords into the Chord Viewer Popover
-// Show Chord Viewer Popover using Popover API
-// Initiate Chord Viewer Slider settings
+// Load Chordbook chords into the Chord Viewer Dialog
+// Show dialog, initiate Chord Viewer Slider settings
 
 export function openChordViewer(setChords, tuneChords) {
   
@@ -166,23 +165,23 @@ export function openChordViewer(setChords, tuneChords) {
   if (setMatch) {
 
     chordViewerTitle.textContent = setMatch.setTitle;
-    loadChordsToPopover(setMatch.tuneChords, "chords-set");
+    loadChordsToDialog(setMatch.tuneChords, "chords-set");
 
   } else if (tuneMatch) {
 
     chordViewerTitle.textContent = tuneMatch.title;
-    loadChordsToPopover([tuneMatch], "chords-tune");
+    loadChordsToDialog([tuneMatch], "chords-tune");
   }
 
   chordViewerDialog.showModal();
-  initPopoverSlider();
+  initDialogSlider();
 }
 
 ///////////////////////////////////
 // CHORD VIEWER INIT FUNCTIONS
 //////////////////////////////////
 
-// Initialize Chord Viewer Popover
+// Initialize Chord Viewer Dialog
 
 export function initChordViewer() {
 
@@ -195,14 +194,14 @@ export function initChordViewer() {
 
 function handleChordViewerClick(event) {
 
-  const actionTrigger = event.target.closest('[data-action]');
+  const actionTrigger = event.target.closest('[data-cvw-action]');
 
   if (!actionTrigger) return;
 
   const chordViewerGui = chordViewerDialog.querySelectorAll('[data-controls]');
   const chordViewerThemeBtns = chordViewerDialog.querySelectorAll('[data-controls="theme-btn"]');
 
-  const elAction = actionTrigger.dataset.action;
+  const elAction = actionTrigger.dataset.cvwAction;
 
   if (elAction === 'reset-slider') {
 
@@ -215,7 +214,7 @@ function handleChordViewerClick(event) {
       localStorage.removeItem('chordViewerSliderMaxWidthValue');
     }
 
-    initPopoverSlider();
+    initDialogSlider();
   
     return;
   }
@@ -273,7 +272,7 @@ function handleChordViewerClick(event) {
 
 // Initialize Chord Viewer slider using values from localStorage or default values
 
-function initPopoverSlider() {
+function initDialogSlider() {
 
   if (isLocalStorageOk()) {
 
@@ -330,9 +329,9 @@ function initPopoverSlider() {
 // CHORD DISPLAY FUNCTIONS
 //////////////////////////////////
 
-// Create responsive grid layout with chords data inside Chords Popover
+// Create responsive grid layout with chords data inside Chords Dialog
 
-function loadChordsToPopover(chordsMatch, chordsType) {
+function loadChordsToDialog(chordsMatch, chordsType) {
 
   chordViewerChords.textContent = '';
 
@@ -476,7 +475,7 @@ function loadChordsToPopover(chordsMatch, chordsType) {
   });
 }
 
-// Handle Chord Popover Slider events
+// Handle Chord Dialog Slider events
 
 function appChordSliderHandler(event) {
 
@@ -829,7 +828,7 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
     const extraDivisorArr = abcFragment.includes('/')? abcFragment.match(/[/]+\d*/g) : [];
     const countSimpleDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /[/](?=[^\d]|$)/.test(str))? extraDivisorArr.filter(str => str.match(/[/](?=[^\d]|$)/)).reduce((a, b) => a + (1 - (1 / Math.pow(2, b.length))), 0) : 0;
     const countAllExtraDivisorSum = extraDivisorArr.length > 0 && extraDivisorArr.some(str => /\d/.test(str))? extraDivisorArr.map(str => str.replaceAll(/[^\d]/g, '')).reduce((a, b) => a + (1 - (1 / b)), 0) + countSimpleDivisorSum : countSimpleDivisorSum;
-    const countEights = countNotes + countExtraMultiplierSum - countAllExtraDivisorSum;
+    const countEights = countNotes + (Number.isFinite(countExtraMultiplierSum)? countExtraMultiplierSum : 0) - (Number.isFinite(countAllExtraDivisorSum)? countAllExtraDivisorSum : 0);
     const relatedChord = abcBarChordsInput[notesBetweenChords.indexOf(abcFragment)];
     let previousChord = '';
 
@@ -893,6 +892,7 @@ function normalizeAbc(abcContent) {
   abcOutput = convertAbcIntervalsToSingleNotes(abcOutput);
   abcOutput = normalizeAbcTriplets(abcOutput);
   abcOutput = normalizeAbcChordOrder(abcOutput);
+  abcOutput = normalizeAbcFractions(abcOutput);
 
   return abcOutput;
 }
@@ -943,7 +943,8 @@ function convertAbcIntervalsToSingleNotes(abcContent) {
 
 function normalizeAbcTriplets(abcContent) {
 
-  let filteredAbc = abcContent.replaceAll(/\([34](\w)(\w)(\w)/g, `$1/$2/$3`);
+  let filteredAbc = abcContent.replaceAll(/\([34](\w)\/(\w)\/(\w)\//g, `$1//$2//$3/`)
+                              .replaceAll(/\([34](\w)(\w)(\w)/g, `$1/$2/$3`);
 
   return filteredAbc;
 }
@@ -953,6 +954,20 @@ function normalizeAbcTriplets(abcContent) {
 function normalizeAbcChordOrder(abcContent) {
 
   let filteredAbc = abcContent.replaceAll(/(\([34])(".*?")/g, `$2$1`);
+
+  return filteredAbc;
+}
+
+// Replace fractional notation of notes with special characters
+
+function normalizeAbcFractions(abcContent) {
+
+  let filteredAbc = abcContent.replaceAll("3/2", ">")
+                              .replaceAll("2/3", "<")
+                              .replaceAll("1/2", "/")
+                              .replaceAll("1/4", "//")
+                              .replaceAll(/([a-gA-G]+)\/2/g, `$1/`)
+                              .replaceAll(/([a-gA-G]+)\/4/g, `$1//`);
 
   return filteredAbc;
 }

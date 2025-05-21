@@ -35,6 +35,11 @@ export const abcEncoderDefaults = {
 
 const sessionSurveyData = [];
 
+// Keep track of additional info messages at various processing steps
+
+let addEncoderInfoMsg = '';
+let addEncoderWarningMsg = '';
+
 // List of basic Tune Types in Session DB
 // Other tunes will be prefixed by Various
 
@@ -183,14 +188,25 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
             if (+localStorage.abcSortExportsChordsFromTunes === 1 && abcSortedOutput[2] !== '') {
 
-                downloadAbcFile(abcSortedOutput[2], "chords.json", "abc-extract-chords");
+                downloadAbcFile(abcSortedOutput[2], abcSortedOutput[2].includes("setTitle")? "chords-sets.json" : "chords-tunes.json", "abc-extract-chords");
             }
         }
     }
 
     // Save main ABC Encoder output file
     downloadAbcFile(abcEncoderOutput, fileName, taskType);
-    displayNotification("Encoder task completed", "success")
+
+    if (addEncoderWarningMsg) {
+
+        displayNotification(`Encoder task completed. ${addEncoderWarningMsg}`, "warning");
+        addEncoderWarningMsg = '';
+    
+    } else {
+        
+        displayNotification(`Encoder task completed${addEncoderInfoMsg? '. ' + addEncoderInfoMsg : ''}`, "success");
+    }
+
+    addEncoderInfoMsg = '';
 
     // Return an array containing Encoder Output and optional Encoder Tunes Output
     return [abcEncoderOutput, abcEncoderTunesOutput];
@@ -409,21 +425,62 @@ async function preProcessAbcMetadata(rawAbcContent) {
 
     // Check raw ABC for links to The Session, return unchanged if none found
 
-    if (!rawAbcContent.includes('https://thesession.org/')) {
+    const abcHasTsoLinks = rawAbcContent.includes('https://thesession.org/');
 
+    if (!abcHasTsoLinks) {
+
+        addEncoderInfoMsg = "No links to The Session found in ABC";
+        return rawAbcContent;
+    }
+
+    // Check raw ABC for links to sets and settings, return unchanged if none found
+    
+    const tsoSetUrlArr = rawAbcContent.match(/https:\/\/thesession\.org\/members\/[0-9]+\/sets\/[0-9]+/g);
+    const tsoSettingUrlArr = rawAbcContent.match(/https:\/\/thesession\.org\/tunes\/[0-9]+#setting[0-9]+/g);
+
+    if (!tsoSetUrlArr && !tsoSettingUrlArr) {
+
+        addEncoderInfoMsg = "No links to sets or settings on The Session found in ABC";
+        return rawAbcContent;
+    }
+
+    // Fail-fast check: Test connection to The Session before firing promises
+
+    try {
+
+        console.log('ABC Encoder:\n\nTesting connection to The Session...');
+
+        const testJsonUrl = "https://thesession.org/tunes/1?format=json";
+        
+        await fetchData(testJsonUrl, "json");
+
+    } catch (error) {
+
+        console.warn('ABC Encoder:\n\nFailed to connect to The Session. Details:\n\n', error.message);
+
+        addEncoderWarningMsg = "Failed to get metadata from The\xa0Session";
+        
         return rawAbcContent;
     }
 
     // Process ABC items - Sets or Tunes - containing fetchable links to The Session
 
     let preProcessedAbcArr = rawAbcContent.split('X:');
+    let metaAddedCounter = 0;
+    let metaFoundCounter = 0;
 
     console.log('ABC Encoder:\n\nChecking ABC for links to The Session with fetchable metadata...');
 
     preProcessedAbcArr = await Promise.all(preProcessedAbcArr.map(async (abcItem) => {
     
-        if (!abcItem || abcItem.includes('at The Session')) {
+        if (!abcItem) {
             
+            return abcItem;
+        }
+
+        if (abcItem.includes('at The Session')) {
+
+            metaFoundCounter++;
             return abcItem;
         }
 
@@ -444,6 +501,8 @@ async function preProcessAbcMetadata(rawAbcContent) {
 
         abcZString = `${abcZString} at The Session`;
 
+        metaAddedCounter++;
+
         // Replace the first found Z: field in ABC or insert Z: field value before N: or R:
 
         if (abcItem.match(/^Z:/m)) {
@@ -459,6 +518,22 @@ async function preProcessAbcMetadata(rawAbcContent) {
             return abcItem.replace(/^R:/m, `${abcZString}\nR:`);
         }
     }));
+
+    if (!preProcessedAbcArr[1]) {
+
+        console.warn('ABC Encoder:\n\nNo valid metadata from The Session could be added');
+        addEncoderWarningMsg = "No valid metadata from The Session could be added";
+
+    } else if (!metaAddedCounter) {
+
+        console.log(`ABC Encoder:\n\nThe Session metadata found in ${metaFoundCounter} item(s), fetching cancelled`);
+        addEncoderInfoMsg = "The Session metadata found in source ABC";
+
+    } else {
+
+        console.log(`ABC Encoder:\n\nThe Session metadata added to ${metaAddedCounter} item(s)${metaFoundCounter? ', found in ' + metaFoundCounter + ' item(s)' : ''}`);
+        addEncoderInfoMsg = "The Session metadata has been added";
+    }
 
     return preProcessedAbcArr[1]? preProcessedAbcArr.join('X:') : rawAbcContent;
 }
