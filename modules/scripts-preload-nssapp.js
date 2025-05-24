@@ -13,6 +13,8 @@ const viewPortH = window.visualViewport? Math.floor(window.visualViewport.height
 
 export function adjustHtmlFontSize(viewPortW, viewPortH) {
 
+  if (document.body.dataset.mode === "desktop") return "100%";
+
   let newFontSize = 100;
 
   // Calculate font size for tablets and mobile devices in portrait mode
@@ -55,9 +57,27 @@ export function adjustHtmlFontSize(viewPortW, viewPortH) {
   return newFontSizePercent;
 }
 
+// Initialize app mode based on viewport width
+
+function initAppMode() {
+
+  if (viewPortW < 880 || viewPortH <= 768) {
+
+    document.body.dataset.mode = "mobile";
+
+  } else {
+
+    document.body.dataset.mode = "desktop";
+  }
+}
+
+// Set initial app mode
+
+initAppMode();
+
 // Set HTML font-size value (%) for small and medium-sized screens
 
-if (viewPortW < 1080 || viewPortH <= 768) {
+if (viewPortW < 880 || viewPortH <= 768) {
 
   document.documentElement.style.fontSize = adjustHtmlFontSize(viewPortW, viewPortH);
 }

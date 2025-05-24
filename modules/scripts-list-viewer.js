@@ -10,7 +10,7 @@ import { storageAvailable } from "./scripts-3p/storage-available/storage-availab
 
 // Import functions handling warning messages (for user notifications)
 
-import { displayWarningEffect, displayNotification } from "./scripts-ns-sessions.js";
+import { displayWarningEffect, displayNotification } from "./scripts-nss-app.js";
 
 // Import function for loading selected tune items into ABC Tools iframe
 

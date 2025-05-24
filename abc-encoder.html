@@ -13,9 +13,9 @@
     <title>N.S.S.S. ABC Encoder</title>
     <link rel="modulepreload" href="./modules/scripts-preload-nssapp.js">
     <script type="module" src="./modules/scripts-preload-nssapp.js"></script>
-    <link rel="stylesheet" href="./styles/nss-styles.css">
+    <link rel="stylesheet" href="./styles/styles-nss-app.css">
     <script type="module" src="./modules/scripts-3p/popover-polyfill/popover.min.js"></script>
-    <script type="module" src="./modules/scripts-ns-sessions.js"></script>
+    <script type="module" src="./modules/scripts-nss-app.js"></script>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
         <header class="nss-header-container">
 
             <nav class="nss-encodernav-container">
-                <div id="nss-encoder-header" class="nss-header-app flex-align-center">
+                <div id="nss-encoder-header" class="nss-app-header flex-align-center">
                     <button class="nss-btn-abc-setlist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
                         <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Sets.abc" target="_blank" class="nss-icon-container" title="Get raw ABC of NS Session Setlist" aria-title="Get raw ABC of NS Session Setlist">
                             <svg class="nss-icon" aria-hidden="true">
@@ -46,7 +46,7 @@
                         </a>
                     </button>
                 </div>
-                <a href="/#launcher" class="nss-subhead-link nss-encoder-subhead-link" title="Return to Launch Screen of Novi Sad Session Setlist App" aria-title="Return to Launch Screen of Novi Sad Session Setlist App" autofocus><h2 class="nss-gradient-text">Back to Launch Screen</h2></a>
+                <a href="index.html" class="nss-subhead-link nss-encoder-subhead-link" title="Return to Launch Screen of Novi Sad Session Setlist App" aria-title="Return to Launch Screen of Novi Sad Session Setlist App" autofocus><h2 class="nss-gradient-text">Back to Launch Screen</h2></a>
             </nav>
 
         </header>
@@ -82,7 +82,7 @@
             <article id="nss-popover-options" popover="manual" class="nss-popover nss-popover-menu" aria-label="Encoder Settings Menu">
                 <header class="nss-popover-header">
                     <div class="flex-wrapper nss-header-left-btn-container">
-                        <button button data-load="session-survey" data-state="empty" class="nss-btn nss-btn-plus nss-control-btn flex-wrapper" title="Add Session Survey Data" aria-title="Add Session Survey Data"></button>
+                        <button data-load="session-survey" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn flex-wrapper" title="Add Session Survey Data" aria-title="Add Session Survey Data"></button>
                     </div>
                     <div class="nss-popover-header-title-container flex-wrapper">
                         <h2 class="nss-popover-title">Encoder Settings</h2>
@@ -91,7 +91,7 @@
                         <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
                     </div>
                 </header>
-                <div class="nss-popover-body flex-wrapper">
+                <div class="nss-popover-body flex-wrapper" tabindex="-1">
                     <div class="nss-checkbox-container flex-column">
                         <label for="encoder-export-tunelist" class="nss-checkbox-label">
                           <input type="checkbox" id="encoder-export-tunelist" data-option="abcEncoderExportsTuneList" class="nss-checkbox-btn" value="1">
