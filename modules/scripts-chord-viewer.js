@@ -18,7 +18,7 @@ import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
 // Import functions handling warning messages (for user notifications)
 
-import { displayWarningEffect, displayNotification } from "./scripts-ns-sessions.js";
+import { displayWarningEffect, displayNotification } from "./scripts-nss-app.js";
 
 // Define required app elements
 

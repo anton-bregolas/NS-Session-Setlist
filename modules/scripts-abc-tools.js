@@ -8,7 +8,7 @@
 // Import N.S.S.S. custom elements and tune JSONs from NS Sessions DB
 import { localStorageOk, initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
         filterOptions, resetTuneBookFilters, initCustomDropDownMenus, openSettingsMenu, handleSelectorLabels, 
-        switchTuneBookItem, sanitizeQueryParam, displayNotification} from "./scripts-ns-sessions.js";
+        switchTuneBookItem, sanitizeQueryParam, displayNotification} from "./scripts-nss-app.js";
 // Import lz-string compression algorithm
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 

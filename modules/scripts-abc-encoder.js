@@ -8,7 +8,7 @@ import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-titl
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
 import { pThrottle } from './scripts-3p/p-throttle/p-throttle.js'
 import { makeAbcChordBook } from './scripts-chord-viewer.js'
-import { localStorageOk, fetchData, initSettingsFromObject, displayWarningEffect, displayNotification } from './scripts-ns-sessions.js';
+import { localStorageOk, fetchData, initSettingsFromObject, displayWarningEffect, displayNotification } from './scripts-nss-app.js';
 
 ////////////////////////////////
 // ABC ENCODER GLOBAL SETTINGS
