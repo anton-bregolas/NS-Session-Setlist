@@ -1842,8 +1842,7 @@ function appRouterOnLoad() {
   // Redirect to Launch Screen if opening sections by direct link on load is not allowed
 
   if (initialHash && localStorageOk() && 
-    (!localStorage.tuneBookInitialized_NSSSAPP ||
-    +localStorage.tuneBookAllowLoadFromHashLink === 0)) {
+    (+localStorage.tuneBookAllowLoadFromHashLink === 0)) {
 
     console.log(`NS Session App:\n\nHash routing is being blocked\n
     Hash links loading on startup allowed? [${!!+localStorage.tuneBookAllowLoadFromHashLink}]\n
