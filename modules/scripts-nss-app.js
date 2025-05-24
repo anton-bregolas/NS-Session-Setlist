@@ -1,9 +1,11 @@
 import { storageAvailable } from './scripts-3p/storage-available/storage-available.js';
 import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, displayOptions,
          restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, 
-         resetViewportWidth, getViewportWidth, getViewportHeight, tuneFrame } from './scripts-abc-tools.js';
+         resetViewportWidth, getViewportWidth, getViewportHeight, getLastTunebookUrl, tuneFrame, 
+         handleFullScreenButton, loadFromQueryString } from './scripts-abc-tools.js';
 import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
+import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,17 +19,19 @@ import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: 2025-05-05
+// NS Session DB date: 2025-05-17
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const APP_VERSION = "0.9.8";
+const APP_VERSION = "0.9.9";
+const DB_VERSION = "2025-05-17";
 
 // Define Global Variables
 
 let tuneBookSetting = "setlist"; // Tunebook loads Setlist by default
 let isTuneBookInitialized = false; // If false, opening Tunebook will initialise ABC Tools and fetch Session DB data
-let isManualTunebookModeOn = false; // If true, Tunebook footer and Tunelist / Setlist switch buttons are hidden
+let isCompactTunebookModeOn = false; // If true, Tunebook footer and Tunelist / Setlist switch buttons are hidden
 let lastAppSectionOpened = "launcher"; // Keep track of the last app section name / latest hash handled by routing
+let lastTuneBookMode; // Keep track of the last Tunebook mode setting for this session
 let lastTuneBookOpened; // Keep track of the latest Tunebook opened (fallback global variable)
 let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
 
@@ -44,7 +48,6 @@ export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/
 
 // Define common app elements
 
-const allCustomBtn = document.querySelectorAll('.nss-btn');
 const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
 const allLaunchEls = document.querySelectorAll('.nss-launch-el');
 const allThemeBtn = document.querySelectorAll('.nss-theme-btn');
@@ -62,6 +65,7 @@ const abcContainer = document.querySelector('.nss-abctools-embed');
 // Define App Menu elements
 
 const appOptionsPopover = document.querySelector('#nss-popover-options');
+const advancedOptions = document.querySelector('.nss-advanced-options-container');
 const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
 const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
 const notificationPopup = document.querySelector('[data-popover="notification-popup"]');
@@ -74,88 +78,119 @@ const tuneBookActionsPopup = document.querySelector('[data-popover="tunebook-act
 
 // Load Tunebook with Setlist or Tunelist interface, initiate ABC Tools
 
-async function launchTuneBook(targetSection, currentSection) {
+async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
-// Fetch latest Session DB
+  // Fetch latest Session DB if Tunebook has not been initialized
 
-  if (await tuneDataFetch() > 0) {
+  if (!isTuneBookInitialized) {
 
-    tuneBookSetting = targetSection;
+    const isSessionDBLoaded = await tuneDataFetch();
 
-    if (getViewportWidth() < 870 && !checkIfMobileMode()) {
+    if (!isSessionDBLoaded) {
 
-      resetViewportWidth(870);
-    }
+      // Display an error and hightlight section button if fetch attempt fails
 
-    if (currentSection === "launcher") hideLaunchers();
-    if (currentSection === "playalong") hidePlayAlongEls();
+      displayNotification("Error trying to load Tunebook", "error");
+    
+      const triggerBtn = document.querySelector(`#nss-launch-${targetSection}`);
 
-    updateAppSectionTitle(targetSection);
-    swapSwitchBtns(targetSection);
-
-    appHeader.setAttribute("style", "display: none");
-
-    showTuneBookEls();
-
-    if (!document.querySelector('#nss-tunebook-exit').hasAttribute("hidden")) {
-
-      document.querySelector('#nss-tunebook-exit').focus();
-
-    } else {
-
-      document.querySelector(`#nss-tunebook-${targetSection}-switch`).focus();
-    }
-
-    handleSelectorLabels("init");
-
-    if (isTuneBookInitialized === false) {
-
-      initAbcTools();
-
-      initTunebookRadioBtns();
-      
-      console.log(`NS Session App:\n\nABC Tools initialized`);
-
-      isTuneBookInitialized = true;
-
-      lastTuneBookOpened = tuneBookSetting;
-
-      if (localStorageOk()) {
-
-        localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
-
-        if (!localStorage.tuneBookInitialized_NSSSAPP) {
-
-          displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "status");
-          localStorage.tuneBookInitialized_NSSSAPP = 1;
-        }
-      }
+      displayWarningEffect(triggerBtn);
 
       return;
-
-    } else if ((localStorageOk() && +localStorage.tuneBookLastOpened_NSSSAPP !== tuneBookSetting) ||
-              (!localStorageOk() && lastTuneBookOpened !== tuneBookSetting)) {
-
-      refreshTuneBook();
-    
-    } else {
-
-      console.log(`NS Session App:\n\nTunebook has been reopened`);
     }
+  }
 
-  // If Tunebook launch sequence fails after the fetch attempt, display an error
+  // Launch Tunebook
+
+  tuneBookSetting = targetSection;
+
+  initTunebookMode();
+
+  if (getViewportWidth() < 880 && !checkIfMobileMode()) {
+
+    resetViewportWidth(880);
+  }
+
+  if (currentSection === "playalong") hidePlayAlongEls();
+  if (currentSection === "launcher" || currentSection === "playalong") hideLaunchers();
+
+  updateAppSectionTitle(targetSection);
+  swapSwitchBtns(targetSection);
+
+  appHeader.style.display = "none";
+
+  showTuneBookEls();
+
+  if (!document.querySelector('#nss-tunebook-exit').hasAttribute("hidden")) {
+
+    document.querySelector('#nss-tunebook-exit').focus();
 
   } else {
 
-    displayNotification("Error trying to load Tunebook", "error");
-
-    if (lastAppSectionOpened === "setlist" || lastAppSectionOpened === "tunelist") {
-  
-      const triggerBtn = document.querySelector(`#nss-launch-${lastAppSectionOpened}`);
-
-      displayWarningEffect(triggerBtn);
-    }
+    document.querySelector(`#nss-tunebook-${targetSection}-switch`).focus();
   }
+
+  handleSelectorLabels("init");
+
+  // Initialize ABC Tools when Tunebook first opened
+
+  if (isTuneBookInitialized === false) {
+
+    initAbcTools(itemQuery);
+
+    initTunebookRadioBtns();
+    
+    console.log(`NS Session App:\n\nABC Tools initialized`);
+
+    isTuneBookInitialized = true;
+
+    lastTuneBookOpened = tuneBookSetting;
+
+    if (localStorageOk()) {
+
+      localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
+
+      if (!localStorage.tuneBookInitialized_NSSSAPP) {
+
+        displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "success");
+        localStorage.tuneBookInitialized_NSSSAPP = 1;
+      }
+    }
+
+    return;
+  }
+
+  // Refresh Tunebook if section has been changed or query passed
+
+  if (itemQuery ||
+     (localStorageOk() && localStorage.tuneBookLastOpened_NSSSAPP !== tuneBookSetting) ||
+     (!localStorageOk() && lastTuneBookOpened !== tuneBookSetting)) {
+
+    refreshTuneBook(false, itemQuery);
+
+    lastTuneBookOpened = targetSection;
+
+    if (localStorageOk()) {
+
+      localStorage.tuneBookLastOpened_NSSSAPP = targetSection;
+    }
+
+    return;
+  }
+
+  // Refresh Tunebook if desktop mode was switched on while persistent mobile mode is on
+
+  if (lastTuneBookMode === "desktop" && 
+      (localStorageOk() && +localStorage.tuneBookAlwaysUseMobileMode === 1)) {
+
+    lastTuneBookMode = "mobile";
+
+    refreshTuneBook();
+  }
+  
+  // Simply log Tunebook opened event if section has not changed
+
+  console.log(`NS Session App:\n\nTunebook has been reopened`);
 }
 
 // Load Play Along section interface
@@ -173,11 +208,25 @@ function launchPlayAlong() {
 
 // Switch between sections or repopulate ABC tools with new data, swap elements
 
-function switchAppSection(targetSection, currentSection) {
+function switchAppSection(targetSection, currentSection, itemQuery) {
 
   // Switch from Tunebook >>>
 
   if (checkIfTunebookOpen()) {
+
+    // Handle same-section query requests
+
+    if (itemQuery && currentSection === targetSection) {
+
+      if (itemQuery.startsWith("filter")) {
+
+        loadFromQueryString(itemQuery);
+        return;
+      }
+
+      refreshTuneBook(false, itemQuery);
+      return;
+    }
 
     updateAppSectionTitle(targetSection);
 
@@ -189,7 +238,14 @@ function switchAppSection(targetSection, currentSection) {
 
       swapSwitchBtns(targetSection);
 
-      refreshTuneBook();
+      refreshTuneBook(false, itemQuery);
+
+      lastTuneBookOpened = targetSection;
+
+      if (localStorageOk()) {
+
+        localStorage.tuneBookLastOpened_NSSSAPP = targetSection;
+      }
 
       document.querySelector(`#nss-tunebook-${targetSection}-switch`).focus();
 
@@ -214,9 +270,13 @@ function switchAppSection(targetSection, currentSection) {
       tuneBookActionsPopup.hidePopover();
     }
 
-    resetViewportWidth();
+    lastTuneBookMode = document.body.dataset.mode;
+
     hideTuneBookEls();
     appHeader.removeAttribute("style");
+    resetViewportWidth();
+    initAppMode();
+    appWindowResizeHandler();
     
     // Tunebook > Playalong switch
 
@@ -241,7 +301,13 @@ function switchAppSection(targetSection, currentSection) {
 
   if (targetSection === "setlist" || targetSection === "tunelist") {
 
-    launchTuneBook(targetSection, currentSection);
+    if (currentSection === "playalong") {
+
+      hidePlayAlongEls();
+      showLaunchers();
+    }
+
+    launchTuneBook(targetSection, currentSection, itemQuery);
     return;
   }
 
@@ -271,7 +337,7 @@ function switchAppSection(targetSection, currentSection) {
 
 // Load previous or next Tunebook item depending on data-load type
 
-function switchTuneBookItem(loadDir) {
+export function switchTuneBookItem(loadDir) {
 
   const currentTuneBook = checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
 
@@ -367,7 +433,7 @@ function zoomTuneBookItem(zoomDir) {
 
 function swapSwitchBtns(targetSection) {
 
-  if (isManualTunebookModeOn) return;
+  if (isCompactTunebookModeOn) return;
 
   allSwitchBtn.forEach(switchBtn => {
 
@@ -392,18 +458,24 @@ function switchTunebookMode(targetMode) {
 
     document.body.dataset.mode = "mobile";
     
-    displayNotification("Mobile mode enabled: Double tap on tune to play, long press to rewind", "success");
+    displayNotification("Mobile mode enabled", "success");
+    // displayNotification("Mobile mode enabled: Double tap on tune to play, long press to rewind", "success");
 
     resetViewportWidth();
+
+    appWindowResizeHandler();
   }
 
   if (targetMode === "desktop-switch") {
 
     document.body.dataset.mode = "desktop";
-    
-    displayNotification("Desktop mode enabled: Navigate between items in header, use ABC Tools buttons for playback", "success");
 
-    if (getViewportWidth() < 870) resetViewportWidth(870);
+    displayNotification("Desktop mode enabled", "success");
+    // displayNotification("Desktop mode enabled: Navigate between items in header, use ABC Tools buttons for playback", "success");
+
+    if (getViewportWidth() < 880) resetViewportWidth(880);
+
+    appWindowResizeHandler();
   }
 
   refreshTuneBook(true);
@@ -466,8 +538,6 @@ async function exitFullScreenMode() {
 
     await exitFullScreen.call(document);
 
-    document.querySelector('#fullScreenButton').focus();
-
   } catch {
 
     console.warn(`NS Session App:\n\nTrying to exit fullscreen while not in Full Screen mode`);
@@ -487,6 +557,12 @@ export function openSettingsMenu(dataType) {
   if (dataType === "fullscreen-view") {
     
     openChordViewer(setChords, tuneChords);
+    return;
+  }
+
+  if (dataType === "list-viewer") {
+
+    openListViewer(document.querySelector('#tuneSelector'));
     return;
   }
 
@@ -533,12 +609,24 @@ export function displayNotification(msgText, msgType) {
     clearTimeout(notificationTimeoutId);
   }
 
-  if (msgType === "success" || msgType === "status") {
+  if (msgType === "status") {
     
     notificationTimeoutId = setTimeout(() => {
 
       notificationPopup.hidePopover();
-    }, 5000);
+    }, 2500);
+
+    return;
+  }
+
+  if (msgType === "success") {
+    
+    notificationTimeoutId = setTimeout(() => {
+
+      notificationPopup.hidePopover();
+    }, 4500);
+
+    return;
   }
 }
 
@@ -548,11 +636,15 @@ export function displayWarningEffect(focusBtn) {
 
   if (!focusBtn) return;
 
-  focusBtn.setAttribute("style", "outline-color: red");
+  if (focusBtn !== document.activeElement) focusBtn.focus();
+
+  focusBtn.style.outline = "0.17rem solid red";
+  focusBtn.style.filter = "drop-shadow(1px 1px 8px red)";
 
   setTimeout(() => {
 
-    focusBtn.removeAttribute("style");
+    focusBtn.style.removeProperty('outline');
+    focusBtn.style.removeProperty('filter');
   }, 2500);
 }
 
@@ -590,7 +682,7 @@ export function checkIfMobileMode() {
 
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
 
-export function refreshTuneBook(isSoftRefresh) {
+export function refreshTuneBook(isSoftRefresh, itemQuery) {
 
   const currentTuneBook = checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
 
@@ -605,6 +697,19 @@ export function refreshTuneBook(isSoftRefresh) {
     populateFilterOptions(sortFilterOptions(currentTuneBook));
 
     console.log(`NS Session App:\n\nTunebook has been refreshed`);
+  }
+
+  // Load a Tunebook item using query params
+
+  if (itemQuery) {
+
+    setTimeout(() => {
+      
+      loadFromQueryString(itemQuery);
+
+    }, 150);
+
+    return;
   }
 
   // Simply load the first Tunebook item if localStorage is unavailable
@@ -637,13 +742,6 @@ export function refreshTuneBook(isSoftRefresh) {
 
 export function resetTuneBookMenus() {
 
-  if (localStorageOk()) {
-
-    localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
-  }
-
-  lastTuneBookOpened = tuneBookSetting;
-
   while (tuneSelector.children.length > 1) {
 
     tuneSelector.removeChild(tuneSelector.lastChild);
@@ -664,7 +762,19 @@ export function resetTuneBookMenus() {
 
 // Clear the effects of all custom Tunebook filter options
 
-function resetTuneBookFilters() {
+export function resetTuneBookFilters() {
+
+  // Clear existing filter query, refreshing the page
+
+  if (window.location.hash.includes("?filter=")) {
+
+    const currentSection = checkTuneBookSetting();
+    window.location.hash = `#${currentSection}`;
+
+    return;
+  }
+
+  // Reset filters without refreshing the page
 
   const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
   const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
@@ -713,21 +823,25 @@ async function tuneDataFetch() {
 
     const tuneDataSize = await updateDataJsons();
 
-    if (tuneDataSize[0] > 0) {
+    if (!tuneDataSize[0]) {
 
-      console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
-      
-      if (localStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
-
-        displayNotification(`Session DB v.${APP_VERSION} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
-      }
-      
-      return tuneDataSize[0];
+      return null;
     }
+
+    console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
+    
+    if (localStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
+
+      displayNotification(`App version: v.${APP_VERSION}; Session DB: ${DB_VERSION} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
+    }
+    
+    return tuneDataSize[0];
 
   } catch (error) {
 
     console.warn(`NS Session App:\n\nLaunching app sequence failed. Details:\n\n${error.message}`);
+
+    window.location.hash = "#launcher";
 
     return null;
   }
@@ -772,7 +886,7 @@ export async function fetchData(url, type) {
     
     } else {
 
-      displayNotification("Error trying to launch Tunebook", "error");
+      displayNotification("Error trying to fetch data", "error");
     }
 
     throw new Error(`[${error}\n\nHTTP error code: ${error.cause?.status}]`);
@@ -918,99 +1032,99 @@ function showTuneBookEls() {
   });
 }
 
-// Hide screen elements in all sections except for Launcher
-
-function hideAllSectionsEls() {
-
-  hideTuneBookEls();
-  hidePlayAlongEls();
-}
-
 ////////////////////////////////
 // EVENT HANDLERS
 ////////////////////////////////
 
 // Handle custom button click events
 
-async function appButtonHandler() {
+async function appButtonHandler(btn) {
 
-  if (this.hasAttribute('data-action')) {
+  if (btn.hasAttribute('data-cvw-action') || btn.hasAttribute('data-lvw-action')) {
 
     return;
   }
 
-  const parentEl = this.parentElement;
+  // Full Screen Buttons: View sections in fullscreen mode
+
+  if (btn.dataset.load && btn.dataset.load === "fullscreen-view") {
+
+    handleFullScreenButton(btn.dataset.load);
+    return;
+  }
 
   // Mode Togglers: Switch between Desktop and Mobile Tunebook mode
 
-  if (this.dataset.controls && this.dataset.controls === "mode" && this.dataset.type) {
+  if (btn.dataset.controls && btn.dataset.controls === "mode" && btn.dataset.type) {
 
-    switchTunebookMode(this.dataset.type);
+    switchTunebookMode(btn.dataset.type);
     return;
   }
 
   // Launch Buttons: Run section Launcher depending on data type
 
-  if (this.classList.contains('nss-btn-launch')) {
+  if (btn.classList.contains('nss-btn-launch')) {
 
-    if (this.dataset.load === "setlist" || 
-        this.dataset.load === "tunelist" || 
-        this.dataset.load === "playalong") {
+    if (btn.dataset.load === "setlist" || 
+        btn.dataset.load === "tunelist" || 
+        btn.dataset.load === "playalong") {
 
-      window.location.hash = `#${this.dataset.load}`;
+      window.location.hash = `#${btn.dataset.load}`;
+      return;
     }
 
     // Handle ABC Encoder buttons
 
-    if (this.dataset.load.startsWith("abc")) {
+    if (btn.dataset.load.startsWith("abc")) {
       
-      parseAbcFromFile(this.dataset.load, this);
+      parseAbcFromFile(btn.dataset.load, btn);
+      return;
     }
   }
 
   // Switch Buttons: Load and swap section content depending on data type
 
-  if (this.classList.contains('nss-switch-btn')) {
+  if (btn.classList.contains('nss-switch-btn')) {
 
     // Page switchers
 
-    if (this.classList.contains('nss-launcher-link')) {
+    if (btn.classList.contains('nss-launcher-link')) {
 
-      window.location.href = '/#launcher';
+      window.location.href = 'index.html';
 
       return;
     }
 
     // Tune switchers
 
-    if (this.classList.contains('nss-arrow-btn')) {
+    if (btn.classList.contains('nss-arrow-btn')) {
 
-      switchTuneBookItem(this.dataset.load);
+      switchTuneBookItem(btn.dataset.load);
       
       return;
     }
 
     // Zoom in and zoom out
 
-    if (this.classList.contains('nss-zoom-btn')) {
+    if (btn.classList.contains('nss-zoom-btn')) {
 
-      zoomTuneBookItem(this.dataset.load);
+      zoomTuneBookItem(btn.dataset.load);
       
       return;
     }
 
     // GUI switchers
 
-    if (this.dataset.load.startsWith("toggle-gui")) {
+    if (btn.dataset.load.startsWith("toggle-gui")) {
 
-      toggleFullScreenGui(this.dataset.load);
+      toggleFullScreenGui(btn.dataset.load);
 
       return;
     }
 
     // Full Screen switchers
 
-    if (this.dataset.load === "exit-fullscreen") {
+    if (btn.dataset.load === "exit-fullscreen") {
 
       exitFullScreenMode();
       
@@ -1020,35 +1134,64 @@ async function appButtonHandler() {
     // Tunebook switchers >>>
     // Hash change triggers switchAppSection
 
-    window.location.hash = `#${this.dataset.load}`;
+    window.location.hash = `#${btn.dataset.load}`;
+    return;
   }
 
-  // Options Buttons: Load settings dialogue depending on data type
+  // Options Buttons: Load settings or dialogue menus
 
-  if (this.classList.contains('nss-option-btn')) {
+  if (btn.classList.contains('nss-option-btn')) {
 
-    if (appOptionsPopover.matches(':popover-open')) {
+    // Prompt file selection menu for Session Survey Data
 
-      appOptionsPopover.hidePopover();
+    if (btn.dataset.load === "session-survey") {
+
+      parseSessionSurveyData(btn);
       return;
     }
 
-    openSettingsMenu(this.dataset.load);
+    // Copy share link to current Tunebook item to clipboard
+
+    if (btn.dataset.load === "share-link") {
+
+      copyTextToClipboard(getShareLink());
+      return;
+    }
+
+    // Close options menu if button pressed again
+
+    if (btn.dataset.load === "app-options" || btn.dataset.load === "encoder-options") {
+
+      if (appOptionsPopover.matches(':popover-open')) {
+
+        appOptionsPopover.hidePopover();
+        return;
+      }
+    }
+
+    // Open the associated menu by default
+
+    openSettingsMenu(btn.dataset.load);
+  }
+
+  if (btn.classList.contains('nss-btn-advanced-options')) {
+
+    btn.style.display = "none";
+
+    ariaShowMe(advancedOptions);
+    return;
   }
 
   // Control Buttons: Open additional menus and modify settings
 
-  if (this.classList.contains('nss-control-btn')) {
+  if (btn.classList.contains('nss-control-btn')) {
 
-    if (this.dataset.load === "session-survey") {
 
-      parseSessionSurveyData(this);
-    }
   }
 
   // Close Buttons: Hide parent element, show alternative navigation
 
-  if (this.dataset.controls === "tunebook-compact-mode") {
+  if (btn.dataset.controls === "tunebook-compact-mode") {
 
     const tuneBookFooter = document.querySelector('#nss-tunebook-footer');
     const switchContainer = document.querySelector('.nss-switch-container');
@@ -1056,7 +1199,7 @@ async function appButtonHandler() {
 
     ariaHideMe(tuneBookFooter);
 
-    isManualTunebookModeOn = true;
+    isCompactTunebookModeOn = true;
 
     allSwitchBtns.forEach(switchBtn => {
 
@@ -1077,28 +1220,28 @@ async function appButtonHandler() {
     return;
   }
 
-  if (this.classList.contains('popover-btn-x')) {
+  if (btn.classList.contains('popover-btn-x')) {
 
     appOptionsPopover.hidePopover();
     return;
   }
 
-  if (this.classList.contains('popup-btn-x')) {
+  if (btn.classList.contains('popup-btn-x')) {
 
-    this.parentElement.parentElement.hidePopover();
+    btn.parentElement.parentElement.hidePopover();
     return;
   }
 
   // Theme buttons: Change color theme of document depending on the section
 
-  if (this.classList.contains('nss-theme-btn')) {
+  if (btn.classList.contains('nss-theme-btn')) {
 
-    const appSectionHeader = this.parentElement.classList;
+    const appSectionHeader = btn.parentElement.classList;
 
     allThemeBtn.forEach(themeBtn => {
 
       if (themeBtn.parentElement.classList === appSectionHeader &&
-          themeBtn.classList.contains(`nss-btn-${this.dataset.theme}`)) {
+          themeBtn.classList.contains(`nss-btn-${btn.dataset.theme}`)) {
 
         themeBtn.removeAttribute("inert");
         ariaShowMe(themeBtn);
@@ -1106,8 +1249,35 @@ async function appButtonHandler() {
       }
     });
 
-    ariaHideMe(this);
-    this.setAttribute("inert", "");
+    ariaHideMe(btn);
+    btn.setAttribute("inert", "");
+    return;
+  }
+}
+
+// Handle custom checkbox events
+
+async function appCheckBoxHandler(checkBox) {
+
+  if (+localStorage[checkBox.dataset.option] > 0) {
+
+    localStorage[checkBox.dataset.option] = 0;
+
+  } else {
+
+    localStorage[checkBox.dataset.option] = 1;
+  } 
+
+  if (checkBox.id === 'tunebook-use-mobile-mode') {
+
+    if (checkBox.checked) {
+
+      displayNotification("Persistent mobile mode enabled", "success");
+      
+    } else {
+
+      displayNotification("Persistent mobile mode disabled", "success");
+    }
   }
 }
 
@@ -1236,7 +1406,7 @@ function filterTuneBook() {
 
   console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
 
-  displayNotification(`Tunebook filtered by "${filterId}"`, "status")
+  displayNotification(`Tunebook filtered by "${filterId}"`, "status");
 
   tuneSelector.focus();
 }
@@ -1401,7 +1571,8 @@ export function appWindowResizeHandler() {
 
   // Adjust font-size value based on viewport size for small and medium-sized screens
 
-  if (viewPortW < 1080 || viewPortH <= 768) {
+  if (document.body.dataset.mode === "mobile" &&
+      (viewPortW < 880 || viewPortH <= 768)) {
 
     document.documentElement.style.fontSize = adjustHtmlFontSize(viewPortW, viewPortH);
   
@@ -1412,15 +1583,16 @@ export function appWindowResizeHandler() {
     document.documentElement.style.removeProperty('font-size');
   }
 
-  // Dynamically switch between desktop and mobile mode until Tunebook is first opened
+  // Dynamically switch between desktop and mobile mode in main app menu
+  // If Tunebook menu is currently hidden, do nothing else
 
-  if (!isTuneBookInitialized) initTunebookMode();
+  if (!checkIfTunebookOpen()) { 
+    
+    initAppMode();
+    return; 
+  }
 
   // Handle Tunebook adjustments >>>
-
-  // If Tunebook menu is currently hidden, do nothing
-
-  if (!checkIfTunebookOpen()) return;
 
   // Change Tunebook selector labels
 
@@ -1430,16 +1602,32 @@ export function appWindowResizeHandler() {
 
   if (checkIfMobileMode()) return;
 
-  // If Tunebook is displayed in desktop mode on a narrow screen, switch to fixed viewport
+  // If app is in desktop mode, see if viewport needs to be adjusted
 
   const viewPortMeta = document.querySelector("meta[name=viewport]");
   const isFixedViewport = viewPortMeta.getAttribute("content") !== "width=device-width, initial-scale=1.0";
 
-  if (getViewportWidth() < 870 && !isFixedViewport) {
+  // If Tunebook is displayed in desktop mode on a wide screen, do nothing
+  // This includes resized desktop browser windows
 
-    resetViewportWidth(870);
+  if (window.outerWidth > 880 && !isFixedViewport) return;
+
+  // If Tunebook is displayed in desktop mode on a narrow screen, switch to fixed viewport
+
+  if (window.outerWidth < 880 && getViewportWidth() < 880 && !isFixedViewport) {
+
+    resetViewportWidth(880);
     return;
-  } 
+  }
+
+  // If Tunebook is displayed in fixed viewport mode on a wide screen, reset viewport
+  // This applies to resize events fired when a device with wide and narrow screen is turned
+
+  if (window.outerWidth > 880 && isFixedViewport) {
+
+    resetViewportWidth();
+    return;
+  }
 }
 
 // Handle enter and exit Full Screen events
@@ -1514,6 +1702,8 @@ export function handleFullScreenChange() {
       ariaHideMe(controlEl);
     });
 
+    document.querySelector('#fullScreenButton').focus();
+
     return;
   }
 }
@@ -1523,14 +1713,30 @@ export function handleFullScreenChange() {
 function appWindowClickHandler(event) {
 
   const interactableEl = 'button, select, input[type="checkbox"], input[type="radio"]';
+
   const triggerEl = event.target.closest(interactableEl);
 
   if (!triggerEl) return;
 
+  const elTag = triggerEl.tagName.toLowerCase();
+
+  // Handle all button clicks
+
+  if (elTag === 'button') {
+
+    appButtonHandler(triggerEl);
+  }
+
+  // Handle checkbox clicks
+
+  if (elTag === 'input' & triggerEl.type === "checkbox") {
+
+    appCheckBoxHandler(triggerEl);
+  }
 }
 
 ////////////////////////////////
-// ROUTERS
+// ROUTERS & HASH MANIPULATORS
 ///////////////////////////////
 
 // Handle app's hash routing
@@ -1539,13 +1745,20 @@ function appWindowClickHandler(event) {
 
 function appRouter() {
 
-  const urlHash = window.location.hash; 
+  const path = window.location.pathname;
+
+  // Handle pages outside of main app module
+
+  if (path !== "/" &&
+      path !== "/index.html" && 
+      path !== "/NS-Session-Setlist/" && 
+      path !== "/NS-Session-Setlist/index.html") return;
+
+  const urlHash = window.location.hash;
+
+  // Handle no hash in URL
 
   if (!urlHash) {
-
-    const path = window.location.pathname;
-
-    if (path !== "/" && path !== "/index.html") return;
 
     window.location.hash = "#launcher";
 
@@ -1554,15 +1767,57 @@ function appRouter() {
     return;
   }
 
-  const targetSection = urlHash.slice(1);
+  const inputHashQuery = urlHash.slice(1);
 
   const appSections = ["launcher", "setlist", "tunelist", "playalong"];
 
-  if (appSections.includes(targetSection)) {
+  // Handle hashes with section name and no query
 
-    switchAppSection(targetSection, lastAppSectionOpened);
+  if (appSections.includes(inputHashQuery)) {
+
+    switchAppSection(inputHashQuery, lastAppSectionOpened);
     
-    lastAppSectionOpened = targetSection;
+    lastAppSectionOpened = inputHashQuery;
+
+    return;
+
+  // Handle hashes with invalid section name and no query
+
+  } else if (!inputHashQuery.includes("?")) {
+
+    console.warn(`NS Session App:\n\nInvalid section hash in user query`);
+
+    let currentSection = checkIfTunebookOpen()? tuneBookSetting : "launcher";
+
+    window.location.hash = `#${currentSection}`;
+    
+    return;
+  }
+
+  // Handle hashes with query
+
+  if (inputHashQuery.includes("?")) {
+
+    let parentSection = 
+      inputHashQuery.startsWith("setlist?")? "setlist" :
+      inputHashQuery.startsWith("tunelist?")? "tunelist" : undefined;
+
+    // Handle hashes with invalid section name
+
+    if (!parentSection) {
+
+      console.warn(`NS Session App:\n\nInvalid section hash in user query\n\nQuery params are supported in setlist and tunelist`);
+      displayNotification("Invalid query provided, check input URL", "warning");
+      return;
+    }
+
+    // Handle hashes with valid section name
+
+    const itemQuery = inputHashQuery.split('?')[1];
+
+    switchAppSection(parentSection, lastAppSectionOpened, itemQuery);
+
+    lastAppSectionOpened = parentSection;
   }
 
   return;
@@ -1572,16 +1827,31 @@ function appRouter() {
 
 function appRouterOnLoad() {
 
+  const path = window.location.pathname;
+
+  // Handle pages outside of main app module
+
+  if (path !== "/" &&
+      path !== "/index.html" && 
+      path !== "/NS-Session-Setlist/" && 
+      path !== "/NS-Session-Setlist/index.html") return;
+
   let initialHash = window.location.hash;
 
   // Redirect to Launch Screen if app has never been initialized
   // Redirect to Launch Screen if opening sections by direct link on load is not allowed
 
-  if (localStorageOk() && 
+  if (initialHash && localStorageOk() && 
     (!localStorage.tuneBookInitialized_NSSSAPP ||
     +localStorage.tuneBookAllowLoadFromHashLink === 0)) {
 
+    console.log(`NS Session App:\n\nHash routing is being blocked\n
+    Hash links loading on startup allowed? [${!!+localStorage.tuneBookAllowLoadFromHashLink}]\n
+    Tunebook previously initialized? [${!!+localStorage.tuneBookInitialized_NSSSAPP}]`);
+
     window.location.hash = "#launcher";
+
+    lastAppSectionOpened = "launcher";
 
     initAppRouter();
     return;
@@ -1598,6 +1868,227 @@ function appRouterOnLoad() {
 function initAppRouter() {
 
   window.addEventListener('hashchange', appRouter);
+}
+
+// Create a string of query parameters depending on query type
+// Return null if any required parameter is missing
+
+function createQueryString(optionText, optionType) {
+
+  let queryString = '';
+
+  if (optionType === "tunebook-item") {
+
+    const optionType = optionText.toLowerCase().split(':')[0];
+    const optionName = optionText.toLowerCase().split(':')[1];
+
+    if (!optionType || !optionName) return;
+
+    const itemTypeQuery = sanitizeQueryParam(optionType);
+    const itemNameQuery = sanitizeQueryParam(optionName);
+
+    queryString = `?type=${itemTypeQuery}&name=${itemNameQuery}`;
+  }
+
+  if (optionType === "tunebook-filter") {
+
+    const filterName = optionText.toLowerCase();
+
+    if (!filterName) return;
+
+    const filterNameQuery = sanitizeQueryParam(filterName);
+
+    queryString = `?filter=${filterNameQuery}`;
+  }
+
+  return queryString;
+}
+
+// Filter a string returning valid query parameter text
+
+export function sanitizeQueryParam(rawString) {
+  
+  if (detectCyrillicRusChars(rawString)) {
+
+    rawString = convertCyrillicToTranslit(rawString);
+  }
+
+  const sanitizedString = 
+
+    rawString.trim()
+             .toLowerCase()
+             .normalize('NFKD')
+             .replace(/\p{Diacritic}/gu, '')
+             .replaceAll('&', 'and')
+             .replaceAll(/[/\\]/g, '-')
+             .replaceAll(/\s/g, '_')
+             .replaceAll(/[^a-z0-9_]/g, '');
+
+  return sanitizedString;
+}
+
+// Check if string contains characters from a specific subset of Cyrillic unicode 
+
+function detectCyrillicRusChars(rawString) {
+
+  const hasCyrillicRusChars = new RegExp(`[\u0401\u0451\u0410-\u044f]`, "g");
+
+  if (rawString.match(hasCyrillicRusChars)) return true;
+
+  return false;
+}
+
+// Transliterate Cyrillic characters using custom character map
+// Preprocess string to account for certain vowel combinations
+
+function convertCyrillicToTranslit(rawString) {
+
+  // Limit to lowercase characters
+  rawString = rawString.toLowerCase();
+
+  let outputString;
+
+  const comboMap = 
+
+    {
+      '\u0430\u0435': 'aye', '\u0435\u0435': 'eye', '\u0438\u0435': 'iye',
+      '\u0436\u0451': 'zho', '\u0436\u044e': 'zhu', 
+      '\u043e\u0435': 'oye', '\u0443\u0435': 'uye', 
+      '\u0448\u0451': 'sho', '\u0448\u044e': 'shu', 
+      '\u044a\u0435': 'ye', '\u044b\u0438': 'yyi', '\u044b\u0439': 'yi',
+      '\u044c\u0435': 'ye', '\u044c\u0438': 'yi', '\u044c\u043e': 'yo',
+      '\u044d\u0435': 'eye', '\u044e\u0435': 'yuye', '\u044f\u0435': 'yaye'
+    }
+
+  const translitMap = 
+
+    {
+      '\u0430': 'a', '\u0431': 'b', '\u0432': 'v', '\u0433': 'g', '\u0434': 'd',
+      '\u0435': 'e', '\u0451': 'yo', '\u0436': 'zh', '\u0437': 'z', '\u0438': 'i',
+      '\u0439': 'y', '\u043a': 'k','\u043b': 'l', '\u043c': 'm', '\u043d': 'n',
+      '\u043e': 'o', '\u043f': 'p', '\u0440': 'r', '\u0441': 's', '\u0442': 't',
+      '\u0443': 'u', '\u0444': 'f', '\u0445': 'kh', '\u0446': 'ts', '\u0447': 'ch',
+      '\u0448': 'sh', '\u0449': 'shch', '\u044a': '', '\u044b': 'y', '\u044c': '',
+      '\u044d': 'e', '\u044e': 'yu', '\u044f': 'ya'
+    }
+
+  const startsWithYe = new RegExp(`^\u0435|([^\u0401\u0451\u0410-\u044fa-z])\u0435`, "g");
+
+  if (rawString.match(startsWithYe)) {
+
+    rawString = rawString.replaceAll(startsWithYe, `$1ye`);
+  }
+  
+  for (let [key, value] of Object.entries(comboMap)) {
+
+    if (rawString.includes(key)) {
+
+      rawString = rawString.replaceAll(key, value);
+    }
+  }
+
+  outputString = rawString.split('')
+    .map((char) => translitMap[char] ?? char)
+    .join('');
+
+  return outputString;
+}
+
+// Create a share link for Tunebook item or filter
+
+function getShareLink(optionType) {
+
+  let shareLink = '';
+
+  // Return share link to ABC Tools if relevant setting is on
+
+  if (localStorageOk() && +localStorage.tuneBookShareLinksToAbcTools === 1) {
+
+    return tuneSelector.value || getLastTunebookUrl();
+  }
+
+  // Define variants of placeholder option text
+
+  const placeHolderText = /select|pick a|filter by/;
+
+  // Get selected Tunebook item name by default, get filter name if specified
+
+  let optionText = 
+    optionType === "tunebook-filter"? filterOptions.selectedOptions[0].text.slice(2) : 
+      tuneSelector.selectedOptions[0].text;
+
+  let isValidTitle = optionText && !optionText.toLowerCase().match(placeHolderText);
+
+  // Try several fallback options if item title is invalid
+
+  if (!isValidTitle) {
+
+    const filterText = filterOptions.selectedOptions[0].text;
+
+    if (!optionType && filterText && !filterText.toLowerCase().match(placeHolderText)) {
+
+      // Continue with filter title if no Tunebook item selected
+
+      optionText = filterText.slice(2);
+      optionType = "tunebook-filter";
+
+    } else if (optionType !== "tunebook-filter") {
+
+      // Return share link to ABC Tools if no filter and item selected
+
+      return tuneSelector.value || getLastTunebookUrl();
+
+    } else {
+
+      // Signal empty input if no fallback applies
+
+      return null;
+    }
+  };
+
+  // Return Tunebook item link with hash query
+
+  const baseUrl = window.location.href.split('?')[0];
+
+  const queryString = createQueryString(optionText, optionType || "tunebook-item");
+
+  if (!baseUrl || !queryString) return null;
+
+  shareLink = `${baseUrl}${queryString}`;
+
+  return shareLink;
+}
+
+// Copy input text to clipboard using Clipboard API
+
+async function copyTextToClipboard(inputText) {
+
+  if (!navigator.clipboard && inputText) {
+
+    displayNotification(inputText, "report");
+    console.log(`NS Session App:\n\nThis browser does not support Clipboard API. Displaying text in status bar...`);
+    return;
+  }
+
+  if (!inputText) {
+
+    displayNotification("Select an item to share", "warning");
+    console.log(`NS Session App:\n\nNo text copied to clipboard, input string missing or empty`);
+    return;
+  }
+
+  try {
+
+    navigator.clipboard.writeText(inputText);
+
+    displayNotification("Copied to clipboard", "status");
+    console.log(`NS Session App:\n\nText copied to clipboard:\n\n${inputText}`);
+
+  } catch(error) {
+
+    displayNotification("Could not copy to clipboard", "warning");
+    console.warn(`NS Session App:\n\nError trying to copy text to clipboard`);
+  }
 }
 
 ////////////////////////////////
@@ -1674,16 +2165,6 @@ export function printLocalStorageSettings(settingsObj) {
   console.log(settingsReport);
 }
 
-// Add event listeners to custom app buttons
-
-function initAppButtons() {
-
-  allCustomBtn.forEach(btn => {
-
-    btn.addEventListener('click', appButtonHandler);
-  });
-}
-
 // Add event listeners to custom dropdown menus
 
 export function initCustomDropDownMenus() {
@@ -1714,37 +2195,6 @@ export function initAppCheckboxes() {
     } else {
 
       checkBox.checked = false;
-    } 
-
-    checkBox.addEventListener('click', () => {
-
-      if (+localStorage[checkBox.dataset.option] > 0) {
-
-        localStorage[checkBox.dataset.option] = 0;
-      
-      } else {
-
-        localStorage[checkBox.dataset.option] = 1;
-      } 
-    });
-
-    if (checkBox.id === 'tunebook-use-mobile-mode') {
-
-      checkBox.addEventListener('click', () => {
-
-        if (checkBox.checked) {
-
-          document.body.dataset.mode = "mobile";
-
-          displayNotification("Persistent mobile mode enabled", "success");
-          
-        } else {
-      
-          document.body.dataset.mode = "desktop";
-
-          displayNotification("Persistent mobile mode disabled", "success");
-        }
-      });
     }
   });
 }
@@ -1775,18 +2225,40 @@ function initTunebookRadioBtns() {
   });
 }
 
-// Initialize Tunebook Mobile Mode settings
+// Initialize app mode based on viewport width
 
-function initTunebookMode() {
+function initAppMode() {
 
-  if (getViewportWidth() < 870 || 
-     (localStorageOk() && +localStorage.tuneBookAlwaysUseMobileMode === 1)) {
+  if (getViewportWidth() < 880 || getViewportHeight() <= 768) {
 
     document.body.dataset.mode = "mobile";
 
   } else {
 
     document.body.dataset.mode = "desktop";
+  }
+}
+
+// Initialize Tunebook mode based on 
+
+function initTunebookMode() {
+
+  const viewPortW = getViewportWidth();
+  const viewPortH = getViewportHeight();
+
+  if ((lastTuneBookMode !== "desktop" && 
+      (lastTuneBookMode === "mobile" || viewPortW < 880 || viewPortH <= 768)) || 
+      (localStorageOk() && +localStorage.tuneBookAlwaysUseMobileMode === 1)) {
+
+    document.body.dataset.mode = "mobile";
+
+    document.documentElement.style.fontSize = adjustHtmlFontSize(viewPortW, viewPortH);    
+
+  } else {
+    
+    document.body.dataset.mode = "desktop";
+
+    document.documentElement.style.removeProperty('font-size');
   }
 }
 
@@ -1827,6 +2299,8 @@ function initWindowEvents() {
   window.addEventListener('resize', appWindowResizeHandler);
 
   window.addEventListener('beforeunload', () => { resetViewportWidth() });
+
+  initFullScreenEvents();
 }
 
 // Initialize event listeners and settings on Launch Screen load
@@ -1835,11 +2309,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initPopoverWarning();
   initWindowEvents();
-  initFullScreenEvents();
   initAppSettings();
-  initAppButtons();
-  initTunebookMode();
   initChordViewer();
+  initListViewer();
   appRouterOnLoad();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
