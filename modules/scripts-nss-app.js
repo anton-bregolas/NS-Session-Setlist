@@ -121,9 +121,9 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
   showTuneBookEls();
 
-  if (!document.querySelector('#nss-tunebook-exit').hasAttribute("hidden")) {
+  if (!document.querySelector('#nss-tunebook-actions-header').hasAttribute("hidden")) {
 
-    document.querySelector('#nss-tunebook-exit').focus();
+    document.querySelector('#nss-tunebook-actions-header').focus();
 
   } else {
 
@@ -458,8 +458,7 @@ function switchTunebookMode(targetMode) {
 
     document.body.dataset.mode = "mobile";
     
-    displayNotification("Mobile mode enabled", "success");
-    // displayNotification("Mobile mode enabled: Double tap on tune to play, long press to rewind", "success");
+    displayNotification("Mobile mode enabled: Double tap to play", "success");
 
     resetViewportWidth();
 
@@ -471,7 +470,6 @@ function switchTunebookMode(targetMode) {
     document.body.dataset.mode = "desktop";
 
     displayNotification("Desktop mode enabled", "success");
-    // displayNotification("Desktop mode enabled: Navigate between items in header, use ABC Tools buttons for playback", "success");
 
     if (getViewportWidth() < 880) resetViewportWidth(880);
 
@@ -480,6 +478,48 @@ function switchTunebookMode(targetMode) {
 
   refreshTuneBook(true);
   handleSelectorLabels("init");
+}
+
+// Switch Tunebook to Compact Mode, hiding footer section
+
+function setTuneBookCompactMode() {
+
+  const tuneBookFooter = document.querySelector('#nss-tunebook-footer');
+  const switchContainer = document.querySelector('.nss-switch-container');
+  const allSwitchBtns = switchContainer.querySelectorAll('button');
+  const tuneBookActionsBtn = 
+    switchContainer.querySelector('[data-load="tunebook-actions-menu"]');
+    
+    ariaHideMe(tuneBookFooter);
+    
+    isCompactTunebookModeOn = true;
+    
+    allSwitchBtns.forEach(switchBtn => {
+
+    if (switchBtn.dataset.load !== "tunebook-actions-menu") {
+      
+      ariaHideMe(switchBtn);
+      return;
+    }
+
+    ariaShowMe(switchBtn);
+  });
+  
+  tuneBookActionsBtn.focus();
+  tuneBookFooter.setAttribute("inert", "");
+  
+  const hideFooterBtn = tuneBookActionsPopup.querySelector('[data-tbk-action="hide-footer"]');
+  const backupCvwBtn = tuneBookActionsPopup.querySelector('[data-tbk-action="open-chord-viewer-mobile"]');
+
+  ariaHideMe(hideFooterBtn);
+  ariaShowMe(backupCvwBtn);
+
+  setTimeout(() => {
+    
+    tuneBookActionsPopup.dataset.popsUpFrom = "header";
+  }, 150);
+
+  displayNotification("Compact mode enabled: Refresh app to reset", "success");
 }
 
 // Hide or show GUI elements depending on toggle element type
@@ -554,7 +594,12 @@ async function exitFullScreenMode() {
 
 export function openSettingsMenu(dataType) {
 
-  if (dataType === "fullscreen-view") {
+  if (tuneBookActionsPopup.matches(':popover-open')) {
+
+    tuneBookActionsPopup.hidePopover();
+  }
+
+  if (dataType === "chord-viewer") {
     
     openChordViewer(setChords, tuneChords);
     return;
@@ -563,6 +608,20 @@ export function openSettingsMenu(dataType) {
   if (dataType === "list-viewer") {
 
     openListViewer(document.querySelector('#tuneSelector'));
+    return;
+  }
+
+  if (dataType === "tunebook-actions-menu") {
+
+    tuneBookActionsPopup.showPopover();
+
+    if (localStorageOk() && +localStorage.tuneBookHelpMenuViewed === 1) {
+
+      tuneBookActionsPopup.querySelector('[data-load="launcher"]').focus();
+      return;
+    }
+
+    tuneBookActionsPopup.querySelector('[data-load="help"]').focus();
     return;
   }
 
@@ -598,6 +657,11 @@ export function displayNotification(msgText, msgType) {
 
   notificationMessage.textContent = msgText;
   notificationPopup.className = msgType ?? "status";
+
+  if (tuneBookActionsPopup.matches(':popover-open')) {
+
+    tuneBookActionsPopup.hidePopover();
+  }
 
   if (!notificationPopup.matches(':popover-open')) {
 
@@ -1047,7 +1111,7 @@ async function appButtonHandler(btn) {
 
   // Full Screen Buttons: View sections in fullscreen mode
 
-  if (btn.dataset.load && btn.dataset.load === "fullscreen-view") {
+  if (btn.dataset.controls && btn.dataset.controls === "fullscreen-view") {
 
     handleFullScreenButton(btn.dataset.load);
     return;
@@ -1138,9 +1202,19 @@ async function appButtonHandler(btn) {
     return;
   }
 
-  // Options Buttons: Load settings or dialogue menus
+  // Option Buttons: Load settings or dialogue menus
 
   if (btn.classList.contains('nss-option-btn')) {
+
+    if (!btn.dataset.load) return;
+
+    // Trigger Tunebook compact mode
+   
+    if (btn.dataset.load === "tunebook-compact-mode") {
+
+      setTuneBookCompactMode();
+      return;
+    }
 
     // Prompt file selection menu for Session Survey Data
 
@@ -1158,13 +1232,24 @@ async function appButtonHandler(btn) {
       return;
     }
 
-    // Close options menu if button pressed again
+    // Close options menu if menu button pressed again
 
     if (btn.dataset.load === "app-options" || btn.dataset.load === "encoder-options") {
 
       if (appOptionsPopover.matches(':popover-open')) {
 
         appOptionsPopover.hidePopover();
+        return;
+      }
+    }
+
+    // Close Tunebook actions menu if menu button pressed again
+
+    if (btn.dataset.load === "tunebook-actions-menu") {
+
+      if (tuneBookActionsPopup.matches(':popover-open')) {
+
+        tuneBookActionsPopup.hidePopover();
         return;
       }
     }
@@ -1182,47 +1267,21 @@ async function appButtonHandler(btn) {
     return;
   }
 
-  // Control Buttons: Open additional menus and modify settings
-
-  if (btn.classList.contains('nss-control-btn')) {
-
-
-  }
-
   // Close Buttons: Hide parent element, show alternative navigation
 
-  if (btn.dataset.controls === "tunebook-compact-mode") {
+  if (btn.id === 'nss-popover-options-close') {
 
-    const tuneBookFooter = document.querySelector('#nss-tunebook-footer');
-    const switchContainer = document.querySelector('.nss-switch-container');
-    const allSwitchBtns = switchContainer.querySelectorAll('.nss-switch-btn');
+    appOptionsPopover.hidePopover();
 
-    ariaHideMe(tuneBookFooter);
-
-    isCompactTunebookModeOn = true;
-
-    allSwitchBtns.forEach(switchBtn => {
-
-      if (switchBtn.dataset.load !== "launcher") {
-
-        ariaHideMe(switchBtn);
-        return;
-      }
-
-      ariaShowMe(switchBtn);
-    });
-
-    document.querySelector('#nss-tunebook-exit').focus();
-    tuneBookFooter.setAttribute("inert", "");
-
-    displayNotification("Compact mode enabled: Top left button to exit, refresh app to reset", "success");
+    document.querySelector('[data-controls="options-menu"]').focus();
 
     return;
   }
 
-  if (btn.classList.contains('popover-btn-x')) {
+  if (btn.classList.contains('popup-btn-x') &&
+      btn.parentElement.classList.contains('tunebook-action')) {
 
-    appOptionsPopover.hidePopover();
+    tuneBookActionsPopup.hidePopover();
     return;
   }
 
@@ -1295,7 +1354,7 @@ async function appDropDownHandler(event) {
     }
   }
 
-  if (getViewportWidth() > 768) return;
+  if (getViewportWidth() >= 768) return;
 
   if (event.type === 'mousedown' || event.type === 'keydown' || event.type === 'touchstart') {
 
@@ -1428,7 +1487,7 @@ export function handleSelectorLabels(actionType, parentSelector, selectedIndex) 
 
   if (actionType === "init") {
 
-    if (getViewportWidth() > 768 || document.body.dataset.mode === "desktop") {
+    if (getViewportWidth() >= 768 || document.body.dataset.mode === "desktop") {
       
       removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders);
       return;
@@ -1443,7 +1502,7 @@ export function handleSelectorLabels(actionType, parentSelector, selectedIndex) 
 
   if (actionType === "resize") {
 
-    if (getViewportWidth() > 768 &&
+    if (getViewportWidth() >= 768 &&
       (filterHeader.hasAttribute('label') || 
       tunesHeader.hasAttribute('label') || 
       tabsHeader.hasAttribute('label'))) {
@@ -1452,7 +1511,7 @@ export function handleSelectorLabels(actionType, parentSelector, selectedIndex) 
       return;
     }
 
-    if (getViewportWidth() <= 768) {
+    if (getViewportWidth() < 768) {
 
       if (filterHeader.hasAttribute('label') && 
         tunesHeader.hasAttribute('label') && 
@@ -1477,7 +1536,7 @@ export function handleSelectorLabels(actionType, parentSelector, selectedIndex) 
 
     if (parentSelector.style.fontSize) {
 
-      if (selectedIndex !== 0 || getViewportWidth() > 768) {
+      if (selectedIndex !== 0 || getViewportWidth() >= 768) {
 
         parentSelector.style.removeProperty('font-size');
         return
@@ -1486,7 +1545,7 @@ export function handleSelectorLabels(actionType, parentSelector, selectedIndex) 
       return;
     }
 
-    if (selectedIndex !== 0 || document.body.dataset.mode === "desktop" || getViewportWidth() > 768) return;
+    if (selectedIndex !== 0 || document.body.dataset.mode === "desktop" || getViewportWidth() >= 768) return;
 
     parentSelector.style.fontSize = "2.4rem";
 
@@ -1702,8 +1761,19 @@ export function handleFullScreenChange() {
       ariaHideMe(controlEl);
     });
 
-    document.querySelector('#fullScreenButton').focus();
+    // Optional: Focus on the Full Screen button that likely triggered fullscreen mode
 
+    const mainFullScreenBtn = document.querySelector('#fullScreenButton');
+    const popUpFullScreenBtn = tuneBookActionsPopup.querySelector('[data-controls="fullscreen-view"]');
+
+    if (tuneBookActionsPopup && tuneBookActionsPopup.matches(':popover-open') && 
+        popUpFullScreenBtn && getComputedStyle(popUpFullScreenBtn.parentElement).display !== "none") {
+
+      popUpFullScreenBtn.focus();
+      return;
+    }
+
+    mainFullScreenBtn.focus();
     return;
   }
 }
@@ -1842,8 +1912,7 @@ function appRouterOnLoad() {
   // Redirect to Launch Screen if opening sections by direct link on load is not allowed
 
   if (initialHash && localStorageOk() && 
-    (!localStorage.tuneBookInitialized_NSSSAPP ||
-    +localStorage.tuneBookAllowLoadFromHashLink === 0)) {
+      +localStorage.tuneBookAllowLoadFromHashLink === 0) {
 
     console.log(`NS Session App:\n\nHash routing is being blocked\n
     Hash links loading on startup allowed? [${!!+localStorage.tuneBookAllowLoadFromHashLink}]\n
