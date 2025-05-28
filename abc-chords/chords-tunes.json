@@ -42,7 +42,7 @@
   {
     "title": "HORNPIPE: Little Beggarman",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA\tA\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA G\tA A\t||"
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|1\tA G\tA A\t|\n|2\tA\tA\t||"
   },
   {
     "title": "HORNPIPE: Off to California",

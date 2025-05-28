@@ -20,7 +20,7 @@
       {
         "title": "Little Beggarman",
         "meter": "4/4",
-        "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA\tA\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|\tA G\tA A\t||"
+        "chords": "PART 1:\n|\tA\tA\t|\tA\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tG\tG\t|\tG\tD\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tD\t|\tA\tG\t|1\tA G\tA A\t|\n|2\tA\tA\t||"
       },
       {
         "title": "Chief O'Neill's Favourite",
@@ -880,7 +880,7 @@
       {
         "title": "Sí Bheag, Sí Mhór",
         "meter": "3/4",
-        "chords": "PART 1:\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tA\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tBm\tBm\tBm\t|\n|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tD/A\tD/A\tD/A\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tD\tD\tD\t||\n\nPART 2:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t||\n\nPART 3:\n|\tD\tD\tD\t|\tA7\tA7\tA7\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tA7\tA7\tA7\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tG\tG\tG\t|\tG\tG\tG\t|\n|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA7\tA7\tA7\t|\n|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|2\tD\tD\tD\t||\n\nPART 4:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
+        "chords": "PART 1:\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tA\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tBm\tBm\tBm\t|\n|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tD/A\tD/A\tD/A\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tD\tD\tD\t||\n\nPART 2:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t||\n\nPART 3:\n|\tD\tD\tD\t|\tA7\tA7\tA7\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tA7\tA7\tA7\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tG\tG\tG\t|\tG\tG\tG\t|\n|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA7\tA7\tA7\t|\n|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||\n\nPART 4:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
       }
     ]
   },

@@ -60,13 +60,13 @@ M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Amix
-|:"A"EAAG ABcd|"A"efec "D"d2 cd|"A"e2 A2 ABcA|"G"B=GEF G2 FG|
-"A"EAAG ABcd|"A"efec "D"d2 cd|"A"e2 a2 "G"aged|"A"c2 A2 A4:||
-|:"G"gfga gfef|"G"gfec "D"d2 cd|"A"e2 A2 ABcA|"G"B=GEF G2 FG|
-"A"EAAG ABcd|"A"efec "D"d2 cd|"A"e=gab "G"aged|"A"(3cBA "G"B=G "A"A4:||
+|:AG|"A"EAAG ABcd|"A"efec "D"d2 cd|"A"e2 A2 ABcA|"G"BGEF G2 FG|
+"A"EAAG ABcd|"A"efec "D"d2 cd|"A"e2 a2 "G"aged|1 "A"c2 A2 A2:|2 "A"c2 A2 A2 ef||
+|:"G"gfga gfef|"G"gfec "D"d2 cd|"A"e2 A2 ABcA|"G"BGEF G2 FG|
+"A"EAAG ABcd|"A"efec "D"d2 cd|"A"egab "G"aged|1 "A"(3cBA "G"BG "A"A2 ef:|2 "A"c2 A2 A2||
 T: Chief O'Neill's Favourite
 K: Dmaj
-de|:"D"~f3g afge|"D"fdef "G"dcAG|"D"FDAD (3EFG AB|"C"=cAd"A"^c A2 de|
+|:de|"D"~f3g afge|"D"fdef "G"dcAG|"D"FDAD (3EFG AB|"C"=cAd"A"^c A2 de|
 "D"fd (3efg afge|"D"fdef "G"dcAG|"D"FDAF "G"GBAG|1 "D"F2 D2 D2 de:|2 "D"(3FGF D2 D3E||
 |:"F"=F2 FE =FGAB|"C"=cAdB cAGB|"D"Adde fded|"A"cAdc A2 de|
 "D"~f3g afge|"D"fdef "G"dcAG|"D"FDAF "G"GBAG|1 "D"(3FGF D2 D2 DE:|2 "D"F2 D2 D2||
@@ -634,23 +634,23 @@ T: JIGS: Paddy Fahey's Set
 T: Paddy Fahey's (Gmin)
 C: C: Paddy Fahey / Seán Ryan; S: Martin Hayes
 C: Set Leaders: Oliushka, Anton
-Z: [Unedited]; Jeff Finkelstein at The Session
+Z: Anton Zille ed.; Jeff Finkelstein at The Session
 N: https://thesession.org/members/26966/sets/95962
 R: Jig
 M: 6/8
 L: 1/8
 Q: 3/8=116
 K: Gdor
-F|:DGA B2 c|cBc d2g|gfd Bcd|cAG FDC|
-DGA B2 c|cBc d2 g|gfd Bcd|1 cAF G2 D:|2 cAF GBd||
-|:g3 fga|gfd Bcd|c2 A f3|agf def|
-g2 a bag|fdg fdc|B2G Adc|1 AGF GBd:|2 AGF G2D||
+|:DGA B2c|cBc d2g|gfd Bcd|cAG FDC|
+DGA ~B3|cBc d2g|gfd Bcd|1 cAF G2D:|2 cAF GBd||
+|:g3 fga|gfd Bcd|c2A ~f3|agf def|
+g2a bag|fdg fdc|B2G Adc|1 AGF GBd:|2 AGF G2D||
 T: Castle (Dmin)
-K: Dmin
-fed edc|dcA GEC|DED AcA|GAc dcA|
-fed edc|dcA GEC|DED AcA|1 GEC D3:|2 GEC D2 F||
-FED ~d3|edc AGE|CEG cBc|CEG FED|
-~F3 ~G3|AGA cde|dcA GEC|1 A,B,C D3:||
+K: Ddor
+|:fed edc|dcA GEC|DED AcA|GAc dcA|
+f/g/af edc|dcA GEC|DED AcA|1 GEC D3:|2 GEC D2E||
+|:FED ~d3|edc AGE|CEG cBc|CEG FED|
+~F3 ~G3|AGA cde|dcA GEC|1 A,B,C D2E:|2 A,B,C D3||
 
 X: 25
 T: JIGS: Scully Casey's Set
@@ -2011,7 +2011,7 @@ L: 1/8
 Q: 3/8=130
 K: Gmaj
 |:g|"G"edB d2 B d2 B B2 g|edB d2 B "C"c2 A "D"A2 g|
-"G"edB d2 B BAB ~g3|"C"BAB ~g3 "D",B2 G G2:||
+"G"edB d2 B BAB ~g3|"C"BAB ~g3 "D"B2 G G2:||
 |:f|"Em"gbg f/g/af g2 e e2 d|"C"eaa aga "D"b2 e e2 f|
 "G"gbg "D/F#"faf "Em"g2 e e2 d|"C"BAB "D"~g3 "G"B2 G G2:||
 T: Cat's Rambles to the Child's Saucepan / Mary Willie's
@@ -2028,7 +2028,7 @@ K: Ador
 "D/F#"eaf "G"g2e dBA G2A|1 "Em"B2e dBG A3 ABd:|2 "Em"B2e dBG "Csus2"A2B "D"c2B||
 
 X: 73
-T: SLIDES: Dan Jeremiah O'Connor's Set
+T: SLIDES: Dan Jeremiah's Set
 T: If I Had a Wife or Mad Dancing / Nellie Mahony's
 C: C: Trad.; S: Denis Murphy / Emma O'Leary
 C: Set Leaders: Anton, Sophie
@@ -2370,7 +2370,7 @@ V:1
 V:2
 D2 A4|B4 A2|G4 G2|F6|
 V:1
-"G"ba gf ed|"A7"e4 dc|"D"d6|"D"1d4 de:|2 d6||
+"G"ba gf ed|"A7"e4 dc|"D"d6|1 "D"d4 de:|2 d6||
 V:2
 gf ed cB|A2 G2 E2|F6|1 F6:|2 F6||
 T: Sí Bheag, Sí Mhór
