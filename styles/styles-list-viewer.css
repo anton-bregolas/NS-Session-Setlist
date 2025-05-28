@@ -75,7 +75,7 @@
   overflow-y: hidden;
 }
 
-.btn {
+.btn-lvw {
   appearance: none;
   border: none;
   box-shadow: none;
@@ -87,27 +87,28 @@
   outline-color: transparent;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+  transition: color 0.25s ease-out;
 }
 
 [data-controls] {
   z-index: 1;
 }
 
-[data-controls="theme-btn"],
-[data-controls="control-btn"],
-[data-controls="btn-x"] {
+[data-controls="lvw-theme-btn"],
+[data-controls="lvw-control-btn"],
+[data-controls="lvw-btn-x"] {
   color: var(--tiles-ui-color);
   outline-color: var(--tiles-ui-color);
   border-radius: 50%;
   opacity: 0.9;
 }
 
-[data-controls="theme-btn"],
+[data-controls="lvw-theme-btn"],
 [data-list-viewer="x-container"] {
   top: 1.5rem;
 }
 
-[data-controls="theme-btn"] {
+[data-controls="lvw-theme-btn"] {
   position: absolute;
   left: 1.5rem;
 }
@@ -117,37 +118,37 @@
   right: 1.65rem;
 }
 
-[data-controls="control-btn"],
-[data-controls="btn-x"] {
+[data-controls="lvw-control-btn"],
+[data-controls="lvw-btn-x"] {
   font-size: 2.75rem;
   width: 2.75rem;
   height: 2.75rem;
 }
 
-[data-controls="btn-x"] {
+[data-controls="lvw-btn-x"] {
   outline-offset: 0.25rem;
 }
 
-[data-controls="btn-x"]::after {
+[data-controls="lvw-btn-x"]::after {
   content: "\00d7";
   padding-bottom: 0.35rem;
 }
 
-[data-controls="control-btn"] {
+[data-controls="lvw-control-btn"] {
   outline-offset: 0.25rem;
 }
 
-[data-controls="theme-btn"] {
+[data-controls="lvw-theme-btn"] {
   outline-offset: 0.33rem;
 }
 
-[data-controls="btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-controls="lvw-btn-x"]:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid;
 }
 
-[data-controls="theme-btn"]:is(:hover, :focus, :focus-visible),
-[data-controls="control-btn"]:is(:hover, :focus, :focus-visible),
-[data-controls="btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-controls="lvw-theme-btn"]:is(:hover, :focus, :focus-visible),
+[data-controls="lvw-control-btn"]:is(:hover, :focus, :focus-visible),
+[data-controls="lvw-btn-x"]:is(:hover, :focus, :focus-visible) {
   color: var(--tiles-font-color);
   outline-color: var(--tiles-font-color);
 }
@@ -162,9 +163,9 @@
   height: 2.45rem;
 }
 
-[data-list-viewer="dialog"].dark [data-controls="theme-btn"]:is(:hover, :focus, :focus-visible),
-[data-list-viewer="dialog"].dark [data-controls="control-btn"]:is(:hover, :focus, :focus-visible),
-[data-list-viewer="dialog"].dark [data-controls="btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-list-viewer="dialog"].dark [data-controls="lvw-theme-btn"]:is(:hover, :focus, :focus-visible),
+[data-list-viewer="dialog"].dark [data-controls="lvw-control-btn"]:is(:hover, :focus, :focus-visible),
+[data-list-viewer="dialog"].dark [data-controls="lvw-btn-x"]:is(:hover, :focus, :focus-visible) {
   opacity: 1;
 }
 

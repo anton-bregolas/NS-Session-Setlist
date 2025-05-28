@@ -80,7 +80,7 @@
   text-align: left;
 }
 
-.btn {
+.btn-cvw {
   appearance: none;
   border: none;
   box-shadow: none;
@@ -92,27 +92,28 @@
   outline-color: transparent;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+  transition: color 0.25s ease-out;
 }
 
 [data-controls] {
   z-index: 1;
 }
 
-[data-controls="theme-btn"],
-[data-controls="control-btn"],
-[data-controls="btn-x"] {
+[data-controls="cvw-theme-btn"],
+[data-controls="cvw-control-btn"],
+[data-controls="cvw-btn-x"] {
   color: var(--chords-ui-color);
   outline-color: var(--chords-ui-color);
   border-radius: 50%;
   opacity: 0.9;
 }
 
-[data-controls="theme-btn"],
+[data-controls="cvw-theme-btn"],
 [data-chord-viewer="x-container"] {
   top: 1.5rem;
 }
 
-[data-controls="theme-btn"] {
+[data-controls="cvw-theme-btn"] {
   position: absolute;
   left: 1.5rem;
 }
@@ -122,37 +123,37 @@
   right: 1.65rem;
 }
 
-[data-controls="control-btn"],
-[data-controls="btn-x"] {
+[data-controls="cvw-control-btn"],
+[data-controls="cvw-btn-x"] {
   font-size: 2.75rem;
   width: 2.75rem;
   height: 2.75rem;
 }
 
-[data-controls="btn-x"] {
+[data-controls="cvw-btn-x"] {
   outline-offset: 0.25rem;
 }
 
-[data-controls="btn-x"]::after {
+[data-controls="cvw-btn-x"]::after {
   content: "\00d7";
   padding-bottom: 0.35rem;
 }
 
-[data-controls="control-btn"] {
+[data-controls="cvw-control-btn"] {
   outline-offset: 0.25rem;
 }
 
-[data-controls="theme-btn"] {
+[data-controls="cvw-theme-btn"] {
   outline-offset: 0.33rem;
 }
 
-[data-controls="btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-controls="cvw-btn-x"]:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid;
 }
 
-[data-controls="theme-btn"]:is(:hover, :focus, :focus-visible),
-[data-controls="control-btn"]:is(:hover, :focus, :focus-visible),
-[data-controls="btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-controls="cvw-theme-btn"]:is(:hover, :focus, :focus-visible),
+[data-controls="cvw-control-btn"]:is(:hover, :focus, :focus-visible),
+[data-controls="cvw-btn-x"]:is(:hover, :focus, :focus-visible) {
   color: var(--chords-font-color);
   outline-color: var(--chords-font-color);
 }
@@ -167,9 +168,9 @@
   height: 2.45rem;
 }
 
-[data-chord-viewer="dialog"].dark [data-controls="theme-btn"]:is(:hover, :focus, :focus-visible),
-[data-chord-viewer="dialog"].dark [data-controls="control-btn"]:is(:hover, :focus, :focus-visible),
-[data-chord-viewer="dialog"].dark [data-controls="btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-chord-viewer="dialog"].dark [data-controls="cvw-theme-btn"]:is(:hover, :focus, :focus-visible),
+[data-chord-viewer="dialog"].dark [data-controls="cvw-control-btn"]:is(:hover, :focus, :focus-visible),
+[data-chord-viewer="dialog"].dark [data-controls="cvw-btn-x"]:is(:hover, :focus, :focus-visible) {
   opacity: 1;
 }
 
@@ -246,6 +247,7 @@
   top: 26%;
   writing-mode: vertical-lr;
   direction: rtl;
+  transition: opacity 0.25s ease-out;
 }
 
 [data-controls="chord-viewer-slider"]:is(:hover, :focus, :focus-visible) {

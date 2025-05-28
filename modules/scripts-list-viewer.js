@@ -54,7 +54,6 @@ export function openListViewer(selectList) {
       tunesArr.push(itemObj);
     }
   }
-  console.warn(tunesArr)
 
   // Get current Filter value, pass "None" if none found
 
@@ -98,7 +97,7 @@ function loadTuneTiles(tunesArr, currentFilter) {
 
     tuneItemBtn.dataset.listViewer = "tune-tile";
     tuneItemBtn.dataset.lvwAction = "load-item";
-    tuneItemBtn.classList = "btn flex-center";
+    tuneItemBtn.classList = "btn-lvw flex-center";
 
     tuneItemBtn.textContent = tune.title;
     tuneItemBtn.dataset.url = tune.url;
@@ -130,7 +129,7 @@ function handleListViewerClick(event) {
   if (!actionTrigger) return;
 
   const listViewerGui = listViewerDialog.querySelectorAll('[data-controls]');
-  const listViewerThemeBtns = listViewerDialog.querySelectorAll('[data-controls="theme-btn"]');
+  const listViewerThemeBtns = listViewerDialog.querySelectorAll('[data-controls="lvw-theme-btn"]');
 
   const elAction = actionTrigger.dataset.lvwAction;
 

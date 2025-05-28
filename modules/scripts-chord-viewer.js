@@ -199,7 +199,7 @@ function handleChordViewerClick(event) {
   if (!actionTrigger) return;
 
   const chordViewerGui = chordViewerDialog.querySelectorAll('[data-controls]');
-  const chordViewerThemeBtns = chordViewerDialog.querySelectorAll('[data-controls="theme-btn"]');
+  const chordViewerThemeBtns = chordViewerDialog.querySelectorAll('[data-controls="cvw-theme-btn"]');
 
   const elAction = actionTrigger.dataset.cvwAction;
 
