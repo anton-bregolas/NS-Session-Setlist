@@ -18,6 +18,7 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + Project updates:
+
   - Launcher: Hash & query param routing implemented for Launcher, Tunebook and Playalong
   - Launcher: Advanced Options button and additional App Options added
   - Launcher: New improved hover and focus look of App UI elements (TO DO: Animations)
@@ -44,6 +45,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 <summary>v.0.9.9: Routing, Tunebook Nav & List Viewer</summary>
 
 + Project updates:
+
   - Launcher: Hash & query param routing implemented for Launcher, Tunebook and Playalong
   - Launcher: Advanced Options button and additional App Options added
   - Launcher: New improved hover and focus look of App UI elements (TO DO: Animations)
@@ -64,6 +66,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   - Icons updated
 
 + HTML updates:
+
   - Main App (index.html)
     + Advanced Options button and subgroup added to Tunebook Options
     + Tunebook Actions popup updated with new grid layout and buttons
@@ -77,6 +80,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + Back to Launch Screen link fixed
 
 + CSS updates:
+
   - App Styles (nss-styles.css)
     + Tunebook header refactored with more responsive layout and new buttons
     + New breakpoints added for more flexible Tunebook header & footer layout
@@ -91,6 +95,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + Minor consistency tweaks
 
 + JavaScript updates:
+
   - App Launcher module (scripts-ns-sessions.js)
     + appRouter*, appRouterOnLoad*: Main handler functions for hash navigation / query param routing added
     + createQueryString*, sanitizeQueryParam*: New functions for query param handling
