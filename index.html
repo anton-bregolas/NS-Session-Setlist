@@ -271,19 +271,19 @@
                 </header>
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
                     <div class="nss-checkbox-container flex-column">
-                        <label for="tools-save-restore-tunes" class="nss-checkbox-label">
+                        <label class="nss-checkbox-label">
                             <input type="checkbox" id="tools-save-restore-tunes" data-option="abcToolsSaveAndRestoreTunes" class="nss-checkbox-btn" value="1">
                             Save & load last opened Set or Tune
                         </label>
-                        <label for="tunebook-use-mobile-mode" class="nss-checkbox-label">
+                        <label class="nss-checkbox-label">
                             <input type="checkbox" id="tunebook-use-mobile-mode" data-option="tuneBookAlwaysUseMobileMode" class="nss-checkbox-btn" value="1">
                             Always open Tunebook in Mobile Mode
                         </label>
-                        <label for="tunebook-share-links-abctools" class="nss-checkbox-label">
+                        <label class="nss-checkbox-label">
                             <input type="checkbox" id="tunebook-share-links-abctools" data-option="tuneBookShareLinksToAbcTools" class="nss-checkbox-btn" value="1">
                             Share links open ABC Tools instead of app
                         </label>
-                        <label for="tools-fullscreen-new-window" class="nss-checkbox-label">
+                        <label class="nss-checkbox-label">
                             <input type="checkbox" id="tools-fullscreen-new-window" data-option="abcToolsFullScreenOpensNewWindow" class="nss-checkbox-btn" value="1">
                             Full Screen opens ABC Tools in new window
                         </label>
@@ -291,31 +291,31 @@
                             Show advanced options
                         </button>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
-                            <label for="tunebook-show-status-report" class="nss-checkbox-label">
+                            <label class="nss-checkbox-label">
                                 <input type="checkbox" id="tunebook-show-status-report" data-option="tuneBookShowStatusReport" class="nss-checkbox-btn" value="1">
                                 App: Show Tunebook report at launch
                             </label>
-                            <label for="app-allow-hash-onload" class="nss-checkbox-label">
+                            <label class="nss-checkbox-label">
                                 <input type="checkbox" id="app-allow-hash-onload" data-option="tuneBookAllowLoadFromHashLink" class="nss-checkbox-btn" value="1">
                                 App: Allow loading #links on startup
                             </label>
-                            <label for="tools-allow-midi-change" class="nss-checkbox-label">
+                            <label class="nss-checkbox-label">
                                 <input type="checkbox" id="tools-allow-midi-change" data-option="abcToolsAllowInstrumentChanges" class="nss-checkbox-btn" value="1">
                                 MIDI: Allow changing playback instrument
                             </label>
-                            <label for="tools-always-mute-chords" class="nss-checkbox-label">
+                            <label class="nss-checkbox-label">
                                 <input type="checkbox" id="tools-always-mute-chords" data-option="abcToolsAlwaysMuteChords" class="nss-checkbox-btn" value="1">
                                 MIDI: Always mute chords in playback
                             </label>
-                            <label for="tools-allow-tab-change" class="nss-checkbox-label">
+                            <label class="nss-checkbox-label">
                                 <input type="checkbox" id="tools-allow-tab-change" data-option="abcToolsAllowTabStyleChanges" class="nss-checkbox-btn" value="1">
                                 Tabs: Allow adding Tablature to notes
                             </label>
-                            <label for="tools-allow-auto-reload" class="nss-checkbox-label">
+                            <label class="nss-checkbox-label">
                                 <input type="checkbox" id="tools-allow-auto-reload" data-option="abcToolsAllowTuneAutoReload" class="nss-checkbox-btn" value="1">
                                 Tunes: Allow automatic Tunebook reload
                             </label>
-                            <label for="cv-allow-dynamic-chords" class="nss-checkbox-label">
+                            <label class="nss-checkbox-label">
                                 <input type="checkbox" id="cv-allow-dynamic-chords" data-option="chordViewerAllowDynamicChords" class="nss-checkbox-btn" value="1">
                                 Chord Viewer: Generate chords dynamically
                             </label>
@@ -435,7 +435,7 @@
                 </button>
 
                 <div class="flex-wrapper footer-link-wrapper">
-                    <label for="nss-radio-view-tunes" class="radio-wrapper flex-wrapper" title="Full Screen button opens current Set or Tune">
+                    <label class="radio-wrapper flex-wrapper" title="Full Screen button opens current Set or Tune">
                         <input type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" checked>
                         <span class="flex-wrapper">
                             <span class="nss-mini-icon nss-icon-show">
@@ -463,14 +463,14 @@
                             MODE
                         </span>
                     </button>
-                    <button data-controls="tunebook-actions-mobile" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions">
+                    <button id="nss-tunebook-actions-footer-mobile" data-controls="tunebook-actions-mobile" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions">
                         <span class="nss-mini-icon">
                             <svg class="nss-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-archives"></use>
                             </svg>
                         </span>
                     </button>
-                    <label for="nss-radio-view-chords" class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
+                    <label class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
                         <input type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1">
                         <span class="flex-wrapper">
                             <span class="nss-mini-icon nss-icon-show">
@@ -489,7 +489,7 @@
 
                 <button data-controls="tunebook-footer" data-load="tunebook-compact-mode" class="nss-btn nss-option-btn nss-btn-x footer-btn-x flex-wrapper" title="Hide footer section" aria-title="Hide footer section"></button>
                 
-                <button data-controls="tunebook-actions-desktop" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions">
+                <button id="nss-tunebook-actions-footer-desktop" data-controls="tunebook-actions-desktop" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions">
                     <svg class="nss-mini-icon" aria-hidden="true">
                         <use href="assets/icons/icons.svg#action-icon-list"></use>
                     </svg>
@@ -527,7 +527,7 @@
                     </div>
                     <div data-tbk-action="open-chord-viewer-mobile" class="tunebook-action flex-wrapper" aria-hidden="true" hidden>
                         <button data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open List Viewer" aria-title="Open List Viewer">
-                            <span class="nss-btn-text-label flex-wrapper">Em</span>
+                            <span class="nss-btn-text-label flex-wrapper">‘Em’</span>
                         </button>
                     </div>
                     <div data-tbk-action="switch-desktop-mode" class="tunebook-action flex-wrapper">

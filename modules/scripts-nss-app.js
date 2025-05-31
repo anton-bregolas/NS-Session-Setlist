@@ -28,7 +28,7 @@ const DB_VERSION = "2025-05-17";
 // Define Global Variables
 
 let tuneBookSetting = "setlist"; // Tunebook loads Setlist by default
-let isTuneBookInitialized = false; // If false, opening Tunebook will initialise ABC Tools and fetch Session DB data
+let isTuneBookInitialized = false; // If false, opening Tunebook will initialize ABC Tools and fetch Session DB data
 let isCompactTunebookModeOn = false; // If true, Tunebook footer and Tunelist / Setlist switch buttons are hidden
 let lastAppSectionOpened = "launcher"; // Keep track of the last app section name / latest hash handled by routing
 let lastTuneBookMode; // Keep track of the last Tunebook mode setting for this session
@@ -90,9 +90,11 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
       // Display an error and hightlight section button if fetch attempt fails
 
-      displayNotification("Error trying to load Tunebook", "error");
-    
-      const triggerBtn = document.querySelector(`#nss-launch-${targetSection}`);
+      const triggerBtnId = `#nss-launch-${targetSection}`;
+      
+      const triggerBtn = document.querySelector(triggerBtnId);
+      
+      displayNotification("Tunebook data could not be loaded", "error", triggerBtnId);
 
       displayWarningEffect(triggerBtn);
 
@@ -254,6 +256,13 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
 
     // Exit Tunebook
 
+    // Hide Tunebook menus
+
+    if (tuneBookActionsPopup.matches(':popover-open')) {
+
+      tuneBookActionsPopup.hidePopover();
+    }
+
     // Save last opened Tunebook section before exiting
 
     if (localStorageOk()) {
@@ -263,12 +272,7 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
 
     lastTuneBookOpened = tuneBookSetting;
 
-    // Hide Tunebook menus, reset styles
-
-    if (tuneBookActionsPopup.matches(':popover-open')) {
-
-      tuneBookActionsPopup.hidePopover();
-    }
+    // Hide Tunebook elements, reset styles
 
     lastTuneBookMode = document.body.dataset.mode;
 
@@ -454,11 +458,16 @@ function swapSwitchBtns(targetSection) {
 
 function switchTunebookMode(targetMode) {
 
+  let tuneBookActionsBtnId = 
+    isCompactTunebookModeOn? '#nss-tunebook-actions-header' :
+    targetMode === "mobile-switch"? '#nss-tunebook-actions-footer-mobile' :
+    '#nss-tunebook-actions-footer-desktop';
+
   if (targetMode === "mobile-switch") {
 
     document.body.dataset.mode = "mobile";
     
-    displayNotification("Mobile mode enabled: Double tap to play", "success");
+    displayNotification("Mobile mode enabled: Double tap to play", "success", tuneBookActionsBtnId);
 
     resetViewportWidth();
 
@@ -469,7 +478,7 @@ function switchTunebookMode(targetMode) {
 
     document.body.dataset.mode = "desktop";
 
-    displayNotification("Desktop mode enabled", "success");
+    displayNotification("Desktop mode enabled", "success", tuneBookActionsBtnId);
 
     if (getViewportWidth() < 880) resetViewportWidth(880);
 
@@ -477,6 +486,7 @@ function switchTunebookMode(targetMode) {
   }
 
   refreshTuneBook(true);
+
   handleSelectorLabels("init");
 }
 
@@ -594,7 +604,7 @@ async function exitFullScreenMode() {
 
 export function openSettingsMenu(dataType) {
 
-  if (tuneBookActionsPopup.matches(':popover-open')) {
+  if (tuneBookActionsPopup && tuneBookActionsPopup.matches(':popover-open')) {
 
     tuneBookActionsPopup.hidePopover();
   }
@@ -653,12 +663,13 @@ export function openSettingsMenu(dataType) {
 // Display Notification Popup Popover with a message to the user
 // Adjust popover's behavior and style depending on message type
 
-export function displayNotification(msgText, msgType) {
+export function displayNotification(msgText, msgType, nextFocusEl) {
 
   notificationMessage.textContent = msgText;
   notificationPopup.className = msgType ?? "status";
+  notificationPopup.dataset.nextFocus = nextFocusEl || '';
 
-  if (tuneBookActionsPopup.matches(':popover-open')) {
+  if (tuneBookActionsPopup && tuneBookActionsPopup.matches(':popover-open')) {
 
     tuneBookActionsPopup.hidePopover();
   }
@@ -699,8 +710,6 @@ export function displayNotification(msgText, msgType) {
 export function displayWarningEffect(focusBtn) {
 
   if (!focusBtn) return;
-
-  if (focusBtn !== document.activeElement) focusBtn.focus();
 
   focusBtn.style.outline = "0.17rem solid red";
   focusBtn.style.filter = "drop-shadow(1px 1px 8px red)";
@@ -942,16 +951,6 @@ export async function fetchData(url, type) {
     return data;
 
   } catch (error) {
-
-    if (error.message.startsWith("NetworkError") ||
-        error.message.includes("Failed to fetch") || error.cause?.status) {
-
-      displayNotification("Network error trying to fetch data", "error");
-    
-    } else {
-
-      displayNotification("Error trying to fetch data", "error");
-    }
 
     throw new Error(`[${error}\n\nHTTP error code: ${error.cause?.status}]`);
   }
@@ -1282,12 +1281,25 @@ async function appButtonHandler(btn) {
       btn.parentElement.classList.contains('tunebook-action')) {
 
     tuneBookActionsPopup.hidePopover();
+
+    const tuneBookActionsBtns = document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
+
+    tuneBookActionsBtns[0].focus();
     return;
   }
 
   if (btn.classList.contains('popup-btn-x')) {
 
-    btn.parentElement.parentElement.hidePopover();
+    const parentPopup = btn.parentElement.parentElement;
+    const nextFocusEl = parentPopup.dataset.nextFocus;
+
+    parentPopup.hidePopover();
+
+    if (nextFocusEl) {
+
+      document.querySelector(nextFocusEl).focus();
+    }
+
     return;
   }
 
