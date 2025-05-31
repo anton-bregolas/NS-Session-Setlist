@@ -564,9 +564,13 @@ export function makeAbcChordBook(abcContent) {
     let abcNoteLength = '';
     let abcBody = '';
 
-    // Generate Sets Chordbook if ABC has more than two T: fields (including Set Title)
+    // Generate Sets Chordbook if ABC has several T: groups followed by text
 
-    if (abc.match(/^T:/gm).length > 2) {
+    const matchTuneBlocks = abcContent.match(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?=^[\S]+)/gm);
+
+    const isTuneSet = matchTuneBlocks && matchTuneBlocks.length > 1;
+
+    if (isTuneSet) {
 
       const abcPrimaryTitle = abc.match(/(?<=^T:).*/m)[0].trim();
       const abcTunesArr = 
