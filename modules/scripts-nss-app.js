@@ -258,10 +258,7 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
 
     // Hide Tunebook menus
 
-    if (tuneBookActionsPopup.matches(':popover-open')) {
-
-      tuneBookActionsPopup.hidePopover();
-    }
+    hideTuneBookActionsMenu(true);
 
     // Save last opened Tunebook section before exiting
 
@@ -527,7 +524,7 @@ function setTuneBookCompactMode() {
   setTimeout(() => {
     
     tuneBookActionsPopup.dataset.popsUpFrom = "header";
-  }, 150);
+  }, 250);
 
   displayNotification("Compact mode enabled: Refresh app to reset", "success");
 }
@@ -604,10 +601,7 @@ async function exitFullScreenMode() {
 
 export function openSettingsMenu(dataType) {
 
-  if (tuneBookActionsPopup && tuneBookActionsPopup.matches(':popover-open')) {
-
-    tuneBookActionsPopup.hidePopover();
-  }
+  hideTuneBookActionsMenu();
 
   if (dataType === "chord-viewer") {
     
@@ -669,10 +663,7 @@ export function displayNotification(msgText, msgType, nextFocusEl) {
   notificationPopup.className = msgType ?? "status";
   notificationPopup.dataset.nextFocus = nextFocusEl || '';
 
-  if (tuneBookActionsPopup && tuneBookActionsPopup.matches(':popover-open')) {
-
-    tuneBookActionsPopup.hidePopover();
-  }
+  hideTuneBookActionsMenu(true);
 
   if (!notificationPopup.matches(':popover-open')) {
 
@@ -719,6 +710,26 @@ export function displayWarningEffect(focusBtn) {
     focusBtn.style.removeProperty('outline');
     focusBtn.style.removeProperty('filter');
   }, 2500);
+}
+
+// Hide Tunebook Actions menu popover
+// Optionally disable transition animation
+
+function hideTuneBookActionsMenu(disableAnimation) {
+
+  if (tuneBookActionsPopup && tuneBookActionsPopup.matches(':popover-open')) {
+
+    tuneBookActionsPopup.hidePopover();
+
+    if (!disableAnimation) return;
+
+    tuneBookActionsPopup.style.setProperty("transition", "none");
+
+    setTimeout(() => {
+      
+      tuneBookActionsPopup.style.removeProperty("transition");
+    }, 500);
+  }
 }
 
 ////////////////////////////////
