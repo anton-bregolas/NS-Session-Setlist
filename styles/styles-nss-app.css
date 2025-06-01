@@ -65,7 +65,7 @@ body,
 
 .body-container {
   width: 100%;
-  height: 100svh;
+  height: 100dvh;
   margin: 0 auto;
   text-align: center;
   overflow-x: hidden;
@@ -1030,8 +1030,8 @@ body[data-mode="mobile"] .nss-select-container {
 /* Popover Menu Elements */
 
 .nss-popover {
-  width: min(calc(80svw - 3.7rem), 40rem);
-  height: min(calc(80svh - 3rem), 45rem);
+  width: min(calc(80% - 3.7rem), 40rem);
+  height: min(calc(80dvh - 3rem), 45rem);
   border-radius: 1.5rem;
   border: 0.3rem solid var(--accent-color);
   overflow: hidden;
@@ -1218,7 +1218,7 @@ body[data-mode="mobile"] [data-tbk-action="toggle-full-screen"] {
 }
 
 body[data-mode="desktop"] [data-popover="tunebook-actions-popup"] {
-  height: calc(100svh - var(--tunebook-header-height) - var(--tunebook-footer-height));
+  height: calc(100dvh - var(--tunebook-header-height) - var(--tunebook-footer-height));
   width: 24rem;
   max-width: 100%;
   bottom: var(--tunebook-footer-height);
@@ -1226,7 +1226,7 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"] {
 }
 
 body[data-mode="desktop"] [data-pops-up-from="header"] {
-  height: calc(100svh - var(--tunebook-header-height));
+  height: calc(100dvh - var(--tunebook-header-height));
   right: unset;
   left: 0;
   bottom: 0;
@@ -1281,6 +1281,7 @@ body[data-mode="desktop"] [data-tbk-action="close-menu-footer"] {
   border: none;
   bottom: 0;
   left: 0;
+  z-index: 3;
 }
 
 [data-popover="notification-popup"].status .popup-btn-x {
@@ -1451,7 +1452,7 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 
   .nss-popover-menu .nss-popover-body {
     width: 100%;
-    height: calc(100svh - 7.75rem);
+    height: calc(100dvh - 7.75rem);
     align-items: flex-start;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -1641,7 +1642,7 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 @media screen and (max-width: 30em) {
 
   .nss-popover-menu .nss-popover-body {
-    height: calc(100svh - 11.75rem);
+    height: calc(100dvh - 11.75rem);
   }
 }
 
