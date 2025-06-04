@@ -19,16 +19,29 @@ import { localStorageOk, fetchData, initSettingsFromObject, displayWarningEffect
 
 export const abcEncoderDefaults = {
 
-    abcEncoderExportsTuneList: "1",
-    abcEncoderSortsTuneBook: "0",
+    abcEncodeSortsTuneBook: "0",
+    abcEncodeExportsTuneList: "0",
+    abcSortEnforcesCustomAbcFields: "1",
     abcSortExportsTunesFromSets: "1",
     abcSortExportsChordsFromTunes: "1",
-    abcSortFetchesTsoMetaData: "0",
     abcSortNormalizesAbcPartEndings: "1",
-    abcSortRemovesLineBreaksInAbc: "0",
+    abcSortFetchesTsoMetaData: "0",
+    abcSortRemovesLineBreaksInAbc: "1",
     abcSortRemovesTextAfterLineBreaksInAbc: "0",
-    abcSortUsesStandardCSFields: "0"
+    abcSortUsesStrictTuneDetection: "0"
 };
+
+// Define custom regular expressions that affect Encoder behavior
+
+// Lax detection mode: Tune headers are allowed to contain just T: for the purposes of splitting Sets into Tunes
+// Sets or Tunes missing a K: field will have a blank ABC Key field added to them by Sort (only for first tune)
+const matchTuneHeadersLax = new RegExp(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?=^[\S]+)/, "gm");
+const matchIndividualTunesLax = new RegExp (/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?:[^T]+[\s]*)+(?=(?:^T:|$))/, "gm");
+
+// Strict detection mode: Every tune header must contain K: field for the purposes of splitting Sets into Tunes
+// Sets or Tunes missing a K: field will be filtered out by Sort with invalid ABC printed to the console
+const matchTuneHeadersStrict = new RegExp(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*^K:[ ]*.+/, "gm");
+const matchIndividualTunesStrict = new RegExp (/^T:.*[\s]*(?:^[A-JL-Z]:.*[\s]*)*(?:^K:[ ]*.+[\s]*)(?:[^T]+[\s]*)+(?=(?:^T:|$))/, "gm");
 
 // Define an additional array of Session Survey Data
 // When not empty, its data will be used to modify ABC Sort output
@@ -115,7 +128,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
             // Optional: Save plain text Tunelist generated from source ABC
 
-            if (+localStorage.abcEncoderExportsTuneList === 1) {
+            if (+localStorage.abcEncodeExportsTuneList === 1) {
 
                 downloadAbcFile(exportPlainTuneList(abcEncoderOutput), "Tunelist[Source].txt");
             }
@@ -128,7 +141,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
                 // Optional: Save plain text Tunelist of all individual Setlist Tunes from source ABC
 
-                if (+localStorage.abcEncoderExportsTuneList === 1) {
+                if (+localStorage.abcEncodeExportsTuneList === 1) {
 
                     downloadAbcFile(exportPlainTuneList(abcEncoderTunesOutput), "Tunelist[Tunes].txt");
                 }
@@ -160,13 +173,19 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
             abcSortedOutput = getSortedAbc(rawAbcContent);
         }
 
+        if (!abcSortedOutput || !abcSortedOutput[0]) return;
+
         abcEncoderOutput = abcSortedOutput[0];
         abcEncoderTunesOutput = abcSortedOutput[1];
 
         if (sessionSurveyData.length > 0) {
 
             abcEncoderOutput = applySessionSurveyResults(abcEncoderOutput);
-            abcEncoderTunesOutput = applySessionSurveyResults(abcEncoderTunesOutput);
+           
+            if (abcEncoderTunesOutput) {
+                
+                abcEncoderTunesOutput = applySessionSurveyResults(abcEncoderTunesOutput);
+            }
         }
 
         if (localStorageOk()) {
@@ -175,10 +194,10 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
             if (+localStorage.abcSortExportsTunesFromSets === 1 && abcEncoderTunesOutput !== '') {
 
-                const isStandardCSSettingOn = localStorageOk() && !!+localStorage.abcSortUsesStandardCSFields;
+                const isCustomFieldSetEnforced = localStorageOk() && !!+localStorage.abcSortEnforcesCustomAbcFields;
                 const fileExt = fileName.includes('.')? fileName.slice(fileName.lastIndexOf('.') + 1) : 'txt';
                 
-                downloadAbcFile(abcEncoderTunesOutput, isStandardCSSettingOn? `${fileName.slice(0, fileName.lastIndexOf('.'))} [ABC-SORTED-TUNES].${fileExt}` : `NS-Session-Tunes.${fileExt}`);
+                downloadAbcFile(abcEncoderTunesOutput, isCustomFieldSetEnforced? `NS-Session-Tunes.${fileExt}` : `${fileName.slice(0, fileName.lastIndexOf('.'))} [ABC-SORTED-TUNES].${fileExt}`);
 
                 // Optional: Save additional Chordbook JSON containing extracted chords arranged as Tunelist
 
@@ -480,10 +499,9 @@ async function preProcessAbcMetadata(rawAbcContent) {
 
     preProcessedAbcArr = await Promise.all(preProcessedAbcArr.map(async (abcItem) => {
     
-        if (!abcItem) {
-            
-            return abcItem;
-        }
+        if (!abcItem) return abcItem;
+
+        // Do not process ABCs that already contain TSO metadata
 
         if (abcItem.includes('at The Session')) {
 
@@ -491,39 +509,89 @@ async function preProcessAbcMetadata(rawAbcContent) {
             return abcItem;
         }
 
-        const tsoSetUrlArr = abcItem.match(/https:\/\/thesession\.org\/members\/[0-9]+\/sets\/[0-9]+/g);
+        // Account for various types of The Session links passed
+
         const tsoSettingUrlArr = abcItem.match(/https:\/\/thesession\.org\/tunes\/[0-9]+#setting[0-9]+/g);
+        const tsoSetUrlArr = abcItem.match(/https:\/\/thesession\.org\/members\/[0-9]+\/sets\/[0-9]+/g);
         
-        if (!tsoSetUrlArr && !tsoSettingUrlArr) {
+        if (!tsoSettingUrlArr && !tsoSetUrlArr) return abcItem;
+
+        // Keep pre-existing data intact in ABC Transcription fields, ignore data in ABC Composer fields
+        
+        let abcZString = abcItem.match(/^Z:.+/m) && abcItem.match(/(?<=^Z:).+/m)[0].trim()? 
+            `${abcItem.match(/^Z:[^;\r\n]+/m)[0]}; ` :
+            'Z: [Unedited]; ';
+        
+        let abcCString = 'C: ';
+        
+        // Process links to TSO sets or settings via fetchTsoMetadata, fetching JSON data to an array
+
+        let tsoMetaDataArr =
+            tsoSettingUrlArr && tsoSettingUrlArr.length > 0? await fetchTsoMetadata(tsoSettingUrlArr, "setting") :
+            tsoSetUrlArr && tsoSetUrlArr.length > 0? await fetchTsoMetadata(tsoSetUrlArr, "set") : null;
+
+        if (!tsoMetaDataArr || !tsoMetaDataArr[0]) return abcItem;
+
+        // Process links to each setting if data is being extracted from TSO sets
+        // Step required as TSO set JSONs do to not contain Composer data
+
+        if (typeof(tsoMetaDataArr[0]) === "string" &&
+            tsoMetaDataArr[0].startsWith('https://thesession.org/tunes/')) {
+
+            tsoMetaDataArr = await fetchTsoMetadata(tsoMetaDataArr, "setting");
+        }
+
+        // Reduce metadata sub-arrays to slash-separated strings
+        // Replace sets of identical values with a single string
+
+        if (Array.isArray(tsoMetaDataArr[0])) {
+
+            const setAbcCArr = tsoMetaDataArr.map(arr => arr[0]);
+            const setAbcZArr = tsoMetaDataArr.map(arr => arr[1]);
+
+            tsoMetaDataArr = [
+                reduceArrToSlashSeparatedList(setAbcCArr), 
+                reduceArrToSlashSeparatedList(setAbcZArr)
+            ];
+
+            // Assign C: and Z: values
+
+            abcCString += tsoMetaDataArr[0];
             
-            return abcItem;
+            abcZString += `${tsoMetaDataArr[1]} at The Session`;
+
+            metaAddedCounter++;
+
+            // Replace the first found Z: field in ABC
+            // Else insert Z: field value before N: or R:
+
+            if (abcItem.match(/^Z:/m)) {
+
+                abcItem = abcItem.replace(/^Z:.*/m, abcZString);
+
+            } else if (abcItem.match(/^N:/m)) {
+
+                abcItem = abcItem.replace(/^N:/m, `${abcZString}\nN:`);
+
+            } else if (abcItem.match(/^R:/m)) {
+
+                abcItem = abcItem.replace(/^R:/m, `${abcZString}\nR:`);
+            }
+
+            // Replace the first found C: field in ABC
+            // Else insert C: field value before Z:
+
+            if (abcItem.match(/^C:/m)) {
+
+                abcItem = abcItem.replace(/^C:.*/m, abcCString);
+
+            } else {
+
+                abcItem = abcItem.replace(/^Z:/m, `${abcCString}\nZ:`);
+            }
         }
         
-        let abcZString = abcItem.match(/^Z:.+/m)? `${abcItem.match(/^Z:[^;\r\n]+/m)[0]}; ` : 'Z: [Unedited]; ';
-        
-        // Process links to TSO settings via fetchTsoMetadata: fetch JSON data to an array, reduce it to string
-
-        abcZString += tsoSetUrlArr && tsoSetUrlArr.length > 0? await fetchTsoMetadata(tsoSetUrlArr, "set") :
-                      tsoSettingUrlArr && tsoSettingUrlArr.length > 0? await fetchTsoMetadata(tsoSettingUrlArr, "setting") : '';
-
-        abcZString = `${abcZString} at The Session`;
-
-        metaAddedCounter++;
-
-        // Replace the first found Z: field in ABC or insert Z: field value before N: or R:
-
-        if (abcItem.match(/^Z:/m)) {
-
-            return abcItem.replace(/^Z:.*/m, `${abcZString}`);
-
-        } else if (abcItem.match(/^N:/m)) {
-
-            return abcItem.replace(/^N:/m, `${abcZString}\nN:`);
-
-        } else if (abcItem.match(/^R:/m)) {
-
-            return abcItem.replace(/^R:/m, `${abcZString}\nR:`);
-        }
+        return abcItem;
     }));
 
     if (!preProcessedAbcArr[1]) {
@@ -549,13 +617,10 @@ async function preProcessAbcMetadata(rawAbcContent) {
 // Limit the number of concurrent requests with throttleTsoRequests
 
 async function fetchTsoMetadata(urlArr, urlType) {
-
-    let tsoJsonUrl = '';
-    let tsoMetaDataOutput = '';
     
-    const tsoMetaDataArr = await Promise.all(urlArr.map(throttleTsoRequests(async (url) => {
+    const tsoMetaDataOutputArr = await Promise.all(urlArr.map(throttleTsoRequests(async (url) => {
         
-        tsoJsonUrl = urlType === "setting"? `${url.split('#')[0]}?format=json` : 
+        let tsoJsonUrl = urlType === "setting"? `${url.split('#')[0]}?format=json` : 
         urlType === "set"? `${url}?format=json` : '';
         
         if (!tsoJsonUrl) return;
@@ -565,33 +630,37 @@ async function fetchTsoMetadata(urlArr, urlType) {
 
         displayNotification("Fetching metadata from The\xa0Session...");
 
-        let tsoMetaData = '';
-
         const tsoJsonObj = await fetchData(tsoJsonUrl, "json");
 
         if (urlType === "setting") {
 
             const tsoSettingId = +url.split('#setting')[1];
+            const tsoTuneSettingObj = tsoJsonObj.settings.find(setting => setting.id === tsoSettingId);
 
-            tsoMetaData = tsoJsonObj.settings.find(setting => setting.id === tsoSettingId)?.member.name;
+            let tsoC = tsoJsonObj.composer? tsoJsonObj.composer : 'Trad.';
+            let tsoZ = tsoTuneSettingObj? tsoTuneSettingObj.member.name : 'Anon.';
+
+            return [tsoC, tsoZ];
         }
 
         if (urlType === "set") {
 
-            const tsoSetMetaDataArr = tsoJsonObj.settings.map(setting => {
-                
-                return setting.member.name || 'Anon.';
+            const tsoSettingUrlArr = [];
+
+            tsoJsonObj.settings.forEach(tuneSetting => {
+
+                tsoSettingUrlArr.push(tuneSetting.url);
             });
 
-            tsoMetaData = reduceArrToSlashSeparatedList(tsoSetMetaDataArr);
+            return tsoSettingUrlArr;
         }
 
-        return tsoMetaData || 'Anon.';
     })));
 
-    tsoMetaDataOutput += reduceArrToSlashSeparatedList(tsoMetaDataArr);
+    // Return a nested array of TSO metadata extracted from Setting URLs
+    // Return an array of links to TSO settings extracted from Set URLs
 
-    return tsoMetaDataOutput;
+    return urlType === "set"? tsoMetaDataOutputArr[0] : tsoMetaDataOutputArr;
 }
 
 ////////////////////////////////
@@ -665,13 +734,24 @@ export function sortFilterAbc(abcContent) {
 
         const uniqueAbcArr = Array.from(uniqueAbcMap.values());
 
-        const sortedAbcArr = uniqueAbcArr.sort().map(abc => `X: ${uniqueAbcArr.indexOf(abc) + 1}\n${addCustomAbcFields(abc)}`);
+        const sortedAbcArr = uniqueAbcArr.sort().map(abc => {
+
+            const processedAbc = addCustomAbcFields(abc);
+
+            if (!processedAbc) return;
+
+            return `X: ${uniqueAbcArr.indexOf(abc) + 1}\n${processedAbc}`;
+        
+        }).filter(Boolean);
 
         // Filter and sort an additional array of Tunes if abcContent contains Sets and abcSortExportsTunesFromSets setting is on
 
         let sortedAbcTunesArr = [];
 
-        const matchTuneBlocks = uniqueAbcArr[0].match(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?=^[\S]+)/gm);
+        const isStrictDetectMode = localStorageOk() && !!+localStorage.abcSortUsesStrictTuneDetection;
+
+        const matchTuneBlocks = uniqueAbcArr[0].match(isStrictDetectMode? matchTuneHeadersStrict : matchTuneHeadersLax);
+
         const isTuneSet = matchTuneBlocks && matchTuneBlocks.length > 1;
         
         if (localStorageOk() && +localStorage.abcSortExportsTunesFromSets === 1 && isTuneSet) {
@@ -796,7 +876,7 @@ function makeStringTitleCase(abcString) {
                 let titleSuffix = inputTitle.match(/(?:\(.*?\)[\s]*?)*\[.*?\]/);
     
                 titleOverride = `${caseObj.override}${titleSuffix? ' ' + titleSuffix[0] : ''}`;
-                // console.warn(`Exception found! Output: ${titleOverride}`);
+                // console.warn(`Title exception found! Output: ${titleOverride}`);
                 break;
             }
         }
@@ -870,7 +950,9 @@ function makeTuneTypeSingular(abcTitlePrefix) {
 
 function makeTuneTypePlural(abcContent, abcR) {
 
-    const matchTuneBlocks = abcContent.match(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?=^[\S]+)/gm);
+    const isStrictDetectMode = localStorageOk() && !!+localStorage.abcSortUsesStrictTuneDetection;
+
+    const matchTuneBlocks = abcContent.match(isStrictDetectMode? matchTuneHeadersStrict : matchTuneHeadersLax);
 
     const isTuneSet = matchTuneBlocks && matchTuneBlocks.length > 1;
 
@@ -1022,19 +1104,39 @@ function getValueByAbcIndex(abcArr, abcIndex) {
 // Process ABC Transcription Field text, separate Tune Composers from Tune Sources
 // Return correct C: C: S: field value for a Tune depending on its abcIndex in the Set
 
-function processAbcCCS(abcCCS, abcIndex) {
+function processAbcCCS(abcCCS, abcC, abcSArr, abcIndex) {
+   
+    let abcCFromCCSArr = abcCCS.split('S:')[0]?.replace(';', '').split('/');
+    let abcSFromCCSArr = abcCCS.split('S:')[1]?.split('/');
     
-    let abcCArr = abcCCS.split('S:')[0]?.replace(';', '').split('/');
-    let abcSTxt = abcCCS.split('S:')[1];
+    let abcCVal = 
+        abcCFromCCSArr && abcCFromCCSArr[0]? getValueByAbcIndex(abcCFromCCSArr, +abcIndex).trim() : 
+        abcC && abcC.split('/').length > 1? getValueByAbcIndex(abcC.split('/'), +abcIndex).trim() : abcC;
 
-    let abcSArr = abcSTxt && abcSTxt.includes('+')? 
-        abcSTxt.split('+')[1].split('/').map(str => `${abcSTxt.split('+')[0].trim()}; ${str.trim()}`) :
-        abcSTxt ? abcSTxt.split('/') : [];
+    let abcSVal = 
+        abcSFromCCSArr && abcSFromCCSArr[0]? getValueByAbcIndex(abcSFromCCSArr, +abcIndex).trim() : '';
+
+    if (!abcSVal && abcSArr && abcSArr[0] && !abcSArr[0].trim().startsWith('http')) {
+
+        abcSVal = 
+            abcSArr[0].split('/').length > 1? getValueByAbcIndex(abcSArr[0].split('/'), +abcIndex).trim() : 
+            abcSArr[0];
+    }
+
+    return `${abcCVal? abcCVal : 'Trad.'}; S: ${abcSVal? abcSVal : 'Various'}`;
+}
+
+// Process ABC Composer Field text for individual tunes being converted to sets
+// Return correct C: field value for a Tune depending on its abcIndex in the Set
+
+function processAbcC(abcC, abcIndex) {
+
+    let abcCArr = abcC.split('/');
+
+    let abcCVal = 
+        abcCArr && abcCArr.length > 0? getValueByAbcIndex(abcCArr, +abcIndex).trim() : '';
     
-    let abcC = abcCArr && abcCArr.length > 0? getValueByAbcIndex(abcCArr, +abcIndex).trim() : '';
-    let abcS = abcSArr && abcSArr.length > 0? getValueByAbcIndex(abcSArr, +abcIndex).trim() : '';
-
-    return `${abcC? abcC : 'Trad.'}; S: ${abcS? abcS : 'Various'}`;
+    return abcCVal;
 }
 
 // Process ABC Transcription Field text, separate Editors from The Session authors
@@ -1114,9 +1216,28 @@ function processPartEndings(abcContent) {
 
 function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley) {
 
-    // Replace Set Title before processing for every first setToTunes conversion
+    // Set-to-tunes: Replace Set Title before processing first tune in a set
 
-    if (setToTunes && abcIndex === 0) abcContent = abcContent.replace(/^T:.*[\s]*/, '');
+    const abcTitles = abcContent.match(/^T:.*/gm);
+
+    if (setToTunes && abcIndex === 0 && abcTitles && abcTitles.length > 1) {
+        
+        abcContent = abcContent.replace(/^T:.*[\s]*/, '');
+    }
+
+    // Check if ABC contains a set of tunes
+
+    const isStrictDetectMode = localStorageOk() && !!+localStorage.abcSortUsesStrictTuneDetection;
+
+    const matchTuneBlocks = abcContent.match(isStrictDetectMode? matchTuneHeadersStrict : matchTuneHeadersLax);
+
+    if (!matchTuneBlocks || (isStrictDetectMode && abcContent.match(matchTuneHeadersLax).length > matchTuneBlocks.length)) {
+
+        console.warn(`ABC Encoder:\n\nInvalid ABC detected and skipped:\n\n${abcContent}${abcMatch? '\n\nParent ABC:\n\n' + abcMatch : ''}`);
+        return '';
+    }
+
+    const isTuneSet = matchTuneBlocks && matchTuneBlocks.length > 1;
 
     // Define start values for primary ABC Title and modified ABC copy
 
@@ -1125,12 +1246,6 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
     let updatedAbc = abcContent.trim();
 
     let abcTitle = '';
-
-    // Check if ABC contains a set of tunes
-
-    const matchTuneBlocks = abcContent.match(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?=^[\S]+)/gm);
-
-    const isTuneSet = matchTuneBlocks && matchTuneBlocks.length > 1;
 
     // Separate primary ABC Title(s) from the rest of the ABC
 
@@ -1170,24 +1285,24 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
         
     // QUICK EDIT CASE:
 
-    const isStandardCSSettingOn = localStorageOk() && !!+localStorage.abcSortUsesStandardCSFields;
+    const isCustomFieldSetEnforced = localStorageOk() && !!+localStorage.abcSortEnforcesCustomAbcFields;
     const isTsoMetadataSettingOn = localStorageOk() && !!+localStorage.abcSortFetchesTsoMetaData;
 
     // Determine the custom layout type the ABC must match
 
     let abcCustomFieldsLayout;
-    
-    if (isStandardCSSettingOn && isTsoMetadataSettingOn) {
 
-        abcCustomFieldsLayout = /^(?:C:.*[\s]*)*(?:S:.*[\s]*)*Z:.*at The Session[\s]*(?:N:.*[\s]*)*(?:[ABD-IOPU-Wm]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*K:.*[\s]*/gm;
-    
-    } else if (isStandardCSSettingOn) {
-
-        abcCustomFieldsLayout = /^(?:C:.*[\s]*)*(?:S:.*[\s]*)*(?:Z:.*[\s]*)*(?:N:.*[\s]*)*(?:[ABD-IOPU-Wm]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*K:.*[\s]*/gm;
-
-    } else {
+    if (isCustomFieldSetEnforced) {
 
         abcCustomFieldsLayout = /^C: C:.*[\s]*C: Set Leaders:.*[\s]*Z:.*at The Session[\s]*(?:N:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*K:.*[\s]*/gm;
+    
+    } else if (isTsoMetadataSettingOn) {
+
+        abcCustomFieldsLayout = /^(?:C:.*[\s]*)*(?:S:.*[\s]*)*Z:.*at The Session[\s]*(?:N:.*[\s]*)*(?:[ABD-IOPU-Wm]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*(?:Q:.*[\s]*)*K:.*[\s]*/gm;
+    
+    } else {
+
+        abcCustomFieldsLayout = /^(?:C:.*[\s]*)*(?:S:.*[\s]*)*(?:Z:.*[\s]*)*(?:N:.*[\s]*)*(?:[ABD-IOPU-Wm]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*(?:Q:.*[\s]*)*K:.*[\s]*/gm;
     }
 
     // Return ABC with processed Title and quick-styled fields if all custom fields are already in place
@@ -1207,16 +1322,68 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     // Define variables to store custom ABC fields data
 
-    let abcC = abcContent.match(/(?<=^C:).*/m)? abcContent.match(/(?<=^C:).*/m)[0].trim() : '';
-    let abcS = abcContent.match(/(?<=^S:).*/m)? abcContent.match(/(?<=^S:).*/gm) : [];
-    let abcCSL = abcContent.match(/(?<=^C: Set Leaders:).*/m)? abcContent.match(/(?<=^C: Set Leaders:).*/m)[0].trim() : '';
-    let abcCCS = abcContent.match(/(?<=^C: C:).*/m)? abcContent.match(/(?<=^C: C:).*/m)[0].trim() : '';
-    let abcZ = abcContent.match(/(?<=^Z:).*/m)? abcContent.match(/(?<=^Z:).*/m)[0].trim() : '';
-    let abcN = abcContent.match(/(?<=^N:).*/m)? abcContent.match(/(?<=^N:).*/gm) : [];
-    let abcM = abcContent.match(/(?<=^M:).*/m)? abcContent.match(/(?<=^M:).*/m)[0].trim() : '';
-    let abcL = abcContent.match(/(?<=^L:).*/m)? abcContent.match(/(?<=^L:).*/m)[0].trim() : '';
-    let abcQ = abcContent.match(/(?<=^Q:).*/m)? abcContent.match(/(?<=^Q:).*/m)[0].trim() : '';
-    let abcK = abcContent.match(/(?<=^K:).*/m)? abcContent.match(/(?<=^K:).*/m)[0].trim() : '';
+    let abcC; // ABC Composer field data
+    let abcS; // ABC Source field data
+    let abcCSL; // ABC Set Leaders data (N.S.S.S.)
+    let abcCCS; // ABC Composer & Source data (N.S.S.S.) 
+    let abcZ; // ABC Transcription field data
+    let abcN; // ABC Notes field data
+    let abcM; // ABC Meter field data
+    let abcL; // ABC Note Length field data
+    let abcQ; // ABC Tempo field data
+    let abcK; // ABC Key field data
+
+    // Set ABC field variable values for individual tunes
+
+    if (!isTuneSet) {
+
+        abcC = abcContent.match(/(?<=^C:).*/m)? abcContent.match(/(?<=^C:).*/m)[0].trim() : '';
+        abcS = abcContent.match(/(?<=^S:).*/m)? abcContent.match(/(?<=^S:).*/gm) : [];
+        abcCSL = abcContent.match(/(?<=^C: Set Leaders:).*/m)? abcContent.match(/(?<=^C: Set Leaders:).*/m)[0].trim() : '';
+        abcCCS = abcContent.match(/(?<=^C: C:).*/m)? abcContent.match(/(?<=^C: C:).*/m)[0].trim() : '';
+        abcZ = abcContent.match(/(?<=^Z:).*/m)? abcContent.match(/(?<=^Z:).*/m)[0].trim() : '';
+        abcN = abcContent.match(/(?<=^N:).*/m)? abcContent.match(/(?<=^N:).*/gm) : [];
+        abcM = abcContent.match(/(?<=^M:).*/m)? abcContent.match(/(?<=^M:).*/m)[0].trim() : '';
+        abcL = abcContent.match(/(?<=^L:).*/m)? abcContent.match(/(?<=^L:).*/m)[0].trim() : '';
+        abcQ = abcContent.match(/(?<=^Q:).*/m)? abcContent.match(/(?<=^Q:).*/m)[0].trim() : '';
+        abcK = abcContent.match(/(?<=^K:).*/m)? abcContent.match(/(?<=^K:).*/m)[0].trim() : '';
+    }
+
+    // Set ABC field variable values for the first tune in a set
+
+    let titleTune = '';
+
+    if (isTuneSet) {
+
+        const abcTunesArr = abcContent.match(isStrictDetectMode? matchIndividualTunesStrict : matchIndividualTunesLax);
+
+        if (!abcTunesArr || !abcTunesArr[0]) {
+
+            console.warn(`ABC Encoder:\n\nInvalid ABC detected and skipped:\n\n${abcContent}`);
+            return '';
+        }
+
+        titleTune = abcTunesArr[0];
+
+        abcC = titleTune.match(/(?<=^C:).*/m)? titleTune.match(/(?<=^C:).*/m)[0].trim() : '';
+        abcS = titleTune.match(/(?<=^S:).*/m)? titleTune.match(/(?<=^S:).*/gm) : [];
+        abcCSL = titleTune.match(/(?<=^C: Set Leaders:).*/m)? titleTune.match(/(?<=^C: Set Leaders:).*/m)[0].trim() : '';
+        abcCCS = titleTune.match(/(?<=^C: C:).*/m)? titleTune.match(/(?<=^C: C:).*/m)[0].trim() : '';
+        abcZ = titleTune.match(/(?<=^Z:).*/m)? titleTune.match(/(?<=^Z:).*/m)[0].trim() : '';
+        abcN = titleTune.match(/(?<=^N:).*/m)? titleTune.match(/(?<=^N:).*/gm) : [];
+        abcM = titleTune.match(/(?<=^M:).*/m)? titleTune.match(/(?<=^M:).*/m)[0].trim() : '';
+        abcL = titleTune.match(/(?<=^L:).*/m)? titleTune.match(/(?<=^L:).*/m)[0].trim() : '';
+        abcQ = titleTune.match(/(?<=^Q:).*/m)? titleTune.match(/(?<=^Q:).*/m)[0].trim() : '';
+        abcK = titleTune.match(/(?<=^K:).*/m)? titleTune.match(/(?<=^K:).*/m)[0].trim() : '';
+    }
+
+    // Strict mode: Invalidate tunes with missing K: field
+    
+    if (!abcK && isStrictDetectMode) {
+
+        console.warn(`ABC Encoder:\n\nInvalid ABC detected and skipped with strict detect mode on:\n\n${abcContent}${abcMatch? '\n\nParent ABC:\n\n' + abcMatch : ''}`);
+        return '';
+    }
 
     // Retrieve custom ABC field data if abcMatch is provided
     
@@ -1262,9 +1429,11 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
                 abcTitle = abcTitle.replace(/(?:[\s]*[^0-9]\/[\s]*)/, `\nT: `);
             }
 
+            abcC = processAbcC(abcC, abcIndex);
+
             abcZ = processAbcZ(abcZ, abcIndex);
 
-            if (!isStandardCSSettingOn) abcCCS = processAbcCCS(abcCCS, abcIndex);
+            if (isCustomFieldSetEnforced) abcCCS = processAbcCCS(abcCCS, abcC, abcS, abcIndex);
         }
     }
 
@@ -1276,13 +1445,13 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     const unorderedSubTitle = new RegExp(/(?<=^T:.*[\s]*)(?:^[A-SU-Z]:.*[\s]*)+(?:^T:.+)[\s]*(?:^[A-Z]:.*[\s]*)*(?=^K:)/, "gm");
     
-    const unorderedSubTitleMatch = abcContent.match(unorderedSubTitle);
+    const unorderedSubTitleMatch = titleTune? titleTune.match(unorderedSubTitle) : abcContent.match(unorderedSubTitle);
 
     let abcSubTitle = unorderedSubTitleMatch? processUnorderedSubTitle(unorderedSubTitleMatch[0]) : '';
 
     // Remove all ABC header text and reconstruct ABC fields in the correct order
     
-    let abcBody = updatedAbc.replace(/^(?:[A-Z]:.*\r?\n)*/, '');
+    let abcBody = updatedAbc.replace(/^(?:[A-Z]:.*(?:\r?\n|$))*/, '');
 
     // N.S.S.S.-style field groups
     
@@ -1455,12 +1624,12 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     } else {
 
-        abcNotes = !isStandardCSSettingOn? `N: \n` : '';
+        abcNotes = isCustomFieldSetEnforced? `N: \n` : '';
     }
 
     // Add ABC Transcription field if missing, fill in the default value
 
-    if (!abcZ && !isStandardCSSettingOn) {
+    if (!abcZ && isCustomFieldSetEnforced) {
 
         abcZ = "[Unedited]; The Session";
         // console.log(`ABC Encoder:\n\nMissing Z: field added to ${abcContentTitle}`);
@@ -1468,7 +1637,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     // Standard C: and S: fields are used >>>
 
-    if (isStandardCSSettingOn) {
+    if (!isCustomFieldSetEnforced) {
 
         // Fill in Editors string if ABC Transcription field has data
 
@@ -1501,7 +1670,7 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
         // Fill in miscellaneous other ABC Standard fields
 
-        const extraFieldsMatch = abcContent.match(/^[ABD-IOPU-Wm]:.*/gm);
+        const extraFieldsMatch = titleTune? titleTune.match(/^[ABD-IOPU-Wm]:.*/gm) : abcContent.match(/^[ABD-IOPU-Wm]:.*/gm);
 
         if (extraFieldsMatch) {
 
@@ -1511,27 +1680,44 @@ function addCustomAbcFields(abcContent, abcMatch, setToTunes, abcIndex, isMedley
 
     // N.S.S.S. Tunebook-specific C: C: S: field is used >>>
 
-    if (!isStandardCSSettingOn && !abcCCS) {
+    // Add C: C: S: Composer and Source field if missing
 
-        // Add C: C: S: Composer and Source field if missing, fill in the default value
+    if (isCustomFieldSetEnforced && !abcCCS) {
 
-        abcCCS = "Trad.; S: Various"
+        // Attempt to fill in C: C: S: data using C: and S: fields
+
+        if (abcC && abcS && abcS[0] && !abcS[0].trim().startsWith('http')) {
+
+            abcCCS = `${abcC}; S: ${abcS[0]}`;
+
+        // Attempt to fill in C: C: S: data using C: field value
+
+        } else if (abcC) {
+
+            abcCCS = `${abcC}; S: Various`;
+
+        // Fill in default C: C: S: values
+
+        } else {
+
+            abcCCS = "Trad?; S: Various"
+        }
         // console.log(`ABC Encoder:\n\nMissing C: / S: field added to ${abcContentTitle}`);
     }
 
     // Combine all ABC fields after Title(s) into an ordered headers string
 
-    if (isStandardCSSettingOn) {
-
-        // Use standard ABC headers used
-
-        abcHeaders = `${abcComposers}${abcSources}${abcEditors}${abcNotes}${abcExtras}R: ${abcTuneType}\nM: ${abcM}\nL: ${abcL}\nQ: ${abcQ}\nK: ${abcK}`;
-
-    } else {
+    if (isCustomFieldSetEnforced) {
 
         // Use custom N.S.S.S. headers
     
         abcHeaders = `C: C: ${abcCCS}\nC: Set Leaders: ${abcCSL}\nZ: ${abcZ}\n${abcNotes}R: ${abcTuneType}\nM: ${abcM}\nL: ${abcL}\nQ: ${abcQ}\nK: ${abcK}`;
+
+    } else {
+
+        // Use standard ABC headers used
+
+        abcHeaders = `${abcComposers}${abcSources}${abcEditors}${abcNotes}${abcExtras}R: ${abcTuneType}\nM: ${abcM}\nL: ${abcL}\nQ: ${abcQ}\nK: ${abcK}`;
     }
 
     // Format ABC body Titles, process ABC body fields
@@ -1582,11 +1768,15 @@ function replaceDuplicateAbcFields(abcContent, fieldName) {
 
     const matchPattern = new RegExp(`^${fieldName}:.*[\\s]*`, "gm");
 
-    const fieldMatchArr = abcContent.match(matchPattern).map(line => line.trim());
+    const fieldMatchArr = abcContent.match(matchPattern);
+
+    if (!fieldMatchArr) return;
+
+    const filteredFieldMatchArr = fieldMatchArr.map(line => line.trim());
     
-    if (fieldMatchArr && 
-        fieldMatchArr.length > 1 && 
-        areAllArrValsTheSame(fieldMatchArr)) {
+    if (filteredFieldMatchArr && 
+        filteredFieldMatchArr.length > 1 && 
+        areAllArrValsTheSame(filteredFieldMatchArr)) {
 
         return abcContent.replaceAll(matchPattern, (match, offset) => 
             offset === abcContent.indexOf(match)? match : '');
@@ -1603,7 +1793,7 @@ async function getEncodedAbc(abcContent, fileName) {
 
     let sortedAbcContent = [];
 
-    if (localStorageOk() && +localStorage.abcEncoderSortsTuneBook === 1) {
+    if (localStorageOk() && +localStorage.abcEncodeSortsTuneBook === 1) {
 
         sortedAbcContent = await saveAbcEncoderOutput(abcContent, fileName, "abc-sort");
 
@@ -1775,7 +1965,7 @@ function makeTunesFromSets(abcSetsArr) {
 
     console.log(`ABC Encoder:\n\nConverting ABC Sets data into Tunes...`);
 
-    const matchIndividualTunes = new RegExp (/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?:[^T]+[\s]*)+(?=(?:^T:|$))/, "gm");
+    const isStrictDetectMode = localStorageOk() && !!+localStorage.abcSortUsesStrictTuneDetection;
 
     const abcTuneGroupsArr = abcSetsArr.map(abcSet => {
 
@@ -1784,7 +1974,7 @@ function makeTunesFromSets(abcSetsArr) {
             abcSet = abcSet.replace(/T:/g, 'T:[MEDLEY]');
         }
 
-        return abcSet.match(matchIndividualTunes);
+        return abcSet.match(isStrictDetectMode? matchIndividualTunesStrict : matchIndividualTunesLax);
 
     }).filter(Boolean);
 
@@ -1802,7 +1992,8 @@ function makeTunesFromSets(abcSetsArr) {
             }
 
             return addCustomAbcFields(tuneSet, abcSetArr[0], true, abcIndex, isMedley);
-        })
+
+        }).filter(Boolean)
     );
 
     const uniqueTunesMap = new Map(abcTunesArr.flat(Infinity).map(abc => ([abc.match(/^T:.*/)[0], abc])));

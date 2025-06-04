@@ -219,18 +219,6 @@ export function loadTuneBookItem(currentTuneBook, itemNumber, passedUrl) {
     tuneFrame.src = theURL;
     lastURL = theURL;
 
-    // Clear item query params
-
-    // if (window.location.hash.includes("?type=")) {
-
-    //     setTimeout(() => {
-
-    //         const currentSection = checkTuneBookSetting();
-    //         window.location.hash = `#${currentSection}`;
-
-    //     }, 400);
-    // }
-
     // Save last Tunebook item loaded
     if (localStorageOk() && +localStorage.abcToolsSaveAndRestoreTunes === 1) {
 
