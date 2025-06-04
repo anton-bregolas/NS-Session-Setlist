@@ -1341,26 +1341,120 @@ async function appButtonHandler(btn) {
 
 async function appCheckBoxHandler(checkBox) {
 
-  if (+localStorage[checkBox.dataset.option] > 0) {
+  const optionName = checkBox.dataset.option;
 
-    localStorage[checkBox.dataset.option] = 0;
+  if (+localStorage[optionName] > 0) {
+
+    localStorage[optionName] = 0;
 
   } else {
 
-    localStorage[checkBox.dataset.option] = 1;
-  } 
-
-  if (checkBox.id === 'tunebook-use-mobile-mode') {
-
-    if (checkBox.checked) {
-
-      displayNotification("Persistent mobile mode enabled", "success");
-      
-    } else {
-
-      displayNotification("Persistent mobile mode disabled", "success");
-    }
+    localStorage[optionName] = 1;
   }
+
+  switch (optionName) {
+
+    case 'abcToolsSaveAndRestoreTunes':
+      checkBox.checked?
+        displayNotification("App will now store last opened Tunebook item between sessions", "success"):
+        displayNotification("App will always open first Tunebook item on section change", "success");
+      break;
+
+    case 'tuneBookAlwaysUseMobileMode':
+      checkBox.checked?
+        displayNotification("Persistent Tunebook mobile mode enabled", "success"):
+        displayNotification("Persistent Tunebook mobile mode disabled", "success");
+      break;
+
+    case 'tuneBookShareLinksToAbcTools':
+      checkBox.checked?
+        displayNotification("App will now generate share links to ABC Transcription Tools", "success"):
+        displayNotification("App will now prioritize in-app links over ABC Tools links", "success");
+      break;
+
+    case 'abcToolsFullScreenOpensNewWindow':
+      checkBox.checked?
+        displayNotification("Full Screen button will always redirect to ABC Transcription Tools", "success"):
+        displayNotification("Full Screen button will attempt to open Tunebook items in full screen", "success");
+      break;
+
+    case 'tuneBookAllowLoadFromHashLink':
+      checkBox.checked?
+        displayNotification("App will auto-open Tunebook from links on startup", "success"):
+        displayNotification("App will always open Launch Screen on startup", "success");
+      break;
+
+    case 'tuneBookShowStatusReport':
+      checkBox.checked?
+        displayNotification("App will show version info and Set / Tune count on Tunebook startup", "success"):
+        displayNotification("App will not show version info on Tunebook startup", "success");
+      break;
+
+    case 'abcToolsAllowTuneAutoReload':
+      checkBox.checked?
+        displayNotification("App will now auto-load items when filters are applied or sections swapped", "success"):
+        displayNotification("App will stop auto-loading items when filters are applied or sections swapped", "success");
+      break;
+
+    case 'chordViewerAllowDynamicChords':
+      checkBox.checked?
+        displayNotification("Chord Viewer will attempt to extract chords from current tune", "success"):
+        displayNotification("Chord Viewer will always use Chordbook JSON as source of chords", "success");
+      break;
+
+    case 'abcEncoderSortsTuneBook':
+      checkBox.checked?
+        displayNotification("Encode will now output all Encode and Sort file types", "success"):
+        displayNotification("Encode will now output only Encode file types", "success");
+      break;
+
+    case 'abcEncoderExportsTuneList':
+      checkBox.checked?
+        displayNotification("Encode will now output a .txt list for each ABC file", "success"):
+        displayNotification("Encode will now skip creating .txt list files for ABC", "success");
+      break;
+
+    case 'abcSortEnforcesCustomAbcFields':
+      checkBox.checked?
+        displayNotification("Sort will now enforce custom fields used by N.S.S.S.", "success"):
+        displayNotification("Sort will now support all standard ABC fields", "success");
+      break;
+
+    case 'abcSortExportsTunesFromSets':
+      checkBox.checked?
+        displayNotification("Sort will now output a separate ABC of Tunes converted from Sets", "success"):
+        displayNotification("Sort will now output a single sorted ABC file", "success");
+      break;
+
+    case 'abcSortExportsChordsFromTunes':
+      checkBox.checked?
+        displayNotification("Sort will now output a Chordbook JSON extracted from ABC", "success"):
+        displayNotification("Sort will now skip ABC chords extraction", "success");
+      break;
+
+    case 'abcSortNormalizesAbcPartEndings':
+      checkBox.checked?
+        displayNotification("Sort will now attempt to normalize part endings and fill in missing repeats", "success"):
+        displayNotification("Sort will now skip normalizing part endings and repeats", "success");
+      break;
+
+    case 'abcSortFetchesTsoMetaData':
+      checkBox.checked?
+        displayNotification("Sort will now fetch C: and Z: data from links to The Session found in ABC", "success"):
+        displayNotification("Sort will now skip fetching C: and Z: data from The Session", "success");
+      break;
+
+    case 'abcSortUsesStrictTuneDetection':
+      checkBox.checked?
+        displayNotification("Sort will now remove tunes with no key or empty K: field", "success"):
+        displayNotification("Sort will now allow tunes with no key, adding blank K: fields", "success");
+      break;
+  
+    default:
+      break;
+  }
+
+  return;
 }
 
 // Handle custom dropdown menu events

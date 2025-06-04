@@ -158,15 +158,13 @@ a,
   color: var(--accent-color);
 }
 
-a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible),
-a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible) > * {
-  animation-name: colorize-alt;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
+.nss-link > * {
+  transition: color 0.75s ease-in-out;
 }
 
-@keyframes colorize-alt {
-  to { color: var(--accent-color-alt); }
+.nss-link:is(:hover, :active, :focus, :focus-visible),
+.nss-link:is(:hover, :active, :focus, :focus-visible) > * {
+  color: var(--accent-color-alt);
 }
 
 .nss-btn-advanced-options:is(:hover, :focus, :focus-visible),
@@ -176,17 +174,6 @@ a:not([class*="nss-link-filled"]):is(:hover, :active, :focus, :focus-visible) > 
 .popover-btn-x:is(:hover, :focus, :focus-visible) {
   color: var(--accent-color-alt-mix);
 }
-
-/* .nss-option-btn:is(:hover, :focus, :focus-visible),
-.nss-control-btn:is(:hover, :focus, :focus-visible) {
-  animation-name: colorize-mix;
-  animation-duration: 0.25s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes colorize-mix {
-  to { color: var(--accent-color-alt-mix); }
-} */
 
 .nss-option-btn[data-load="tunebook-actions-menu"]:is(:hover, :focus, :focus-visible) {
   color: var(--accent-color);
@@ -239,8 +226,8 @@ select {
   border-radius: 0.33rem;
   cursor: pointer;
   transition:
-  outline-color 0.3s ease-in-out,
-  filter 0.3s ease-in-out
+  outline-color 0.17s ease-in-out,
+  filter 0.17s ease-in-out
 }
 
 .nss-tunebook-selector {
@@ -337,17 +324,34 @@ iframe {
   border-radius: 0.25rem;
 }
 
+a,
+.nss-btn,
+input + span {
+  outline: 0.2rem solid transparent;
+}
+
+a,
+.nss-btn,
+input + span {
+  transition:
+  outline-color 0.2s ease-out,
+  filter 0.17s ease-out, 
+  opacity 0.17s ease-out;
+}
+
 a:focus-visible,
+.nss-btn:is(:focus-visible),
 input:is(:focus-visible) + span,
-#fullScreenButton:is(:focus, :focus-visible),
-[data-controls="mode"]:is(:focus-visible),
-[data-controls="tunebook-actions-mobile"]:is(:focus-visible),
-[data-controls="tunebook-actions-desktop"]:is(:focus-visible) {
-  outline: 0.2rem solid var(--accent-color);
+select:is(:focus, :focus-visible),
+#fullScreenButton:is(:focus, :focus-visible) {
+  outline-color: var(--accent-color);
+}
+
+select {
+  outline: 0.25rem solid transparent;
 }
 
 select:is(:focus, :focus-visible) {
-  outline: 0.25rem solid var(--accent-color);
   filter: drop-shadow(1px 1px 4px var(--accent-color));
 }
 
@@ -370,10 +374,14 @@ a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visib
 }
 
 .nss-subhead-link:is(:hover, :active, :focus, :focus-visible) {
-  outline: none;
   text-decoration-style: dotted;
   text-decoration-thickness: 0.24rem;
   text-decoration-color: var(--accent-color-alt);
+}
+
+.nss-subhead-link,
+.nss-footer-link {
+  outline: none;
 }
 
 .nss-footer-link {
@@ -478,20 +486,11 @@ option:is([disabled]) {
   appearance: none;
   border: none;
   box-shadow: none;
-  outline: none;
   background-color: transparent;
   padding: 0;
   margin: 0;
   text-align: center;
-  outline-color: transparent;
   cursor: pointer;
-}
-
-.nss-btn, a {
-  transition:
-  outline-color 0.2s ease-out,
-  filter 0.17s ease-out, 
-  opacity 0.17s ease-out;
 }
 
 .nss-switch-btn,
@@ -650,6 +649,11 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   outline: 0.2rem solid;
 }
 
+.nss-btn-advanced-options:is(:focus-visible),
+[data-controls="options-menu"]:is(:focus-visible) {
+  outline-color: transparent;
+}
+
 [data-controls="tunebook-actions-mobile"],
 [data-controls="tunebook-actions-desktop"],
 [data-controls="mode"] .nss-mini-icon {
@@ -673,6 +677,15 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
 .nss-btn-abcraw {
   width: 3rem;
   height: 3rem;
+}
+
+#nss-app-header .nss-link-btn a:not(.nss-link-filled) {
+  outline-width: 0.23rem;
+}
+
+#nss-app-header .nss-link-btn a,
+.nss-link-btn .nss-link-filled {
+  outline-offset: 0;
 }
 
 .nss-control-btn:not(.nss-btn-plus),
@@ -718,12 +731,20 @@ body[data-mode="desktop"] .footer-btn-x {
   display: none;
 }
 
+.nss-link-btn a,
+.nss-switch-btn,
+.nss-btn-launch,
+.nss-btn-plus,
+.nss-btn-x {
+  outline: 0.2rem solid transparent;
+}
+
 .nss-link-btn a:is(:hover, :focus, :focus-visible),
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
 .nss-btn-plus:is(:hover, :focus, :focus-visible),
 .nss-btn-x:is(:hover, :focus, :focus-visible) {
-  outline: 0.2rem solid var(--accent-color);
+  outline-color: var(--accent-color);
   opacity: 1;
 }
 
@@ -747,16 +768,12 @@ body[data-mode="desktop"] .footer-btn-x {
   filter: drop-shadow(1px 1px 4px var(--accent-color));
 }
 
-.popup-btn-x {
-  color: #212121;
-}
-
-.popup-btn-x:is(:hover, :focus, :focus-visible) {
-  outline-color: #212121;
+.nss-btn-abcraw a {
+  outline: 0.24rem solid transparent;
 }
 
 .nss-btn-abcraw a:is(:hover, :focus, :focus-visible) {
-  outline: 0.24rem solid var(--accent-color);
+  outline-color: var(--accent-color);
   outline-offset: 0.4rem;
 }
 
@@ -932,12 +949,20 @@ body[data-mode="mobile"] .nss-select-container {
 
 .nss-playalong-link-container a { 
   display: block;
-  color: #f0f0f0;
+  outline: 0.21rem solid transparent;
+  outline-offset: 0.16rem;
+  transition: 
+  filter 1s ease-in-out,
+  outline-color 0.75s ease-in-out;
 }
 
 .nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) {
-  outline: 0.21rem solid var(--accent-color);
-  outline-offset: unset;
+  outline-color: var(--accent-color);
+}
+
+.nss-playalong-link-container a > * {
+  color: #f0f0f0;
+  transition: color 0.75s ease-in-out;
 }
 
 .nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible) > * {
@@ -1100,9 +1125,13 @@ body[data-mode="mobile"] .nss-select-container {
   cursor: pointer;
 }
 
+input[type="checkbox"] {
+  outline: 0.15rem solid transparent;
+  transition: outline-color 0.16s ease-out;
+}
+
 input[type="checkbox"]:focus-visible {
-  outline: 0.15rem solid var(--accent-color);
-  outline-style: solid;
+  outline-color: var(--accent-color);
   outline-offset: 0.25rem;
   border-radius: 0.25rem;
 }
@@ -1212,8 +1241,12 @@ body[data-mode="mobile"] [data-tbk-action="toggle-full-screen"] {
   grid-row: 2;
 }
 
+.tunebook-action .nss-option-btn {
+  outline: 0.25rem solid transparent;
+}
+
 .tunebook-action .nss-option-btn:is(:focus-visible) {
-  outline: 0.25rem solid var(--accent-color);
+  outline-color: var(--accent-color);
   outline-offset: 0.5rem;
 }
 
@@ -1284,6 +1317,10 @@ body[data-mode="desktop"] [data-tbk-action="close-menu-footer"] {
   z-index: 3;
 }
 
+[data-popover="notification-popup"] .popup-btn-x {
+  color: #212121;
+}
+
 [data-popover="notification-popup"].status .popup-btn-x {
   color: var(--accent-color);
   outline-color: var(--accent-color);
@@ -1291,6 +1328,7 @@ body[data-mode="desktop"] [data-tbk-action="close-menu-footer"] {
 }
 
 [data-popover="notification-popup"] .popup-btn-x:is(:hover, :focus, :focus-visible) {
+  outline-color: #212121;
   opacity: 1;
 }
 
@@ -1679,10 +1717,6 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   .popover-btn-x:is(:hover, :focus, :focus-visible) {
     color: color-mix(in srgb, var(--accent-color) 60%, var(--accent-color-alt));
   }
-
-  /* @keyframes colorize-mix {
-    to { color: color-mix(in srgb, var(--accent-color) 60%, var(--accent-color-alt)); }
-  } */
 }
 
 @supports (-webkit-tap-highlight-color: rgba(0,0,0,0)) {

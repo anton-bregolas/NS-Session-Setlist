@@ -29,7 +29,7 @@
             <nav class="nss-encodernav-container">
                 <div id="nss-encoder-header" class="nss-app-header flex-align-center">
                     <button class="nss-btn-abc-setlist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
-                        <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Sets.abc" target="_blank" class="nss-icon-container" title="Get raw ABC of NS Session Setlist" aria-title="Get raw ABC of NS Session Setlist">
+                        <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Sets.abc" target="_blank" class="nss-link nss-icon-container" title="Get raw ABC of NS Session Setlist" aria-title="Get raw ABC of NS Session Setlist">
                             <svg class="nss-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-tunelist"></use>
                             </svg>
@@ -39,7 +39,7 @@
                         <h1 id="nss-title-encoder" class="nss-gradient-text" data-title="encoder" aria-title="Novi Sad Session Setlist ABC Encoder"></h1>
                     </div>
                     <button class="nss-btn-abc-tunelist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
-                        <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-icon-container" title="Get raw ABC of NS Session Tunelist" aria-title="Get raw ABC of NS Session Tunelist">
+                        <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Tunes.abc" target="_blank" class="nss-link nss-icon-container" title="Get raw ABC of NS Session Tunelist" aria-title="Get raw ABC of NS Session Tunelist">
                             <svg class="nss-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-music"></use>
                             </svg>
@@ -94,40 +94,44 @@
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
                     <div class="nss-checkbox-container flex-column">
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="encoder-export-tunelist" data-option="abcEncoderExportsTuneList" class="nss-checkbox-btn" value="1">
-                            ENCODE also exports plain text Tunelist
-                        </label>
-                        <label class="nss-checkbox-label">
-                          <input type="checkbox" id="encoder-sort-tunebook" data-option="abcEncoderSortsTuneBook" class="nss-checkbox-btn" value="1">
+                          <input type="checkbox" id="encoder-sorts-tunebook" data-option="abcEncoderSortsTuneBook" class="nss-checkbox-btn" value="1">
                             ENCODE automatically passes tunes to SORT
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-export-chords" data-option="abcSortExportsChordsFromTunes" class="nss-checkbox-btn" value="1">
-                            SORT extracts chords from Tunebook
+                          <input type="checkbox" id="encoder-exports-tunelist" data-option="abcEncoderExportsTuneList" class="nss-checkbox-btn" value="1">
+                            ENCODE also exports plain text Tunelist
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-export-settunes" data-option="abcSortExportsTunesFromSets" class="nss-checkbox-btn" value="1">
+                          <input type="checkbox" id="sort-enforces-fields" data-option="abcSortEnforcesCustomAbcFields" class="nss-checkbox-btn" value="1">
+                            SORT enforces custom N.S.S.S. ABC fields
+                        </label>
+                        <label class="nss-checkbox-label">
+                          <input type="checkbox" id="sort-exports-tunes" data-option="abcSortExportsTunesFromSets" class="nss-checkbox-btn" value="1">
                             SORT exports Tunes ABC from Sets ABC
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-fetch-tsodata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1">
-                            SORT fetches metadata from The Session
+                          <input type="checkbox" id="sort-exports-chords" data-option="abcSortExportsChordsFromTunes" class="nss-checkbox-btn" value="1">
+                            SORT extracts chords from Tunebook
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-normalize-partendings" data-option="abcSortNormalizesAbcPartEndings" class="nss-checkbox-btn" value="1">
+                          <input type="checkbox" id="sort-normalizes-repeats" data-option="abcSortNormalizesAbcPartEndings" class="nss-checkbox-btn" value="1">
                             SORT normalizes ABC part endings
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-remove-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">
-                            SORT removes extra line breaks in ABC
+                          <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1">
+                            SORT fetches metadata from The Session
                         </label>
                         <!-- <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-remove-afterbreaks" data-option="abcSortRemovesTextAfterLineBreaksInAbc" class="nss-checkbox-btn" value="1">
+                          <input type="checkbox" id="sort-removes-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">
+                            SORT removes extra line breaks in ABC
+                        </label> -->
+                        <!-- <label class="nss-checkbox-label">
+                          <input type="checkbox" id="sort-removes-textafterbreaks" data-option="abcSortRemovesTextAfterLineBreaksInAbc" class="nss-checkbox-btn" value="1">
                             SORT removes text after line breaks in ABC
                         </label> -->
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-remove-afterbreaks" data-option="abcSortUsesStandardCSFields" class="nss-checkbox-btn" value="1">
-                            SORT uses standard C: and S: ABC fields
+                          <input type="checkbox" id="sort-removes-keylesstunes" data-option="abcSortUsesStrictTuneDetection" class="nss-checkbox-btn" value="1">
+                            SORT removes tunes with no K: (strict mode)
                         </label>
                     </div>
                 </div>
