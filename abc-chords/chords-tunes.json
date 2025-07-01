@@ -10,6 +10,11 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tG\tC\t|\tG G\tC D\t|\tG\tG\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tG\tEm\t|\tC\tD\t|\n|\tG\tG\t|\tG\tC\t|\tG G\tC D\t|\tG\tG\t||"
   },
   {
+    "title": "AIR: Munster Cloak",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tG\tG\tG\t|\tC\tC\tD/F#\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tC\t(G)\t(G)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
+  },
+  {
     "title": "BARNDANCE: Hills of Tara",
     "meter": "4/4",
     "chords": "PART 1:\n|\tG\tG/B\t|\tC\tA5\t|\tD\tC\t|\tD\tD/F#\t|\n|\tG\tG/B\t|\tC\tA5\t|\tD\tD/F#\t|\tG D\tG ||\n\nPART 2:\n|\tG\tD/F#\t|\tC\tA5\t|\tD\tC\t|\tD\tD/F#\t|\n|\tG\tD/F#\t|\tC\tA5\t|\tD\tD/F#\t|\tG D\tD ||"
@@ -127,7 +132,7 @@
   {
     "title": "JIG: Breeches Mary",
     "meter": "6/8",
-    "chords": "PART 1:\n|\tAm\tAm\t|\tG\tG\t|\tEm\tD/F#\t|\tEm\tG\t|\n|\tAm\tAm\t|\tG\tG\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tC\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tD\t|1\tG\t(Em)\t|\n|2\tG\t(Em)\t||"
+    "chords": "PART 1:\n|\tAm\tAm\t|\tG\tG\t|\tEm\t(D/F#)\t|\tEm\tG\t|\n|\tAm\tAm\t|\tG\tG\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tC\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tD\t|1\tG\t(Em)\t|\n|2\tG\t(Em)\t||"
   },
   {
     "title": "JIG: Carraroe",
@@ -247,7 +252,7 @@
   {
     "title": "JIG: Tenpenny Bit",
     "meter": "6/8",
-    "chords": "PART 1:\n|\tD\tG\t|\tG\tG\t|\tC\tG/B\t|\tD\tD\t|\n|\tG\t(Em)\t|\tG(Em)\tEm\t|\tC\tG/B\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tA5\t(Em)\t|\t(D)\t(D)\t|\tA5\t(C)\t|\t(D)\tD/F#\t|\n|\tA5(G)\t(D)\t|\tG\tA5\t|\t(C)\t(C)\t|1\tD\tD\t|\n|2\tD\tD\t||"
+    "chords": "PART 1:\n|\tD\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\t(Em)\t|\tG(Em)\tEm\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\t(A5)\t|\tD\t(A5)\t|\tC\t(A5)\t|\tD(A5)\tD/F#(D)\t|\n|\tG(A5)\tD(A5)\t|\tG\tA5\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||"
   },
   {
     "title": "JIG: Tripping up the Stairs",
@@ -695,7 +700,7 @@
     "chords": "PART 1:\n|\tEm\tD\t|\tD\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tD\t|\tD\tC\t|\tC\tC\t|\tD\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\tD\tD\t|\n|\tC\tC\t|\tAm\tAm\t|\tD\tBm\t|\tC\tD\t||"
   },
   {
-    "title": "VARIOUS: St. Patrick's [An Dro]",
+    "title": "VARIOUS: St. Patrick's An Dro [An Dro]",
     "meter": "4/4",
     "chords": "PART 1:\n|\tD\tEm\t|\tEm\tD(G)\t|\tD(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tEm\tG\t|\tG\tAm\t|\tD\tEm\t||\n\nPART 2:\n|\tD\tEm\t|\tD\tEm(G)\t|\tEm(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tD\tG\t|\tG\tAm\t|\tBm\tEm\t||"
   },
@@ -733,11 +738,6 @@
     "title": "WALTZ: Looking at a Rainbow",
     "meter": "3/4",
     "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tG\tG\tG\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tD/F#\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|1\tG\tG\tD/F#\t|\n|2\tC\tC\tC\t||"
-  },
-  {
-    "title": "WALTZ: Munster Cloak",
-    "meter": "3/4",
-    "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tG\tG\tG\t|\tC\tC\tD/F#\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tC\t(G)\t(G)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
   },
   {
     "title": "WALTZ: Petranu-Valse",
