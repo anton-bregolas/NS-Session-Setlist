@@ -166,6 +166,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css)
+  - App Styles (styles-nss-app.css)
     + Full Screen GUI styles added with dynamic :fullscreen display
     + Zoom button styles added with CSS-drawn shapes in place of icons
     + Tunebook header and footer heights added as CSS variables
@@ -180,6 +181,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + Viewport units changed from svw/svh to dvw/dvh (experimental)
   
 + JavaScript updates:
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + handleFullScreenChange: This and other Full Screen handlers now have separate Desktop & Mobile logic
     + zoomTuneBookItem*: Handle Zoom controls in Full Screen (depending on Desktop or Mobile mode)
@@ -202,6 +204,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + initAppSettings*: Initializes all app settings, runs initial localStorage check
     + ariaHideMe, ariaShowMe: Now return immediately if the element is inert
     + appWindowClickHandler*: New event delegation handler function added (TO DO)
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + loadTabsMidiOptions: Missing checkTuneBookSetting() check added for loading item from correct list with auto-restore functionality disabled
     + loadTuneBookItem(tunes, 0) calls replaced with explicit selectedIndex setting and dispatchEvent calls
@@ -243,6 +246,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css):
+  - App Styles (styles-nss-app.css):
     + Full screen popover width and height changed to vw and vh for testing (reverted to svw)
   - Chord Viewer module (styles-chord-viewer.css)
     + Chord Viewer popover width and height changed to vw and vh for testing (reverted to svw)
@@ -258,11 +262,14 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + appChordSliderHandler: Now modifies chords font-size using getRootFontSizeModifier value
     + initPopoverSlider: Now modifies initial chords font-size using getRootFontSizeModifier value
     + getLastTunebookUrl* import function from ABC Tools & Tunebook module added
+    + getLastTunebookUrl* import function from ABC Tools & Tunebook module added
     + getRootFontSizeModifier*: Gets root font-size modifier for chord display calculations
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + initWindowEvents: Font-size initialization moved to Preload Scripts module
     + appWindowResizeHandler: HTML font-size value calculations moved to Preload Scripts module
     + appWindowResizeHandler: Now sets and clears root font-size via setProperty and removeProperty methods
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + getLastTunebookUrl*: Export function added getting lastURL value for use in Chord Viewer
     + handleSelectorLabels: Now sets and clears CSS styles via setProperty and removeProperty methods
@@ -292,6 +299,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css)
+  - App Styles (styles-nss-app.css)
     + Responsive ABC Tools iframe styles added, fixed width replaced with 100svw
     + Responsive @media breakpoints reworked, font-size scaling offloaded to JS
     + Follow NS Sessions link styles adjusted for launch screen footer
@@ -301,6 +309,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + Tweaked --chords-min-bar-width and main title width to fix mobile display issues
   
 + JavaScript updates:
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + appWindowResizeHandler*: New handler function adjusts HTML font size depending on viewport size
     + launchTuneBook: Now applies fixed viewport width if desktop mode is on and current viewport is narrower than ABC Tools embed
@@ -318,6 +327,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + isTuneBookInitialized: Variable renamed from tuneBookInitialized
     + Global flags removed: isMobileTunebookModeOn, doesTuneBookNeedResize
     + Fixed viewport size for resetViewportWidth() reset from 1080 to 870
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + ABC Tools iframe resize functions removed, now handled by CSS
     + Window resize event listeners removed, now handled by App Launcher
@@ -360,6 +370,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css)
+  - App Styles (styles-nss-app.css)
     + Mobile Mode Styles implemented with multiple breakpoints
     + Breakpoints 860, 768, 668 and 480 added (360 pending)
     + Mobile Switch button and large transparent selectors kick in at 860
@@ -378,6 +389,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   
 + JavaScript updates:
   - App Launcher module (scripts-nss-app.js)
+  - App Launcher module (scripts-nss-app.js)
     + initTunebookMode*: Initializes current Tunebook Mode via localStorage variable tuneBookAlwaysUseMobileMode
     + isManualTunebookModeOn, isMobileTunebookModeOn, doesTuneBookNeedResize global variables added (all false by default)
     + checkIfMobileMode*: Return up-to-date isMobileTunebookModeOn value
@@ -389,6 +401,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + updateTuneBookTitles now sets data-type attribute for CSS controls, redundant data-title change removed 
     + refreshTuneBook updated with isSoftRefresh flag and check (for cases where only item reload is needed)
     + handleSelectorLabels imported, calls added to account for Mobile Mode changes to Tunebook selectors
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + handleFullScreenButton*: Now handles fullScreenButton clicks
     + handleResizeWindow*: Handler function for changing window size added
@@ -423,6 +436,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   
 + JavaScript updates:
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + Tune Selector optgroup label tweaked
 
 + Session DB updates:
@@ -439,9 +453,11 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   
 + JavaScript updates:
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + populateFilterOptions: Filters are now grouped using optgroups with non-selectable headers
     + populateTuneSelector: Sets and Tunes are now grouped using optgroups
     + populateTuneSelector: An optgroup is created for each Tune Type when tuneSelector is populated
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + appDropDownHandler: Refactored to handle both optgroups and separate options simultaneously
     + appDropDownHandler: Tune Type filters now hide and show optgroups in tuneSelector as well as options
@@ -472,10 +488,12 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css)
+  - App Styles (styles-nss-app.css)
     + Notification Popup styles tweaked and expanded
     + --notification-color variables added
   
 + JavaScript updates:
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + APP_VERSION and notificationTimeoutId global variables added
     + displayNotification: Now keeps track of last Timeout and checks for open Popup Popover
@@ -486,6 +504,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   - ABC Encoder module (scripts-abc-encoder.js)
     + Notification messages added, types tweaked
     + preProcessAbcMetadata: Tweaked Z: field data copying to keep pre-existing non-N.S.S.S. specific strings
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + tuneBookShowStatusReport* localStorage variable added for optional Session DB version & status report
   - Chord Viewer module (scripts-chord-viewer.js)
@@ -517,6 +536,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css)
+  - App Styles (styles-nss-app.css)
     + Notification Popup popover styles added
     + Notification Popup classes styling the popover added
     + Global Popover styles tweaked to reduce specificity
@@ -539,6 +559,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + countBeatsInsertChords: Now accounts for non-standard Note Length in calculations
     + countBeatsInsertChords: Now returns null for invalid bars or an array with chord-data and lastChord
     + displayNotification import function added with messages for Chordbook warnings and errors
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + displayNotification*: Notification Popup handler function prefilling message text, changing popover style-class and launching popover; automatically hides messages with low priority after timeout
     + displayNotification messages added for Tunebook launch warnings and errors
@@ -587,7 +608,9 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + getValidChordsArray*: Safely parses Chordbook and returns Chords Array or false if it doesn't pass validation
     + LZString import added for dynamic chord extraction from ABC
   - App Launcher module & ABC Encoder module (scripts-nss-app.js, scripts-abc-encoder.js)
+  - App Launcher module & ABC Encoder module (scripts-nss-app.js, scripts-abc-encoder.js)
     + showRedOutlineWarning renamed to displayWarningEffect
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + abcToolsAllowDynamicChords* localStorage variable added
 
@@ -608,6 +631,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + "MIDI: Always mute chords in playback" checkbox added with default state unchecked
   
 + JavaScript updates:
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + abcToolsAlwaysMuteChords* localStorage variable added
     + muteChordsPlayback*: Decompress encoded ABC, inject MIDI instructions with 0 volume for bass & chords, re-encode update ABC
@@ -647,9 +671,11 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css)
+  - App Styles (styles-nss-app.css)
     + nss-btn-plus styles added
 
 + JavaScript updates:
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + Add Session Survey button handled
     + Import parseSessionSurveyData added
@@ -712,6 +738,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + CSS updates:
   - App Styles (styles-nss-app.css)
+  - App Styles (styles-nss-app.css)
     + Full screen popover styles moved to Chord Viewer stylesheet, some shared classes remain
   - Chord Viewer module (styles-chord-viewer.css)
     + Separate styles for Chord Viewer elements added, shared classes to be migrated
@@ -724,6 +751,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + initChordViewer*: New export function initializing Chord Viewer Popover
     + handleChordViewerClick*: New function handling clicks on interactable Chord Viewer elements
     + normalizeAbc*: New handler function calling cleanup ABC functions during Chord extraction
+  - App Launcher module (scripts-nss-app.js)
   - App Launcher module (scripts-nss-app.js)
     + initChordViewer and openChordViewer are now imported from Chord Viewer module
     + openSettingsMenu now calls openChordViewer, passing current setChords and tuneChords arrays
@@ -818,6 +846,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + JavaScript updates:
   - App Launcher module (scripts-nss-app.js)
+  - App Launcher module (scripts-nss-app.js)
     + initLocalStorage function added to initialize new localStorage items
     + initSettingsFromObject added to initialize options in localStorage using settings objects
     + printLocalStorageSettings added to log current settings, default and modified
@@ -833,6 +862,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + processPartEndings also converts `::` to `:||\n|:`
     + sortFilterAbc and makeTunesFromSets now create a Map of unique primary title & ABC pairs to remove duplicate Sets or Tunes
     + makeStringTitleCase refactored to integrate toSortFriendlyTitle and prioritise title exceptions 
+  - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + abcTunebookDefaults settings object added
     + initToolsOptions renamed to initTunebookOptions and now initialises settings via initSettingsFromObject
@@ -864,6 +894,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + countBeatsInsertChords recovers missing chord-beats by counting notes against beats and inserting the sufficient number of chords
     + Note counting algorithm takes both note multipliers (numbers not preceded by /) and note divisors (/, //... or /Num) into the equation
     + getCompleteAbcChordBar refactored, getChordsFromTune updated to support the new algorithm
+  - Theme and localStorage variable tweaks in main App scripts (scripts-nss-app.js)
   - Theme and localStorage variable tweaks in main App scripts (scripts-nss-app.js)
 
 + Session DB updates:
@@ -905,6 +936,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
     + Reset Slider Settings and show / hide slider control buttons added
     + Dark / Light colour theme and Theme switch button added
   - Main app scripts refactored (scripts-nss-app.js)
+  - Main app scripts refactored (scripts-nss-app.js)
     + launchTuneBook and section swap functions updated with tweaks and autofocusing
     + initTunebookRadioBtns implemented for selection and storing of Full Screen Button setting (Open tune item in new page / Open chords in Chords Popover)
     + ariaHideMe and ariaShowMe functions added, functions updated
@@ -935,6 +967,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 + JavaScript updates:
   - ABC Encoder functions getChordsFromTune and getCompleteAbcChordBar now add tabs instead of spaces and properly indent Part subtitles (scripts-abc-encoder.js)
   - Temporary placeholder Chords JSON and trigger functions added to scripts-nss-app.js
+  - Temporary placeholder Chords JSON and trigger functions added to scripts-nss-app.js
 
 + CSS updates:
   - Basic nss-fullscreen-popover styles added and tweaked
@@ -962,8 +995,10 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   - Temporary solution added to appDropDownHandler for Safari not hiding options in dropdown menus, filtered options are now also disabled
   - LZString script moved from ABC Tools scripts to a separate module (scripts-abc-tools.js > scripts-3p/lz-string)
   - Popover Polyfill warning added to initialisation scripts (scripts-nss-app.js)
+  - Popover Polyfill warning added to initialisation scripts (scripts-nss-app.js)
 
 + HTML updates:
+  - Changed entry point module for abc-encoder.html to be scripts-nss-app.js
   - Changed entry point module for abc-encoder.html to be scripts-nss-app.js
   - Popover Polyfill module popover.min.js added to index.html and abc-encoder.html
 
@@ -986,6 +1021,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + JavaScript updates:
   - Scripts for updating Global variables in Local Storage via App Options and Encoder Settings Menus added
+  - openSettingsMenu, appButtonHandler, initAppCheckboxes updated with Popover scripts (scripts-nss-app.js)
   - openSettingsMenu, appButtonHandler, initAppCheckboxes updated with Popover scripts (scripts-nss-app.js)
   - initToolsOptions updated with new Global variables (scripts-abc-tools.js)
   - loadTuneBookItem, loadTabsMidiOptions and injectInstrument updated with fixes, now both ABC Tools Default option and Piano + Notes option are available (scripts-abc-tools.js)
@@ -1016,8 +1052,10 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + JavaScript updates:
   - JSON object key names updated in scripts-abc-encoder.js, scripts-abc-tools.js and scripts-nss-app.js
+  - JSON object key names updated in scripts-abc-encoder.js, scripts-abc-tools.js and scripts-nss-app.js
   - addCustomAbcFields tweaked and refactored, ABC body titles processing now handled by formatAbcBodyTitles
   - formatAbcBodyTitles makes secondary R: field text Proper Case and subtitle T: field text Title Case
+  - openSettingsMenu logs Tunes and Sets Chords output in test mode (scripts-nss-app.js)
   - openSettingsMenu logs Tunes and Sets Chords output in test mode (scripts-nss-app.js)
   - initEncoderSettings and initAbcTools now initialise Global variables and store them to localStorage
 
@@ -1054,6 +1092,8 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   - makeAbcChordBook exports JSON array of objects with chords organised depending on ABC Type (Set or Tune)
   - getCompleteAbcChordBar fills chord bars with the minimum number of chords depending on beats per bar (NB: ambiguous bars with two chords in triple-meter tunes are currently left untouched)
   - Tunebook's Full Screen View button now changes behavior depending on fullScreenSetting value, opening either tunes or chords (scripts-abc-tools.js)
+  - setChords, tuneChords and corresponding data links added to (scripts-nss-app.js)
+  - Options button function added, Launch button behavior tweaked for ABC Encoder (scripts-nss-app.js)
   - setChords, tuneChords and corresponding data links added to (scripts-nss-app.js)
   - Options button function added, Launch button behavior tweaked for ABC Encoder (scripts-nss-app.js)
   - ABC Parse & Sort updated with chord export functions (parseAbcFromFile, downloadAbcFile, getSortedAbc)
@@ -1259,6 +1299,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   - initAbcTools, saveLastTuneBookItem, restoreLastTunebookItem functions updated in ABC Tools scripts
   - checkPersistenceState function added to ABC Tools scripts
   - refreshTuneBook updated with loading last saved Set or Tune; load callback removed from resetTuneBookMenus (scripts-nss-app.js)
+  - refreshTuneBook updated with loading last saved Set or Tune; load callback removed from resetTuneBookMenus (scripts-nss-app.js)
   - Tunebook Filter fix: sortFilterOptions now receives currentTuneBook as argument
   - Proper Case Tune Type: encodeTunesForAbcTools tweaked to account for multi-word types (scripts-abc-encoder.js)
 
@@ -1284,6 +1325,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   - New functions: restoreTuneBookOptions, restoreLastTunebookItem, saveLastTuneBookItem, setSelectedTuneByName
   - Options-updating script (loadTabsMidiOptions) now triggers Tunebook item restoring & loading
   - Tweaked scripts updating tuneBookSetting and tuneBookLastOpened variables (scripts-nss-app.js)
+  - Tweaked scripts updating tuneBookSetting and tuneBookLastOpened variables (scripts-nss-app.js)
 
 + CSS updates:
   - Removed superfluous highlight of buttons and links for mobile taps (-webkit-tap-highlight-color)
@@ -1306,6 +1348,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 + JavaScript updates:
   - initAbcTools further tweaked in scripts-abc-tools.js
   - loadTuneBookItem(currentTuneBook, itemNumber) script moved into separate export function
+  - resetTuneBookMenus in scripts-nss-app.js now loads first Tunebook item
   - resetTuneBookMenus in scripts-nss-app.js now loads first Tunebook item
 
 + Session DB updates:
@@ -1358,7 +1401,9 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 
 + JavaScript updates:
   - Dropdown menu handler functions (appDropDownHandler, initCustomDropDownMenus) added to scripts-nss-app.js
+  - Dropdown menu handler functions (appDropDownHandler, initCustomDropDownMenus) added to scripts-nss-app.js
   - Filter Options population and sorting functions (populateFilterOptions, sortFilterOptions) added to scripts-abc-encoder.js
+  - Tunebook cleanup functions (refreshTuneBook, resetTuneBookMenus, resetTuneBookFilters) added to scripts-nss-app.js
   - Tunebook cleanup functions (refreshTuneBook, resetTuneBookMenus, resetTuneBookFilters) added to scripts-nss-app.js
   - New global variables (tuneBookInitialized, tuneBookLastOpened) added to keep track of event listeners and last opened section
   - ABC Tools scripts refactored:
@@ -1424,6 +1469,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 		- N.S.S.S. tools page (abc-encoder.html) added with ABC Encoder / ABC Decoder / ABC Sort tools 
 		- ABC Encoder scripts (scripts-abc-encoder.js) added to project: Sort and Decoder functional, Encoder in development
 		- ABC Encoder styles based on Launch Screen styles, additional styles merged into styles-nss-app.css
+		- ABC Encoder styles based on Launch Screen styles, additional styles merged into styles-nss-app.css
 	- Launcher: Links added, responsive design tweaks
 	- Tunebook:	Filter selector added, responsive design tweaks
 	- Playalong: Links added, responsive design tweaks
@@ -1437,6 +1483,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
 	- Additional data- attributes made
 	
 + CSS updates:
+	- ABC Encoder styles added, some refactoring done in styles-nss-app.css
 	- ABC Encoder styles added, some refactoring done in styles-nss-app.css
 	- Playalong styles added including new nav link class nss-link-filled
 	- Titles responsive changes partly implemented via CSS pseudoclasses
@@ -1532,6 +1579,7 @@ NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
   - Meta tags updated in <head>
 
 + JavaScript updates:
+  - App scripts moved to scripts-nss-app.js
   - App scripts moved to scripts-nss-app.js
   - Michael Eskin's original scripts moved to scripts-abc-tools.js
   - App now fetches up-to-date Session DB data from the project's GitHub page
