@@ -3,7 +3,8 @@ import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, d
          restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, 
          resetViewportWidth, getViewportWidth, getViewportHeight, getLastTunebookUrl, tuneFrame, 
          handleFullScreenButton, loadFromQueryString } from './scripts-abc-tools.js';
-import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
+import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings,
+         resetEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
@@ -65,9 +66,9 @@ const abcContainer = document.querySelector('.nss-abctools-embed');
 // Define App Menu elements
 
 const appOptionsPopover = document.querySelector('#nss-popover-options');
-const advancedOptions = document.querySelector('.nss-advanced-options-container');
 const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
 const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
+const advancedOptions = document.querySelectorAll('.nss-advanced-options-container');
 const notificationPopup = document.querySelector('[data-popover="notification-popup"]');
 const notificationMessage = document.querySelector('[data-popover="notification-message"]');
 const tuneBookActionsPopup = document.querySelector('[data-popover="tunebook-actions-popup"]');
@@ -1218,11 +1219,19 @@ async function appButtonHandler(btn) {
 
     if (!btn.dataset.load) return;
 
-    // Trigger Tunebook compact mode
-   
-    if (btn.dataset.load === "tunebook-compact-mode") {
+    // Reset App Options to defaults
 
-      setTuneBookCompactMode();
+    if (btn.dataset.load === "app-defaults") {
+
+      resetAppOptions();
+      return;
+    }
+
+    // Reset Encoder Settings to defaults
+
+    if (btn.dataset.load === "encoder-defaults") {
+
+      resetEncoderSettings();
       return;
     }
 
@@ -1231,6 +1240,14 @@ async function appButtonHandler(btn) {
     if (btn.dataset.load === "session-survey") {
 
       parseSessionSurveyData(btn);
+      return;
+    }
+
+    // Trigger Tunebook compact mode
+   
+    if (btn.dataset.load === "tunebook-compact-mode") {
+
+      setTuneBookCompactMode();
       return;
     }
 
@@ -1273,7 +1290,11 @@ async function appButtonHandler(btn) {
 
     btn.style.display = "none";
 
-    ariaShowMe(advancedOptions);
+    advancedOptions.forEach(optGroup => {
+
+      ariaShowMe(optGroup);
+    });
+
     return;
   }
 
@@ -1347,109 +1368,273 @@ async function appCheckBoxHandler(checkBox) {
 
     localStorage[optionName] = 0;
 
+    if (checkBox.dataset.disables) 
+      reEnableCheckBoxes(checkBox.dataset.disables)
+
+    if (checkBox.dataset.enables)
+      reEnableCheckBoxes(checkBox.dataset.enables)
+    
+    if (checkBox.dataset.linkedOptions)
+      disableCheckBoxes(checkBox.dataset.linkedOptions);
+
+    if (checkBox.dataset.linkedInput)
+      document.getElementById(checkBox.dataset.linkedInput).setAttribute("disabled", "");
+
   } else {
 
     localStorage[optionName] = 1;
+
+    if (checkBox.dataset.disables) 
+      disableCheckBoxes(checkBox.dataset.disables)
+
+    if (checkBox.dataset.enables)
+      forceEnableCheckBoxes(checkBox.dataset.enables)
+
+    if (checkBox.dataset.linkedOptions)
+      reEnableCheckBoxes(checkBox.dataset.linkedOptions);
+
+    if (checkBox.dataset.linkedInput)
+      document.getElementById(checkBox.dataset.linkedInput).removeAttribute("disabled");
   }
 
   switch (optionName) {
 
+    // App Options
+
     case 'abcToolsSaveAndRestoreTunes':
       checkBox.checked?
-        displayNotification("App will now store last opened Tunebook item between sessions", "success"):
+        displayNotification("App will now store last opened Tunebook item between sessions", "success") :
         displayNotification("App will always open first Tunebook item on section change", "success");
       break;
 
     case 'tuneBookAlwaysUseMobileMode':
       checkBox.checked?
-        displayNotification("Persistent Tunebook mobile mode enabled", "success"):
+        displayNotification("Persistent Tunebook mobile mode enabled", "success") :
         displayNotification("Persistent Tunebook mobile mode disabled", "success");
       break;
 
     case 'tuneBookShareLinksToAbcTools':
       checkBox.checked?
-        displayNotification("App will now generate share links to ABC Transcription Tools", "success"):
+        displayNotification("App will now generate share links to ABC Transcription Tools", "success") :
         displayNotification("App will now prioritize in-app links over ABC Tools links", "success");
       break;
 
     case 'abcToolsFullScreenOpensNewWindow':
       checkBox.checked?
-        displayNotification("Full Screen button will always redirect to ABC Transcription Tools", "success"):
+        displayNotification("Full Screen button will always redirect to ABC Transcription Tools", "success") :
         displayNotification("Full Screen button will attempt to open Tunebook items in full screen", "success");
       break;
 
+    // Advanced App Options
+
     case 'tuneBookAllowLoadFromHashLink':
       checkBox.checked?
-        displayNotification("App will auto-open Tunebook from links on startup", "success"):
+        displayNotification("App will auto-open Tunebook from links on startup", "success") :
         displayNotification("App will always open Launch Screen on startup", "success");
       break;
 
     case 'tuneBookShowStatusReport':
       checkBox.checked?
-        displayNotification("App will show version info and Set / Tune count on Tunebook startup", "success"):
+        displayNotification("App will show version info and Set / Tune count on Tunebook startup", "success") :
         displayNotification("App will not show version info on Tunebook startup", "success");
       break;
 
     case 'abcToolsAllowTuneAutoReload':
       checkBox.checked?
-        displayNotification("App will now auto-load items when filters are applied or sections swapped", "success"):
+        displayNotification("App will now auto-load items when filters are applied or sections swapped", "success") :
         displayNotification("App will stop auto-loading items when filters are applied or sections swapped", "success");
       break;
 
     case 'chordViewerAllowDynamicChords':
       checkBox.checked?
-        displayNotification("Chord Viewer will attempt to extract chords from current tune", "success"):
+        displayNotification("Chord Viewer will attempt to extract chords from current tune", "success") :
         displayNotification("Chord Viewer will always use Chordbook JSON as source of chords", "success");
       break;
 
-    case 'abcEncoderSortsTuneBook':
+    // Encoder Settings
+
+    case 'abcEncodeSortsTuneBook':
       checkBox.checked?
-        displayNotification("Encode will now output all Encode and Sort file types", "success"):
+        displayNotification("Encode will now output all Encode and Sort file types", "success") :
         displayNotification("Encode will now output only Encode file types", "success");
       break;
 
-    case 'abcEncoderExportsTuneList':
+    case 'abcEncodeExportsTuneList':
       checkBox.checked?
-        displayNotification("Encode will now output a .txt list for each ABC file", "success"):
+        displayNotification("Encode will now output a .txt list for each ABC file", "success") :
         displayNotification("Encode will now skip creating .txt list files for ABC", "success");
+      break;
+
+    case 'abcEncodeOutputsAbcToolsString':
+      checkBox.checked?
+        displayNotification("Encode will now output text string compatible with ABC Tools export website", "success") :
+        displayNotification("Encode will now output JSON file compatible with Novi Sad Session Setlist", "success");
       break;
 
     case 'abcSortEnforcesCustomAbcFields':
       checkBox.checked?
-        displayNotification("Sort will now enforce custom fields used by N.S.S.S.", "success"):
+        displayNotification("Sort will now enforce custom fields used by N.S.S.S.", "success") :
         displayNotification("Sort will now support all standard ABC fields", "success");
       break;
 
     case 'abcSortExportsTunesFromSets':
       checkBox.checked?
-        displayNotification("Sort will now output a separate ABC of Tunes converted from Sets", "success"):
+        displayNotification("Sort will now output a separate ABC of Tunes converted from Sets", "success") :
         displayNotification("Sort will now output a single sorted ABC file", "success");
       break;
 
     case 'abcSortExportsChordsFromTunes':
       checkBox.checked?
-        displayNotification("Sort will now output a Chordbook JSON extracted from ABC", "success"):
+        displayNotification("Sort will now output a Chordbook JSON extracted from ABC", "success") :
         displayNotification("Sort will now skip ABC chords extraction", "success");
-      break;
-
-    case 'abcSortNormalizesAbcPartEndings':
-      checkBox.checked?
-        displayNotification("Sort will now attempt to normalize part endings and fill in missing repeats", "success"):
-        displayNotification("Sort will now skip normalizing part endings and repeats", "success");
-      break;
-
-    case 'abcSortFetchesTsoMetaData':
-      checkBox.checked?
-        displayNotification("Sort will now fetch C: and Z: data from links to The Session found in ABC", "success"):
-        displayNotification("Sort will now skip fetching C: and Z: data from The Session", "success");
       break;
 
     case 'abcSortUsesStrictTuneDetection':
       checkBox.checked?
-        displayNotification("Sort will now remove tunes with no key or empty K: field", "success"):
+        displayNotification("Sort will now remove tunes with no key or empty K: field", "success") :
         displayNotification("Sort will now allow tunes with no key, adding blank K: fields", "success");
       break;
-  
+
+    // Advanced Encoder Settings
+
+    case 'abcSortFetchesTsoMetaData':
+      checkBox.checked?
+        displayNotification("Sort will now fetch C: and Z: data from links to The Session found in ABC", "success") :
+        displayNotification("Sort will now skip fetching C: and Z: data from The Session", "success");
+      break;
+
+    case 'abcSortFormatsSetTitleFirstName':
+      checkBox.checked?
+        displayNotification("Sort will always use the name of the first tune as Set Title", "success") :
+        displayNotification("Sort will now use original Set Title where available", "success");
+      break;
+
+    case 'abcSortFormatsSetTitleSlashNames':
+      checkBox.checked?
+        displayNotification("Sort will always use a slash-separated name list as Set Title", "success") :
+        displayNotification("Sort will now use original Set Title where available", "success");
+      break;
+
+    case 'abcSortFormatsTitlesTypePrefix':
+      checkBox.checked?
+        displayNotification("Sort will now add a title prefix with R: data such as POLKA:", "success") :
+        displayNotification("Sort will now skip adding a title prefix with R: data", "success");
+      break;
+
+    case 'abcSortFormatsTitlesTypeSuffix':
+      checkBox.checked?
+        displayNotification("Sort will now add a title suffix with R: data such as [Polka]", "success") :
+        displayNotification("Sort will now skip adding a title suffix with R: data", "success");
+      break;
+
+    case 'abcSortReSortsByAbcTag':
+      checkBox.checked?
+        displayNotification("Sort will now sort ABCs by custom header value", "success") :
+        displayNotification("Sort will now sort ABCs by T: header value", "success");
+      break;
+
+    case 'abcSortReSortsByAbcTSansPrefix':
+      checkBox.checked?
+        displayNotification("Sort will now order ABCs by T: / Title ignoring prefix and The/An/A", "success") :
+        displayNotification("Sort will now order ABCs by T: / Title including prefix and The/An/A", "success");
+      break;
+
+    case 'abcSortRespectsOriginalOrder':
+      checkBox.checked?
+        displayNotification("Sort will now keep the original order of ABCs", "success") :
+        displayNotification("Sort will now order ABCs by T: / Title including prefix and The/An/A", "success");
+      break;
+
+    case 'abcSortFormatsTitlesInIrish':
+      checkBox.checked?
+        displayNotification("Sort will now attempt to correct capitalization of eclipsed and lenited words in Irish titles", "success") :
+        displayNotification("Sort will now skip correcting capitalization of Irish words in tune titles", "success");
+      break;
+
+    case 'abcSortFormatsTitlesMovesTheAnA':
+      checkBox.checked?
+        displayNotification("Sort will now move articles at the start of ABC title to title's end", "success") :
+        displayNotification("Sort will now skip moving opening articles to ABC title's end", "success");
+      break;
+
+    case 'abcSortFormatsTitlesTitleCase':
+      checkBox.checked?
+        displayNotification("Sort will now format all titles in AP Style Title Case, skipping uppercased words", "success") :
+        displayNotification("Sort will now skip title capitalization", "success");
+      break;
+
+    case 'abcSortFormatsTitlesNoCaps':
+      checkBox.checked?
+        displayNotification("Sort will now attempt to pre-process uppercased words in titles", "success") :
+        displayNotification("Sort will now skip pre-processing uppercased words in titles", "success");
+      break;
+
+    case 'abcSortNormalizesAbcPartEndings':
+      checkBox.checked?
+        displayNotification("Sort will now attempt to normalize part endings to ||", "success") :
+        displayNotification("Sort will now skip normalizing part endings", "success");
+      break;
+
+    case 'abcSortRemovesDuplicatesByContent':
+      checkBox.checked?
+        displayNotification("Sort will now remove ABCs with identical content (sans X:), leaving the first copy", "success") :
+        displayNotification("Sort will now skip deduplicating ABCs by content", "success");
+      break;
+
+    case 'abcSortRemovesDuplicatesByTitle':
+      checkBox.checked?
+        displayNotification("Sort will now remove ABCs with identical Title, leaving the last copy", "success") :
+        displayNotification("Sort will now skip deduplicating ABCs by Title", "success");
+      break;
+
+    case 'abcSortFormatsTitlesNoTheAnAStart':
+      checkBox.checked?
+        displayNotification("Sort will now remove articles The/An/A from title's start. It will skip An/A before mutated Irish words", "success") :
+        displayNotification("Sort will now skip processing opening articles in titles", "success");
+      break;
+
+    case 'abcSortFormatsTitlesNoIrishAnAStart':
+      checkBox.checked?
+        displayNotification("Sort will now convert An/A + mutated Irish word pairs at title's start to single word in NOM case", "success") :
+        displayNotification("Sort will now skip processing An/A + mutated Irish word pairs at title's start", "success");
+      break;
+
+    case 'abcSortFormatsTitlesNoTheAnAEnd':
+      checkBox.checked?
+        displayNotification("Sort will now remove articles The/An/A from title's end, keeping the existing (suffix)/[suffix]", "success") :
+        displayNotification("Sort will now skip processing trailing articles in titles", "success");
+      break;
+
+    case 'abcSortSkipsTitleEditForOrderedAbc':
+      checkBox.checked?
+        displayNotification("Sort will now skip changing ABC titles if headers are ordered in line with Encoder specs", "success") :
+        displayNotification("Sort will now edit ABC titles even if all the headers are in order", "success");
+      break;
+
+    case 'abcSortSkipsDeepEditForOrderedAbc':
+      checkBox.checked?
+        displayNotification("Sort will now skip filling in ABC field values if headers are ordered in line with Encoder specs", "success") :
+        displayNotification("Sort will now run ABCs through entire field-editing algorithm regardless of its contents", "success");
+      break;
+
+    case 'abcSortSkipsMergingDuplicateFields':
+      checkBox.checked?
+        displayNotification("Sort will now skip merging ABC header fields in Sets, allowing for duplicate display in abcjs", "success") :
+        displayNotification("Sort will now merge ABC header fields in Sets, fixing duplicate display in abcjs", "success");
+      break;
+
+    case 'abcSortRemovesLineBreaksInAbc':
+      checkBox.checked?
+        displayNotification("Sort will now reassemble ABC body line-by-line to ensure it has no empty lines", "success") :
+        displayNotification("Sort will now skip processing line breaks in ABC body", "success");
+      break;
+
+    case 'abcSortRemovesTextAfterLineBreaksInAbc':
+      checkBox.checked?
+        displayNotification("Sort will now remove all extra text separated by line breaks from ABC body", "success") :
+        displayNotification("Sort will now skip processing line break-separated text in ABC body", "success");
+      break;
+
     default:
       break;
   }
@@ -2294,7 +2479,7 @@ function initAppSettings() {
 
   initTunebookOptions();
   initEncoderSettings();
-  initAppCheckboxes();
+  initAppCheckBoxes();
 }
 
 // Check if localStorage is available and writable
@@ -2306,19 +2491,17 @@ export function localStorageOk() {
 
 // Initialize previously not set local storage item
 
-export function initLocalStorage(locStorName, locStorValue) {
+export function initLocalStorage(locStorName, locStorValue, isHardReset) {
 
-  if (!localStorageOk()) return;
+  if (!localStorageOk() ||
+     (!isHardReset && localStorage.getItem(locStorName))) return;
 
-  if (!localStorage.getItem(locStorName)) {
-
-    localStorage.setItem(locStorName, locStorValue);
-  }
+  localStorage.setItem(locStorName, locStorValue);
 }
 
 // Initialize settings stored in an object using key-value pairs
 
-export function initSettingsFromObject(settingsObj) {
+export function initSettingsFromObject(settingsObj, isHardReset = false) {
   
   if (!localStorageOk()) return;
 
@@ -2326,8 +2509,19 @@ export function initSettingsFromObject(settingsObj) {
 
   locStorKeys.forEach(key => {
 
-    initLocalStorage(key, settingsObj[key]);
+    initLocalStorage(key, settingsObj[key], isHardReset);
   });
+}
+
+// Reset Tunebook options in App menu to defaults
+
+function resetAppOptions() {
+
+  initTunebookOptions(true);
+  initAppCheckBoxes();
+
+  displayNotification("Tunebook options have been reset to defaults", "success");
+  console.log('NS Session App:\n\nApp options reset to defaults');
 }
 
 // Log the current values of settings using keys listed in an object
@@ -2368,20 +2562,90 @@ export function initCustomDropDownMenus() {
 
 // Initialize App & Encoder Settings checkboxes on page load
 
-export function initAppCheckboxes() {
+export function initAppCheckBoxes(isHardReset) {
 
   if (!localStorageOk()) return;
+
+  if (isHardReset) {
+
+    allCheckBoxes.forEach(checkBox => checkBox.removeAttribute("disabled"));
+  }
 
   allCheckBoxes.forEach(checkBox => {
 
     if (+localStorage[checkBox.dataset.option] === 1) {
 
       checkBox.checked = true;
+
+      if (checkBox.dataset.disables)
+        disableCheckBoxes(checkBox.dataset.disables)
+
+      if (checkBox.dataset.enables)
+        forceEnableCheckBoxes(checkBox.dataset.enables)
+
+      if (checkBox.dataset.linkedInput)
+        document.getElementById(checkBox.dataset.linkedInput).removeAttribute("disabled");
     
     } else {
 
       checkBox.checked = false;
+
+      if (checkBox.dataset.linkedOptions)
+      disableCheckBoxes(checkBox.dataset.linkedOptions);
     }
+  });
+}
+
+// Disable one or several App & Encoder Settings checkboxes
+// Reset the associated localStorage item's value
+
+function disableCheckBoxes(datasetDisables) {
+
+  const disableBoxesArr = datasetDisables.split(' ');
+
+  disableBoxesArr.forEach(boxData => {
+
+    const boxEl = document.querySelector(`[data-option="${boxData}"]`);
+    
+    if (boxEl.checked) boxEl.checked = false;
+              
+    localStorage.setItem(boxData, 0);
+    
+    boxEl.setAttribute("disabled", "");
+  });
+}
+
+// Reenable one or several App & Encoder Settings checkboxes
+
+function reEnableCheckBoxes(datasetDisables) {
+
+  const reEnableBoxesArr = datasetDisables.split(' ');
+
+  reEnableBoxesArr.forEach(boxData => {
+
+    const boxEl = document.querySelector(`[data-option="${boxData}"]`);
+    
+    boxEl.removeAttribute("disabled");
+  });
+}
+
+// Enable one or several App & Encoder Settings checkboxes
+// Disable the checkbox in checked state
+
+function forceEnableCheckBoxes(datasetEnables) {
+
+  const enableBoxesArr = datasetEnables.split(' ');
+
+  enableBoxesArr.forEach(boxData => {
+
+    const boxEl = document.querySelector(`[data-option="${boxData}"]`);
+    
+    boxEl.checked = true;
+              
+    localStorage.setItem(boxData, 1);
+    
+    boxEl.setAttribute("disabled", "");
+
   });
 }
 
@@ -2411,7 +2675,7 @@ function initTunebookRadioBtns() {
   });
 }
 
-// Initialize app mode based on viewport width
+// Initialize app mode based on viewport dimensions
 
 function initAppMode() {
 
@@ -2425,7 +2689,8 @@ function initAppMode() {
   }
 }
 
-// Initialize Tunebook mode based on 
+// Initialize Tunebook mode based on viewport dimensions
+// Optional: Always load Tunebook in mobile mode if setting enabled
 
 function initTunebookMode() {
 

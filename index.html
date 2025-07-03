@@ -262,11 +262,18 @@
 
             <article id="nss-popover-options" popover="manual" class="nss-popover nss-popover-menu" aria-label="App Options Menu">
                 <header class="nss-popover-header">
-                    <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close App Options" aria-title="Close App Options"></button>
+                    <div class="flex-wrapper nss-header-left-btn-container">
+                        <button data-load="app-defaults" class="nss-btn nss-option-btn nss-popover-btn flex-wrapper" title="Reset app options to defaults" aria-title="Reset app options to defaults">
+                            <svg class="nss-mid-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-revert"></use>
+                            </svg> 
+                        </button>
                     </div>
                     <div class="nss-popover-header-title-container flex-wrapper">
                         <h2 class="nss-popover-title">Tunebook Options</h2>
+                    </div>
+                    <div class="flex-wrapper nss-header-x-container">
+                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close App Options" aria-title="Close App Options"></button>
                     </div>
                 </header>
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
@@ -394,7 +401,7 @@
 
             <article popover data-popover="notification-popup" data-layout="footer" class="info" aria-label="Notification Popup">
                 <div class="nss-header-x-container">
-                    <button autofocus class="nss-btn nss-btn-x popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification"></button>
+                    <button autofocus class="nss-btn nss-btn-x nss-popover-btn popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification"></button>
                 </div>
                 <div class="flex-wrapper subtitle-wrapper">
                     <p data-popover="notification-message">Notification Message Test</p>
@@ -437,7 +444,7 @@
                 <div class="flex-wrapper footer-link-wrapper">
                     <label class="radio-wrapper flex-wrapper" title="Full Screen button opens current Set or Tune">
                         <input type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" checked>
-                        <span class="flex-wrapper">
+                        <span class="icon-wrapper flex-wrapper">
                             <span class="nss-mini-icon nss-icon-show">
                                 <svg class="nss-icon" aria-hidden="true">
                                     <use href="assets/icons/icons.svg#action-icon-view"></use>
@@ -472,7 +479,7 @@
                     </button>
                     <label class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
                         <input type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1">
-                        <span class="flex-wrapper">
+                        <span class="icon-wrapper flex-wrapper">
                             <span class="nss-mini-icon nss-icon-show">
                                 <svg class="nss-icon" aria-hidden="true">
                                     <use href="assets/icons/icons.svg#action-icon-view"></use>
@@ -487,7 +494,7 @@
                     </label>
                 </div>
 
-                <button data-controls="tunebook-footer" data-load="tunebook-compact-mode" class="nss-btn nss-option-btn nss-btn-x footer-btn-x flex-wrapper" title="Hide footer section" aria-title="Hide footer section"></button>
+                <button data-controls="tunebook-footer" data-load="tunebook-compact-mode" class="nss-btn nss-option-btn nss-popover-btn nss-btn-x flex-wrapper" title="Hide footer section" aria-title="Hide footer section"></button>
                 
                 <button id="nss-tunebook-actions-footer-desktop" data-controls="tunebook-actions-desktop" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions">
                     <svg class="nss-mini-icon" aria-hidden="true">

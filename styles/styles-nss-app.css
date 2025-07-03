@@ -14,6 +14,8 @@ body {
   --accent-color-alt-light: #ff6d9d;
   --accent-color-alt-lighter: #ff6f9f;
   --accent-color-alt-mix: #ffa753;
+  --disabled-color-light: #849b5c;
+  --disabled-color-dark: #556b2f;
   --gradient-color-left: #003300;
   --gradient-color-right: #663399;
   --notification-color-success: #d6ff08;
@@ -167,11 +169,11 @@ a,
   color: var(--accent-color-alt);
 }
 
-.nss-btn-advanced-options:is(:hover, :focus, :focus-visible),
+.nss-control-btn:is(:hover, :focus, :focus-visible),
 .nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-option-btn:is(:hover, :focus, :focus-visible) > .nss-btn-text-label,
-.nss-control-btn:is(:hover, :focus, :focus-visible),
-.popover-btn-x:is(:hover, :focus, :focus-visible) {
+.nss-popover-btn:not(.popup-btn-x):is(:hover, :focus, :focus-visible),
+.nss-btn-advanced-options:is(:hover, :focus, :focus-visible) {
   color: var(--accent-color-alt-mix);
 }
 
@@ -325,14 +327,15 @@ iframe {
 }
 
 a,
+input,
 .nss-btn,
-input + span {
+input + .icon-wrapper {
   outline: 0.2rem solid transparent;
 }
 
 a,
 .nss-btn,
-input + span {
+input + .icon-wrapper {
   transition:
   outline-color 0.2s ease-out,
   filter 0.17s ease-out, 
@@ -343,6 +346,7 @@ a:focus-visible,
 .nss-btn:is(:focus-visible),
 input:is(:focus-visible) + span,
 select:is(:focus, :focus-visible),
+input + .icon-wrapper:is(:focus-visible),
 #fullScreenButton:is(:focus, :focus-visible) {
   outline-color: var(--accent-color);
 }
@@ -424,10 +428,6 @@ label:is([class*="radio-wrapper"]) > span,
   border-radius: 0.85rem;
 }
 
-input:is(:focus-visible) {
-  outline: none;
-}
-
 input:is([name="nss-radio-view"]):checked + span {
   color: var(--accent-color);
 }
@@ -437,7 +437,7 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-hide,
   display: none;
 }
 
-.nss-mini-icon.nss-icon-hide {
+.radio-wrapper .nss-icon-hide {
   color: var(--accent-color-alt);
 }
 
@@ -478,7 +478,7 @@ body[data-mode="mobile"] label:is([class*="radio-wrapper"]) {
   transform: rotate(-20deg);
 }
 
-option:is([disabled]) {
+option:disabled {
   display: none;
 }
 
@@ -513,7 +513,7 @@ option:is([disabled]) {
 .nss-switch-btn,
 .nss-theme-btn,
 .nss-control-btn,
-.nss-btn-x {
+.nss-popover-btn {
   border-radius: 50%;
   opacity: 0.9;
 }
@@ -688,7 +688,7 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   outline-offset: 0;
 }
 
-.nss-control-btn:not(.nss-btn-plus),
+.nss-control-btn,
 .nss-link-btn a {
   outline-offset: 0.25rem;
 }
@@ -697,8 +697,7 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   outline-offset: 0.33rem;
 }
 
-.nss-btn-x,
-.nss-btn-plus {
+.nss-popover-btn {
   font-size: 2.75rem;
   width: 2.75rem;
   height: 2.75rem;
@@ -721,29 +720,25 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   opacity: 1;
 }
 
-.footer-btn-x {
-  top: 0.05rem;
-}
-
 body[data-mode="mobile"] .nss-footer-tunebook [data-type="mobile-switch"],
 body[data-mode="desktop"] .nss-footer-tunebook [data-controls="tunebook-actions-mobile"],
-body[data-mode="desktop"] .footer-btn-x {
+body[data-mode="desktop"] .nss-footer-tunebook [data-controls="tunebook-footer"] {
   display: none;
 }
 
 .nss-link-btn a,
 .nss-switch-btn,
 .nss-btn-launch,
-.nss-btn-plus,
-.nss-btn-x {
+.nss-popover-btn {
   outline: 0.2rem solid transparent;
 }
 
 .nss-link-btn a:is(:hover, :focus, :focus-visible),
 .nss-switch-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
-.nss-btn-plus:is(:hover, :focus, :focus-visible),
-.nss-btn-x:is(:hover, :focus, :focus-visible) {
+.nss-popover-btn:is(:hover, :focus, :focus-visible),
+.nss-settings-input:is(:focus, :focus-visible),
+.nss-settings-input:valid {
   outline-color: var(--accent-color);
   opacity: 1;
 }
@@ -757,8 +752,7 @@ body[data-mode="desktop"] .footer-btn-x {
 .nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-control-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
-.nss-btn-plus:is(:hover, :focus, :focus-visible),
-.nss-btn-x:is(:hover, :focus, :focus-visible) {
+.nss-popover-btn:is(:hover, :focus, :focus-visible) {
   filter: drop-shadow(1px 1px 8px var(--accent-color));
 }
 
@@ -826,6 +820,11 @@ body[data-mode="mobile"] .nss-switch-container {
   height: 101%;
 }
 
+.nss-mid-icon {
+  width: 80%;
+  height: 80%;
+}
+
 .nss-mini-icon {
   width: 2rem;
   height: 2rem;
@@ -859,6 +858,10 @@ body[data-mode="desktop"] .nss-footer-tunebook [data-load="launcher"],
 
 [data-controls="tunebook-actions-mobile"] {
   outline-offset: -0.05rem;
+}
+
+.nss-footer-tunebook [data-controls="tunebook-footer"] {
+  top: 0.05rem;
 }
 
 .nss-launch {
@@ -1076,7 +1079,12 @@ body[data-mode="mobile"] .nss-select-container {
   scrollbar-gutter: stable both-edges;
 }
 
-.nss-popover-header {
+[aria-label="Encoder Settings Menu"] .nss-popover-body {
+  height: calc(100% - 9.25rem);
+}
+
+.nss-popover-header,
+.nss-popover-footer {
   width: 100%;
 }
 
@@ -1087,6 +1095,13 @@ body[data-mode="mobile"] .nss-select-container {
 .nss-popover-header-title-container {
   margin: 1.17rem auto 2rem;
   max-width: min(calc(80svw - 3.7rem - 5rem), 35rem);
+}
+
+.nss-popover-footer {
+  position: absolute;
+  bottom: 0;
+  padding: 0 1rem 1rem;
+  background-color: var(--gradient-color-left);
 }
 
 .nss-theme-btn,
@@ -1106,6 +1121,10 @@ body[data-mode="mobile"] .nss-select-container {
 
 .nss-checkbox-container {
   margin: 1rem 1rem 2.5rem;
+}
+
+[aria-label="Encoder Settings Menu"] .nss-checkbox-container {
+  margin: 1rem 1rem 0;
 }
 
 .nss-checkbox-container,
@@ -1175,6 +1194,56 @@ input[type="checkbox"]:focus-visible {
   opacity: 0.85;
 }
 
+[aria-label="Encoder Settings Menu"] .nss-btn-advanced-options {
+  margin: 0 auto;
+}
+
+.nss-advanced-option-text {
+  color: var(--accent-color-contrast);
+}
+
+.nss-checkbox-btn:disabled {
+  border-color: var(--disabled-color-light);
+  background-image: linear-gradient(90deg, var(--disabled-color-light) 25%, var(--disabled-color-dark) 100%);
+}
+
+.nss-checkbox-label:has(.nss-checkbox-btn:disabled),
+.nss-checkbox-btn:disabled ~ .nss-advanced-option-text {
+  color: var(--disabled-color-light);
+}
+
+.nss-checkbox-input-group {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 2.25rem;
+  gap: 0.75rem;
+}
+
+#nss-input-sort-by {
+  width: 3.1rem;
+}
+
+.nss-settings-input {
+  font-size: 1.2rem;
+  text-align: center;
+  border: none;
+  outline-color: var(--accent-color-contrast);
+  border-radius: 0.25rem;
+  color: var(--accent-color-alt-mix);
+  caret-color: var(--accent-color-contrast);
+  background-color: var(--gradient-color-left);
+  opacity: 0.9;
+}
+
+.nss-settings-input:disabled {
+  outline-color: var(--disabled-color-light);
+  color: var(--disabled-color-light);
+}
+
+.nss-settings-input::placeholder {
+  color: var(--disabled-color-light);
+}
+
 [data-controls="tunebook-actions-desktop"]:is(:hover, :focus, :focus-visible),
 .nss-btn-advanced-options:is(:hover, :focus, :focus-visible) {
   filter: drop-shadow(1px 1px 7px var(--accent-color));
@@ -1204,7 +1273,7 @@ input[type="checkbox"]:focus-visible {
   padding: 2.25em 0 1.25em;
 }
 
-[data-popover="tunebook-actions-popup"] .popup-btn-x {
+[data-popover="tunebook-actions-popup"] .nss-popover-btn {
   display: flex;
   color: var(--accent-color);
 }
@@ -1317,22 +1386,26 @@ body[data-mode="desktop"] [data-tbk-action="close-menu-footer"] {
   z-index: 3;
 }
 
-[data-popover="notification-popup"] .popup-btn-x {
+[data-popover="notification-popup"] .nss-popover-btn {
   color: #212121;
 }
 
-[data-popover="notification-popup"].status .popup-btn-x {
+[data-popover="notification-popup"] .nss-popover-btn:is(:hover, :focus, :focus-visible) {
+  outline-color: #212121;
+  opacity: 1;
+}
+
+[data-popover="notification-popup"].status .nss-popover-btn {
   color: var(--accent-color);
   outline-color: var(--accent-color);
   opacity: 0.7;
 }
 
-[data-popover="notification-popup"] .popup-btn-x:is(:hover, :focus, :focus-visible) {
-  outline-color: #212121;
-  opacity: 1;
+[data-popover="notification-popup"].status .nss-popover-btn:is(:hover, :focus, :focus-visible) {
+  outline-color: var(--accent-color);
 }
 
-[data-popover="notification-popup"].report .popup-btn-x {
+[data-popover="notification-popup"].report .nss-popover-btn {
   color: var(--accent-color-alt-light);
   outline-color: var(--accent-color);
 }
@@ -1496,8 +1569,17 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     overscroll-behavior: contain;
   }
 
+  [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100dvh - 14rem);
+  }
+
   .nss-popover-header {
     border-bottom: 0.3rem solid;
+  }
+
+  .nss-popover-footer {
+    border-top: 0.25rem solid;
+    padding: 1rem 1rem;
   }
 
   .nss-popover-header h2 {
@@ -1506,11 +1588,19 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 
   .nss-popover-header-title-container {
     margin: 1.75rem auto;
-    max-width: calc(100svw - 12.75rem);
+    max-width: calc(100svw - 12.7rem);
+  }
+
+  [aria-label="Encoder Settings Menu"] .nss-popover-header-title-container {
+    max-width: calc(100svw - 14.6rem);
   }
 
   .nss-checkbox-container {
     margin: 2.75rem 1rem;
+  }
+
+  [aria-label="Encoder Settings Menu"] .nss-checkbox-container {
+    margin: 2.75rem 1rem 2.25rem;
   }
 
   .nss-checkbox-container,
@@ -1526,13 +1616,24 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     border-radius: 0.25rem;
   }
 
-  .nss-checkbox-label {
+  .nss-checkbox-input-group {
+    gap: 1.25rem;
+  }
+
+  #nss-input-sort-by {
+    width: 4rem;
+  }
+
+  .nss-checkbox-label,
+  .nss-settings-input {
     font-size: 1.75rem;
+  }
+
+  .nss-checkbox-label {
     gap: 1.75rem;
   }
 
-  .nss-popover .nss-btn-plus,
-  .nss-popover .nss-btn-x {
+  .nss-popover .nss-popover-btn {
     font-size: 3.75rem;
     width: 3.75rem;
     height: 3.75rem;
@@ -1612,6 +1713,28 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   }
 }
 
+/* @media screen and (max-height: 768px) and (max-width: 544px) and (min-width: 481px) { */
+@media screen and (max-height: 48em) and (max-width: 34em) and (min-width: calc(30em + 1px)) {
+
+  .nss-popover-header h2,
+  [aria-label="Encoder Settings Menu"] .nss-popover-header h2 {
+    font-size: calc(3.25rem - 1vw);
+  }
+
+  .nss-popover-menu .nss-popover-body {
+    height: calc(100dvh - 7.5rem);
+  }
+
+  [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100dvh - 13.6rem);
+  }
+
+  .nss-popover-header-title-container,
+  [aria-label="Encoder Settings Menu"] .nss-popover-header-title-container {
+    max-width: calc(100svw - 10.75rem);
+  }
+}
+
 /* @media screen and (max-height: 720px),
           screen and (max-width: 480px) { */
 @media screen and (max-height: 45em),
@@ -1645,6 +1768,10 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     gap: 1.75rem;
   }
 
+  #nss-input-sort-by {
+    height: 3.1rem;
+  }
+
   body[data-mode="mobile"] .select-wrapper:last-of-type {
     display: none;
   }
@@ -1653,8 +1780,8 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     width: 6.5rem;
   }
 
-  body[data-mode="mobile"] .footer-btn-x,
-  body[data-mode="mobile"] .nss-footer-tunebook [data-load="launcher"] {
+  body[data-mode="mobile"] .nss-footer-tunebook [data-load="launcher"],
+  body[data-mode="mobile"] .nss-footer-tunebook [data-controls="tunebook-footer"] {
     display: none;
   }
 
@@ -1681,6 +1808,10 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 
   .nss-popover-menu .nss-popover-body {
     height: calc(100dvh - 11.75rem);
+  }
+
+  [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100dvh - 17.75rem);
   }
 }
 
@@ -1710,11 +1841,11 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 
 @supports (color: color-mix(in srgb, #000 50%, #fff)) {
 
-  .nss-btn-advanced-options:is(:hover, :focus, :focus-visible),
+  .nss-control-btn:is(:hover, :focus, :focus-visible),
   .nss-option-btn:is(:hover, :focus, :focus-visible),
   .nss-option-btn:is(:hover, :focus, :focus-visible) > .nss-btn-text-label,
-  .nss-control-btn:is(:hover, :focus, :focus-visible),
-  .popover-btn-x:is(:hover, :focus, :focus-visible) {
+  .nss-popover-btn:not(.popup-btn-x):is(:hover, :focus, :focus-visible),
+  .nss-btn-advanced-options:is(:hover, :focus, :focus-visible) {
     color: color-mix(in srgb, var(--accent-color) 60%, var(--accent-color-alt));
   }
 }

@@ -566,7 +566,7 @@ export function makeAbcChordBook(abcContent) {
 
     // Generate Sets Chordbook if ABC has several T: groups followed by text
 
-    const matchTuneBlocks = abcContent.match(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?=^[\S]+)/gm);
+    const matchTuneBlocks = abc.match(/^T:.*[\s]*(?:^[A-Z]:.*[\s]*)*(?=^[\S]+)/gm);
 
     const isTuneSet = matchTuneBlocks && matchTuneBlocks.length > 1;
 

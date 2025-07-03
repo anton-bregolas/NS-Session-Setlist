@@ -27,7 +27,7 @@
         <header class="nss-header-container">
 
             <nav class="nss-encodernav-container">
-                <div id="nss-encoder-header" class="nss-app-header flex-align-center">
+                <div id="nss-encoder-header" class="nss-app-header flex-wrapper-space-between">
                     <button class="nss-btn-abc-setlist nss-btn-abcraw nss-btn nss-link-btn flex-wrapper" tabindex="-1">
                         <a href="https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc/NS-Session-Sets.abc" target="_blank" class="nss-link nss-icon-container" title="Get raw ABC of NS Session Setlist" aria-title="Get raw ABC of NS Session Setlist">
                             <svg class="nss-icon" aria-hidden="true">
@@ -82,25 +82,31 @@
             <article id="nss-popover-options" popover="manual" class="nss-popover nss-popover-menu" aria-label="Encoder Settings Menu">
                 <header class="nss-popover-header">
                     <div class="flex-wrapper nss-header-left-btn-container">
-                        <button data-load="session-survey" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn flex-wrapper" title="Add Session Survey Data" aria-title="Add Session Survey Data"></button>
+                        <button data-load="session-survey" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Add Session Survey Data" aria-title="Add Session Survey Data"></button>
                     </div>
                     <div class="nss-popover-header-title-container flex-wrapper">
                         <h2 class="nss-popover-title">Encoder Settings</h2>
                     </div>
                     <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x popover-btn-x flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
+                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
                     </div>
                 </header>
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
                     <div class="nss-checkbox-container flex-column">
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="encoder-sorts-tunebook" data-option="abcEncoderSortsTuneBook" class="nss-checkbox-btn" value="1">
+                          <input type="checkbox" id="encode-sorts-tunebook" data-option="abcEncodeSortsTuneBook" class="nss-checkbox-btn" value="1">
                             ENCODE automatically passes tunes to SORT
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="encoder-exports-tunelist" data-option="abcEncoderExportsTuneList" class="nss-checkbox-btn" value="1">
-                            ENCODE also exports plain text Tunelist
+                          <input type="checkbox" id="encode-exports-tunelist" data-option="abcEncodeExportsTuneList" class="nss-checkbox-btn" value="1">
+                            ENCODE exports plaintext Tunelist with links
                         </label>
+                        <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
+                        <label class="nss-checkbox-label">
+                          <input type="checkbox" id="encode-outputs-abctoolsstring" data-option="abcEncodeOutputsAbcToolsString" class="nss-checkbox-btn" value="1">
+                            <span class="nss-advanced-option-text">ENCODE output is for ABC Tools export website</span>
+                        </label>
+                        </div>
                         <label class="nss-checkbox-label">
                           <input type="checkbox" id="sort-enforces-fields" data-option="abcSortEnforcesCustomAbcFields" class="nss-checkbox-btn" value="1">
                             SORT enforces custom N.S.S.S. ABC fields
@@ -114,32 +120,132 @@
                             SORT extracts chords from Tunebook
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-normalizes-repeats" data-option="abcSortNormalizesAbcPartEndings" class="nss-checkbox-btn" value="1">
-                            SORT normalizes ABC part endings
-                        </label>
-                        <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1">
-                            SORT fetches metadata from The Session
-                        </label>
-                        <!-- <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-removes-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">
-                            SORT removes extra line breaks in ABC
-                        </label> -->
-                        <!-- <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-removes-textafterbreaks" data-option="abcSortRemovesTextAfterLineBreaksInAbc" class="nss-checkbox-btn" value="1">
-                            SORT removes text after line breaks in ABC
-                        </label> -->
-                        <label class="nss-checkbox-label">
                           <input type="checkbox" id="sort-removes-keylesstunes" data-option="abcSortUsesStrictTuneDetection" class="nss-checkbox-btn" value="1">
                             SORT removes tunes with no K: (strict mode)
                         </label>
+                        <button class="nss-btn nss-btn-advanced-options">
+                            Show advanced options
+                        </button>
+                        <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT fetches metadata from The Session</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-settitle-first" data-option="abcSortFormatsSetTitleFirstName" data-disables="abcSortFormatsSetTitleSlashNames" class="nss-checkbox-btn" value="1" title="SORT adds first tune name as Set Title. This setting disables Add slash-separated names as Set title option" aria-title="SORT adds first tune name as Set Title. This setting disables Add slash-separated names as Set title option">
+                                <span class="nss-advanced-option-text">SORT adds first tune name as Set Title</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-settitle-slash" data-option="abcSortFormatsSetTitleSlashNames" data-disables="abcSortFormatsSetTitleFirstName" class="nss-checkbox-btn" value="1" title="SORT adds slash-separated names as Set Title. This setting disables Add first tune name as Set title option" aria-title="SORT adds slash-separated names as Set Title. This setting disables Add first tune name as Set title option">
+                                <span class="nss-advanced-option-text">SORT adds slash-separated list as Set Title</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-titleprefix" data-option="abcSortFormatsTitlesTypePrefix" data-enables="abcSortFormatsTitlesNoTheAnAEnd" data-disables="abcSortFormatsTitlesTypeSuffix abcSortFormatsTitlesMovesTheAnA" class="nss-checkbox-btn" value="1" title="SORT adds TYPE: prefix to ABC titles. This setting disables Add [Type] suffix option and Format titles with trailing article option" aria-title="SORT adds TYPE: prefix to ABC titles. This setting disables Add [Type] suffix option and Format titles with trailing article option">
+                                <span class="nss-advanced-option-text">SORT adds TYPE: prefix to ABC titles</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-titlesuffix" data-option="abcSortFormatsTitlesTypeSuffix" data-disables="abcSortFormatsTitlesTypePrefix" class="nss-checkbox-btn" value="1" title="SORT adds [Type] suffix to ABC titles. This setting disables Add TYPE: prefix option" aria-title="SORT adds [Type] suffix to ABC titles. This setting disables Add TYPE: prefix option">
+                                <span class="nss-advanced-option-text">SORT adds [Type] suffix to ABC titles</span>
+                            </label>
+                            <div class="nss-checkbox-input-group">
+                                <label class="nss-checkbox-label">
+                                  <input type="checkbox" id="sort-resort-abcr" data-option="abcSortReSortsByAbcTag" data-linked-input="nss-input-sort-by" data-disables="abcSortReSortsByAbcTSansPrefix abcSortRespectsOriginalOrder" class="nss-checkbox-btn" value="1" title="SORT arranges tunes by user-defined ABC tag instead of Title. This setting disables other Arrange by... options" aria-title="SORT arranges tunes by user-defined ABC tag instead of Title. This setting disables other Arrange by... options">
+                                    <span class="nss-advanced-option-text">SORT arranges tunes by ABC tag:</span>
+                                </label>
+                                <input type="text" id="nss-input-sort-by" class="nss-settings-input" placeholder="R" autocomplete="off" required disabled>
+                            </div>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-resort-abct" data-option="abcSortReSortsByAbcTSansPrefix" data-disables="abcSortReSortsByAbcTag abcSortRespectsOriginalOrder" class="nss-checkbox-btn" value="1" title="SORT arranges tunes by Title ignoring articles and prefix. This setting disables other Arrange by... options" aria-title="SORT arranges tunes by Title ignoring articles and prefix. This setting disables other Arrange by... options">
+                                <span class="nss-advanced-option-text">SORT arranges tunes by T: minus articles</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-keeps-original-order" data-option="abcSortRespectsOriginalOrder" data-disables="abcSortReSortsByAbcTag abcSortReSortsByAbcTSansPrefix" class="nss-checkbox-btn" value="1" title="SORT arranges tunes in original order. This setting disables other Arrange by... options" aria-title="SORT arranges tunes in original order. This setting disables other Arrange by... options">
+                                <span class="nss-advanced-option-text">SORT arranges tunes in original order</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-title-irish" data-option="abcSortFormatsTitlesInIrish" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT attempts to fix ABC titles in Irish</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-title-movethetoend" data-option="abcSortFormatsTitlesMovesTheAnA" data-enables="abcSortFormatsTitlesNoTheAnAStart" data-disables="abcSortFormatsTitlesTypePrefix abcSortFormatsTitlesNoTheAnAEnd" class="nss-checkbox-btn" value="1" title="SORT formats ABC titles as ABC Title, The, auto-removing opening articles. This setting disables Add TYPE: prefix option and Remove trailing articles option" aria-title="SORT formats ABC titles as ABC Title, The, auto-removing opening articles. This setting disables Add TYPE: prefix option and Remove trailing articles option">
+                                <span class="nss-advanced-option-text">SORT formats ABC titles as ABC Title, The</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-title-titlecase" data-option="abcSortFormatsTitlesTitleCase" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT formats ABC titles in Title Case</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-title-nocaps" data-option="abcSortFormatsTitlesNoCaps" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT formats ALL CAPS in titles as No Caps</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-normalizes-repeats" data-option="abcSortNormalizesAbcPartEndings" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT normalizes ABC part endings</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-removes-duplicates-bycontent" data-option="abcSortRemovesDuplicatesByContent" data-disables="abcSortRemovesDuplicatesByTitle" class="nss-checkbox-btn" value="1" title="SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option" aria-title="SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option">
+                                <span class="nss-advanced-option-text">SORT removes duplicates by ABC content</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-removes-duplicates-bytitle" data-option="abcSortRemovesDuplicatesByTitle" data-disables="abcSortRemovesDuplicatesByContent" class="nss-checkbox-btn" value="1" title="SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option" aria-title="SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option">
+                                <span class="nss-advanced-option-text">SORT removes duplicates by ABC Title</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-title-nothestart" data-option="abcSortFormatsTitlesNoTheAnAStart" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT removes opening articles from titles</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-title-noanstart" data-option="abcSortFormatsTitlesNoIrishAnAStart" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT removes opening articles in Irish titles</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-formats-title-notheend" data-option="abcSortFormatsTitlesNoTheAnAEnd" data-disables="abcSortFormatsTitlesMovesTheAnA" class="nss-checkbox-btn" value="1" title="SORT removes trailing articles from titles. This setting disables Format titles as ABC Title, The option" aria-title="SORT removes trailing articles from titles. This setting disables Format titles as ABC Title, The option">
+                                <span class="nss-advanced-option-text">SORT removes trailing articles from titles</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-skips-orderedabc-headers" data-option="abcSortSkipsDeepEditForOrderedAbc" data-linked-options="abcSortSkipsTitleEditForOrderedAbc" class="nss-checkbox-btn" value="1" title="SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option" aria-title="SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option">
+                                <span class="nss-advanced-option-text">SORT skips deep-editing headers if ABC ordered</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-skips-orderedabc-settitle" data-option="abcSortSkipsTitleEditForOrderedAbc" class="nss-checkbox-btn" value="1" title="SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option" aria-title="SORT skips editing titles if ABC ordered. This setting is linked to Skip editing ordered ABC headers option">
+                                <span class="nss-advanced-option-text">SORT skips editing titles if ABC ordered</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-skips-mergefields" data-option="abcSortSkipsMergingDuplicateFields" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT skips merging duplicate header fields</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-removes-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT wipes extra line breaks in ABC</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-removes-textafterbreaks" data-option="abcSortRemovesTextAfterLineBreaksInAbc" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT wipes text after line breaks in ABC</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
+                <footer class="nss-popover-footer flex-wrapper-space-between">
+                    <div class="flex-wrapper">
+                        <button data-load="encoder-defaults" class="nss-btn nss-option-btn nss-popover-btn flex-wrapper" title="Reset Encoder Settings to defaults" aria-title="Reset Encoder Settings to defaults">
+                            <svg class="nss-mid-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-revert"></use>
+                            </svg> 
+                        </button>
+                    </div>
+                    <div class="flex-wrapper">
+                        <button data-load="encoder-ini" class="nss-btn nss-option-btn nss-popover-btn flex-wrapper" title="Save Encoder Settings to file" aria-title="Save Encoder Settings to file">
+                            <svg class="nss-mid-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-save"></use>
+                            </svg> 
+                        </button>
+                    </div>
+                </footer>
             </article>
 
             <article popover data-popover="notification-popup" class="info" aria-label="Notification Popup">
                 <div class="nss-header-x-container">
-                    <button class="nss-btn nss-btn-x popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification"></button>
+                    <button class="nss-btn nss-btn-x nss-popover-btn popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification"></button>
                 </div>
                 <div class="flex-wrapper subtitle-wrapper">
                     <p data-popover="notification-message">Notification Message Test</p>
