@@ -72,9 +72,9 @@ export const displayOptions = document.querySelector('#displayOptions');
 
 // Initialize default Global settings for ABC Tools
 
-export function initTunebookOptions() {
+export function initTunebookOptions(isHardReset) {
 
-    initSettingsFromObject(abcTunebookDefaults);
+    initSettingsFromObject(abcTunebookDefaults, isHardReset);
 }
 
 // Initialize ABC Transcription Tools, add event listeners to Tunebook elements

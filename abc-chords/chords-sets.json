@@ -45,21 +45,6 @@
     ]
   },
   {
-    "setTitle": "HORNPIPES: Galtee Hunt Set",
-    "tuneChords": [
-      {
-        "title": "Súisin Bán [Set Dance]",
-        "meter": "4/4",
-        "chords": "PART 1:\n|\tC\tC\t|\tG\tC\t|\tG\t(D)\t|\tAm\tD\t|\n|\tG\t(D)\t|1\tC D\tC |\n|2\tC D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tG\tC\t|\tG\t(D)\t|\tAm\tD\t|\n|\tG\t(D)\t|1\tC D\tG G\t|\n|2\tC D\tC ||"
-      },
-      {
-        "title": "Galtee Hunt",
-        "meter": "4/4",
-        "chords": "PART 1:\n|\tG\tG\t|\tC C\tC D\t|\tG\tG\t|\tC C\tC D\t|\n|\tG\tD\t|\tC C\tC D\t|\tG\tEm\t|\tC D\tG G\t||\n\nPART 2:\n|\tG\tG\t|\tC D\tEm Em\t|\tC\tC\t|\tD\tD\t|\n|\tC\tC\t|\tG\tG\t|\tD\tC\t|\tEm Em\tEm D\t|\n|\tG\tEm\t|\tC C\tC D\t|\tG\tEm\t|1\tC D\tG G\t|\n|2\tC D\tG ||"
-      }
-    ]
-  },
-  {
     "setTitle": "HORNPIPES: Off to California Set",
     "tuneChords": [
       {
@@ -170,32 +155,12 @@
       {
         "title": "Breeches Mary",
         "meter": "6/8",
-        "chords": "PART 1:\n|\tAm\tAm\t|\tG\tG\t|\tEm\tD/F#\t|\tEm\tG\t|\n|\tAm\tAm\t|\tG\tG\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tC\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tD\t|1\tG\t(Em)\t|\n|2\tG\t(Em)\t||"
+        "chords": "PART 1:\n|\tAm\tAm\t|\tG\tG\t|\tEm\t(D/F#)\t|\tEm\tG\t|\n|\tAm\tAm\t|\tG\tG\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tC\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tG/B\tG/B\t|\tC\tD\t|1\tG\t(Em)\t|\n|2\tG\t(Em)\t||"
       },
       {
         "title": "Tenpenny Bit",
         "meter": "6/8",
-        "chords": "PART 1:\n|\tD\tG\t|\tG\tG\t|\tC\tG/B\t|\tD\tD\t|\n|\tG\t(Em)\t|\tG(Em)\tEm\t|\tC\tG/B\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tA5\t(Em)\t|\t(D)\t(D)\t|\tA5\t(C)\t|\t(D)\tD/F#\t|\n|\tA5(G)\t(D)\t|\tG\tA5\t|\t(C)\t(C)\t|1\tD\tD\t|\n|2\tD\tD\t||"
-      }
-    ]
-  },
-  {
-    "setTitle": "JIGS: Carraroe Set",
-    "tuneChords": [
-      {
-        "title": "Carraroe [Jig]",
-        "meter": "6/8",
-        "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tG\tAsus4\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tG\tAsus4\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD/F#\tD/F#\t|\tA\tA\t|\n|\tD\tD\t|\tG\tG\t|\tEm\tD/F#\t|1\tG\tA\t|\n|2\tG\tA\t||"
-      },
-      {
-        "title": "Kevin McHugh's [Single Jig]",
-        "meter": "12/8",
-        "chords": "PART 1:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tC\tD\t||\n\nPART 2:\n|\tG\tC\t|\tG(Em)\tD\t|\tG G\tC (G/B)\t|\tAm\tD\t||"
-      },
-      {
-        "title": "Old Favourite [Single Jig]",
-        "meter": "12/8",
-        "chords": "PART 1:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|1\tC D\tG D\t|\n|2\tC D\tG D\t||\n\nPART 2:\n|\tEm D\tC C\t|\tAm\tD\t|\tEm D\tC C\t|\tD\tG\t|\n|\tEm D\tC D/B\t|\tAm\tD\t|\tEm\tD\t|\tC\tD/B\t|\n|\tC\tD\t||"
+        "chords": "PART 1:\n|\tD\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG\t(Em)\t|\tG(Em)\tEm\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\t(A5)\t|\tD\t(A5)\t|\tC\t(A5)\t|\tD(A5)\tD/F#(D)\t|\n|\tG(A5)\tD(A5)\t|\tG\tA5\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||"
       }
     ]
   },
@@ -368,7 +333,7 @@
     "setTitle": "MEDLEY: Ash Grove Set",
     "tuneChords": [
       {
-        "title": "Ash Grove",
+        "title": "Ash Grove [Mazurka]",
         "meter": "3/4",
         "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG(Em)\t(Em)\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
       }
@@ -386,6 +351,21 @@
         "title": "Cucanandy [Hop Jig]",
         "meter": "3/4",
         "chords": "PART 1:\n|\tG\tG\tG\t|\tG\tG\tD\t|\tG\tG\tG\t|\tC\tC\tD\t|\n|\tG\tG\tG\t|\tG\tG\tD/F#\t|\tEm\tEm\tEm\t|\tC\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "MEDLEY: Galtee Hunt Set",
+    "tuneChords": [
+      {
+        "title": "Súisin Bán [Set Dance]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tC\tC\t|\tG\tC\t|\tG\t(D)\t|\tAm\tD\t|\n|\tG\t(D)\t|1\tC D\tC |\n|2\tC D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tG\tC\t|\tG\t(D)\t|\tAm\tD\t|\n|\tG\t(D)\t|1\tC D\tG G\t|\n|2\tC D\tC ||"
+      },
+      {
+        "title": "Galtee Hunt [Hornpipe]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tC C\tC D\t|\tG\tG\t|\tC C\tC D\t|\n|\tG\tD\t|\tC C\tC D\t|\tG\tEm\t|\tC D\tG G\t||\n\nPART 2:\n|\tG\tG\t|\tC D\tEm Em\t|\tC\tC\t|\tD\tD\t|\n|\tC\tC\t|\tG\tG\t|\tD\tC\t|\tEm Em\tEm D\t|\n|\tG\tEm\t|\tC C\tC D\t|\tG\tEm\t|1\tC D\tG G\t|\n|2\tC D\tG ||"
       }
     ]
   },
@@ -466,6 +446,21 @@
         "title": "Snow on the Tracks [March]",
         "meter": "4/4",
         "chords": "PART 1:\n|\t D\tA D\t|\tG\tD\t|\tD\tD\t|\tA\tA\t|\n|\tD D\tA D\t|\tG\tD\t|\tD\tD\t|\tA\tA\t|1\tD D\tA D\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tG\tA\t|\tD\tD\t|\n|\tA\tA\t|\tD\t(Bm)\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "MEDLEY: St. Patrick's An Dro Set",
+    "tuneChords": [
+      {
+        "title": "St. Patrick's An Dro [An Dro]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tEm\t|\tEm\tD(G)\t|\tD(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tEm\tG\t|\tG\tAm\t|\tD\tEm\t||\n\nPART 2:\n|\tD\tEm\t|\tD\tEm(G)\t|\tEm(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tD\tG\t|\tG\tAm\t|\tBm\tEm\t||"
+      },
+      {
+        "title": "Wren [An Dro]",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tD\tD\t||"
       }
     ]
   },
@@ -850,6 +845,26 @@
     ]
   },
   {
+    "setTitle": "SINGLE JIGS: Old Favourite Set",
+    "tuneChords": [
+      {
+        "title": "Carraroe",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tG\tAsus4\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tG\tAsus4\t||\n\nPART 2:\n|\tD\tD\t|\tG\tG\t|\tD/F#\tD/F#\t|\tA\tA\t|\n|\tD\tD\t|\tG\tG\t|\tEm\tD/F#\t|1\tG\tA\t|\n|2\tG\tA\t||"
+      },
+      {
+        "title": "Kevin McHugh's",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|\tC\tD\t||\n\nPART 2:\n|\tG\tC\t|\tG(Em)\tD\t|\tG G\tC (G/B)\t|\tAm\tD\t||"
+      },
+      {
+        "title": "Old Favourite",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|1\tC D\tG D\t|\n|2\tC D\tG D\t||\n\nPART 2:\n|\tEm D\tC C\t|\tAm\tD\t|\tEm D\tC C\t|\tD\tG\t|\n|\tEm D\tC D/B\t|\tAm\tD\t|\tEm\tD\t|\tC\tD/B\t|\n|\tC\tD\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "SLIDES: Brosna Set",
     "tuneChords": [
       {
@@ -888,17 +903,17 @@
     "setTitle": "SLIDES: Denny Mescall's Set",
     "tuneChords": [
       {
-        "title": "Bank of Turf [Single Jig]",
+        "title": "Bank of Turf",
         "meter": "12/8",
         "chords": "PART 1:\n|\tD D\tG D\t|\tD A\tD D\t|\tG\tD\t|1\tEm\tA\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tA\tD\t|\tG D\tA A\t|\tA\tD\t|1\tG D\tA A\t|\n|2\tG D\tA A\t||"
       },
       {
-        "title": "Denny Mescall's [Slide]",
+        "title": "Denny Mescall's",
         "meter": "12/8",
         "chords": "PART 1:\n|\tG\tG\t|\tG/B G/B\tC D\t|\tG\t(D)\t|1\tEm D\tG (C)\t|\n|2\tEm D\tG G\t||\n\nPART 2:\n|\tG\tG/B\t|\tCadd9\tD\t|\tEm\tD/B\t|\tC D\tG G\t||"
       },
       {
-        "title": "Kings of Kerry [Slide]",
+        "title": "Kings of Kerry",
         "meter": "12/8",
         "chords": "PART 1:\n|\tA\tA\t|\tA\tE\t|\tA\tA\t|1\tD E\tA A\t|\n|2\tD E\tA A\t||\n\nPART 2:\n|\tF#m\tD\t|\tA\tE\t|\tF#m\tD\t|\tD E\tA A\t|\n|\tF#m\tD\t|\tA\tE\t|\tF#m\tD\t|\tE\tE\t||"
       }
@@ -985,21 +1000,6 @@
     ]
   },
   {
-    "setTitle": "VARIOUS: St. Patrick's An Dro Set",
-    "tuneChords": [
-      {
-        "title": "St. Patrick's [An Dro]",
-        "meter": "4/4",
-        "chords": "PART 1:\n|\tD\tEm\t|\tEm\tD(G)\t|\tD(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tEm\tG\t|\tG\tAm\t|\tD\tEm\t||\n\nPART 2:\n|\tD\tEm\t|\tD\tEm(G)\t|\tEm(G)\tAm\t|\tAm\tD\t|\n|\tD\tEm\t|\tD\tG\t|\tG\tAm\t|\tBm\tEm\t||"
-      },
-      {
-        "title": "Wren [An Dro]",
-        "meter": "4/4",
-        "chords": "PART 1:\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tD\tD\t||"
-      }
-    ]
-  },
-  {
     "setTitle": "WALTZES: Munster Cloak Set",
     "tuneChords": [
       {
@@ -1051,16 +1051,6 @@
         "title": "Looking at a Rainbow",
         "meter": "3/4",
         "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\t(Em)\t(Em)\t|\tD\tD\tD\t|\tC\tC\tC\t|1\tG\tG\tG\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tD/F#\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|1\tG\tG\tD/F#\t|\n|2\tC\tC\tC\t||"
-      }
-    ]
-  },
-  {
-    "setTitle": "WALTZES: Sí Bheag, Sí Mhór Set",
-    "tuneChords": [
-      {
-        "title": "Sí Bheag, Sí Mhór",
-        "meter": "3/4",
-        "chords": "PART 1:\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tA\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tBm\tBm\tBm\t|\n|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tD/A\tD/A\tD/A\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|\tD\tD\tD\t||\n\nPART 2:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t||\n\nPART 3:\n|\tD\tD\tD\t|\tA7\tA7\tA7\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tA7\tA7\tA7\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tG\tG\tG\t|\n|\tG\tG\tG\t|\tG\tG\tG\t|\tG\tG\tG\t|\tG\tG\tG\t|\n|\tF#m\tF#m\tF#m\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA7\tA7\tA7\t|\n|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\tA7\tA7\tA7\t|\n|\tG\tG\tG\t|\tA7\tA7\tA7\t|\tD\tD\tD\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||\n\nPART 4:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
       }
     ]
   },
