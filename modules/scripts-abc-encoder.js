@@ -168,7 +168,7 @@ const makeProperCaseExceptions = [
 
 // ABC Encoder Main Handler Function
 // Process and output files passed to ABC Encoder depending on task type
-// Pass the resulting abc/text or JSON output to downloadAbcFile
+// Pass the resulting abc/text or JSON output to downloadAbcEncoderFile
 
 async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
@@ -196,20 +196,20 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
         if (customSettingsOn && +localStorage.abcEncodeExportsTuneList) {
 
-            downloadAbcFile(exportPlainTuneList(abcEncoderOutput), "Tunelist[SourceABC].txt");
+            downloadAbcEncoderFile(exportPlainTuneList(abcEncoderOutput), "Tunelist[SourceABC].txt");
         }
 
         // Optional: Save additional JSON array of objects containing all individual Setlist Tunes encoded
 
         if (customSettingsOn && +localStorage.abcSortExportsTunesFromSets && abcEncoderTunesOutput !== '') {
 
-            downloadAbcFile(abcEncoderTunesOutput, isForAbcToolsWebsite? "ABC-ENCODED-TUNES.txt" : "tunes.json");
+            downloadAbcEncoderFile(abcEncoderTunesOutput, isForAbcToolsWebsite? "ABC-ENCODED-TUNES.txt" : "tunes.json");
 
             // Optional: Save plain text Tunelist of all individual Setlist Tunes from source ABC
 
             if (+localStorage.abcEncodeExportsTuneList) {
 
-                downloadAbcFile(exportPlainTuneList(abcEncoderTunesOutput), "Tunelist[TunesABC].txt");
+                downloadAbcEncoderFile(exportPlainTuneList(abcEncoderTunesOutput), "Tunelist[TunesABC].txt");
             }
         }
     }
@@ -261,13 +261,13 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
             const fileExt = fileName.includes('.')? fileName.slice(fileName.lastIndexOf('.') + 1) : 'txt';
             
-            downloadAbcFile(abcEncoderTunesOutput, isCustomFieldSetEnforced? `NS-Session-Tunes.${fileExt}` : `${fileName.slice(0, fileName.lastIndexOf('.'))} [ABC-SORTED-TUNES].${fileExt}`);
+            downloadAbcEncoderFile(abcEncoderTunesOutput, isCustomFieldSetEnforced? `NS-Session-Tunes.${fileExt}` : `${fileName.slice(0, fileName.lastIndexOf('.'))} [ABC-SORTED-TUNES].${fileExt}`);
 
             // Optional: Save additional Chordbook JSON containing extracted chords arranged as Tunelist
 
             if (+localStorage.abcSortExportsChordsFromTunes && abcSortedOutput[3] !== '') {
 
-                downloadAbcFile(abcSortedOutput[3], "chords-tunes.json", "abc-extract-chords");
+                downloadAbcEncoderFile(abcSortedOutput[3], "chords-tunes.json", "abc-extract-chords");
             }
         }
 
@@ -275,12 +275,12 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
         if (customSettingsOn && +localStorage.abcSortExportsChordsFromTunes && abcSortedOutput[2] !== '') {
 
-            downloadAbcFile(abcSortedOutput[2], abcSortedOutput[2].includes("setTitle")? "chords-sets.json" : "chords-tunes.json", "abc-extract-chords");
+            downloadAbcEncoderFile(abcSortedOutput[2], abcSortedOutput[2].includes("setTitle")? "chords-sets.json" : "chords-tunes.json", "abc-extract-chords");
         }
     }
 
     // Save main ABC Encoder output file
-    downloadAbcFile(abcEncoderOutput, fileName, taskType);
+    downloadAbcEncoderFile(abcEncoderOutput, fileName, taskType);
 
     if (addEncoderWarningMsg) {
 
@@ -358,29 +358,59 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
     }
 }
 
-// Parse Session Survey Data from .tsv file
+// Read and validate a file uploaded via Encoder Settings menu
+// Parse Encoder Settings from .json file, pass to
+// Parse Session Survey Data from .tsv file, pass to fillSurveyDataArray
   
-export async function parseSessionSurveyData(triggerBtn) {
+export async function parseEncoderImportFile(triggerBtn) {
 
     try {
 
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
-        fileInput.accept = '.tsv';
+        fileInput.accept = '.json, .tsv';
 
         fileInput.onchange = async function() {
 
-            console.log("ABC Encoder:\n\nParsing Session Survey Data...");
+            const fileExt =
+                this.files[0].name.split('.').pop().toLowerCase();
 
-            const rawSurveyData = this.files[0];
+            if (fileExt !== 'json' && fileExt !== 'tsv') {
+
+                console.warn("ABC Encoder:\n\n Settings import file rejected, unsupported file type");
+
+                displayNotification("Unsupported file type: Import .json file to restore settings or .tsv file to add Session Survey data", "warning");
+                displayWarningEffect(triggerBtn);
+
+                return;
+            }
+
+            const rawImportFileData = this.files[0];
 
             try {
 
-                const surveyDataOutput = await readFileContent(rawSurveyData);
+                const importFileContents = await readFileContent(rawImportFileData);
 
-                console.log("ABC Encoder:\n\nSession Survey Data contents read");
+                console.log("ABC Encoder:\n\nSettings import file contents read");
 
-                if (!surveyDataOutput.startsWith("Timestamp\tI am...\tI can start...")) {
+                const isEncoderSettingsFile =
+                    importFileContents.startsWith(`[\n  {\n    "abcEncodeSortsTuneBook":`);
+
+                const isSessionSurveyFile = 
+                    importFileContents.startsWith("Timestamp\tI am...\tI can start...");
+
+
+                if (fileExt === 'json' && !isEncoderSettingsFile) {
+
+                    console.warn("ABC Encoder:\n\nInvalid Encoder Settings file!");
+
+                    displayNotification("Not a valid Encoder Settings file", "warning");
+                    displayWarningEffect(triggerBtn);
+
+                    return;
+                }
+
+                if (fileExt === 'tsv' && !isSessionSurveyFile) {
 
                     console.warn("ABC Encoder:\n\nInvalid Session Survey Data file!");
 
@@ -390,15 +420,30 @@ export async function parseSessionSurveyData(triggerBtn) {
                     return;
                 }
 
+                // Process Encoder Settings JSON, restore user settings 
+
+                if (isEncoderSettingsFile) {
+
+                    restoreEncoderSettingsFromFile(importFileContents);
+                    return;
+                }
+
                 // Process Survey Data and fill sessionSurveyData array
-                fillSurveyDataArray(surveyDataOutput);
-                triggerBtn.dataset.state = "filled";
+
+                if (isSessionSurveyFile) {
+
+                    console.log("ABC Encoder:\n\nProcessing Session Survey Data...")
+
+                    fillSurveyDataArray(importFileContents);
+                    triggerBtn.dataset.state = "filled";
+                    return;
+                }
 
             } catch (error) {
 
-                console.error("ABC Encoder:\n\nError reading Session Survey Data file:\n\n", error);
+                console.error("ABC Encoder:\n\nError reading imported data file:\n\n", error);
 
-                displayNotification("Error reading session survey file", "error");
+                displayNotification("Error reading imported data file", "error");
                 displayWarningEffect(triggerBtn);
             }
         };
@@ -409,7 +454,7 @@ export async function parseSessionSurveyData(triggerBtn) {
 
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
 
-        displayNotification("Error parsing session survey file", "error");
+        displayNotification("Error parsing imported data file", "error");
         displayWarningEffect(triggerBtn);
     }
 }
@@ -438,13 +483,23 @@ async function readFileContent(file) {
 
 // Download a file containing ABC Encoder output, assign file name depending on task type
 
-function downloadAbcFile(abcContent, fileName, taskType) {
+export function downloadAbcEncoderFile(fileContent, fileName, taskType) {
 
     const isForAbcToolsWebsite = localStorageOk() && +localStorage.abcEncodeOutputsAbcToolsString;
 
-    const fileExt = isForAbcToolsWebsite || !fileName.includes('.')? 'txt' : fileName.slice(fileName.lastIndexOf('.') + 1);
+    const fileExt =
+        isForAbcToolsWebsite || !fileName.includes('.')? 'txt' : fileName.slice(fileName.lastIndexOf('.') + 1);
 
-    const abcFile = new Blob([abcContent], { type: !isForAbcToolsWebsite && (taskType === "abc-encode" || taskType === "abc-extract-chords")? "application/json" : "text/plain" });
+    const abcFile =
+        new Blob(
+            [fileContent],
+            { type: !isForAbcToolsWebsite &&
+                (taskType === "abc-encode" ||
+                taskType === "abc-extract-chords" ||
+                taskType === "export-settings")?
+                "application/json" :
+                "text/plain" }
+        );
 
     const abcFileName = taskType === "abc-encode" && isForAbcToolsWebsite? "ABC-ENCODED.txt" :
                         taskType === "abc-encode" && fileName.startsWith("NS-Session-Sets") ? "sets.json" :
@@ -1980,7 +2035,7 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
     const abcFirstTitle = 
         abcHeadersArr[0].find(tagLine => tagLine.startsWith('T:')).
-        match(/(?<=^T:).*/)[0].trim();
+        replace('T:', '').trim();
 
     // Group ABC Titles by tune
 
@@ -3564,8 +3619,37 @@ function exportPlainTuneList(abcContent) {
 }
 
 ////////////////////////////////
-// SESSION SURVEY FUNCTIONS
+// IMPORT FILE FUNCTIONS
 ///////////////////////////////
+
+// Process Settings JSON and restore user settings
+
+function restoreEncoderSettingsFromFile(importFileData) {
+
+    if (!localStorageOk()) return;
+
+    try {
+
+        const settingsJson = JSON.parse(importFileData);
+        const settingsObj = settingsJson[0];
+
+        for (const key in settingsObj) {
+
+            localStorage[key] = settingsObj[key];
+        }
+
+    } catch (error) {
+
+        displayNotification("Error parsing imported settings file", "error");
+        console.error("ABC Encoder:\n\nParsing settings file data failed\n\n", error);
+    }
+
+    initAppCheckBoxes(true);
+    restoreEncoderSettingsInputs();
+
+    displayNotification("ABC Encoder settings have been restored", "success");
+    console.log("ABC Encoder:\n\nEncoder settings restored");
+}
 
 // Process raw Session Survey Data
 // Push an array of headers to sessionSurveyData array
@@ -3614,14 +3698,20 @@ function applySessionSurveyResults(abcContent) {
 
         if (!abc) return;
 
-        const abcTitle = abc.match(/(?<=^T:).*/m)[0].trim();
+        const abcTitle = abc.match(/^T:.*/gm)[0].replace('T:', '').trim();
         const abcTitleArr = abcTitle.split(': ');
         const titlePrefix = abcTitleArr[0];
         const titleName = abcTitleArr[1];
         let updatedAbc = '';
 
-        // Create an array of current Set Leaders
-        const abcSetLeadersArr = abc.match(/(?<=^C: Set Leaders:).*/m)[0].trim().split(', ');
+        // Get a string of current Set Leaders
+        const abcSetLeadersStr =
+            abc.match(/^C: Set Leaders:.*/gm)[0]?.
+            replace('C: Set Leaders:', '').trim();
+
+        // Create an array of Set Leaders or an empty array
+        const abcSetLeadersArr = 
+            abcSetLeadersStr? abcSetLeadersStr.split(', ') : [];
 
         // Search Survey Data headers for the current Tune / Set
         const surveyHeader = sessionSurveyData[0].find(header => 
@@ -3691,7 +3781,25 @@ export function resetEncoderSettings() {
     console.log('ABC Encoder:\n\nEncoder settings reset to defaults');
 }
 
-// Initialize inputs in ABC Encoder settings, restore last saved values
+// Restore last saved values of ABC Encoder settings inputs
+
+function restoreEncoderSettingsInputs() {
+
+    if (!encoderSettings || !localStorageOk()) return;
+
+    const lastInputVal = localStorage.abcSortReSortsByLastTagValue;
+
+    if (lastInputVal && lastInputVal.match(/^[ABCDFGHIKLMNOPQRSTUVWZ]/)) {
+
+        inputSortAbcTag.value = lastInputVal;
+
+    } else {
+
+        inputSortAbcTag.value = '';
+    }
+}
+
+// Initialize inputs in ABC Encoder settings
 
 function initEncoderSettingsInputs() {
 
@@ -3699,8 +3807,5 @@ function initEncoderSettingsInputs() {
 
     inputSortAbcTag.addEventListener('input', filterInputSortAbcTag);
 
-    if (localStorageOk() && localStorage.abcSortReSortsByLastTagValue) {
-
-        inputSortAbcTag.value = localStorage.abcSortReSortsByLastTagValue;
-    }
+    restoreEncoderSettingsInputs();
 }

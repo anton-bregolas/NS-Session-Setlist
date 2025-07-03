@@ -3,14 +3,14 @@ import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, d
          restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, 
          resetViewportWidth, getViewportWidth, getViewportHeight, getLastTunebookUrl, tuneFrame, 
          handleFullScreenButton, loadFromQueryString } from './scripts-abc-tools.js';
-import { parseAbcFromFile, parseSessionSurveyData, initEncoderSettings,
+import { parseAbcFromFile, parseEncoderImportFile, initEncoderSettings, downloadAbcEncoderFile,
          resetEncoderSettings, abcEncoderDefaults } from './scripts-abc-encoder.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Novi Sad Session Setlist Custom App Scripts
+// Novi Sad Session Setlist App Scripts
 // https://github.com/anton-bregolas/
 // (c) Anton Zille 2024-2025
 //
@@ -20,11 +20,11 @@ import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: 2025-05-17
+// NS Session DB date: See DB_VERSION
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const APP_VERSION = "0.9.9";
-const DB_VERSION = "2025-05-17";
+const APP_VERSION = "1.0.0.1";
+const DB_VERSION = "2025-07-03";
 
 // Define Global Variables
 
@@ -638,14 +638,14 @@ export function openSettingsMenu(dataType) {
 
   if (dataType === "app-options") {
 
-    printLocalStorageSettings(abcTunebookDefaults);
+    printLocalStorageSettings(abcTunebookDefaults, true);
 
     appOptionsPopover.showPopover();
   }
 
   if (dataType === "encoder-options") {
 
-    printLocalStorageSettings(abcEncoderDefaults);
+    printLocalStorageSettings(abcEncoderDefaults, true);
 
     appOptionsPopover.showPopover();
   }
@@ -1235,11 +1235,21 @@ async function appButtonHandler(btn) {
       return;
     }
 
-    // Prompt file selection menu for Session Survey Data
+    // Export Encoder Settings and save them as a .json file
 
-    if (btn.dataset.load === "session-survey") {
+    if (btn.dataset.load === "encoder-json") {
 
-      parseSessionSurveyData(btn);
+      downloadAbcEncoderFile(
+        exportLocalStorageSettings(abcEncoderDefaults),
+        "abc-encoder-settings.json",
+        "export-settings");
+    }
+
+    // Prompt file selection menu for Encoder Settings Import
+
+    if (btn.dataset.load === "encoder-import") {
+
+      parseEncoderImportFile(btn);
       return;
     }
 
@@ -1377,7 +1387,7 @@ async function appCheckBoxHandler(checkBox) {
     if (checkBox.dataset.linkedOptions)
       disableCheckBoxes(checkBox.dataset.linkedOptions);
 
-    if (checkBox.dataset.linkedInput)
+    if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
       document.getElementById(checkBox.dataset.linkedInput).setAttribute("disabled", "");
 
   } else {
@@ -1393,7 +1403,7 @@ async function appCheckBoxHandler(checkBox) {
     if (checkBox.dataset.linkedOptions)
       reEnableCheckBoxes(checkBox.dataset.linkedOptions);
 
-    if (checkBox.dataset.linkedInput)
+    if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
       document.getElementById(checkBox.dataset.linkedInput).removeAttribute("disabled");
   }
 
@@ -2527,7 +2537,7 @@ function resetAppOptions() {
 // Log the current values of settings using keys listed in an object
 // Mark user-modified settings with a '*' indicator
 
-export function printLocalStorageSettings(settingsObj) {
+export function printLocalStorageSettings(settingsObj, showModified) {
 
   if (!localStorageOk()) return;
 
@@ -2537,12 +2547,40 @@ export function printLocalStorageSettings(settingsObj) {
 
   locStorKeys.forEach(key => {
 
-    let modIndicator = localStorage[key] !== settingsObj[key]? '*' : '';
+    let modIndicator =
+      showModified && localStorage[key] !== settingsObj[key]? '*' : '';
 
     settingsReport += `${key}: ${localStorage[key]}${modIndicator}\n`;
   });
 
-  console.log(settingsReport);
+  if (showModified) console.log(settingsReport);
+
+  return settingsReport;
+}
+
+// Export the current user settings for app or ABC Encoder
+// Use keys from settings object and localStorage values
+
+function exportLocalStorageSettings(settingsObj) {
+
+  if (!localStorageOk()) return;
+
+  const locStorKeys = Object.keys(settingsObj);
+
+    let exportSettingsObject = {};
+
+  locStorKeys.forEach(key => {
+
+    exportSettingsObject[key] = localStorage[key];
+  });
+
+  if (localStorage.abcSortReSortsByLastTagValue) {
+
+    exportSettingsObject["abcSortReSortsByLastTagValue"] =
+      localStorage.abcSortReSortsByLastTagValue;
+  }
+
+  return JSON.stringify([exportSettingsObject], null, 2);
 }
 
 // Add event listeners to custom dropdown menus
@@ -2583,7 +2621,7 @@ export function initAppCheckBoxes(isHardReset) {
       if (checkBox.dataset.enables)
         forceEnableCheckBoxes(checkBox.dataset.enables)
 
-      if (checkBox.dataset.linkedInput)
+      if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
         document.getElementById(checkBox.dataset.linkedInput).removeAttribute("disabled");
     
     } else {
@@ -2591,7 +2629,10 @@ export function initAppCheckBoxes(isHardReset) {
       checkBox.checked = false;
 
       if (checkBox.dataset.linkedOptions)
-      disableCheckBoxes(checkBox.dataset.linkedOptions);
+        disableCheckBoxes(checkBox.dataset.linkedOptions);
+
+      if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
+        document.getElementById(checkBox.dataset.linkedInput).setAttribute("disabled", "");
     }
   });
 }
