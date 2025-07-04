@@ -10,7 +10,7 @@ import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 import { APP_VERSION, DB_VERSION } from '../version.js'
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist App Scripts
 // https://github.com/anton-bregolas/
 // (c) Anton Zille 2024-2025
@@ -21,8 +21,7 @@ import { APP_VERSION, DB_VERSION } from '../version.js'
 // Tania Sycheva - ABC
 // Oleg Naumov - Chords
 //
-// NS Session DB date: See DB_VERSION
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 // Define Global Variables
 
@@ -915,7 +914,7 @@ async function tuneDataFetch() {
     
     if (localStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
 
-      displayNotification(`App version: v.${APP_VERSION}; Session DB: ${DB_VERSION} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
+      displayNotification(`App version: v${APP_VERSION}; Session DB: ${DB_VERSION} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
     }
     
     return tuneDataSize[0];
@@ -2572,11 +2571,8 @@ function exportLocalStorageSettings(settingsObj) {
     exportSettingsObject[key] = localStorage[key];
   });
 
-  if (localStorage.abcSortReSortsByLastTagValue) {
-
-    exportSettingsObject["abcSortReSortsByLastTagValue"] =
-      localStorage.abcSortReSortsByLastTagValue;
-  }
+  exportSettingsObject["abcSortReSortsByLastTagValue"] =
+      localStorage.abcSortReSortsByLastTagValue || '';
 
   return JSON.stringify([exportSettingsObject], null, 2);
 }
