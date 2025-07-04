@@ -8,6 +8,7 @@ import { parseAbcFromFile, parseEncoderImportFile, initEncoderSettings, download
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
+import { APP_VERSION, DB_VERSION } from '../version.js'
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist App Scripts
@@ -22,9 +23,6 @@ import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 //
 // NS Session DB date: See DB_VERSION
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const APP_VERSION = "1.0.0.1";
-const DB_VERSION = "2025-07-03";
 
 // Define Global Variables
 
