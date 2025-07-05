@@ -335,12 +335,12 @@
                 <div data-chord-viewer="background"></div>
                 <div data-chord-viewer="container">
                     <header data-chord-viewer="header" class="wrapper-container flex-between">
-                        <button data-cvw-action="toggle-theme" data-controls="cvw-theme-btn" data-theme="light" class="btn-cvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
+                        <button data-cvw-action="toggle-theme" data-theme="light" class="btn-cvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#theme-icon-dark"></use>
                             </svg>
                         </button>
-                        <button data-cvw-action="toggle-theme" data-controls="cvw-theme-btn" data-theme="dark" class="btn-cvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
+                        <button data-cvw-action="toggle-theme" data-theme="dark" class="btn-cvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#theme-icon-light"></use>
                             </svg>
@@ -349,20 +349,20 @@
                             <h2 data-chord-viewer="title"></h2>
                         </div>
                         <div data-chord-viewer="x-container" class="flex-center">
-                            <button autofocus data-cvw-action="close-chord-viewer" data-controls="cvw-btn-x" class="btn-cvw btn-x flex-center" title="Close Chord Viewer" aria-title="Close Chord Viewer"></button>
+                            <button autofocus data-cvw-action="close-chord-viewer" class="btn-cvw btn-x flex-center" title="Close Chord Viewer" aria-title="Close Chord Viewer"></button>
                         </div>
                     </header>
                     <div data-chord-viewer="body">
-                        <input type="range" data-controls="chord-viewer-slider" name="chords-slider" min="75" max="185" value="120" step="1" />
+                        <input type="range" data-chord-viewer="slider" name="chords-slider" min="75" max="185" value="120" step="1" />
                         <div data-chord-viewer="chords-container"></div>
                     </div>
                     <footer data-chord-viewer="footer" class="flex-between">
-                        <button data-cvw-action="toggle-gui" data-controls="cvw-control-btn" class="btn-cvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
+                        <button data-cvw-action="toggle-gui" class="btn-cvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
                             <svg data-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#action-icon-sliders"></use>
                             </svg>
                         </button>
-                        <button data-cvw-action="reset-slider" data-controls="cvw-control-btn" class="btn-cvw flex-center" title="Reset slider settings" aria-title="Reset slider settings">
+                        <button data-cvw-action="reset-slider" class="btn-cvw flex-center" title="Reset slider settings" aria-title="Reset slider settings">
                             <svg data-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#action-icon-reset"></use>
                             </svg>
@@ -374,13 +374,13 @@
             <dialog id="list-viewer" data-list-viewer="dialog" class="dark" aria-label="List Viewer Dialog">
                 <div data-list-viewer="background"></div>
                 <div data-list-viewer="container">
-                    <header data-list-viewer="header" class="wrapper-container flex-between">
-                        <button data-lvw-action="toggle-theme" data-controls="lvw-theme-btn" data-theme="light" class="btn-lvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
+                    <header data-list-viewer="header" class="wrapper-container flex-between" tabindex="-1">
+                        <button data-lvw-action="toggle-theme" data-theme="light" class="btn-lvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#theme-icon-dark"></use>
                             </svg>
                         </button>
-                        <button data-lvw-action="toggle-theme" data-controls="lvw-theme-btn" data-theme="dark" class="btn-lvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
+                        <button data-lvw-action="toggle-theme" data-theme="dark" class="btn-lvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#theme-icon-light"></use>
                             </svg>
@@ -389,10 +389,10 @@
                             <h2 data-list-viewer="title"></h2>
                         </div>
                         <div data-list-viewer="x-container" class="flex-center">
-                            <button autofocus data-lvw-action="close-list-viewer" data-controls="lvw-btn-x" class="btn-lvw btn-x flex-center" title="Close List Viewer" aria-title="Close List Viewer"></button>
+                            <button autofocus data-lvw-action="close-list-viewer" class="btn-lvw btn-x flex-center" title="Close List Viewer" aria-title="Close List Viewer"></button>
                         </div>
                     </header>
-                    <div data-list-viewer="body">
+                    <div data-list-viewer="body" tabindex="-1">
                         <div data-list-viewer="tiles-container" class="flex-center"></div>
                     </div>
                     <footer data-list-viewer="footer" class="flex-between"></footer>
