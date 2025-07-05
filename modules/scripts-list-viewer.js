@@ -128,8 +128,7 @@ function handleListViewerClick(event) {
 
   if (!actionTrigger) return;
 
-  const listViewerGui = listViewerDialog.querySelectorAll('[data-controls]');
-  const listViewerThemeBtns = listViewerDialog.querySelectorAll('[data-controls="lvw-theme-btn"]');
+  const listViewerThemeBtns = listViewerDialog.querySelectorAll('[data-lvw-action="toggle-theme"]');
 
   const elAction = actionTrigger.dataset.lvwAction;
 

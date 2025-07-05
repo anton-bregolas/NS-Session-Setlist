@@ -30,7 +30,7 @@ const tuneSelector = document.querySelector('#tuneSelector');
 const chordViewerDialog = document.querySelector('[data-chord-viewer="dialog"]');
 const chordViewerTitle = document.querySelector('[data-chord-viewer="title"]');
 const chordViewerChords = document.querySelector('[data-chord-viewer="chords-container"]');
-const chordViewerSlider = document.querySelector('[data-controls="chord-viewer-slider"]');
+const chordViewerSlider = document.querySelector('[data-chord-viewer="slider"]');
 
 // Define initial Chord Dialog slider settings
 
@@ -198,8 +198,8 @@ function handleChordViewerClick(event) {
 
   if (!actionTrigger) return;
 
-  const chordViewerGui = chordViewerDialog.querySelectorAll('[data-controls]');
-  const chordViewerThemeBtns = chordViewerDialog.querySelectorAll('[data-controls="cvw-theme-btn"]');
+  const chordViewerGui = chordViewerDialog.querySelectorAll('[data-cvw-action]');
+  const chordViewerThemeBtns = chordViewerDialog.querySelectorAll('[data-cvw-action="toggle-theme"]');
 
   const elAction = actionTrigger.dataset.cvwAction;
 

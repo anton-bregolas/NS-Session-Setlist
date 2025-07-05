@@ -90,25 +90,20 @@
   transition: color 0.25s ease-out;
 }
 
-[data-controls] {
+[data-lvw-action] {
+  color: var(--tiles-ui-color);
+  outline-offset: 0.33rem;
+  border-radius: 50%;
+  opacity: 0.9;
   z-index: 1;
 }
 
-[data-controls="lvw-theme-btn"],
-[data-controls="lvw-control-btn"],
-[data-controls="lvw-btn-x"] {
-  color: var(--tiles-ui-color);
-  outline-color: var(--tiles-ui-color);
-  border-radius: 50%;
-  opacity: 0.9;
-}
-
-[data-controls="lvw-theme-btn"],
+[data-lvw-action="toggle-theme"],
 [data-list-viewer="x-container"] {
   top: 1.5rem;
 }
 
-[data-controls="lvw-theme-btn"] {
+[data-lvw-action="toggle-theme"] {
   position: absolute;
   left: 1.5rem;
 }
@@ -118,37 +113,24 @@
   right: 1.65rem;
 }
 
-[data-controls="lvw-control-btn"],
-[data-controls="lvw-btn-x"] {
+[data-lvw-action].btn-x {
   font-size: 2.75rem;
   width: 2.75rem;
   height: 2.75rem;
 }
 
-[data-controls="lvw-btn-x"] {
-  outline-offset: 0.25rem;
-}
-
-[data-controls="lvw-btn-x"]::after {
+[data-lvw-action].btn-x::after {
   content: "\00d7";
   padding-bottom: 0.35rem;
 }
 
-[data-controls="lvw-control-btn"] {
-  outline-offset: 0.25rem;
-}
-
-[data-controls="lvw-theme-btn"] {
-  outline-offset: 0.33rem;
-}
-
-[data-controls="lvw-btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-list-viewer="tune-tile"]:is(:focus-visible),
+[data-lvw-action].btn-x:is(:hover, :focus),
+[data-lvw-action]:is(:focus-visible) {
   outline: 0.2rem solid;
 }
 
-[data-controls="lvw-theme-btn"]:is(:hover, :focus, :focus-visible),
-[data-controls="lvw-control-btn"]:is(:hover, :focus, :focus-visible),
-[data-controls="lvw-btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-lvw-action]:is(:hover, :focus, :focus-visible) {
   color: var(--tiles-font-color);
   outline-color: var(--tiles-font-color);
 }
@@ -163,9 +145,7 @@
   height: 2.45rem;
 }
 
-[data-list-viewer="dialog"].dark [data-controls="lvw-theme-btn"]:is(:hover, :focus, :focus-visible),
-[data-list-viewer="dialog"].dark [data-controls="lvw-control-btn"]:is(:hover, :focus, :focus-visible),
-[data-list-viewer="dialog"].dark [data-controls="lvw-btn-x"]:is(:hover, :focus, :focus-visible) {
+[data-list-viewer="dialog"].dark [data-lvw-action]:is(:hover, :focus, :focus-visible) {
   opacity: 1;
 }
 
@@ -189,6 +169,8 @@
   color: var(--tiles-font-color);
   min-height: var(--tiles-height);
   padding: var(--tiles-padding);
+  border-radius: 0;
+  outline-offset: -0.2rem;
 }
 
 [data-list-viewer="tune-tile"]:nth-of-type(odd) {

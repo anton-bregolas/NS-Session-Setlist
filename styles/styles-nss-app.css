@@ -1288,6 +1288,7 @@ input[type="checkbox"]:focus-visible {
 }
 
 .tunebook-action {
+  cursor: pointer;
   gap: 1.2rem;
 }
 
