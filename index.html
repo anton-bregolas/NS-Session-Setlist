@@ -146,7 +146,7 @@
                     </section>
                 </div>
 
-                <button id="fullScreenButton" data-controls="fullscreen-view" data-load="chord-viewer" class="nss-btn nss-tunebook-el flex-wrapper" title="View current item in full screen mode" aria-title="View current item in full screen mode">
+                <button id="fullScreenButton" data-controls="fullscreen-view" data-alt-view="chord-viewer" class="nss-btn nss-tunebook-el flex-wrapper" title="View current item in full screen mode" aria-title="View current item in full screen mode">
                     <span data-label="fs"></span>
                     <span class="nss-icon-show nss-mini-icon">
                         <svg class="nss-icon" aria-hidden="true">
@@ -353,7 +353,7 @@
                         </div>
                     </header>
                     <div data-chord-viewer="body">
-                        <input type="range" data-chord-viewer="slider" name="chords-slider" min="75" max="185" value="120" step="1" />
+                        <input type="range" data-chord-viewer="slider" data-cvw-action="scale-chords-output" name="chords-slider" min="75" max="185" value="120" step="1" />
                         <div data-chord-viewer="chords-container"></div>
                     </div>
                     <footer data-chord-viewer="footer" class="flex-between">
@@ -533,7 +533,7 @@
                         </span>
                     </div>
                     <div data-tbk-action="open-chord-viewer-mobile" class="tunebook-action flex-wrapper" aria-hidden="true" hidden>
-                        <button data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open List Viewer" aria-title="Open List Viewer">
+                        <button data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open Chord Viewer" aria-title="Open Chord Viewer">
                             <span class="nss-btn-text-label flex-wrapper">‘Em’</span>
                         </button>
                     </div>
@@ -558,7 +558,7 @@
                         </span>
                     </div>
                     <div data-tbk-action="open-chord-viewer" class="tunebook-action flex-wrapper">
-                        <button data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open List Viewer" aria-title="Open List Viewer">
+                        <button data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open Chord Viewer" aria-title="Open Chord Viewer">
                             <span class="nss-btn-text-label flex-wrapper">‘Em’</span>
                         </button>
                         <span class="tunebook-action-label nss-gradient-text">

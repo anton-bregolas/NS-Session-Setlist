@@ -696,17 +696,21 @@ export function displayNotification(msgText, msgType, nextFocusEl) {
 
 // Show a warning outline around the target button
 
-export function displayWarningEffect(focusBtn) {
+export function displayWarningEffect(focusBtn, fallBackBtn) {
 
-  if (!focusBtn) return;
+  let targetBtn = 
+    focusBtn && !!focusBtn.offsetParent? focusBtn :
+    fallBackBtn? fallBackBtn : null;
 
-  focusBtn.style.outline = "0.17rem solid red";
-  focusBtn.style.filter = "drop-shadow(1px 1px 8px red)";
+  if (!targetBtn) return;
+
+  targetBtn.style.outline = "0.17rem solid red";
+  targetBtn.style.filter = "drop-shadow(1px 1px 8px red)";
 
   setTimeout(() => {
 
-    focusBtn.style.removeProperty('outline');
-    focusBtn.style.removeProperty('filter');
+    targetBtn.style.removeProperty('outline');
+    targetBtn.style.removeProperty('filter');
   }, 2500);
 }
 
@@ -1121,7 +1125,7 @@ async function appButtonHandler(btn) {
 
   if (btn.dataset.controls && btn.dataset.controls === "fullscreen-view") {
 
-    handleFullScreenButton(btn.dataset.load);
+    handleFullScreenButton(btn.dataset.altView);
     return;
   }
 
@@ -1321,9 +1325,18 @@ async function appButtonHandler(btn) {
 
     tuneBookActionsPopup.hidePopover();
 
-    const tuneBookActionsBtns = document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
+    const tuneBookActionsBtns =
+      document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
 
-    tuneBookActionsBtns[0].focus();
+    for (let i = 0; i < tuneBookActionsBtns.length; i++) {
+
+      if(!!tuneBookActionsBtns[i].offsetParent) {
+
+        tuneBookActionsBtns[i].focus();
+        break;
+      }
+    }
+
     return;
   }
 

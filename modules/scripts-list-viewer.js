@@ -18,8 +18,13 @@ import { loadTuneBookItem } from "./scripts-abc-tools.js"
 
 // Define required app elements
 
-const launchButton = document.querySelector('[data-controls="list-viewer"]');
+// Elements used to launch the viewer, first currently displayed gets focus on exit
+const launchEls = document.querySelectorAll('[data-load="list-viewer"]');
+// Fallback button receiving focus after viewer is closed
+const altFocusBtn = document.querySelector('#fullScreenButton');
+// Select element containing a list of Tune / Set options
 const tuneSelector = document.querySelector('#tuneSelector');
+// Select element containing a list of filter options
 const filterOptions = document.querySelector('#filterOptions');
 
 // Define variants of placeholder option text
@@ -163,6 +168,21 @@ function handleListViewerClick(event) {
   if (elAction === 'close-list-viewer') {
 
     listViewerDialog.close();
+
+    let wasFocusFound = false;
+
+    for (let i = 0; i < launchEls.length; i++) {
+
+      if(!!launchEls[i].offsetParent) {
+
+        wasFocusFound = true;
+        launchEls[i].focus();
+        break;
+      }
+    }
+
+    if (!wasFocusFound) altFocusBtn.focus();
+
     return;
   }
 }
@@ -226,12 +246,18 @@ function ariaShowMe(el) {
 
 // Show a warning outline around the target button
 
-// function displayWarningEffect(focusBtn) {
+// function displayWarningEffect(focusBtn, fallBackBtn) {
 
-//   focusBtn.setAttribute("style", "outline-color: red");
+//   let targetBtn = 
+//     focusBtn && !!focusBtn.offsetParent? focusBtn :
+//     fallBackBtn? fallBackBtn : null;
+
+//   if (!targetBtn) return;
+
+//   targetBtn.style.outline = "0.17rem solid red";
 
 //   setTimeout(() => {
 
-//     focusBtn.removeAttribute("style");
+//     targetBtn.style.removeProperty('outline');
 //   }, 2500);
 // }

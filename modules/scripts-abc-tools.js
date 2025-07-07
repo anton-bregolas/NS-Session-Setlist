@@ -884,7 +884,7 @@ export function getViewportWidth() {
 
 // Handle Full Screen Button action depending on app settings
 
-export async function handleFullScreenButton(dataLoad) {
+export async function handleFullScreenButton(altView) {
 
     if (!lastURL) {
 
@@ -938,7 +938,7 @@ export async function handleFullScreenButton(dataLoad) {
     
     if (fullScreenSetting === 1) {
         
-        openSettingsMenu(dataLoad);
+        openSettingsMenu(altView);
         return;
     }
 }
