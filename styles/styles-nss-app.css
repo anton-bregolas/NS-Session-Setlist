@@ -441,12 +441,12 @@ input:is([name="nss-radio-view"]):checked + span .nss-icon-hide,
   color: var(--accent-color-alt);
 }
 
-[data-load="chord-viewer"] .nss-icon-show {
+[data-controls="fullscreen-view"] .nss-icon-show {
   filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
 }
 
 input:is([name="nss-radio-view"]):checked + span .nss-icon-show,
-body[data-mode="mobile"] [data-load="chord-viewer"] .nss-icon-show {
+body[data-mode="mobile"] [data-controls="fullscreen-view"] .nss-icon-show {
   display: block;
 }
 

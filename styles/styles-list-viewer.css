@@ -90,7 +90,7 @@
   transition: color 0.25s ease-out;
 }
 
-[data-lvw-action] {
+[data-lvw-action].btn-lvw {
   color: var(--tiles-ui-color);
   outline-offset: 0.33rem;
   border-radius: 50%;
@@ -126,11 +126,11 @@
 
 [data-list-viewer="tune-tile"]:is(:focus-visible),
 [data-lvw-action].btn-x:is(:hover, :focus),
-[data-lvw-action]:is(:focus-visible) {
+[data-lvw-action].btn-lvw:is(:focus-visible) {
   outline: 0.2rem solid;
 }
 
-[data-lvw-action]:is(:hover, :focus, :focus-visible) {
+[data-lvw-action].btn-lvw:is(:hover, :focus, :focus-visible) {
   color: var(--tiles-font-color);
   outline-color: var(--tiles-font-color);
 }
@@ -145,7 +145,7 @@
   height: 2.45rem;
 }
 
-[data-list-viewer="dialog"].dark [data-lvw-action]:is(:hover, :focus, :focus-visible) {
+[data-list-viewer="dialog"].dark [data-lvw-action].btn-lvw:is(:hover, :focus, :focus-visible) {
   opacity: 1;
 }
 
@@ -163,7 +163,7 @@
   margin: 0 auto;
 }
 
-[data-list-viewer="tune-tile"] {
+[data-list-viewer="tune-tile"].btn-lvw {
   width: 100%;
   font-size: var(--tiles-font-size);
   color: var(--tiles-font-color);
