@@ -719,7 +719,10 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength) {
       const abcBarChordsArr = abcBar.match(/".*?"/g) ?? [];
       
       // Clean up chord contents, filtering out all invalid characters
-      const abcBarChordsInput = abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#♯♭♮×/()+]/g, '')).filter(Boolean);
+      const abcBarChordsInput =
+        abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#♯♭♮×/()+]/g, '')).
+        map(c => c.replaceAll(/(.+)\(/g, `$1\u2009(`)).
+        filter(Boolean);
       
       const processedChordsArr = getCompleteAbcChordBar(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength);
       
@@ -752,12 +755,9 @@ function getCompleteAbcChordBar(abcBar, abcBarChordsInput, minTuneBeats, abcMete
 
     const singleBarChord = abcBarChordsInput[0];
 
-    if (abcBarChordsInput[0].match(/.+\(.+\)/)) {
+    if (abcBarChordsInput[0].length > 3) {
 
-      const primaryChord = singleBarChord.replaceAll(/\(.*?\)/g, '');
-      const alternateChord = singleBarChord.match(/\(.*\)/)[0];
-
-      return [`${primaryChord}\t${(alternateChord + '\t').repeat(minTuneBeats - 1)}`, singleBarChord];
+      return [`${singleBarChord}${`\t/`.repeat(minTuneBeats - 1)}`, singleBarChord];
     }
 
     return [`${(singleBarChord + '\t').repeat(minTuneBeats)}`, singleBarChord];
@@ -869,16 +869,21 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
     for (let n = 0; n < beatsInThisFragment; n++) {
 
       let currentChord = relatedChord? relatedChord : '';
-      // console.warn(previousChord, currentChord, currentChord.match(/\(.*\)/), abcBarChordsInput);
+
       if ((previousChord && currentChord) && 
         currentChord === previousChord && 
-        currentChord.match(/.+\(.*\)/)) {
+        currentChord.length > 3) {
 
-        currentChord = currentChord.match(/\(.*\)/)[0];
+        currentChord = '/';
       }
       
-      completeChordBar += currentChord? `${currentChord}${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0 || beatsInThisFragment === minTuneBeats? '\t' : '\xa0'}` : '';
-      previousChord = currentChord;
+      completeChordBar +=
+        currentChord? 
+        `${currentChord}` +
+        `${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0 || beatsInThisFragment === minTuneBeats? '\t' : '\xa0'}` :
+        '';
+      console.warn(completeChordBar)
+        previousChord = currentChord;
       beatCount++;
     }
   });

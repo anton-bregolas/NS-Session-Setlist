@@ -208,7 +208,7 @@
 
 [data-chords="chord"] {
   white-space: nowrap;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /*[data-chords="barline"] {
