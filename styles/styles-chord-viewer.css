@@ -195,6 +195,7 @@
 
 [data-chords="bar"] {
   grid-template-columns: auto repeat(2, 1fr) auto;
+  overflow: clip;
 }
 
 [data-chords="bar-triple"] {
