@@ -8,9 +8,9 @@
 
 import { storageAvailable } from "./scripts-3p/storage-available/storage-available.js";
 
-// Import functions handling warning messages (for user notifications)
+// Import custom functions handling warning messages, user notifications and focus on exit
 
-import { displayWarningEffect, displayNotification } from "./scripts-nss-app.js";
+import { displayWarningEffect, displayNotification, getFirstCurrentlyDisplayedElem } from "./scripts-nss-app.js";
 
 // Import function for loading selected tune items into ABC Tools iframe
 
@@ -169,19 +169,10 @@ function handleListViewerClick(event) {
 
     listViewerDialog.close();
 
-    let wasFocusFound = false;
+    const focusElem =
+      getFirstCurrentlyDisplayedElem(launchEls) ?? altFocusBtn;
 
-    for (let i = 0; i < launchEls.length; i++) {
-
-      if(!!launchEls[i].offsetParent) {
-
-        wasFocusFound = true;
-        launchEls[i].focus();
-        break;
-      }
-    }
-
-    if (!wasFocusFound) altFocusBtn.focus();
+    focusElem.focus();
 
     return;
   }
@@ -242,6 +233,24 @@ function ariaShowMe(el) {
 
 //     console.log(msgText);
 //   } 
+// }
+
+// Get the first element in a NodeList that is currently displayed
+
+// function getFirstCurrentlyDisplayedElem(nodeList) {
+
+//   let foundEl = null;
+
+//   for (let i = 0; i < nodeList.length; i++) {
+
+//     if(!!nodeList[i].offsetParent) {
+
+//       foundEl = nodeList[i];
+//       break;
+//     }
+//   }
+
+//   return foundEl;
 // }
 
 // Show a warning outline around the target button

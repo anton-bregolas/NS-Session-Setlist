@@ -264,6 +264,10 @@ body[data-mode="mobile"] .nss-tunebook-options {
   z-index: -1;
 }
 
+.select-wrapper:focus-within {
+  filter: drop-shadow(1px 1px 4px var(--accent-color));
+}
+
 body[data-mode="desktop"] .nss-select .nss-option-btn {
   margin-top: -0.5rem;
 }
@@ -355,13 +359,13 @@ select {
   outline: 0.25rem solid transparent;
 }
 
-select:is(:focus, :focus-visible) {
-  filter: drop-shadow(1px 1px 4px var(--accent-color));
-}
-
-body[data-mode="mobile"] .nss-tunebook-selector:is(:focus, :focus-visible) {
+select.text-align-left {
   text-align: left;
 }
+
+/* body[data-mode="mobile"] .nss-tunebook-selector:is(:focus, :focus-visible) {
+  text-align: left;
+} */
 
 iframe:is(:focus, :focus-visible) {
   outline: none;
