@@ -10,6 +10,7 @@
 import { localStorageOk, initSettingsFromObject, checkTuneBookSetting, checkIfMobileMode, tuneSets, tuneList, 
         filterOptions, initCustomDropDownMenus, openSettingsMenu, handleSelectorLabels, switchTuneBookItem,
         sanitizeQueryParam, displayNotification, displayWarningEffect } from "./scripts-nss-app.js";
+import { getSupportedAnimalEmojis } from "./scripts-emoji-manager.js";
 // Import lz-string compression algorithm
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
@@ -289,7 +290,7 @@ export function populateFilterOptions(filters) {
 
                 const filterOption = document.createElement('option');
                 filterOption.value = filter;
-                filterOption.textContent = `${filterList.id === "setLeaders"? '🧝' : '🎻'} ${filter}`;
+                filterOption.textContent = `${filterList.id === "setLeaders"? getSupportedAnimalEmojis(1) : '🎻'} ${filter}`;
                 filterGroup.appendChild(filterOption);
             });
         }
