@@ -16,9 +16,9 @@ import { storageAvailable } from "./scripts-3p/storage-available/storage-availab
 
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
-// Import functions handling warning messages (for user notifications)
+// Import custom functions handling warning messages, user notifications and focus on exit
 
-import { displayWarningEffect, displayNotification } from "./scripts-nss-app.js";
+import { displayWarningEffect, displayNotification, getFirstCurrentlyDisplayedElem } from "./scripts-nss-app.js";
 
 // Define required app elements
 
@@ -61,6 +61,8 @@ const maxWTops = 90; // Highest max-width value for chords (%)
 export function openChordViewer(setChords, tuneChords) {
   
   const isDynamicChordsMode = isLocalStorageOk()? +localStorage.chordViewerAllowDynamicChords : false;
+
+  const launchButton = launchEls
 
   if (!setChords && !tuneChords && !isDynamicChordsMode) {
 
@@ -271,19 +273,10 @@ function handleChordViewerClick(event) {
 
     chordViewerDialog.close();
 
-    let wasFocusFound = false;
+    const focusElem =
+      getFirstCurrentlyDisplayedElem(launchEls) ?? altFocusBtn;
 
-    for (let i = 0; i < launchEls.length; i++) {
-
-      if(!!launchEls[i].offsetParent) {
-
-        wasFocusFound = true;
-        launchEls[i].focus();
-        break;
-      }
-    }
-
-    if (!wasFocusFound) altFocusBtn.focus();
+    focusElem.focus();
 
     return;
   }
@@ -882,8 +875,7 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
         `${currentChord}` +
         `${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0 || beatsInThisFragment === minTuneBeats? '\t' : '\xa0'}` :
         '';
-      console.warn(completeChordBar)
-        previousChord = currentChord;
+      previousChord = currentChord;
       beatCount++;
     }
   });
@@ -1140,6 +1132,24 @@ function ariaShowMe(el) {
 
 //     targetBtn.style.removeProperty('outline');
 //   }, 2500);
+// }
+
+// Get the first element in a NodeList that is currently displayed
+
+// function getFirstCurrentlyDisplayedElem(nodeList) {
+
+//   let foundEl = null;
+
+//   for (let i = 0; i < nodeList.length; i++) {
+
+//     if(!!nodeList[i].offsetParent) {
+
+//       foundEl = nodeList[i];
+//       break;
+//     }
+//   }
+
+//   return foundEl;
 // }
 
 // Get last ABC Tools URL (for use in ABC Tools scripts)

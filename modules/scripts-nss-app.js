@@ -699,8 +699,7 @@ export function displayNotification(msgText, msgType, nextFocusEl) {
 export function displayWarningEffect(focusBtn, fallBackBtn) {
 
   let targetBtn = 
-    focusBtn && !!focusBtn.offsetParent? focusBtn :
-    fallBackBtn? fallBackBtn : null;
+    getFirstCurrentlyDisplayedElem([focusBtn, fallBackBtn]);
 
   if (!targetBtn) return;
 
@@ -712,6 +711,26 @@ export function displayWarningEffect(focusBtn, fallBackBtn) {
     targetBtn.style.removeProperty('outline');
     targetBtn.style.removeProperty('filter');
   }, 2500);
+}
+
+// Get the first element in a NodeList that is currently displayed
+// Elements with display: none property are discarded (null)
+// Return null if none of the elements are displayed
+
+export function getFirstCurrentlyDisplayedElem(nodeList) {
+
+  let foundEl = null;
+
+  for (let i = 0; i < nodeList.length; i++) {
+
+    if(!!nodeList[i].offsetParent) {
+
+      foundEl = nodeList[i];
+      break;
+    }
+  }
+
+  return foundEl;
 }
 
 // Hide Tunebook Actions menu popover
@@ -1328,14 +1347,9 @@ async function appButtonHandler(btn) {
     const tuneBookActionsBtns =
       document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
 
-    for (let i = 0; i < tuneBookActionsBtns.length; i++) {
+    const focusElem = getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
 
-      if(!!tuneBookActionsBtns[i].offsetParent) {
-
-        tuneBookActionsBtns[i].focus();
-        break;
-      }
-    }
+    if (focusElem) focusElem.focus();
 
     return;
   }
