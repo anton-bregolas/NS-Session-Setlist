@@ -2,6 +2,7 @@
 .npmrc
 .vscode
 node_modules
+auto-update-version.js
 bun.lock
 bunfig.toml
 chords.diff
