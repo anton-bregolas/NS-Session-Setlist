@@ -1473,6 +1473,12 @@ async function appCheckBoxHandler(checkBox) {
         displayNotification("App will not show version info on Tunebook startup", "success");
       break;
 
+    case 'tuneBookAddRandomFilterEmojis':
+      checkBox.checked?
+        displayNotification("App will now add random animal emojis as avatars for Set Leaders filters", "success") :
+        displayNotification("App will now add a neutral emoji as Set Leaders filter avatar", "success");
+      break;
+
     case 'abcToolsAllowTuneAutoReload':
       checkBox.checked?
         displayNotification("App will now auto-load items when filters are applied or sections swapped", "success") :
