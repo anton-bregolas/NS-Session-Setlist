@@ -27,6 +27,7 @@ export const abcTunebookDefaults = {
     // Advanced Tunebook options
     tuneBookShowStatusReport: "0",
     tuneBookAllowLoadFromHashLink: "1",
+    tuneBookAddRandomFilterEmojis: "1",
     abcToolsAllowInstrumentChanges: "1",
     abcToolsAlwaysMuteChords: "0",
     abcToolsAllowTabStyleChanges: "1",
@@ -268,6 +269,14 @@ export function populateTuneSelector(tuneBook) {
 
 export function populateFilterOptions(filters) {
 
+    const tuneLeadersNo = filters[1].list? filters[1].list.length : 0;
+
+    const areRandomEmojisOn =
+        localStorageOk() && +localStorage.tuneBookAddRandomFilterEmojis;
+
+    const randomAvatars = 
+        areRandomEmojisOn && tuneLeadersNo? getSupportedAnimalEmojis(tuneLeadersNo) : [];
+
     filters.forEach(filterList => {
 
         if (filterList.id) {
@@ -286,11 +295,16 @@ export function populateFilterOptions(filters) {
                 filterOptions.appendChild(filterGroup);
             }
 
-            filterList.list?.forEach(filter => {
+            filterList.list?.forEach((filter, i) => {
 
                 const filterOption = document.createElement('option');
                 filterOption.value = filter;
-                filterOption.textContent = `${filterList.id === "setLeaders"? getSupportedAnimalEmojis(1) : '🎻'} ${filter}`;
+                filterOption.textContent =
+                    filterList.id === "setLeaders" && randomAvatars.length?
+                        `${randomAvatars[i]} ${filter}` : 
+                    filterList.id === "setLeaders"?
+                        `👤 ${filter}` :
+                        `🎻 ${filter}`;
                 filterGroup.appendChild(filterOption);
             });
         }
