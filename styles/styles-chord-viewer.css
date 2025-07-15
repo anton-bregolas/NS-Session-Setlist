@@ -107,6 +107,7 @@
   top: 1.5rem;
 }
 
+[data-cvw-action="toggle-bold-font"],
 [data-cvw-action="toggle-theme"] {
   position: absolute;
   left: 1.5rem;
@@ -115,6 +116,10 @@
 [data-chord-viewer="x-container"] {
   position: fixed;
   right: 1.65rem;
+}
+
+[data-cvw-action="toggle-bold-font"] {
+  top: calc(50% - 2.45rem);
 }
 
 [data-chord-viewer="footer"] [data-cvw-action].btn-cvw,
@@ -280,6 +285,16 @@
 
 .wrapper-container {
   width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  
+}
+
+@media (prefers-color-scheme: light) {
+
+  
 }
 
 @supports (container-type: inline-size) {
