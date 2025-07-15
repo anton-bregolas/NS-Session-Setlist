@@ -123,6 +123,19 @@ export function initListViewer() {
   if (!listViewerDialog) return;
 
   listViewerDialog.addEventListener('click', handleListViewerClick);
+
+  if (isLocalStorageOk()) {
+
+    if (localStorage.listViewerPrefersColorTheme === "light" ||
+        (!localStorage.listViewerPrefersColorTheme && window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: light)').matches)) {
+
+        const lightThemeBtn = 
+          document.querySelector('[data-lvw-action="toggle-theme"][data-theme="light"]');
+
+        toggleColorTheme("light", lightThemeBtn);
+    }
+  }
 }
 
 // Handle clicks on interactable List Viewer elements
@@ -132,8 +145,6 @@ function handleListViewerClick(event) {
   const actionTrigger = event.target.closest('[data-lvw-action]');
 
   if (!actionTrigger) return;
-
-  const listViewerThemeBtns = listViewerDialog.querySelectorAll('[data-lvw-action="toggle-theme"]');
 
   const elAction = actionTrigger.dataset.lvwAction;
 
@@ -149,20 +160,9 @@ function handleListViewerClick(event) {
 
   if (elAction === 'toggle-theme') {
 
-    listViewerDialog.className = actionTrigger.dataset.theme;
+    const themeId = actionTrigger.dataset.theme;
 
-    listViewerThemeBtns.forEach(themeBtn => {
-
-      if (themeBtn.classList.contains(`btn-${actionTrigger.dataset.theme}`)) {
-
-        themeBtn.removeAttribute("inert");
-        ariaShowMe(themeBtn);
-        themeBtn.focus();
-      }
-    });
-
-    ariaHideMe(actionTrigger);
-    actionTrigger.setAttribute("inert", "");
+    toggleColorTheme(themeId, actionTrigger);
   }
 
   if (elAction === 'close-list-viewer') {
@@ -207,6 +207,37 @@ function ariaShowMe(el) {
     
   el.removeAttribute("hidden");
   el.removeAttribute("aria-hidden");
+}
+
+// Toggle between color themes (default options: light & dark)
+// Store theme preference for this Viewer in localStorage
+// Hide the element that triggered theme change
+
+function toggleColorTheme(themeId, triggerBtn) {
+
+  const listViewerThemeBtns =
+
+    listViewerDialog.querySelectorAll('[data-lvw-action="toggle-theme"]');
+
+  listViewerDialog.className = themeId;
+
+  listViewerThemeBtns.forEach(themeBtn => {
+
+    if (themeBtn.classList.contains(`btn-${themeId}`)) {
+
+      if (isLocalStorageOk()) {
+
+        localStorage.listViewerPrefersColorTheme = themeId;
+      }
+
+      themeBtn.removeAttribute("inert");
+      ariaShowMe(themeBtn);
+      themeBtn.focus();
+    }
+  });
+
+  ariaHideMe(triggerBtn);
+  triggerBtn.setAttribute("inert", "");
 }
 
 ///////////////////////////////////

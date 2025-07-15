@@ -32,7 +32,8 @@ export const abcTunebookDefaults = {
     abcToolsAlwaysMuteChords: "0",
     abcToolsAllowTabStyleChanges: "1",
     abcToolsAllowTuneAutoReload: "1",
-    chordViewerAllowDynamicChords: "0"
+    chordViewerAllowDynamicChords: "0",
+    chordViewerUseBoldFonts: "0"
 };
 
 ///////////////////////////////////////////

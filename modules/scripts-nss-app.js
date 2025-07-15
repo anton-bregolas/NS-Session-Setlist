@@ -1491,6 +1491,16 @@ async function appCheckBoxHandler(checkBox) {
         displayNotification("Chord Viewer will always use Chordbook JSON as source of chords", "success");
       break;
 
+    case 'chordViewerUseBoldFonts':
+      const chordViewerChords = document.querySelector('[data-chord-viewer="chords-container"]');
+      checkBox.checked?
+        chordViewerChords.style.fontWeight = "bold" :
+        chordViewerChords.style.removeProperty("font-weight");
+      checkBox.checked?
+        displayNotification("Chord Viewer will now use bold font weight for chords", "success") :
+        displayNotification("Chord Viewer will now use normal font weight for chords", "success");
+      break;
+
     // Encoder Settings
 
     case 'abcEncodeSortsTuneBook':

@@ -194,6 +194,24 @@ export function initChordViewer() {
   if (!chordViewerDialog) return;
 
   chordViewerDialog.addEventListener('click', handleChordViewerClick);
+
+  if (isLocalStorageOk()) {
+
+    if (+localStorage.chordViewerUseBoldFonts) {
+
+      chordViewerChords.style.fontWeight = "bold";
+    }
+
+    if (localStorage.chordViewerPrefersColorTheme === "light" ||
+       (!localStorage.chordViewerPrefersColorTheme && window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: light)').matches)) {
+
+        const lightThemeBtn = 
+          document.querySelector('[data-cvw-action="toggle-theme"][data-theme="light"]');
+
+        toggleColorTheme("light", lightThemeBtn);
+    }
+  }
 }
 
 // Handle clicks on interactable Chord Viewer elements
@@ -205,7 +223,6 @@ function handleChordViewerClick(event) {
   if (!actionTrigger) return;
 
   const chordViewerGui = chordViewerDialog.querySelectorAll('[data-cvw-action]');
-  const chordViewerThemeBtns = chordViewerDialog.querySelectorAll('[data-cvw-action="toggle-theme"]');
 
   const elAction = actionTrigger.dataset.cvwAction;
 
@@ -253,20 +270,22 @@ function handleChordViewerClick(event) {
 
   if (elAction === 'toggle-theme') {
 
-    chordViewerDialog.className = actionTrigger.dataset.theme;
+    const themeId = actionTrigger.dataset.theme;
 
-    chordViewerThemeBtns.forEach(themeBtn => {
+    toggleColorTheme(themeId, actionTrigger);
+  }
 
-      if (themeBtn.classList.contains(`btn-${actionTrigger.dataset.theme}`)) {
+  if (elAction === 'toggle-bold-font') {
 
-        themeBtn.removeAttribute("inert");
-        ariaShowMe(themeBtn);
-        themeBtn.focus();
-      }
-    });
+    if (isLocalStorageOk() && +localStorage.chordViewerUseBoldFonts) {
 
-    ariaHideMe(actionTrigger);
-    actionTrigger.setAttribute("inert", "");
+      chordViewerChords.style.removeProperty('font-weight');
+      localStorage.chordViewerUseBoldFonts = 0;
+      return;
+    }
+
+    chordViewerChords.style.fontWeight = "bold";
+    localStorage.chordViewerUseBoldFonts = 1;
   }
 
   if (elAction === 'close-chord-viewer') {
@@ -1088,6 +1107,37 @@ function ariaShowMe(el) {
     
   el.removeAttribute("hidden");
   el.removeAttribute("aria-hidden");
+}
+
+// Toggle between color themes (default options: light & dark)
+// Store theme preference for this Viewer in localStorage
+// Hide the element that triggered theme change
+
+function toggleColorTheme(themeId, triggerBtn) {
+
+  const chordViewerThemeBtns =
+
+    chordViewerDialog.querySelectorAll('[data-cvw-action="toggle-theme"]');
+
+  chordViewerDialog.className = themeId;
+
+  chordViewerThemeBtns.forEach(themeBtn => {
+
+    if (themeBtn.classList.contains(`btn-${themeId}`)) {
+
+      if (isLocalStorageOk()) {
+
+        localStorage.chordViewerPrefersColorTheme = themeId;
+      }
+
+      themeBtn.removeAttribute("inert");
+      ariaShowMe(themeBtn);
+      themeBtn.focus();
+    }
+  });
+
+  ariaHideMe(triggerBtn);
+  triggerBtn.setAttribute("inert", "");
 }
 
 ///////////////////////////////////
