@@ -35,6 +35,18 @@ const placeHolderText = /select|pick a|filter by/;
 const listViewerDialog = document.querySelector('[data-list-viewer="dialog"]');
 const listViewerTitle = document.querySelector('[data-list-viewer="title"]');
 const listViewerTiles = document.querySelector('[data-list-viewer="tiles-container"]');
+const listViewerSlider = document.querySelector('[data-list-viewer="slider"]');
+
+// Define List Viewer Slider settings
+const hInitVal = 70 // Global initial value for tiles height (rem*10)
+const minHVal = 22; // Minimum tile hight value (rem*10)
+
+// Set global variables
+
+let lastFilterText = 'None'; // Keep track of the last filter text loaded to title
+let isSetMakerModeOn = false; // Keep track of the Set Maker mode status
+let selectedCounter = 0; // Keep track of the number of Set items selected
+let titleStatusTimeoutId; // Keep track of the latest timeout set for clearing status
 
 ///////////////////////////////////
 // LIST VIEWER LAUNCH FUNCTIONS
@@ -74,10 +86,12 @@ export function openListViewer(selectList) {
   // Create Tune Tiles grid, populate it with items from Tunes Array
 
   loadTuneTiles(tunesArr, currentFilter);
+  lastFilterText = currentFilter;
 
-  // Display List Viewer Dialog
+  // Display List Viewer Dialog & initialize tiles height slider
 
   listViewerDialog.showModal();
+  initDialogSlider();
 }
 
 ///////////////////////////////////
@@ -112,6 +126,107 @@ function loadTuneTiles(tunesArr, currentFilter) {
   });
 }
 
+// Handle List Viewer Slider events
+
+function appTileHeightSliderHandler(event) {
+
+  // Handle slider value input event
+
+  if (event.type === 'input') {
+
+    let valueH = listViewerSlider.value;
+
+    if (valueH < minHVal)
+      valueH = minHVal;
+
+    if (this === listViewerSlider) {
+
+      // Remember tune tile height value
+
+      if (isLocalStorageOk()) {
+
+        localStorage.listViewerTilesHeightValue = valueH;
+      }
+
+      // Set tune tile height value
+
+      listViewerDialog.style.setProperty("--tiles-height", `${valueH / 10}rem`);
+    }
+  }
+}
+
+///////////////////////////////////
+// SET MAKER FUNCTIONS
+//////////////////////////////////
+
+// Select or deselect a Set item from the list:
+// Mark the item as selected with data-attribute
+// TO DO: Display the numbered Set item counter tag
+// TO DO: Renumber the existing Set item counters
+
+function toggleSetMakerSelection(item) {
+
+  if (item.hasAttribute("data-lvw-selected")) {
+
+    item.removeAttribute("data-lvw-selected");
+    selectedCounter--;
+    return;
+  }
+
+  item.setAttribute("data-lvw-selected", selectedCounter + 1);
+  selectedCounter++;
+}
+
+// Show or hide Set Maker UI elements
+
+function toggleSetMakerGui() {
+
+  const startSetMakerBtn =
+    document.querySelector('[data-lvw-action="start-set-maker"]');
+
+  const returnListViewerBtn =
+    document.querySelector('[data-lvw-action="return-list-viewer"]');
+
+  if (isSetMakerModeOn) {
+
+    ariaHideMe(startSetMakerBtn);
+    startSetMakerBtn.setAttribute("inert", "");
+    returnListViewerBtn.removeAttribute("inert");
+    ariaShowMe(returnListViewerBtn);
+    returnListViewerBtn.focus();
+    return;
+  }
+
+  ariaHideMe(returnListViewerBtn);
+  returnListViewerBtn.setAttribute("inert", "");
+  startSetMakerBtn.removeAttribute("inert");
+  ariaShowMe(startSetMakerBtn);
+  startSetMakerBtn.focus();
+}
+
+// Show a temporary status message in the List Viewer Dialog title
+// Restore the previously shown status title text after a timeout
+
+function displaySetMakerTitleStatus(titleStatus, lastStatus) {
+
+  listViewerTitle.textContent = titleStatus;
+
+  if (titleStatusTimeoutId)
+    clearTimeout(titleStatusTimeoutId);
+
+  titleStatusTimeoutId = setTimeout(() => {
+    listViewerTitle.textContent = lastStatus;
+  }, 3000);
+}
+
+// Reset all Set Maker mode settings to initial values
+
+function resetSetMakerMode() {
+
+  isSetMakerModeOn = false;
+  selectedCounter = 0;
+}
+
 ///////////////////////////////////
 // LIST VIEWER INIT FUNCTIONS
 //////////////////////////////////
@@ -135,6 +250,11 @@ export function initListViewer() {
 
         toggleColorTheme("light", lightThemeBtn);
     }
+
+    if (+localStorage.listViewerHideGui) {
+
+      ariaHideMe(listViewerSlider);
+    }
   }
 }
 
@@ -148,7 +268,14 @@ function handleListViewerClick(event) {
 
   const elAction = actionTrigger.dataset.lvwAction;
 
-  if (elAction === 'load-item') {
+  if (elAction === 'load-item' && isSetMakerModeOn) {
+
+    toggleSetMakerSelection(actionTrigger);
+
+    return;
+  }
+
+  if (elAction === 'load-item' && !isSetMakerModeOn) {
 
     tuneSelector.selectedIndex = actionTrigger.dataset.index;
 
@@ -158,14 +285,66 @@ function handleListViewerClick(event) {
     return;
   }
 
+  if (elAction === 'toggle-gui') {
+
+    if (listViewerSlider.hasAttribute("hidden")) {
+
+      ariaShowMe(listViewerSlider);
+
+      if (isLocalStorageOk())
+        localStorage.listViewerHideGui = 0;
+
+      return;
+    }
+
+    ariaHideMe(listViewerSlider);
+
+    if (isLocalStorageOk())
+      localStorage.listViewerHideGui = 1;
+
+    return;
+  }
+
   if (elAction === 'toggle-theme') {
 
     const themeId = actionTrigger.dataset.theme;
 
     toggleColorTheme(themeId, actionTrigger);
+
+    return;
+  }
+
+  if (elAction === 'return-list-viewer') {
+
+    listViewerTitle.textContent = `Filters: ${lastFilterText}`;
+    resetSetMakerMode();
+    toggleSetMakerGui();
+    return;
+  }
+
+  if (elAction === 'start-set-maker') {
+
+    const listViewerTileItems = 
+      listViewerTiles.querySelectorAll('[data-list-viewer="tiles-container"] > button');
+
+    if (listViewerTileItems.length < 2) {
+
+      displaySetMakerTitleStatus("❌ You need 2+ items 👇", `Filters: ${lastFilterText}`);
+      return;
+    }
+
+    isSetMakerModeOn = true;
+    listViewerTitle.textContent = "🎶 Select 2+ items 👇";
+    
+    toggleSetMakerGui();
+
+    // listViewerTileItems[0].focus({ focusVisible: true });
+    return;
   }
 
   if (elAction === 'close-list-viewer') {
+
+    resetSetMakerMode();
 
     listViewerDialog.close();
 
@@ -176,6 +355,42 @@ function handleListViewerClick(event) {
 
     return;
   }
+}
+
+// Initialize List Viewer slider using values from localStorage or default values
+
+function initDialogSlider() {
+
+  if (isLocalStorageOk()) {
+
+    if (!localStorage.listViewerTilesHeightValue)
+      localStorage.listViewerTilesHeightValue = hInitVal;
+  }
+
+  // Set default slider values to be applied on load
+
+  let valueH = hInitVal;
+
+  // Restore tile height value from localStorage (if available)
+
+  if (isLocalStorageOk()) {
+
+    if (localStorage.listViewerTilesHeightValue)
+      valueH = localStorage.listViewerTilesHeightValue;
+  }
+
+  if (valueH < minHVal)
+    valueH = minHVal;
+
+  // Set initial tiles height value
+
+  listViewerSlider.value = valueH;
+
+  listViewerDialog.style.setProperty("--tiles-height", `${valueH / 10}rem`);
+
+  // Listen to slider input events
+
+  listViewerSlider.addEventListener('input', appTileHeightSliderHandler);
 }
 
 ///////////////////////////////////
