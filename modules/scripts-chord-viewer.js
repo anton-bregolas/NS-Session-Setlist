@@ -36,7 +36,7 @@ const chordViewerTitle = document.querySelector('[data-chord-viewer="title"]');
 const chordViewerChords = document.querySelector('[data-chord-viewer="chords-container"]');
 const chordViewerSlider = document.querySelector('[data-chord-viewer="slider"]');
 
-// Define initial Chord Dialog slider settings
+// Define initial Chord Viewer Slider settings
 
 const vInitVal = 120 // Global initial value for vertical slider (%)
 const lineWInit = 40 // Global initial value for chords line width (rem)
@@ -266,6 +266,8 @@ function handleChordViewerClick(event) {
         ariaHideMe(guiElem);
       }
     });
+
+    return;
   }
 
   if (elAction === 'toggle-theme') {
@@ -273,6 +275,8 @@ function handleChordViewerClick(event) {
     const themeId = actionTrigger.dataset.theme;
 
     toggleColorTheme(themeId, actionTrigger);
+
+    return;
   }
 
   if (elAction === 'toggle-bold-font') {
@@ -286,6 +290,7 @@ function handleChordViewerClick(event) {
 
     chordViewerChords.style.fontWeight = "bold";
     localStorage.chordViewerUseBoldFonts = 1;
+    return;
   }
 
   if (elAction === 'close-chord-viewer') {
@@ -307,20 +312,14 @@ function initDialogSlider() {
 
   if (isLocalStorageOk()) {
 
-    if (!localStorage.chordViewerSliderFontSizeValue) {
-
+    if (!localStorage.chordViewerSliderFontSizeValue)
       localStorage.chordViewerSliderFontSizeValue = vInitVal;
-    }
 
-    if (!localStorage.chordViewerSliderLineWidthValue) {
-
+    if (!localStorage.chordViewerSliderLineWidthValue)
       localStorage.chordViewerSliderLineWidthValue = lineWInit;
-    }
 
-    if (!localStorage.chordViewerSliderMaxWidthValue) {
-
+    if (!localStorage.chordViewerSliderMaxWidthValue)
       localStorage.chordViewerSliderMaxWidthValue = maxWInit;
-    }
   }
 
   // Set default slider values to be applied on load
@@ -333,9 +332,14 @@ function initDialogSlider() {
 
   if (isLocalStorageOk()) {
 
-    valueV = localStorage.chordViewerSliderFontSizeValue;
-    lineWidth = localStorage.chordViewerSliderLineWidthValue;
-    maxWidth = localStorage.chordViewerSliderMaxWidthValue;
+    if (localStorage.chordViewerSliderFontSizeValue)
+      valueV = localStorage.chordViewerSliderFontSizeValue;
+
+    if (localStorage.chordViewerSliderLineWidthValue)
+      lineWidth = localStorage.chordViewerSliderLineWidthValue;
+
+    if (localStorage.chordViewerSliderMaxWidthValue)
+      maxWidth = localStorage.chordViewerSliderMaxWidthValue;
   }
 
   // Get font-size value modifier (equals to 1 if root font size is 16px)
@@ -506,7 +510,7 @@ function loadChordsToDialog(chordsMatch, chordsType) {
   });
 }
 
-// Handle Chord Dialog Slider events
+// Handle Chord Viewer Slider events
 
 function appChordSliderHandler(event) {
 

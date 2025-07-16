@@ -74,12 +74,12 @@
                     </button>
                     <button id="nss-tunebook-setlist-switch" data-load="tunelist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Tunelist view" aria-title="Switch to Tunelist view" aria-hidden="true" hidden>
                         <svg class="nss-switch-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#action-icon-music"></use>
+                            <use href="assets/icons/icons.svg#nav-icon-tunes"></use>
                         </svg>
                     </button>
                     <button id="nss-tunebook-tunelist-switch" data-load="setlist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Setlist view" aria-title="Switch to Setlist view" aria-hidden="true" hidden>
                         <svg class="nss-switch-icon" aria-hidden="true">
-                            <use href="assets/icons/icons.svg#nav-icon-tunelist"></use>
+                            <use href="assets/icons/icons.svg#nav-icon-setlist"></use>
                         </svg>
                     </button>
                 </div>
@@ -165,14 +165,14 @@
                     <button id="nss-launch-setlist" data-load="setlist" class="nss-btn nss-btn-launch flex-wrapper">
                         <span class="nss-btn-text flex-wrapper">Open Setlist
                             <span class="nss-icon-container flex-wrapper" aria-hidden="true">
-                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#nav-icon-tunelist"></use></svg>
+                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#nav-icon-setlist"></use></svg>
                             </span>
                         </span>
                     </button>
                     <button id="nss-launch-tunelist" data-load="tunelist" class="nss-btn nss-btn-launch flex-wrapper">
                         <span class="nss-btn-text flex-wrapper">Open Tunelist
                             <span class="nss-icon-container flex-wrapper" aria-hidden="true">
-                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#action-icon-music"></use></svg>
+                                <svg class="nss-switch-icon"><use href="assets/icons/icons.svg#nav-icon-tunes"></use></svg>
                             </span>
                         </span>
                     </button>
@@ -345,12 +345,12 @@
                     <header data-chord-viewer="header" class="wrapper-container flex-between">
                         <button data-cvw-action="toggle-theme" data-theme="light" class="btn-cvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
-                                <use href="assets/icons/icons-chord-viewer.svg#theme-icon-dark"></use>
+                                <use href="assets/icons/icons-chord-viewer.svg#theme-icon-moon"></use>
                             </svg>
                         </button>
                         <button data-cvw-action="toggle-theme" data-theme="dark" class="btn-cvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
-                                <use href="assets/icons/icons-chord-viewer.svg#theme-icon-light"></use>
+                                <use href="assets/icons/icons-chord-viewer.svg#theme-icon-sun"></use>
                             </svg>
                         </button>
                         <div class="wrapper-container flex-center">
@@ -361,7 +361,7 @@
                         </div>
                     </header>
                     <div data-chord-viewer="body">
-                        <input type="range" data-chord-viewer="slider" data-cvw-action="scale-chords-output" name="chords-slider" min="85" max="185" value="120" step="1" />
+                        <input type="range" data-chord-viewer="slider" data-cvw-action="scale-chords-output" name="chords-slider" min="85" max="185" value="120" step="1" title="Slide to adjust chords font size" aria-title="Slide to adjust chords font size"/>
                         <div data-chord-viewer="chords-container"></div>
                     </div>
                     <footer data-chord-viewer="footer" class="flex-between">
@@ -372,7 +372,7 @@
                         </button>
                         <button data-cvw-action="reset-slider" class="btn-cvw flex-center" title="Reset slider settings" aria-title="Reset slider settings">
                             <svg data-ui="icon" aria-hidden="true">
-                                <use href="assets/icons/icons-chord-viewer.svg#action-icon-reset"></use>
+                                <use href="assets/icons/icons-chord-viewer.svg#action-icon-revert"></use>
                             </svg>
                         </button>
                     </footer>
@@ -385,12 +385,12 @@
                     <header data-list-viewer="header" class="wrapper-container flex-between" tabindex="-1">
                         <button data-lvw-action="toggle-theme" data-theme="light" class="btn-lvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
-                                <use href="assets/icons/icons-chord-viewer.svg#theme-icon-dark"></use>
+                                <use href="assets/icons/icons.svg#theme-icon-moon"></use>
                             </svg>
                         </button>
                         <button data-lvw-action="toggle-theme" data-theme="dark" class="btn-lvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
                             <svg data-ui="icon-fixed-size" aria-hidden="true">
-                                <use href="assets/icons/icons-chord-viewer.svg#theme-icon-light"></use>
+                                <use href="assets/icons/icons.svg#theme-icon-sun"></use>
                             </svg>
                         </button>
                         <div class="wrapper-container flex-center">
@@ -399,11 +399,47 @@
                         <div data-list-viewer="x-container" class="flex-center">
                             <button autofocus data-lvw-action="close-list-viewer" class="btn-lvw btn-x flex-center" title="Close List Viewer" aria-title="Close List Viewer"></button>
                         </div>
+                        <div data-list-viewer="footer" class="flex-between">
+                            <button data-lvw-action="toggle-gui" class="btn-lvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
+                                <svg data-ui="icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#action-icon-sliders"></use>
+                                </svg>
+                            </button>
+                            <div data-list-viewer="footer-text"></div>
+                            <button data-lvw-action="start-set-maker" class="btn-lvw flex-center" title="Start Set Maker" aria-title="Start Set Maker">
+                                <svg data-ui="icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
+                                </svg>
+                            </button>
+                            <button data-lvw-action="return-list-viewer" class="btn-lvw flex-center" title="Return to List Viewer" aria-title="Return to List Viewer" hidden inert>
+                                <svg data-ui="icon" aria-hidden="true">
+                                    <use href="assets/icons/icons.svg#nav-icon-setlist"></use>
+                                </svg>
+                            </button>
+                        </div>
                     </header>
                     <div data-list-viewer="body" tabindex="-1">
+                        <input type="range" data-list-viewer="slider" data-lvw-action="adjust-tile-height" name="tiles-slider" min="22" max="70" value="70" step="1" title="Slide to adjust tune tile height" aria-title="Slide to adjust tune tile height"/>
                         <div data-list-viewer="tiles-container" class="flex-center"></div>
                     </div>
-                    <footer data-list-viewer="footer" class="flex-between"></footer>
+                    <!-- <footer data-list-viewer="footer" class="flex-between">
+                        <button data-lvw-action="toggle-gui" class="btn-lvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
+                            <svg data-ui="icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-sliders"></use>
+                            </svg>
+                        </button>
+                        <div data-list-viewer="footer-text"></div>
+                        <button data-lvw-action="start-set-maker" class="btn-lvw flex-center" title="Start Set Maker" aria-title="Start Set Maker">
+                            <svg data-ui="icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
+                            </svg>
+                        </button>
+                        <button data-lvw-action="return-list-viewer" class="btn-lvw flex-center" title="Return to List Viewer" aria-title="Return to List Viewer" hidden inert>
+                            <svg data-ui="icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#nav-icon-setlist"></use>
+                            </svg>
+                        </button>
+                    </footer> -->
                 </div>
             </dialog>
 

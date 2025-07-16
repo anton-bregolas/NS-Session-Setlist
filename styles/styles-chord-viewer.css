@@ -238,7 +238,6 @@
 
 [data-chord-viewer="slider"] {
   position: fixed;
-  color: var(--chords-ui-color);
   opacity: 0.4;
   width: 5rem;
   height: 12rem;
@@ -247,10 +246,12 @@
   writing-mode: vertical-lr;
   direction: rtl;
   transition: opacity 0.25s ease-out;
+  accent-color: var(--chords-ui-color);
+  z-index: 1;
 }
 
 [data-chord-viewer="slider"]:is(:hover, :focus, :focus-visible) {
-  opacity: 0.75;
+  opacity: 0.9;
 }
 
 [data-chord-viewer="footer"] {
