@@ -112,7 +112,10 @@ function loadTuneTiles(tunesArr, currentFilter) {
       
   if (!tune.title || !tune.url || !tune.index) return;
 
+    const setCounterSpan = document.createElement('span');
     const tuneItemBtn = document.createElement('button');
+
+    setCounterSpan.dataset.listViewer = "set-counter";
 
     tuneItemBtn.dataset.listViewer = "tune-tile";
     tuneItemBtn.dataset.lvwAction = "load-item";
@@ -122,6 +125,7 @@ function loadTuneTiles(tunesArr, currentFilter) {
     tuneItemBtn.dataset.url = tune.url;
     tuneItemBtn.dataset.index = tune.index;
 
+    tuneItemBtn.appendChild(setCounterSpan);
     listViewerTiles.appendChild(tuneItemBtn);
   });
 }
@@ -161,20 +165,52 @@ function appTileHeightSliderHandler(event) {
 
 // Select or deselect a Set item from the list:
 // Mark the item as selected with data-attribute
-// TO DO: Display the numbered Set item counter tag
-// TO DO: Renumber the existing Set item counters
+// Display the numbered Set item counter tag
+// Renumber the existing Set item counters
 
 function toggleSetMakerSelection(item) {
 
-  if (item.hasAttribute("data-lvw-selected")) {
+  const counter = item.querySelector('[data-list-viewer="set-counter"]');
 
-    item.removeAttribute("data-lvw-selected");
+  if (counter.hasAttribute("data-lvw-selected")) {
+
+    item.style.removeProperty('outline');
+
+    const counterVal = +counter.dataset.lvwSelected;
+    recalcSetMakerCounters(counterVal);
+
+    counter.removeAttribute("data-lvw-selected");
     selectedCounter--;
     return;
   }
 
-  item.setAttribute("data-lvw-selected", selectedCounter + 1);
+  item.style.outline = "0.2rem solid var(--set-counter-color)";
+  counter.setAttribute("data-lvw-selected", selectedCounter + 1);
   selectedCounter++;
+}
+
+// Recalculate values of Set item counters after an item is deselected
+
+function recalcSetMakerCounters(fromCounterVal) {
+
+  const setCountersSelected = 
+    document.querySelectorAll('[data-lvw-selected]');
+
+  if (setCountersSelected.length <= 1 ||
+      setCountersSelected.length === fromCounterVal)
+    return;
+
+  console.warn("recalc from", fromCounterVal)
+
+  setCountersSelected.forEach(counter => {
+
+    const counterVal = +counter.dataset.lvwSelected;
+
+    if (counterVal > fromCounterVal) {
+
+      counter.dataset.lvwSelected = counterVal - 1;
+    }
+  });
 }
 
 // Show or hide Set Maker UI elements
@@ -225,6 +261,17 @@ function resetSetMakerMode() {
 
   isSetMakerModeOn = false;
   selectedCounter = 0;
+
+  const setCountersSelected = 
+    document.querySelectorAll('[data-lvw-selected]');
+
+  setCountersSelected.forEach(counter => {
+
+    counter.removeAttribute("data-lvw-selected");
+    counter.parentElement.style.removeProperty("outline");
+  });
+
+  listViewerDialog.dataset.setMaker = "off";
 }
 
 ///////////////////////////////////
@@ -324,6 +371,8 @@ function handleListViewerClick(event) {
 
   if (elAction === 'start-set-maker') {
 
+    listViewerDialog.dataset.setMaker = "on";
+
     const listViewerTileItems = 
       listViewerTiles.querySelectorAll('[data-list-viewer="tiles-container"] > button');
 
@@ -338,13 +387,13 @@ function handleListViewerClick(event) {
     
     toggleSetMakerGui();
 
-    // listViewerTileItems[0].focus({ focusVisible: true });
     return;
   }
 
   if (elAction === 'close-list-viewer') {
 
     resetSetMakerMode();
+    toggleSetMakerGui();
 
     listViewerDialog.close();
 
