@@ -1653,9 +1653,15 @@ function processAbcCCS(abcCCS, abcC, abcS, abcIndex) {
         abcCFromCCSArr && abcCFromCCSArr[0]?
             getValueByAbcIndex(abcCFromCCSArr, abcIndex).trim() : '';
 
-    let abcSVal = 
-        abcSFromCCSArr && abcSFromCCSArr[0]?
-            getValueByAbcIndex(abcSFromCCSArr, abcIndex).trim() : '';
+    let abcSVal = '';
+
+    if (abcSFromCCSArr && abcSFromCCSArr[0]) {
+
+        abcSVal = abcSFromCCSArr[0].includes(' + ')?
+            abcIndex === 0? `${abcSFromCCSArr[0].split(' + ')[0]}, ${abcSFromCCSArr[0].split(' + ')[1]}` :
+            `${abcSFromCCSArr[0].split(' + ')[0]}, ${getValueByAbcIndex(abcSFromCCSArr, abcIndex).trim()}` :
+            getValueByAbcIndex(abcSFromCCSArr, abcIndex).trim();
+    }
 
     if (!abcCVal && abcC) {
 

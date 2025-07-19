@@ -39,13 +39,13 @@ const chordViewerSlider = document.querySelector('[data-chord-viewer="slider"]')
 // Define initial Chord Viewer Slider settings
 
 const vInitVal = 120 // Global initial value for vertical slider (%)
-const lineWInit = 40 // Global initial value for chords line width (rem)
+const lineWInit = 40 // Global initial value for chords line width (em)
 const maxWInit = 80 // Global initial value for chords line max width (%)
 
 // Define ranges for chords line width and max line width
 
-const lineWMin = 20; // Minimum line width of chords (rem)
-const lineWMax = 50; // Maximum line width of chords (rem)
+const lineWMin = 20; // Minimum line width of chords (em)
+const lineWMax = 50; // Maximum line width of chords (em)
 const maxWLows = 50; // Lowest max-width value for chords (%)
 const maxWTops = 90; // Highest max-width value for chords (%)
 
@@ -243,14 +243,19 @@ function handleChordViewerClick(event) {
   }
 
   if (elAction === 'toggle-gui') {
+    
+    const titleContainer =
+      document.querySelector('[data-chord-viewer="title-container"]');
 
-    if (chordViewerTitle.hasAttribute("hidden")) {
+    if (titleContainer.hasAttribute("hidden")) {
 
-      ariaShowMe(chordViewerTitle);
+      ariaShowMe(titleContainer);
+      actionTrigger.style.removeProperty("opacity");
 
     } else {
 
-      ariaHideMe(chordViewerTitle);
+      ariaHideMe(titleContainer);
+      actionTrigger.style.opacity = 0.3;
     }
 
     chordViewerGui.forEach(guiElem => {
@@ -342,18 +347,14 @@ function initDialogSlider() {
       maxWidth = localStorage.chordViewerSliderMaxWidthValue;
   }
 
-  // Get font-size value modifier (equals to 1 if root font size is 16px)
-
-  const fontSizeMod = getRootFontSizeModifier();
-
   // Set initial style property values for chords
 
   chordViewerSlider.value = valueV;
 
-  chordViewerDialog.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
+  chordViewerDialog.style.setProperty("--chords-font-size", `${valueV}%`);
   chordViewerDialog.style.setProperty("--chords-line-height", `${valueV}%`);
   chordViewerDialog.style.setProperty("--chords-max-width", `${maxWidth}%`);
-  chordViewerDialog.style.setProperty("--chords-line-width", `${lineWidth}rem`); // rem!
+  chordViewerDialog.style.setProperty("--chords-line-width", `${lineWidth}em`); // em!
 
   // Listen to slider input events
 
@@ -379,10 +380,13 @@ function loadChordsToDialog(chordsMatch, chordsType) {
 
   if (chordsType === "chords-set") {
   
-    const titleBlock = document.createElement('div');
-    titleBlock.dataset.chords = "subtitle";
-    titleBlock.textContent = tune.title;
-    tuneBlock.appendChild(titleBlock);
+    const titleDiv = document.createElement('div');
+    const titleSpan = document.createElement('span');
+    titleDiv.dataset.chords = "subtitle-container";
+    titleSpan.dataset.chords = "subtitle";
+    titleSpan.textContent = tune.title;
+    titleDiv.appendChild(titleSpan);
+    tuneBlock.appendChild(titleDiv);
   }
   
   const tunePartsArr = tune.chords.split('\n\n');
@@ -393,13 +397,16 @@ function loadChordsToDialog(chordsMatch, chordsType) {
 
     const partNoText = tunePart.match(/PART[\s]*[\d]*:/)[0];
 
-    const partNoBlock = document.createElement('div');
-    partNoBlock.dataset.chords = "partno";
-    partNoBlock.textContent = partNoText;
+    const partNoDiv = document.createElement('div');
+    const partNoSpan = document.createElement('span');
+    partNoDiv.dataset.chords = "partno-container";
+    partNoSpan.dataset.chords = "partno";
+    partNoSpan.textContent = partNoText;
+    partNoDiv.appendChild(partNoSpan);
     
     const tunePartBlock = document.createElement('div');
     tunePartBlock.dataset.chords = "body";
-    tunePartBlock.appendChild(partNoBlock);
+    tunePartBlock.appendChild(partNoDiv);
     
     const partLinesArr = tunePart.split('\n')
       .filter(line => line.trim() && !line.startsWith('PART'));
@@ -542,16 +549,12 @@ function appChordSliderHandler(event) {
         localStorage.chordViewerSliderLineWidthValue = lineWInit + lineWAddend;
       }
 
-      // Get font-size value modifier (equals to 1 if root font size is 16px)
-
-      const fontSizeMod = getRootFontSizeModifier();
-
       // Set adjusted style property values for chords
 
-      chordViewerDialog.style.setProperty("--chords-font-size", `${valueV * fontSizeMod}%`);
+      chordViewerDialog.style.setProperty("--chords-font-size", `${valueV}%`);
       chordViewerDialog.style.setProperty("--chords-line-height", `${valueV}%`);
       chordViewerDialog.style.setProperty("--chords-max-width", `${maxWInit + maxLineWAddend}%`);
-      chordViewerDialog.style.setProperty("--chords-line-width", `${lineWInit + lineWAddend}rem`);
+      chordViewerDialog.style.setProperty("--chords-line-width", `${lineWInit + lineWAddend}em`); // em!
     }
   }
 }
@@ -931,7 +934,8 @@ function isTuneTripleMeter(tuneMeter) {
 function normalizeAbc(abcContent) {
 
   let abcOutput = processPartEndingsForChordBook(abcContent);
-  abcOutput = removeAbcHeadersAndCommands(abcContent);
+  abcOutput = removeAbcHeadersAndCommands(abcOutput);
+  abcOutput = removeAbcAccidentalsAndDecorations(abcOutput);
   abcOutput = convertAbcIntervalsToSingleNotes(abcOutput);
   abcOutput = normalizeAbcTriplets(abcOutput);
   abcOutput = normalizeAbcChordOrder(abcOutput);
@@ -973,6 +977,16 @@ function removeAbcHeadersAndCommands(abcContent) {
   return filteredAbc;
 }
 
+// Strip ABC of all accidentals (flat, natural, sharp) and decorations (rolls, staccato etc.)
+
+function removeAbcAccidentalsAndDecorations(abcContent) {
+
+  let filteredAbc = 
+    abcContent.replaceAll(/[_=^\.~]/g, '');
+
+  return filteredAbc;
+}
+
 // Replace all ABC intervals / inline chords with a single highest note of the interval / chord
 
 function convertAbcIntervalsToSingleNotes(abcContent) {
@@ -986,7 +1000,8 @@ function convertAbcIntervalsToSingleNotes(abcContent) {
 
 function normalizeAbcTriplets(abcContent) {
 
-  let filteredAbc = abcContent.replaceAll(/\([34](\w)\/(\w)\/(\w)\//g, `$1//$2//$3/`)
+  let filteredAbc = abcContent.replaceAll(/[]/g, '')
+                              .replaceAll(/\([34](\w)\/(\w)\/(\w)\//g, `$1//$2//$3/`)
                               .replaceAll(/\([34](\w)(\w)(\w)/g, `$1/$2/$3`);
 
   return filteredAbc;
@@ -1068,29 +1083,6 @@ function getValidChordsArray(chordBookJson) {
 function isLocalStorageOk() {
 
   return storageAvailable('localStorage');
-}
-
-// Check if root font-size value differs from default (16px)
-// Get root font-size modifier for chord display calculations
-
-function getRootFontSizeModifier(baseFontSize) {
-
-  const defaultFontSize = baseFontSize || 16;
-
-  const rootFontSizeVal = window.getComputedStyle(document.documentElement).fontSize;
-
-  let fontSizeModifier;
-
-  // Calculate modifier if font-size value does not match base font size
-
-  if (rootFontSizeVal && rootFontSizeVal !== `${defaultFontSize}px`) {
-
-    fontSizeModifier = rootFontSizeVal.slice(0, -2) / 16;
-  }
-
-  // Return modifier or 1 if font-size value matches base font size
-
-  return fontSizeModifier || 1;
 }
 
 // Hide an element via attribute hidden and set aria-hidden to true
