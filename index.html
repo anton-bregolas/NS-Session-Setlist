@@ -344,17 +344,19 @@
                 <div data-chord-viewer="container">
                     <header data-chord-viewer="header" class="wrapper-container flex-between">
                         <button data-cvw-action="toggle-theme" data-theme="light" class="btn-cvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
-                            <svg data-ui="icon-fixed-size" aria-hidden="true">
+                            <svg data-cvw-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#theme-icon-moon"></use>
                             </svg>
                         </button>
                         <button data-cvw-action="toggle-theme" data-theme="dark" class="btn-cvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
-                            <svg data-ui="icon-fixed-size" aria-hidden="true">
+                            <svg data-cvw-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#theme-icon-sun"></use>
                             </svg>
                         </button>
                         <div class="wrapper-container flex-center">
-                            <h2 data-chord-viewer="title"></h2>
+                            <h2 data-chord-viewer="title-container">
+                                <span data-chord-viewer="title"></span>
+                            </h2>
                         </div>
                         <div data-chord-viewer="x-container" class="flex-center">
                             <button autofocus data-cvw-action="close-chord-viewer" class="btn-cvw btn-x flex-center" title="Close Chord Viewer" aria-title="Close Chord Viewer"></button>
@@ -366,12 +368,12 @@
                     </div>
                     <footer data-chord-viewer="footer" class="flex-between">
                         <button data-cvw-action="toggle-gui" class="btn-cvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
-                            <svg data-ui="icon" aria-hidden="true">
+                            <svg data-cvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#action-icon-sliders"></use>
                             </svg>
                         </button>
                         <button data-cvw-action="reset-slider" class="btn-cvw flex-center" title="Reset slider settings" aria-title="Reset slider settings">
-                            <svg data-ui="icon" aria-hidden="true">
+                            <svg data-cvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons-chord-viewer.svg#action-icon-revert"></use>
                             </svg>
                         </button>
@@ -384,12 +386,12 @@
                 <div data-list-viewer="container">
                     <header data-list-viewer="header" class="wrapper-container flex-between" tabindex="-1">
                         <button data-lvw-action="toggle-theme" data-theme="light" class="btn-lvw btn-dark flex-center" title="Switch to light theme" aria-title="Switch to light theme">
-                            <svg data-ui="icon-fixed-size" aria-hidden="true">
+                            <svg data-lvw-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#theme-icon-moon"></use>
                             </svg>
                         </button>
                         <button data-lvw-action="toggle-theme" data-theme="dark" class="btn-lvw btn-light flex-center" title="Switch to dark theme" aria-title="Switch to dark theme" aria-hidden="true" hidden inert>
-                            <svg data-ui="icon-fixed-size" aria-hidden="true">
+                            <svg data-lvw-ui="icon-fixed-size" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#theme-icon-sun"></use>
                             </svg>
                         </button>
@@ -401,18 +403,18 @@
                         </div>
                         <div data-list-viewer="footer" class="flex-between">
                             <button data-lvw-action="toggle-gui" class="btn-lvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
-                                <svg data-ui="icon" aria-hidden="true">
+                                <svg data-lvw-ui="icon" aria-hidden="true">
                                     <use href="assets/icons/icons.svg#action-icon-sliders"></use>
                                 </svg>
                             </button>
                             <div data-list-viewer="footer-text"></div>
                             <button data-lvw-action="start-set-maker" class="btn-lvw flex-center" title="Start Set Maker" aria-title="Start Set Maker">
-                                <svg data-ui="icon" aria-hidden="true">
+                                <svg data-lvw-ui="icon" aria-hidden="true">
                                     <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
                                 </svg>
                             </button>
                             <button data-lvw-action="return-list-viewer" class="btn-lvw flex-center" title="Return to List Viewer" aria-title="Return to List Viewer" hidden inert>
-                                <svg data-ui="icon" aria-hidden="true">
+                                <svg data-lvw-ui="icon" aria-hidden="true">
                                     <use href="assets/icons/icons.svg#nav-icon-setlist"></use>
                                 </svg>
                             </button>
@@ -424,18 +426,18 @@
                     </div>
                     <!-- <footer data-list-viewer="footer" class="flex-between">
                         <button data-lvw-action="toggle-gui" class="btn-lvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
-                            <svg data-ui="icon" aria-hidden="true">
+                            <svg data-lvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-sliders"></use>
                             </svg>
                         </button>
                         <div data-list-viewer="footer-text"></div>
                         <button data-lvw-action="start-set-maker" class="btn-lvw flex-center" title="Start Set Maker" aria-title="Start Set Maker">
-                            <svg data-ui="icon" aria-hidden="true">
+                            <svg data-lvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
                             </svg>
                         </button>
                         <button data-lvw-action="return-list-viewer" class="btn-lvw flex-center" title="Return to List Viewer" aria-title="Return to List Viewer" hidden inert>
-                            <svg data-ui="icon" aria-hidden="true">
+                            <svg data-lvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-setlist"></use>
                             </svg>
                         </button>
@@ -647,7 +649,7 @@
                         </button>
                     </div>
                     <div data-tbk-action="toggle-full-screen" class="tunebook-action flex-wrapper">
-                        <button data-controls="fullscreen-view" data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="View in full screen mode" aria-title="View in full screen mode">
+                        <button data-controls="fullscreen-view" data-alt-view="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="View in full screen mode" aria-title="View in full screen mode">
                             <svg class="nss-mini-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-view"></use>
                             </svg>

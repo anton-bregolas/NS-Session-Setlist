@@ -371,8 +371,6 @@ function handleListViewerClick(event) {
 
   if (elAction === 'start-set-maker') {
 
-    listViewerDialog.dataset.setMaker = "on";
-
     const listViewerTileItems = 
       listViewerTiles.querySelectorAll('[data-list-viewer="tiles-container"] > button');
 
@@ -382,9 +380,9 @@ function handleListViewerClick(event) {
       return;
     }
 
-    isSetMakerModeOn = true;
+    listViewerDialog.dataset.setMaker = "on";
     listViewerTitle.textContent = "🎶 Select 2+ items 👇";
-    
+    isSetMakerModeOn = true; 
     toggleSetMakerGui();
 
     return;

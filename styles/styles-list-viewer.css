@@ -1,12 +1,16 @@
 /* List Viewer Styles */
 
 [data-list-viewer="dialog"] {
-  --lvw-header-height: 6rem;
+  --list-header-height: 6rem;
   --tiles-font-size: 1.5rem;
   --tiles-height: 7rem;
   --tiles-padding: 0.25rem;
   --set-counter-font-size: 1rem;
   --set-counter-offset: 2rem;
+
+  --list-ui-button-width: 2.75em;         /* Default: 2.75em */
+  --list-ui-slider-width: 2.75em;         /* Default: 2.75em */
+  --list-ui-slider-height: 12em;          /* Default: 12em */  
 }
 
 [data-list-viewer="dialog"], 
@@ -66,7 +70,7 @@
 }
 
 [data-list-viewer="header"] {
-  height: var(--lvw-header-height);
+  height: var(--list-header-height);
   text-align: center;
   background-color: var(--tiles-bg-color);
   outline-offset: -0.18rem;
@@ -181,12 +185,12 @@
   opacity: 0.9;
 }
 
-[data-ui="icon"] {
+[data-lvw-ui="icon"] {
   width: 100%;
   height: 100%;
 }
 
-[data-ui="icon-fixed-size"] {
+[data-lvw-ui="icon-fixed-size"] {
   width: 2.45rem;
   height: 2.45rem;
 }
@@ -197,7 +201,7 @@
 
 [data-list-viewer="body"] {
   width: 100%;
-  height: calc(100dvh - var(--lvw-header-height));
+  height: calc(100dvh - var(--list-header-height));
   overflow-y: auto;
   overscroll-behavior: contain;
 }
@@ -263,7 +267,7 @@
   position: fixed;
   padding: 0 1.65rem 0 1.5rem;
   box-sizing: border-box;
-  bottom: 1rem;
+  bottom: 1.5rem;
   left: 0;
   z-index: 1;
   pointer-events: none;
