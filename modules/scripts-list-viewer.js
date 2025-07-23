@@ -12,6 +12,14 @@ import { storageAvailable } from "./scripts-3p/storage-available/storage-availab
 
 import { displayWarningEffect, displayNotification, getFirstCurrentlyDisplayedElem } from "./scripts-nss-app.js";
 
+// Import custom functions handling Tune <> Set conversions for Set Maker
+
+import { makeTunesFromSets, sortFilterAbc } from "./scripts-abc-encoder.js";
+
+// Import lz-string compression algorithm (for decoding & encoding ABC items)
+
+import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
+
 // Import function for loading selected tune items into ABC Tools iframe
 
 import { loadTuneBookItem } from "./scripts-abc-tools.js"
@@ -360,6 +368,56 @@ function resetSetMakerMode() {
   listViewerDialog.dataset.setMaker = "off";
 }
 
+// Create an encoded Set of tunes from tile items
+// Extract ABC data from compressed LZW strings
+// Split merged sets into tunes before processing
+// Return a compressed ABC URL string
+
+function createTuneSetUrl(selectedItems) {
+
+  const abcArr = [];
+
+  let baseUrl = ''; 
+  let baseUrlParams = '';
+
+  selectedItems.forEach((item, index) => {
+
+    if (index === 0) {
+
+      baseUrl = item.dataset.url.split('?lzw=')[0];
+      baseUrlParams = `&format=${item.dataset.url.split('&format=')[1]}`;
+    }
+
+    const dataUrl = item.dataset.url;
+    const dataUrlName = dataUrl.split('&name=')[1];
+    const abcInLzw = dataUrl.match(/lzw=(?:[^&]*)/)[0];
+    const tuneNoInSet = item.querySelector('[data-lvw-counter]').dataset.lvwCounter;
+
+    let abc = LZString.decompressFromEncodedURIComponent(abcInLzw.split('lzw=')[1]);
+
+    abc = abc.replace(/^X:.*\s/, '');
+
+    if (dataUrlName && dataUrlName.includes('_Set')) {
+
+      abc = makeTunesFromSets([abc]);
+    }
+
+    abcArr[tuneNoInSet - 1] = abc;
+  });
+
+  const abcString = abcArr.flat().join('\n');
+
+  const sortedAbc = sortFilterAbc(`T: NEW SET\n${abcString}`)[0].join('\n');
+
+  const abcUrlOutput =
+    baseUrl +
+    "?lzw=" +
+    LZString.compressToEncodedURIComponent(sortedAbc) +
+    baseUrlParams.replace(/&name=.*(?=&|$)/, '&name=NEW_SET');
+
+  return abcUrlOutput;
+}
+
 ///////////////////////////////////
 // LIST VIEWER INIT FUNCTIONS
 //////////////////////////////////
@@ -478,7 +536,23 @@ function handleListViewerClick(event) {
 
   if (elAction === 'create-set') {
 
-    //
+    const selectedItems =
+      listViewerTiles.querySelectorAll('[aria-selected="true"]');
+
+    const setUrl = createTuneSetUrl(selectedItems);
+
+    if (!setUrl) return;
+
+    window.open(setUrl, '_blank');
+
+    // quitListViewer();
+
+    // setTimeout(() => {
+
+    //   loadTuneBookItem(null, null, setUrl);  
+    // }, 150);
+
+    return;
   }
 
   if (elAction === 'close-list-viewer') {
