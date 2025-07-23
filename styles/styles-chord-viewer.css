@@ -86,7 +86,7 @@
 }
 
 [data-chord-viewer="title-container"] {
-  font-size: 1em;
+  font-size: inherit;
   width: calc(100dvw - calc(var(--chords-ui-button-width) * 2 + 1.5em * 2 + 1.2em));
   font-weight: bold;
   text-align: center;
@@ -182,8 +182,8 @@
 }
 
 [data-cvw-ui="icon"] {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 
 [data-cvw-ui="icon-fixed-size"] {
@@ -246,10 +246,6 @@
   white-space: nowrap;
   overflow: visible;
 }
-
-/*[data-chords="barline"] {
-  margin: 0 0.5em; 
-}*/
 
 [data-chords="combo-barline"],
 [data-chords="barline"],
@@ -351,7 +347,7 @@
   }
 
   [data-chord-viewer="slider"]:is(:focus-visible) {
-    outline: 0.2em dashed;
+    outline-width: 0.2em;
   }
 }
 

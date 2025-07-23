@@ -15,28 +15,9 @@ https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
 
 ## Version History
 
-NS Session Setlist v.0.9.9: Routing, Tunebook Nav & List Viewer
+NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 
 + Project updates:
-
-  - Launcher: Hash & query param routing implemented for Launcher, Tunebook and Playalong
-  - Launcher: Advanced Options button and additional App Options added
-  - Launcher: New improved hover and focus look of App UI elements (TO DO: Animations)
-  - Tunebook: Link sharing implemented for Tunebook items and filters
-  - Tunebook: Tunebook Actions popup implemented for Desktop and Mobile mode
-  - Tunebook: Tunebook Actions grid adjusts to Tunebook mode (Desktop, Compact, Mobile)
-  - Tunebook: Header refactored to include List Viewer & Share Link buttons
-  - Tunebook: Footer refactored to include Tunebook Actions hamburger button
-  - Tunebook: Compact mode GUI refactored, Tunebook Actions button now appears in header
-  - Tunebook: Full Screen always opens ABC Tools in new window option implemented
-  - Tunebook: New notifications added, tab navigation and accessibility improvements
-  - List Viewer: New module for displaying and opening Tunebook items via a tile grid dialog
-  - List Viewer: Responsive desktop and mobile styles implemented, dark & light themes added
-  - ABC Encoder: Improved metadata pre-processing for The Session links
-  - ABC Encoder: Encoder now tests connection to The Session before making requests (fail fast)
-  - Chord Viewer: Fixed incorrect handling of ABC triplets & fractions, normalization logic tweaked
-  - Launcher, Encoder, Chord Viewer: CSS fix to prevent background jump on scroll
-  - Icons updated
 
 <details>
   <summary>v.0.9: UI/UX Upgrade</summary>

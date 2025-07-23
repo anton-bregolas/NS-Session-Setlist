@@ -678,7 +678,7 @@ export function displayNotification(msgText, msgType, nextFocusEl) {
     notificationTimeoutId = setTimeout(() => {
 
       notificationPopup.hidePopover();
-    }, 2500);
+    }, 2000);
 
     return;
   }
@@ -1817,7 +1817,9 @@ function filterTuneBook() {
 
   console.log(`NS Session App:\n\nTunebook filtered by "${filterId}"`);
 
-  displayNotification(`Tunebook filtered by "${filterId}"`, "status");
+  setTimeout(() => {
+    displayNotification(`Tunebook filtered by "${filterId}"`, "status");
+  }, 150);
 
   tuneSelector.focus();
 }
