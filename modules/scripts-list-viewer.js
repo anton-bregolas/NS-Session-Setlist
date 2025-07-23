@@ -36,17 +36,25 @@ const listViewerDialog = document.querySelector('[data-list-viewer="dialog"]');
 const listViewerTitle = document.querySelector('[data-list-viewer="title"]');
 const listViewerTiles = document.querySelector('[data-list-viewer="tiles-container"]');
 const listViewerSlider = document.querySelector('[data-list-viewer="slider"]');
+const listViewerFooter = document.querySelector('[data-list-viewer="footer"]');
+const listViewerSetBtn = document.querySelector('[data-lvw-action="create-set"]');
 
 // Define List Viewer Slider settings
-const hInitVal = 70 // Global initial value for tiles height (rem*10)
-const minHVal = 22; // Minimum tile hight value (rem*10)
+
+const hInitVal = 70 // Global initial value for tiles height (em*10)
+const minHVal = 22; // Minimum tile hight value (em*10)
 
 // Set global variables
 
 let lastFilterText = 'None'; // Keep track of the last filter text loaded to title
-let isSetMakerModeOn = false; // Keep track of the Set Maker mode status
-let selectedCounter = 0; // Keep track of the number of Set items selected
+let selectedCounter = 0; // Keep track of the number of tile items selected
+let lastFocusedIndex = -1; // Keep track of the last focused tile item index
+let lastSelectedIndex = -1; // Keep track of the last selected tile item index
+let searchKeysPressed = '' // Accumulate the characters entered for tune search
+let typeAheadTimeoutId; // Re-record latest timeout for clearing type-ahead search
 let titleStatusTimeoutId; // Keep track of the latest timeout set for clearing status
+
+const indexedTilesArr = [];
 
 ///////////////////////////////////
 // LIST VIEWER LAUNCH FUNCTIONS
@@ -74,19 +82,32 @@ export function openListViewer(selectList) {
 
   // Get current Filter value, pass "None" if none found
 
-  let currentFilter;
+  const filterArr = [];
 
-  currentFilter = filterOptions?.options[filterOptions.selectedIndex].text;
+  const currentFilter = filterOptions?.options[filterOptions.selectedIndex];
+  let currentFilterText = currentFilter? currentFilter.text : '';
+  let currentFilterType = currentFilter? currentFilter.parentElement?.label : '';
 
-  if (!currentFilter || currentFilter.toLowerCase().match(placeHolderText)) {
+  if (!currentFilterText || currentFilterText.toLowerCase().match(placeHolderText)) {
 
-    currentFilter = "None";
+    currentFilterText = "None";
   }
+
+  if (currentFilterType) {
+
+    currentFilterType =
+      currentFilterType.toLowerCase().includes("tune type")? "type" : 
+      currentFilterType.toLowerCase().includes("set leader")? "leader" : 
+      "other";
+  }
+
+  filterArr[0] = currentFilterText;
+  filterArr[1] = currentFilterType;
 
   // Create Tune Tiles grid, populate it with items from Tunes Array
 
-  loadTuneTiles(tunesArr, currentFilter);
-  lastFilterText = currentFilter;
+  loadTuneTiles(tunesArr, filterArr);
+  lastFilterText = currentFilterText;
 
   // Display List Viewer Dialog & initialize tiles height slider
 
@@ -100,33 +121,61 @@ export function openListViewer(selectList) {
 
 // Create responsive grid layout with tune tiles inside List Viewer Dialog
 
-function loadTuneTiles(tunesArr, currentFilter) {
+function loadTuneTiles(tunesArr, filterArr) {
+
+  let listViewerTitleText = `Filters: ${filterArr[0]}`;
+
+  // if (listViewerTitle.textContent === listViewerTitleText) {
+
+  //   return;
+  // }
 
   listViewerTitle.textContent = '';
   listViewerTiles.textContent = '';
+  indexedTilesArr.length = 0;
+  lastFocusedIndex = -1;
 
-  let listViewerTitleText = `Filters: ${currentFilter}`
   listViewerTitle.textContent = listViewerTitleText;
 
   tunesArr.forEach(tune => {
       
-  if (!tune.title || !tune.url || !tune.index) return;
+    if (!tune.title || !tune.url || !tune.index) return;
 
+    const tileTitleSpan = document.createElement('span');
     const setCounterSpan = document.createElement('span');
-    const tuneItemBtn = document.createElement('button');
+    const tuneItem = document.createElement('li');
 
+    let tuneItemText =
+      filterArr[1] && filterArr[1] === "type"?
+      tune.title.replace(/^[A-Z ]*:[ ]*/, '') :
+      tune.title.includes(':')? `${tune.title.split(':')[1].trim()} [${tune.title.split(':')[0]}]` :
+      tune.title;
+
+    tileTitleSpan.textContent = tuneItemText;
+    tileTitleSpan.dataset.listViewer = "tune-tile-title";
     setCounterSpan.dataset.listViewer = "set-counter";
 
-    tuneItemBtn.dataset.listViewer = "tune-tile";
-    tuneItemBtn.dataset.lvwAction = "load-item";
-    tuneItemBtn.classList = "btn-lvw flex-center";
+    tuneItem.dataset.listViewer = "tune-tile";
+    tuneItem.dataset.lvwAction = "load-item";
+    tuneItem.classList = "flex-center";
+    tuneItem.dataset.url = tune.url;
+    tuneItem.dataset.index = tune.index;
 
-    tuneItemBtn.textContent = tune.title;
-    tuneItemBtn.dataset.url = tune.url;
-    tuneItemBtn.dataset.index = tune.index;
+    tuneItem.setAttribute("role", "option");
+    tuneItem.setAttribute("tabindex", "-1");
+    tuneItem.setAttribute("aria-selected", "false");
 
-    tuneItemBtn.appendChild(setCounterSpan);
-    listViewerTiles.appendChild(tuneItemBtn);
+    tuneItem.appendChild(tileTitleSpan);
+    tuneItem.appendChild(setCounterSpan);
+    
+    listViewerTiles.appendChild(tuneItem);
+
+    indexedTilesArr.push(
+      {
+        tuneItem,
+        title: tuneItemText
+      }
+    );
   });
 }
 
@@ -154,9 +203,26 @@ function appTileHeightSliderHandler(event) {
 
       // Set tune tile height value
 
-      listViewerDialog.style.setProperty("--tiles-height", `${valueH / 10}rem`);
+      listViewerDialog.style.setProperty("--tiles-height", `${valueH / 10}em`);
     }
   }
+}
+
+// Handle List Viewer exit
+
+function quitListViewer() {
+
+  listViewerDialog.querySelector('[data-list-viewer="body"]').scrollTo(0,0);
+
+  resetSetMakerMode();
+  toggleSetMakerGui();
+
+  listViewerDialog.close();
+
+  const focusElem =
+    getFirstCurrentlyDisplayedElem(launchEls) ?? altFocusBtn;
+
+  focusElem.focus();
 }
 
 ///////////////////////////////////
@@ -170,45 +236,55 @@ function appTileHeightSliderHandler(event) {
 
 function toggleSetMakerSelection(item) {
 
-  const counter = item.querySelector('[data-list-viewer="set-counter"]');
+  if (!item.hasAttribute("aria-selected")) return;
 
-  if (counter.hasAttribute("data-lvw-selected")) {
+  const counter =
+    item.querySelector('[data-list-viewer="set-counter"]');
 
+  if (item.getAttribute("aria-selected") === "true") {
+
+    item.setAttribute("aria-selected", "false");
     item.style.removeProperty('outline');
 
-    const counterVal = +counter.dataset.lvwSelected;
+    const counterVal = +counter.dataset.lvwCounter;
     recalcSetMakerCounters(counterVal);
 
-    counter.removeAttribute("data-lvw-selected");
+    counter.removeAttribute("data-lvw-counter");
     selectedCounter--;
+
+    if (selectedCounter < 2 && listViewerFooter.hasAttribute("data-set-maker"))
+      listViewerFooter.removeAttribute("data-set-maker");
+
     return;
   }
 
-  item.style.outline = "0.2rem solid var(--set-counter-color)";
-  counter.setAttribute("data-lvw-selected", selectedCounter + 1);
+  item.setAttribute("aria-selected", "true");
+  item.style.outline = "0.2em solid var(--set-counter-color)";
+  counter.setAttribute("data-lvw-counter", selectedCounter + 1);
   selectedCounter++;
+
+  if (selectedCounter === 2)
+    listViewerFooter.setAttribute("data-set-maker", "ready");
 }
 
 // Recalculate values of Set item counters after an item is deselected
 
 function recalcSetMakerCounters(fromCounterVal) {
 
-  const setCountersSelected = 
-    document.querySelectorAll('[data-lvw-selected]');
+  const setCounters = 
+    document.querySelectorAll('[data-lvw-counter]');
 
-  if (setCountersSelected.length <= 1 ||
-      setCountersSelected.length === fromCounterVal)
+  if (setCounters.length <= 1 ||
+      setCounters.length === fromCounterVal)
     return;
 
-  console.warn("recalc from", fromCounterVal)
+  setCounters.forEach(counter => {
 
-  setCountersSelected.forEach(counter => {
-
-    const counterVal = +counter.dataset.lvwSelected;
+    const counterVal = +counter.dataset.lvwCounter;
 
     if (counterVal > fromCounterVal) {
 
-      counter.dataset.lvwSelected = counterVal - 1;
+      counter.dataset.lvwCounter = counterVal - 1;
     }
   });
 }
@@ -223,13 +299,15 @@ function toggleSetMakerGui() {
   const returnListViewerBtn =
     document.querySelector('[data-lvw-action="return-list-viewer"]');
 
-  if (isSetMakerModeOn) {
+  if (listViewerDialog.dataset.setMaker === "on") {
 
     ariaHideMe(startSetMakerBtn);
     startSetMakerBtn.setAttribute("inert", "");
     returnListViewerBtn.removeAttribute("inert");
     ariaShowMe(returnListViewerBtn);
-    returnListViewerBtn.focus();
+
+    listViewerTiles.setAttribute("aria-multiselectable", "true");
+    listViewerTiles.focus();
     return;
   }
 
@@ -237,6 +315,8 @@ function toggleSetMakerGui() {
   returnListViewerBtn.setAttribute("inert", "");
   startSetMakerBtn.removeAttribute("inert");
   ariaShowMe(startSetMakerBtn);
+
+  listViewerTiles.removeAttribute("aria-multiselectable");
   startSetMakerBtn.focus();
 }
 
@@ -259,18 +339,24 @@ function displaySetMakerTitleStatus(titleStatus, lastStatus) {
 
 function resetSetMakerMode() {
 
-  isSetMakerModeOn = false;
   selectedCounter = 0;
+  lastSelectedIndex = -1;
 
-  const setCountersSelected = 
-    document.querySelectorAll('[data-lvw-selected]');
+  const selectedTiles =
+    listViewerTiles.querySelectorAll('[aria-selected="true"]');
 
-  setCountersSelected.forEach(counter => {
+  selectedTiles.forEach(tile => {
 
-    counter.removeAttribute("data-lvw-selected");
-    counter.parentElement.style.removeProperty("outline");
+    const counter =
+      tile.querySelector('[data-list-viewer="set-counter"]');
+
+    tile.style.removeProperty("outline");
+    counter.removeAttribute("data-lvw-counter");
+    tile.setAttribute("aria-selected", "false");
   });
-
+  
+  listViewerTiles.removeAttribute("aria-multiselectable");
+  listViewerFooter.removeAttribute("data-set-maker");
   listViewerDialog.dataset.setMaker = "off";
 }
 
@@ -285,6 +371,9 @@ export function initListViewer() {
   if (!listViewerDialog) return;
 
   listViewerDialog.addEventListener('click', handleListViewerClick);
+  listViewerDialog.addEventListener('keydown', handleListViewerKeyPress);
+  listViewerTiles.addEventListener('focus', handleTilesListBoxFocus);
+  listViewerTiles.addEventListener('keydown', handleTilesKeyboardNavigation);
 
   if (isLocalStorageOk()) {
 
@@ -315,14 +404,14 @@ function handleListViewerClick(event) {
 
   const elAction = actionTrigger.dataset.lvwAction;
 
-  if (elAction === 'load-item' && isSetMakerModeOn) {
+  if (elAction === 'load-item' && listViewerDialog.dataset.setMaker === "on") {
 
     toggleSetMakerSelection(actionTrigger);
 
     return;
   }
 
-  if (elAction === 'load-item' && !isSetMakerModeOn) {
+  if (elAction === 'load-item' && listViewerDialog.dataset.setMaker === "off") {
 
     tuneSelector.selectedIndex = actionTrigger.dataset.index;
 
@@ -371,8 +460,8 @@ function handleListViewerClick(event) {
 
   if (elAction === 'start-set-maker') {
 
-    const listViewerTileItems = 
-      listViewerTiles.querySelectorAll('[data-list-viewer="tiles-container"] > button');
+    const listViewerTileItems =
+      [...listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"]')];
 
     if (listViewerTileItems.length < 2) {
 
@@ -382,24 +471,19 @@ function handleListViewerClick(event) {
 
     listViewerDialog.dataset.setMaker = "on";
     listViewerTitle.textContent = "🎶 Select 2+ items 👇";
-    isSetMakerModeOn = true; 
     toggleSetMakerGui();
 
     return;
   }
 
+  if (elAction === 'create-set') {
+
+    //
+  }
+
   if (elAction === 'close-list-viewer') {
 
-    resetSetMakerMode();
-    toggleSetMakerGui();
-
-    listViewerDialog.close();
-
-    const focusElem =
-      getFirstCurrentlyDisplayedElem(launchEls) ?? altFocusBtn;
-
-    focusElem.focus();
-
+    quitListViewer();
     return;
   }
 }
@@ -433,11 +517,251 @@ function initDialogSlider() {
 
   listViewerSlider.value = valueH;
 
-  listViewerDialog.style.setProperty("--tiles-height", `${valueH / 10}rem`);
+  listViewerDialog.style.setProperty("--tiles-height", `${valueH / 10}em`);
 
   // Listen to slider input events
 
   listViewerSlider.addEventListener('input', appTileHeightSliderHandler);
+}
+
+// Handle List Viewer tune tiles listbox receiving focus
+// Focus on the first tile item by default
+
+function handleTilesListBoxFocus(e) {
+
+  if (e.target === listViewerTiles) {
+
+    if (lastFocusedIndex === -1) {
+
+      const firstTileItem =
+        listViewerTiles.querySelector('[data-list-viewer="tune-tile"]');
+      
+      firstTileItem?.focus();
+
+      return;
+    }
+
+    const allTileItems =
+    [...listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"]')];
+
+    allTileItems[lastFocusedIndex].focus();
+  }
+}
+
+///////////////////////////////////
+// LIST VIEWER KEYBOARD NAVIGATION
+//////////////////////////////////
+
+// Handle key presses when List Viewer Dialog is open
+
+function handleListViewerKeyPress(e) {
+
+  // Handle Esc key pressed
+
+  if (e.key === 'Escape') {
+
+    e.preventDefault();
+    quitListViewer();
+  }
+
+  // Handle type-ahead if letters or numbers pressed
+
+  if (e.key.length === 1 && e.key.match(/[A-Za-z0-9]/)) {
+
+    searchKeysPressed += e.key.toLowerCase();
+
+    if (typeAheadTimeoutId) {
+
+      clearTimeout(typeAheadTimeoutId);
+    }
+
+    typeAheadTimeoutId = setTimeout(() => {
+
+      searchKeysPressed = '';
+      typeAheadTimeoutId = null;
+    }, 500);
+
+    focusOnTypeAheadMatch(searchKeysPressed);
+  }
+}
+
+// Handle keyboard navigation in the List Viewer tune tiles listbox
+
+function handleTilesKeyboardNavigation(e) {
+
+  // Handle Tab key pressed
+
+  if (e.key === 'Tab') {
+
+    e.preventDefault();
+
+    // Tab to the previous UI element
+    
+    if (e.shiftKey) {
+
+      const listViewerBtnX =
+        document.querySelector('[data-lvw-action="close-list-viewer"]');
+
+      listViewerBtnX.focus();
+      return;
+    }
+
+    // Tab to the next UI element
+
+    if (!listViewerSlider.hasAttribute("hidden")) {
+
+      listViewerSlider.focus();
+
+    } else {
+
+      const sliderGuiBtn =
+        document.querySelector('[data-lvw-action="toggle-gui"]');
+
+      sliderGuiBtn.focus();
+    }
+    return;
+  }
+
+  const tiles =
+    [...listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"]')];
+
+  if (!tiles.length) return;
+
+  const currentTile = document.activeElement;
+  const currentIndex = tiles.indexOf(currentTile);
+  
+  // Handle "Ctrl + A" pressed (select all)
+
+  if (e.ctrlKey && e.key.toUpperCase() === "A") {
+
+    e.preventDefault();
+
+    if (listViewerDialog.dataset.setMaker === "on") {
+
+      tiles.forEach(tile => {
+
+        if (tile.hasAttribute("aria-selected") && tile.getAttribute("aria-selected") === "false") {
+          
+          toggleSetMakerSelection(tile);
+        }
+      });
+    }
+    return;
+  }
+
+  // Handle arrow keys pressed (focus on tile)
+
+  switch(e.key) {
+
+    case 'ArrowLeft':
+    case 'ArrowRight':
+    case 'ArrowDown':
+    case 'ArrowUp': {
+
+      e.preventDefault();
+      
+      const nextIndex = e.key === 'ArrowDown' || e.key === 'ArrowRight'?
+        Math.min(currentIndex + 1, tiles.length - 1) :
+        Math.max(currentIndex - 1, 0);
+
+      // Handle Shift pressed 
+
+      if (e.shiftKey && listViewerDialog.dataset.setMaker === "on") {
+
+        if (lastSelectedIndex === -1) lastSelectedIndex = currentIndex;
+        
+        const start = Math.min(lastSelectedIndex, nextIndex);
+        const end = Math.max(lastSelectedIndex, nextIndex);
+        
+        tiles.forEach((tile, i) => {
+
+          if (i >= start && i <= end && tile.getAttribute("aria-selected") === "false") {
+
+            toggleSetMakerSelection(tile);
+          }
+        });
+      }
+      
+      tiles[nextIndex].focus();
+      lastFocusedIndex = nextIndex;
+      break;
+    }
+    
+    case 'Home':
+      e.preventDefault();
+      tiles[0].focus();
+      lastFocusedIndex = 0;
+      break;
+      
+    case 'End':
+      e.preventDefault();
+      tiles[tiles.length - 1].focus();
+      lastFocusedIndex = tiles.length - 1;
+      break;
+
+    case 'Spacebar':
+    case 'Enter':
+    case ' ':
+      e.preventDefault();
+
+      if (currentTile) {
+
+        currentTile.click();
+        lastSelectedIndex = currentIndex;
+      }
+
+      break;
+
+    default:
+
+      break;
+  }
+}
+
+// Search for an indexed title that starts with type-ahead string
+// Start searching from after currently focused tile or from the top
+// Focus on the tile with the title matching the search
+
+function focusOnTypeAheadMatch() {
+  
+  if (!indexedTilesArr.length) return;
+
+  let searchStartIndex = Math.max(0, lastFocusedIndex);
+
+  let match = findMatchingTileObject(searchStartIndex + 1, indexedTilesArr.length);
+
+  if (!match && searchStartIndex > 0) {
+
+    match = findMatchingTileObject(0, searchStartIndex);
+  }
+
+  if (match) {
+    match.tuneItem.focus();
+    lastFocusedIndex = indexedTilesArr.indexOf(match);
+  }
+}
+
+// Find an indexed title matching the current type-ahead string
+// Limit the search to a range if start & end indices provided
+
+function findMatchingTileObject(startIndex, endIndex) {
+
+  if (startIndex && endIndex) {
+
+    return indexedTilesArr.find(tileObj => 
+      tileObj.title.toLowerCase().startsWith(searchKeysPressed));
+  }
+
+  for (let i = startIndex; i < endIndex; i++) {
+
+    const item = indexedTilesArr[i];
+
+    if (item.title.toLowerCase().startsWith(searchKeysPressed)) {
+
+      return item;
+    }
+  }
+  return null;
 }
 
 ///////////////////////////////////
