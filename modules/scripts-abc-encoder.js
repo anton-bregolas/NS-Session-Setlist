@@ -3571,7 +3571,7 @@ function getDecodedAbc(abcContent) {
 
 // Convert sets into separate tunes by adding missing ABC fields
 
-function makeTunesFromSets(abcSetsArr) {
+export function makeTunesFromSets(abcSetsArr) {
 
     console.log(`ABC Encoder:\n\nConverting ABC Sets data into Tunes...`);
 

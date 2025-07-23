@@ -362,7 +362,8 @@
   width: inherit;
   height: inherit;
   border-radius: 0;
-  color: var(--set-counter-color);
+  color: var(--tiles-font-color);
+  outline-color: var(--set-counter-color);
   outline-offset: -0.3em;
   opacity: 0.95;
 }
@@ -379,6 +380,13 @@
   font-size: var(--tiles-font-size);
   font-weight: bold;
   padding: 0 0.5em;
+}
+
+[data-lvw-action="create-set"].btn-lvw:is(:hover, :focus, :focus-visible) {
+  background-color: var(--tiles-color-odd-focused);
+  color: var(--set-counter-color);
+  outline-color: var(--set-counter-color);
+  opacity: 1;
 }
 
 .flex-center:not([hidden]) {
