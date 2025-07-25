@@ -45,7 +45,6 @@ const listViewerTitle = document.querySelector('[data-list-viewer="title"]');
 const listViewerTiles = document.querySelector('[data-list-viewer="tiles-container"]');
 const listViewerSlider = document.querySelector('[data-list-viewer="slider"]');
 const listViewerFooter = document.querySelector('[data-list-viewer="footer"]');
-const listViewerSetBtn = document.querySelector('[data-lvw-action="create-set"]');
 
 // Define List Viewer Slider settings
 
@@ -62,7 +61,10 @@ let searchKeysPressed = '' // Accumulate the characters entered for tune search
 let typeAheadTimeoutId; // Re-record latest timeout for clearing type-ahead search
 let titleStatusTimeoutId; // Keep track of the latest timeout set for clearing status
 
-const indexedTilesArr = [];
+// Prepare arrays for iterating through tile items & titles
+
+const tileItemsArr = [];
+const tileTitlesArr = [];
 
 ///////////////////////////////////
 // LIST VIEWER LAUNCH FUNCTIONS
@@ -140,7 +142,8 @@ function loadTuneTiles(tunesArr, filterArr) {
 
   listViewerTitle.textContent = '';
   listViewerTiles.textContent = '';
-  indexedTilesArr.length = 0;
+  tileItemsArr.length = 0;
+  tileTitlesArr.length = 0;
   lastFocusedIndex = -1;
 
   listViewerTitle.textContent = listViewerTitleText;
@@ -151,39 +154,35 @@ function loadTuneTiles(tunesArr, filterArr) {
 
     const tileTitleSpan = document.createElement('span');
     const setCounterSpan = document.createElement('span');
-    const tuneItem = document.createElement('li');
+    const tileItem = document.createElement('li');
 
-    let tuneItemText =
+    const tileItemText =
       filterArr[1] && filterArr[1] === "type"?
       tune.title.replace(/^[A-Z ]*:[ ]*/, '') :
       tune.title.includes(':')? `${tune.title.split(':')[1].trim()} [${tune.title.split(':')[0]}]` :
       tune.title;
 
-    tileTitleSpan.textContent = tuneItemText;
+    tileTitleSpan.textContent = tileItemText;
     tileTitleSpan.dataset.listViewer = "tune-tile-title";
     setCounterSpan.dataset.listViewer = "set-counter";
 
-    tuneItem.dataset.listViewer = "tune-tile";
-    tuneItem.dataset.lvwAction = "load-item";
-    tuneItem.classList = "flex-center";
-    tuneItem.dataset.url = tune.url;
-    tuneItem.dataset.index = tune.index;
+    tileItem.dataset.listViewer = "tune-tile";
+    tileItem.dataset.lvwAction = "load-item";
+    tileItem.classList = "flex-center";
+    tileItem.dataset.url = tune.url;
+    tileItem.dataset.index = tune.index;
 
-    tuneItem.setAttribute("role", "option");
-    tuneItem.setAttribute("tabindex", "-1");
-    tuneItem.setAttribute("aria-selected", "false");
+    tileItem.setAttribute("role", "option");
+    tileItem.setAttribute("tabindex", "-1");
+    tileItem.setAttribute("aria-selected", "false");
 
-    tuneItem.appendChild(tileTitleSpan);
-    tuneItem.appendChild(setCounterSpan);
+    tileItem.appendChild(tileTitleSpan);
+    tileItem.appendChild(setCounterSpan);
     
-    listViewerTiles.appendChild(tuneItem);
+    listViewerTiles.appendChild(tileItem);
 
-    indexedTilesArr.push(
-      {
-        tuneItem,
-        title: tuneItemText
-      }
-    );
+    tileItemsArr.push(tileItem);
+    tileTitlesArr.push(tileItemText);
   });
 }
 
@@ -242,14 +241,17 @@ function quitListViewer() {
 // Display the numbered Set item counter tag
 // Renumber the existing Set item counters
 
-function toggleSetMakerSelection(item) {
+function toggleSetMakerSelection(item, forceSelectMode) {
+
+  const forceSelect = forceSelectMode === "select";
+  const forceDeselect = forceSelectMode === "deselect";
 
   if (!item.hasAttribute("aria-selected")) return;
 
   const counter =
     item.querySelector('[data-list-viewer="set-counter"]');
 
-  if (item.getAttribute("aria-selected") === "true") {
+  if (item.getAttribute("aria-selected") === "true" && !forceSelect) {
 
     item.setAttribute("aria-selected", "false");
     item.style.removeProperty('outline');
@@ -266,6 +268,8 @@ function toggleSetMakerSelection(item) {
     return;
   }
 
+  if (forceDeselect) return;
+
   item.setAttribute("aria-selected", "true");
   item.style.outline = "0.2em solid var(--set-counter-color)";
   counter.setAttribute("data-lvw-counter", selectedCounter + 1);
@@ -273,6 +277,38 @@ function toggleSetMakerSelection(item) {
 
   if (selectedCounter === 2)
     listViewerFooter.setAttribute("data-set-maker", "ready");
+}
+
+// Select or deselect multiple Set items from the list of tiles
+
+function toggleMultipleTiles(tiles, startIndex, endIndex, forceSelectMode) {
+
+let start;
+let end;
+
+  if (endIndex > startIndex) {
+
+  start = Math.max(0, startIndex);
+  end = Math.min(endIndex, tiles.length - 1);
+
+    for (let i = start; i <= end; i++) {
+
+      toggleSetMakerSelection(tiles[i], forceSelectMode);
+    }
+    return;
+  }
+
+  if (startIndex > endIndex) {
+
+  start = Math.min(endIndex, tiles.length - 1);
+  end = Math.max(0, startIndex);
+
+    for (let j = end; j >= start; j--) {
+
+      toggleSetMakerSelection(tiles[j], forceSelectMode);
+    }
+    return;    
+  }
 }
 
 // Recalculate values of Set item counters after an item is deselected
@@ -349,6 +385,7 @@ function resetSetMakerMode() {
 
   selectedCounter = 0;
   lastSelectedIndex = -1;
+  lastFocusedIndex = -1;
 
   const selectedTiles =
     listViewerTiles.querySelectorAll('[aria-selected="true"]');
@@ -430,7 +467,8 @@ export function initListViewer() {
 
   listViewerDialog.addEventListener('click', handleListViewerClick);
   listViewerDialog.addEventListener('keydown', handleListViewerKeyPress);
-  listViewerTiles.addEventListener('focus', handleTilesListBoxFocus);
+  listViewerTiles.addEventListener('focusin', handleTilesListBoxFocusIn);
+  listViewerTiles.addEventListener('mousedown', handleTilesMouseDown);
   listViewerTiles.addEventListener('keydown', handleTilesKeyboardNavigation);
 
   if (isLocalStorageOk()) {
@@ -458,7 +496,7 @@ function handleListViewerClick(event) {
 
   const actionTrigger = event.target.closest('[data-lvw-action]');
 
-  if (!actionTrigger) return;
+  if (!actionTrigger || event.shiftKey) return;
 
   const elAction = actionTrigger.dataset.lvwAction;
 
@@ -518,10 +556,7 @@ function handleListViewerClick(event) {
 
   if (elAction === 'start-set-maker') {
 
-    const listViewerTileItems =
-      [...listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"]')];
-
-    if (listViewerTileItems.length < 2) {
+    if (tileItemsArr.length < 2) {
 
       displaySetMakerTitleStatus("❌ You need 2+ items 👇", `Filters: ${lastFilterText}`);
       return;
@@ -558,6 +593,37 @@ function handleListViewerClick(event) {
   if (elAction === 'close-list-viewer') {
 
     quitListViewer();
+    return;
+  }
+}
+
+// Handle special cases of mouse events on tile items
+
+function handleTilesMouseDown(event) {
+
+  const actionTrigger = event.target.closest('[data-lvw-action]');
+
+  if (!actionTrigger) return;
+
+  const elAction = actionTrigger.dataset.lvwAction;
+
+  // Handle mouse clicks with additional keys pressed
+
+  if (elAction === 'load-item' && event.shiftKey &&
+      listViewerDialog.dataset.setMaker === "on") {
+
+    event.preventDefault();
+
+    let endIndex = tileItemsArr.indexOf(actionTrigger);
+    let startIndex = 
+      lastSelectedIndex === -1? 0 :
+      lastSelectedIndex > endIndex? lastSelectedIndex - 1 :
+      lastSelectedIndex < endIndex? lastSelectedIndex + 1 :
+      lastSelectedIndex;
+
+    toggleMultipleTiles(tileItemsArr, startIndex, endIndex);
+    actionTrigger.focus();
+    lastSelectedIndex = endIndex;
     return;
   }
 }
@@ -601,7 +667,7 @@ function initDialogSlider() {
 // Handle List Viewer tune tiles listbox receiving focus
 // Focus on the first tile item by default
 
-function handleTilesListBoxFocus(e) {
+function handleTilesListBoxFocusIn(e) {
 
   if (e.target === listViewerTiles) {
 
@@ -615,10 +681,14 @@ function handleTilesListBoxFocus(e) {
       return;
     }
 
-    const allTileItems =
-    [...listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"]')];
+    tileItemsArr[lastFocusedIndex].focus();
+    return;
+  }
+  
+  if (e.target.dataset.listViewer === "tune-tile") {
 
-    allTileItems[lastFocusedIndex].focus();
+    lastFocusedIndex = tileItemsArr.indexOf(e.target);
+    return;
   }
 }
 
@@ -630,12 +700,50 @@ function handleTilesListBoxFocus(e) {
 
 function handleListViewerKeyPress(e) {
 
+  const setMakerOn = listViewerDialog.dataset.setMaker === "on";
+
   // Handle Esc key pressed
 
   if (e.key === 'Escape') {
 
     e.preventDefault();
     quitListViewer();
+  }
+
+  // Handle "Ctrl + A" pressed (select all)
+
+  if (e.ctrlKey && e.key.toUpperCase() === "A") {
+
+    e.preventDefault();
+
+    if (setMakerOn && tileItemsArr[0].getAttribute("aria-selected") === "false") {
+
+      selectedCounter = 0;
+
+      tileItemsArr.forEach(tile => {
+          
+        toggleSetMakerSelection(tile, "select");
+      });
+
+      lastSelectedIndex = tileItemsArr.length - 1;
+      tileItemsArr[tileItemsArr.length - 1].focus();
+      return;
+    }
+
+    if (setMakerOn && tileItemsArr[0].getAttribute("aria-selected") === "true") {
+
+      tileItemsArr.forEach(tile => {
+
+        toggleSetMakerSelection(tile, "deselect");
+      });
+
+      lastSelectedIndex = -1;
+      selectedCounter = 0;
+      tileItemsArr[0].focus();
+      return;
+    }
+
+    return;
   }
 
   // Handle type-ahead if letters or numbers pressed
@@ -662,6 +770,8 @@ function handleListViewerKeyPress(e) {
 // Handle keyboard navigation in the List Viewer tune tiles listbox
 
 function handleTilesKeyboardNavigation(e) {
+
+  const setMakerOn = listViewerDialog.dataset.setMaker === "on";
 
   // Handle Tab key pressed
 
@@ -696,82 +806,54 @@ function handleTilesKeyboardNavigation(e) {
     return;
   }
 
-  const tiles =
-    [...listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"]')];
-
-  if (!tiles.length) return;
+  if (!tileItemsArr.length) return;
 
   const currentTile = document.activeElement;
-  const currentIndex = tiles.indexOf(currentTile);
-  
-  // Handle "Ctrl + A" pressed (select all)
-
-  if (e.ctrlKey && e.key.toUpperCase() === "A") {
-
-    e.preventDefault();
-
-    if (listViewerDialog.dataset.setMaker === "on") {
-
-      tiles.forEach(tile => {
-
-        if (tile.hasAttribute("aria-selected") && tile.getAttribute("aria-selected") === "false") {
-          
-          toggleSetMakerSelection(tile);
-        }
-      });
-    }
-    return;
-  }
-
-  // Handle arrow keys pressed (focus on tile)
+  const currentIndex = tileItemsArr.indexOf(currentTile);
 
   switch(e.key) {
 
-    case 'ArrowLeft':
-    case 'ArrowRight':
-    case 'ArrowDown':
-    case 'ArrowUp': {
-
-      e.preventDefault();
-      
-      const nextIndex = e.key === 'ArrowDown' || e.key === 'ArrowRight'?
-        Math.min(currentIndex + 1, tiles.length - 1) :
-        Math.max(currentIndex - 1, 0);
-
-      // Handle Shift pressed 
-
-      if (e.shiftKey && listViewerDialog.dataset.setMaker === "on") {
-
-        if (lastSelectedIndex === -1) lastSelectedIndex = currentIndex;
-        
-        const start = Math.min(lastSelectedIndex, nextIndex);
-        const end = Math.max(lastSelectedIndex, nextIndex);
-        
-        tiles.forEach((tile, i) => {
-
-          if (i >= start && i <= end && tile.getAttribute("aria-selected") === "false") {
-
-            toggleSetMakerSelection(tile);
-          }
-        });
-      }
-      
-      tiles[nextIndex].focus();
-      lastFocusedIndex = nextIndex;
-      break;
-    }
+    // Handle Home & End buttons (select one or multiple tiles)
     
     case 'Home':
       e.preventDefault();
-      tiles[0].focus();
-      lastFocusedIndex = 0;
+
+      if (e.shiftKey && setMakerOn) {
+
+        if (lastFocusedIndex === 0) return;
+
+        toggleMultipleTiles(tileItemsArr, tileItemsArr.length - 1, +lastFocusedIndex + 1, "deselect");
+
+        selectedCounter = 0;
+
+        toggleMultipleTiles(tileItemsArr, lastFocusedIndex, 0, "select");
+
+        lastSelectedIndex = 0;
+      }
+
+      tileItemsArr[0].focus();
       break;
       
     case 'End':
       e.preventDefault();
-      tiles[tiles.length - 1].focus();
-      lastFocusedIndex = tiles.length - 1;
+
+      if (e.shiftKey && setMakerOn) {
+
+        if (lastFocusedIndex === tileItemsArr.length - 1) return;
+
+        toggleMultipleTiles(tileItemsArr, 0, lastFocusedIndex, "deselect");
+
+        selectedCounter = 0;
+
+        toggleMultipleTiles(tileItemsArr, lastFocusedIndex, tileItemsArr.length - 1, "select");
+
+        lastSelectedIndex = tileItemsArr.length - 1;
+      }
+
+      tileItemsArr[tileItemsArr.length - 1].focus();
       break;
+
+    // Handle Space & Enter (select a tile)
 
     case 'Spacebar':
     case 'Enter':
@@ -786,6 +868,71 @@ function handleTilesKeyboardNavigation(e) {
 
       break;
 
+    // Handle arrow keys pressed (focus on tile)
+
+    case 'ArrowLeft':
+    case 'ArrowRight':
+    case 'ArrowDown':
+    case 'ArrowUp': {
+
+      e.preventDefault();
+
+      const selectDown = e.key === 'ArrowDown' || e.key === 'ArrowRight';
+      const selectUp = e.key === 'ArrowUp' || e.key === 'ArrowLeft';
+
+      const nextIndex = selectDown?
+        Math.min(currentIndex + 1, tileItemsArr.length - 1) :
+        Math.max(currentIndex - 1, 0);
+
+      // Handle Shift pressed: Select multiple tiles
+
+      if (currentTile && e.shiftKey && setMakerOn) {
+
+        e.preventDefault();
+
+        if (lastSelectedIndex === -1)
+          lastSelectedIndex = currentIndex;
+
+        if (nextIndex === lastSelectedIndex) return;
+          
+        if (nextIndex === lastSelectedIndex - 1 ||
+            nextIndex === lastSelectedIndex + 1) {
+
+        if (selectDown && lastFocusedIndex === tileItemsArr.length - 1) return;
+        if (selectUp && lastFocusedIndex === 0) return;
+
+          if (currentTile.getAttribute("aria-selected") ===
+              tileItemsArr[nextIndex].getAttribute("aria-selected")) {
+
+            currentTile.click();
+          }
+
+          tileItemsArr[nextIndex].click();
+          lastSelectedIndex = nextIndex;
+          tileItemsArr[nextIndex].focus();
+          break;
+        }
+
+        if (selectDown) {
+
+          toggleMultipleTiles(tileItemsArr, lastSelectedIndex + 1, lastFocusedIndex);
+        }
+
+        if (selectUp) {
+
+          toggleMultipleTiles(tileItemsArr, lastSelectedIndex - 1, lastFocusedIndex);
+        }
+
+        tileItemsArr[lastFocusedIndex].focus();
+        lastSelectedIndex = lastFocusedIndex;
+
+        break;
+      }
+
+      tileItemsArr[nextIndex].focus();
+      break;
+    }
+
     default:
 
       break;
@@ -798,11 +945,11 @@ function handleTilesKeyboardNavigation(e) {
 
 function focusOnTypeAheadMatch() {
   
-  if (!indexedTilesArr.length) return;
+  if (!tileItemsArr.length || !tileTitlesArr.length) return;
 
   let searchStartIndex = Math.max(0, lastFocusedIndex);
 
-  let match = findMatchingTileObject(searchStartIndex + 1, indexedTilesArr.length);
+  let match = findMatchingTileObject(searchStartIndex + 1, tileItemsArr.length);
 
   if (!match && searchStartIndex > 0) {
 
@@ -810,8 +957,8 @@ function focusOnTypeAheadMatch() {
   }
 
   if (match) {
-    match.tuneItem.focus();
-    lastFocusedIndex = indexedTilesArr.indexOf(match);
+
+    match.focus();
   }
 }
 
@@ -820,19 +967,25 @@ function focusOnTypeAheadMatch() {
 
 function findMatchingTileObject(startIndex, endIndex) {
 
-  if (startIndex && endIndex) {
+  if (!startIndex || !endIndex) {
 
-    return indexedTilesArr.find(tileObj => 
-      tileObj.title.toLowerCase().startsWith(searchKeysPressed));
+    const tileTitleIndex = 
+      tileTitlesArr.indexOf(
+        tileTitlesArr.find(
+          title => title.toLowerCase().startsWith(searchKeysPressed)
+        )
+      );
+
+    return tileItemsArr[tileTitleIndex];
   }
 
   for (let i = startIndex; i < endIndex; i++) {
 
-    const item = indexedTilesArr[i];
+    const itemTitle = tileTitlesArr[i];
 
-    if (item.title.toLowerCase().startsWith(searchKeysPressed)) {
+    if (itemTitle.toLowerCase().startsWith(searchKeysPressed)) {
 
-      return item;
+      return tileItemsArr[i];
     }
   }
   return null;
