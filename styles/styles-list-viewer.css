@@ -22,7 +22,7 @@
   --set-counter-offset: 2em;                /* Default: 2em */
 
   --list-ui-button-width: 2.75em;           /* Default: 2.75em */
-  --list-ui-slider-width: 2.75em;           /* Default: 2.75em */
+  --list-ui-slider-width: 3.75em;           /* Default: 3.75em */
   --list-ui-slider-height: 12em;            /* Default: 12em */
 }
 
@@ -217,7 +217,7 @@
   max-height: var(--list-ui-slider-height);
   width: var(--list-ui-slider-width);
   top: 33%;
-  left: 1.5em;
+  left: 1em;
   writing-mode: vertical-lr;
   direction: rtl;
   transition: opacity 0.25s ease-out;
@@ -417,7 +417,7 @@
   }
 
   [data-list-viewer="slider"] {
-    left: 1.2em;
+    left: 0.7em;
   }
 
   [data-list-viewer="slider"]:is(:focus-visible) {

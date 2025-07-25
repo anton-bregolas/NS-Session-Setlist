@@ -20,7 +20,7 @@
   --chords-min-bar-width: 1em;              /* Default: 1em */
 
   --chords-ui-button-width: 2.75em;         /* Default: 2.75em */
-  --chords-ui-slider-width: 2.75em;         /* Default: 2.75em */
+  --chords-ui-slider-width: 3.75em;         /* Default: 3.75em */
   --chords-ui-slider-height: 12em;          /* Default: 12em */
 }
 
@@ -270,7 +270,7 @@
   max-height: var(--chords-ui-slider-height);
   width: var(--chords-ui-slider-width);
   top: 33%;
-  right: 1.5em;
+  right: 1em;
   writing-mode: vertical-lr;
   direction: rtl;
   transition: opacity 0.25s ease-out;
@@ -343,7 +343,7 @@
   }
 
   [data-chord-viewer="slider"] {
-    right: 1.2em;
+    right: 0.7em;
   }
 
   [data-chord-viewer="slider"]:is(:focus-visible) {
