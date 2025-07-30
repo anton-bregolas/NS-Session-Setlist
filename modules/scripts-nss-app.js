@@ -512,12 +512,6 @@ function setTuneBookCompactMode() {
   
   tuneBookActionsBtn.focus();
   tuneBookFooter.setAttribute("inert", "");
-  
-  const hideFooterBtn = tuneBookActionsPopup.querySelector('[data-tbk-action="hide-footer"]');
-  const backupCvwBtn = tuneBookActionsPopup.querySelector('[data-tbk-action="open-chord-viewer-mobile"]');
-
-  ariaHideMe(hideFooterBtn);
-  ariaShowMe(backupCvwBtn);
 
   setTimeout(() => {
     
@@ -1340,7 +1334,7 @@ async function appButtonHandler(btn) {
   }
 
   if (btn.classList.contains('popup-btn-x') &&
-      btn.parentElement.classList.contains('tunebook-action')) {
+      btn.classList.contains('tunebook-action')) {
 
     tuneBookActionsPopup.hidePopover();
 
