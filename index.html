@@ -539,112 +539,111 @@
                 </button>
             </section>
 
-            <article popover="manual" data-popover="tunebook-actions-popup" data-pops-up-from="footer" class="info" aria-label="Tunebook actions menu">
+            <article popover="manual" data-popover="tunebook-actions-popup" data-tbk-actions-mode="open" data-pops-up-from="footer" class="info" aria-label="Tunebook actions menu">
+                <header class="tunebook-actions-header">
+                    <h2 class="tunebook-actions-header-title nss-gradient-text"></h2>
+                </header>
                 <div class="tunebook-actions-grid">
-                    <div data-tbk-action="close-menu-header" class="tunebook-action flex-wrapper" aria-hidden="true" hidden>
-                        <button class="nss-btn popup-btn-x nss-control-btn flex-wrapper" title="Minimize popup" aria-title="Minimize popup">
-                            <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#action-icon-wrap-up"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <div data-tbk-action="show-help" class="tunebook-action flex-wrapper">
-                        <button data-load="help" class="nss-btn nss-switch-btn flex-wrapper" title="Show Help overlay" aria-title="Show Help overlay">
+                    <button data-tbk-action="close-tunebook-actions" data-close-direction="up" class="tunebook-action nss-btn popup-btn-x nss-control-btn flex-wrapper" title="Minimize popup" aria-title="Minimize popup">
+                        <svg class="nss-action-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-wrap-up"></use>
+                        </svg>
+                    </button>
+                    <button data-tbk-action="show-help" data-load="help" class="tunebook-action nss-btn nss-switch-btn flex-align-center" title="Show Help overlay" aria-title="Show Help overlay">
+                        <span class="nss-icon-filler">
                             <svg class="nss-circled-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-help"></use>
                             </svg>
-                        </button>
+                        </span>
                         <span class="tunebook-action-label nss-gradient-text">
                             SHOW HELP
                         </span>
-                    </div>
-                    <div data-tbk-action="hide-footer" class="tunebook-action flex-wrapper">
-                        <button data-controls="tunebook-footer" data-load="tunebook-compact-mode" class="nss-btn nss-option-btn flex-wrapper" title="Hide footer section" aria-title="Hide footer section">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#action-icon-panel-down"></use>
-                            </svg>
-                        </button>
+                    </button>
+                    <button data-tbk-action="hide-footer" data-controls="tunebook-footer" data-load="tunebook-compact-mode" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Hide footer section" aria-title="Hide footer section">
+                        <svg class="nss-action-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-panel-down"></use>
+                        </svg>
                         <span class="tunebook-action-label nss-gradient-text">
                             HIDE FOOTER
                         </span>
-                    </div>
-                    <div data-tbk-action="open-chord-viewer-mobile" class="tunebook-action flex-wrapper" aria-hidden="true" hidden>
-                        <button data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open Chord Viewer" aria-title="Open Chord Viewer">
-                            <span class="nss-btn-text-label flex-wrapper">‘Em’</span>
-                        </button>
-                    </div>
-                    <div data-tbk-action="switch-desktop-mode" class="tunebook-action flex-wrapper">
-                        <button data-controls="mode" data-type="desktop-switch" class="nss-btn nss-option-btn flex-wrapper" title="Switch to desktop mode" aria-title="Switch to desktop mode">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#nav-icon-desktop"></use>
-                            </svg>
-                        </button>
+                    </button>
+                    <button data-tbk-action="open-chord-viewer-mobile" data-load="chord-viewer" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Open Chord Viewer" aria-title="Open Chord Viewer">
+                        <span class="nss-btn-text-label flex-align-center">
+                            ‘Em’
+                        </span>
+                    </button>
+                    <button data-tbk-action="switch-desktop-mode" data-controls="mode" data-type="desktop-switch" class="tunebook-action flex-align-center nss-btn nss-option-btn" title="Switch to desktop mode" aria-title="Switch to desktop mode">
+                        <svg class="nss-action-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-desktop"></use>
+                        </svg>
                         <span class="tunebook-action-label nss-gradient-text">
                             DESKTOP MODE
                         </span>
-                    </div>
-                    <div data-tbk-action="switch-mobile-mode" class="tunebook-action flex-wrapper">
-                        <button data-controls="mode" data-type="mobile-switch" class="nss-btn nss-option-btn" title="Switch to mobile mode" aria-title="Switch to mobile mode">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#nav-icon-mobile"></use>
-                            </svg>
-                        </button>
+                    </button>
+                    <button data-tbk-action="switch-mobile-mode" data-controls="mode" data-type="mobile-switch" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Switch to mobile mode" aria-title="Switch to mobile mode">
+                        <svg class="nss-action-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#nav-icon-mobile"></use>
+                        </svg>
                         <span class="tunebook-action-label nss-gradient-text">
                             MOBILE MODE
                         </span>
-                    </div>
-                    <div data-tbk-action="open-chord-viewer" class="tunebook-action flex-wrapper">
-                        <button data-load="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open Chord Viewer" aria-title="Open Chord Viewer">
-                            <span class="nss-btn-text-label flex-wrapper">‘Em’</span>
-                        </button>
+                    </button>
+                    <button data-tbk-action="open-chord-viewer" data-load="chord-viewer" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Open Chord Viewer" aria-title="Open Chord Viewer">
+                        <span class="nss-btn-text-label flex-align-center">
+                            ‘Em’
+                        </span>
                         <span class="tunebook-action-label nss-gradient-text">
                             CHORD VIEWER
                         </span>
-                    </div>
-                    <div data-tbk-action="open-list-viewer" class="tunebook-action flex-wrapper">
-                        <button data-load="list-viewer" class="nss-btn nss-option-btn flex-wrapper" title="Open List Viewer / Set Maker" aria-title="Open List Viewer / Set Maker">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
-                            </svg>
-                        </button>
+                    </button>
+                    <button data-tbk-action="open-list-viewer" data-load="list-viewer" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Open List Viewer / Set Maker" aria-title="Open List Viewer / Set Maker">
+                        <svg class="nss-action-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
+                        </svg>
                         <span class="tunebook-action-label nss-gradient-text">
                             LIST VIEWER
                         </span>
-                    </div>
-                    <div data-tbk-action="open-launch-screen" class="tunebook-action flex-wrapper">
-                        <button autofocus data-load="launcher" class="nss-btn nss-switch-btn flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
-                            <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
+                    </button>
+                    <button data-tbk-action="open-launch-screen" data-load="launcher" class="tunebook-action nss-btn nss-switch-btn flex-align-center" title="Return to Launch Screen" aria-title="Return to Launch Screen" autofocus>
+                        <span class="nss-icon-filler flex-wrapper">
+                            <svg class="nss-icon" data-icon="launch" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-launch"></use>
                             </svg>
-                        </button>
+                        </span>
                         <span class="tunebook-action-label nss-gradient-text">
                             LAUNCH SCREEN
                         </span>
-                    </div>
-                    <div data-tbk-action="get-share-link" class="tunebook-action flex-wrapper">
-                        <button data-load="share-link" class="nss-btn nss-option-btn flex-wrapper" title="Share link to item" aria-title="Share link to item">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#action-icon-share"></use>
-                            </svg>
-                        </button>
+                    </button>
+                    <button data-tbk-action="get-share-link" data-load="share-link" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Share link to item" aria-title="Share link to item">
+                        <svg class="nss-action-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-share"></use>
+                        </svg>
                         <span class="tunebook-action-label nss-gradient-text">
                             SHARE LINK
                         </span>
-                    </div>
-                    <div data-tbk-action="close-menu-footer" class="tunebook-action flex-wrapper">
-                        <button class="nss-btn popup-btn-x nss-control-btn flex-wrapper" title="Minimize popup" aria-title="Minimize popup">
-                            <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#action-icon-wrap-down"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <div data-tbk-action="toggle-full-screen" class="tunebook-action flex-wrapper">
-                        <button data-controls="fullscreen-view" data-alt-view="chord-viewer" class="nss-btn nss-option-btn flex-wrapper" title="View in full screen mode" aria-title="View in full screen mode">
-                            <svg class="nss-mini-icon" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#action-icon-view"></use>
-                            </svg>
-                        </button>
-                    </div>
+                    </button>
+                    <button data-tbk-action="select-fullscreen-tunes" class="tunebook-action nss-btn nss-option-btn flex-wrapper" title="Full screen button opens Full Screen View" aria-title="Full screen button opens Full Screen View">
+                        <span class="nss-gradient-text"></span>
+                        <svg class="nss-mini-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-view"></use>
+                        </svg>
+                    </button>
+                    <button data-tbk-action="select-fullscreen-chords" class="tunebook-action nss-btn nss-option-btn flex-wrapper" title="Full screen button opens Chord Viewer" aria-title="Full screen button opens Chord Viewer">
+                        <svg class="nss-mini-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-view"></use>
+                        </svg>
+                        <span class="nss-gradient-text"></span>
+                    </button>
+                    <button data-tbk-action="close-tunebook-actions" data-close-direction="down" class="tunebook-action nss-btn popup-btn-x nss-control-btn flex-wrapper" title="Minimize popup" aria-title="Minimize popup">
+                        <svg class="nss-action-icon" data-icon="launch" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-wrap-down"></use>
+                        </svg>
+                    </button>
+                    <button data-tbk-action="toggle-full-screen" data-controls="fullscreen-view" data-alt-view="chord-viewer" class="tunebook-action nss-btn nss-option-btn flex-wrapper" title="Launch full screen mode" aria-title="Launch full screen mode">
+                        <svg class="nss-mini-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-view"></use>
+                        </svg>
+                    </button>
             </article>
 
         </footer>
