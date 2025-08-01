@@ -53,6 +53,7 @@ const minHVal = 22; // Minimum tile hight value (em*10)
 
 // Set global variables
 
+let isSliderInitialized = false; // Keep track of the slider initialization status
 let lastFilterText = 'None'; // Keep track of the last filter text loaded to title
 let selectedCounter = 0; // Keep track of the number of tile items selected
 let lastFocusedIndex = -1; // Keep track of the last focused tile item index
@@ -661,7 +662,11 @@ function initDialogSlider() {
 
   // Listen to slider input events
 
-  listViewerSlider.addEventListener('input', appTileHeightSliderHandler);
+  if (!isSliderInitialized) {
+
+    listViewerSlider.addEventListener('input', appTileHeightSliderHandler);
+    isSliderInitialized = true;
+  }
 }
 
 // Handle List Viewer tune tiles listbox receiving focus
