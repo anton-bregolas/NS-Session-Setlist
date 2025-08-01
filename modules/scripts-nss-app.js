@@ -32,6 +32,7 @@ let lastAppSectionOpened = "launcher"; // Keep track of the last app section nam
 let lastTuneBookMode; // Keep track of the last Tunebook mode setting for this session
 let lastTuneBookOpened; // Keep track of the latest Tunebook opened (fallback global variable)
 let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
+let longPressTimeoutId; // Keep track of the latest timeout set for long press events
 
 // Define Session DB items
 
@@ -591,7 +592,7 @@ async function exitFullScreenMode() {
 
 // Launch a Popover Options menu depending on dataType
 
-export function openSettingsMenu(dataType) {
+export function openSettingsMenu(dataType, dataOptions) {
 
   hideTuneBookActionsMenu();
 
@@ -609,7 +610,12 @@ export function openSettingsMenu(dataType) {
 
   if (dataType === "tunebook-actions-menu") {
 
+    tuneBookActionsPopup.dataset.tbkActionsMode =
+      dataOptions? `pick-fav-${dataOptions}` : "open";
+
     tuneBookActionsPopup.showPopover();
+
+    if (tuneBookActionsPopup.dataset.tbkActionsMode !== "open") return;
 
     if (localStorageOk() && +localStorage.tuneBookHelpMenuViewed === 1) {
 
@@ -639,6 +645,25 @@ export function openSettingsMenu(dataType) {
     printLocalStorageSettings(abcEncoderDefaults, true);
 
     appOptionsPopover.showPopover();
+  }
+}
+
+// Shift focus to the specific element of a currently open popover
+// Optional: Set a timeout for the focus
+
+function focusOnActivePopoverElem(popoverEl, focusElAttr, timeOutVal = 0) {
+
+  if (!popoverEl.matches(':popover-open')) return;
+
+  const focusEl = popoverEl.querySelector(focusElAttr);
+
+  if (focusEl) {
+
+    setTimeout(() => {
+      
+      focusEl.focus();
+
+    }, timeOutVal);
   }
 }
 
@@ -1686,6 +1711,23 @@ async function appCheckBoxHandler(checkBox) {
   return;
 }
 
+// Handle custom radio input click events
+
+function appRadioBtnHandler(input) {
+
+  if (input === fullScreenViewChordsRadioBtn) {
+
+    localStorage.abcToolsFullScreenBtnShowsChords = 1;
+    return;
+  }
+
+  if (input === fullScreenViewTunesRadioBtn) {
+
+    localStorage.abcToolsFullScreenBtnShowsChords = 0;
+    return;
+  }
+}
+
 // Handle custom dropdown menu events
 
 async function appDropDownHandler(event) {
@@ -1704,14 +1746,10 @@ async function appDropDownHandler(event) {
 
   if (event.type === 'mousedown' || event.type === 'keydown' || event.type === 'touchstart') {
 
-    // console.log(event.type);
-
     handleSelectorLabels("clearone", this);
   }
 
   if (event.type === 'blur' || event.type === 'keyup' || event.type === 'touchend') {
-
-    // console.log(event.type);
 
     handleSelectorLabels("setone", this);
   }
@@ -2138,6 +2176,15 @@ function appWindowClickHandler(event) {
 
   const elTag = triggerEl.tagName.toLowerCase();
 
+  // Prevent clicks on elements after long press
+
+  if (triggerEl.dataset.longPress && triggerEl.dataset.activated === "true") {
+
+    event.preventDefault();
+    triggerEl.dataset.activated = "false";
+    return;
+  }
+
   // Handle all button clicks
 
   if (elTag === 'button') {
@@ -2151,6 +2198,248 @@ function appWindowClickHandler(event) {
 
     appCheckBoxHandler(triggerEl);
   }
+
+  // Handle radio input clicks
+
+  if (elTag === 'input' & triggerEl.type === "radio") {
+
+    appRadioBtnHandler(triggerEl);
+  }
+}
+
+// Handle specific app mouse events
+
+function appWindowMouseEventHandler(event) {
+
+  const interactableEl = 'button, label, select, input[type="checkbox"], input[type="radio"]';
+
+  const triggerEl = event.target.closest(interactableEl);
+
+  if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
+
+  if (event.type === 'mousedown') {
+
+    if (triggerEl.dataset.longPress && triggerEl.dataset.longPress !== "off") {
+
+      if (triggerEl.dataset.favBtn) {
+
+        activateLongPressFavBtn(event, triggerEl);
+      }
+      return;
+    }
+    return;
+  }
+
+  if (event.type === 'mouseup') {
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "pressed") {
+
+      if (triggerEl.dataset.favBtn) {
+
+        focusOnActivePopoverElem(
+          tuneBookActionsPopup,
+          '[data-load="help"]',
+          5
+        );
+      }
+
+      triggerEl.dataset.longPress = "on";
+      return;
+    }
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "active") {
+
+      appClearLongPressTimeout(triggerEl);
+      return;
+    }
+
+    return;
+  }
+
+  if (event.type === 'mousemove') {
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "active") {
+
+      appClearLongPressTimeout(triggerEl);
+      return;
+    }
+
+    return;
+  }
+}
+
+// Handle specific app touch events
+
+function appWindowTouchEventHandler(event) {
+
+  const interactableEl = 'button, label, select, input[type="checkbox"], input[type="radio"]';
+
+  const triggerEl = event.target.closest(interactableEl);
+
+  if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
+
+  if (event.type === 'touchstart') {
+
+    if (triggerEl.dataset.longPress && triggerEl.dataset.longPress !== "off") {
+
+      if (triggerEl.dataset.favBtn) {
+
+        activateLongPressFavBtn(event, triggerEl);
+      }
+      return;
+    }
+    return;
+  }
+
+  if (event.type === 'touchend') {
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "pressed") {
+
+      if (triggerEl.dataset.favBtn) {
+
+        focusOnActivePopoverElem(
+          tuneBookActionsPopup,
+          '[data-load="help"]',
+          5
+        );
+      }
+
+      triggerEl.dataset.longPress = "on";
+      triggerEl.dataset.activated = "false";
+      return;
+    }
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "active") {
+
+      appClearLongPressTimeout(triggerEl);
+      return;
+    }
+
+    return;
+  }
+
+  if (event.type === 'touchmove') {
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "active") {
+
+      appClearLongPressTimeout(triggerEl);
+      return;
+    }
+
+    return;
+  }
+}
+
+// Handle specific app keyboard events
+
+function appWindowKeyboardEventHandler(event) {
+
+  const interactableEl = 'button, label, select, input[type="checkbox"], input[type="radio"]';
+
+  const triggerEl = event.target.closest(interactableEl);
+
+  if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
+
+  if (event.type === 'keydown') {
+
+    if ((event.key === "Enter" || event.key === " ") &&
+        triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress !== "off" &&
+        triggerEl.dataset.activated === "false") {
+
+      if (triggerEl.dataset.favBtn) {
+
+        activateLongPressFavBtn(event, triggerEl);
+      }
+      return;
+    }
+    return;
+  }
+
+  if (event.type === 'keyup') {
+
+    if ((event.key === "Enter" || event.key === " ") &&
+        triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "pressed") {
+
+      if (triggerEl.dataset.favBtn) {
+
+        focusOnActivePopoverElem(
+          tuneBookActionsPopup,
+          '[data-load="help"]',
+          5
+        );
+      }
+
+      triggerEl.dataset.longPress = "on";
+      triggerEl.dataset.activated = "false";
+      return;
+    }
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress === "active") {
+
+      appClearLongPressTimeout(triggerEl);
+      return;
+    }
+
+    return;
+  }
+}
+
+// Set a long press timeout with a callback function
+
+function appSetLongPressTimeout(event, triggerEl, timeOutVal, callBackFn, callBackArgs) {
+
+  triggerEl.dataset.longPress = "active";
+
+  longPressTimeoutId = setTimeout(() => {
+
+    longPressTimeoutId = null;
+    callBackFn(...callBackArgs);
+    triggerEl.dataset.longPress = "pressed";
+
+    if (triggerEl.tagName.toLowerCase() === "label") {
+
+      triggerEl.querySelector('input').dataset.activated = "true";
+
+    } else {
+
+      triggerEl.dataset.activated = "true";
+    }
+  }, timeOutVal);
+}
+
+// Reset a long press timeout
+
+function appClearLongPressTimeout(targetEl) {
+
+  clearTimeout(longPressTimeoutId);
+
+  if (targetEl) {
+
+    targetEl.dataset.longPress = "on";
+  }
+}
+
+// Activate long press event on a Tunebook fav button
+
+function activateLongPressFavBtn(event, triggerEl) {
+
+  triggerEl.dataset.longPress = "on";
+
+  const timeOutVal = 500;
+
+  const callBackArgs =
+      ["tunebook-actions-menu", triggerEl.dataset.favBtn];
+
+  appSetLongPressTimeout(event, triggerEl, timeOutVal, openSettingsMenu, callBackArgs);
 }
 
 ////////////////////////////////
@@ -2737,16 +3026,6 @@ function initTunebookRadioBtns() {
 
     fullScreenViewTunesRadioBtn.checked = true;
   }
-
-  fullScreenViewChordsRadioBtn.addEventListener('click', () => {
-
-    localStorage.abcToolsFullScreenBtnShowsChords = 1;
-  });
-
-  fullScreenViewTunesRadioBtn.addEventListener('click', () => {
-
-    localStorage.abcToolsFullScreenBtnShowsChords = 0;
-  });
 }
 
 // Initialize app mode based on viewport dimensions
@@ -2820,6 +3099,22 @@ function initPopoverWarning() {
 function initWindowEvents() {
 
   window.addEventListener('click', appWindowClickHandler);
+
+  window.addEventListener('mousedown', appWindowMouseEventHandler);
+
+  window.addEventListener('mouseup', appWindowMouseEventHandler);
+
+  window.addEventListener('mousemove', appWindowMouseEventHandler);
+
+  window.addEventListener('keydown', appWindowKeyboardEventHandler);
+
+  window.addEventListener('keyup', appWindowKeyboardEventHandler);
+
+  window.addEventListener('touchstart', appWindowTouchEventHandler);
+
+  window.addEventListener('touchend', appWindowTouchEventHandler);
+
+  window.addEventListener('touchmove', appWindowTouchEventHandler);
 
   window.addEventListener('resize', appWindowResizeHandler);
 

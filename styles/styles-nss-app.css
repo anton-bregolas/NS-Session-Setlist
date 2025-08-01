@@ -1071,16 +1071,16 @@ body[data-mode="mobile"] .nss-select-container {
   width: 100%;
 }
 
-.footer-link-container {
+.footer-item-container {
   height: 100%;
 }
 
-.footer-link-wrapper {
+.footer-central-wrapper {
   width: calc(100% - 7.65rem);
   height: 100%;
 }
 
-.nss-footer-tunebook .footer-link-wrapper {
+.nss-footer-tunebook .footer-central-wrapper {
   justify-content: space-evenly;
 }
 
@@ -1672,7 +1672,7 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     display: none;
   }
 
-  .nss-footer-tunebook .footer-link-wrapper {
+  .nss-footer-tunebook .footer-central-wrapper {
     justify-content: space-around;
   }
 }
@@ -1932,7 +1932,7 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     display: none;
   }
 
-  body[data-mode="mobile"] .footer-link-wrapper {
+  body[data-mode="mobile"] .footer-central-wrapper {
     width: 100%;
   }
 }

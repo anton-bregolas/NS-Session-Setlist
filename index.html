@@ -477,23 +477,26 @@
                     </svg>
                 </button>
 
-                <div class="flex-wrapper footer-link-wrapper">
-                    <label class="radio-wrapper flex-wrapper" title="Full Screen button opens current Set or Tune">
-                        <input type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" checked>
-                        <span class="icon-wrapper flex-wrapper">
-                            <span class="nss-mini-icon nss-icon-show">
-                                <svg class="nss-icon" aria-hidden="true">
-                                    <use href="assets/icons/icons.svg#action-icon-view"></use>
-                                </svg>
+                <div class="flex-wrapper footer-central-wrapper">
+                    <div class="footer-item-container">
+                        <label data-long-press="on" data-activated="false" data-fav-btn="left" class="radio-wrapper flex-wrapper" title="Full Screen button opens current Set or Tune">
+                            <input data-long-press="on" data-activated="false" data-fav-btn="left" type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" checked>
+                            <span class="icon-wrapper flex-wrapper">
+                                <span class="nss-mini-icon nss-icon-show">
+                                    <svg class="nss-icon" aria-hidden="true">
+                                        <use href="assets/icons/icons.svg#action-icon-view"></use>
+                                    </svg>
+                                </span>
+                                <span class="nss-mini-icon nss-icon-hide">
+                                    <svg class="nss-icon" aria-hidden="true">
+                                        <use href="assets/icons/icons.svg#action-icon-unview"></use>
+                                    </svg>
+                                </span>
                             </span>
-                            <span class="nss-mini-icon nss-icon-hide">
-                                <svg class="nss-icon" aria-hidden="true">
-                                    <use href="assets/icons/icons.svg#action-icon-unview"></use>
-                                </svg>
-                            </span>
-                        </span>
-                    </label>
-                    <button data-controls="mode" data-type="mobile-switch" class="nss-btn flex-wrapper footer-link-container" title="Switch to mobile mode" aria-title="Switch to mobile mode">
+                        </label>
+                        <div class="nss-left-fav-btn-container"></div>
+                    </div>
+                    <button data-controls="mode" data-type="mobile-switch" class="nss-btn flex-wrapper footer-item-container" title="Switch to mobile mode" aria-title="Switch to mobile mode">
                         <span class="nss-gradient-text flex-wrapper">
                             MOBILE
                         </span>
@@ -513,21 +516,24 @@
                             </svg>
                         </span>
                     </button>
-                    <label class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
-                        <input type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1">
-                        <span class="icon-wrapper flex-wrapper">
-                            <span class="nss-mini-icon nss-icon-show">
-                                <svg class="nss-icon" aria-hidden="true">
-                                    <use href="assets/icons/icons.svg#action-icon-view"></use>
-                                </svg>
+                    <div class="footer-item-container">
+                        <label data-long-press="on" data-activated="false" data-fav-btn="right" class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
+                            <input data-long-press="on" data-activated="false" data-fav-btn="right" type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1">
+                            <span class="icon-wrapper flex-wrapper">
+                                <span class="nss-mini-icon nss-icon-show">
+                                    <svg class="nss-icon" aria-hidden="true">
+                                        <use href="assets/icons/icons.svg#action-icon-view"></use>
+                                    </svg>
+                                </span>
+                                <span class="nss-mini-icon nss-icon-hide">
+                                    <svg class="nss-icon" aria-hidden="true">
+                                        <use href="assets/icons/icons.svg#action-icon-unview"></use>
+                                    </svg>
+                                </span>
                             </span>
-                            <span class="nss-mini-icon nss-icon-hide">
-                                <svg class="nss-icon" aria-hidden="true">
-                                    <use href="assets/icons/icons.svg#action-icon-unview"></use>
-                                </svg>
-                            </span>
-                        </span>
-                    </label>
+                        </label>
+                        <div class="nss-right-fav-btn-container"></div>
+                    </div>
                 </div>
 
                 <button data-controls="tunebook-footer" data-load="tunebook-compact-mode" class="nss-btn nss-option-btn nss-popover-btn nss-btn-x flex-wrapper" title="Hide footer section" aria-title="Hide footer section"></button>
@@ -604,7 +610,7 @@
                             LIST VIEWER
                         </span>
                     </button>
-                    <button data-tbk-action="open-launch-screen" data-load="launcher" class="tunebook-action nss-btn nss-switch-btn flex-align-center" title="Return to Launch Screen" aria-title="Return to Launch Screen" autofocus>
+                    <button data-tbk-action="open-launch-screen" data-load="launcher" class="tunebook-action nss-btn nss-switch-btn flex-align-center" title="Return to Launch Screen" aria-title="Return to Launch Screen">
                         <span class="nss-icon-filler flex-wrapper">
                             <svg class="nss-icon" data-icon="launch" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-launch"></use>

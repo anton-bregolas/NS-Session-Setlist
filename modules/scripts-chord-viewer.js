@@ -49,6 +49,10 @@ const lineWMax = 50; // Maximum line width of chords (em)
 const maxWLows = 50; // Lowest max-width value for chords (%)
 const maxWTops = 90; // Highest max-width value for chords (%)
 
+// Set global variables
+
+let isSliderInitialized = false; // Keep track of the slider initialization status
+
 ///////////////////////////////////
 // CHORD VIEWER LAUNCH FUNCTIONS
 //////////////////////////////////
@@ -358,7 +362,11 @@ function initDialogSlider() {
 
   // Listen to slider input events
 
-  chordViewerSlider.addEventListener('input', appChordSliderHandler);
+  if (!isSliderInitialized) {
+
+    chordViewerSlider.addEventListener('input', appChordSliderHandler);
+    isSliderInitialized = true;
+  }
 }
 
 ///////////////////////////////////
