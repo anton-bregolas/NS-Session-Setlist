@@ -160,6 +160,12 @@ a,
   color: var(--accent-color);
 }
 
+.nss-btn-text-label {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .nss-link > * {
   transition: color 0.75s ease-in-out;
 }
@@ -1954,12 +1960,16 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     height: 80%;
   }
 
-  .nss-footer-tunebook .nss-btn-text-label {
+  body[data-mode="mobile"] .nss-footer-tunebook .nss-btn-text-label {
     font-size: 1.75rem;
   }
 
   body[data-mode="mobile"] .footer-central-wrapper {
     width: 100%;
+  }
+
+  body[data-mode="mobile"] .footer-central-wrapper {
+    grid-template-columns: 1fr 10rem 1fr;
   }
 }
 
