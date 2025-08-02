@@ -681,7 +681,6 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
 
 .tunebook-action .nss-btn-text-label {
   font-size: 1.5rem;
-  padding-bottom: 0.15rem;
 }
 
 [data-type="desktop-switch"] {
