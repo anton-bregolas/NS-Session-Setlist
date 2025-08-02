@@ -1943,9 +1943,19 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     width: 6.5rem;
   }
 
-  body[data-mode="mobile"] .nss-footer-tunebook .nss-btn-x,
-  body[data-mode="mobile"] .nss-footer-tunebook [data-load="launcher"] {
+  body[data-mode="mobile"] .nss-footer-tunebook [data-load="launcher"]:not(.tunebook-action),
+  body[data-mode="mobile"] .nss-footer-tunebook .nss-btn-x {
     display: none;
+  }
+
+  body[data-mode="mobile"] .nss-footer-tunebook .nss-icon-filler,
+  body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action > svg {
+    width: 80%;
+    height: 80%;
+  }
+
+  .nss-footer-tunebook .nss-btn-text-label {
+    font-size: 1.75rem;
   }
 
   body[data-mode="mobile"] .footer-central-wrapper {
