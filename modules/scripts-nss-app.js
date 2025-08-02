@@ -2365,6 +2365,18 @@ function appWindowMouseEventHandler(event) {
 
     return;
   }
+
+  if (event.type === 'contextmenu') {
+
+    if (triggerEl.dataset.longPress &&
+        triggerEl.dataset.longPress !== "off") {
+
+      event.preventDefault();
+      return;
+    }
+
+    return;
+  }
 }
 
 // Handle specific app touch events
@@ -2443,16 +2455,14 @@ function appWindowKeyboardEventHandler(event) {
   if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
 
   if (event.type === 'keydown') {
-
-    if ((event.key === "Enter" || event.key === " ") &&
+    
+    if (event.key === "Enter" && event.shiftKey &&
         triggerEl.dataset.longPress &&
-        triggerEl.dataset.longPress !== "off" &&
-        triggerEl.dataset.activated === "false") {
+        triggerEl.dataset.longPress !== "off") {
 
-      if (triggerEl.dataset.favBtn) {
+      event.preventDefault();
 
-        activateLongPressFavBtn(event, triggerEl);
-      }
+      openSettingsMenu("tunebook-actions-menu", triggerEl.dataset.favBtn);
       return;
     }
     return;
@@ -2460,9 +2470,8 @@ function appWindowKeyboardEventHandler(event) {
 
   if (event.type === 'keyup') {
 
-    if ((event.key === "Enter" || event.key === " ") &&
-        triggerEl.dataset.longPress &&
-        triggerEl.dataset.longPress === "pressed") {
+    if (event.key === "Enter" && event.shiftKey &&
+        triggerEl.dataset.longPress) {
 
       if (triggerEl.dataset.favBtn) {
 
@@ -2472,19 +2481,8 @@ function appWindowKeyboardEventHandler(event) {
           5
         );
       }
-
-      triggerEl.dataset.longPress = "on";
-      triggerEl.dataset.activated = "false";
       return;
     }
-
-    if (triggerEl.dataset.longPress &&
-        triggerEl.dataset.longPress === "active") {
-
-      appClearLongPressTimeout(triggerEl);
-      return;
-    }
-
     return;
   }
 }
@@ -3233,6 +3231,8 @@ function initWindowEvents() {
   window.addEventListener('mouseup', appWindowMouseEventHandler);
 
   window.addEventListener('mousemove', appWindowMouseEventHandler);
+
+  window.addEventListener('contextmenu', appWindowMouseEventHandler);
 
   window.addEventListener('keydown', appWindowKeyboardEventHandler);
 
