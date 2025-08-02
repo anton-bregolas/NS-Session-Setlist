@@ -2372,6 +2372,14 @@ function appWindowMouseEventHandler(event) {
         triggerEl.dataset.longPress !== "off") {
 
       event.preventDefault();
+
+      openSettingsMenu("tunebook-actions-menu", triggerEl.dataset.favBtn);
+      
+      focusOnActivePopoverElem(
+        tuneBookActionsPopup,
+        '[data-load="help"]',
+        5
+      );
       return;
     }
 
@@ -2455,7 +2463,7 @@ function appWindowKeyboardEventHandler(event) {
   if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
 
   if (event.type === 'keydown') {
-    
+
     if (event.key === "Enter" && event.shiftKey &&
         triggerEl.dataset.longPress &&
         triggerEl.dataset.longPress !== "off") {
