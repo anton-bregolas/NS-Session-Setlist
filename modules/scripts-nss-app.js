@@ -140,6 +140,8 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
     initAbcTools(itemQuery);
 
     initTunebookRadioBtns();
+
+    initTunebookFavBtns();
     
     console.log(`NS Session App:\n\nABC Tools initialized`);
 
@@ -1233,7 +1235,15 @@ async function appButtonHandler(btn) {
       btn.dataset.tbkAction !== "close-tunebook-actions" &&
       tuneBookActionsPopup.dataset.tbkActionsMode.startsWith("pick-fav")) {
 
-    switchTuneBookFavBtn(btn, tuneBookActionsPopup.dataset.tbkActionsMode);
+    const targetContainer = tuneBookActionsPopup.dataset.tbkActionsMode;
+    const containerTitle = targetContainer[9].toUpperCase() + targetContainer.slice(10);
+
+    switchTuneBookFavBtn(btn, targetContainer);
+
+    if (localStorageOk()) {
+
+      localStorage.setItem(`tuneBookFavBtn${containerTitle}`, btn.dataset.tbkAction);
+    }
 
     tuneBookActionsPopup.hidePopover();
 
@@ -3111,6 +3121,38 @@ function initTunebookRadioBtns() {
   } else {
 
     fullScreenViewTunesRadioBtn.checked = true;
+  }
+}
+
+// Initialize Tunebook Fav Buttons
+// Restore previously switched favs
+
+function initTunebookFavBtns() {
+
+  if (!localStorageOk()) return;
+
+  if(localStorage.tuneBookFavBtnLeft) {
+
+    const favDataLeft = localStorage.tuneBookFavBtnLeft;
+
+    if (favDataLeft === "select-fullscreen-tunes") return;
+
+    const copyLeftElem =
+      document.querySelector(`[data-tbk-action="${favDataLeft}"]`);
+
+    switchTuneBookFavBtn(copyLeftElem, "pick-fav-left");
+  }
+
+  if(localStorage.tuneBookFavBtnRight) {
+
+    const favDataRight = localStorage.tuneBookFavBtnRight;
+
+    if (favDataRight === "select-fullscreen-chords") return;
+
+    const copyRightElem =
+      document.querySelector(`[data-tbk-action="${favDataRight}"]`);
+    
+    switchTuneBookFavBtn(copyRightElem, "pick-fav-right");
   }
 }
 
