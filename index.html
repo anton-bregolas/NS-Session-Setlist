@@ -477,8 +477,8 @@
                     </svg>
                 </button>
 
-                <div class="flex-wrapper footer-central-wrapper">
-                    <div class="footer-item-container">
+                <div class="footer-central-wrapper grid-wrapper">
+                    <div class="footer-item-container flex-wrapper">
                         <label data-long-press="on" data-activated="false" data-fav-btn="left" class="radio-wrapper flex-wrapper" title="Full Screen button opens current Set or Tune">
                             <input data-long-press="on" data-activated="false" data-fav-btn="left" type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" checked>
                             <span class="icon-wrapper flex-wrapper">
@@ -494,7 +494,7 @@
                                 </span>
                             </span>
                         </label>
-                        <div class="nss-left-fav-btn-container"></div>
+                        <div data-tbk-container="pick-fav-left" class="footer-item-container flex-wrapper"></div>
                     </div>
                     <button data-controls="mode" data-type="mobile-switch" class="nss-btn flex-wrapper footer-item-container" title="Switch to mobile mode" aria-title="Switch to mobile mode">
                         <span class="nss-gradient-text flex-wrapper">
@@ -516,7 +516,7 @@
                             </svg>
                         </span>
                     </button>
-                    <div class="footer-item-container">
+                    <div class="footer-item-container flex-wrapper">
                         <label data-long-press="on" data-activated="false" data-fav-btn="right" class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
                             <input data-long-press="on" data-activated="false" data-fav-btn="right" type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1">
                             <span class="icon-wrapper flex-wrapper">
@@ -532,7 +532,7 @@
                                 </span>
                             </span>
                         </label>
-                        <div class="nss-right-fav-btn-container"></div>
+                        <div data-tbk-container="pick-fav-right" class="footer-item-container flex-wrapper"></div>
                     </div>
                 </div>
 
@@ -576,6 +576,9 @@
                     <button data-tbk-action="open-chord-viewer-mobile" data-load="chord-viewer" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Open Chord Viewer" aria-title="Open Chord Viewer">
                         <span class="nss-btn-text-label flex-align-center">
                             ‘Em’
+                        </span>
+                        <span class="tunebook-action-label nss-gradient-text">
+                            CHORD VIEWER
                         </span>
                     </button>
                     <button data-tbk-action="switch-desktop-mode" data-controls="mode" data-type="desktop-switch" class="tunebook-action flex-align-center nss-btn nss-option-btn" title="Switch to desktop mode" aria-title="Switch to desktop mode">

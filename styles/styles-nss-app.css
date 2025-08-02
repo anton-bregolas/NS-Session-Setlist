@@ -675,6 +675,7 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
 
 .tunebook-action .nss-btn-text-label {
   font-size: 1.5rem;
+  padding-bottom: 0.15rem;
 }
 
 [data-type="desktop-switch"] {
@@ -727,9 +728,9 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   opacity: 1;
 }
 
+body[data-mode="desktop"] .nss-footer-tunebook .nss-btn-x,
 body[data-mode="mobile"] .nss-footer-tunebook [data-type="mobile-switch"],
-body[data-mode="desktop"] .nss-footer-tunebook [data-controls="tunebook-actions-mobile"],
-body[data-mode="desktop"] .nss-footer-tunebook [data-controls="tunebook-footer"] {
+body[data-mode="desktop"] .nss-footer-tunebook [data-controls="tunebook-actions-mobile"] {
   display: none;
 }
 
@@ -741,7 +742,7 @@ body[data-mode="desktop"] .nss-footer-tunebook [data-controls="tunebook-footer"]
   outline: 0.2rem solid transparent;
 }
 
-body[data-mode="mobile"] .nss-icon-filler {
+body[data-mode="mobile"] .nss-icon-filler:not(.nss-footer-tunebook .nss-icon-filler) {
   outline-width: 0.24rem;
 }
 
@@ -793,6 +794,7 @@ body[data-mode="mobile"] .nss-icon-filler {
 
 [data-controls="tunebook-actions-desktop"],
 [data-controls="tunebook-actions-mobile"],
+.nss-footer-tunebook .tunebook-action,
 .nss-switch-container,
 .nss-abclink-container,
 .nss-switch-btn,
@@ -865,7 +867,7 @@ body[data-mode="mobile"] .nss-mini-icon,
   height: 2.4rem;
 }
 
-body[data-mode="desktop"] .nss-footer-tunebook [data-load="launcher"],
+body[data-mode="desktop"] .nss-footer-tunebook [data-load="launcher"]:not(.tunebook-action),
 [data-controls="tunebook-actions-desktop"] {
   width: 2.75rem;
   height: 2.75rem;
@@ -873,24 +875,26 @@ body[data-mode="desktop"] .nss-footer-tunebook [data-load="launcher"],
 
 .nss-footer-tunebook [data-type="mobile-switch"] {
   gap: 0.5rem;
+}
+
+body[data-mode="desktop"] .nss-footer-tunebook .tunebook-action,
+.nss-footer-tunebook [data-type="mobile-switch"] {
   padding: 0 1.1rem;
   outline-offset: -0.5rem;
   border-radius: 0.85rem;
 }
 
+body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action,
 [data-controls="tunebook-actions-mobile"],
 .nss-footer-tunebook .nss-btn-x {
   height: 3.4rem;
   width: 3.4rem;
-  outline-offset: -0.3rem;
-}
-
-[data-controls="tunebook-actions-mobile"] {
   outline-offset: -0.05rem;
 }
 
-.nss-footer-tunebook [data-controls="tunebook-footer"] {
+.nss-footer-tunebook .nss-btn-x {
   top: 0.05rem;
+  outline-offset: -0.3rem;
 }
 
 .nss-launch {
@@ -1078,6 +1082,10 @@ body[data-mode="mobile"] .nss-select-container {
 .footer-central-wrapper {
   width: calc(100% - 7.65rem);
   height: 100%;
+  grid-template-columns: 1fr 13rem 1fr;
+  justify-items: center;
+  align-items: center;
+  padding-right: 0.7rem;
 }
 
 .nss-footer-tunebook .footer-central-wrapper {
@@ -1392,7 +1400,12 @@ body[data-mode="desktop"] [data-tbk-action="select-fullscreen-tunes"] .nss-mini-
   opacity 0.15s ease-out;
 }
 
-.tunebook-action:not(:focus-visible) {
+.nss-footer-tunebook .tunebook-action {
+  outline-width: 0.2rem;
+}
+
+.tunebook-action:not(:focus-visible),
+body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action.nss-switch-btn:focus-visible {
   outline-color: transparent;
 }
 
@@ -1401,13 +1414,17 @@ body[data-mode="desktop"] [data-tbk-action="select-fullscreen-tunes"] .nss-mini-
 }
 
 .tunebook-action:focus-visible {
-  outline: 0.25rem solid var(--accent-color);
-
+  outline-color: var(--accent-color);
 }
 
 body[data-mode="desktop"] .tunebook-action {
   height: 3rem;
   justify-content: flex-start;
+}
+
+body[data-mode="desktop"] .nss-footer-tunebook .tunebook-action {
+  height: 100%;
+  filter: none;
 }
 
 body[data-mode="mobile"] .tunebook-action {
@@ -1511,7 +1528,7 @@ body[data-mode="desktop"] [data-close-direction="down"] {
   grid-row: 8;
 }
 
-[data-tbk-action="open-chord-viewer"] {
+[data-load="chord-viewer"].tunebook-action {
   gap: 0.7rem;
 }
 
@@ -1692,6 +1709,10 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   input:is(#nss-radio-view-chords) + span::after {
     font-size: 1.45rem;
     content: "Chords";
+  }
+
+  .nss-footer-tunebook .tunebook-action-label {
+    display: none;
   }
 }
 
@@ -1927,8 +1948,8 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     width: 6.5rem;
   }
 
-  body[data-mode="mobile"] .nss-footer-tunebook [data-load="launcher"],
-  body[data-mode="mobile"] .nss-footer-tunebook [data-controls="tunebook-footer"] {
+  body[data-mode="mobile"] .nss-footer-tunebook .nss-btn-x,
+  body[data-mode="mobile"] .nss-footer-tunebook [data-load="launcher"] {
     display: none;
   }
 

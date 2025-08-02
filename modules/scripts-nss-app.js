@@ -586,6 +586,74 @@ async function exitFullScreenMode() {
   return;
 }
 
+// Switch Tunebook Fav Button to a target button
+
+function switchTuneBookFavBtn(btn, containerData) {
+
+  const btnAction = btn.dataset.tbkAction;
+
+  const favBtnContainer =
+    document.querySelector(`[data-tbk-container="${containerData}"]`);
+
+  if (btnAction.startsWith("select-fullscreen")) {
+
+    if (btnAction === "select-fullscreen-tunes" &&
+        !fullScreenViewTunesRadioBtn.parentElement.hasAttribute("hidden")) return;
+
+    if (btnAction === "select-fullscreen-chords" &&
+        !fullScreenViewChordsRadioBtn.parentElement.hasAttribute("hidden")) return;
+
+    favBtnContainer.textContent = '';
+
+    if (btnAction === "select-fullscreen-tunes") {
+      ariaShowMe(fullScreenViewTunesRadioBtn.parentElement);
+    }
+
+    if (btnAction === "select-fullscreen-chords") {
+      ariaShowMe(fullScreenViewChordsRadioBtn.parentElement);
+    }
+    return;
+  }
+
+  const favBtn = btn.cloneNode(true);
+
+  favBtn.removeAttribute("data-tbk-action");
+  favBtn.classList.remove("flex-align-center");
+  favBtn.classList.add("flex-wrapper");
+
+  favBtn.dataset.longPress = "on";
+  favBtn.dataset.activated = "false";
+  favBtn.dataset.favBtn = containerData.replace("pick-fav-", '');
+
+  const favBtnFiller = favBtn.querySelector('.nss-icon-filler');
+
+  if (favBtnFiller) {
+
+    favBtnFiller.classList.add("nss-mini-icon");
+
+  } else {
+
+    const favBtnSvg = favBtn.querySelector('svg');
+
+    if (favBtnSvg) favBtnSvg.classList.add("nss-mini-icon");
+  }
+
+  if (favBtnContainer.children.length === 0) {
+
+    if (containerData === "pick-fav-left") {
+      ariaHideMe(fullScreenViewTunesRadioBtn.parentElement);
+    }
+
+    if (containerData === "pick-fav-right") {
+      ariaHideMe(fullScreenViewChordsRadioBtn.parentElement);
+    }
+  }
+
+  favBtnContainer.textContent = '';
+
+  favBtnContainer.appendChild(favBtn);
+}
+
 ////////////////////////////////
 // POPOVER & DIALOG LAUNCHERS
 ///////////////////////////////
@@ -1156,6 +1224,24 @@ async function appButtonHandler(btn) {
 
   if (btn.hasAttribute('data-cvw-action') || btn.hasAttribute('data-lvw-action')) {
 
+    return;
+  }
+
+  // Tunebook actions menu: Fav picker mode
+
+  if (btn.dataset.tbkAction &&
+      btn.dataset.tbkAction !== "close-tunebook-actions" &&
+      tuneBookActionsPopup.dataset.tbkActionsMode.startsWith("pick-fav")) {
+
+    switchTuneBookFavBtn(btn, tuneBookActionsPopup.dataset.tbkActionsMode);
+
+    tuneBookActionsPopup.hidePopover();
+
+    const tuneBookFooter = document.querySelector('#nss-tunebook-footer');
+
+    document.body.dataset.mode === "desktop"?
+    tuneBookFooter.querySelector('[data-controls="mode"]').focus() :
+    tuneBookFooter.querySelector('[data-controls="tunebook-actions-mobile"]').focus();
     return;
   }
 
