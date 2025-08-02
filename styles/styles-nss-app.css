@@ -1085,11 +1085,6 @@ body[data-mode="mobile"] .nss-select-container {
   grid-template-columns: 1fr 13rem 1fr;
   justify-items: center;
   align-items: center;
-  padding-right: 0.7rem;
-}
-
-.nss-footer-tunebook .footer-central-wrapper {
-  justify-content: space-evenly;
 }
 
 /* Popover Menu Elements */
