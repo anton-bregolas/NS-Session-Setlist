@@ -112,7 +112,7 @@
                                 </select>
                             </div>
                             <div class="select-wrapper" data-select="tunes">
-                                <select id="tuneSelector" class="nss-tunebook-selector" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
+                                <select id="tuneSelector" class="nss-tunebook-selector" data-long-press="on" data-activated="false" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
                                     <option id="tuneSelectorTitle" data-select="tunes-header" data-title="setlist" value=""></option>
                                 </select>
                             </div>
@@ -327,11 +327,15 @@
                                 Tunes: Allow automatic Tunebook reload
                             </label>
                             <label class="nss-checkbox-label">
-                                <input type="checkbox" id="cv-allow-dynamic-chords" data-option="chordViewerAllowDynamicChords" class="nss-checkbox-btn" value="1">
+                                <input type="checkbox" id="lvw-override-dropdown-click" data-option="listViewerOverrideTuneSelector" class="nss-checkbox-btn" value="1">
+                                Tunes: Open List Viewer on selector click
+                            </label>
+                            <label class="nss-checkbox-label">
+                                <input type="checkbox" id="cvw-allow-dynamic-chords" data-option="chordViewerAllowDynamicChords" class="nss-checkbox-btn" value="1">
                                 Chord Viewer: Generate chords dynamically
                             </label>
                             <label class="nss-checkbox-label">
-                                <input type="checkbox" id="cv-use-bold-fonts" data-option="chordViewerUseBoldFonts" class="nss-checkbox-btn" value="1">
+                                <input type="checkbox" id="cvw-use-bold-fonts" data-option="chordViewerUseBoldFonts" class="nss-checkbox-btn" value="1">
                                 Chord Viewer: Use bold font for chords
                             </label>
                         </div>
@@ -494,7 +498,7 @@
                                 </span>
                             </span>
                         </label>
-                        <div data-tbk-container="pick-fav-left" class="footer-item-container flex-wrapper"></div>
+                        <div data-tbk-container="pick-fav-left" class="footer-item-container flex-wrapper" aria-hidden="true" hidden></div>
                     </div>
                     <button data-controls="mode" data-type="mobile-switch" class="nss-btn flex-wrapper footer-item-container" title="Switch to mobile mode" aria-title="Switch to mobile mode">
                         <span class="nss-gradient-text flex-wrapper">
@@ -532,7 +536,7 @@
                                 </span>
                             </span>
                         </label>
-                        <div data-tbk-container="pick-fav-right" class="footer-item-container flex-wrapper"></div>
+                        <div data-tbk-container="pick-fav-right" class="footer-item-container flex-wrapper" aria-hidden="true" hidden></div>
                     </div>
                 </div>
 
