@@ -607,6 +607,8 @@ function switchTuneBookFavBtn(btn, containerData) {
 
     favBtnContainer.textContent = '';
 
+    ariaHideMe(favBtnContainer);
+
     if (btnAction === "select-fullscreen-tunes") {
       ariaShowMe(fullScreenViewTunesRadioBtn.parentElement);
     }
@@ -641,6 +643,8 @@ function switchTuneBookFavBtn(btn, containerData) {
   }
 
   if (favBtnContainer.children.length === 0) {
+
+    ariaShowMe(favBtnContainer);
 
     if (containerData === "pick-fav-left") {
       ariaHideMe(fullScreenViewTunesRadioBtn.parentElement);
@@ -723,7 +727,7 @@ export function openSettingsMenu(dataType, dataOptions) {
 
 function focusOnActivePopoverElem(popoverEl, focusElAttr, timeOutVal = 0) {
 
-  if (!popoverEl.matches(':popover-open')) return;
+  if (!popoverEl.matches(':popover-open') && !popoverEl.open) return;
 
   const focusEl = popoverEl.querySelector(focusElAttr);
 
@@ -1600,6 +1604,12 @@ async function appCheckBoxHandler(checkBox) {
         displayNotification("App will stop auto-loading items when filters are applied or sections swapped", "success");
       break;
 
+    case 'listViewerOverrideTuneSelector':
+      checkBox.checked?
+        displayNotification("Clicking on Tune Selector will now launch List Viewer", "success") :
+        displayNotification("Clicking on Tune Selector will now open the default dropdown menu", "success");
+      break;
+
     case 'chordViewerAllowDynamicChords':
       checkBox.checked?
         displayNotification("Chord Viewer will attempt to extract chords from current tune", "success") :
@@ -1838,7 +1848,9 @@ async function appDropDownHandler(event) {
     }
   }
 
-  if (getViewportWidth() >= 768) return;
+  const isLvwOverrideOn = localStorageOk() && +localStorage.listViewerOverrideTuneSelector === 1;
+
+  if (getViewportWidth() >= 768 || isLvwOverrideOn) return;
 
   if (event.type === 'mousedown' || event.type === 'keydown' || event.type === 'touchstart') {
 
@@ -2320,6 +2332,14 @@ function appWindowMouseEventHandler(event) {
       if (triggerEl.dataset.favBtn) {
 
         activateLongPressFavBtn(event, triggerEl);
+        return;
+      }
+
+      if (triggerEl.id === "tuneSelector" && localStorageOk() && 
+          +localStorage.listViewerOverrideTuneSelector === 1) {
+
+        event.preventDefault();
+        return;
       }
       return;
     }
@@ -2327,6 +2347,13 @@ function appWindowMouseEventHandler(event) {
   }
 
   if (event.type === 'mouseup') {
+
+    if (triggerEl.id === "tuneSelector" && localStorageOk() && 
+        +localStorage.listViewerOverrideTuneSelector === 1) {
+
+      openSettingsMenu("list-viewer");
+      return;
+    }
 
     if (triggerEl.dataset.longPress &&
         triggerEl.dataset.longPress === "pressed") {
@@ -2373,13 +2400,23 @@ function appWindowMouseEventHandler(event) {
 
       event.preventDefault();
 
-      openSettingsMenu("tunebook-actions-menu", triggerEl.dataset.favBtn);
-      
-      focusOnActivePopoverElem(
-        tuneBookActionsPopup,
-        '[data-load="help"]',
-        5
-      );
+      if (triggerEl.dataset.favBtn) {
+
+        openSettingsMenu("tunebook-actions-menu", triggerEl.dataset.favBtn);
+
+        focusOnActivePopoverElem(
+          tuneBookActionsPopup,
+          '[data-load="help"]',
+          5
+        );
+        return;
+      }
+
+      if (triggerEl.id === "tuneSelector") {
+
+        openSettingsMenu("list-viewer");
+        return;
+      }
       return;
     }
 
@@ -2404,6 +2441,13 @@ function appWindowTouchEventHandler(event) {
       if (triggerEl.dataset.favBtn) {
 
         activateLongPressFavBtn(event, triggerEl);
+        return;
+      }
+
+      if (triggerEl.id === "tuneSelector") {
+
+        activateLongPressTuneSelector(event, triggerEl);
+        return;
       }
       return;
     }
@@ -2422,6 +2466,20 @@ function appWindowTouchEventHandler(event) {
           '[data-load="help"]',
           5
         );
+      }
+
+      if (triggerEl.id === "tuneSelector") {
+
+        const listViewerDialog =
+          document.getElementById("list-viewer");
+
+        setTimeout(() => {
+          focusOnActivePopoverElem(
+            listViewerDialog,
+            '[data-lvw-action="close-list-viewer"]',
+            5
+          );
+        }, 100);
       }
 
       triggerEl.dataset.longPress = "on";
@@ -2470,7 +2528,17 @@ function appWindowKeyboardEventHandler(event) {
 
       event.preventDefault();
 
-      openSettingsMenu("tunebook-actions-menu", triggerEl.dataset.favBtn);
+      if (triggerEl.dataset.favBtn) {
+
+        openSettingsMenu("tunebook-actions-menu", triggerEl.dataset.favBtn);
+        return;
+      }
+
+      if (triggerEl.id === "tuneSelector") {
+
+        openSettingsMenu("list-viewer");
+        return;
+      }
       return;
     }
     return;
@@ -2542,6 +2610,19 @@ function activateLongPressFavBtn(event, triggerEl) {
       ["tunebook-actions-menu", triggerEl.dataset.favBtn];
 
   appSetLongPressTimeout(event, triggerEl, timeOutVal, openSettingsMenu, callBackArgs);
+}
+
+// Activate long press event on the Tune Selector
+
+function activateLongPressTuneSelector(event, tuneSelectorEl) {
+
+  tuneSelectorEl.dataset.longPress = "on";
+
+  const timeOutVal = 500;
+
+  const callBackArgs = ["list-viewer"];
+
+  appSetLongPressTimeout(event, tuneSelectorEl, timeOutVal, openSettingsMenu, callBackArgs);
 }
 
 ////////////////////////////////

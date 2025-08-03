@@ -127,6 +127,9 @@
 
 [data-list-viewer="title"] {
   font-size: 1.75em;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 [data-list-viewer="status"] {
