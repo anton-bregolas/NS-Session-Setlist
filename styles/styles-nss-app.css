@@ -1436,28 +1436,23 @@ body[data-mode="mobile"] .tunebook-action-label {
   display: none;
 }
 
-body[data-mode="mobile"] [data-tbk-action="get-share-link"] {
+body[data-mode="mobile"] [data-tbk-actions-mode="open"] [data-tbk-action="get-share-link"],
+body[data-mode="mobile"] [data-tbk-actions-mode="open"] [data-tbk-action="toggle-full-screen"],
+body[data-mode="mobile"] [data-tbk-actions-mode="pick-fav-left"] [data-tbk-action="select-fullscreen-tunes"],
+body[data-mode="mobile"] [data-tbk-actions-mode="pick-fav-right"] [data-tbk-action="select-fullscreen-chords"] {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+body[data-mode="mobile"] [data-tbk-action="get-share-link"],
+body[data-mode="mobile"] [data-tbk-actions-mode="open"] [data-tbk-action="hide-footer"],
+body[data-mode="mobile"] [data-pops-up-from="header"] [data-tbk-action="get-share-link"] {
   grid-column: 2;
   grid-row: 2;
 }
 
 body[data-mode="mobile"] [data-close-direction="down"] {
   grid-column: 3;
-  grid-row: 2;
-}
-
-body[data-mode="mobile"] [data-tbk-actions-mode="open"] [data-tbk-action="toggle-full-screen"] {
-  grid-column: 4;
-  grid-row: 2;
-}
-
-body[data-mode="mobile"] [data-tbk-actions-mode="pick-fav-left"] [data-tbk-action="select-fullscreen-tunes"] {
-  grid-column: 4;
-  grid-row: 2;
-}
-
-body[data-mode="mobile"] [data-tbk-actions-mode="pick-fav-right"] [data-tbk-action="select-fullscreen-chords"] {
-  grid-column: 4;
   grid-row: 2;
 }
 
@@ -1486,7 +1481,6 @@ body[data-mode="desktop"] .tunebook-actions-grid {
 }
 
 body[data-mode="desktop"] [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="open-chord-viewer-mobile"],
-body[data-mode="mobile"] [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="toggle-full-screen"],
 body[data-mode="mobile"] [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="open-chord-viewer"],
 [data-tbk-actions-mode="pick-fav-right"] [data-tbk-action="select-fullscreen-tunes"],
 [data-tbk-actions-mode="pick-fav-left"] [data-tbk-action="select-fullscreen-chords"],
@@ -1495,12 +1489,12 @@ body[data-mode="desktop"] [data-pops-up-from="footer"] [data-close-direction="up
 [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="switch-desktop-mode"],
 [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="switch-mobile-mode"],
 [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="toggle-full-screen"],
-[data-pops-up-from="footer"] [data-tbk-action="open-chord-viewer-mobile"],
 [data-tbk-actions-mode="open"] [data-tbk-action="select-fullscreen-chords"],
 [data-tbk-actions-mode="open"] [data-tbk-action="select-fullscreen-tunes"],
+[data-tbk-actions-mode="open"] [data-tbk-action="toggle-full-screen"],
 body[data-mode="desktop"] [data-tbk-action="open-chord-viewer-mobile"],
 body[data-mode="desktop"] [data-tbk-action="switch-desktop-mode"],
-body[data-mode="desktop"] [data-tbk-action="toggle-full-screen"],
+[data-pops-up-from="footer"] [data-tbk-action="toggle-full-screen"],
 body[data-mode="mobile"] [data-tbk-action="switch-mobile-mode"],
 body[data-mode="mobile"] [data-tbk-action="open-chord-viewer"],
 [data-pops-up-from="header"] [data-tbk-action="hide-footer"],
@@ -1510,9 +1504,9 @@ body[data-mode="mobile"] [data-close-direction="up"] {
 
 body[data-mode="mobile"] [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="open-chord-viewer-mobile"],
 body[data-mode="desktop"] [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="open-chord-viewer"],
+body[data-mode="mobile"] [data-pops-up-from="header"] [data-tbk-action="toggle-full-screen"],
 [data-tbk-actions-mode="pick-fav-right"] [data-tbk-action="select-fullscreen-chords"],
-[data-tbk-actions-mode="pick-fav-left"] [data-tbk-action="select-fullscreen-tunes"],
-body[data-mode="desktop"] [data-pops-up-from="header"] [data-close-direction="up"] {
+[data-tbk-actions-mode="pick-fav-left"] [data-tbk-action="select-fullscreen-tunes"] {
   display: flex;
 }
 
@@ -1949,10 +1943,6 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
     display: none;
   }
 
-  body[data-mode="mobile"] .nss-footer-tunebook {
-    /* padding: 0; */
-  }
-
   body[data-mode="mobile"] .nss-footer-tunebook .nss-icon-filler,
   body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action > svg {
     width: 2.75rem;
@@ -1966,12 +1956,12 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action,
   body[data-mode="mobile"] .footer-central-wrapper,
   body[data-mode="mobile"] .footer-item-container,
-  [data-load="tunebook-actions-menu"] {
+  body[data-mode="mobile"] [data-load="tunebook-actions-menu"]:not(#nss-tunebook-actions-header) {
     width: 100%;
   }
 
   body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action,
-  [data-load="tunebook-actions-menu"] {
+  body[data-mode="mobile"] [data-load="tunebook-actions-menu"]:not(#nss-tunebook-actions-header) {
     border-radius: 0.4rem;
   }
 
@@ -2113,5 +2103,41 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
       height: 12cqw;
       aspect-ratio: 1/1;
     }
+  }
+}
+
+@supports (reading-flow: grid-columns) {
+
+  body[data-mode="mobile"] .tunebook-actions-grid {
+    reading-flow: grid-columns;
+  }
+
+  body[data-mode="mobile"] [data-tbk-actions-mode="open"] [data-tbk-action="get-share-link"],
+  body[data-mode="mobile"] [data-tbk-actions-mode="open"] [data-tbk-action="toggle-full-screen"],
+  body[data-mode="mobile"] [data-tbk-actions-mode="pick-fav-left"] [data-tbk-action="select-fullscreen-tunes"],
+  body[data-mode="mobile"] [data-tbk-actions-mode="pick-fav-right"] [data-tbk-action="select-fullscreen-chords"] {
+    reading-order: 8;
+  }
+
+  body[data-mode="mobile"] [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="hide-footer"] {
+    grid-column: 4;
+    grid-row: 1;
+    reading-order: 4;
+  }
+
+  body[data-mode="mobile"] [data-tbk-actions-mode*="pick-fav"] [data-tbk-action="open-launch-screen"] {
+    grid-column: 5;
+    grid-row: 1;
+    reading-order: 5;
+  }
+
+  body[data-mode="mobile"] [data-tbk-action="get-share-link"],
+  body[data-mode="mobile"] [data-tbk-actions-mode="open"] [data-tbk-action="hide-footer"],
+  body[data-mode="mobile"] [data-pops-up-from="header"] [data-tbk-action="get-share-link"] {
+    reading-order: 6;
+  }
+
+  body[data-mode="mobile"] [data-close-direction="down"] {
+    reading-order: 7;
   }
 }
