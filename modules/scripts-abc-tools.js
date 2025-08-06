@@ -916,7 +916,7 @@ export async function handleFullScreenButton(altView) {
     
     // View ABC Tools frame in Full Screen using Fullscreen API
 
-    if (fullScreenSetting === 0) {
+    if (fullScreenSetting === 0 || !altView) {
 
         // If browser does not support Fullscreen API, open ABC Tools in new window
 
@@ -940,6 +940,13 @@ export async function handleFullScreenButton(altView) {
         try {
 
             await requestFullScreen.call(abcToolsContainer);
+
+            const exitFullScreenBtn = document.querySelector('[data-load="exit-fullscreen"]');
+
+            setTimeout(() => {
+                
+                exitFullScreenBtn.focus();
+            }, 100);
 
         } catch {
 
