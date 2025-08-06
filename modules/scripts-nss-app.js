@@ -56,10 +56,9 @@ const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
 const tuneSelectorTitle = document.querySelector('#tuneSelectorTitle');
 export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#nss-tunebook-title');
+const abcContainer = document.querySelector('.nss-abctools-embed');
 const appNavTitle = document.querySelector('#nss-appnav-title');
 const appHeader = document.querySelector('#nss-app-header');
-
-const abcContainer = document.querySelector('.nss-abctools-embed');
 
 // Define App Menu elements
 
@@ -70,6 +69,13 @@ const advancedOptions = document.querySelectorAll('.nss-advanced-options-contain
 const notificationPopup = document.querySelector('[data-popover="notification-popup"]');
 const notificationMessage = document.querySelector('[data-popover="notification-message"]');
 const tuneBookActionsPopup = document.querySelector('[data-popover="tunebook-actions-popup"]');
+const tuneBookActionsHeaderBtn = document.querySelector('#nss-tunebook-actions-header');
+
+// Dialog Menus
+
+const chordViewerDialog = document.getElementById('chord-viewer');
+const listViewerDialog = document.getElementById('list-viewer');
+const helpDialog = document.getElementById('help');
 
 ////////////////////////////////
 // APP LAUNCHERS
@@ -122,9 +128,9 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
   showTuneBookEls();
 
-  if (!document.querySelector('#nss-tunebook-actions-header').hasAttribute("hidden")) {
+  if (!tuneBookActionsHeaderBtn.hasAttribute("hidden")) {
 
-    document.querySelector('#nss-tunebook-actions-header').focus();
+    tuneBookActionsHeaderBtn.focus();
 
   } else {
 
@@ -722,6 +728,62 @@ export function openSettingsMenu(dataType, dataOptions) {
   }
 }
 
+// Open Help Dialog overlay
+
+function openHelpDialog() {
+
+  if (tuneBookActionsHeaderBtn.hasAttribute("hidden")) {
+
+    helpDialog.dataset.popsUpFrom = "footer";
+
+  } else {
+
+    helpDialog.dataset.popsUpFrom = "header";
+  }
+
+  if (tuneBookTitle.dataset.type === "Tune") {
+
+    helpDialog.dataset.tbkLoaded = "tunes";
+  
+  } else {
+
+    helpDialog.dataset.tbkLoaded = "sets";
+  }
+
+  helpDialog.showModal();
+}
+
+// Show description for Help Dialog item
+
+function showHelpDescription(event) {
+
+  const helpItem = event.target.closest('.nss-btn-help');
+
+  if (!helpItem) return;
+
+  const helpTextDiv = helpDialog.querySelector('.nss-help-description');
+
+  helpTextDiv.textContent = helpItem.title;
+
+  helpItem.focus();
+}
+
+////////////////////////////////
+// FOCUS SHIFTERS
+///////////////////////////////
+
+// Shift focus to the first non-hidden Tunebook Actions button
+
+function focusOnTuneBookActions() {
+
+    const tuneBookActionsBtns =
+      document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
+
+    const focusElem = getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
+
+    if (focusElem) focusElem.focus();
+}
+
 // Shift focus to the specific element of a currently open popover
 // Optional: Set a timeout for the focus
 
@@ -1309,6 +1371,17 @@ async function appButtonHandler(btn) {
       return;
     }
 
+    // Help overlay switcher
+
+    if (btn.dataset.load === "help") {
+
+      hideTuneBookActionsMenu();
+
+      openHelpDialog();
+
+      return;
+    }
+
     // Tune switchers
 
     if (btn.classList.contains('nss-arrow-btn')) {
@@ -1458,17 +1531,21 @@ async function appButtonHandler(btn) {
     return;
   }
 
+  if (btn.id === 'nss-help-dialog-close') {
+
+    helpDialog.close();
+
+    focusOnTuneBookActions();
+
+    return;
+  }
+
   if (btn.classList.contains('popup-btn-x') &&
       btn.classList.contains('tunebook-action')) {
 
     tuneBookActionsPopup.hidePopover();
 
-    const tuneBookActionsBtns =
-      document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
-
-    const focusElem = getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
-
-    if (focusElem) focusElem.focus();
+    focusOnTuneBookActions();
 
     return;
   }
@@ -2395,6 +2472,14 @@ function appWindowMouseEventHandler(event) {
 
   if (event.type === 'contextmenu') {
 
+    if (triggerEl.id === "fullScreenButton") {
+
+      event.preventDefault();
+
+      openSettingsMenu("chord-viewer");
+      return;
+    }
+
     if (triggerEl.dataset.longPress &&
         triggerEl.dataset.longPress !== "off") {
 
@@ -2441,6 +2526,12 @@ function appWindowTouchEventHandler(event) {
       if (triggerEl.dataset.favBtn) {
 
         activateLongPressFavBtn(event, triggerEl);
+        return;
+      }
+
+      if (triggerEl.id === "fullScreenButton") {
+
+        activateLongPressFullScreenBtn(event, triggerEl);
         return;
       }
 
@@ -2514,6 +2605,33 @@ function appWindowTouchEventHandler(event) {
 
 function appWindowKeyboardEventHandler(event) {
 
+  // Handle Tunebook-specific shortcuts
+
+  if (event.type === 'keydown' &&
+      event.shiftKey &&
+      checkIfTunebookOpen() &&
+      !chordViewerDialog.open &&
+      !listViewerDialog.open &&
+      !document.fullscreenElement) {
+
+    switch (event.key) {
+      case "F1":
+        event.preventDefault();
+        openHelpDialog();
+        return;
+
+      case "F11":
+        event.preventDefault();
+        handleFullScreenButton("chord-viewer");
+        return;
+    
+      default:
+        break;
+    }    
+  }
+
+  // Handle keyboard events on interactable elements
+
   const interactableEl = 'button, label, select, input[type="checkbox"], input[type="radio"]';
 
   const triggerEl = event.target.closest(interactableEl);
@@ -2531,6 +2649,12 @@ function appWindowKeyboardEventHandler(event) {
       if (triggerEl.dataset.favBtn) {
 
         openSettingsMenu("tunebook-actions-menu", triggerEl.dataset.favBtn);
+        return;
+      }
+
+      if (triggerEl.id === "fullScreenButton") {
+
+        openSettingsMenu("chord-viewer");
         return;
       }
 
@@ -2612,13 +2736,26 @@ function activateLongPressFavBtn(event, triggerEl) {
   appSetLongPressTimeout(event, triggerEl, timeOutVal, openSettingsMenu, callBackArgs);
 }
 
+// Activate long press event on the Full Screen Button
+
+function activateLongPressFullScreenBtn(event, fullScreenButton) {
+
+  fullScreenButton.dataset.longPress = "on";
+
+  const timeOutVal = 700;
+
+  const callBackArgs = ["chord-viewer"];
+
+  appSetLongPressTimeout(event, fullScreenButton, timeOutVal, openSettingsMenu, callBackArgs);
+}
+
 // Activate long press event on the Tune Selector
 
 function activateLongPressTuneSelector(event, tuneSelectorEl) {
 
   tuneSelectorEl.dataset.longPress = "on";
 
-  const timeOutVal = 500;
+  const timeOutVal = 700;
 
   const callBackArgs = ["list-viewer"];
 
@@ -3296,6 +3433,18 @@ function initFullScreenEvents() {
   document.addEventListener('fullscreenchange', handleFullScreenChange);
 }
 
+// Initialize Help Dialog
+
+function initHelpDialog() {
+
+  if (!helpDialog) return;
+
+  ['mouseover', 'focusin'].forEach(eventType => {
+
+    helpDialog.addEventListener(eventType, showHelpDescription);
+  });
+}
+
 // Initialize popover polyfill warning if the browser doesn't support Popover API
 
 function initPopoverWarning() {
@@ -3345,6 +3494,7 @@ function initWindowEvents() {
 document.addEventListener('DOMContentLoaded', () => {
 
   initPopoverWarning();
+  initHelpDialog();
   initWindowEvents();
   initAppSettings();
   initChordViewer();
