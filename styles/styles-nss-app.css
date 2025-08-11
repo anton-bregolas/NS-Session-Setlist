@@ -2125,10 +2125,6 @@ body[data-mode="desktop"] [data-hide="desktop"],
     display: none;
   }
 
-  .nss-help-dialog {
-    height: calc(100% - var(--tunebook-header-height));
-  }
-
   [data-pops-up-from="header"] .nss-help-x-container {
     top: calc(80% - 3.75rem / 2);
   }
@@ -2143,6 +2139,15 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 17.75rem);
+  }
+}
+
+/* @media screen and (max-height: 480px) { */
+@media screen and (max-height: 30em) {
+
+  .nss-help-dialog {
+    height: 100%;
+    margin: 0;
   }
 }
 

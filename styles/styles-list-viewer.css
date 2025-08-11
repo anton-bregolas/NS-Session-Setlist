@@ -127,6 +127,10 @@
 
 [data-list-viewer="title"] {
   font-size: 1.75em;
+}
+
+[data-list-viewer="title"],
+[data-lvw-action] {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -135,7 +139,6 @@
 [data-list-viewer="status"] {
   font-size: var(--tiles-font-size);
 }
-
 
 [data-set-maker="off"] [data-list-viewer="status"]::after {
   content: "Press on item to view";
