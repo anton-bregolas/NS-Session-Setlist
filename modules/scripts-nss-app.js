@@ -750,6 +750,12 @@ function openHelpDialog() {
     helpDialog.dataset.tbkLoaded = "sets";
   }
 
+  const helpTextDiv =
+    helpDialog.querySelector('.nss-help-description');
+    
+  helpTextDiv.textContent =
+    "Select a Tunebook element to view description";
+
   helpDialog.showModal();
 }
 
@@ -2742,7 +2748,7 @@ function activateLongPressFullScreenBtn(event, fullScreenButton) {
 
   fullScreenButton.dataset.longPress = "on";
 
-  const timeOutVal = 700;
+  const timeOutVal = 500;
 
   const callBackArgs = ["chord-viewer"];
 
@@ -2755,7 +2761,7 @@ function activateLongPressTuneSelector(event, tuneSelectorEl) {
 
   tuneSelectorEl.dataset.longPress = "on";
 
-  const timeOutVal = 700;
+  const timeOutVal = 500;
 
   const callBackArgs = ["list-viewer"];
 

@@ -61,6 +61,7 @@ let lastSelectedIndex = -1; // Keep track of the last selected tile item index
 let searchKeysPressed = '' // Accumulate the characters entered for tune search
 let typeAheadTimeoutId; // Re-record latest timeout for clearing type-ahead search
 let titleStatusTimeoutId; // Keep track of the latest timeout set for clearing status
+let tileLongPressTimeoutId; // Keep track of the latest timeout set for tile long press
 
 // Prepare arrays for iterating through tile items & titles
 
@@ -169,6 +170,7 @@ function loadTuneTiles(tunesArr, filterArr) {
 
     tileItem.dataset.listViewer = "tune-tile";
     tileItem.dataset.lvwAction = "load-item";
+    tileItem.dataset.longPress = "on";
     tileItem.classList = "flex-center";
     tileItem.dataset.url = tune.url;
     tileItem.dataset.index = tune.index;
@@ -237,6 +239,27 @@ function quitListViewer() {
 // SET MAKER FUNCTIONS
 //////////////////////////////////
 
+// Start the Set Maker mode
+// Display warning if not enough items for a Set
+
+function startSetMaker(selectItem) {
+
+  if (tileItemsArr.length < 2) {
+
+    displaySetMakerTitleStatus("❌ You need 2+ items 👇", `Filters: ${lastFilterText}`);
+    return;
+  }
+
+  listViewerDialog.dataset.setMaker = "on";
+  listViewerTitle.textContent = "🎶 Select 2+ items 👇";
+  toggleSetMakerGui();
+
+  if (selectItem) {
+   
+    toggleSetMakerSelection(selectItem);
+  }
+}
+
 // Select or deselect a Set item from the list:
 // Mark the item as selected with data-attribute
 // Display the numbered Set item counter tag
@@ -275,6 +298,10 @@ function toggleSetMakerSelection(item, forceSelectMode) {
   item.style.outline = "0.2em solid var(--set-counter-color)";
   counter.setAttribute("data-lvw-counter", selectedCounter + 1);
   selectedCounter++;
+
+  if (lastFocusedIndex === -1) lastFocusedIndex = tileItemsArr.indexOf(item);
+
+  if (lastSelectedIndex === -1) lastSelectedIndex = tileItemsArr.indexOf(item);
 
   if (selectedCounter === 2)
     listViewerFooter.setAttribute("data-set-maker", "ready");
@@ -468,9 +495,15 @@ export function initListViewer() {
 
   listViewerDialog.addEventListener('click', handleListViewerClick);
   listViewerDialog.addEventListener('keydown', handleListViewerKeyPress);
+
   listViewerTiles.addEventListener('focusin', handleTilesListBoxFocusIn);
-  listViewerTiles.addEventListener('mousedown', handleTilesMouseDown);
+  listViewerTiles.addEventListener('mousedown', handleTilesMouseEvents);
+  listViewerTiles.addEventListener('contextmenu', handleTilesMouseEvents);
   listViewerTiles.addEventListener('keydown', handleTilesKeyboardNavigation);
+
+  listViewerTiles.addEventListener('touchstart', handleTilesTouchEvents);
+  listViewerTiles.addEventListener('touchend', handleTilesTouchEvents);
+  listViewerTiles.addEventListener('touchmove', handleTilesTouchEvents);
 
   if (isLocalStorageOk()) {
 
@@ -504,7 +537,6 @@ function handleListViewerClick(event) {
   if (elAction === 'load-item' && listViewerDialog.dataset.setMaker === "on") {
 
     toggleSetMakerSelection(actionTrigger);
-
     return;
   }
 
@@ -557,16 +589,7 @@ function handleListViewerClick(event) {
 
   if (elAction === 'start-set-maker') {
 
-    if (tileItemsArr.length < 2) {
-
-      displaySetMakerTitleStatus("❌ You need 2+ items 👇", `Filters: ${lastFilterText}`);
-      return;
-    }
-
-    listViewerDialog.dataset.setMaker = "on";
-    listViewerTitle.textContent = "🎶 Select 2+ items 👇";
-    toggleSetMakerGui();
-
+    startSetMaker();
     return;
   }
 
@@ -600,17 +623,35 @@ function handleListViewerClick(event) {
 
 // Handle special cases of mouse events on tile items
 
-function handleTilesMouseDown(event) {
+function handleTilesMouseEvents(event) {
 
-  const actionTrigger = event.target.closest('[data-lvw-action]');
-
+  const actionTrigger =
+    event.target.closest('[data-lvw-action="load-item"]');
+    
   if (!actionTrigger) return;
 
-  const elAction = actionTrigger.dataset.lvwAction;
+  if (event.type === 'contextmenu' &&
+      actionTrigger.dataset.longPress === "on") {
+
+    event.preventDefault();
+
+    if (listViewerDialog.dataset.setMaker === "off") {
+
+      startSetMaker(actionTrigger);
+      return;
+    }
+
+    if (listViewerDialog.dataset.setMaker === "on") {
+
+      actionTrigger.click();
+      return;
+    }
+  }
 
   // Handle mouse clicks with additional keys pressed
 
-  if (elAction === 'load-item' && event.shiftKey &&
+  if (event.shiftKey &&
+      actionTrigger.dataset.longPress === "on" &&
       listViewerDialog.dataset.setMaker === "on") {
 
     event.preventDefault();
@@ -625,6 +666,83 @@ function handleTilesMouseDown(event) {
     toggleMultipleTiles(tileItemsArr, startIndex, endIndex);
     actionTrigger.focus();
     lastSelectedIndex = endIndex;
+    return;
+  }
+}
+
+// Handle special cases of touch events on tile items
+
+function handleTilesTouchEvents(event) {
+
+  const actionTrigger =
+    event.target.closest('[data-lvw-action="load-item"]');
+
+  if (!actionTrigger) return;
+
+  if (actionTrigger.dataset.longPress &&
+      actionTrigger.dataset.longPress !== "off") {
+
+    switch (event.type) {
+
+      case 'touchstart':
+
+        if (listViewerDialog.dataset.setMaker === "off")
+          actionTrigger.dataset.longPress = "on";
+          handleTilesLongPress(actionTrigger, "start");
+        break;
+
+      case 'touchend':
+
+        if (actionTrigger.dataset.longPress === "pressed") {
+          handleTilesLongPress(actionTrigger, "end");
+        }
+        else if (actionTrigger.dataset.longPress === "active") {
+          handleTilesLongPress(actionTrigger, "clear");
+        }
+        break;
+
+      case 'touchmove':
+        
+        if (actionTrigger.dataset.longPress === "active")
+          handleTilesLongPress(actionTrigger, "clear");
+        break;
+    
+      default:
+        break;
+    }
+
+    return;
+  }
+}
+
+// Handle long press events on tile items
+
+function handleTilesLongPress(actionTrigger, eventType) {
+
+  if (eventType === "start") {
+
+    actionTrigger.dataset.longPress = "active";
+
+    tileLongPressTimeoutId = setTimeout(() => {
+
+      tileLongPressTimeoutId = null;
+      startSetMaker(actionTrigger);
+      actionTrigger.dataset.longPress = "pressed";
+    }, 500);
+
+    return;
+  }
+
+  if (eventType === "end") {
+
+    actionTrigger.dataset.longPress = "on";
+    return;
+  }
+
+  if (eventType === "clear") {
+
+    clearTimeout(tileLongPressTimeoutId);
+    actionTrigger.dataset.longPress = "on";
     return;
   }
 }
@@ -864,6 +982,12 @@ function handleTilesKeyboardNavigation(e) {
     case 'Enter':
     case ' ':
       e.preventDefault();
+
+      if (currentTile && e.shiftKey && !setMakerOn) {
+
+        startSetMaker(currentTile);
+        break;
+      }
 
       if (currentTile) {
 
