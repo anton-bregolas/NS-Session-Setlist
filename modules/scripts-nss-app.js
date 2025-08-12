@@ -1570,6 +1570,15 @@ async function appButtonHandler(btn) {
     return;
   }
 
+  if (btn.id === 'nss-help-popover-open') {
+
+    helpDialog.close();
+
+    showHelpGuidePopover();
+
+    return;
+  }
+
   if (btn.id === 'nss-help-dialog-close') {
 
     helpDialog.close();
@@ -2842,7 +2851,7 @@ function activateLongPressTuneSelector(event, tuneSelectorEl) {
 
 function helpGuidePopoverHandler(event) {
 
-  const interactableEl = 'button, label, select, input[type="checkbox"], input[type="radio"]';
+  const interactableEl = 'a, button, label, select, input[type="checkbox"], input[type="radio"]';
 
   const triggerEl = event.target.closest(interactableEl);
 
@@ -2866,6 +2875,13 @@ function helpGuidePopoverHandler(event) {
       helpGuidePopover.hidePopover();
 
       openHelpDialog();
+
+      return;
+    }
+
+    if (helpData === 'readme') {
+
+      window.open(triggerEl.href, "_blank");
 
       return;
     }

@@ -440,9 +440,6 @@
             </dialog>
 
             <dialog id="quick-help" class="nss-help-dialog" aria-label="Quick Help Dialog">
-                <div class="nss-help-x-container flex-wrapper">
-                    <button id="nss-help-dialog-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Dialog" aria-title="Close Quick Help Dialog" autofocus></button>
-                </div>
                 <div class="nss-help-container grid-wrapper">
                     <div class="nss-help-header-icons nss-help-row grid-wrapper">
                         <svg class="nss-icon" aria-hidden="true">
@@ -484,7 +481,17 @@
                             <span class="nss-btn-help-label">Fullscreen Button</span>
                         </button>
                     </div>
+                    <div class="nss-help-q-container flex-wrapper">
+                        <button id="nss-help-popover-open" class="nss-btn nss-popover-btn flex-align-center" title="Show Help Menu" aria-title="Show Help Menu">
+                            <svg class="nss-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#nav-icon-help"></use>
+                            </svg>
+                        </button>
+                    </div>
                     <p class="nss-help-description flex-wrapper">Select an element label to view description</p>
+                    <div class="nss-help-x-container flex-wrapper">
+                        <button id="nss-help-dialog-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Dialog" aria-title="Close Quick Help Dialog" autofocus></button>
+                    </div>
                     <div class="nss-help-footer-labels nss-help-row grid-wrapper">
                         <button data-cutoff-mobile="l" class="nss-btn nss-btn-help" aria-label="(Bottom Left) Return to app's Launch Screen" title="Return to app's Launch Screen">
                             <span class="nss-btn-help-label">Launch Screen</span>
@@ -531,13 +538,25 @@
 
             <article id="help-guide" popover="manual" class="nss-help-popover" aria-label="Help Guide Popover">
                 <header class="nss-help-popover-header">
+                    <button class="nss-btn nss-link-btn flex-wrapper" tabindex="-1">
+                        <a data-help-guide="readme" href="https://github.com/anton-bregolas/NS-Session-Setlist#ns-session-setlist" target="_blank" class="nss-link nss-icon-container" title="Open README on GitHub" aria-title="Open README on GitHub">
+                            <svg class="nss-icon github-icon-dark" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#nav-icon-github"></use>
+                            </svg>
+                        </a>
+                    </button>
                     <button data-help-guide="quit" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Guide Popover" aria-title="Close Help Guide Popover" autofocus></button>
                 </header>
                 <div class="nss-help-guide-container flex-wrapper">
                     <p data-help-guide="text" class="nss-help-guide-description flex-wrapper">Click on a Tunebook element to view description</p>
                 </div>
                 <footer class="nss-help-popover-footer flex-wrapper">
-                    <button data-help-guide="quick-help" class="nss-btn flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">Show Quick Help</button>
+                    <button data-help-guide="quick-help" class="nss-btn nss-popover-btn nss-btn-quick-help-mini flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#help-arrow-diagonal"></use>
+                        </svg>
+                    </button>
+                    <button data-help-guide="quick-help" class="nss-btn nss-btn-quick-help flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">Show Quick Help</button>
                 </footer>
             </article>
 
@@ -661,7 +680,7 @@
                             <use href="assets/icons/icons.svg#action-icon-wrap-up"></use>
                         </svg>
                     </button>
-                    <button data-tbk-action="show-help" data-load="help" class="tunebook-action nss-btn nss-switch-btn flex-align-center" title="Show Help Dialog" aria-title="Show Help Dialog">
+                    <button data-tbk-action="show-help" data-load="help" class="tunebook-action nss-btn nss-switch-btn flex-align-center" title="Show Help Menu" aria-title="Show Help Menu">
                         <span class="nss-icon-filler">
                             <svg class="nss-circled-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-help"></use>

@@ -1344,9 +1344,7 @@ body[data-mode="desktop"] [data-tbk-actions-mode="pick-fav-left"] {
 }
 
 .nss-help-dialog .nss-popover-btn,
-.nss-help-popover .nss-popover-btn,
-[data-popover="tunebook-actions-popup"] .nss-popover-btn {
-  display: flex;
+.nss-help-popover .nss-popover-btn {
   color: var(--accent-color);
 }
 
@@ -1699,7 +1697,7 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   max-height: unset;
   margin-top: var(--tunebook-header-height);
   margin-bottom: var(--tunebook-footer-height);
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.92);
   font-size: large;
   outline: none;
   border: 0;
@@ -1716,10 +1714,29 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   width: 100%;
 }
 
+.nss-help-popover-header .nss-link-btn,
 .nss-help-popover-header .nss-btn-x {
   position: fixed;
   top: calc(var(--tunebook-header-height) + 0.75rem);
+}
+
+.nss-help-popover-header .nss-link-btn {
+  left: 0.75rem;
+}
+
+.nss-help-popover .nss-btn-quick-help-mini,
+.nss-help-popover-header .nss-btn-x {
   right: 0.75rem;
+}
+
+.nss-help-popover .nss-btn-quick-help-mini {
+  display: none;
+}
+
+.nss-btn-quick-help-mini svg {
+  width: 85%;
+  height: 85%;
+  transform:rotate(90deg);
 }
 
 .nss-help-guide-container {
@@ -1742,9 +1759,13 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   margin: 0;
 }
 
-.nss-help-popover-footer button {
+.nss-btn-quick-help-mini,
+.nss-btn-quick-help {
   position: absolute;
   bottom: 1.6rem;
+}
+
+.nss-btn-quick-help {
   outline: 0.2rem solid var(--accent-color-contrast);
   border-radius: 0.33rem;
   font-size: 1.6rem;
@@ -1752,22 +1773,17 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   opacity: 0.8;
 }
 
-.nss-help-popover-footer button:is(:hover, :focus, :focus-visible),
-.nss-help-container button:is(:hover, :focus, :focus-visible) {
+.nss-btn-quick-help:is(:hover, :focus, :focus-visible),
+.nss-help-row button:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid var(--accent-color);
   opacity: 1;
 }
+
 .nss-help-dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.nss-help-x-container {
-  position: absolute;
-  top: calc(67% - 3.75rem / 2);
-  left: calc(50% - 3.75rem / 2);
-}
-
-[data-help-guide="quick-help"],
+.nss-btn-quick-help,
 .nss-help-dialog,
 .nss-btn-help-label {
   color: var(--accent-color-contrast);
@@ -1789,12 +1805,18 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 }
 
 .nss-help-container,
-.nss-help-container button {
+.nss-help-row button {
   width: 100%;
   height: 100%;
 }
 
-.nss-help-container button {
+.nss-help-container .nss-help-q-container button {
+  width: 3.95rem;
+  height: 3.95rem;
+  outline-offset: -0.2rem;
+}
+
+.nss-help-row button {
   border-radius: 0.25rem;
   opacity: 0.8;
   z-index: 1;
@@ -1802,7 +1824,7 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 
 .nss-help-container {
   overflow: hidden;
-  grid-template-rows: minmax(3.5rem, 0.25fr) minmax(3rem, 0.25fr) 1fr minmax(3rem, 0.25fr) minmax(3.5rem, 0.25fr);
+  grid-template-rows: minmax(3.5rem, 0.25fr) minmax(3rem, 0.25fr) 0.33fr 0.33fr 0.33fr minmax(3rem, 0.25fr) minmax(3.5rem, 0.25fr);
 }
 
 .nss-help-row {
@@ -1978,11 +2000,6 @@ body[data-mode="desktop"] [data-hide="desktop"],
     width: 3.75rem;
     height: 3.75rem;
     touch-action: auto;
-  }
-
-  .nss-help-x-container {
-    top: calc(67% - 3.75rem / 2);
-    left: calc(50% - 3.75rem / 2);
   }
 
   .nss-checkbox-btn {
@@ -2187,10 +2204,6 @@ body[data-mode="desktop"] [data-hide="desktop"],
   .nss-footer-launch [data-type="telegram-link"] {
     display: none;
   }
-
-  [data-pops-up-from="header"] .nss-help-x-container {
-    top: calc(80% - 3.75rem / 2);
-  }
 }
 
 /* @media screen and (max-width: 480px) { */
@@ -2215,6 +2228,14 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   .nss-help-popover .nss-help-guide-container {
     align-items: flex-start;
+  }
+
+  .nss-help-popover .nss-btn-quick-help {
+    display: none;
+  }
+
+  .nss-help-popover .nss-btn-quick-help-mini {
+    display: flex;
   }
 }
 
