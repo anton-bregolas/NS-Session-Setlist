@@ -252,7 +252,7 @@ function startSetMaker(selectItem) {
 
   listViewerDialog.dataset.setMaker = "on";
   listViewerTitle.textContent = "🎶 Select 2+ items 👇";
-  toggleSetMakerGui();
+  toggleSetMakerGui(selectItem);
 
   if (selectItem) {
    
@@ -363,7 +363,7 @@ function recalcSetMakerCounters(fromCounterVal) {
 
 // Show or hide Set Maker UI elements
 
-function toggleSetMakerGui() {
+function toggleSetMakerGui(focusItem) {
 
   const startSetMakerBtn =
     document.querySelector('[data-lvw-action="start-set-maker"]');
@@ -379,6 +379,13 @@ function toggleSetMakerGui() {
     ariaShowMe(returnListViewerBtn);
 
     listViewerTiles.setAttribute("aria-multiselectable", "true");
+
+    if (focusItem) {
+
+      focusItem.focus();
+      return;
+    }
+
     listViewerTiles.focus();
     return;
   }
