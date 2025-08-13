@@ -439,9 +439,9 @@
                 </div>
             </dialog>
 
-            <dialog id="help" class="nss-help-dialog" aria-label="Help Dialog">
+            <dialog id="quick-help" class="nss-help-dialog" aria-label="Quick Help Dialog">
                 <div class="nss-help-x-container flex-wrapper">
-                    <button id="nss-help-dialog-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Help Dialog" aria-title="Close Help Dialog" autofocus></button>
+                    <button id="nss-help-dialog-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Dialog" aria-title="Close Quick Help Dialog" autofocus></button>
                 </div>
                 <div class="nss-help-container grid-wrapper">
                     <div class="nss-help-header-icons nss-help-row grid-wrapper">
@@ -484,7 +484,7 @@
                             <span class="nss-btn-help-label">Fullscreen Button</span>
                         </button>
                     </div>
-                    <div class="nss-help-description flex-wrapper">Select a Tunebook element to view description</div>
+                    <p class="nss-help-description flex-wrapper">Select an element label to view description</p>
                     <div class="nss-help-footer-labels nss-help-row grid-wrapper">
                         <button data-cutoff-mobile="l" class="nss-btn nss-btn-help" aria-label="(Bottom Left) Return to app's Launch Screen" title="Return to app's Launch Screen">
                             <span class="nss-btn-help-label">Launch Screen</span>
@@ -528,6 +528,18 @@
                 </div>
                 <footer class="nss-help-dialog-footer"></footer>
             </dialog>
+
+            <article id="help-guide" popover="manual" class="nss-help-popover" aria-label="Help Guide Popover">
+                <header class="nss-help-popover-header">
+                    <button data-help-guide="quit" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Guide Popover" aria-title="Close Help Guide Popover" autofocus></button>
+                </header>
+                <div class="nss-help-guide-container flex-wrapper">
+                    <p data-help-guide="text" class="nss-help-guide-description flex-wrapper">Click on a Tunebook element to view description</p>
+                </div>
+                <footer class="nss-help-popover-footer flex-wrapper">
+                    <button data-help-guide="quick-help" class="nss-btn flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">Show Quick Help</button>
+                </footer>
+            </article>
 
             <article popover data-popover="notification-popup" data-layout="footer" class="info" aria-label="Notification Popup">
                 <div class="nss-header-x-container">
@@ -574,7 +586,7 @@
                 <div class="footer-central-wrapper grid-wrapper">
                     <div class="footer-item-container flex-wrapper">
                         <label data-long-press="on" data-activated="false" data-fav-btn="left" class="radio-wrapper flex-wrapper" title="Full Screen button shows current Set or Tune">
-                            <input data-long-press="on" data-activated="false" data-fav-btn="left" type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" checked>
+                            <input data-long-press="on" data-activated="false" data-fav-btn="left" type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" aria-title="Full Screen button shows current Set or Tune" checked>
                             <span class="icon-wrapper flex-wrapper">
                                 <span class="nss-mini-icon nss-icon-show">
                                     <svg class="nss-icon" aria-hidden="true">
@@ -612,7 +624,7 @@
                     </button>
                     <div class="footer-item-container flex-wrapper">
                         <label data-long-press="on" data-activated="false" data-fav-btn="right" class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
-                            <input data-long-press="on" data-activated="false" data-fav-btn="right" type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1">
+                            <input data-long-press="on" data-activated="false" data-fav-btn="right" type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1" aria-title="Full Screen button opens Chord Viewer">
                             <span class="icon-wrapper flex-wrapper">
                                 <span class="nss-mini-icon nss-icon-show">
                                     <svg class="nss-icon" aria-hidden="true">

@@ -58,10 +58,10 @@ export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#nss-tunebook-title');
 const abcContainer = document.querySelector('.nss-abctools-embed');
 const appNavTitle = document.querySelector('#nss-appnav-title');
-const appHeader = document.querySelector('#nss-app-header');
 
 // Define App Menu elements
 
+const helpGuidePopover = document.getElementById('help-guide');
 const appOptionsPopover = document.querySelector('#nss-popover-options');
 const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
 const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
@@ -75,7 +75,7 @@ const tuneBookActionsHeaderBtn = document.querySelector('#nss-tunebook-actions-h
 
 const chordViewerDialog = document.getElementById('chord-viewer');
 const listViewerDialog = document.getElementById('list-viewer');
-const helpDialog = document.getElementById('help');
+const helpDialog = document.getElementById('quick-help');
 
 ////////////////////////////////
 // APP LAUNCHERS
@@ -124,7 +124,7 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
   updateAppSectionTitle(targetSection);
   swapSwitchBtns(targetSection);
 
-  appHeader.style.display = "none";
+  document.body.dataset.tunebook = "open";
 
   showTuneBookEls();
 
@@ -281,7 +281,7 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
     lastTuneBookMode = document.body.dataset.mode;
 
     hideTuneBookEls();
-    appHeader.removeAttribute("style");
+    document.body.removeAttribute("data-tunebook");
     resetViewportWidth();
     initAppMode();
     appWindowResizeHandler();
@@ -728,7 +728,29 @@ export function openSettingsMenu(dataType, dataOptions) {
   }
 }
 
-// Open Help Dialog overlay
+// Show Help Guide Popover
+
+function showHelpGuidePopover() {
+
+  if (tuneBookActionsHeaderBtn.hasAttribute("hidden")) {
+
+    helpGuidePopover.dataset.popsUpFrom = "footer";
+
+  } else {
+
+    helpGuidePopover.dataset.popsUpFrom = "header";
+  }
+
+  const helpGuideText =
+    helpGuidePopover.querySelector('[data-help-guide="text"]');
+
+  helpGuideText.textContent =
+    "Click on a Tunebook element to view description";
+
+  helpGuidePopover.showPopover();
+}
+
+// Open Quick Help Dialog overlay
 
 function openHelpDialog() {
 
@@ -754,14 +776,14 @@ function openHelpDialog() {
     helpDialog.querySelector('.nss-help-description');
     
   helpTextDiv.textContent =
-    "Select a Tunebook element to view description";
+    "Select an element label to view description";
 
   helpDialog.showModal();
 }
 
 // Show description for Help Dialog item
 
-function showHelpDescription(event) {
+function showQuickHelpDescription(event) {
 
   const helpItem = event.target.closest('.nss-btn-help');
 
@@ -931,12 +953,26 @@ export function checkIfTunebookOpen() {
 
   let isTuneBookOpen = false;
 
-  if (abcContainer && !abcContainer.hasAttribute("hidden")) {
+  if (document.body.dataset.tunebook) {
 
     isTuneBookOpen = true;
   }
 
   return isTuneBookOpen;
+}
+
+// Return true if Help Guide Popover is currently open
+
+function checkIfHelpMenuOpen() {
+
+  let isHelpMenuOpen = false;
+
+  if (helpGuidePopover && helpGuidePopover.matches(':popover-open')) {
+
+    isHelpMenuOpen = true;
+  }
+
+  return isHelpMenuOpen;
 }
 
 // Return true if app is currently in mobile mode
@@ -1175,9 +1211,6 @@ export async function updateDataJsons() {
   updateData(setChords, setChordsData);
   updateData(tuneChords, tuneChordsData);
 
-  // sessionSetsCounter.textContent = tuneSets.length;
-  // sessionTunesCounter.textContent = tuneList.length;
-
   return [tuneSets.length, tuneList.length, setChords.length, tuneChords.length];
 }
 
@@ -1383,8 +1416,8 @@ async function appButtonHandler(btn) {
 
       hideTuneBookActionsMenu();
 
-      openHelpDialog();
-
+      // openHelpDialog();
+      showHelpGuidePopover();
       return;
     }
 
@@ -1921,6 +1954,16 @@ function appRadioBtnHandler(input) {
 
 async function appDropDownHandler(event) {
 
+  if (checkIfHelpMenuOpen() &&
+     (event.type === 'mousedown' || event.type === 'keydown' || event.type === 'touchstart') &&
+      event.key !== 'Tab') {
+
+    event.preventDefault();
+    event.target.closest('select').focus();
+    helpGuidePopoverHandler(event);
+    return;
+  }
+
   if (event.type === 'change') {
     
     if (this === filterOptions) {
@@ -2367,6 +2410,15 @@ function appWindowClickHandler(event) {
 
   const elTag = triggerEl.tagName.toLowerCase();
 
+  // Prevent clicks on elements in Help Guide mode
+
+  if (checkIfHelpMenuOpen()) {
+
+    event.preventDefault();
+    helpGuidePopoverHandler(event);
+    return;
+  }
+
   // Prevent clicks on elements after long press
 
   if (triggerEl.dataset.longPress && triggerEl.dataset.activated === "true") {
@@ -2406,7 +2458,10 @@ function appWindowMouseEventHandler(event) {
 
   const triggerEl = event.target.closest(interactableEl);
 
-  if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
+  if (!triggerEl ||
+      triggerEl.hasAttribute('data-cvw-action') ||
+      triggerEl.hasAttribute('data-lvw-action') ||
+      checkIfHelpMenuOpen()) return;
 
   if (event.type === 'mousedown') {
 
@@ -2523,7 +2578,10 @@ function appWindowTouchEventHandler(event) {
 
   const triggerEl = event.target.closest(interactableEl);
 
-  if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
+  if (!triggerEl ||
+      triggerEl.hasAttribute('data-cvw-action') ||
+      triggerEl.hasAttribute('data-lvw-action') ||
+      checkIfHelpMenuOpen()) return;
 
   if (event.type === 'touchstart') {
 
@@ -2616,6 +2674,7 @@ function appWindowKeyboardEventHandler(event) {
   if (event.type === 'keydown' &&
       event.shiftKey &&
       checkIfTunebookOpen() &&
+      !checkIfHelpMenuOpen() &&
       !chordViewerDialog.open &&
       !listViewerDialog.open &&
       !document.fullscreenElement) {
@@ -2623,7 +2682,7 @@ function appWindowKeyboardEventHandler(event) {
     switch (event.key) {
       case "F1":
         event.preventDefault();
-        openHelpDialog();
+        showHelpGuidePopover();
         return;
 
       case "F11":
@@ -2642,7 +2701,18 @@ function appWindowKeyboardEventHandler(event) {
 
   const triggerEl = event.target.closest(interactableEl);
 
-  if (!triggerEl || triggerEl.hasAttribute('data-cvw-action') || triggerEl.hasAttribute('data-lvw-action')) return;
+  if (!triggerEl ||
+      triggerEl.hasAttribute('data-cvw-action') ||
+      triggerEl.hasAttribute('data-lvw-action')) return;
+
+  if (checkIfHelpMenuOpen() &&
+      event.type === 'keydown' &&
+      (event.key === 'Enter' || event.key === ' ')) {
+
+    event.preventDefault();
+    helpGuidePopoverHandler(event);
+    return;
+  }
 
   if (event.type === 'keydown') {
 
@@ -2768,6 +2838,48 @@ function activateLongPressTuneSelector(event, tuneSelectorEl) {
   appSetLongPressTimeout(event, tuneSelectorEl, timeOutVal, openSettingsMenu, callBackArgs);
 }
 
+// Handle events with Help Guide Popover open
+
+function helpGuidePopoverHandler(event) {
+
+  const interactableEl = 'button, label, select, input[type="checkbox"], input[type="radio"]';
+
+  const triggerEl = event.target.closest(interactableEl);
+
+  if (!triggerEl) return;
+
+  const helpData = triggerEl.dataset.helpGuide;
+
+  if (helpData) {
+
+    if (helpData === 'quit') {
+
+      helpGuidePopover.hidePopover();
+
+      focusOnTuneBookActions();
+
+      return;
+    }
+
+    if (helpData === 'quick-help') {
+
+      helpGuidePopover.hidePopover();
+
+      openHelpDialog();
+
+      return;
+    }
+
+    return;
+  }
+
+  const helpGuideText =
+    helpGuidePopover.querySelector('[data-help-guide="text"]');
+
+  helpGuideText.textContent =
+    triggerEl.hasAttribute("aria-title")? triggerEl.getAttribute("aria-title") : triggerEl.title;
+}
+
 ////////////////////////////////
 // ROUTERS & HASH MANIPULATORS
 ///////////////////////////////
@@ -2839,7 +2951,7 @@ function appRouter() {
 
     if (!parentSection) {
 
-      console.warn(`NS Session App:\n\nInvalid section hash in user query\n\nQuery params are supported in setlist and tunelist`);
+      console.warn(`NS Session App:\n\nInvalid section hash in user query\n\nQuery params are supported in Setlist and Tunelist`);
       displayNotification("Invalid query provided, check input URL", "warning");
       return;
     }
@@ -2888,11 +3000,11 @@ function appRouterOnLoad() {
     initAppRouter();
     return;
   }
-  
-  initAppRouter();
 
-  window.location.hash = '';
-  window.location.hash = initialHash || "#launcher";
+  // Initialize hash routing
+  initAppRouter();
+  // Do initial app routing
+  appRouter();
 }
 
 // Initialize app's hash routing
@@ -3361,7 +3473,7 @@ function initTunebookFavBtns() {
 
   if (!localStorageOk()) return;
 
-  if(localStorage.tuneBookFavBtnLeft) {
+  if (localStorage.tuneBookFavBtnLeft) {
 
     const favDataLeft = localStorage.tuneBookFavBtnLeft;
 
@@ -3373,7 +3485,7 @@ function initTunebookFavBtns() {
     switchTuneBookFavBtn(copyLeftElem, "pick-fav-left");
   }
 
-  if(localStorage.tuneBookFavBtnRight) {
+  if (localStorage.tuneBookFavBtnRight) {
 
     const favDataRight = localStorage.tuneBookFavBtnRight;
 
@@ -3447,7 +3559,7 @@ function initHelpDialog() {
 
   ['mouseover', 'focusin'].forEach(eventType => {
 
-    helpDialog.addEventListener(eventType, showHelpDescription);
+    helpDialog.addEventListener(eventType, showQuickHelpDescription);
   });
 }
 
