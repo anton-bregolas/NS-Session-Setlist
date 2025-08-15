@@ -387,10 +387,6 @@ select.text-align-left {
   text-align: left;
 }
 
-/* body[data-mode="mobile"] .nss-tunebook-selector:is(:focus, :focus-visible) {
-  text-align: left;
-} */
-
 iframe:is(:focus, :focus-visible) {
   outline: none;
 }
@@ -1714,17 +1710,18 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   width: 100%;
 }
 
+.nss-help-popover .nss-btn-quick-help-mini,
 .nss-help-popover-header .nss-link-btn,
 .nss-help-popover-header .nss-btn-x {
   position: fixed;
   top: calc(var(--tunebook-header-height) + 0.75rem);
 }
 
+.nss-help-popover .nss-btn-quick-help-mini,
 .nss-help-popover-header .nss-link-btn {
   left: 0.75rem;
 }
 
-.nss-help-popover .nss-btn-quick-help-mini,
 .nss-help-popover-header .nss-btn-x {
   right: 0.75rem;
 }
@@ -1736,7 +1733,6 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
 .nss-btn-quick-help-mini svg {
   width: 85%;
   height: 85%;
-  transform:rotate(90deg);
 }
 
 .nss-help-guide-container {
@@ -1754,8 +1750,17 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-f
   padding: 1.6rem 1rem;
 }
 
+.nss-help-guide-description[data-text="custom"]::after {
+  content: '';
+}
+
+.nss-help-guide-description[data-text="default"]::after {
+  content:
+    "Click on any Tunebook button to view description \a\a Click on Show Quick Help (↑) button to view app map \a\a Click on GitHub button to view app readme";
+}
 .nss-help-popover p,
 .nss-help-dialog p {
+  white-space: pre-wrap;
   margin: 0;
 }
 
@@ -2128,6 +2133,36 @@ body[data-mode="desktop"] [data-hide="desktop"],
   }
 }
 
+/* @media screen and (max-height: 600px) { */
+@media screen and (max-height: 37.5em) {
+
+  .nss-help-container {
+    grid-template-rows: minmax(3.5rem, 0.25fr) minmax(3rem, 0.25fr) 0 0.33fr 0 minmax(3rem, 0.25fr) minmax(3.5rem, 0.25fr);
+  }
+
+  .nss-help-q-container button,
+  .nss-help-x-container button {
+    position: absolute;
+    top: calc(50% - 3.75rem / 2);
+  }
+
+  .nss-help-q-container button {
+    left: 1.25rem;
+  }
+
+  .nss-help-x-container button {
+    right: 1.25rem;
+  }
+
+  .nss-help-description {
+    padding: 0 7rem;
+  }
+
+  .nss-help-guide-description[data-text="default"]::after {
+    content: 'Click on any Tunebook button to view description \a\a Click on Show Quick Help (↑) button to view app map';
+  }
+}
+
 /* @media screen and (max-width: 528px) { */
 @media screen and (max-width: 33em) {
 
@@ -2230,6 +2265,7 @@ body[data-mode="desktop"] [data-hide="desktop"],
     align-items: flex-start;
   }
 
+  .nss-help-popover-header .nss-link-btn,
   .nss-help-popover .nss-btn-quick-help {
     display: none;
   }
@@ -2383,5 +2419,12 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   body[data-mode="mobile"] [data-close-direction="down"] {
     reading-order: 7;
+  }
+}
+
+@supports (appearance: base-select) {
+  
+  body[data-mode="mobile"] .nss-tunebook-selector:open {
+    text-align: left;
   }
 }

@@ -744,8 +744,9 @@ function showHelpGuidePopover() {
   const helpGuideText =
     helpGuidePopover.querySelector('[data-help-guide="text"]');
 
-  helpGuideText.textContent =
-    "Click on a Tunebook element to view description";
+  helpGuideText.dataset.text = "default";
+
+  helpGuideText.textContent = '';
 
   helpGuidePopover.showPopover();
 }
@@ -1416,8 +1417,8 @@ async function appButtonHandler(btn) {
 
       hideTuneBookActionsMenu();
 
-      // openHelpDialog();
       showHelpGuidePopover();
+
       return;
     }
 
@@ -2891,6 +2892,11 @@ function helpGuidePopoverHandler(event) {
 
   const helpGuideText =
     helpGuidePopover.querySelector('[data-help-guide="text"]');
+
+  if (helpGuideText.dataset.text === "default") {
+
+    helpGuideText.dataset.text = "custom";
+  }
 
   helpGuideText.textContent =
     triggerEl.hasAttribute("aria-title")? triggerEl.getAttribute("aria-title") : triggerEl.title;
