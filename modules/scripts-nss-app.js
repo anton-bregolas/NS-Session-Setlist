@@ -983,6 +983,18 @@ export function checkIfMobileMode() {
   return document.body.dataset.mode === "mobile";
 }
 
+// Return true if user agent string suggests the app is opened in Safari Browser
+
+function checkIfSafariBrowser() {
+
+  const userAgentStr = navigator.userAgent.toLowerCase();
+
+  const isSafariBrowser =
+    userAgentStr.indexOf('safari') > -1 && userAgentStr.indexOf('chrome') === -1;
+
+  return isSafariBrowser;
+}
+
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
 
 export function refreshTuneBook(isSoftRefresh, itemQuery) {
@@ -1079,6 +1091,16 @@ export function resetTuneBookFilters() {
 
   // Reset filters without refreshing the page
 
+  const isSafari = checkIfSafariBrowser();
+
+  // Safari only: Repopulate Tune Selector
+
+  if (isSafari) {
+
+    repopulateTuneSelector();
+    return;
+  }
+
   const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
   const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
 
@@ -1090,6 +1112,41 @@ export function resetTuneBookFilters() {
       item.removeAttribute("disabled");
     });
   });
+}
+
+// Repopulate Tune Selector with options from current Tunebook
+// Optional: Filter out options with specific filter ID and Type
+
+function repopulateTuneSelector(filterId, filterType) {
+
+  while (tuneSelector.children.length > 1) {
+    tuneSelector.removeChild(tuneSelector.lastChild);
+  }
+
+  const currentTuneBook =
+    checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
+
+  if (filterId && filterType) {
+
+    let updatedTuneBook = [];
+
+    if (filterType === "tuneType") {
+
+      updatedTuneBook =
+        currentTuneBook.filter(item => item.type === filterId);
+    }
+
+    if (filterType === "setLeader") {
+
+      updatedTuneBook =
+        currentTuneBook.filter(item => item.leaders.indexOf(filterId) > -1);
+    }
+
+    populateTuneSelector(updatedTuneBook);
+    return;
+  }
+
+  populateTuneSelector(currentTuneBook);
 }
 
 // Update text content on page depending on section being revealed
@@ -2005,12 +2062,11 @@ function filterTuneBook() {
 
   const filterId = filterOptions.value;
 
+  // Do nothing if placeholder icon selected
+
   if (filterId === "-1") return;
 
-  const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
-  const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
-  const activeFilter = filterOptions.querySelector('option:checked')
-  const activeFilterGroup = activeFilter.closest('optgroup');
+  // Reset filters, show all Tune Selector options
 
   if (filterId === "0") {
 
@@ -2032,59 +2088,87 @@ function filterTuneBook() {
 
     return;
   }
+  
+  const isSafari = checkIfSafariBrowser();
+  const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
+  const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
+  const activeFilter = filterOptions.querySelector('option:checked')
+  const activeFilterGroup = activeFilter.closest('optgroup');
 
+  // Filter Tune Selector by Tune Type
+  
   if (filterId && activeFilterGroup.label.includes("Tune Type")) {
 
-    [tuneGroups, tuneOptions].forEach(tuneSelectorItemCat => {
+    // Safari only: Repopulate Tune Selector with items matching Tune Type
 
-      tuneSelectorItemCat.forEach(item => {
+    if (isSafari) {
 
-        if (filterId !== item.dataset.tunetype) {
+      repopulateTuneSelector(filterId, "tuneType");
 
-          item.setAttribute("hidden", "");
-          item.setAttribute("disabled", "");
+    } else {
 
-        } else if (item.hasAttribute("disabled")) {
+      [tuneGroups, tuneOptions].forEach(tuneSelectorItemCat => {
 
-          item.removeAttribute("disabled");
-          item.removeAttribute("hidden");
-        }
+        tuneSelectorItemCat.forEach(item => {
+
+          if (filterId !== item.dataset.tunetype) {
+
+            item.setAttribute("hidden", "");
+            item.setAttribute("disabled", "");
+
+          } else if (item.hasAttribute("disabled")) {
+
+            item.removeAttribute("disabled");
+            item.removeAttribute("hidden");
+          }
+        });
       });
-    });
+    }
   }
+
+  // Filter Tune Selector by Set Leader
 
   if (filterId && activeFilterGroup.label.includes("Set Leader")) {
 
-    tuneOptions.forEach(tuneOption => {
+    // Safari only: Repopulate Tune Selector with items matching Set Leader
 
-      if (!tuneOption.dataset.leaders.split(', ').includes(filterId)) {
+    if (isSafari) {
 
-        tuneOption.setAttribute("hidden", "");
-        tuneOption.setAttribute("disabled", "");
+      repopulateTuneSelector(filterId, "setLeader");
 
-      } else if (tuneOption.hasAttribute("disabled")) {
+    } else {
 
-        tuneOption.removeAttribute("disabled");
-        tuneOption.removeAttribute("hidden");
-      }
-    });
+      tuneOptions.forEach(tuneOption => {
 
-    tuneGroups.forEach(tuneGroup => {
+        if (!tuneOption.dataset.leaders.split(', ').includes(filterId)) {
 
-      tuneGroup.setAttribute("hidden", "");
-      tuneGroup.setAttribute("disabled", "");
+          tuneOption.setAttribute("hidden", "");
+          tuneOption.setAttribute("disabled", "");
 
-      tuneGroup.querySelectorAll('option').forEach(option => {
+        } else if (tuneOption.hasAttribute("disabled")) {
 
-        if (!option.hasAttribute("disabled")) {
-
-          tuneGroup.removeAttribute("disabled");
-          tuneGroup.removeAttribute("hidden");
-
-          return;
+          tuneOption.removeAttribute("disabled");
+          tuneOption.removeAttribute("hidden");
         }
       });
-    });
+
+      tuneGroups.forEach(tuneGroup => {
+
+        tuneGroup.setAttribute("hidden", "");
+        tuneGroup.setAttribute("disabled", "");
+
+        tuneGroup.querySelectorAll('option').forEach(option => {
+
+          if (!option.hasAttribute("disabled")) {
+
+            tuneGroup.removeAttribute("disabled");
+            tuneGroup.removeAttribute("hidden");
+
+            return;
+          }
+        });
+      });
+    }
   }
 
   tuneSelector.selectedIndex = 0;
