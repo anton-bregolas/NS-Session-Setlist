@@ -345,6 +345,7 @@ iframe {
   pointer-events: none;
 }
 
+.nss-footer-launch .nss-footer-link,
 .nss-footer-launch button {
   pointer-events: auto;
 }
@@ -789,7 +790,8 @@ body[data-mode="mobile"] .nss-icon-filler:not(.nss-footer-tunebook .nss-icon-fil
 .nss-option-btn:is(:hover, :focus, :focus-visible),
 .nss-control-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-launch:is(:hover, :focus, :focus-visible),
-.nss-popover-btn:is(:hover, :focus, :focus-visible) {
+.nss-popover-btn:is(:hover, :focus, :focus-visible),
+.nss-btn-quick-help:is(:hover, :focus, :focus-visible) {
   filter: drop-shadow(1px 1px 8px var(--accent-color));
 }
 
