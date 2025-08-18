@@ -3579,11 +3579,10 @@ function initTunebookFavBtns() {
 
   if (!localStorageOk()) return;
 
-  if (localStorage.tuneBookFavBtnLeft) {
+  const favDataLeft = localStorage.tuneBookFavBtnLeft;
+  const favDataRight = localStorage.tuneBookFavBtnRight;
 
-    const favDataLeft = localStorage.tuneBookFavBtnLeft;
-
-    if (favDataLeft === "select-fullscreen-tunes") return;
+  if (favDataLeft && favDataLeft !== "select-fullscreen-tunes") {
 
     const copyLeftElem =
       document.querySelector(`[data-tbk-action="${favDataLeft}"]`);
@@ -3591,11 +3590,7 @@ function initTunebookFavBtns() {
     switchTuneBookFavBtn(copyLeftElem, "pick-fav-left");
   }
 
-  if (localStorage.tuneBookFavBtnRight) {
-
-    const favDataRight = localStorage.tuneBookFavBtnRight;
-
-    if (favDataRight === "select-fullscreen-chords") return;
+  if (favDataRight && favDataRight !== "select-fullscreen-chords") {
 
     const copyRightElem =
       document.querySelector(`[data-tbk-action="${favDataRight}"]`);
