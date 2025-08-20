@@ -404,6 +404,7 @@
                         <h2 data-list-viewer="title-container" class="flex-center">
                             <span data-list-viewer="title"></span>
                         </h2>
+                        <input type="search" data-list-viewer="search-input" placeholder="Filter by:" autocomplete="off" aria-hidden="true" hidden>
                         <div data-list-viewer="x-container" class="flex-center">
                             <button autofocus data-lvw-action="close-list-viewer" class="btn-lvw btn-x flex-center" title="Close List Viewer" aria-title="Close List Viewer"></button>
                         </div>
@@ -413,18 +414,17 @@
                         <input type="range" data-list-viewer="slider" data-lvw-action="adjust-tile-height" name="tiles-slider" min="22" max="70" value="70" step="1" title="Slide to adjust tune tile height" aria-title="Slide to adjust tune tile height"/>
                         <div data-list-viewer="tiles-listbox-outline"></div>
                     </div>
+                    <!-- <button data-lvw-action="search" class="btn-lvw flex-center" title="Search and Filter Tiles" aria-title="Search and Filter Tiles">
+                        <svg data-lvw-ui="icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-search"></use>
+                        </svg>
+                    </button> -->
                     <footer data-list-viewer="footer" class="flex-between">
-                        <button data-lvw-action="toggle-gui" class="btn-lvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
+                        <!-- <button data-lvw-action="toggle-gui" class="btn-lvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
                             <svg data-lvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-sliders"></use>
                             </svg>
-                        </button>
-                        <button data-lvw-action="create-set" class="btn-lvw flex-center">
-                            <span>Create Set</span>
-                        </button>
-                        <div data-list-viewer="footer-status-container" class="flex-center">
-                            <span data-list-viewer="status"></span>
-                        </div>
+                        </button> -->
                         <button data-lvw-action="start-set-maker" class="btn-lvw flex-center" title="Start Set Maker" aria-title="Start Set Maker">
                             <svg data-lvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
@@ -433,6 +433,17 @@
                         <button data-lvw-action="return-list-viewer" class="btn-lvw flex-center" title="Return to List Viewer" aria-title="Return to List Viewer" hidden inert>
                             <svg data-lvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-setlist"></use>
+                            </svg>
+                        </button>
+                        <button data-lvw-action="create-set" class="btn-lvw flex-center">
+                            <span>Create Set</span>
+                        </button>
+                        <div data-list-viewer="footer-status-container" class="flex-center">
+                            <span data-list-viewer="status"></span>
+                        </div>
+                        <button data-lvw-action="search" class="btn-lvw flex-center" title="Search and Filter Tiles" aria-title="Search and Filter Tiles">
+                            <svg data-lvw-ui="icon-fixed-size" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-search"></use>
                             </svg>
                         </button>
                     </footer>

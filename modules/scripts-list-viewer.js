@@ -42,6 +42,8 @@ const placeHolderText = /select|pick a|filter by/;
 
 const listViewerDialog = document.querySelector('[data-list-viewer="dialog"]');
 const listViewerTitle = document.querySelector('[data-list-viewer="title"]');
+const listViewerTitleBox = document.querySelector('[data-list-viewer="title-container"]');
+const listViewerSearchInput = document.querySelector('[data-list-viewer="search-input"]');
 const listViewerTiles = document.querySelector('[data-list-viewer="tiles-container"]');
 const listViewerSlider = document.querySelector('[data-list-viewer="slider"]');
 const listViewerFooter = document.querySelector('[data-list-viewer="footer"]');
@@ -220,14 +222,18 @@ function appTileHeightSliderHandler(event) {
 
 // Handle List Viewer exit
 
-function quitListViewer() {
+function quitListViewer(noFocus) {
 
+  if (!listViewerSearchInput.hasAttribute("hidden")) { hideSearchFilterInput(); }
+  
   listViewerDialog.querySelector('[data-list-viewer="body"]').scrollTo(0,0);
 
   resetSetMakerMode();
   toggleSetMakerGui();
 
   listViewerDialog.close();
+
+  if (noFocus) return;
 
   const focusElem =
     getFirstCurrentlyDisplayedElem(launchEls) ?? altFocusBtn;
@@ -438,6 +444,11 @@ function resetSetMakerMode() {
   listViewerTiles.removeAttribute("aria-multiselectable");
   listViewerFooter.removeAttribute("data-set-maker");
   listViewerDialog.dataset.setMaker = "off";
+
+  if (!listViewerSearchInput.hasAttribute("hidden")) {
+
+    refreshSearchFilterTiles();
+  }
 }
 
 // Create an encoded Set of tunes from tile items
@@ -512,6 +523,8 @@ export function initListViewer() {
   listViewerTiles.addEventListener('touchend', handleTilesTouchEvents);
   listViewerTiles.addEventListener('touchmove', handleTilesTouchEvents);
 
+  listViewerSearchInput.addEventListener('input', handleSearchFilterInput);
+
   if (isLocalStorageOk()) {
 
     if (localStorage.listViewerPrefersColorTheme === "light" ||
@@ -553,7 +566,7 @@ function handleListViewerClick(event) {
 
     tuneSelector.dispatchEvent(new Event('change'));
 
-    listViewerDialog.close();
+    quitListViewer(true);
     return;
   }
 
@@ -619,6 +632,11 @@ function handleListViewerClick(event) {
     // }, 150);
 
     return;
+  }
+
+  if (elAction === 'search') {
+
+    toggleSearchFilterInput();
   }
 
   if (elAction === 'close-list-viewer') {
@@ -804,10 +822,15 @@ function handleTilesListBoxFocusIn(e) {
     if (lastFocusedIndex === -1) {
 
       const firstTileItem =
-        listViewerTiles.querySelector('[data-list-viewer="tune-tile"]');
-      
-      firstTileItem?.focus();
+        listViewerTiles.querySelector('[data-list-viewer="tune-tile"]:not([inert])');
 
+      if (!firstTileItem) {
+
+        
+        return;
+      }
+      
+      firstTileItem.focus();
       return;
     }
 
@@ -838,11 +861,36 @@ function handleListViewerKeyPress(e) {
 
     e.preventDefault();
     quitListViewer();
+    return;
   }
 
-  // Handle "Ctrl + A" pressed (select all)
+  // Handle "Ctrl + Shift + F" pressed (toggle search filter input)
 
-  if (e.ctrlKey && e.key.toUpperCase() === "A") {
+  if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === "F") {
+
+    e.preventDefault();
+
+    toggleSearchFilterInput();
+    return;
+  }
+
+  // Handle type-ahead separately if key pressed within search input
+
+  const currentFocus = document.activeElement;
+
+  if (currentFocus && currentFocus.dataset.listViewer &&
+      currentFocus.dataset.listViewer === "search-input") {
+
+    if (e.key === 'Enter') {
+
+      refreshSearchFilterTiles();
+    }
+    return;
+  }
+
+  // Handle "Ctrl + Shift + A" pressed (select all tiles)
+
+  if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === "A") {
 
     e.preventDefault();
 
@@ -876,11 +924,13 @@ function handleListViewerKeyPress(e) {
     return;
   }
 
-  // Handle type-ahead if letters or numbers pressed
+  // Handle type-ahead if letters or numbers pressed outside of search input
 
-  if (e.key.length === 1 && e.key.match(/[A-Za-z0-9]/)) {
+  const normalizedKey = processTypeAheadStr(e.key);
 
-    searchKeysPressed += e.key.toLowerCase();
+  if (e.key.length === 1 && !e.ctrlKey && normalizedKey.match(/[A-Za-z0-9-& ]/)) {
+
+    searchKeysPressed += normalizedKey;
 
     if (typeAheadTimeoutId) {
 
@@ -925,13 +975,24 @@ function handleTilesKeyboardNavigation(e) {
     if (!listViewerSlider.hasAttribute("hidden")) {
 
       listViewerSlider.focus();
+    }
+    
+    if (listViewerSlider.hasAttribute("hidden")) {
 
-    } else {
+      // const sliderGuiBtn =
+      //   document.querySelector('[data-lvw-action="toggle-gui"]');
 
-      const sliderGuiBtn =
-        document.querySelector('[data-lvw-action="toggle-gui"]');
+      // sliderGuiBtn.focus();
 
-      sliderGuiBtn.focus();
+      const returnListViewerBtn =
+        document.querySelector('[data-lvw-action="return-list-viewer"]');
+
+      const startSetMakerBtn =
+        document.querySelector('[data-lvw-action="start-set-maker"]');
+
+      returnListViewerBtn.hasAttribute("hidden")?
+        startSetMakerBtn.focus() :
+        returnListViewerBtn.focus();
     }
     return;
   }
@@ -1125,6 +1186,150 @@ function findMatchingTileObject(startIndex, endIndex) {
     }
   }
   return null;
+}
+
+///////////////////////////////////
+// TILES FILTERING FUNCTIONS
+//////////////////////////////////
+
+// Handle List Viewer Search Input
+
+function handleSearchFilterInput() {
+
+  const searchInputVal =
+    listViewerSearchInput.value;
+
+  if (!searchInputVal || !searchInputVal.trim()) return;
+
+  const inputStr =
+    processTypeAheadStr(searchInputVal.trim());
+
+  if (typeAheadTimeoutId) {
+
+    clearTimeout(typeAheadTimeoutId);
+  }
+
+  typeAheadTimeoutId = setTimeout(() => {
+
+    filterTilesBySearchInput(inputStr);
+    typeAheadTimeoutId = null;
+  }, 250);
+
+  return;
+}
+
+// Filter tune tiles by List Viewer Search Input results:
+// Hide or show tune tiles with title matching search input
+// Keep selected tiles on the list regardless of search input
+
+function filterTilesBySearchInput(inputStr) {
+
+  if (inputStr.length < 2) {
+    clearSearchFilterTiles();
+    return;
+  }
+
+  lastFocusedIndex = -1;
+
+  const tuneTiles =
+    listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"]');
+
+  tuneTiles.forEach(tile => {
+
+    if (tile.hasAttribute("aria-selected") &&
+        tile.getAttribute("aria-selected") === "true") {
+        return;
+    }
+
+    const tileTextSpan =
+      tile.querySelector('[data-list-viewer="tune-tile-title"]');
+    
+    const tuneTitleStr =
+      processTypeAheadStr(tileTextSpan.textContent);
+
+    if (tuneTitleStr.includes(inputStr) &&
+        tile.hasAttribute("hidden")) {
+
+      tile.removeAttribute("inert");
+      ariaShowMe(tile);
+      return;
+    }
+    
+    if (!tuneTitleStr.includes(inputStr) &&
+        !tile.hasAttribute("hidden")) {
+
+      ariaHideMe(tile);
+      tile.setAttribute("inert", '');
+      return;
+    }
+  });
+}
+
+// Process type-ahead string:
+// Lowercase all characters
+// Normalize apostrophies
+// Normalize diactritics 
+
+function processTypeAheadStr(str) {
+  
+  return str.toLowerCase().replace(/[\u2018\u2019\u0060\u00B4]/g, `'`).normalize("NFD").replace(/\p{Diacritic}/gu, "");
+}
+
+// Update filtered out / hidden tune tiles
+
+function refreshSearchFilterTiles() {
+
+  filterTilesBySearchInput(
+    processTypeAheadStr(listViewerSearchInput.value.trim())
+  );
+}
+
+// Clear all filtered out / hidden tune tiles
+
+function clearSearchFilterTiles() {
+
+  const tuneTiles =
+    listViewerTiles.querySelectorAll('[data-list-viewer="tune-tile"][hidden]');
+
+  tuneTiles.forEach(tile => {
+    tile.removeAttribute("inert");
+    ariaShowMe(tile)
+  });
+}
+
+//
+
+function toggleSearchFilterInput() {
+
+  if (listViewerSearchInput.hasAttribute("hidden")) {
+
+    showSearchFilterInput();
+    listViewerSearchInput.focus();
+    return;
+  }
+
+  clearSearchFilterTiles();
+  hideSearchFilterInput();
+  listViewerDialog.querySelector('[data-lvw-action="search"]').focus();
+  return;
+}
+
+// Show Search Filter Input
+// Hide List Viewer Title
+
+function showSearchFilterInput() {
+
+  ariaHideMe(listViewerTitleBox);
+  ariaShowMe(listViewerSearchInput);
+}
+
+// Clear & Hide Search Filter Input
+
+function hideSearchFilterInput() {
+  
+  listViewerSearchInput.value = '';
+  ariaHideMe(listViewerSearchInput);
+  ariaShowMe(listViewerTitleBox);
 }
 
 ///////////////////////////////////
