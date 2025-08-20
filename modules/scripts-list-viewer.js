@@ -826,7 +826,7 @@ function handleTilesListBoxFocusIn(e) {
 
       if (!firstTileItem) {
 
-        
+
         return;
       }
       
@@ -928,7 +928,7 @@ function handleListViewerKeyPress(e) {
 
   const normalizedKey = processTypeAheadStr(e.key);
 
-  if (e.key.length === 1 && !e.ctrlKey && normalizedKey.match(/[A-Za-z0-9-& ]/)) {
+  if (e.key.length === 1 && !e.ctrlKey && normalizedKey.match(/[A-Za-z0-9-&]/)) {
 
     searchKeysPressed += normalizedKey;
 
@@ -1297,7 +1297,8 @@ function clearSearchFilterTiles() {
   });
 }
 
-//
+// Toggle between hidden and displayed Search Filter Input
+// Focus on input if shown, focus on Search button if hidden
 
 function toggleSearchFilterInput() {
 
