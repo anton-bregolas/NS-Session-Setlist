@@ -132,10 +132,6 @@
   opacity: 0.6;
 }
 
-[data-list-viewer="search-input"]::placeholder {
-  /* color: white; */
-}
-
 [data-list-viewer="title"],
 [data-list-viewer="status"] {
   width: 100%;
