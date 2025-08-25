@@ -414,8 +414,6 @@ function toggleSetMakerSelection(item, forceSelectMode) {
 
   if (lastFocusedIndex === -1) lastFocusedIndex = item.dataset.index;
 
-  // if (lastSelectedIndex === -1) lastSelectedIndex = item.dataset.index;
-
   if (selectedCounter === 2)
     listViewerFooter.setAttribute("data-set-maker", "ready");
 }
@@ -655,7 +653,6 @@ function handleListViewerClick(event) {
   if (elAction === 'load-item' && listViewerDialog.dataset.setMaker === "on") {
 
     toggleSetMakerSelection(actionTrigger);
-    // lastSelectedIndex = actionTrigger.dataset.index;
     return;
   }
 
