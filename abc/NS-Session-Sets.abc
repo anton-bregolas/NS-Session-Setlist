@@ -2308,9 +2308,9 @@ EF|:"A"A2 A2 EF|"A"A2 A2 ce|"D"f2 e2 A2|"A"c4 EF|
 "Bm"FB BA Bc|"F#m"BA F2 AF|"D"EF A2 "E7"A2|1 "A"A4 ce:|2 "A"A4||
 
 X: 82
-T: WALTZES: Petranu-Valse Set
-T: Petranu-Valse
-C: C: Oliushka Tikhaia / Calum Stewart; S: ThZCh / Various
+T: WALTZES: Petranu Vals Set
+T: Petranu Vals
+C: C: Oliushka Tikhaia / Fredrik Jakobsson; S: ThZCh / Sandy's Band; Krack
 C: Set Leaders: Oliushka, Anton, Sophie
 Z: Oliushka Tikhaia ed., Anton Zille ed., Oleg Naumov arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/95961
@@ -2319,10 +2319,10 @@ M: 3/4
 L: 1/8
 Q: 1/4=144
 K: Gmaj
-D GA|:"G"B2 BA B/c/d|"D/G"A4 BA|"C/G"G2 FG E2|"D/G"D4 GA|
-"G"BA B B2 d|"D/G"A3 g fg|"C/G"eG ef e2|"D/G"d3 c BA|
-"G"B2 BA B/c/d|"D/G"A4 BA|"C/G"G2 F G2 E|"D/G"DC D2 GA|
-"G"BA B B2 d|"D/G"A6|"C"CD EG "D"F2|1 "G"G3 D GA:|2 "G"G3 F ED||
+D GA|:"G"B2 BA B/c/d|"D"A4 BA|"C"G2 FG E2|"D"D4 GA|
+"G"BA B B2 d|"D"A3 g fg|"C"eG ef e2|"D"d3 c BA|
+"G"B2 BA B/c/d|"D"A4 BA|"C"G2 F G2 E|"D"DC D2 GA|
+"G"BA B B2 d|"D"A6|"C"CD EG "D"F2|1 "G"G3 D GA:|2 "G"G3 F ED||
 "C"C3 D EG|"D"FE F2 D2|"Em"B3 A GF|"G"GF EF DE|
 "C"C3 D EG|"D"FE F2 D2|"G"G3 A B2|"G"d2 "D/F#"g2 "D"fg|
 "Em"eG ef ef|"D"dF de de|"C"cB cE cd|"G"B3 A GA|
@@ -2330,13 +2330,17 @@ D GA|:"G"B2 BA B/c/d|"D/G"A4 BA|"C/G"G2 FG E2|"D/G"D4 GA|
 "C"C3 D EG|"D"FE F2 D2|"Em"B3 D GA|"Em"cB AG FG|
 "C"C3 D EG|"D"FE F2 D2|"Em"G3 A B2|"G"d2 g2 "D/F#"fg|
 "Em"ed eG ef|"D"dc dF de|"Cm"c_E cd c2|"G"B3 A GA|
-"G"B2 BA B/c/d|"D"A6|"C"CD EG "D"F2|"G"G6||
-T: Looking at a Rainbow / Looking at a Rainbow Through a Dirty Window
+"G"B2 BA B/c/d|"D"A6|"C"CD EG "D"F2|"G"G4||
+T: Empty Wallet
 K: Gmaj
-D GA|:"G"Bd AB GA|"D"F2 FG FD|"C"E6-|"D"E3 DGA|
-"G (Em)"Bd AB GA|"D"F2 FG FD|"C"G6-|1 "G"G3 DGA:|2 "D"GA Bd gf||
-|:"Em"e2 B2 gf|"C"e2 c2 gf|"D"ed ef ga|"G"b2 ba "D/F#"gf|
-"Em"e2 B2 gf|"C"e2 c2 gf|"D"ed ef ga|1 "G"g4 "D/F#"gf:|2 "C"g3||
+GA|:B3A G2|E3-E G2|A2 D2 B2|A4 Bc|
+d3B G2|e3d B2|A2 AB AG|E4 GA|
+B3A G2|E3-E G2|A2 D2 B2|A4 B2|
+G3F E2|E2 F2 D2|E4 F/E/D|1 E4 GA:|2 E3F GA||
+|:Bd d2 B2|Ad d2 A2|GF GB AG|FG FE D2|
+EG~G2 EG|DG~G2 AB|c3B AG| A3B/A/ GA|
+Bd d2 B2|Ad d2 A2|GF GB AG|FG FE D2|
+EG~G2 EG|DG~G2 AB|cB AG GF|1 G3B/A/ GA:|2 G4||
 
 X: 83
 T: WALTZES: Rainbow Set
