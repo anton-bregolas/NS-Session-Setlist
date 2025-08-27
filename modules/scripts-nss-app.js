@@ -40,10 +40,10 @@ export const tuneSets = [];
 export const tuneList = [];
 export const setChords = [];
 export const tuneChords = [];
-export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/sets.json"
-export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunes.json"
-export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
-export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-tunes.json";
+export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-encoded/sets.json"
+export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-encoded/tunes.json"
+export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-chords/chords-sets.json";
+export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-chords/chords-tunes.json";
 
 // Define common app elements
 
@@ -2021,9 +2021,11 @@ function appRadioBtnHandler(input) {
 
 async function appDropDownHandler(event) {
 
-  if (checkIfHelpMenuOpen() &&
-     (event.type === 'mousedown' || event.type === 'keydown' || event.type === 'touchstart') &&
-      event.key !== 'Tab') {
+  if (event.key !== 'Tab' && 
+      (event.type === 'mousedown' ||
+      event.type === 'keydown' ||
+      event.type === 'touchstart') &&
+      checkIfHelpMenuOpen()) {
 
     event.preventDefault();
     event.target.closest('select').focus();
