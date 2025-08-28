@@ -741,6 +741,11 @@ function showHelpGuidePopover() {
     helpGuidePopover.dataset.popsUpFrom = "header";
   }
 
+  if (checkIfIosSafariBrowser()) {
+
+    disableTuneBookSelectors();
+  }
+
   const helpGuideText =
     helpGuidePopover.querySelector('[data-help-guide="text"]');
 
@@ -995,6 +1000,20 @@ function checkIfSafariBrowser() {
   return isSafariBrowser;
 }
 
+// Return true if user agent string suggests the app is opened in iOS
+
+function checkIfIosSafariBrowser() {
+
+  const userAgentStr = navigator.userAgent.toLowerCase();
+
+  const isIosSafari =
+    checkIfSafariBrowser() &&
+    !/crios/.test(userAgentStr) &&
+    /ip(ad|hone|od)/.test(userAgentStr);
+
+  return isIosSafari;
+}
+
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
 
 export function refreshTuneBook(isSoftRefresh, itemQuery) {
@@ -1147,6 +1166,32 @@ function repopulateTuneSelector(filterId, filterType) {
   }
 
   populateTuneSelector(currentTuneBook);
+}
+
+// Disable all Tunebook selector elements
+
+function disableTuneBookSelectors() {
+
+  const tuneBookSelectors =
+    document.querySelectorAll('.nss-tunebook-selector');
+  
+  tuneBookSelectors.forEach(selector => {
+
+    selector.setAttribute("disabled", "");
+  });
+}
+
+// Remove disabled attribute from all Tunebook selectors
+
+function reEnableTuneBookSelectors() {
+
+  const tuneBookSelectors =
+    document.querySelectorAll('.nss-tunebook-selector');
+  
+  tuneBookSelectors.forEach(selector => {
+
+    selector.removeAttribute("disabled");
+  });
 }
 
 // Update text content on page depending on section being revealed
@@ -2950,26 +2995,21 @@ function helpGuidePopoverHandler(event) {
 
     if (helpData === 'quit') {
 
-      helpGuidePopover.hidePopover();
-
+      quitHelpGuidePopover();
       focusOnTuneBookActions();
-
       return;
     }
 
     if (helpData === 'quick-help') {
 
-      helpGuidePopover.hidePopover();
-
+      quitHelpGuidePopover();
       openHelpDialog();
-
       return;
     }
 
     if (helpData === 'readme') {
 
       window.open(triggerEl.href, "_blank");
-
       return;
     }
 
@@ -2986,6 +3026,18 @@ function helpGuidePopoverHandler(event) {
 
   helpGuideText.textContent =
     triggerEl.hasAttribute("aria-title")? triggerEl.getAttribute("aria-title") : triggerEl.title;
+}
+
+// Handle Help Guide Popover closing
+
+function quitHelpGuidePopover() {
+
+  if (checkIfIosSafariBrowser()) {
+
+    reEnableTuneBookSelectors();
+  }
+
+  helpGuidePopover.hidePopover();
 }
 
 ////////////////////////////////
