@@ -1,2 +1,2 @@
-export const APP_VERSION = "1.0.0.42";
+export const APP_VERSION = "1.0.0.43";
 export const DB_VERSION = "2025.08.27.1";
