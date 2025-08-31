@@ -30,7 +30,7 @@
 
             <div id="nss-app-header" class="nss-app-header flex-wrapper-space-between">
                 <button id="website_help" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
-                    <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank" class="nss-link nss-icon-container" title="Visit GitHub page with tunebook info" aria-title="Visit GitHub page with tunebook info">
+                    <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank" class="nss-link nss-icon-container" title="Open Tunebook App Readme on GitHub" aria-title="Open Tunebook App Readme on GitHub">
                         <svg class="nss-icon github-icon-dark" aria-hidden="true">
                             <use href="assets/icons/icons.svg#nav-icon-github"></use>
                         </svg>
@@ -338,6 +338,10 @@
                                 <input type="checkbox" id="cvw-use-bold-fonts" data-option="chordViewerUseBoldFonts" class="nss-checkbox-btn" value="1">
                                 Chord Viewer: Use bold font for chords
                             </label>
+                            <label class="nss-checkbox-label">
+                                <input type="checkbox" id="lvw-hide-slider-gui" data-option="listViewerHideSliderGui" class="nss-checkbox-btn" value="1">
+                                List Viewer: Always hide slider input GUI
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -415,11 +419,6 @@
                         <div data-list-viewer="tiles-listbox-outline"></div>
                     </div>
                     <footer data-list-viewer="footer" class="flex-between">
-                        <!-- <button data-lvw-action="toggle-gui" class="btn-lvw flex-center" title="Show or hide GUI" aria-title="Show or hide GUI">
-                            <svg data-lvw-ui="icon" aria-hidden="true">
-                                <use href="assets/icons/icons.svg#action-icon-sliders"></use>
-                            </svg>
-                        </button> -->
                         <button data-lvw-action="start-set-maker" class="btn-lvw flex-center" title="Start Set Maker" aria-title="Start Set Maker">
                             <svg data-lvw-ui="icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-list-checked"></use>
@@ -488,7 +487,7 @@
                         </button>
                     </div>
                     <div class="nss-help-q-container flex-wrapper">
-                        <button id="nss-help-popover-open" class="nss-btn nss-popover-btn flex-align-center" title="Show Help Menu" aria-title="Show Help Menu">
+                        <button id="nss-help-popover-open" class="nss-btn nss-popover-btn flex-align-center" title="Show Help Guide Menu" aria-title="Show Help Guide Menu">
                             <svg class="nss-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-help"></use>
                             </svg>
@@ -508,7 +507,7 @@
                         <button data-hide="desktop" class="nss-btn nss-btn-help" aria-label="(Bottom Center) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
                             <span class="nss-btn-help-label">Open Actions</span>
                         </button>
-                        <button data-hide="mobile" class="nss-btn nss-btn-help" aria-label="(Bottom Center) Switch to mobile Tunebook mode with larger buttons" title="Switch to mobile Tunebook mode with larger buttons">
+                        <button data-hide="mobile" class="nss-btn nss-btn-help" aria-label="(Bottom Center) Switch to mobile Tunebook mode with adaptive design" title="Switch to mobile Tunebook mode with adaptive design">
                             <span class="nss-btn-help-label">Mobile Mode</span>
                         </button>
                         <button class="nss-btn nss-btn-help" aria-label="(Bottom Right-of-Center) Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs" title="Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs">
@@ -545,7 +544,7 @@
             <article id="help-guide" popover="manual" class="nss-help-popover" aria-label="Help Guide Popover">
                 <header class="nss-help-popover-header">
                     <button class="nss-btn nss-link-btn flex-wrapper" tabindex="-1">
-                        <a data-help-guide="readme" href="https://github.com/anton-bregolas/NS-Session-Setlist#ns-session-setlist" target="_blank" class="nss-link nss-icon-container" title="Open README on GitHub" aria-title="Open README on GitHub">
+                        <a data-help-guide="readme" href="https://github.com/anton-bregolas/NS-Session-Setlist#ns-session-setlist" target="_blank" class="nss-link nss-icon-container" title="Open Tunebook App Readme on GitHub" aria-title="Open Tunebook App Readme on GitHub">
                             <svg class="nss-icon github-icon-dark" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-github"></use>
                             </svg>

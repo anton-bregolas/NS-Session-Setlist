@@ -8,10 +8,6 @@
 
 import { storageAvailable } from "./scripts-3p/storage-available/storage-available.js";
 
-// Import custom functions handling warning messages, user notifications and focus on exit
-
-import { getFirstCurrentlyDisplayedElem } from "./scripts-nss-app.js";
-
 // Import custom functions handling Tune <> Set conversions for Set Maker
 
 import { makeTunesFromSets, sortFilterAbc } from "./scripts-abc-encoder.js";
@@ -19,10 +15,6 @@ import { makeTunesFromSets, sortFilterAbc } from "./scripts-abc-encoder.js";
 // Import lz-string compression algorithm (for decoding & encoding ABC items)
 
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
-
-// Import function for loading selected tune items into ABC Tools iframe
-
-import { loadTuneBookItem } from "./scripts-abc-tools.js"
 
 // Define required app elements
 
@@ -165,7 +157,7 @@ export function initListViewer() {
         toggleColorTheme("light", lightThemeBtn);
     }
 
-    if (+localStorage.listViewerHideGui) {
+    if (+localStorage.listViewerHideSliderGui) {
 
       ariaHideMe(listViewerSlider);
     }
@@ -673,7 +665,7 @@ function handleListViewerClick(event) {
       ariaShowMe(listViewerSlider);
 
       if (isLocalStorageOk())
-        localStorage.listViewerHideGui = 0;
+        localStorage.listViewerHideSliderGui = 0;
 
       return;
     }
@@ -681,7 +673,7 @@ function handleListViewerClick(event) {
     ariaHideMe(listViewerSlider);
 
     if (isLocalStorageOk())
-      localStorage.listViewerHideGui = 1;
+      localStorage.listViewerHideSliderGui = 1;
 
     return;
   }
@@ -1585,26 +1577,26 @@ function toggleColorTheme(themeId, triggerBtn) {
   triggerBtn.setAttribute("inert", "");
 }
 
+// Get the first element in a NodeList that is currently displayed
+
+function getFirstCurrentlyDisplayedElem(nodeList) {
+
+  let foundEl = null;
+
+  for (let i = 0; i < nodeList.length; i++) {
+
+    if(!!nodeList[i].offsetParent) {
+
+      foundEl = nodeList[i];
+      break;
+    }
+  }
+
+  return foundEl;
+}
+
 ///////////////////////////////////
 // PLACEHOLDER FUNCTIONS
 //////////////////////////////////
 
 // Use these functions as placeholders in place of imports
-
-// Get the first element in a NodeList that is currently displayed
-
-// function getFirstCurrentlyDisplayedElem(nodeList) {
-
-//   let foundEl = null;
-
-//   for (let i = 0; i < nodeList.length; i++) {
-
-//     if(!!nodeList[i].offsetParent) {
-
-//       foundEl = nodeList[i];
-//       break;
-//     }
-//   }
-
-//   return foundEl;
-// }
