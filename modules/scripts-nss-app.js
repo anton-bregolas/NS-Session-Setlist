@@ -162,6 +162,9 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
       if (!localStorage.tuneBookInitialized_NSSSAPP) {
 
         displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "success");
+
+        openHelpDialog();
+
         localStorage.tuneBookInitialized_NSSSAPP = 1;
       }
     }
@@ -1852,6 +1855,16 @@ async function appCheckBoxHandler(checkBox) {
       checkBox.checked?
         displayNotification("Chord Viewer will now use bold font weight for chords", "success") :
         displayNotification("Chord Viewer will now use normal font weight for chords", "success");
+      break;
+
+    case 'listViewerHideSliderGui':
+      const listViewerSlider = document.querySelector('[data-list-viewer="slider"]');
+      checkBox.checked?
+        ariaHideMe(listViewerSlider) :
+        ariaShowMe(listViewerSlider);
+      checkBox.checked?
+        displayNotification("List Viewer Slider GUI has been hidden", "success") :
+        displayNotification("List Viewer Slider GUI will now be displayed", "success");
       break;
 
     // Encoder Settings

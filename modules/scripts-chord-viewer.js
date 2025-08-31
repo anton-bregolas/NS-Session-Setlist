@@ -18,7 +18,7 @@ import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
 // Import custom functions handling warning messages, user notifications and focus on exit
 
-import { displayWarningEffect, displayNotification, getFirstCurrentlyDisplayedElem } from "./scripts-nss-app.js";
+import { displayWarningEffect, displayNotification } from "./scripts-nss-app.js";
 
 // Define required app elements
 
@@ -1144,6 +1144,24 @@ function toggleColorTheme(themeId, triggerBtn) {
   triggerBtn.setAttribute("inert", "");
 }
 
+// Get the first element in a NodeList that is currently displayed
+
+function getFirstCurrentlyDisplayedElem(nodeList) {
+
+  let foundEl = null;
+
+  for (let i = 0; i < nodeList.length; i++) {
+
+    if(!!nodeList[i].offsetParent) {
+
+      foundEl = nodeList[i];
+      break;
+    }
+  }
+
+  return foundEl;
+}
+
 ///////////////////////////////////
 // PLACEHOLDER FUNCTIONS
 //////////////////////////////////
@@ -1188,29 +1206,11 @@ function toggleColorTheme(themeId, triggerBtn) {
 //   }, 2500);
 // }
 
-// Get the first element in a NodeList that is currently displayed
+// Get last URL containing LZ-encoded ABC that was loaded to ABC Tools
+// Copy as export to module containing ABC Tools Export Website scripts
+// Replace lastURL with custom logic if used independently
 
-// function getFirstCurrentlyDisplayedElem(nodeList) {
+// export function getLastTunebookUrl() {
 
-//   let foundEl = null;
-
-//   for (let i = 0; i < nodeList.length; i++) {
-
-//     if(!!nodeList[i].offsetParent) {
-
-//       foundEl = nodeList[i];
-//       break;
-//     }
-//   }
-
-//   return foundEl;
-// }
-
-// Get last ABC Tools URL (for use in ABC Tools scripts)
-// Copy as export function if scripts are in a separate module
-// Replace lastURL with custom logic if used outside of ABC Tools scripts
-
-// function getLastTunebookUrl() {
-
-//     return lastURL;
+//   return lastURL;
 // }
