@@ -1,26 +1,220 @@
 NS Session Setlist
 ========================================================================================
 
-A tunebook app for the Novi Sad Irish Traditional Music Session integrating Michael Eskin's ABC Transcription Tools. Contains Anton Zille's ABC Encoder for converting ABC Sets and Tunes into NS Session DB files and the Chord Viewer module for the simplified display of chords contained in ABC.
+A tunebook app for the Novi Sad Irish Traditional Music Session integrating Michael Eskin's ABC Transcription Tools. Contains Anton Zille's **ABC Encoder** for converting ABC Sets and Tunes into Session DB files, **Chord Viewer** module for simplified display of chords found in ABCs and **List Viewer** / **Set Maker** module for listing Tunebook items and making ABC Sets.
 
-🎵 [**TUNEBOOK APP**](https://anton-bregolas.github.io/NS-Session-Setlist/) 🎻 [**ABC ENCODER**](https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html) 🎵
+🎵 [**NS TUNEBOOK APP**](https://anton-bregolas.github.io/NS-Session-Setlist/) 🎻 [**ABC ENCODER**](https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html) 🎵
 
-**NS Session Tunebook by Anton Zille & Novi Sad Trad Sessions** 👇
+## ABC Modules & Libraries
 
-https://github.com/anton-bregolas | https://t.me/irish_sessions_ns
+Module Name | GitHub Repo | Help Link |
+| --- | --- | --- |
+| 👉 <a href="https://ns.tunebook.app" target="_blank">**NS Tunebook App by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#ns-tunebook-app" target="_blank">README</a> |
+| 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html" target="_blank">**ABC Encoder Module by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#abc-encoder-module" target="_blank">README</a> |
+| 👉 **Chord Viewer Module by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#chord-viewer-module" target="_blank">README</a> |
+| 👉 **List Viewer / Set Maker by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#list-viewer-set-maker" target="_blank">README</a> |
+| 👉 <a href="https://michaeleskin.com/abc" target="_blank">**ABC Transcription Tools by Michael Eskin**</a> | <a href="https://github.com/seisiuneer/abctools" target="_blank">abctools</a> | <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">GUIDE</a> |
+| 👉 <a href="https://abcjs.net/" target="_blank">**abcjs by Paul Rosen and Gregory Dyke**</a> | <a href="https://github.com/paulrosen/abcjs" target="_blank">abcjs</a> | <a href="https://paulrosen.github.io/abcjs/" target="_blank">DOCS</a> |
 
-**ABC Transcription Tools by Michael Eskin** 👇
+## NS Tunebook App
 
-https://github.com/seisiuneer/abctools | https://michaeleskin.com/abc
+Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project exploring responsive web design and progressive web app paradigms for cross-platform viewing and editing of ABC music notation. This is a single-page client app for working with collections of ABC tunes and chords via the latest desktop and mobile browsers. Version 1.0 serves as a wrapper to Michael Eskin's ABC Transcription Tools for convenient viewing of ABC notation on devices of any viewport size.
+
+### Notes for developers
+
+File Path | Module Name | Description |
+| --- | --- | --- |
+| `index.html` | **NS Tunebook App** | NS Tunebook App HTML markup |
+| `/modules/scripts-nss-app.js` | **NS Tunebook App scripts** | Scripts handling Launcher, Tunebook and Playalong app sections |
+| `/modules/scripts-abc-tools.js` | **Custom ABC Tools scripts** | Modified and refactored scripts from ABC Transcription Tools Export Tunebook Website |
+| `/modules/scripts-emoji-manager.js` | **App Emoji Manager scripts** | Optional scripts for displaying randomized emojis in Tunebook |
+| `/modules/scripts-preload-nssapp.js` | **App Preload scripts** | Scripts executed before common app scripts are loaded |
+| `/styles/styles-nss-app.css` | **NS Tunebook App styles** | Common NS Tunebook App styles |
+| `/assets/icons/icons.svg` | **NS Tunebook App icons** | Common NS Tunebook App icons (Default set: Bootstrap Icons) |
+
+## ABC Encoder Module
+
+<a href="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html" target="_blank">**ABC Encoder**</a> is a set of tools for organizing ABC music collections and converting .abc data to encoded Session DB files. Encoder allows to automate mundane sorting and formatting tasks and streamline abc-to-abc or abc-to-db process. It employs opinionated ABC field merging and ordering for optimized display of the multi-header ABC Sets within abcjs-based software.
+
+Clicking on an Encoder tool button brings up a file selection dialog. Use `SORT` for manipulating ABC contents and generating Chordbooks. Use `ENCODE` for converting ABCs into .json data files or plaintext tunelists with ABC Transcription Tools-compatible URLs. Use `DECODE` for converting .json data files back into ABC. See **Input / Output Defaults** for examples of output.
+
+Use **Encoder Settings** ⚙️ to fine-tune `SORT` and `ENCODE` algorithms. Click **Show Advanced Options** to view the complete set of sorting options. Settings can be loaded, saved and restored to default using dialog buttons. **N.S.S.S. ABC Encoder** comes with custom presets for creating Session DB for NS Session Setlist.
+
+**Mass-output hint**: With `ENCODE automatically passes tunes to SORT` and `SORT exports Tunes ABC from Sets ABC` settings enabled you can use `ENCODE` button to output two pairs of .abc and .json files (Sets and Tunes) from a single ABC Sets file. With `SORT extracts chords from Tunebook` and `ENCODE exports plaintext Tunelist with links` settings additionally enabled you can export four types of output files at once (sorted ABC, encoded ABC, Chordbook, plaintext Tunelist).
+
+### Encoder Settings Overview
+
+Setting Name | Default Setting | Comments |
+| --- | --- | --- |
+| `ENCODE automatically passes tunes to SORT` | **OFF** | Output all Encode and Sort file types selected |
+| `ENCODE exports plaintext Tunelist with links` | **OFF** | Output .txt Tunelist with links for each ABC file |
+| `ENCODE output is for ABC Tools export website` | **OFF** | Output text string compatible with ABC Tools Export Website |
+| `SORT enforces custom N.S.S.S. ABC fields` | **ON** | Use custom C: C: S: and C: Set Leaders: ABC fields, order ABC tags à la NS Session Setlist |
+| `SORT exports Tunes ABC from Sets ABC` | **ON** | Output separate ABC of Tunes converted from Sets |
+| `SORT extracts chords from Tunebook` | **ON** | Output Chordbook JSON for each ABC file |
+| `SORT removes tunes with no K: (strict mode)` | **OFF** | Do not output tunes with missing or empty K: field |
+| `SORT fetches metadata from The Session` | **OFF** | Add C: and Z: data using The Session links found in ABC |
+
+### Encoder Advanced Settings Overview
+
+Features adjustable via Advanced Settings include (`*` signifies default):
+
+- **Arrange ABC tunes by:** `Name*` / `Name minus A-An-The` / `ABC Tag` / `Original order`
+- **Format ABC titles as:** `Title Case*`, `Remove ALL CAPS`
+- **Handle articles in ABC titles:** `Remove opening articles*`, `Remove trailing articles*` / `ABC Title, The`
+- **Handle ABC titles in Irish:** `Attempt to fix ABC titles in Irish*`, `Remove opening An articles*`
+- **Handle ABC Set titles:** `Add first tune name as Set Title*` / `Add slash-separated list as Set Title`
+- **Handle ABC prefix & suffix:** `Add TYPE: prefix*` / `Add [Type] suffix`
+- **Handle ABC body formatting:** `Normalize ABC part endings*`
+- **Remove duplicate ABCs:** `By ABC Title*` / `By ABC content`
+- **Remove extra line breaks in ABC:** `Wipe extra line breaks`, `Wipes text after line breaks`
+- **Skip editing ABC if:** `Do not edit headers if ABC ordered*`, `Do not edit titles if ABC ordered*`
+- **Prevent default Encoder behavior:** `Do not merge duplicate header fields`
+
+### Input / Output Defaults
+
+- **Input file name:** `NS-Session-Sets.abc` / `sets.json`
+- `SORT enforces custom N.S.S.S. ABC fields` setting enabled
+
+Tool | Input | Output |
+| --- | --- | --- |
+| `SORT` with `extract chords` disabled | `*.abc` / `*.txt` | `NS-Session-Sets.abc`, `NS-Session-Tunes.abc` |
+| `SORT` with `extract chords` enabled | `*.abc` / `*.txt` | `NS-Session-Sets.abc`, `NS-Session-Tunes.abc`, `chords-sets.json`, `chords-tunes.json` |
+| `ENCODE` with no additional settings enabled | `*.abc` / `*.txt` | `sets.json`, `tunes.json` |
+| `ENCODE` with `pass tunes to SORT` enabled | `*.abc` / `*.txt` | `NS-Session-Sets.abc`, `NS-Session-Tunes.abc`, `sets.json`, `tunes.json` |
+| `ENCODE` with `export plaintext Tunelist` enabled | `*.abc` / `*.txt` | `Tunelist[SourceABC].txt`, `Tunelist[TunesABC].txt`, `sets.json`, `tunes.json` |
+| `ENCODE` with `pass tunes to SORT` and `export plaintext Tunelist` enabled | `*.abc` / `*.txt` | `NS-Session-Sets.abc`, `NS-Session-Tunes.abc`, `Tunelist[SourceABC].txt`, `Tunelist[TunesABC].txt`, `sets.json`, `tunes.json` |
+| `ENCODE` with `pass tunes to SORT` and `export plaintext Tunelist` on and `SORT extracts chords from Tunebook` enabled | `*.abc` / `*.txt` | `NS-Session-Sets.abc`, `NS-Session-Tunes.abc`, `Tunelist[SourceABC].txt`, `Tunelist[TunesABC].txt`, `chords-sets.json`, `chords-tunes.json`, `sets.json`, `tunes.json` |
+| `DECODE` | `*.json` | `NS-Session-Sets.abc` |
+
+### Output ABC Field Order
+
+Given the fluidity and variability of the de-facto applied <a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank">ABC Notation Standard</a>, Encoder attempts to strike a balance between rigid-but-predictable and highly-permissive output. As such Encoder v.1.0 offers an array of customizable settings and a pre-determined order of ABC Fields. Field ordering serves both aesthetic and functional purposes and enables the custom ABC Field-merging algorithm that produces clean-looking ABC Sets. Field merging is on by default and can be turned off in Encoder Settings.
+
+ABC Field Tag | Description | Mergeable? |
+| --- | --- | --- |
+| `X:` | Reference Number | **NO** |
+| `T:` | ABC Set / Tune Title | **YES [1]** **[C]** |
+| `C:` | **†** Composer | **YES** **[C]** |
+| `C: C: S:` | **‡** Composer / Source | **YES [2]** |
+| `C: Set Leaders:` | **‡** Set Leaders | **YES [2]** |
+| `S:` | **†** Source | **YES** **[C]** |
+| `Z:` | Transcription | **YES** **[C]** |
+| `N:` | Notes | **YES** **[C]** |
+| `A-W:` | Other Info Fields **[3]** | **YES** **[C]** |
+| `IPUV:` | Instructions **[3]** | **NO** |
+| `R:` | Rhythm | **YES** **[R]** |
+| `M:` | Meter | **YES** **[R]** |
+| `L:` | Note Length | **YES** **[R]** |
+| `Q:` | Tempo | **YES** **[R]** |
+| `K:` | Key | **NO** |
+
+**[C]** Concatenated to slash-separated strings in primary header / Links take new line<br>
+**[R]** Removed from secondary headers if duplicate / Stays put in header if unique<br>
+**†** Standard fields with `SORT enforces custom N.S.S.S. ABC fields` setting **disabled**<br>
+**‡** Custom field with `SORT enforces custom N.S.S.S. ABC fields` setting **enabled**<br>
+**[1]** Handled separately by ABC Set title & subtitle-merging logic<br>
+**[2]** Custom N.S.S.S. fields handled by additional field-merging logic<br>
+**[3]** Additional Information / Instruction Fields:
+
+Info Field Tag | Description | Mergeable? |
+| --- | --- | --- |
+| `A:` | Area | **YES** **[C]** |
+| `B:` | Book | **YES** **[C]** |
+| `D:` | Discography | **YES** **[C]** |
+| `F:` | File URL | **YES** **[C]** |
+| `G:` | Group | **YES** **[C]** |
+| `H:` | History | **YES** **[C]** |
+| `O:` | Origin | **YES** **[C]** |
+| `W:` | Words (After ABC) | **YES** **[C]** |
+| `I:` | Instruction | **NO** |
+| `P:` | Parts | **NO** |
+| `U:` | User Defined | **NO** |
+| `V:` | Voice | **NO** |
+
+### Note on Header Comments
+
+Encoder aims to achieve clean ABC display in abcjs-based software by modifying the source ABC code and making output compact and unified. It does not account for alternative custom commands and solutions that may be added to ABC headers. Encoder v.1.0 stacks any abcjs-supported comments found in the header (lines starting with `%` and `"`) before the K: field. Any header lines that invalidate the abcjs output would also invalidate the current ABC Set / Tune in Encoder output.
+
+### Notes for developers
+
+File Path | Module Name | Description |
+| --- | --- | --- |
+| `abc-encoder.html` | **ABC Encoder** | ABC Encoder HTML markup |
+| `/modules/scripts-abc-encoder.js` | **ABC Encoder scripts** | Scripts for ABC Encoder's Sort, Encode and Decode tools |
+| `/styles/styles-nss-app.css` | **ABC Encoder styles** | Styles for ABC Encoder contents and UI |
+| `/assets/icons/icons.svg` | **ABC Encoder icons** | Icons for ABC Encoder UI (Default set: Bootstrap Icons) |
+
+### Required imports
+
+Import Name | Import Description | Details |
+| --- | --- | --- |
+| `apStyleTitleCase` | Convert string to AP Title Case | Required for formatting ABC titles |
+| `LZString` | LZ-based compression algorithm | Required for compressing and decompressing ABC strings |
+| `pThrottle` | Throttle promise-returning functions | Required for throttling API requests to The Session |
+| `makeAbcChordBook` | Generate Chordbook from ABC data | Required for creating Chordbook JSON with Encoder's Sort tool. Imported from `scripts-chord-viewer.js` |
+| `localStorageOk`, `fetchData`, `initSettingsFromObject`, `initAppCheckBoxes`, `displayWarningEffect`, `displayNotification` | Shared NS Tunebook App scripts | Required for initializing localStorage items, fetching data and displaying notifications. Imported from `scripts-nss-app.js` |
+
+## Chord Viewer Module
+
+### Notes for developers
+
+File Path | Module Name | Description |
+| --- | --- | --- |
+| `index.html <dialog id="chord-viewer">` | **Chord Viewer Dialog** | Chord Viewer Dialog HTML markup |
+| `/modules/scripts-chord-viewer.js` | **Chord Viewer scripts** | Scripts for extracting chords from ABC, generating Chordbook and displaying Chord Viewer Dialog |
+| `/styles/styles-chord-viewer.css` | **Chord Viewer styles** | Styles for Chord Viewer Dialog contents and UI |
+| `/assets/icons/icons-chord-viewer.svg` | **Chord Viewer icons** | Icons for Chord Viewer Dialog UI (Default set: Bootstrap Icons) |
+
+### Required imports
+
+See comments in `scripts-chord-viewer.js` for more details.
+
+Import Name | Import Description | Details |
+| --- | --- | --- |
+| `LZString` | LZ-based compression algorithm | Required for decompressing ABC encoded by LZString |
+| `storageAvailable` | Detect if localStorage is available | Required for localStorage checks (replaceable by custom logic) |
+| `getLastTunebookUrl` | Get last URL loaded into ABC Tools | Required for extracting ABC in Chordbook Mode (replaceable by custom logic). Imported from `scripts-abc-tools.js` by default |
+| `displayWarningEffect`, `displayNotification` | Custom scripts for user notifications | Replaceable by placeholder functions or custom logic. Imported from `scripts-nss-app.js` by default |
+
+## List Viewer / Set Maker
+
+### Notes for developers
+
+File Path | Module Name | Description |
+| --- | --- | --- |
+| `index.html <dialog id="list-viewer">` | **List Viewer Dialog** | List Viewer Dialog HTML markup |
+| `/modules/scripts-list-viewer.js` | **List Viewer scripts** | Description |
+| `/styles/styles-chord-viewer.css` | **List Viewer styles** | Description |
+| `/assets/icons/icons.svg` | **List Viewer icons** | Icons for List Viewer Dialog UI (Default set: Bootstrap Icons) |
+
+### Required imports
+
+See comments in `scripts-list-viewer.js` for more details.
+
+Import Name | Import Description | Details |
+| --- | --- | --- |
+| `LZString` | LZ-based compression algorithm | Required for decompressing ABC encoded by LZString |
+| `storageAvailable` | Detect if localStorage is available | Required for localStorage checks (replaceable by custom logic) |
+| `makeTunesFromSets`, `sortFilterAbc` | Custom scripts for making ABC Sets | Required for creating ABC Sets and generating Set URLs. Imported from `scripts-abc-encoder.js` by default |
 
 ## Version History
 
-NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
-
-+ Project updates:
+<details>
+  <summary><b>Alpha version updates (v.1.0+)</b></summary>
 
 <details>
-  <summary>v.0.9: UI/UX Upgrade</summary>
+<summary><b>v.1.0.0: Alpha version, module testing & improvements</b></summary>
+
++ Project updates:
+</details>
+</details>
+
+<details>
+  <summary><b>Pre-alpha updates (v.0.1+)</b></summary>
+
+<details>
+  <summary><b>v.0.9: UI/UX Upgrade</b></summary>
 
 <details>
 <summary>v.0.9.9: Routing, Tunebook Nav & List Viewer</summary>
@@ -429,7 +623,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 <summary>v.0.9.2: UI/UX Upgrade (Tunebook Filter Groups)</summary>
 
 + Project updates:
-  - Tunebook: Filters and Tune Selector items are now organised using option groups
+  - Tunebook: Filters and Tune Selector items are now organized using option groups
   - Launcher, Tunebook: Tune Selector population and filtering functions refactored to support option groups
   
 + JavaScript updates:
@@ -554,7 +748,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 </details>
 </details>
 <details>
-  <summary>v.0.8: Encoder Upgrade</summary>
+  <summary><b>v.0.8: Encoder Upgrade</b></summary>
 
 <details>
 <summary>v.0.8.9: Session DB Update (Session Survey Applied)</summary>
@@ -810,7 +1004,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 </details>
 </details>
 <details>
-  <summary>v.0.7: Generate Chordbook</summary>
+  <summary><b>v.0.7: Generate Chordbook</b></summary>
 
 <details>
 <summary>v.0.7.7: Responsive Chordbook (Syncopation Handling & ABC Cleanup)</summary>
@@ -839,14 +1033,14 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
       - removeAbcHeadersAndCommands: removes all header fields and inline commands and decorations
       - convertAbcIntervalsToSingleNotes: strips all the intervals / chords down to a single note
       - normalizeAbcTriplets: converts `(3ABC` triplets to `A/B/C` 
-    + addCustomAbcFields now passes ABC to processPartEndings to standardise the formatting of identifiable part endings to `||` if localStorage option abcSortNormalizesAbcPartEndings is 1
+    + addCustomAbcFields now passes ABC to processPartEndings to standardize the formatting of identifiable part endings to `||` if localStorage option abcSortNormalizesAbcPartEndings is 1
     + processPartEndings also converts `::` to `:||\n|:`
     + sortFilterAbc and makeTunesFromSets now create a Map of unique primary title & ABC pairs to remove duplicate Sets or Tunes
-    + makeStringTitleCase refactored to integrate toSortFriendlyTitle and prioritise title exceptions 
+    + makeStringTitleCase refactored to integrate toSortFriendlyTitle and prioritize title exceptions 
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
   - ABC Tools & Tunebook module (scripts-abc-tools.js)
     + abcTunebookDefaults settings object added
-    + initToolsOptions renamed to initTunebookOptions and now initialises settings via initSettingsFromObject
+    + initToolsOptions renamed to initTunebookOptions and now initializes settings via initSettingsFromObject
 
 + Session DB updates:
   - Session DB updated to 2025-03-03
@@ -892,7 +1086,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
   - Tunebook: Chords Popover Slider proportionally adjusts Chords text scale
   - Tunebook: Tunes and Chords toggle buttons remember user settings, more options
   - Tunebook: Footer close button now enables manual mode for less cluttered Tunebook
-  - ABC Encoder: ABC Sort organises Chordbook data depending on number of beats
+  - ABC Encoder: ABC Sort organizes Chordbook data depending on number of beats
   - ABC Encoder: Fixes and additions for better styling of titles and chords
   - App and Tools scripts reworked to enable new control elements and responsive design
   - Accessibility: App tabbing, focusing and elements receiving aria-hidden revisited
@@ -912,7 +1106,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 + JavaScript updates:
   - Chords Popover scripts: 
     + Chords text generator: loadChordsToPopover rewritten, now uses Chords JSON to create a responsive grid
-    + Slider & Chords grid init: initPopoverSliders initialises values for Chords grid adjustable by Slider
+    + Slider & Chords grid init: initPopoverSliders initializes values for Chords grid adjustable by Slider
     + Slider: appChordSliderHandler handle Chord Popover Slider events with smart scaling, adjusting font size, line height, line width and max width proportional to the vertical slider setting
     + Reset Slider Settings and show / hide slider control buttons added
     + Dark / Light colour theme and Theme switch button added
@@ -1026,10 +1220,10 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 
 + Project updates:
   - Naming convention update: All JSONs now use camelCase in object key names for consistency
-  - ABC Tools scripts reorganised and updated with new naming convention
+  - ABC Tools scripts reorganized and updated with new naming convention
   - ABC Encoder: ABC Sort now splits generated Chords after every 4 bars excluding voltas
   - ABC Encoder: ABC Sort now correctly formats secondary tune types and titles in Sets
-  - App Options update: Settings defaults are now initialised on app load and stored locally
+  - App Options update: Settings defaults are now initialized on app load and stored locally
 
 + JavaScript updates:
   - JSON object key names updated in scripts-abc-encoder.js, scripts-abc-tools.js and scripts-nss-app.js
@@ -1038,7 +1232,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
   - formatAbcBodyTitles makes secondary R: field text Proper Case and subtitle T: field text Title Case
   - openSettingsMenu logs Tunes and Sets Chords output in test mode (scripts-nss-app.js)
   - openSettingsMenu logs Tunes and Sets Chords output in test mode (scripts-nss-app.js)
-  - initEncoderSettings and initAbcTools now initialise Global variables and store them to localStorage
+  - initEncoderSettings and initAbcTools now initialize Global variables and store them to localStorage
 
 + Session DB updates:
   - Session DB updated to 2025-02-17
@@ -1070,7 +1264,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 + JavaScript updates:
   - Chords extraction and formatting functions added to scripts-abc-encoder.js (makeAbcChordBook, getChordsFromTune, getCompleteAbcChordBar)
   - getChordsFromTune extracts chords from each ABC item and converts them into a plaintext list with part numbers, bar lines and optional volta numbers
-  - makeAbcChordBook exports JSON array of objects with chords organised depending on ABC Type (Set or Tune)
+  - makeAbcChordBook exports JSON array of objects with chords organized depending on ABC Type (Set or Tune)
   - getCompleteAbcChordBar fills chord bars with the minimum number of chords depending on beats per bar (NB: ambiguous bars with two chords in triple-meter tunes are currently left untouched)
   - Tunebook's Full Screen View button now changes behavior depending on fullScreenSetting value, opening either tunes or chords (scripts-abc-tools.js)
   - setChords, tuneChords and corresponding data links added to (scripts-nss-app.js)
@@ -1087,7 +1281,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 </details>
 </details>
 <details>
-  <summary>v.0.6: Convert Sets to Tunes</summary>
+  <summary><b>v.0.6: Convert Sets to Tunes</b></summary>
 
 <details>
 <summary>v.0.6.6: Convert Sets to Tunes (Testing Medley Splitting)</summary>
@@ -1116,7 +1310,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 
 + Session DB updates:
   - Session DB updated to 2025-02-12
-  - Formatting of multiple value C: C: S: and Z: fields standartised
+  - Formatting of multiple value C: C: S: and Z: fields standartized
 </details>
 <details>
 <summary>v.0.6.4: Convert Sets to Tunes (Correct ABC Field Splitting)</summary>
@@ -1225,7 +1419,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 </details>
 </details>
 <details>
-  <summary>v.0.5: Save & Restore Tunes</summary>
+  <summary><b>v.0.5: Save & Restore Tunes</b></summary>
 
 <details>
 <summary>v.0.5.5: Session DB Update</summary>
@@ -1318,7 +1512,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 </details>
 </details>
 <details>
-  <summary>v.0.4: Tunebook Filter Options</summary>
+  <summary><b>v.0.4: Tunebook Filter Options</b></summary>
 
 <details>
 <summary>v.0.4.4: Filter Options (Tune Load Tweaks)</summary>
@@ -1342,7 +1536,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 
 + Session DB updates:
   - Session DB updated to 2025-01-20
-  - Tempos (Q:) standardised
+  - Tempos (Q:) standardized
   - ABC fixes & tweaks
 </details>
 <details>
@@ -1399,7 +1593,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 </details>
 </details>
 <details>
-  <summary>v.0.3: ABC Encoder</summary>
+  <summary><b>v.0.3: ABC Encoder</b></summary>
 
 <details>
 <summary>v.0.3.2: ABC Encoder (Encoder tweaks)</summary>
@@ -1440,7 +1634,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 + Session DB updates:
   - Session DB updated to 2025-01-16
   - Missing R fields added to tunes and sets
-  - Order of R: -> M: -> L: -> Q -> K standardised
+  - Order of R: -> M: -> L: -> Q -> K standardized
 </details>
 <details>
 <summary>v.0.3.0: ABC Encoder (Initial commit)</summary>
@@ -1489,7 +1683,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
   - MIDI instructions removed from encoded data files, to be injected dynamically (injectInstrument)</details>
 </details>
 <details>
-  <summary>v.0.2: Play Along Page</summary>
+  <summary><b>v.0.2: Play Along Page</b></summary>
 
 <details>
 <summary>v.0.2.3: Session DB Update</summary>
@@ -1532,7 +1726,7 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
   - Playalong thumbnails added</details></details>
 
 <details>
-  <summary>v.0.1: Initial App Outline</summary>
+  <summary><b>v.0.1: Initial App Outline</b></summary>
 
 <details>
 <summary>v.0.1.1: Session DB Update</summary>
@@ -1540,14 +1734,14 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 + Session DB updates:
   - Session DB updated to 2024-12-22
   - Naming format changed for C: / S: fields
-  - Naming format standardised for C: Set Leaders field
+  - Naming format standardized for C: Set Leaders field
   - Z: [Transcription By] and N: [Link to the Set] fields added
 </details>
 <details>
 <summary>v.0.1.0: Initial App Version </summary>
 
 + Project updates:
-  - Project structure reorganised to suit transition to Progressive Web App (PWA)
+  - Project structure reorganized to suit transition to Progressive Web App (PWA)
   - Single-page file split into HTML, CSS and JS files with modular design
   - License files added for NS-Session-Setlist / abctools and Bootstrap icons
   - Icons file added to assets folder
@@ -1564,10 +1758,10 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
   - App scripts moved to scripts-nss-app.js
   - Michael Eskin's original scripts moved to scripts-abc-tools.js
   - App now fetches up-to-date Session DB data from the project's GitHub page
-  - App scripts organised in subgroups: App Launchers, Switchers, Checkers / Updaters, Fetchers / Data Handlers, Event Handlers, Event Listeners
+  - App scripts organized in subgroups: App Launchers, Switchers, Checkers / Updaters, Fetchers / Data Handlers, Event Handlers, Event Listeners
 
 + CSS updates:
-  - Classes standardised and compartmentalised (exceptions made for some legacy selectors)
+  - Classes standardized and compartmentalized (exceptions made for some legacy selectors)
   - Media queries added for better mobile experience
 
 + Accessibility updates: 
@@ -1605,4 +1799,6 @@ NS Session Setlist v.1.0.0: Refactoring modules with breaking changes
 <details>
 <summary>v.0.0.1: Initial Commit</summary>
 
-+ Initial commit of raw export website file from Michael Eskin's ABC Transcription Tools.</details></details>
++ Initial commit of raw export website file from Michael Eskin's ABC Transcription Tools.
+</details></details>
+</details>
