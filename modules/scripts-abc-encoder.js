@@ -1076,18 +1076,26 @@ export function sortFilterAbc(abcContent) {
 
         // Replace all duplicate ABC header fields if their values are the same
 
-        const sortedTidyAbcArr = renumberedAbcArr.map(abc => 
+        const isHeaderMergingOn =
+            customSettingsOn && !+localStorage.abcSortSkipsMergingDuplicateFields;
 
-            ['R', 'M', 'L', 'Q'].reduce((processedAbc, fieldName) => 
+        if (isHeaderMergingOn) {
 
-                replaceDuplicateAbcFields(processedAbc, fieldName) || processedAbc,
-                
-            abc)
-        );
-        
+            const sortedTidyAbcArr = renumberedAbcArr.map(abc => 
+
+                ['R', 'M', 'L', 'Q'].reduce((processedAbc, fieldName) => 
+
+                    replaceDuplicateAbcFields(processedAbc, fieldName) || processedAbc,
+                    
+                abc)
+            );
+
+            return [sortedTidyAbcArr, renumberedAbcTunesArr];
+        }
+
         // Default option: Return sorted ABCs as is (everything in-between X: fields)
 
-        return [sortedTidyAbcArr, renumberedAbcTunesArr];
+        return [renumberedAbcArr, renumberedAbcTunesArr];
 
     } catch (error) {
 
