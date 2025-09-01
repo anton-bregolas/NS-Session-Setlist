@@ -1811,22 +1811,40 @@ async function appCheckBoxHandler(checkBox) {
 
     // Advanced App Options
 
-    case 'tuneBookAllowLoadFromHashLink':
-      checkBox.checked?
-        displayNotification("App will auto-open Tunebook from links on startup", "success") :
-        displayNotification("App will always open Launch Screen on startup", "success");
-      break;
-
     case 'tuneBookShowStatusReport':
       checkBox.checked?
         displayNotification("App will show version info and Set / Tune count on Tunebook startup", "success") :
         displayNotification("App will not show version info on Tunebook startup", "success");
       break;
 
+    case 'tuneBookAllowLoadFromHashLink':
+      checkBox.checked?
+        displayNotification("App will auto-open Tunebook from links on startup", "success") :
+        displayNotification("App will always open Launch Screen on startup", "success");
+      break;
+
     case 'tuneBookAddRandomFilterEmojis':
       checkBox.checked?
         displayNotification("App will now add random animal emojis as avatars for Set Leaders filters", "success") :
         displayNotification("App will now add a neutral emoji as Set Leaders filter avatar", "success");
+      break;
+
+    case 'abcToolsAllowInstrumentChanges':
+      checkBox.checked?
+        displayNotification("MIDI presets have been enabled for ABC playback", "success") :
+        displayNotification("App will now ignore MIDI presets when playing back tunes", "success");
+      break;
+
+    case 'abcToolsAlwaysMuteChords':
+      checkBox.checked?
+        displayNotification("App will now add instructions to mute chords when opening ABC", "success") :
+        displayNotification("App will now play chords by default when playing back tunes", "success");
+      break;
+
+    case 'abcToolsAllowTabStyleChanges':
+      checkBox.checked?
+        displayNotification("Tab presets have been enabled for ABC display", "success") :
+        displayNotification("App will now ignore Tab presets when displaying ABC", "success");
       break;
 
     case 'abcToolsAllowTuneAutoReload':

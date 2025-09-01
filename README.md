@@ -9,16 +9,39 @@ A tunebook app for the Novi Sad Irish Traditional Music Session integrating Mich
 
 Module Name | GitHub Repo | Help Link |
 | --- | --- | --- |
-| 👉 <a href="https://ns.tunebook.app" target="_blank">**NS Tunebook App by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#ns-tunebook-app" target="_blank">README</a> |
-| 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html" target="_blank">**ABC Encoder Module by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#abc-encoder-module" target="_blank">README</a> |
-| 👉 **Chord Viewer Module by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#chord-viewer-module" target="_blank">README</a> |
-| 👉 **List Viewer / Set Maker by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist/tree/test#list-viewer-set-maker" target="_blank">README</a> |
+| 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist" target="_blank">**NS Tunebook App by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README]#ns-tunebook-app |
+| 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html" target="_blank">**ABC Encoder Module by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README]#abc-encoder-module |
+| 👉 **Chord Viewer Module by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README]#chord-viewer-module |
+| 👉 **List Viewer / Set Maker by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README]#list-viewer--set-maker |
 | 👉 <a href="https://michaeleskin.com/abc" target="_blank">**ABC Transcription Tools by Michael Eskin**</a> | <a href="https://github.com/seisiuneer/abctools" target="_blank">abctools</a> | <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">GUIDE</a> |
-| 👉 <a href="https://abcjs.net/" target="_blank">**abcjs by Paul Rosen and Gregory Dyke**</a> | <a href="https://github.com/paulrosen/abcjs" target="_blank">abcjs</a> | <a href="https://paulrosen.github.io/abcjs/" target="_blank">DOCS</a> |
+| 👉 <a href="https://abcjs.net/" target="_blank">**abcjs by Paul Rosen and Gregory Dyke**</a> | <a href="https://github.com/paulrosen/abcjs" target="_blank">abcjs</a> | <a href="https://paulrosen.github.io/abcjs" target="_blank">DOCS</a> |
 
 ## NS Tunebook App
 
 Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project exploring responsive web design and progressive web app paradigms for cross-platform viewing and editing of ABC music notation. This is a single-page client app for working with collections of ABC tunes and chords via the latest desktop and mobile browsers. Version 1.0 serves as a wrapper to Michael Eskin's ABC Transcription Tools for convenient viewing of ABC notation on devices of any viewport size.
+
+### Tunebook Options Overview
+
+Option Name | Default Setting | Comments |
+| --- | --- | --- |
+| `Save & load last opened Set or Tune` | **ON** | Store last opened Tunebook item between sessions |
+| `Always open Tunebook in Mobile Mode` | **OFF** | Enable persistent mobile mode ignoring viewport size |
+| `Share links open ABC Tools instead of app` | **OFF** | Always generate share links to ABC Transcription Tools |
+| `Full Screen opens ABC Tools in new window` | **OFF** | Full Screen button redirects to ABC Transcription Tools |
+| `App: Show Tunebook report at launch` | **OFF** | Show version info and Session DB stats on Tunebook startup |
+| `App: Allow loading #links on startup` | **ON** | Auto-open Tunebook section or item on startup |
+| `Filters: Add random emojis to Set Leaders` | **ON** | Add randomized animal emoji avatars to custom filters |
+| `MIDI: Allow changing playback instrument` | **ON** | If disabled, Tab & MIDI presets have no effect on playback |
+| `MIDI: Always mute chords in playback` | **OFF** | Add instructions to mute chords when opening Tunebook items |
+| `Tabs: Allow adding Tablature to notes` | **ON** | If disabled, Tab & MIDI presets do not add tabs to notation |
+| `Tunes: Allow automatic Tunebook reload` | **ON** | Auto-load items every time new filter or section selected |
+| `Tunes: Open List Viewer on selector click` | **OFF** | Replace the native browser Tune Selector menu with List Viewer |
+| `Chord Viewer: Generate chords dynamically` | **OFF** | Extract chords directly from ABC or Tune selector instead of Chordbook* |
+| `Chord Viewer: Use bold font for chords` | **OFF** | Make chords and barlines more readable on small screens |
+| `List Viewer: Always hide slider input GUI` | **OFF** | Do not show List Viewer slider |
+
+> [!NOTE]
+> *Due to Cross-Origin Resource Sharing restrictions, Chord Viewer would fall back to last item loaded to Tune Selector when a Tunebook uses ABC Transcription Tools embed. When used with text directly printed to the page, it can extract chords from the currently edited ABC.
 
 ### Notes for developers
 
@@ -40,7 +63,8 @@ Clicking on an Encoder tool button brings up a file selection dialog. Use `SORT`
 
 Use **Encoder Settings** ⚙️ to fine-tune `SORT` and `ENCODE` algorithms. Click **Show Advanced Options** to view the complete set of sorting options. Settings can be loaded, saved and restored to default using dialog buttons. **N.S.S.S. ABC Encoder** comes with custom presets for creating Session DB for NS Session Setlist.
 
-**Mass-output hint**: With `ENCODE automatically passes tunes to SORT` and `SORT exports Tunes ABC from Sets ABC` settings enabled you can use `ENCODE` button to output two pairs of .abc and .json files (Sets and Tunes) from a single ABC Sets file. With `SORT extracts chords from Tunebook` and `ENCODE exports plaintext Tunelist with links` settings additionally enabled you can export four types of output files at once (sorted ABC, encoded ABC, Chordbook, plaintext Tunelist).
+> [!TIP]
+> With `ENCODE automatically passes tunes to SORT` and `SORT exports Tunes ABC from Sets ABC` settings enabled you can use `ENCODE` button to output two pairs of .abc and .json files (Sets and Tunes) from a single ABC Sets file. With `SORT extracts chords from Tunebook` and `ENCODE exports plaintext Tunelist with links` settings additionally enabled you can export four types of output files at once (sorted ABC, encoded ABC, Chordbook, plaintext Tunelist).
 
 ### Encoder Settings Overview
 
@@ -89,7 +113,10 @@ Tool | Input | Output |
 
 ### Output ABC Field Order
 
-Given the fluidity and variability of the de-facto applied <a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank">ABC Notation Standard</a>, Encoder attempts to strike a balance between rigid-but-predictable and highly-permissive output. As such Encoder v.1.0 offers an array of customizable settings and a pre-determined order of ABC Fields. Field ordering serves both aesthetic and functional purposes and enables the custom ABC Field-merging algorithm that produces clean-looking ABC Sets. Field merging is on by default and can be turned off in Encoder Settings.
+Given the fluidity and variability of the de-facto applied <a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank">**ABC Notation Standard**</a>, Encoder attempts to strike a balance between rigid-but-predictable and highly-permissive output. As such Encoder v.1.0 combines an array of customizable settings with a pre-determined order of ABC Fields. Strict order of fields serves both aesthetic and functional purposes and enables the custom ABC Field-merging algorithm that produces clean-looking ABC Sets.
+
+> [!NOTE]
+> ABC Field merging is ON by default and can be turned off in Encoder Settings.
 
 ABC Field Tag | Description | Mergeable? |
 | --- | --- | --- |
@@ -134,7 +161,8 @@ Info Field Tag | Description | Mergeable? |
 
 ### Note on Header Comments
 
-Encoder aims to achieve clean ABC display in abcjs-based software by modifying the source ABC code and making output compact and unified. It does not account for alternative custom commands and solutions that may be added to ABC headers. Encoder v.1.0 stacks any abcjs-supported comments found in the header (lines starting with `%` and `"`) before the K: field. Any header lines that invalidate the abcjs output would also invalidate the current ABC Set / Tune in Encoder output.
+> [!WARNING]
+> Encoder aims to achieve clean ABC display in abcjs-based software by modifying the source ABC code and making output compact and unified. It does not account for alternative custom commands and solutions that may be added to ABC headers. Encoder v.1.0 stacks any abcjs-supported comments found in the header (lines starting with `%` and `"`) before the K: field. Any header lines that invalidate the abcjs output would also invalidate the current ABC Set / Tune in Encoder output.
 
 ### Notes for developers
 
