@@ -21,8 +21,7 @@ Module Name | GitHub Repo | Help Link |
 Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project exploring responsive web design and progressive web app paradigms for cross-platform viewing and editing of ABC music notation. This is a single-page client app for working with curated collections of ABC tunes and chords. Version 1.0 serves as a wrapper to Michael Eskin's ABC Transcription Tools for convenient viewing of ABC notation on devices of any viewport size.
 
 > [!IMPORTANT]
-> The app uses some of the latest web dev features with cross-browser support. Updating to the latest version of your browser is advised for the smoothest experience.<br><br>
-> Recommended browser versions: Firefox 125+, Chrome / Edge 114+, Opera 100+, Safari 17+, Safari for iOS 18+
+> The app uses some of the latest web dev features with decent cross-browser support. Updating to the latest version of your browser is advised for the smoothest experience.
 
 ### Tunebook Options Overview
 
