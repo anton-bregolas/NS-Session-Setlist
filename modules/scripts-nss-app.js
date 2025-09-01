@@ -350,7 +350,11 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
 
 export function switchTuneBookItem(loadDir) {
 
-  const currentTuneBook = checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
+  const isSafari = checkIfSafariBrowser();
+
+  const currentTuneBook =
+    isSafari? [...tuneSelector.querySelectorAll('option')].slice(1) :
+      checkTuneBookSetting() === "setlist"? tuneSets : tuneList;
 
   const currentTuneIndex = tuneSelector.selectedIndex;
 

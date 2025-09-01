@@ -252,6 +252,7 @@ select {
 
 .nss-tunebook-selector {
   width: 15.75rem;
+  max-width: 15.75rem;
   height: 2.5rem;
   background-color: white;
 }
@@ -1310,9 +1311,7 @@ input[type="checkbox"]:focus-visible {
 }
 
 [data-popover="tunebook-actions-popup"]:popover-open,
-[data-popover="tunebook-actions-popup"].\:popover-open,
-[data-popover="notification-popup"]:popover-open,
-[data-popover="notification-popup"].\:popover-open {
+[data-popover="notification-popup"]:popover-open {
   display: flex;
 }
 
@@ -1609,87 +1608,96 @@ body[data-mode="desktop"] [data-close-direction="down"] {
 
 /* Popover animations */
 
-[data-popover="tunebook-actions-popup"][data-pops-up-from="footer"] {
-  &:popover-open,
-  &.\:popover-open {
+@supports selector(:popover-open) {
 
-    @starting-style {
-      transform: translateY(150%);
-      opacity: 0;
-    }
-    
-  /* :popover-open */
-    transform: translateY(0);
-    opacity: 1;
-    transition: 
-    transform 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
-    opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
-    display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
-  }
-  
-  /* popover out */
-  transform: translateY(150%);
-  opacity: 0;
+  [data-popover="tunebook-actions-popup"][data-pops-up-from="footer"] {
+    &:popover-open {
 
-  transition: 
-  transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1), 
-  opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
-  display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
-}
-
-body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-from="header"] {
-  &:popover-open,
-  &.\:popover-open {
-
-    @starting-style {
-      transform: translateY(-150%);
-      opacity: 0;
-    }
-    
-  /* :popover-open */
-    transform: translateY(0);
-    opacity: 1;
-    transition: 
-    transform 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
-    opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
-    display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
-  }
-  
-  /* popover out */
-  transform: translateY(-150%);
-  opacity: 0;
-
-  transition: 
-  transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1), 
-  opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
-  display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
-}
-
-[data-popover="notification-popup"] {
-  &:popover-open,
-  &.\:popover-open {
-
-    @starting-style {
-      transform: translateY(100%);
-    }
-    
+      @starting-style {
+        transform: translateY(150%);
+        opacity: 0;
+      }
+      
     /* :popover-open */
-    transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+      transition: 
+      transform 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
+      opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
+      display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
+    }
     
-    transition: 
-    opacity 0.25s ease-in, 
-    transform 0.5s ease-in, 
-    display 0.5s ease-in allow-discrete;
-  }
-  
-  /* popover out */
-  transform: translateY(100%);
+    /* popover out */
+    transform: translateY(150%);
+    opacity: 0;
 
-  transition: 
-  opacity 0.25s ease-out, 
-  transform 0.5s ease-out, 
-  display 0.5s ease-out allow-discrete;
+    transition: 
+    transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1), 
+    opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
+    display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
+  }
+
+  body[data-mode="desktop"] [data-popover="tunebook-actions-popup"][data-pops-up-from="header"] {
+    &:popover-open {
+
+      @starting-style {
+        transform: translateY(-150%);
+        opacity: 0;
+      }
+      
+    /* :popover-open */
+      transform: translateY(0);
+      opacity: 1;
+      transition: 
+      transform 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
+      opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
+      display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
+    }
+    
+    /* popover out */
+    transform: translateY(-150%);
+    opacity: 0;
+
+    transition: 
+    transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1), 
+    opacity 0.5s cubic-bezier(0.23, 1, 0.320, 1), 
+    display 0.5s cubic-bezier(0.23, 1, 0.320, 1) allow-discrete;
+  }
+
+  [data-popover="notification-popup"] {
+    &:popover-open {
+
+      @starting-style {
+        transform: translateY(100%);
+      }
+      
+      /* :popover-open */
+      transform: translateY(0);
+      
+      transition: 
+      opacity 0.25s ease-in, 
+      transform 0.5s ease-in, 
+      display 0.5s ease-in allow-discrete;
+    }
+    
+    /* popover out */
+    transform: translateY(100%);
+
+    transition: 
+    opacity 0.25s ease-out, 
+    transform 0.5s ease-out, 
+    display 0.5s ease-out allow-discrete;
+  }
 }
+
+/* Popover Fallbacks */
+
+[data-popover="tunebook-actions-popup"].\:popover-open,
+[data-popover="notification-popup"].\:popover-open {
+  display: flex;
+}
+
+/* Popover & Dialog Styles */
 
 .nss-help-popover,
 .nss-help-dialog {
@@ -1922,7 +1930,6 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   .nss-tunebook-selector {
     width: 100%;
-    max-width: 15.75rem;
   }
 }
 
