@@ -216,6 +216,13 @@ export function initChordViewer() {
         toggleColorTheme("light", lightThemeBtn);
     }
   }
+
+  const userAgentStr = navigator.userAgent.toLowerCase();
+
+  const isSafariBrowser =
+    userAgentStr.indexOf('safari') > -1 && userAgentStr.indexOf('chrome') === -1;
+
+  if (isSafariBrowser) chordViewerDialog.dataset.browser = "safari";
 }
 
 // Handle clicks on interactable Chord Viewer elements
