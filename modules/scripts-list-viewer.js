@@ -162,6 +162,13 @@ export function initListViewer() {
       ariaHideMe(listViewerSlider);
     }
   }
+
+  const userAgentStr = navigator.userAgent.toLowerCase();
+
+  const isSafariBrowser =
+    userAgentStr.indexOf('safari') > -1 && userAgentStr.indexOf('chrome') === -1;
+
+  if (isSafariBrowser) listViewerDialog.dataset.browser = "safari";
 }
 
 // Initialize List Viewer slider using values from localStorage or default values

@@ -278,6 +278,15 @@
   z-index: 1;
 }
 
+[data-browser="safari"] [data-chord-viewer="slider"] {
+  transform: rotate(90deg);
+  max-height: var(--chords-ui-slider-width);
+  width: calc(var(--chords-ui-slider-height) - 0.25em);
+  top: 42%;
+  right: calc(0.45em - var(--chords-ui-slider-width));
+  writing-mode: unset;
+}
+
 [data-chord-viewer="slider"]:is(:hover, :focus, :focus-visible) {
   opacity: 0.9;
 }

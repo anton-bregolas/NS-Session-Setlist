@@ -247,17 +247,19 @@
   z-index: 1;
 }
 
+[data-browser="safari"] [data-list-viewer="slider"] {
+  transform: rotate(90deg);
+  max-height: var(--list-ui-slider-width);
+  width: calc(var(--list-ui-slider-height) - 1.25em);
+  top: 42%;
+  left: calc(0.75em - var(--list-ui-slider-width));
+  writing-mode: unset;
+}
+
 [data-list-viewer="search-input"],
 [data-list-viewer="slider"] {
   transition: opacity 0.25s ease-out;
 }
-
-/* [data-lvw-action="search"] {
-  position: fixed;
-  opacity: 0.4;
-  top: calc(50% - var(--list-ui-button-width));
-  right: 1.25em;
-} */
 
 [data-lvw-action="search"]:is(:hover, :focus, :focus-visible),
 [data-list-viewer="slider"]:is(:hover, :focus, :focus-visible) {

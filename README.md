@@ -3,25 +3,25 @@ NS Session Setlist
 
 A tunebook app for the Novi Sad Irish Traditional Music Session integrating Michael Eskin's ABC Transcription Tools. Contains Anton Zille's **ABC Encoder** for converting ABC Sets and Tunes into Session DB files, **Chord Viewer** module for simplified display of chords found in ABCs and **List Viewer** / **Set Maker** module for listing Tunebook items and making ABC Sets.
 
-🎵 [**NS TUNEBOOK APP**](https://anton-bregolas.github.io/NS-Session-Setlist/) 🎻 [**ABC ENCODER**](https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html) 🎵
+🎵 [**NS SESSION APP**](https://anton-bregolas.github.io/NS-Session-Setlist/) 🎻 [**ABC ENCODER**](https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html) 🎵
 
 ## ABC Modules & Libraries
 
 Module Name | GitHub Repo | Help Link |
 | --- | --- | --- |
-| 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist" target="_blank">**NS Tunebook App by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#ns-tunebook-app) |
+| 👉 ☑️ <a href="https://anton-bregolas.github.io/NS-Session-Setlist" target="_blank">**NS Session App by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#ns-tunebook-app) |
 | 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html" target="_blank">**ABC Encoder Module by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#abc-encoder-module) |
 | 👉 **Chord Viewer Module by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#chord-viewer-module) |
 | 👉 **List Viewer / Set Maker by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#list-viewer--set-maker) |
 | 👉 <a href="https://michaeleskin.com/abc" target="_blank">**ABC Transcription Tools by Michael Eskin**</a> | <a href="https://github.com/seisiuneer/abctools" target="_blank">abctools</a> | <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">GUIDE</a> |
 | 👉 <a href="https://abcjs.net/" target="_blank">**abcjs by Paul Rosen and Gregory Dyke**</a> | <a href="https://github.com/paulrosen/abcjs" target="_blank">abcjs</a> | <a href="https://paulrosen.github.io/abcjs" target="_blank">DOCS</a> |
 
-## NS Tunebook App
+## NS Session App
 
 Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project exploring responsive web design and progressive web app paradigms for cross-platform viewing and editing of ABC music notation. This is a single-page client app for working with curated collections of ABC tunes and chords. Version 1.0 serves as a wrapper to Michael Eskin's ABC Transcription Tools for convenient viewing of ABC notation on devices of any viewport size.
 
 > [!IMPORTANT]
-> The app uses some of the latest web dev features with decent cross-browser support. Updating to the latest version of your browser is advised for the smoothest experience.
+> The app employs some of the latest web dev features with decent cross-browser support. Updating to the latest version of your browser is advised for the smoothest experience.
 
 ### Tunebook Options Overview
 
@@ -52,13 +52,13 @@ The app retrieves Tunebook and Chordbook data by fetching Session DB files speci
 
 File Path | Module Name | Description |
 | --- | --- | --- |
-| `index.html` | **NS Tunebook App** | NS Tunebook App HTML markup |
-| `/modules/scripts-nss-app.js` | **NS Tunebook App scripts** | Scripts handling Launcher, Tunebook and Playalong app sections |
+| `index.html` | **NS Session App** | NS Session App HTML markup |
+| `/modules/scripts-nss-app.js` | **NS Session App scripts** | Scripts handling Launcher, Tunebook and Playalong app sections |
 | `/modules/scripts-abc-tools.js` | **Custom ABC Tools scripts** | Modified and refactored scripts from ABC Transcription Tools Export Tunebook Website |
 | `/modules/scripts-emoji-manager.js` | **App Emoji Manager scripts** | Optional scripts for displaying randomized emojis in Tunebook |
 | `/modules/scripts-preload-nssapp.js` | **App Preload scripts** | Scripts executed before common app scripts are loaded |
-| `/styles/styles-nss-app.css` | **NS Tunebook App styles** | Common NS Tunebook App styles |
-| `/assets/icons/icons.svg` | **NS Tunebook App icons** | Common NS Tunebook App icons (Default set: Bootstrap Icons) |
+| `/styles/styles-nss-app.css` | **NS Session App styles** | Common NS Session App styles |
+| `/assets/icons/icons.svg` | **NS Session App icons** | Common NS Session App icons (Default set: Bootstrap Icons) |
 
 ## ABC Encoder Module
 
@@ -190,7 +190,7 @@ Import Name | Import Description | Details |
 | `LZString` | LZ-based compression algorithm | Required for compressing and decompressing ABC strings |
 | `pThrottle` | Throttle promise-returning functions | Required for throttling API requests to The Session |
 | `makeAbcChordBook` | Generate Chordbook from ABC data | Required for creating Chordbook JSON with Encoder's Sort tool. Imported from `scripts-chord-viewer.js` |
-| `localStorageOk`, `fetchData`, `initSettingsFromObject`, `initAppCheckBoxes`, `displayWarningEffect`, `displayNotification` | Shared NS Tunebook App scripts | Required for initializing localStorage items, fetching data and displaying notifications. Imported from `scripts-nss-app.js` |
+| `localStorageOk`, `fetchData`, `initSettingsFromObject`, `initAppCheckBoxes`, `displayWarningEffect`, `displayNotification` | Shared NS Session App scripts | Required for initializing localStorage items, fetching data and displaying notifications. Imported from `scripts-nss-app.js` |
 
 ## Chord Viewer Module
 
