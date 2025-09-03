@@ -3095,7 +3095,7 @@ function addHelpGuideDescription(el) {
 
     case 'tunebook-actions-menu':
       helpText =
-        "Open a popup menu with shortcuts to Tunebook modules and features. Use the minimize button (⮟/⮝) to close the menu. Actions are navigable via keyboard with the Tab key.";
+        "Open a popup menu with shortcuts to Tunebook modules and features. Use the minimize button to close the menu. Actions are navigable via keyboard with the Tab key.";
       break;
 
     case 'tunelist':
