@@ -730,7 +730,7 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
 }
 
 .nss-help-popover .nss-popover-btn,
-.nss-help-dialog .nss-popover-btn {
+.nss-qhelp-dialog .nss-popover-btn {
   font-size: 3.75rem;
   width: 3.75rem;
   height: 3.75rem;
@@ -1305,6 +1305,8 @@ input[type="checkbox"]:focus-visible {
   filter: drop-shadow(1px 1px 7px var(--accent-color));
 }
 
+/* Actions Popup Styles */
+
 [data-popover="tunebook-actions-popup"],
 [data-popover="notification-popup"] {
   background-image: linear-gradient(90deg, var(--gradient-color-left) 25%, var(--gradient-color-right) 100%);
@@ -1341,7 +1343,7 @@ body[data-mode="desktop"] [data-tbk-actions-mode="pick-fav-left"] {
   left: 0;
 }
 
-.nss-help-dialog .nss-popover-btn,
+.nss-qhelp-dialog .nss-popover-btn,
 .nss-help-popover .nss-popover-btn {
   color: var(--accent-color);
 }
@@ -1549,6 +1551,8 @@ body[data-mode="desktop"] [data-close-direction="down"] {
   font-size: 2.25rem;
 }
 
+/* Notification Popup Styles */
+
 [data-popover="notification-popup"] {
   width: 100%;
   min-height: 4.5rem;
@@ -1697,10 +1701,10 @@ body[data-mode="desktop"] [data-close-direction="down"] {
   display: flex;
 }
 
-/* Popover & Dialog Styles */
+/* Help Popover & Dialog Styles */
 
 .nss-help-popover,
-.nss-help-dialog {
+.nss-qhelp-dialog {
   width: 100%;
   height: calc(100% - var(--tunebook-header-height) - var(--tunebook-footer-height));
   max-width: unset;
@@ -1715,7 +1719,7 @@ body[data-mode="desktop"] [data-close-direction="down"] {
 }
 
 .nss-help-popover[data-pops-up-from="header"],
-.nss-help-dialog[data-pops-up-from="header"] {
+.nss-qhelp-dialog[data-pops-up-from="header"] {
   height: calc(100% - var(--tunebook-header-height));
   margin-bottom: 0;
 }
@@ -1760,22 +1764,35 @@ body[data-mode="desktop"] [data-close-direction="down"] {
   max-height: calc(100dvh - var(--tunebook-header-height));
 }
 
-.nss-help-guide-description {
+.nss-help-guide-text-block {
+  flex-direction: column;
   padding: 1.6rem 1rem;
+  gap: 1.75rem;
 }
 
-.nss-help-guide-description[data-text="custom"]::after {
+.nss-help-popover [data-title="default"] {
+  font-weight: normal;
+}
+
+.nss-help-popover [data-title="custom"]::after {
   content: '';
 }
 
-.nss-help-guide-description[data-text="default"]::after {
+.nss-help-popover [data-title="default"]::after {
   content:
     "Click on any Tunebook button to view description \a\a Click on Show Quick Help (↑) button to view app map \a\a Click on GitHub button to view app readme";
 }
+
+.nss-help-popover h2,
 .nss-help-popover p,
-.nss-help-dialog p {
+.nss-qhelp-dialog p {
   white-space: pre-wrap;
   margin: 0;
+}
+
+.nss-help-popover p {
+  text-align: justify;
+  text-align-last: center;
 }
 
 .nss-btn-quick-help-mini,
@@ -1793,91 +1810,92 @@ body[data-mode="desktop"] [data-close-direction="down"] {
 }
 
 .nss-btn-quick-help:is(:hover, :focus, :focus-visible),
-.nss-help-row button:is(:hover, :focus, :focus-visible) {
+.nss-qhelp-row button:is(:hover, :focus, :focus-visible) {
   outline: 0.2rem solid var(--accent-color);
   opacity: 1;
 }
 
-.nss-help-dialog::backdrop {
+.nss-qhelp-dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
 .nss-btn-quick-help,
-.nss-help-dialog,
-.nss-btn-help-label {
+.nss-qhelp-dialog,
+.nss-btn-qhelp-label {
   color: var(--accent-color-contrast);
 }
 
-.nss-btn-help-label {
+.nss-btn-qhelp-label {
   font-size: 1.5rem;
   padding: 0.33rem;
 }
 
-.nss-help-description {
+.nss-qhelp-description {
   padding: 0 1rem;
 }
 
-.nss-help-guide-description,
-.nss-help-description {
+.nss-help-popover [data-title],
+.nss-help-guide-text-block,
+.nss-qhelp-description {
   font-size: 1.75rem;
   color: var(--accent-color);
 }
 
-.nss-help-container,
-.nss-help-row button {
+.nss-qhelp-container,
+.nss-qhelp-row button {
   width: 100%;
   height: 100%;
 }
 
-.nss-help-container .nss-help-q-container button {
+.nss-qhelp-container .nss-qhelp-q-container button {
   width: 3.95rem;
   height: 3.95rem;
   outline-offset: -0.2rem;
 }
 
-.nss-help-row button {
+.nss-qhelp-row button {
   border-radius: 0.25rem;
   opacity: 0.8;
   z-index: 1;
 }
 
-.nss-help-container {
+.nss-qhelp-container {
   overflow: hidden;
   grid-template-rows: minmax(3.5rem, 0.25fr) minmax(3rem, 0.25fr) 0.33fr 0.33fr 0.33fr minmax(3rem, 0.25fr) minmax(3.5rem, 0.25fr);
 }
 
-.nss-help-row {
+.nss-qhelp-row {
   justify-items: center;
   align-items: center;
   padding: 0.25em;
   grid-template-columns: repeat(5, 1fr);
 }
 
-.nss-help-header-icons,
-.nss-help-header-labels {
+.nss-qhelp-header-icons,
+.nss-qhelp-header-labels {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.nss-help-footer-icons,
-.nss-help-footer-labels {
+.nss-qhelp-footer-icons,
+.nss-qhelp-footer-labels {
   grid-template-columns: .5fr .75fr 1fr .75fr .5fr;
 }
 
-.nss-help-header-icons svg:nth-child(1) {
+.nss-qhelp-header-icons svg:nth-child(1) {
   transform:rotate(270deg);
 }
 
-.nss-help-footer-icons svg:nth-child(1) {
+.nss-qhelp-footer-icons svg:nth-child(1) {
   transform:rotate(180deg);
 }
 
-.nss-help-footer-icons svg:nth-child(2),
-.nss-help-footer-icons svg:nth-child(3),
-.nss-help-footer-icons svg:nth-child(4) {
+.nss-qhelp-footer-icons svg:nth-child(2),
+.nss-qhelp-footer-icons svg:nth-child(3),
+.nss-qhelp-footer-icons svg:nth-child(4) {
   transform:rotate(180deg);
 }
 
-.nss-help-footer-icons svg:nth-child(5) {
+.nss-qhelp-footer-icons svg:nth-child(5) {
   transform:rotate(90deg);
 }
 
@@ -1885,8 +1903,8 @@ body[data-mode="mobile"] [data-hide="mobile"],
 body[data-mode="desktop"] [data-hide="desktop"],
 [data-tbk-loaded="sets"] [data-hide="sets-loaded"],
 [data-tbk-loaded="tunes"] [data-hide="tunes-loaded"],
-[data-pops-up-from="header"] .nss-help-footer-icons,
-[data-pops-up-from="header"] .nss-help-footer-labels,
+[data-pops-up-from="header"] .nss-qhelp-footer-icons,
+[data-pops-up-from="header"] .nss-qhelp-footer-labels,
 [data-pops-up-from="footer"] [data-hide="pops-up-from-footer"],
 [data-pops-up-from="header"] [data-hide="pops-up-from-header"] {
   display: none;
@@ -2082,8 +2100,8 @@ body[data-mode="desktop"] [data-hide="desktop"],
     display: none;
   }
 
-  body[data-mode="desktop"] .nss-help-header-icons,
-  body[data-mode="desktop"] .nss-help-header-labels {
+  body[data-mode="desktop"] .nss-qhelp-header-icons,
+  body[data-mode="desktop"] .nss-qhelp-header-labels {
     grid-template-columns: repeat(4, 1fr);
   }
   
@@ -2135,6 +2153,23 @@ body[data-mode="desktop"] [data-hide="desktop"],
   }
 }
 
+/* @media screen and (max-height: 700px) { */
+@media screen and (max-height: 43.75em) {
+
+  .nss-help-popover [data-title="default"]::after {
+    content: 'Click on any Tunebook button to view description \a\a Click on Show Quick Help (↑) button to view app map';
+  }
+
+  .nss-help-popover-header .nss-link-btn,
+  .nss-help-popover .nss-btn-quick-help {
+    display: none;
+  }
+
+  .nss-help-popover .nss-btn-quick-help-mini {
+    display: flex;
+  }
+}
+
 /* @media screen and (max-width: 600px) { */
 @media screen and (max-width: 37.5em) {
 
@@ -2154,30 +2189,30 @@ body[data-mode="desktop"] [data-hide="desktop"],
 /* @media screen and (max-height: 600px) { */
 @media screen and (max-height: 37.5em) {
 
-  .nss-help-container {
+  .nss-qhelp-container {
     grid-template-rows: minmax(3.5rem, 0.25fr) minmax(3rem, 0.25fr) 0 0.33fr 0 minmax(3rem, 0.25fr) minmax(3.5rem, 0.25fr);
   }
 
-  .nss-help-q-container button,
-  .nss-help-x-container button {
+  .nss-qhelp-q-container button,
+  .nss-qhelp-x-container button {
     position: absolute;
     top: calc(50% - 3.75rem / 2);
   }
 
-  .nss-help-q-container button {
+  .nss-qhelp-q-container button {
     left: 1.25rem;
   }
 
-  .nss-help-x-container button {
+  .nss-qhelp-x-container button {
     right: 1.25rem;
   }
 
-  .nss-help-description {
+  .nss-qhelp-description {
     padding: 0 7rem;
   }
 
-  .nss-help-guide-description[data-text="default"]::after {
-    content: 'Click on any Tunebook button to view description \a\a Click on Show Quick Help (↑) button to view app map';
+  .nss-help-popover .nss-help-guide-container {
+    align-items: flex-start;
   }
 }
 
@@ -2231,13 +2266,13 @@ body[data-mode="desktop"] [data-hide="desktop"],
     grid-template-columns: 1fr 10rem 1fr;
   }
 
-  body[data-mode="mobile"] .nss-help-header-icons,
-  body[data-mode="mobile"] .nss-help-header-labels {
+  body[data-mode="mobile"] .nss-qhelp-header-icons,
+  body[data-mode="mobile"] .nss-qhelp-header-labels {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  body[data-mode="mobile"] .nss-help-footer-icons,
-  body[data-mode="mobile"] .nss-help-footer-labels {
+  body[data-mode="mobile"] .nss-qhelp-footer-icons,
+  body[data-mode="mobile"] .nss-qhelp-footer-labels {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -2274,22 +2309,9 @@ body[data-mode="desktop"] [data-hide="desktop"],
 /* @media screen and (max-height: 480px) { */
 @media screen and (max-height: 30em) {
 
-  .nss-help-dialog {
+  .nss-qhelp-dialog {
     height: 100%;
     margin: 0;
-  }
-
-  .nss-help-popover .nss-help-guide-container {
-    align-items: flex-start;
-  }
-
-  .nss-help-popover-header .nss-link-btn,
-  .nss-help-popover .nss-btn-quick-help {
-    display: none;
-  }
-
-  .nss-help-popover .nss-btn-quick-help-mini {
-    display: flex;
   }
 }
 

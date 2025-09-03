@@ -63,7 +63,7 @@
 
             <nav id="nss-tunebook-header" class="nss-tunebook-header nss-tunebook-el grid-wrapper" aria-hidden="true" hidden>
                 <div class="nss-switch-container flex-align-center">
-                    <button id="nss-tunebook-actions-header" data-controls="tunebook-actions-desktop" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions" aria-hidden="true" hidden>
+                    <button id="nss-tunebook-actions-header" data-controls="tunebook-actions-desktop" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="Show Tunebook Actions" aria-title="Show Tunebook Actions" aria-hidden="true" hidden>
                         <svg class="nss-icon" aria-hidden="true">
                             <use href="assets/icons/icons.svg#action-icon-list"></use>
                         </svg>
@@ -73,12 +73,12 @@
                             <use href="assets/icons/icons.svg#action-icon-launch"></use>
                         </svg>
                     </button>
-                    <button id="nss-tunebook-setlist-switch" data-load="tunelist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Tunelist view" aria-title="Switch to Tunelist view" aria-hidden="true" hidden>
+                    <button id="nss-tunebook-setlist-switch" data-load="tunelist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Tunelist" aria-title="Switch to Tunelist" aria-hidden="true" hidden>
                         <svg class="nss-switch-icon" aria-hidden="true">
                             <use href="assets/icons/icons.svg#nav-icon-tunes"></use>
                         </svg>
                     </button>
-                    <button id="nss-tunebook-tunelist-switch" data-load="setlist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Setlist view" aria-title="Switch to Setlist view" aria-hidden="true" hidden>
+                    <button id="nss-tunebook-tunelist-switch" data-load="setlist" class="nss-btn nss-switch-btn flex-wrapper" title="Switch to Setlist" aria-title="Switch to Setlist" aria-hidden="true" hidden>
                         <svg class="nss-switch-icon" aria-hidden="true">
                             <use href="assets/icons/icons.svg#nav-icon-setlist"></use>
                         </svg>
@@ -107,18 +107,18 @@
                         <div class="nss-select-container flex-wrapper">
 
                             <div class="select-wrapper" data-select="filter">
-                                <select id="filterOptions" class="nss-tunebook-selector nss-select-options" title="Filter tunes by tune type or players" aria-title="Filter tunes by tune type or players">
+                                <select id="filterOptions" data-load="tunebook-filters" class="nss-tunebook-selector nss-select-options" title="Filter tunes by tune type or players" aria-title="Filter tunes by tune type or players">
                                     <option data-select="filter-header" value="-1">✨ Filter by...</option>
                                     <option value="0">😎 Show All 😎</option>
                                 </select>
                             </div>
                             <div class="select-wrapper" data-select="tunes">
-                                <select id="tuneSelector" class="nss-tunebook-selector" data-long-press="on" data-activated="false" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
+                                <select id="tuneSelector" data-load="tunebook-tunes" class="nss-tunebook-selector" data-long-press="on" data-activated="false" title="Select tunes from the dropdown menu" aria-title="Select tunes from the dropdown menu">
                                     <option id="tuneSelectorTitle" data-select="tunes-header" data-title="setlist" value=""></option>
                                 </select>
                             </div>
                             <div class="select-wrapper" data-select="display" data-cutoff-desktop="tablet-s">
-                                <select id="displayOptions" class="nss-tunebook-selector nss-select-options" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
+                                <select id="displayOptions" data-load="tunebook-tabsmidi" class="nss-tunebook-selector nss-select-options" title="Set tablature display and change playback instrument" aria-title="Set tablature display and change playback instrument">
                                    <option data-select="display-header" value="-1">🎹 Tabs & MIDI</option>
                                    <option value="0">Default (ABC Tools)</option>
                                    <option value="13">Notes (Piano)</option>
@@ -147,7 +147,7 @@
                     </section>
                 </div>
 
-                <button id="fullScreenButton" data-controls="fullscreen-view" data-alt-view="chord-viewer" data-long-press="on" data-activated="false" class="nss-btn nss-tunebook-el flex-wrapper" title="View current item in Full Screen mode" aria-title="View current item in Full Screen mode">
+                <button id="fullScreenButton" data-controls="fullscreen-view" data-load="fullscreen-mode" data-alt-view="chord-viewer" data-long-press="on" data-activated="false" class="nss-btn nss-tunebook-el flex-wrapper" title="View current item in Full Screen mode" aria-title="View current item in Full Screen mode">
                     <span data-label="fs"></span>
                     <span class="nss-icon-show nss-mini-icon">
                         <svg class="nss-icon" aria-hidden="true">
@@ -445,9 +445,9 @@
                 </div>
             </dialog>
 
-            <dialog id="quick-help" class="nss-help-dialog" aria-label="Quick Help Dialog">
-                <div class="nss-help-container grid-wrapper">
-                    <div class="nss-help-header-icons nss-help-row grid-wrapper">
+            <dialog id="quick-help" class="nss-qhelp-dialog" aria-label="Quick Help Dialog">
+                <div class="nss-qhelp-container grid-wrapper">
+                    <div class="nss-qhelp-header-icons nss-qhelp-row grid-wrapper">
                         <svg class="nss-icon" aria-hidden="true">
                             <use href="assets/icons/icons.svg#help-arrow-diagonal"></use>
                         </svg>
@@ -464,64 +464,64 @@
                             <use href="assets/icons/icons.svg#help-arrow-diagonal"></use>
                         </svg>
                     </div>
-                    <div class="nss-help-header-labels nss-help-row grid-wrapper">
-                        <button data-hide="pops-up-from-footer" class="nss-btn nss-btn-help" aria-label="(Top Left) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
-                            <span class="nss-btn-help-label">Open Actions</span>
+                    <div class="nss-qhelp-header-labels nss-qhelp-row grid-wrapper">
+                        <button data-hide="pops-up-from-footer" class="nss-btn nss-btn-qhelp" aria-label="(Top Left) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
+                            <span class="nss-btn-qhelp-label">Open Actions</span>
                         </button>
-                        <button data-hide="pops-up-from-header" class="nss-btn nss-btn-help" aria-label="(Top Left) Switch between Setlist and Tunelist" title="Switch between Setlist and Tunelist">
-                            <span class="nss-btn-help-label">Switch Tunebook</span>
+                        <button data-hide="pops-up-from-header" class="nss-btn nss-btn-qhelp" aria-label="(Top Left) Switch between Setlist and Tunelist" title="Switch between Setlist and Tunelist">
+                            <span class="nss-btn-qhelp-label">Switch Tunebook</span>
                         </button>
-                        <button class="nss-btn nss-btn-help" aria-label="(Top Center Left) Filter Tunebook by Tune Type / Set Leader" title="Filter Tunebook by tune type or custom filter">
-                            <span class="nss-btn-help-label">Select Filter</span>
+                        <button class="nss-btn nss-btn-qhelp" aria-label="(Top Center Left) Filter Tunebook by Tune Type / Set Leader" title="Filter Tunebook by tune type or custom filter">
+                            <span class="nss-btn-qhelp-label">Select Filter</span>
                         </button>
-                        <button data-hide="tunes-loaded" class="nss-btn nss-btn-help" aria-label="(Top Center) Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer" title="Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
-                            <span class="nss-btn-help-label">Select a Set</span>
+                        <button data-hide="tunes-loaded" class="nss-btn nss-btn-qhelp" aria-label="(Top Center) Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer" title="Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
+                            <span class="nss-btn-qhelp-label">Select a Set</span>
                         </button>
-                        <button data-hide="sets-loaded" class="nss-btn nss-btn-help" aria-label="(Top Center) Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer" title="Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
-                            <span class="nss-btn-help-label">Select a Tune</span>
+                        <button data-hide="sets-loaded" class="nss-btn nss-btn-qhelp" aria-label="(Top Center) Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer" title="Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
+                            <span class="nss-btn-qhelp-label">Select a Tune</span>
                         </button>
-                        <button data-cutoff-desktop="tablet-s" data-cutoff-mobile="l" class="nss-btn nss-btn-help" aria-label="(Top Center Right) Select Tabs & MIDI presets for playback" title="Select Tabs & MIDI presets for playback">
-                            <span class="nss-btn-help-label">Select Tab/MIDI</span>
+                        <button data-cutoff-desktop="tablet-s" data-cutoff-mobile="l" class="nss-btn nss-btn-qhelp" aria-label="(Top Center Right) Select Tabs & MIDI presets for playback" title="Select Tabs & MIDI presets for playback">
+                            <span class="nss-btn-qhelp-label">Select Tab/MIDI</span>
                         </button>
-                        <button class="nss-btn nss-btn-help" aria-label="(Top Right) View tunes or chords in Full Screen mode. Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer" title="View tunes or chords in Full Screen mode. Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer">
-                            <span class="nss-btn-help-label">Fullscreen Button</span>
+                        <button class="nss-btn nss-btn-qhelp" aria-label="(Top Right) View tunes or chords in Full Screen mode. Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer" title="View tunes or chords in Full Screen mode. Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer">
+                            <span class="nss-btn-qhelp-label">Fullscreen Button</span>
                         </button>
                     </div>
-                    <div class="nss-help-q-container flex-wrapper">
+                    <div class="nss-qhelp-q-container flex-wrapper">
                         <button id="nss-help-popover-open" class="nss-btn nss-popover-btn flex-align-center" title="Show Help Guide Menu" aria-title="Show Help Guide Menu">
                             <svg class="nss-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-help"></use>
                             </svg>
                         </button>
                     </div>
-                    <p class="nss-help-description flex-wrapper">Select an element label to view description</p>
-                    <div class="nss-help-x-container flex-wrapper">
-                        <button id="nss-help-dialog-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Dialog" aria-title="Close Quick Help Dialog" autofocus></button>
+                    <p class="nss-qhelp-description flex-wrapper">Select an element label to view description</p>
+                    <div class="nss-qhelp-x-container flex-wrapper">
+                        <button id="nss-qhelp-dialog-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Dialog" aria-title="Close Quick Help Dialog" autofocus></button>
                     </div>
-                    <div class="nss-help-footer-labels nss-help-row grid-wrapper">
-                        <button data-cutoff-mobile="l" class="nss-btn nss-btn-help" aria-label="(Bottom Left) Return to app's Launch Screen" title="Return to app's Launch Screen">
-                            <span class="nss-btn-help-label">Launch Screen</span>
+                    <div class="nss-qhelp-footer-labels nss-qhelp-row grid-wrapper">
+                        <button data-cutoff-mobile="l" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Left) Return to app's Launch Screen" title="Return to app's Launch Screen">
+                            <span class="nss-btn-qhelp-label">Launch Screen</span>
                         </button>
-                        <button class="nss-btn nss-btn-help" aria-label="(Bottom Left-of-Center) Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs" title="Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs">
-                            <span class="nss-btn-help-label">Left Fav Button</span>
+                        <button class="nss-btn nss-btn-qhelp" aria-label="(Bottom Left-of-Center) Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs" title="Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs">
+                            <span class="nss-btn-qhelp-label">Left Fav Button</span>
                         </button>
-                        <button data-hide="desktop" class="nss-btn nss-btn-help" aria-label="(Bottom Center) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
-                            <span class="nss-btn-help-label">Open Actions</span>
+                        <button data-hide="desktop" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Center) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
+                            <span class="nss-btn-qhelp-label">Open Actions</span>
                         </button>
-                        <button data-hide="mobile" class="nss-btn nss-btn-help" aria-label="(Bottom Center) Switch to mobile Tunebook mode with adaptive design" title="Switch to mobile Tunebook mode with adaptive design">
-                            <span class="nss-btn-help-label">Mobile Mode</span>
+                        <button data-hide="mobile" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Center) Switch to mobile Tunebook mode with adaptive design" title="Switch to mobile Tunebook mode with adaptive design">
+                            <span class="nss-btn-qhelp-label">Mobile Mode</span>
                         </button>
-                        <button class="nss-btn nss-btn-help" aria-label="(Bottom Right-of-Center) Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs" title="Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs">
-                            <span class="nss-btn-help-label">Right Fav Button</span>
+                        <button class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right-of-Center) Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs" title="Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs">
+                            <span class="nss-btn-qhelp-label">Right Fav Button</span>
                         </button>
-                        <button data-cutoff-mobile="l" data-hide="desktop" class="nss-btn nss-btn-help" aria-label="(Bottom Right) Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes" title="Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes">
-                            <span class="nss-btn-help-label">Hide Footer</span>
+                        <button data-cutoff-mobile="l" data-hide="desktop" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right) Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes" title="Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes">
+                            <span class="nss-btn-qhelp-label">Hide Footer</span>
                         </button>
-                        <button data-cutoff-mobile="l" data-hide="mobile" class="nss-btn nss-btn-help" aria-label="(Bottom Right) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
-                            <span class="nss-btn-help-label">Open Actions</span>
+                        <button data-cutoff-mobile="l" data-hide="mobile" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
+                            <span class="nss-btn-qhelp-label">Open Actions</span>
                         </button>
                     </div>
-                    <div class="nss-help-footer-icons nss-help-row grid-wrapper">
+                    <div class="nss-qhelp-footer-icons nss-qhelp-row grid-wrapper">
                         <svg data-cutoff-mobile="l" class="nss-icon" aria-hidden="true">
                             <use href="assets/icons/icons.svg#help-arrow-diagonal"></use>
                         </svg>
@@ -539,7 +539,7 @@
                         </svg>
                     </div>
                 </div>
-                <footer class="nss-help-dialog-footer"></footer>
+                <footer class="nss-qhelp-dialog-footer"></footer>
             </dialog>
 
             <article id="help-guide" popover="manual" class="nss-help-popover" aria-label="Help Guide Popover">
@@ -554,7 +554,10 @@
                     <button data-help-guide="quit" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Quick Help Guide Popover" aria-title="Close Help Guide Popover" autofocus></button>
                 </header>
                 <div class="nss-help-guide-container flex-wrapper">
-                    <p data-help-guide="text" data-text="default" class="nss-help-guide-description flex-wrapper"></p>
+                    <div class="nss-help-guide-text-block flex-wrapper">
+                        <h2 data-title="default"></h2>
+                        <p data-help-guide="text"></p>
+                    </div>
                 </div>
                 <footer class="nss-help-popover-footer flex-wrapper">
                     <button data-help-guide="quick-help" class="nss-btn nss-popover-btn nss-btn-quick-help-mini flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">
@@ -610,8 +613,8 @@
 
                 <div class="footer-central-wrapper grid-wrapper">
                     <div class="footer-item-container flex-wrapper">
-                        <label data-long-press="on" data-activated="false" data-fav-btn="left" class="radio-wrapper flex-wrapper" title="Full Screen button shows current Set or Tune">
-                            <input data-long-press="on" data-activated="false" data-fav-btn="left" type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" aria-title="Full Screen button shows current Set or Tune" checked>
+                        <label data-long-press="on" data-activated="false" data-fav-btn="left" data-load="fs-radio-tunes" class="radio-wrapper flex-wrapper" title="Full Screen button shows current Set or Tune">
+                            <input data-long-press="on" data-activated="false" data-fav-btn="left" data-load="fs-radio-tunes" type="radio" id="nss-radio-view-tunes" name="nss-radio-view" value="0" aria-title="Full Screen button shows current Set or Tune" checked>
                             <span class="icon-wrapper flex-wrapper">
                                 <span class="nss-mini-icon nss-icon-show">
                                     <svg class="nss-icon" aria-hidden="true">
@@ -627,7 +630,7 @@
                         </label>
                         <div data-tbk-container="pick-fav-left" class="footer-item-container flex-wrapper" aria-hidden="true" hidden></div>
                     </div>
-                    <button data-controls="mode" data-type="mobile-switch" class="nss-btn flex-wrapper footer-item-container" title="Switch to mobile mode" aria-title="Switch to mobile mode">
+                    <button data-controls="mode" data-type="mobile-switch" data-load="switch-mobile-mode" class="nss-btn flex-wrapper footer-item-container" title="Switch to Mobile mode" aria-title="Switch to Mobile mode">
                         <span class="nss-gradient-text flex-wrapper">
                             MOBILE
                         </span>
@@ -640,7 +643,7 @@
                             MODE
                         </span>
                     </button>
-                    <button id="nss-tunebook-actions-footer-mobile" data-controls="tunebook-actions-mobile" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions">
+                    <button id="nss-tunebook-actions-footer-mobile" data-controls="tunebook-actions-mobile" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="Show Tunebook Actions" aria-title="Show Tunebook Actions">
                         <span class="nss-mini-icon">
                             <svg class="nss-icon" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#action-icon-archives"></use>
@@ -648,8 +651,8 @@
                         </span>
                     </button>
                     <div class="footer-item-container flex-wrapper">
-                        <label data-long-press="on" data-activated="false" data-fav-btn="right" class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
-                            <input data-long-press="on" data-activated="false" data-fav-btn="right" type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1" aria-title="Full Screen button opens Chord Viewer">
+                        <label data-long-press="on" data-activated="false" data-fav-btn="right" data-load="fs-radio-chords" class="radio-wrapper flex-wrapper" title="Full Screen button opens Chord Viewer">
+                            <input data-long-press="on" data-activated="false" data-fav-btn="right" data-load="fs-radio-chords" type="radio" id="nss-radio-view-chords" name="nss-radio-view" value="1" aria-title="Full Screen button opens Chord Viewer">
                             <span class="icon-wrapper flex-wrapper">
                                 <span class="nss-mini-icon nss-icon-show">
                                     <svg class="nss-icon" aria-hidden="true">
@@ -669,7 +672,7 @@
 
                 <button data-controls="tunebook-footer" data-load="tunebook-compact-mode" class="nss-btn nss-option-btn nss-popover-btn nss-btn-x flex-wrapper" title="Hide footer section" aria-title="Hide footer section"></button>
                 
-                <button id="nss-tunebook-actions-footer-desktop" data-controls="tunebook-actions-desktop" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="More Tunebook actions" aria-title="More Tunebook actions">
+                <button id="nss-tunebook-actions-footer-desktop" data-controls="tunebook-actions-desktop" data-load="tunebook-actions-menu" class="nss-btn nss-option-btn flex-wrapper" title="Show Tunebook Actions" aria-title="Show Tunebook Actions">
                     <svg class="nss-mini-icon" aria-hidden="true">
                         <use href="assets/icons/icons.svg#action-icon-list"></use>
                     </svg>
@@ -704,7 +707,7 @@
                             CHORD VIEWER
                         </span>
                     </button>
-                    <button data-tbk-action="switch-desktop-mode" data-controls="mode" data-type="desktop-switch" class="tunebook-action flex-align-center nss-btn nss-option-btn" title="Switch to desktop mode" aria-title="Switch to desktop mode">
+                    <button data-tbk-action="switch-desktop-mode" data-controls="mode" data-type="desktop-switch" data-load="switch-desktop-mode" class="tunebook-action flex-align-center nss-btn nss-option-btn" title="Switch to Desktop mode" aria-title="Switch to Desktop mode">
                         <svg class="nss-action-icon" aria-hidden="true">
                             <use href="assets/icons/icons.svg#nav-icon-desktop"></use>
                         </svg>
@@ -712,7 +715,7 @@
                             DESKTOP MODE
                         </span>
                     </button>
-                    <button data-tbk-action="switch-mobile-mode" data-controls="mode" data-type="mobile-switch" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Switch to mobile mode" aria-title="Switch to mobile mode">
+                    <button data-tbk-action="switch-mobile-mode" data-controls="mode" data-type="mobile-switch" data-load="switch-mobile-mode" class="tunebook-action nss-btn nss-option-btn flex-align-center" title="Switch to Mobile mode" aria-title="Switch to Mobile mode">
                         <svg class="nss-action-icon" aria-hidden="true">
                             <use href="assets/icons/icons.svg#nav-icon-mobile"></use>
                         </svg>

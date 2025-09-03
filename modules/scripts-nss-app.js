@@ -753,12 +753,15 @@ function showHelpGuidePopover() {
     disableTuneBookSelectors();
   }
 
-  const helpGuideText =
+  const helpGuideTitleBox =
+    helpGuidePopover.querySelector('[data-title]');
+
+  const helpGuideTextBox =
     helpGuidePopover.querySelector('[data-help-guide="text"]');
 
-  helpGuideText.dataset.text = "default";
-
-  helpGuideText.textContent = '';
+  helpGuideTitleBox.dataset.title = "default";
+  helpGuideTitleBox.textContent = '';
+  helpGuideTextBox.textContent = '';
 
   helpGuidePopover.showPopover();
 }
@@ -786,7 +789,7 @@ function openHelpDialog() {
   }
 
   const helpTextDiv =
-    helpDialog.querySelector('.nss-help-description');
+    helpDialog.querySelector('.nss-qhelp-description');
     
   helpTextDiv.textContent =
     "Select an element label to view description";
@@ -798,11 +801,11 @@ function openHelpDialog() {
 
 function showQuickHelpDescription(event) {
 
-  const helpItem = event.target.closest('.nss-btn-help');
+  const helpItem = event.target.closest('.nss-btn-qhelp');
 
   if (!helpItem) return;
 
-  const helpTextDiv = helpDialog.querySelector('.nss-help-description');
+  const helpTextDiv = helpDialog.querySelector('.nss-qhelp-description');
 
   helpTextDiv.textContent = helpItem.title;
 
@@ -1689,7 +1692,7 @@ async function appButtonHandler(btn) {
     return;
   }
 
-  if (btn.id === 'nss-help-dialog-close') {
+  if (btn.id === 'nss-qhelp-dialog-close') {
 
     helpDialog.close();
 
@@ -3050,17 +3053,129 @@ function helpGuidePopoverHandler(event) {
 
     return;
   }
-
-  const helpGuideText =
+  const helpGuideTitleBox =
+    helpGuidePopover.querySelector('[data-title]');
+    
+  const helpGuideTextBox =
     helpGuidePopover.querySelector('[data-help-guide="text"]');
 
-  if (helpGuideText.dataset.text === "default") {
+  if (helpGuideTitleBox.dataset.title === "default") {
 
-    helpGuideText.dataset.text = "custom";
+    helpGuideTitleBox.dataset.title = "custom";
   }
 
-  helpGuideText.textContent =
-    triggerEl.hasAttribute("aria-title")? triggerEl.getAttribute("aria-title") : triggerEl.title;
+  const elTitleText = 
+    triggerEl.hasAttribute("aria-title")?
+      triggerEl.getAttribute("aria-title") : triggerEl.title || null;
+
+  const helpGuideDescr = addHelpGuideDescription(triggerEl);
+
+  helpGuideTitleBox.textContent =
+    elTitleText && helpGuideDescr? `${elTitleText}:` :
+    elTitleText ?? "No help description for this element";
+
+  helpGuideTextBox.textContent = helpGuideDescr? `${helpGuideDescr}\n\n` : '';
+}
+
+// Handle Help Guide descriptions
+
+function addHelpGuideDescription(el) {
+
+  let helpText = '';
+
+  const elLoads = el.dataset.load;
+
+  if (!elLoads) return null;
+
+  switch (elLoads) {
+    case 'launcher':
+      helpText =
+        "Exit to app's start screen. Press Open Setlist / Open Tunelist / Play Along buttons to switch between app sections. Click Open App Options ⚙️ button to adjust Tunebook settings.";
+      break;
+
+    case 'tunebook-actions-menu':
+      helpText =
+        "Open a popup menu with shortcuts to Tunebook modules and features. Use the minimize button (⮟/⮝) to close the menu. Actions are navigable via keyboard with the Tab key.";
+      break;
+
+    case 'tunelist':
+      helpText =
+        "Load the Session Tunelist without exiting Tunebook. By default the last loaded Set is saved and then restored when Setlist is reopened. If Save & Restore is disabled in App Options, the first item on the list is always loaded.";
+      break;
+
+    case 'setlist':
+      helpText =
+        "Load the Session Setlist without exiting Tunebook. By default the last loaded Tune is saved and then restored when Tunelist is reopened. If Save & Restore is disabled in App Options, the first item on the list is always loaded.";
+      break;
+
+    case 'prev':
+    case 'next':
+      helpText =
+        "Switch between Tunebook items. Arrow navigation is located on top of the page in Desktop mode and in the middle of the page in Mobile mode and in Full Screen view.";
+      break;
+
+    case 'tunebook-filters':
+      helpText =
+        "Apply a filter from the dropdown list to the currently loaded Setlist or Tunelist. Selecting a filter modifies options shown in Tune Selector and List Viewer.";
+      break;
+
+    case 'tunebook-tunes':
+      helpText =
+        "Select an item from the dropdown list to load into ABC Transcription Tools. Use Right-Click / Shift + Enter / Long Touch to open List Viewer / Set Maker.";
+      break;
+
+    case 'tunebook-tabsmidi':
+      helpText =
+        "Apply Tabs & MIDI presets from the dropdown list to Tunebook items being viewed and played back in ABC Transcription Tools. When viewing the Tunebook on a narrow screen, rotate the device to reveal this selector.";
+      break;
+
+    case 'fullscreen-mode':
+      helpText =
+        "Open the current ABC or chords in Full Screen mode depending on the settings. Using Right-Click / Shift + Enter / Long Touch on the button opens Chord Viewer. Use Shift + F11 keyboard shortcut while outside of ABC Transcription Tools to activate this button.";
+      break;
+
+    case 'fs-radio-tunes':
+    case 'fs-radio-chords':
+      helpText =
+        "Choose the default behavior for the Full Screen button. Useful for those frequently switching between ABC and Chord Viewer. Use Right-Click / Shift + Enter / Long Touch on the slot to pick alternative fav buttons from Tunebook Actions.";
+      break;
+
+    case 'share-link':
+      helpText =
+        "Generate a short link to the currently selected Set or Tune or an active Tunebook filter. The link opens the item directly in the app. If no items or filters are selected, the last loaded link to ABC Transcription Tools will be copied instead.";
+      break;
+
+    case 'list-viewer':
+      helpText =
+        "Load the List Viewer / Set Maker module to view the searchable list of filtered items. Use the Start button or select an item with Right-Click / Shift + Enter / Long Touch to switch to the Set Maker mode. Use the slider to resize rows. Toggle between color schemes with the theme button.";
+      break;
+
+    case 'chord-viewer':
+      helpText =
+        "Load the Chord Viewer module to view guitar chords for the current ABC. Use the Chord Viewer slider to scale the chords, press the theme button to toggle between color schemes.";
+      break;
+
+    case 'tunebook-compact-mode':
+      helpText =
+        "Switch to compact Tunebook mode with footer bar hidden. Tunebook Actions are accessible via header while in compact mode. Reload the app to reset the layout.";
+      break;
+
+    case 'switch-mobile-mode':
+      helpText =
+        "Adjust the Tunebook layout to suit devices with small and medium-sized screens. ABC Transcription Tools are view-only while in Mobile mode (Double Tap the tune to play, Long Touch to rewind). Rotate the device to see more elements in Mobile mode.";
+      break;
+
+    case 'help':
+      helpText =
+        "Launch Help Guide Dialog. Use Shift + F1 keyboard shortcut to open this menu while outside of the ABC Transcription Tools frame. To view Michael Eskin's User Guide click on \u2754 button within ABC Transcription Tools.";
+      break;
+  
+    default:
+      helpText = '';
+      break;
+  }
+
+  return helpText;
 }
 
 // Handle Help Guide Popover closing
