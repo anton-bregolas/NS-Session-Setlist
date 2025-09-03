@@ -240,10 +240,478 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Alpha version updates (v.1.0+)</b></summary>
 
-<details>
-<summary><b>v.1.0.0: Alpha version, module testing & improvements</b></summary>
+**v1.0.50: Add Help Guide Descripts**
+
++ Tunebook updates:
+  - Update Quick Help / Help Guide classes for more clarity
+  - Refactor Help Guide text element, split title & description
+  - Add missing data-load attributes to Tunebook UI elements
+  - Update helpGuidePopoverHandler handler function
+  - Add addHelpGuideDescription handler function
+  - Add Help Guide Descriptions for all Tunebook UI elements
+
+**v1.0.49: Add Safari Fallbacks**
+
++ List Viewer module updates:
++ Chord Viewer module updates:
+  - Add detect Safari logic to dialog init script
+  - Add data-browser="safari" attribute to dialog
+  - Add Safari fallback styles for Slider
+
+**v1.0.48: Fix Safari Tunebook Nav**
++ Tunebook Updates:
+  - Add isSafari check to switchTuneBookItem to fix arrow navigation
+
++ App updates:
+  - Fix Popover Polyfill not being applied to Tunebook Action Popup: Add fallbacks for :popover-open
+  - Fix filters stretching Tunes Selector in Safari: Fixed width for viewport width < 880px
+
++ README updates:
+  - Fix markdown
+
+**v1.0.47: Fix Browser CSS Bugs**
+
++ App updates:
+  - Fix Popover Polyfill not being applied to Tunebook Action Popup: Add fallbacks for :popover-open
+  - Fix filters stretching Tunes Selector in Safari: Fixed width for viewport width > 880px
+  - Fix FOUC in Firefox on app load: Add dummy <head> script workaround to make sure CSS is fully applied
+
+**v1.0.46: Update App README**
+
++ README updates:
+  - Add Tunebook Options Overview to App Readme
++ App updates:
+  - Add missing notifications for enabled/disabled Tunebook Options
++ Tunebook updates:
+  - Add listViewerHideSliderGui to abcTunebookDefaults
+
+**v1.0.45: Add Encoder README**
+
++ README updates:
+  - Update README intro
+  - Add ABC Modules & Libraries section
+  - Add Readme sections for App, Encoder, CVW and LVW
+  - Add developer notes for App, Encoder, CVW and LVW
+  - Add App Readme Intro
+  - Add ABC Encoder Readme:
+    * Intro
+    * Encoder Settings Overview
+    * Encoder Advanced Settings Overview
+    * Input / Output Defaults
+    * Output ABC Field Order
+    * Note on Header Comments
+
+**v1.0.44: Add Encoder Merge Check**
+
++ ABC Encoder updates:
+  - Add Merging Fields Disabled check to ABC Sort post-processing
+  - RMLQ header fields will now remain unchanged if skip merging is on
+  - Replace Tunes.abc button with GitHub Readme button in Encoder UI
+
+**v1.0.43: Add Show Help on 1st Load**
+
++ Tunebook updates:
+  - Add Show Quick Help on first Tunebook load
+  - Add List Viewer: Always hide slider input GUI checkbox to Tunebook Options
++ List Viewer module updates:
+  - Update hide slider input GUI logic
+  - Update imports and utility functions, move getFirstCurrentlyDisplayedElem to module
++ Chord Viewer module updates:
+  - Update imports and utility functions, move getFirstCurrentlyDisplayedElem to module
+
+**v1.0.42: Fix Safari iOS Help bug**
+
++ Tunebook updates:
+  - Add iOS Safari checker function
+  - Add disable / enable Tunebook selectors functions
+  - Add disable Tunebook selectors on Help Guide Popover open
+  - Add reenable Tunebook selectors on Help Guide Popover close
+
+**v1.0.41: Session DB Update**
+
++ Session DB Updates:
+  - Update to version 2025.08.27.1
+  - Empty Wallet waltz added, Petranu Vals tweaked
+
+**v1.0.40: Update Tune DB Links**
+
++ Tunebook updates:
+  - Change Tune DB links from /main/ to /test/
+
+**v1.0.39: Fix LVW Arrow Navigation**
+
++ List Viewer module updates:
+  - Refactor lastSelectedIndex storage & recall with data-index
+  - Update toggleSetMakerSelection, assign data-index values to lastSelectedIndex
+  - Add getLastSelectedIndex to update last selected index on deselect
+  - Refactor Arrows / Home / End navigation in handleTilesKeyboardNavigation
+  - Refactor Shift + Click navigation in handleTilesShiftClick
+  - Refactor Ctrl + Shift + A logic in handleListViewerKeyPress
+  - Refactor arrow navigation in selectTilesWithShiftArrow and focusOnNextTile
+  - Update handleListViewerClick, handleTilesMouseEvents, handleTilesListBoxFocusIn
+  - Add selectAllTiles, deselectAllTiles, selectTilesToListStart, selectTilesToListEnd as separate functions
+  - Add focusOnBtnX and focusOnModeSwitchBtn as separate functions, update quitListViewer
+  - Rearrange List Viewer function categories
+
+**v1.0.38: Add Search Filter Input**
+
++ List Viewer module updates:
+  - Add Search button to LVW footer
+  - Add Search Filter input GUI to LVW header
+  - Remove Show or hide GUI button from footer (TO DO)
+  - Add Search Filter input GUI styles
+  - Fix Odd / Even tiles styles with of :not
+  - Add List Viewer Search Input handler (handleSearchFilterInput)
+  - Add Process search / type-ahead string handler (normalize case, apostrophies, diacritics)
+  - Update initListViewer handler with input event listener
+  - Add Filter Tiles / Clear Tiles handlers
+  - Add Show / Hide / Toggle Search Input handlers
+  - Update LVW click and keyboard event handlers
+  - Update LVW tiles focusin and navigation handlers (TO DO)
+  - Update Quit List Viewer / Reset Set Maker handlers
+  - Add LVW keyboard navigation:
+    + Ctrl + Shift + F to toggle search input
+    + Ctrl + Shift + A to select all tiles in Set Maker mode
+    + Enter refreshes filtered tiles if search input in focus
+    + Type-ahead searches for normalized keys with Shift allowed
+
+**v1.0.37: Fix Init Fav Buttons**
+
++ Tunebook updates:
+  - Fix initTunebookFavBtns resetting both favs to radio on reload
+
+**v1.0.36: Add Safari Filter Logic**
+
++ Tunebook update:
+  - Fix disabled Tune Selector options appearing in dropdown list in Safari browser
+  - Add repopulateTuneSelector function for clearing and creating Tune Selector options
+  - Add checkIfSafariBrowser checker function
+  - Update filterTuneBook with Safari fallback logic
+  - Update resetTuneBookMenus with Safari fallback logic
+
+**v1.0.35: Responsive Help Defaults**
+
++ Tunebook updates:
+  - Add default Help Guide instructions via pseudo-elements
+  - Add data-text attribute, update helpGuidePopoverHandler
+  - Add support block styles to Tunebook selectors for browsers with customizable select (Chrome)
+
+**v1.0.34: Add Help Menu Navigation**
+
++ Tunebook updates:
+  - Add Show Quick Help mini button to Help Guide (mobile viewports)
+  - Add Show Help Guide Popover button to Quick Help Dialog, update button handler
+  - Add GitHub README button to Help Guide Popover, update Help Popover handler
+  - Refactor Quick Help Dialog grid, position Open Help Guide / Close Quick Help buttons
+
+**v1.0.33: Add Help Guide Popover**
+
++ Tunebook updates:
+  - Add Help Guide Popover linking to Quick Help Dialog
+  - Add Help Guide Popover handler & status checker
+  - Add basic Help Guide functionality (display item title attr)
+  - Add Show Quick Help button to open Help Dialog from popover
+  - Add data-tunebook attribute for checking Tunebook open state
++ List Viewer updates:
+  - Fix focus shift after long press from List view
++ App updates:
+  - Fix hash routing init
+
+**v1.0.32: Add Set Maker Long Touch**
+
++ List Viewer module updates:
+  - Add separate startSetMaker handler
+  - Add touch event handler for touchstart / touchend / touchmove
+  - Add contextmenu events to LVW mouse events handler
+  - Add Long Press event handling to LVW: Star Set Maker on Long Touch / Right-Click / Shift + Click
++ Tunebook updates:
+  - Change full screen GUI breakpoint for Help Dialog to 480px
+  - Tweak Help Dialog descriptions
+
+**v1.0.31: Add Help Dialog Menu**
+
++ Tunebook updates:
+  - Add Help Dialog HTML and arrow icons
+  - Add Help Dialog CSS with breakpoints and mobile / desktop mode adjustments
+  - Add Help Dialog handlers openHelpDialog & showHelpDescription
+  - Add Help Dialog open and close events to button handler
+  - Add Help Dialog init function initHelpDialog, load on DOMContentLoaded
+  - Add Help Dialog Tunebook-specific shortcut Shift + F1
+  - Add Full Screen Mode Tunebook-specific shortcut Shift + F11
+  - Add Open Chord Viewer with Shift + Enter / Right-Click / Long Touch on Full Screen Button
+  - Add focus on Exit Full Screen Mode button on successful fullscreen event
+  - Add prevent select on button elements
+
+**v1.0.30: Fix Action Menu Taborder**
+
++ Tunebook updates:
+  - Fix Tunebook Actions trigger button styles for desktop mode
+  - Fix tabbing order in Tunebook Actions menu for all modes
+  - Add experimental CSS feature reading-flow to Actions container for supported browsers
+  - Add experimental CSS feature reading-order to Actions items for supported browsers
+
+**v1.0.29: Add LVW Dropdown Override**
+
++ Tunebook updates:
+  - Add List Viewer overrides Tune Selector dropdown to Tunebook options
+  - Add mousedown / mouseup overrides to mouse handlers (only when LVW option selected)
+  - Add Open LVW with Shift + Enter / Right-Click / Long Touch on Tune Selector
+  - Add Hide / Show Fav button containers when switching between radio items and Fav buttons
+  - Fix Footer Fav buttons touch area for smaller viewports
+
+**v1.0.28: Add Fav Btn Right Click**
+
++ Tunebook update:
+  - Add contextmenu event handling to open Fav button picker with right mouse click
+
+**v1.0.27: Fix Fav Btn Keyboard Nav**
+
++ App updates:
+  - Add contextmenu event handling to mouse events handler
+
++ Tunebook updates:
+  - Refactor Long Press for keyboard: Shift + Enter replaces long press
+  - Add prevent contextmenu events on Long Press buttons
+  - Add Footer grid adjustments for small mobile viewports
+
+**v1.0.26: Fix Fav Btn Mobile Styles**
+
++ Tunebook updates:
+  - Fix disappearing Launch Screen Fav button on mobile viewports
+  - Add enlarged small mobile viewport size for Fav button icons / text
+
+**v1.0.25: Add Restore Fav Btns**
+
++ Tunebook updates:
+  - Add save Fav button data to localStorage to button handler
+  - Add Fav button init handler initTunebookFavBtns
+  - Fix Footer padding-right
+
+**v1.0.24: Add Switch Fav Btn**
+
++ Tunebook updates:
+  - Add Footer Fav button switch handler switchTuneBookFavBtn
+  - Add Fav picker mode click override to button handler
+  - Refactor Footer central container to grid
+  - Add styles for Footer Fav buttons
+
+**v1.0.23: Add Long Press handling**
 
 + Project updates:
+  - Add Long Press functionality
+
++ App updates:
+  - Add radio input event handler
+  - Add mouse, touch and keyboard event handlers
+  - Handle mousedown, mouseup, mousemove, touchstart, touchend, touchmove, keydown, keyup
+
++ Tunebook updates:
+  - Add Long Press timeout global variable: longPressTimeoutId
+  - Add Long Press handlers: appSetLongPressTimeout, appClearLongPressTimeout
+  - Add activateLongPressFavBtn handler and update mouse / touch / keyboard event handlers
+  - Add focusOnActivePopoverElem utility function
+  - Rename Footer container classes
+  - Update radio buttons, add Fav btn container
+  - Add Long Press data attributes to Fav buttons
+
+**v1.0.22: Refactor Tunebook Actions**
+
++ Tunebook updates:
+  - Refactor Tunebook Actions Popup menu buttons
+  - Merge Actions buttons with wrapper divs for larger focus area
+  - Add more Actions buttons for Pick Fav buttons mode
+  - Add mode data attr to Actions Popup, "open" by default
+  - Add "pick-fav-left" / "pick-fav-right" mode styles
+  - Actions menu now adjusts depending on Tunebook mode and popup mode
+
+**v1.0.21: Fix LVW & CVW navigation**
+
++ List Viewer module:
+  - Refactor creation of reusable iterative tiles arrays
+  - Fill tileItemsArr and tileTitlesArr separately, reuse tileItemsArr
+  - Fix Shift + <key> navigation in Set Maker, improve selection logic
+
++ Chord Viewer module:
+  - Enlarge default slider width
+
+**v1.0.20: Add Create New Set to LVW**
+
++ List Viewer module:
+  - Add createTuneSetUrl function for creating New Set from tile items
+  - Create Set button now opens New Set URL in ABC Tools
+  - Import ABC Encoder functions for Tune <> Set conversions
+
+**v1.0.19: LVW em Listbox refactor**
+
++ List Viewer module:
+  - Refactor List Viewer to use em units and independent root font-size
+  - Refactor List Viewer tiles as ul / li with role="option"
+  - Refactor footer section, add status div and Create Set button
+  - Add keyboard navigation in line with ARIA Authoring Practices Guide (APG)
+  - Add type-ahead search for List Viewer options in line with APG
+  - Add breakpoints for mobile devices with font coefficients
+  - Add container queries to header and footer for mobile viewports
+
++ Tunebook & Launcher:
+  - Add timeout for status notifications to avoid clash with refocusing
+
+**v1.0.18: Chord Viewer em refactor**
+
++ Chord Viewer module:
+  - Fix triplet bug, add additional ABC cleanup step (accidentals, decorations) to Chord Viewer scripts
+  - Refactor Chord Viewer to use em units and independent root font-size
+  - Refactor dynamically created CVW elements with font-size to use containers
+  - Remove getRootFontSizeModifier from scripts, handled by CSS
+  - Chord Viewer now scales fonts and ui elements independently from app
+  - Add breakpoints for mobile devices with font coefficients
+  - Add more adjustable CSS variables with consistent naming to CVW stylesheet
+
++ List Viewer module:
+  - Fix "need 2+ items" warning entering Set Maker mode
+  - Rename CSS variables for more consistency
+
+**v1.0.17: Session DB Update**
+
++ Session DB Updates:
+  - Update to version 2025.07.16.1
+  - Fix Chordbook triplet bug handled in Chord Viewer update
+
+**v1.0.16: Add Set Maker counters**
+
++ List Viewer / Set Maker module:
+  - Add counter & outline to selected items in Set Maker mode
+  - Add Set Maker data-attr to List Viewer for switching header styles
+  - Add styles to counter spans for dark & light modes
+  - Add recalc function to renumber counters on deselect
+  - Expand reset Set Maker function to include changes
+
+**v1.0.15: Add Set Maker GUI to LVW**
+
++ List Viewer module:
+  - Add List Viewer / Set Maker slider for adjusting tiles height
+  - Add custom styles to slider as progressive enhancement
+  - Add Set Maker / Return to List Viewer buttons
+  - Add basic Set Maker start, select and reset functions
+  - Add List Viewer status messages with setTimeout counter
+  - Refactor List Viewer GUI structure for better tab order
++ Icons:
+  - Renamed setlist / tunes icons for clarity
+  - Reverted Chord Viewer icons to original names for consistency
+
+**v1.0.14: Store Viewer theme/font preferences**
+
++ Chord & List Viewer modules:
+  - Add Chord Viewer font weight setting to App Options
+  - Store color theme preference in localStorage
+  - Restore preferred color theme on app load
+  - Auto-apply preferred browser color theme on first load
+
+**v1.0.13: Add emoji filter option**
+
++ App updates:
+  - Added `Filters: Add random emojis to Set Leaders` option to App Options
+  - Option enabled by default. If disabled, a neutral person avatar is displayed instead
+
+**v1.0.12: Session DB Update**
+
++ Session DB Updates:
+  - Updated to version 2025.07.09.2
+  - Chords from Oleg added to 10 more sets
+
+**v1.0.11: Add Emoji Manager module**
+
+- App updates:
+  - Emoji Manager module added
+
++ Tunebook updates:
+  - Set Leaders emoji generation randomized via `getSupportedAnimalEmojis`
+  - TO DO: Get N unique emojis for Set Leaders and insert after options are filled to prevent duplicates
+
+**v1.0.10: Fix Tunebook focus issues**
+
++ Tunebook updates:
+  - Fixed & improved Chord & List Viewer on exit focus logic
+  - Fixed select dropdown menu jerking in Chrome
+  - TO DO: Reverted select text-align to center, Chromium browsers to be fixed programmatically
+
+**v1.0.9: Session DB Update**
+
++ Project Updates:
+  - Chord Viewer bars now clip content overflowing to the right
+
++ Session DB Updates:
+  - Updated to version 2025.07.07.1
+  - Chordbook updated with new style of repeating chords display
+
+**v1.0.8: Fix CVW alt chord display**
+
++ Chord Viewer & List Viewer updates:
+  - Chord Viewer now displays repeating `"G (Em)" as | G (Em)  / |`
+  - Alt. chords are now auto-separated by thin space
+  - Chord bars are now allowed to overflow between beats to fit long chords
+
+**v1.0.7: Fix Viewers focus on exit**
+
++ Tunebook updates:
+  - New logic for elements receiving focus on exiting Chord & List Viewer
+  - Scripts checks for currently displayed elements with specific data-attr
+  - Full Screen Button is now a fallback focus element with unique data-attr
+  - Added second argument to `displayWarningEffect` as fallback element
+
+**v1.0.6: Fix Viewer Modules GUI**
+
++ Chord Viewer & List Viewer updates:
+  - Removed redundant data-controls attr from buttons
+  - Added missing :focus-visible button outlines
+  - Fixed non-interactable sections from tabbing order
+  - Added dashed outline for Chord Viewer slider
+
+**v1.0.5: Fix Restore Sort by Tag**
+
++ ABC Encoder module updates:
+  - Encoder's Sort by ABC Tag input field now defaults to ''
+
++ App updates:
+  - Version numbers will now exclude dots after 'v'
+  - Cosmetic markup & description changes
+
+**v1.0.4: Session DB Update**
+
++ Session DB Updates:
+  - Updated to version 2025.07.04.1
+  - Fixed composer & minor tweak in Cuas polkas set
+
+**v1.0.3: Version File Added**
+
++ App updates:
+  - `APP_VERSION` & `DB_VERSION` moved to version.js, imported to app scripts
+  - Version values to be used in automation scripts
+
+**v1.0.2: Update CNAME**
+
+**v1.0.1: ABC Encoder Refactored**
+
++ ABC Encoder module updates:
+  - Testing Save & Restore Encoder settings
+  - Testing Add Session Survey Data tweaks
+
++ Session DB updates:
+  - Cuas Polkas added to Session DB
+
++ App updates:
+  - Test Favicons added
+
+**v1.0.0: ABC Encoder Refactored**
+
++ ABC Encoder module updates:
+  - Testing updated ABC Encoder logic with and without N.S.S.S. standard enforced
+  - Testing extended Encoder Advanced Settings
+  - Testing Reset settings to defaults
+
++ Session DB updates:
+  - Session DB updated to 2025-07-01
+  - Testing refactored ABC Encoder output
+  - Added ABC tweaks, adjusted sets to new Medley logic
 </details>
 </details>
 
