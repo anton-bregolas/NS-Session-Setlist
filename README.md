@@ -240,6 +240,15 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Alpha version updates (v.1.0+)</b></summary>
 
+**v1.0.51: Update README & Versioning**
+
++ App updates:
+  - Use 1.0.x instead of 1.0.0.x for alpha version numbers
+  - Revert Session DB links to main
+
++ README updates:
+  - Add Readme entries for v1.0.0-v1.0.51
+
 **v1.0.50: Add Help Guide Descripts**
 
 + Tunebook updates:
