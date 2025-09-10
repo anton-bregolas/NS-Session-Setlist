@@ -50,6 +50,7 @@ body,
 }
 
 .background-container,
+.nss-abc-focus-label,
 .nss-footer-tunebook {
   background-color: var(--gradient-color-left);
   background-image: linear-gradient(90deg, var(--gradient-color-left) 25%, var(--gradient-color-right) 100%);
@@ -315,9 +316,19 @@ main {
 iframe {
   border: 1px solid #ccc;
   background-color: #fff;
+  outline: 0.25rem solid transparent;
+  outline-offset: -0.25rem;
+  transition:
+  filter 0.75s ease-in-out,
+  outline-color 0.5s ease-in-out;
 }
 
-.nss-abctools-embed {
+iframe.focused {
+  outline-color: var(--notification-color-warning);
+  filter: drop-shadow(1px 1px 8px var(--notification-color-warning));
+}
+
+.nss-abc-embed {
   flex: 1;
   position: relative;
   --fullscreen-gui-display: flex;
@@ -386,10 +397,6 @@ select {
 
 select.text-align-left {
   text-align: left;
-}
-
-iframe:is(:focus, :focus-visible) {
-  outline: none;
 }
 
 a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visible {
@@ -551,6 +558,30 @@ option:disabled {
   height: 3.25rem;
 }
 
+.nss-abc-focus-label {
+  outline: none;
+  border: 0.17rem solid var(--notification-color-warning);
+  border-bottom-right-radius: 1.33rem;
+  border-bottom-left-radius: 1.33rem;
+  position: absolute;
+  top: 0;
+}
+
+.nss-abc-focus-label span {
+  margin: 0;
+  color: var(--accent-color);
+  font-size: 1.25rem;
+  padding: 1.25rem;
+}
+
+.nss-abc-focus-label span::after {
+  content: "PRESS THIS OR SHIFT+F4 TO FOCUS ON ABC FRAME";
+}
+
+.nss-abc-focus-label:is(:focus, :focus-visible) {
+  /* outline: none; */
+}
+
 [data-controls="iframe-zoom"],
 [data-controls="iframe-gui"],
 body[data-mode="desktop"] [data-controls="iframe-nav"],
@@ -586,13 +617,13 @@ body[data-mode="mobile"] [data-size="small"] {
   pointer-events: none;
 }
 
-.nss-abctools-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
-.nss-abctools-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-nav"] {
+.nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
+.nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-nav"] {
   display: var(--fullscreen-gui-display);
 }
 
-body[data-mode="desktop"] .nss-abctools-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
-body[data-mode="desktop"] .nss-abctools-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-gui"] {
+body[data-mode="desktop"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
+body[data-mode="desktop"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-gui"] {
   justify-content: space-around;
 }
 

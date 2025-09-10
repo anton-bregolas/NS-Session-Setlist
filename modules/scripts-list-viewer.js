@@ -79,7 +79,8 @@ export function openListViewer(selectList) {
 
     if (!selectItem.hasAttribute("disabled") && !selectItem.text.toLowerCase().match(placeHolderText)) {
 
-      const itemObj = { title: selectItem.text, url: selectItem.value, index: i }
+      const itemObj =
+        { title: selectItem.text, subtitles: selectItem.subtitles, url: selectItem.value, index: i };
 
       tunesArr.push(itemObj);
     }
@@ -221,11 +222,6 @@ function loadTuneTiles(tunesArr, filterArr) {
 
   let listViewerTitleText = `Filters: ${filterArr[0]}`;
 
-  // if (listViewerTitle.textContent === listViewerTitleText) {
-
-  //   return;
-  // }
-
   listViewerTitle.textContent = '';
   listViewerTiles.textContent = '';
   tileItemsArr.length = 0;
@@ -244,9 +240,8 @@ function loadTuneTiles(tunesArr, filterArr) {
 
     const tileItemText =
       filterArr[1] && filterArr[1] === "type"?
-      tune.title.replace(/^[A-Z ]*:[ ]*/, '') :
-      tune.title.includes(':')? `${tune.title.split(':')[1].trim()} [${tune.title.split(':')[0]}]` :
-      tune.title;
+        tune.title.replace(/^[A-Z ]*:[ ]*/, '') :
+        tune.title;
 
     tileTitleSpan.textContent = tileItemText;
     tileTitleSpan.dataset.listViewer = "tune-tile-title";
@@ -256,6 +251,11 @@ function loadTuneTiles(tunesArr, filterArr) {
     tileItem.dataset.lvwAction = "load-item";
     tileItem.dataset.longPress = "on";
     tileItem.classList = "flex-center";
+    tileItem.dataset.title =
+      tune.title.includes(':')?
+        `${tune.title.split(':')[1].trim()} [${tune.title.split(':')[0]}]` :
+        tune.title;
+    tileItem.dataset.subtitles = tune.subtitles || '';
     tileItem.dataset.url = tune.url;
     tileItem.dataset.index = tune.index;
 
@@ -269,7 +269,7 @@ function loadTuneTiles(tunesArr, filterArr) {
     listViewerTiles.appendChild(tileItem);
 
     tileItemsArr.push(tileItem);
-    tileTitlesArr.push(tileItemText);
+    tileTitlesArr.push(tileItemText.replace(/^[A-Z ]*:[ ]*/, ''));
   });
 }
 
@@ -381,13 +381,17 @@ function toggleSetMakerSelection(item, forceSelectMode) {
       const searchFilterVal =
         processTypeAheadStr(listViewerSearchInput.value.trim());
 
-      const tileTextSpan =
-        item.querySelector('[data-list-viewer="tune-tile-title"]');
+      const isTitleMatch =
+        processTypeAheadStr(item.dataset.title).includes(searchFilterVal);
 
-      const tuneTitleStr =
-        processTypeAheadStr(tileTextSpan.textContent);
+      const isSubTitleSearchOn =
+        isLocalStorageOk() && +localStorage.listViewerSearchSubTitles === 1;
 
-      if (!tuneTitleStr.includes(searchFilterVal)) {
+      const isSubTitleMatch = 
+        isSubTitleSearchOn && item.dataset.subtitles &&
+        processTypeAheadStr(item.dataset.subtitles).includes(searchFilterVal);
+
+      if (!isTitleMatch && !isSubTitleMatch) {
 
         ariaHideMe(item);
         item.setAttribute("inert", '');
@@ -943,6 +947,35 @@ function handleListViewerKeyPress(e) {
   const isSetMakerOn =
     listViewerDialog.dataset.setMaker === "on";
 
+  // Handle keyboard shortcuts
+
+  // Open or close Searh / Filter menu
+
+  if (e.key === 'F3' & e.shiftKey) {
+
+    e.preventDefault();
+    toggleSearchFilterInput();
+    return;
+  }
+
+  // Start Set Maker / Return to List Viewer
+
+  if (e.key === 'F4' & e.shiftKey) {
+
+    e.preventDefault();
+
+    if (isSetMakerOn) {
+
+      listViewerTitle.textContent = `Filters: ${lastFilterText}`;
+      resetSetMakerMode();
+      toggleSetMakerGui();
+      return;
+    }
+
+    startSetMaker();
+    return;
+  }
+
   // Remember last Tab / Shift + Tab keys pressed
 
   if (e.key === 'Tab') {
@@ -1335,7 +1368,7 @@ function focusOnTypeAheadMatch() {
 
   let searchStartIndex = Math.max(0, +lastFocusedIndex);
 
-  let match = findMatchingTileObject(searchStartIndex + 1, tileItemsArr.length);
+  let match = findMatchingTileObject(searchStartIndex, tileItemsArr.length);
 
   if (!match && searchStartIndex > 0) {
 
@@ -1430,13 +1463,17 @@ function filterTilesBySearchInput(inputStr) {
         return;
     }
 
-    const tileTextSpan =
-      tile.querySelector('[data-list-viewer="tune-tile-title"]');
-    
-    const tuneTitleStr =
-      processTypeAheadStr(tileTextSpan.textContent);
+    const isTitleMatch =
+      processTypeAheadStr(tile.dataset.title).includes(inputStr);
 
-    if (tuneTitleStr.includes(inputStr) &&
+    const isSubTitleSearchOn =
+      isLocalStorageOk() && +localStorage.listViewerSearchSubTitles === 1;
+
+    const isSubTitleMatch = 
+      isSubTitleSearchOn && tile.dataset.subtitles &&
+      processTypeAheadStr(tile.dataset.subtitles).includes(inputStr);
+
+    if ((isTitleMatch || isSubTitleMatch) &&
         tile.hasAttribute("hidden")) {
 
       tile.removeAttribute("inert");
@@ -1444,7 +1481,7 @@ function filterTilesBySearchInput(inputStr) {
       return;
     }
     
-    if (!tuneTitleStr.includes(inputStr) &&
+    if (!isTitleMatch && !isSubTitleMatch &&
         !tile.hasAttribute("hidden")) {
 
       ariaHideMe(tile);

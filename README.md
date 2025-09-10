@@ -1,7 +1,7 @@
 NS Session Setlist
 ========================================================================================
 
-A tunebook app for the Novi Sad Irish Traditional Music Session integrating Michael Eskin's ABC Transcription Tools. Contains Anton Zille's **ABC Encoder** for converting ABC Sets and Tunes into Session DB files, **Chord Viewer** module for simplified display of chords found in ABCs and **List Viewer** / **Set Maker** module for listing Tunebook items and making ABC Sets.
+The tunebook app of the Novi Sad Irish Traditional Music Session integrating Michael Eskin's ABC Transcription Tools. Contains Anton Zille's **ABC Encoder** for managing ABC collections and creating Session DB files, **Chord Viewer** module for viewing ABC chords and **List Viewer / Set Maker** module for listing Tunebook items and making new ABC Sets.
 
 🎵 [**NS SESSION APP**](https://anton-bregolas.github.io/NS-Session-Setlist/) 🎻 [**ABC ENCODER**](https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html) 🎵
 
@@ -18,10 +18,75 @@ Module Name | GitHub Repo | Help Link |
 
 ## NS Session App
 
-Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project exploring responsive web design and progressive web app paradigms for cross-platform viewing and editing of ABC music notation. This is a single-page client app for working with curated collections of ABC tunes and chords. Version 1.0 serves as a wrapper to Michael Eskin's ABC Transcription Tools for convenient viewing of ABC notation on devices of any viewport size.
+Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project that explores ways of managing ABC music collections across multiple platforms in a simple, streamlined fashion. This is a single-page app that employs responsive design and progressive web app functionality to ensure that an up-to-date version of the session tunes, sets and chords database is accessible from any modern device regardless of its screen size.
+
+The app may be installed via a PWA-supporting browser to guarantee offline access to the Session Tunebook or used in a browser tab. Session DB files are cached by a service worker in both scenarios.
 
 > [!IMPORTANT]
-> The app employs some of the latest web dev features with decent cross-browser support. Updating to the latest version of your browser is advised for the smoothest experience.
+> The app employs some of the latest web dev features. Updating to a fresh version of your browser is advised for the smoothest experience.
+
+### How it works for app user:
+
+Open **Setlist 🎶** or **Tunelist ♫** from the **Launch section** of the app to access the **Tunebook section** and load the latest version of the Session DB. Once loaded, the session’s Sets, Tunes and Chordbook data can be accessed offline. Session DB is set to be updated weekly by default (hard-refresh the app to update manually).
+
+![A screenshot of the Launch section of the app](/assets/screens/screenshot-launch-desktop.webp)
+
+The **Quick Help ⇧** dialog with brief introduction to Tunebook controls opens up on first load. It can later be accessed in the **Help Guide ⍰** menu of the app. Help Guide offers detailed descriptions for every element of the Tunebook interface (press `Shift + F1` or **Show Help** button in the **Tunebook Actions ☰** hamburger menu to view). For help with using ABC Transcription Tools, see Michael Eskin’s detailed <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">User Guide</a>.
+
+![A screenshot of the Quick Help dialog menu of the app](/assets/screens/screenshot-tunebook-quick-help.webp)
+
+The Tunebook interface is split between the **Header**, the **Footer** and the **ABC frame**. Header and Footer are fully keyboard-navigable. See list of [Tunebook Shortcuts](#tunebook-keyboard-shortcuts) for key combinations used in various app sections. See <a href="https://michaeleskin.com/abctools/userguide.html#playing_your_tunes" target="_blank">Playing Your Tunes</a> section of the ABC Transcription Tools User Guide for help with navigation within the ABC frame.
+
+**Optional controls** are accessible via `Shift + Enter` for keyboard users, `Right-Click` for mouse users or `Long Touch` for touchscreen users.
+
+![A screenshot of the Tunebook section of the app](/assets/screens/screenshot-tunebook-desktop.webp)
+
+Use **Tunebook Header** elements to filter and select items, switch between **Setlist 🎶** and **Tunelist ♫** and view the current item in the **Full Screen** mode. Optional controls open **List Viewer / Set Maker** (when used on Tune Selector button) and **Chord Viewer** (when used on Full Screen button).
+
+Use **Tunebook Footer** for accessing shortcuts to various modules and features. Open **Tunebook Actions ☰** menu to view the list of available shortcuts (central button in **Mobile mode**, bottom-right button in **Desktop mode**  or `SHIFT + F2`).
+
+![A screenshot of the Tunebook Actions menu of the app](/assets/screens/screenshot-tunebook-actions.webp)
+
+Both **Mobile 📲** and **Desktop 🖥️** layouts adapt to the current screen size. Wider screen layouts include extra side buttons. Pick two **Fav Buttons** useful for your current layout using optional controls on left-of-center and right-of-center slots. Default layouts feature a pair of **Full Screen behavior** radio buttons that change the binding of the top-right **Full Screen View / 👁️** button.
+
+![Examples of adaptive mobile layout of the Tunebook section of the app](/assets/screens/screenshot-tunebook-mobile.webp)
+
+The app auto-chooses the optimal display mode when the Tunebook is opened and keeps this setting until it is reloaded. ABC Transcription Tools are loaded in view-only mode on devices with small-to-medium screen sizes. To manually change the layout use **Mobile Mode 📲** and **Desktop Mode 🖥️** buttons.
+
+To override the default behavior and always load the Tunebook in the preferred layout, choose `Always open Tunebook in Mobile Mode` or `Always open Tunebook in Desktop Mode` in **App Options ⚙️**
+
+![A screenshot of the Tunebook section of the app when viewed from a tablet device with Mobile Mode and Desktop Mode settings enabled](/assets/screens/screenshot-tunebook-tablet-modes.webp)
+
+The **List Viewer** module brings up a searchable list of filtered Tunebook items. Press `SHIFT + F3` to open List Viewer from the Tunebook interface, press the same combination or `🔍` button to open the **Search / Filter** menu. Use the dialog slider to resize tiles, toggle between color schemes with the theme button. Press `SHIFT + F4`, click on the lower-left **Start** button or use optional controls on any list item to switch to the **Set Maker** mode.
+
+![Examples of adaptive mobile layout of the List Viewer module of the app](/assets/screens/screenshot-list-viewer-mobile.webp)
+
+The **Set Maker** mode offers to combine Tunebook items into new sets using custom ABC Encoder algorithms. Mergeable ABC fields are combined by default (disable in **App Options ⚙️**). The resulting sets are loaded in a new window in ABC Transcription Tools.
+
+![Examples of adaptive mobile layout of the Set Maker module of the app](/assets/screens/screenshot-set-maker-mobile.webp)
+
+The **Chord Viewer** module displays guitar chords from the current ABC in a separate dialog window. Use the dialog slider to scale contents, press the theme button to toggle between color schemes, press the **Show / Hide GUI** button to save more screen space. Chord Viewer remembers all the adjustments made by the user.
+
+![Examples of adaptive mobile layout of the Chord Viewer module of the app](/assets/screens/screenshot-chord-viewer-mobile.webp)
+
+### Tunebook Keyboard Shortcuts
+
+Active Section | Key Combination | Description |
+| --- | --- | --- |
+| **Tunebook / Full Screen** | `SHIFT + F4` | Focus on ABC Frame |
+| **Tunebook / Full Screen** | `SHIFT + "↓"`,<br>`SHIFT + "→"` | Load the next Set / Tune |
+| **Tunebook / Full Screen** | `SHIFT + "↑"`,<br>`SHIFT + "←"` | Load previous Set / Tune |
+| **Tunebook Interface** | `SHIFT + F1` | Open Help Guide menu |
+| **Tunebook Interface** | `SHIFT + F2` | Open Tunebook Actions |
+| **Tunebook Interface** | `SHIFT + F3` | Open List Viewer / Set Maker |
+| **Tunebook Interface** | `SHIFT + F11` | Open Full Screen mode |
+| **Full Screen Mode** | `ESC`,<br>`SHIFT + F11` | Exit Full Screen mode |
+| **Full Screen Mode** | `SHIFT + "+"` | Zoom In (Up to 100%) |
+| **Full Screen Mode** | `SHIFT + "-"` | Zoom Out (Up to 50%) |
+| **ABC Transcription Tools** | `F3` | Rewind playback to start |
+| **ABC Transcription Tools** | `F4` | Open ABC player,<br>Start / Pause playback |
+| **List Viewer / Set Maker** | `SHIFT + F3` | Open Search / Filter menu |
+| **List Viewer / Set Maker** | `SHIFT + F4` | Start Set Maker / Return to List |
 
 ### Tunebook Options Overview
 
@@ -42,9 +107,10 @@ Option Name | Default Setting | Comments |
 | `Chord Viewer: Generate chords dynamically` | **OFF** | Extract chords directly from ABC or Tune Selector instead of Chordbook **[1]** |
 | `Chord Viewer: Use bold font for chords` | **OFF** | Make chords and barlines more readable on small screens |
 | `List Viewer: Always hide slider input GUI` | **OFF** | Do not show List Viewer slider |
+| `List Viewer: Search through ABC subtitles ` | **OFF** | Look through all tune titles & subtitles when filtering the list |
 
 > [!NOTE]
-> **[1]** Due to Cross-Origin Resource Sharing restrictions, Chord Viewer would fall back to last item loaded to Tune Selector when a Tunebook uses ABC Transcription Tools embed. When used with text directly printed to the page, it can extract chords from the currently edited ABC.
+> **[1]** Chord Viewer falls back to the last item loaded to Tune Selector when used with embedded ABC Transcription Tools. For tunebooks printing ABC to a page of the same origin, it can extract chords directly from the text with dynamic mode enabled.
 
 ### Notes for developers
 
@@ -236,6 +302,63 @@ Import Name | Import Description | Details |
 | `makeTunesFromSets`, `sortFilterAbc` | Custom scripts for making ABC Sets | Required for creating ABC Sets and generating Set URLs. Imported from `scripts-abc-encoder.js` by default |
 
 ## Version History
+
+<details>
+  <summary><b>Beta version updates (v.1.1+)</b></summary>
+
+**v1.1.0: Progressive Web App**
+
++ PWA updates:
+  - Add `app.webmanifest`
+  - Add app icons `/assets/icons/`
+  - Add app screenshots `/assets/screens`
+  - Add Service Worker scripts `sw.js`
+  - Add sw.js registration & logging
+  - Set up Service Worker cached files list
+  - Set up Service Worker cache versioning (ns-app-cache-110)
+  - Set Service Worker expiration / reload time limit (7 days)
+
++ Tunebook updates:
+  - Add subtitles handling to ABC Tools scripts
+  - Add listViewerSearchSubTitles to Tunebook options (default: 0)
+  - Add tuneBookAlwaysUseDesktopMode to Tunebook options (default: 0)
+  - Add ABC frame focus label button to aid keyboard navigation
+  - Add ABC frame focus label handling scripts toggleAbcFocusLabel, initAbcFrameLabel
+  - Add ABC frame focus label tab-through triggers handling to keyboard handler
+  - Update names in HTML, scripts & styles: helpDialog -> quickHelpDialog
+  - Update persistent mode handling (Mobile and Desktop)
+  - Add keyboard shortcuts handling:
+    * `SHIFT + F2` Open Tunebook Actions
+    * `SHIFT + F2`, `ESC` Close Tunebook Actions
+    * `SHIFT + F3` Open List Viewer / Set Maker
+    * `SHIFT + F4` Focus on ABC Frame
+    * `SHIFT + F11`, `ESC` Fulls Screen: Exit Full Screen mode
+    * `SHIFT + "+"` Fulls Screen: Zoom In
+    * `SHIFT + "-"` Fulls Screen: Zoom Out
+    * `SHIFT + "↓"`, `SHIFT + "→"` Load next Set / Tune
+    * `SHIFT + "↑"`, `SHIFT + "←"` Load previous Set / Tune
+
++ ABC Encoder updates:
+  - Add ABC Subtitles handling to Encode (New Session DB JSON format)
+  - Add subtitles key/value pairs to `sets.json` and `tunes.json`
+
++ List Viewer updates:
+  - Add ABC Subtitles data to tiles
+  - Add ABC Subtitles Search / Filter handling
+  - Fix starting search index for Typeahead
+  - Add keyboard shortcuts handling:
+    * `SHIFT + F3` Open Search / Filter menu
+    * `SHIFT + F4` Start Set Maker / Return to List
+
++ Chord Viewer updates:
+  - Fix Show / Hide GUI button opacity in focused state
+
++ README updates:
+  - Add Tunebook manual
+  - Add keyboard shortcuts
+  - Add app screenshots
+  - Update short descriptions
+</details>
 
 <details>
   <summary><b>Alpha version updates (v.1.0+)</b></summary>
