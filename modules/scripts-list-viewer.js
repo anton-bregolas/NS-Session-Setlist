@@ -80,7 +80,7 @@ export function openListViewer(selectList) {
     if (!selectItem.hasAttribute("disabled") && !selectItem.text.toLowerCase().match(placeHolderText)) {
 
       const itemObj =
-        { title: selectItem.text, subtitles: selectItem.subtitles, url: selectItem.value, index: i };
+        { title: selectItem.text, subtitles: selectItem.dataset.subtitles, url: selectItem.value, index: i };
 
       tunesArr.push(itemObj);
     }

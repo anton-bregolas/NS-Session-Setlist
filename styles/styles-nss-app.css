@@ -578,10 +578,6 @@ option:disabled {
   content: "PRESS THIS OR SHIFT+F4 TO FOCUS ON ABC FRAME";
 }
 
-.nss-abc-focus-label:is(:focus, :focus-visible) {
-  /* outline: none; */
-}
-
 [data-controls="iframe-zoom"],
 [data-controls="iframe-gui"],
 body[data-mode="desktop"] [data-controls="iframe-nav"],
