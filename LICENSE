@@ -1,9 +1,11 @@
 MIT License
+====================
 
 NS-Session-Setlist: Copyright (c) 2024-2025 Anton Zille
+abcjs: Copyright (c) 2009-2025 Paul Rosen and Gregory Dyke
 abctools: Copyright (c) 2023-2025 Michael Eskin
-lz-string: Copyright (c) 2013-2023 Pieroxy
 ap-style-title-case: Copyright (c) 2016-2022 Zeke Sikelianos
+lz-string: Copyright (c) 2013-2023 Pieroxy
 p-limit: Copyright (c) 2018-2024 Sindre Sorhus
 p-throttle: Copyright (c) 2018-2024 Sindre Sorhus
 
@@ -26,6 +28,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 BSD 3-Clause License
+====================
 
 popover-polyfill: Copyright (c) 2022-2023 OddBird
 
@@ -53,4 +56,3 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-

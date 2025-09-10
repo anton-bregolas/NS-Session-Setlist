@@ -166,6 +166,10 @@
   outline-offset: 0.38em;
 }
 
+[data-cvw-action].btn-cvw[data-cvw-gui="hidden"] {
+  opacity: 0.3;
+}
+
 [data-cvw-action].btn-x:is(:hover, :focus),
 [data-cvw-action].btn-cvw:focus-visible {
   outline: 0.2em solid;

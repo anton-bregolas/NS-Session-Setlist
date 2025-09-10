@@ -22,6 +22,7 @@ export const abcTunebookDefaults = {
     // Tunebook options
     abcToolsSaveAndRestoreTunes: "1",
     tuneBookAlwaysUseMobileMode: "0",
+    tuneBookAlwaysUseDesktopMode: "0",
     tuneBookShareLinksToAbcTools: "0",
     abcToolsFullScreenOpensNewWindow: "0",
     // Advanced Tunebook options
@@ -35,7 +36,8 @@ export const abcTunebookDefaults = {
     listViewerOverrideTuneSelector: "0",    
     chordViewerAllowDynamicChords: "0",
     chordViewerUseBoldFonts: "0",
-    listViewerHideSliderGui: "0"
+    listViewerHideSliderGui: "0",
+    listViewerSearchSubTitles: "0"
 };
 
 ///////////////////////////////////////////
@@ -248,8 +250,9 @@ export function populateTuneSelector(tuneBook) {
         option.value = tune.url;
         option.textContent = tune.name;
         option.label = tune.name.split(': ')[1];
+        option.dataset.subtitles = tune.subtitles || '';
         option.dataset.tunetype = tune.type;
-        option.dataset.leaders = tune.leaders;
+        option.dataset.leaders = tune.leaders || '';
 
         if (currentTuneType !== tune.type) {
 
@@ -931,7 +934,7 @@ export async function handleFullScreenButton(altView) {
             return;
         }
 
-        const abcToolsContainer = document.querySelector('.nss-abctools-embed');
+        const abcToolsContainer = document.querySelector('.nss-abc-embed');
 
         const requestFullScreen = abcToolsContainer.requestFullscreen ||
                                   abcToolsContainer.webkitRequestFullScreen ||

@@ -8,7 +8,8 @@ import { parseAbcFromFile, parseEncoderImportFile, initEncoderSettings, download
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
-import { APP_VERSION, DB_VERSION } from '../version.js'
+import { APP_VERSION, DB_VERSION } from '../version.js';
+import { CACHE_EXPIRES_DAYS } from '../sw.js'
 
 ///////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist App Scripts
@@ -56,8 +57,8 @@ const allPlayAlongEls = document.querySelectorAll('.nss-playalong-el');
 const tuneSelectorTitle = document.querySelector('#tuneSelectorTitle');
 export const filterOptions = document.querySelector('#filterOptions');
 const tuneBookTitle = document.querySelector('#nss-tunebook-title');
-const abcContainer = document.querySelector('.nss-abctools-embed');
 const appNavTitle = document.querySelector('#nss-appnav-title');
+const abcContainer = document.querySelector('.nss-abc-embed');
 
 // Define App Menu elements
 
@@ -75,7 +76,7 @@ const tuneBookActionsHeaderBtn = document.querySelector('#nss-tunebook-actions-h
 
 const chordViewerDialog = document.getElementById('chord-viewer');
 const listViewerDialog = document.getElementById('list-viewer');
-const helpDialog = document.getElementById('quick-help');
+const quickHelpDialog = document.getElementById('quick-help');
 
 ////////////////////////////////
 // APP LAUNCHERS
@@ -163,7 +164,7 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
         displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "success");
 
-        openHelpDialog();
+        openQuickHelpDialog();
 
         localStorage.tuneBookInitialized_NSSSAPP = 1;
       }
@@ -190,12 +191,14 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
     return;
   }
 
-  // Refresh Tunebook if desktop mode was switched on while persistent mobile mode is on
+  // Refresh Tunebook if persistent mode setting is different from current mode
 
-  if (lastTuneBookMode === "desktop" && 
-      (localStorageOk() && +localStorage.tuneBookAlwaysUseMobileMode === 1)) {
+  if (localStorageOk() &&
+      (lastTuneBookMode === "desktop" && +localStorage.tuneBookAlwaysUseMobileMode === 1) ||
+      (lastTuneBookMode === "mobile" && +localStorage.tuneBookAlwaysUseDesktopMode === 1)) {
 
-    lastTuneBookMode = "mobile";
+    lastTuneBookMode =
+      lastTuneBookMode === "mobile"? "desktop" : "mobile";
 
     refreshTuneBook();
   }
@@ -545,7 +548,7 @@ function toggleFullScreenGui(toggleEl) {
 
   if (toggleEl === "toggle-gui-fullscreen") {
 
-    guiElsToToggle = abcContainer.querySelectorAll('nss-iframe-gui-container');
+    guiElsToToggle = abcContainer.querySelectorAll('.nss-iframe-gui-container');
 
     if (abcContainer.style.getPropertyValue("--fullscreen-gui-display") === "none") {
 
@@ -592,6 +595,8 @@ async function exitFullScreenMode() {
   try {
 
     await exitFullScreen.call(document);
+
+    toggleAbcFocusLabel("hide");
 
   } catch {
 
@@ -671,6 +676,28 @@ function switchTuneBookFavBtn(btn, containerData) {
   favBtnContainer.textContent = '';
 
   favBtnContainer.appendChild(favBtn);
+}
+
+// Show or hide ABC embed focus label
+
+function toggleAbcFocusLabel(actionType) {
+
+  const abcFocusLabel =
+    document.querySelector('.nss-abc-focus-label');
+
+  if (actionType === "show" &&
+      abcFocusLabel.hasAttribute("hidden")) {
+
+    ariaShowMe(abcFocusLabel);
+    return;
+  }
+
+  if (actionType === "hide" &&
+      !abcFocusLabel.hasAttribute("hidden")) {
+
+    ariaHideMe(abcFocusLabel);
+    return;
+  }
 }
 
 ////////////////////////////////
@@ -768,33 +795,33 @@ function showHelpGuidePopover() {
 
 // Open Quick Help Dialog overlay
 
-function openHelpDialog() {
+function openQuickHelpDialog() {
 
   if (tuneBookActionsHeaderBtn.hasAttribute("hidden")) {
 
-    helpDialog.dataset.popsUpFrom = "footer";
+    quickHelpDialog.dataset.popsUpFrom = "footer";
 
   } else {
 
-    helpDialog.dataset.popsUpFrom = "header";
+    quickHelpDialog.dataset.popsUpFrom = "header";
   }
 
   if (tuneBookTitle.dataset.type === "Tune") {
 
-    helpDialog.dataset.tbkLoaded = "tunes";
+    quickHelpDialog.dataset.tbkLoaded = "tunes";
   
   } else {
 
-    helpDialog.dataset.tbkLoaded = "sets";
+    quickHelpDialog.dataset.tbkLoaded = "sets";
   }
 
   const helpTextDiv =
-    helpDialog.querySelector('.nss-qhelp-description');
+    quickHelpDialog.querySelector('.nss-qhelp-description');
     
   helpTextDiv.textContent =
     "Select an element label to view description";
 
-  helpDialog.showModal();
+  quickHelpDialog.showModal();
 }
 
 // Show description for Help Dialog item
@@ -805,7 +832,7 @@ function showQuickHelpDescription(event) {
 
   if (!helpItem) return;
 
-  const helpTextDiv = helpDialog.querySelector('.nss-qhelp-description');
+  const helpTextDiv = quickHelpDialog.querySelector('.nss-qhelp-description');
 
   helpTextDiv.textContent = helpItem.title;
 
@@ -826,6 +853,25 @@ function focusOnTuneBookActions() {
     const focusElem = getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
 
     if (focusElem) focusElem.focus();
+}
+
+// Shift focus to the embedded ABC content
+// Temporarily highlight the ABC frame
+
+function focusOnAbcFrame() {
+
+  tuneFrame.contentWindow.focus();
+
+  let abcFrame = tuneFrame;
+
+  if (!abcFrame) return;
+
+  abcFrame.classList.add("focused");
+
+  setTimeout(() => {
+
+    abcFrame.classList.remove("focused");
+  }, 1500);
 }
 
 // Shift focus to the specific element of a currently open popover
@@ -1335,7 +1381,13 @@ export async function updateData(dataJson, newData) {
 
   dataJson.push(...newData);
 
-  console.log(`NS Session App:\n\nSession DB updated`);
+  const dataType =
+    dataJson === tuneSets? "Sets" :
+    dataJson === tuneList? "Tunes" :
+    dataJson === setChords? "Set Chords" : "Tune Chords";
+
+  // console.log(`NS Session App:\n\nSession DB updated`);
+  console.log(`NS Session App:\n\n${dataType} data loaded`);
 }
 
 // Clear Session DB JSONs
@@ -1470,6 +1522,15 @@ async function appButtonHandler(btn) {
     document.body.dataset.mode === "desktop"?
     tuneBookFooter.querySelector('[data-controls="mode"]').focus() :
     tuneBookFooter.querySelector('[data-controls="tunebook-actions-mobile"]').focus();
+    return;
+  }
+
+  // Focus Control Buttons: Focus on target element
+
+  if (btn.dataset.focus && btn.dataset.focus === "abc-frame") {
+
+    toggleAbcFocusLabel("hide");
+    focusOnAbcFrame();
     return;
   }
 
@@ -1685,7 +1746,7 @@ async function appButtonHandler(btn) {
 
   if (btn.id === 'nss-help-popover-open') {
 
-    helpDialog.close();
+    quickHelpDialog.close();
 
     showHelpGuidePopover();
 
@@ -1694,7 +1755,7 @@ async function appButtonHandler(btn) {
 
   if (btn.id === 'nss-qhelp-dialog-close') {
 
-    helpDialog.close();
+    quickHelpDialog.close();
 
     focusOnTuneBookActions();
 
@@ -1804,6 +1865,12 @@ async function appCheckBoxHandler(checkBox) {
         displayNotification("Persistent Tunebook mobile mode disabled", "success");
       break;
 
+    case 'tuneBookAlwaysUseDesktopMode':
+      checkBox.checked?
+        displayNotification("Persistent Tunebook desktop mode enabled", "success") :
+        displayNotification("Persistent Tunebook desktop mode disabled", "success");
+      break;
+
     case 'tuneBookShareLinksToAbcTools':
       checkBox.checked?
         displayNotification("App will now generate share links to ABC Transcription Tools", "success") :
@@ -1873,23 +1940,27 @@ async function appCheckBoxHandler(checkBox) {
       break;
 
     case 'chordViewerUseBoldFonts':
-      const chordViewerChords = document.querySelector('[data-chord-viewer="chords-container"]');
       checkBox.checked?
-        chordViewerChords.style.fontWeight = "bold" :
-        chordViewerChords.style.removeProperty("font-weight");
+        document.querySelector('[data-chord-viewer="chords-container"]').style.fontWeight = "bold" :
+        document.querySelector('[data-chord-viewer="chords-container"]').style.removeProperty("font-weight");
       checkBox.checked?
         displayNotification("Chord Viewer will now use bold font weight for chords", "success") :
         displayNotification("Chord Viewer will now use normal font weight for chords", "success");
       break;
 
     case 'listViewerHideSliderGui':
-      const listViewerSlider = document.querySelector('[data-list-viewer="slider"]');
       checkBox.checked?
-        ariaHideMe(listViewerSlider) :
-        ariaShowMe(listViewerSlider);
+        ariaHideMe(document.querySelector('[data-list-viewer="slider"]')) :
+        ariaShowMe(document.querySelector('[data-list-viewer="slider"]'));
       checkBox.checked?
         displayNotification("List Viewer Slider GUI has been hidden", "success") :
         displayNotification("List Viewer Slider GUI will now be displayed", "success");
+      break;
+
+    case 'listViewerSearchSubTitles':
+      checkBox.checked?
+        displayNotification("List Viewer Search will now look through all ABC subtitles", "success") :
+        displayNotification("List Viewer Search will now look through tile names", "success");
       break;
 
     // Encoder Settings
@@ -2848,20 +2919,49 @@ function appWindowTouchEventHandler(event) {
 
 function appWindowKeyboardEventHandler(event) {
 
+  // Handle Escape key press with open popovers
+
+  if (event.type === 'keydown' &&
+      event.key === 'Escape' &&
+      tuneBookActionsPopup.matches(':popover-open')) {
+
+    hideTuneBookActionsMenu();
+    focusOnTuneBookActions();
+    return;
+  }
+
   // Handle Tunebook-specific shortcuts
 
   if (event.type === 'keydown' &&
       event.shiftKey &&
       checkIfTunebookOpen() &&
+      !document.fullscreenElement &&
       !checkIfHelpMenuOpen() &&
+      !quickHelpDialog.open &&
       !chordViewerDialog.open &&
-      !listViewerDialog.open &&
-      !document.fullscreenElement) {
+      !listViewerDialog.open) {
 
     switch (event.key) {
       case "F1":
         event.preventDefault();
         showHelpGuidePopover();
+        return;
+
+      case "F2":
+        event.preventDefault();
+        focusOnTuneBookActions();
+        document.activeElement.click();
+        return;
+
+      case "F3":
+        event.preventDefault();
+        openSettingsMenu("list-viewer");
+        return;
+
+      case "F4":
+        event.preventDefault();
+        toggleAbcFocusLabel("hide");
+        focusOnAbcFrame();
         return;
 
       case "F11":
@@ -2872,6 +2972,121 @@ function appWindowKeyboardEventHandler(event) {
       default:
         break;
     }    
+  }
+
+  // Handle Tunebook arrow navigation
+
+  if (event.type === 'keydown' &&
+      event.shiftKey &&
+      event.key.startsWith('Arrow') &&
+      checkIfTunebookOpen() &&
+      !checkIfHelpMenuOpen() &&
+      !quickHelpDialog.open &&
+      !chordViewerDialog.open &&
+      !listViewerDialog.open) {
+
+    switch (event.key) {
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        event.preventDefault();
+        switchTuneBookItem("prev");
+        return;
+
+      case 'ArrowRight':
+      case 'ArrowDown':
+        event.preventDefault();
+        switchTuneBookItem("next");
+        return;
+
+      default:
+        break;
+    }
+  }
+
+  // Handle triggers for ABC Frame focus popup label
+
+  if (event.type === 'keydown' &&
+      event.key === 'Tab' &&
+      ((!event.shiftKey &&
+        event.target.id === "fullScreenButton") ||
+      (!checkIfMobileMode() &&
+        event.shiftKey &&
+        event.target.id === "nss-tunebook-exit-footer") ||
+      (!document.fullscreenElement &&
+        event.shiftKey &&
+        event.target.dataset.load &&
+        event.target.dataset.load === "prev") ||
+      (document.fullscreenElement &&
+        event.shiftKey &&
+        event.target.dataset.load &&
+        event.target.dataset.load === "zoom-in") ||
+      (document.fullscreenElement &&
+        !event.shiftKey &&
+        event.target.dataset.load &&
+        event.target.dataset.load === "exit-fullscreen") ||
+      (document.fullscreenElement &&
+        event.shiftKey &&
+        abcContainer.getAttribute("style").startsWith("--fullscreen-gui-display: none") &&
+        event.target.dataset.load &&
+        event.target.dataset.load === "toggle-gui-fullscreen"))
+      ) {
+
+    toggleAbcFocusLabel("show");
+    return;
+  }
+
+  // Handle Full Screen mode shortcuts
+
+  if (document.fullscreenElement &&
+      checkIfTunebookOpen() &&
+      event.type === 'keydown' &&
+      event.shiftKey) {
+
+    switch(event.keyCode) {
+      case 61:
+      case 107:
+      case 187:
+        event.preventDefault();
+        zoomTuneBookItem("zoom-in");
+        return;
+
+      case 173:
+      case 109:
+      case 189:
+        event.preventDefault();
+        zoomTuneBookItem("zoom-out");
+        return;
+    
+      default:
+        break;
+    }
+
+    switch (event.key) {
+      case "F4":
+        event.preventDefault();
+        focusOnAbcFrame();
+        return;
+
+      case "F11":
+        event.preventDefault();
+        exitFullScreenMode();
+        return;
+    
+      default:
+        break;
+    }
+    return;
+  }
+
+  // Handle Help Guide menu shortcuts
+
+  if (checkIfHelpMenuOpen() &&
+      event.type === 'keydown' &&
+      event.key === "Escape") {
+
+    quitHelpGuidePopover();
+    focusOnTuneBookActions();
+    return;
   }
 
   // Handle keyboard events on interactable elements
@@ -3041,7 +3256,7 @@ function helpGuidePopoverHandler(event) {
     if (helpData === 'quick-help') {
 
       quitHelpGuidePopover();
-      openHelpDialog();
+      openQuickHelpDialog();
       return;
     }
 
@@ -3818,16 +4033,18 @@ function initAppMode() {
 }
 
 // Initialize Tunebook mode based on viewport dimensions
-// Optional: Always load Tunebook in mobile mode if setting enabled
+// Optional: Always load Tunebook in chosen mode if persistent setting enabled
 
 function initTunebookMode() {
 
   const viewPortW = getViewportWidth();
   const viewPortH = getViewportHeight();
 
-  if ((lastTuneBookMode !== "desktop" && 
-      (lastTuneBookMode === "mobile" || viewPortW < 880 || viewPortH <= 768)) || 
-      (localStorageOk() && +localStorage.tuneBookAlwaysUseMobileMode === 1)) {
+  if (localStorageOk() &&
+      +localStorage.tuneBookAlwaysUseDesktopMode === 0 &&
+      (lastTuneBookMode !== "desktop" &&
+      (lastTuneBookMode === "mobile" || viewPortW < 880 || viewPortH <= 768)) ||
+      +localStorage.tuneBookAlwaysUseMobileMode === 1) {
 
     document.body.dataset.mode = "mobile";
 
@@ -3858,14 +4075,24 @@ function initFullScreenEvents() {
 
 // Initialize Help Dialog
 
-function initHelpDialog() {
+function initQuickHelpDialog() {
 
-  if (!helpDialog) return;
+  if (!quickHelpDialog) return;
 
   ['mouseover', 'focusin'].forEach(eventType => {
 
-    helpDialog.addEventListener(eventType, showQuickHelpDescription);
+    quickHelpDialog.addEventListener(eventType, showQuickHelpDescription);
   });
+}
+
+// Initialize popup ABC Frame focus button with control hints
+
+function initAbcFrameLabel() {
+
+  const focusLabelBtn =
+    document.querySelector('[data-focus="abc-frame"]');
+
+  focusLabelBtn.addEventListener('focusout', () => toggleAbcFocusLabel("hide"));
 }
 
 // Initialize popover polyfill warning if the browser doesn't support Popover API
@@ -3917,12 +4144,33 @@ function initWindowEvents() {
 document.addEventListener('DOMContentLoaded', () => {
 
   initPopoverWarning();
-  initHelpDialog();
+  initQuickHelpDialog();
   initWindowEvents();
   initAppSettings();
+  initAbcFrameLabel();
   initChordViewer();
   initListViewer();
   appRouterOnLoad();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });
+
+////////////////////////////////
+// SERVICE WORKER
+///////////////////////////////
+
+// Register service worker on window load
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('../sw.js', { type: 'module' })
+      .then((registration) => {
+        console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
+        console.log(`[NS App Service Worker]\n\n` + `Cache set to expire in ${CACHE_EXPIRES_DAYS} days`);
+      })
+      .catch((error) => {
+        console.warn(`[NS App Service Worker]\n\n` + `Registration failed!\n\n` + error);
+      });
+  });
+}

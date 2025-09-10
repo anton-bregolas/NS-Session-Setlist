@@ -3417,6 +3417,7 @@ async function getEncodedAbc(abcContent, fileName) {
 
 // Encode ABC contents into ABC Tools-readable URL using lz-string, extract
 // Tune Name, Tune Type and Set Leaders, return data in an array of objects
+// Additionally extract Subtitles for Tune / Set if secondary titles found
 
 function encodeTunesForAbcTools(abcContent) {
 
@@ -3449,15 +3450,42 @@ function encodeTunesForAbcTools(abcContent) {
                 
                 if (tuneLine.startsWith('T:') && !encodedAbcArr[i].name) {
 
-                    encodedAbcArr[i].name = tuneLine.split('T:')[1].trim();;
+                    // Extract primary title
+
+                    const abcPrimaryTitle = tuneLine.split('T:')[1].trim();
+
+                    encodedAbcArr[i].name = abcPrimaryTitle;
+
+                    // Extract secondary titles
+
+                    const subTitlesArr =
+                        splitTuneArr.filter(line => line.match(/^T:.*/)).slice(1);
+
+                    let subTitlesStr = '';
+
+                    if (subTitlesArr.length) {
+
+                        subTitlesStr = 
+                            subTitlesArr.
+                                map(title => title.replace(/T:\s*/, '')).
+                                join('; ');
+                    }
+
+                    encodedAbcArr[i].subtitles = subTitlesStr;
                 }
 
                 if (tuneLine.startsWith('R:') && !encodedAbcArr[i].type) {
 
-                    const tuneTypeArr = tuneLine.split('R:')[1].trim().split(/[\s,-]/);
+                    const tuneTypeArr =
+                        tuneLine.split('R:')[1].
+                        trim().split(/[\s,-]/);
+
                     let tuneType = '';
 
-                    tuneType = tuneTypeArr.filter(word => word !== '').map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+                    tuneType =
+                        tuneTypeArr.filter(word => word !== '').
+                        map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).
+                        join(' ');
 
                     encodedAbcArr[i].type = tuneType;
                 }

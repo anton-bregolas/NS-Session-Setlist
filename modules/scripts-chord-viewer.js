@@ -261,12 +261,12 @@ function handleChordViewerClick(event) {
     if (titleContainer.hasAttribute("hidden")) {
 
       ariaShowMe(titleContainer);
-      actionTrigger.style.removeProperty("opacity");
+      actionTrigger.dataset.cvwGui = "visible";
 
     } else {
 
       ariaHideMe(titleContainer);
-      actionTrigger.style.opacity = 0.3;
+      actionTrigger.dataset.cvwGui = "hidden";
     }
 
     chordViewerGui.forEach(guiElem => {

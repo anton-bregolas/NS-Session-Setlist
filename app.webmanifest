@@ -1,0 +1,133 @@
+{
+  "name": "NS Session Setlist",
+  "short_name": "NS Setlist",
+  "start_url": "index.html",
+  "display": "standalone",
+  "description": "A Tunebook app of the Novi Sad Irish traditional music session. Integrates Michael Eskin's ABC Transcription Tools and Anton Zille's ABC Chord Viewer, List Viewer and Set Maker.",
+  "lang": "en",
+  "dir": "auto",
+  "theme_color": "#140028",
+  "background_color": "#442069",
+  "categories": ["music"],
+  "orientation": "any",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "assets/icons/app-icon-maskable-192x192.png?v=110",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icons/app-icon-192x192.png?v=110",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/app-icon-maskable-512x512.png?v=110",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icons/app-icon-512x512.png?v=110",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screens/screenshot-launch-tablet-1080.webp",
+      "sizes": "810x1080",
+      "type": "image/webp",
+      "description": "A screenshot of the Launch section of the app",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "assets/screens/screenshot-playalong-tablet.webp",
+      "sizes": "810x1080",
+      "type": "image/webp",
+      "description": "A screenshot of the Play Along section of the app",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "assets/screens/screenshot-tunebook-tablet-1080.webp",
+      "sizes": "810x1080",
+      "type": "image/webp",
+      "description": "A screenshot of the Tunebook section of the app",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "assets/screens/screenshot-tunebook-mobile-1080.webp",
+      "sizes": "810x1080",
+      "type": "image/webp",
+      "description": "Examples of adaptive mobile layout of the Tunebook section of the app",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "assets/screens/screenshot-chord-viewer-tablet-1080.webp",
+      "sizes": "810x1080",
+      "type": "image/webp",
+      "description": "A screenshot of the Chord Viewer module of the app",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "assets/screens/screenshot-launch-desktop.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "A screenshot of the Launch section of the app",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screens/screenshot-tunebook-desktop.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "A screenshot of the Tunebook section of the app",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screens/screenshot-tunebook-actions.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "A screenshot of the Tunebook Actions menu of the app",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screens/screenshot-tunebook-mobile.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "Examples of adaptive mobile layout of the Tunebook section of the app",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screens/screenshot-chord-viewer-desktop.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "A screenshot of the Chord Viewer module of the app",
+      "form_factor": "wide"
+    },
+        {
+      "src": "assets/screens/screenshot-chord-viewer-mobile.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "Examples of adaptive mobile layout of the Chord Viewer module of the app",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screens/screenshot-list-viewer-mobile.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "Examples of adaptive mobile layout of the List Viewer module of the app",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screens/screenshot-set-maker-mobile.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "Examples of adaptive mobile layout of the Set Maker module of the app",
+      "form_factor": "wide"
+    }
+  ]
+}
