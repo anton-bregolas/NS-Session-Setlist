@@ -9,7 +9,6 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 import { APP_VERSION, DB_VERSION } from '../version.js';
-import { CACHE_EXPIRES_DAYS } from '../sw.js'
 
 ///////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist App Scripts
@@ -4092,6 +4091,8 @@ function initAbcFrameLabel() {
   const focusLabelBtn =
     document.querySelector('[data-focus="abc-frame"]');
 
+  if (!focusLabelBtn) return;
+
   focusLabelBtn.addEventListener('focusout', () => toggleAbcFocusLabel("hide"));
 }
 
@@ -4164,10 +4165,9 @@ document.addEventListener('DOMContentLoaded', () => {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('../sw.js', { type: 'module' })
+      .register('../sw.js')
       .then((registration) => {
         console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
-        console.log(`[NS App Service Worker]\n\n` + `Cache set to expire in ${CACHE_EXPIRES_DAYS} days`);
       })
       .catch((error) => {
         console.warn(`[NS App Service Worker]\n\n` + `Registration failed!\n\n` + error);
