@@ -140,9 +140,9 @@ export function initListViewer() {
   listViewerTiles.addEventListener('contextmenu', handleTilesMouseEvents);
   listViewerTiles.addEventListener('keydown', handleTilesKeyboardNavigation);
 
-  listViewerTiles.addEventListener('touchstart', handleTilesTouchEvents);
-  listViewerTiles.addEventListener('touchend', handleTilesTouchEvents);
-  listViewerTiles.addEventListener('touchmove', handleTilesTouchEvents);
+  listViewerTiles.addEventListener('touchstart', handleTilesTouchEvents, { passive: true });
+  listViewerTiles.addEventListener('touchend', handleTilesTouchEvents, { passive: true });
+  listViewerTiles.addEventListener('touchmove', handleTilesTouchEvents, { passive: true });
 
   listViewerSearchInput.addEventListener('input', handleSearchFilterInput);
 

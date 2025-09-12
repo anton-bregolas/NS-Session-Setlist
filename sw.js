@@ -7,6 +7,11 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll([
+        'assets/icons/app-icon-192x192.png',
+        'assets/icons/app-icon-512x512.png',
+        'assets/icons/app-icon-maskable-192x192.png',
+        'assets/icons/app-icon-maskable-512x512.png',
+        'assets/icons/apple-touch-icon.png',
         'assets/icons/icons.svg',
         'assets/icons/icons-chord-viewer.svg',
         'assets/images/playalong-polkas-johnwalshs.jpg',
@@ -30,6 +35,9 @@ self.addEventListener('install', (event) => {
         'styles/styles-list-viewer.css',
         'styles/styles-nss-app.css',
         'abc-encoder.html',
+        'app.webmanifest',
+        'favicon.ico',
+        'favicon.svg',
         'index.html',
         'version.js'
       ]);
@@ -87,7 +95,7 @@ self.addEventListener('fetch', (event) => {
             }
             // If not found in cache or outdated, try to retrieve a fresh copy
             console.log(`[NS App Service Worker]\n\n` + `Session DB missing or outdated\n\n` + `Fetching a fresh version...`);
-            return fetchWithTimeout(event.request, 60000)
+            return fetchWithTimeout(event.request, 30000)
               .then((networkResponse) => {
                 if (navigator.onLine && networkResponse && networkResponse.ok) {
                   // Clone the network response without accessing its body
@@ -156,10 +164,10 @@ function isCacheExpired(cachedResponse, maxAgeInDays) {
   // Helper function preventing infinite loading if connection is lost during fetch request
 
 function fetchWithTimeout(request, timeout) {
-    return Promise.race([
-      fetch(request),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error(`[NS App Service Worker]\n\n` + `Fetch request timed out`)), timeout)
-      ),
-    ]);
-  }
+  return Promise.race([
+    fetch(request),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error(`[NS App Service Worker]\n\n` + `Fetch request timed out`)), timeout)
+    ),
+  ]);
+}

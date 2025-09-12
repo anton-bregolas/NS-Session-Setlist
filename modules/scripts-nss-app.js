@@ -4127,11 +4127,11 @@ function initWindowEvents() {
 
   window.addEventListener('keyup', appWindowKeyboardEventHandler);
 
-  window.addEventListener('touchstart', appWindowTouchEventHandler);
+  window.addEventListener('touchstart', appWindowTouchEventHandler, { passive: true });
 
-  window.addEventListener('touchend', appWindowTouchEventHandler);
+  window.addEventListener('touchend', appWindowTouchEventHandler, { passive: true });
 
-  window.addEventListener('touchmove', appWindowTouchEventHandler);
+  window.addEventListener('touchmove', appWindowTouchEventHandler, { passive: true });
 
   window.addEventListener('resize', appWindowResizeHandler);
 
@@ -4165,7 +4165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('../sw.js')
+      .register('/sw.js')
       .then((registration) => {
         console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
       })

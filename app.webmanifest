@@ -1,7 +1,8 @@
 {
   "name": "NS Session Setlist",
   "short_name": "NS Setlist",
-  "start_url": "index.html",
+  "id": "/index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "description": "A Tunebook app of the Novi Sad Irish traditional music session. Integrates Michael Eskin's ABC Transcription Tools and Anton Zille's ABC Chord Viewer, List Viewer and Set Maker.",
   "lang": "en",
@@ -13,25 +14,25 @@
   "scope": "/",
   "icons": [
     {
-      "src": "assets/icons/app-icon-maskable-192x192.png?v=110",
+      "src": "assets/icons/app-icon-maskable-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "assets/icons/app-icon-192x192.png?v=110",
+      "src": "assets/icons/app-icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/icons/app-icon-maskable-512x512.png?v=110",
+      "src": "assets/icons/app-icon-maskable-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "assets/icons/app-icon-512x512.png?v=110",
+      "src": "assets/icons/app-icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"

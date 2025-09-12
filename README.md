@@ -306,6 +306,36 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.3: Tweak Caching & Touch Events**
+
++ PWA updates:
+  - Add app icons to cached resources in SW
+  - Add app id to webmanifest (matches start_url)
+  - Remove deprecated icon types & metadata
+  - Remove additional cached busting queries
+
++ App updates:
+  - Change Service Worker registration path to "/sw.js"
+  - Add recommended { passive: true } option to touch events
+  - Add touch-action: pan-x pan-y to body (accidental double-tap zooming prevention test)
+
+**v1.1.2: Fix Service Worker for FF**
+
++ PWA updates:
+  - Remove exports / imports for sw.js: Firefox does not support { type: 'module' } service workers
+  - Add APP_VERSION to sw.js, add sw.js update to local auto-update-version scripts
+
+**v1.1.1: Fix Subtitles Search & DB**
+
++ List Viewer updates:
+  - Fix missing dataset reference for loading subtitles data into tiles
+
++ App updates:
+  - Fix init script for Tunebook-only element not used in ABC Encoder
+
++ Session DB updates:
+  - Revert missing Cuas set, fix Petranu Vals set
+
 **v1.1.0: Progressive Web App**
 
 + PWA updates:
