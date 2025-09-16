@@ -306,6 +306,12 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.4: Fix Playalong Links**
+
++ App updates:
+  - Add YouTube links to live notation videos for Playalong items
+  - Remove Soundslice links from Playalong items
+
 **v1.1.3: Tweak Caching & Touch Events**
 
 + PWA updates:
