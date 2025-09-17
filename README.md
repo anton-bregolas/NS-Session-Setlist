@@ -306,6 +306,11 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.6: Add GoatCounter**
+
++ App updates:
+  - Add GoatCounter, a privacy-oriented analytics tool for basic visitor stats
+
 **v1.1.5: Add Browser-Specific Tweaks**
 
 + App updates:

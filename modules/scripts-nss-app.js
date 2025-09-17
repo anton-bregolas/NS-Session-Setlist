@@ -4193,6 +4193,37 @@ function initBrowserMetaData() {
   document.body.dataset.browser = getBrowserId();
 }
 
+// Initialize GoatCounter, a privacy-oriented analytics tool
+
+async function initGoatCounter() {
+
+  try {
+
+    const response = await fetch('//gc.zgo.at/count.js');
+
+    if (!response.ok) {
+      
+      throw new Error("Failed to load GoatCounter script");
+    }
+
+    const goatScript = document.createElement('script');
+  
+    goatScript.dataset.goatcounter =
+      "https://session.goatcounter.com/count";
+
+    goatScript.async = true;
+
+    goatScript.src = "//gc.zgo.at/count.js";
+
+    document.head.appendChild(goatScript);
+
+  } catch (error) {
+
+    console.warn(`GoatCounter disabled (${error.message})`);
+  }
+}
+
+
 // Initialize popover polyfill warning if the browser doesn't support Popover API
 
 function initPopoverWarning() {
@@ -4241,6 +4272,7 @@ function initWindowEvents() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  initGoatCounter();
   initBrowserMetaData();
   initPopoverWarning();
   initQuickHelpDialog();
