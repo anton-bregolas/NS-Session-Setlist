@@ -352,7 +352,7 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
 
 export function switchTuneBookItem(loadDir) {
 
-  const isSafari = checkIfSafariBrowser();
+  const isSafari = checkIfSafariLikeBrowser();
 
   const currentTuneBook =
     isSafari? [...tuneSelector.querySelectorAll('option')].slice(1) :
@@ -774,7 +774,7 @@ function showHelpGuidePopover() {
     helpGuidePopover.dataset.popsUpFrom = "header";
   }
 
-  if (checkIfIosSafariBrowser()) {
+  if (checkIfIosBrowser()) {
 
     disableTuneBookSelectors();
   }
@@ -1043,30 +1043,119 @@ export function checkIfMobileMode() {
   return document.body.dataset.mode === "mobile";
 }
 
-// Return true if user agent string suggests the app is opened in Safari Browser
+// Return true if the app is viewed from Safari-like browser
 
-function checkIfSafariBrowser() {
+function checkIfSafariLikeBrowser() {
 
-  const userAgentStr = navigator.userAgent.toLowerCase();
+  const dataBrowser =
+    document.body.dataset.browser;
 
-  const isSafariBrowser =
-    userAgentStr.indexOf('safari') > -1 && userAgentStr.indexOf('chrome') === -1;
+  const isSafariLike =
+    dataBrowser.indexOf('safari') > -1 || dataBrowser.indexOf('-ios') > -1;
 
-  return isSafariBrowser;
+  return isSafariLike;
 }
 
-// Return true if user agent string suggests the app is opened in iOS
+// Return true if the app appears to be opened in iOS
 
-function checkIfIosSafariBrowser() {
+function checkIfIosBrowser() {
 
-  const userAgentStr = navigator.userAgent.toLowerCase();
+  const dataBrowser =
+    document.body.dataset.browser;
 
-  const isIosSafari =
-    checkIfSafariBrowser() &&
-    !/crios/.test(userAgentStr) &&
-    /ip(ad|hone|od)/.test(userAgentStr);
+  const isIosBrowser =
+    dataBrowser.indexOf('-ios') > -1;
 
-  return isIosSafari;
+  return isIosBrowser;
+}
+
+// Attempt to check what browser and platform the app is being viewed from
+// Return string in the format: browsertype-android|ios|desktop
+
+function getBrowserId() {
+
+  const userAgentStr =
+    navigator.userAgent.toLowerCase();
+
+  const isChromeLike =
+    userAgentStr.indexOf('chrome') > -1;
+
+  const isSafari =
+    userAgentStr.indexOf('safari') > -1 &&
+    !isChromeLike;
+
+  let userBrowserMarker = 
+    userAgentStr.indexOf('firefox') > -1? "firefox" :
+    userAgentStr.indexOf('gecko/') > -1? "gecko" :
+    userAgentStr.indexOf('webview') > -1? "webview" :
+    userAgentStr.indexOf('wv') > -1? "webview" :
+    isSafari? "safari" :
+    isChromeLike? "chromium" :
+    userAgentStr.indexOf('version/') > -1? "webview" :
+    "other";
+
+  // Mobile / Android
+
+  const isAndroid =
+    userAgentStr.indexOf('android') > -1;
+
+  if (isAndroid) {
+
+    return `${userBrowserMarker}-android`;
+  }
+
+  // Mobile / iOS
+
+  const isIOS =
+    /ip(ad|hone|od)/.test(userAgentStr) ||
+    (/macintosh/.test(userAgentStr) &&
+     navigator.maxTouchPoints &&
+     navigator.maxTouchPoints > 2);
+
+  if (isSafari && isIOS) {
+
+    userBrowserMarker =
+      userAgentStr.indexOf('fxios') > -1? "firefox" :
+      userAgentStr.indexOf('crios') > -1? "chrome" :
+      userAgentStr.indexOf('opios') > -1? "opera" :
+      userAgentStr.indexOf('brave') > -1? "brave" :
+      userAgentStr.indexOf('edge') > -1? "edge" :
+      userAgentStr.indexOf('yabrowser') > -1? "yandex" :
+      userAgentStr.indexOf('duckduckgo') > -1? "webview" :
+      userAgentStr.indexOf('webview') > -1? "webview" :
+      "safari";
+
+    return `${userBrowserMarker}-ios`;
+  }
+
+  if (isIOS) {
+
+    return `webview-ios`;
+  }
+
+  // Desktop / Firefox & Gecko-based
+
+  if (userBrowserMarker === "firefox" ||
+      userBrowserMarker === "gecko") {
+
+    return userBrowserMarker === "gecko"? "gecko-desktop" : "firefox-desktop";
+  }
+
+  // Desktop / Safari
+
+  if (isSafari) {
+
+    return "safari-desktop"
+  }
+
+  // Desktop / Chromium-based (likely)
+
+  if (isChromeLike) {
+
+    return "chromium-desktop"
+  }
+
+  return "other";
 }
 
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
@@ -1165,7 +1254,7 @@ export function resetTuneBookFilters() {
 
   // Reset filters without refreshing the page
 
-  const isSafari = checkIfSafariBrowser();
+  const isSafari = checkIfSafariLikeBrowser();
 
   // Safari only: Repopulate Tune Selector
 
@@ -2244,7 +2333,7 @@ function filterTuneBook() {
     return;
   }
   
-  const isSafari = checkIfSafariBrowser();
+  const isSafari = checkIfSafariLikeBrowser();
   const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
   const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
   const activeFilter = filterOptions.querySelector('option:checked')
@@ -3006,6 +3095,7 @@ function appWindowKeyboardEventHandler(event) {
 
   if (event.type === 'keydown' &&
       event.key === 'Tab' &&
+      !checkIfHelpMenuOpen() &&
       ((!event.shiftKey &&
         event.target.id === "fullScreenButton") ||
       (!checkIfMobileMode() &&
@@ -3396,7 +3486,7 @@ function addHelpGuideDescription(el) {
 
 function quitHelpGuidePopover() {
 
-  if (checkIfIosSafariBrowser()) {
+  if (checkIfIosBrowser()) {
 
     reEnableTuneBookSelectors();
   }
@@ -4096,6 +4186,13 @@ function initAbcFrameLabel() {
   focusLabelBtn.addEventListener('focusout', () => toggleAbcFocusLabel("hide"));
 }
 
+// Initialize browser metadata body attribute for specific tweaks
+
+function initBrowserMetaData() {
+
+  document.body.dataset.browser = getBrowserId();
+}
+
 // Initialize popover polyfill warning if the browser doesn't support Popover API
 
 function initPopoverWarning() {
@@ -4144,6 +4241,7 @@ function initWindowEvents() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  initBrowserMetaData();
   initPopoverWarning();
   initQuickHelpDialog();
   initWindowEvents();

@@ -306,6 +306,18 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.5: Add Browser-Specific Tweaks**
+
++ App updates:
+  - Add getBrowserId function returning generalized browser & platform info string
+  - Add data-browser attribute derived from user agent hints to body on page load
+  - NB: Use for edge cases when feature checks are impossible (Safari bugs etc.)
+
++ Tunebook updates:
+  - Refactor & rename checkIfSafariBrowser => checkIfSafariLikeBrowser
+  - Refactor & rename checkIfIosSafariBrowser => checkIfIosBrowser
+  - Add iOS-specific styles for fullscreen GUI
+
 **v1.1.4: Fix Playalong Links**
 
 + App updates:

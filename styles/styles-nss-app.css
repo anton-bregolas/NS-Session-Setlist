@@ -619,6 +619,7 @@ body[data-mode="mobile"] [data-size="small"] {
   display: var(--fullscreen-gui-display);
 }
 
+body[data-browser*="-ios"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
 body[data-mode="desktop"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
 body[data-mode="desktop"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-gui"] {
   justify-content: space-around;
