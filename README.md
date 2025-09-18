@@ -306,6 +306,12 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v.1.1.7: Session DB Update**
+
++ Session DB updates:
+  - Session DB updated to 2025-09-18
+  - Chords from Oleg added to 10 sets (& Anton ed. arr.)
+
 **v1.1.6: Add GoatCounter**
 
 + App updates:
