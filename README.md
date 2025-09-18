@@ -309,7 +309,7 @@ Import Name | Import Description | Details |
 **v.1.1.7: Session DB Update**
 
 + Session DB updates:
-  - Session DB updated to 2025-09-18
+  - Update to version 2025.09.18.1
   - Chords from Oleg added to 10 sets (& Anton ed. arr.)
 
 **v1.1.6: Add GoatCounter**
