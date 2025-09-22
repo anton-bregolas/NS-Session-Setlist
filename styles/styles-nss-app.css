@@ -77,6 +77,10 @@ body,
   overscroll-behavior: contain;
 }
 
+[data-browser*="ios"] .body-container {
+  height: 100svh;
+}
+
 [data-tunebook] .body-container {
   overflow-y: hidden;
 }
@@ -824,6 +828,10 @@ body[data-mode="mobile"] .nss-icon-filler:not(.nss-footer-tunebook .nss-icon-fil
   filter: drop-shadow(1px 1px 8px var(--accent-color));
 }
 
+[data-browser*="safari"] .nss-popover-btn:is(:hover, :focus, :focus-visible) {
+  filter: none;
+}
+
 #fullScreenButton:is(:hover, :focus, :focus-visible),
 .nss-playalong-link-container a:is(:hover, :active, :focus, :focus-visible),
 .nss-switch-btn:is(:hover, :focus, :focus-visible) {
@@ -1151,6 +1159,10 @@ body[data-mode="mobile"] .nss-select-container {
   padding: 0;
 }
 
+[data-browser*="ios"] .nss-popover {
+  height: min(calc(80svh - 3rem), 45rem);
+}
+
 .nss-popover-menu {
   overflow: hidden;
 }
@@ -1442,6 +1454,10 @@ body[data-mode="desktop"] [data-tbk-action="select-fullscreen-tunes"] .nss-mini-
   opacity 0.15s ease-out;
 }
 
+[data-browser*="safari"] .tunebook-action {
+  filter: none;
+}
+
 .tunebook-action .nss-icon,
 .tunebook-action .nss-icon-filler {
   transition:
@@ -1514,11 +1530,19 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"] {
   border-radius: 0.25rem;
 }
 
+body[data-mode="desktop"][data-browser*="ios"] [data-popover="tunebook-actions-popup"] {
+  height: calc(100svh - var(--tunebook-header-height) - var(--tunebook-footer-height));
+}
+
 body[data-mode="desktop"] [data-pops-up-from="header"] {
   height: calc(100dvh - var(--tunebook-header-height));
   right: unset;
   left: 0;
   bottom: 0;
+}
+
+body[data-mode="desktop"][data-browser*="ios"] [data-pops-up-from="header"] {
+  height: calc(100svh - var(--tunebook-header-height));
 }
 
 body[data-mode="desktop"] .tunebook-actions-grid {
@@ -1789,8 +1813,16 @@ body[data-mode="desktop"] [data-close-direction="down"] {
   padding: 0 5rem
 }
 
+[data-browser*="ios"] .nss-help-guide-container {
+  max-height: calc(100svh - var(--tunebook-header-height) - var(--tunebook-footer-height));
+}
+
 .nss-help-popover[data-pops-up-from="header"] .nss-help-guide-container {
   max-height: calc(100dvh - var(--tunebook-header-height));
+}
+
+[data-browser*="ios"] .nss-help-popover[data-pops-up-from="header"] .nss-help-guide-container {
+  max-height: calc(100svh - var(--tunebook-header-height));
 }
 
 .nss-help-guide-text-block {
@@ -1986,7 +2018,7 @@ body[data-mode="desktop"] [data-hide="desktop"],
        screen and (max-height: 40em) {
 
   .nss-popover-menu {
-    width: 100dvw;
+    width: 100%;
     height: 100dvh;
     border-radius: 0;
     overflow: hidden;
@@ -2003,6 +2035,18 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 14rem);
+  }
+
+  [data-browser*="ios"] .nss-popover-menu {
+    height: 100svh;
+  }
+
+  [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
+    height: calc(100svh - 7.75rem);
+  }
+
+  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100svh - 14rem);
   }
 
   .nss-popover-header {
@@ -2164,6 +2208,14 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 13.6rem);
+  }
+
+  [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
+    height: calc(100svh - 7.5rem);
+  }
+
+  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100svh - 13.6rem);
   }
 
   .nss-popover-header-title-container,
@@ -2332,6 +2384,14 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 17.75rem);
+  }
+
+  [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
+    height: calc(100svh - 11.75rem);
+  }
+
+  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100svh - 17.75rem);
   }
 }
 

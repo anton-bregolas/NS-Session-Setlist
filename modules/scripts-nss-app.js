@@ -422,7 +422,7 @@ function zoomTuneBookItem(zoomDir) {
 
     let newPageZoom = +currentPageZoom.slice(0, -1) + zoomValue;
 
-    if (newPageZoom > 100 || newPageZoom < 50) return;
+    if (newPageZoom > 120 || newPageZoom < 40) return;
 
     abcContainer.style.zoom = `${newPageZoom}%`;
 

@@ -306,6 +306,14 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v.1.1.8: Fix Styles in iOS Safari**
+
++ Tunebook updates:
+  - Swap dvh for svh for iOS browsers styles only
+  - Disable filter for Safari popover button styles (buggy in Safari / Safari for iOS)
+  - TO DO: Test incorrect page scaling on Safari minimize/maximize
+  - Full Screen mode Zoom In / Out limits expanded for Desktop mode
+
 **v.1.1.7: Session DB Update**
 
 + Session DB updates:
