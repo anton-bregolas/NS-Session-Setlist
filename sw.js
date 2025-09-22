@@ -1,4 +1,4 @@
-const APP_VERSION = "1.1.7";
+const APP_VERSION = "1.1.8";
 const CACHE_VERSION = APP_VERSION.replaceAll(".", '');
 const CACHE_NAME = `ns-app-cache-${CACHE_VERSION}`;
 const CACHE_EXPIRES_DAYS = 7;
