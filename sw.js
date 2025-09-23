@@ -78,6 +78,26 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
 
+  // Cache and retrieve main app sections (Launch Screen & ABC Encoder)
+
+  if (event.request.mode === 'navigate' && event.request.url.endsWith('index.html')) {
+    event.respondWith(
+      caches.match('index.html').then((cachedPage) => {
+        return cachedPage || fetch(event.request);
+      }).catch(() => caches.match('index.html'))
+    );
+    return;
+  }
+
+  if (event.request.mode === 'navigate' && event.request.url.endsWith('abc-encoder.html')) {
+    event.respondWith(
+      caches.match('abc-encoder.html').then((cachedPage) => {
+        return cachedPage || fetch(event.request);
+      }).catch(() => caches.match('abc-encoder.html'))
+    );
+    return;
+  }
+
   // Cache and retrieve Session DB files
 
   if (event.request.url.endsWith('sets.json') ||
