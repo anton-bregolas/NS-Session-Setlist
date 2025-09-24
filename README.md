@@ -18,20 +18,27 @@ Module Name | GitHub Repo | Help Link |
 
 ## NS Session App
 
-Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project that explores ways of managing ABC music collections across multiple platforms in a simple, streamlined fashion. This is a single-page app that employs responsive design and progressive web app functionality to ensure that an up-to-date version of the session tunes, sets and chords database is accessible from any modern device regardless of its screen size.
+Novi Sad Session Setlist (N.S.S.S.) is a pilot tunebook.app project that explores ways of managing ABC music collections across multiple platforms in a simple, streamlined fashion. This is a single-page app that employs responsive design and progressive web app (PWA) functionality to ensure that an up-to-date version of the session tunes, sets and chords database is accessible from any modern device regardless of its screen size.
 
-The app may be installed via a PWA-supporting browser to guarantee offline access to the Session Tunebook or used in a browser tab. Session DB files are cached by a service worker in both scenarios.
+The app may be installed via a PWA-supporting browser to guarantee offline access to the Session Tunebook or simply used in a browser tab. Session DB files are cached when the Tunebook is first opened.
 
 > [!IMPORTANT]
 > The app employs some of the latest web dev features. Updating to a fresh version of your browser is advised for the smoothest experience.
 
+### How to install as web app:
+
+* [Android phones & tablets](https://web.dev/learn/pwa/installation#android_installation)
+* [Windows / Linux / MacOS](https://web.dev/learn/pwa/installation#desktop_installation)
+* [MacOS Sonoma or newer](https://support.apple.com/en-asia/104996)
+* [iPhone & iPad](https://web.dev/learn/pwa/installation#ios_and_ipados_installation)
+
 ### How it works for app user:
 
-Open **Setlist 🎶** or **Tunelist ♫** from the **Launch section** of the app to access the **Tunebook section** and load the latest version of the Session DB. Once loaded, the session’s Sets, Tunes and Chordbook data can be accessed offline. Session DB is set to be updated weekly by default (hard-refresh the app to update manually).
+Open **Setlist 🎶** or **Tunelist 🎵** from the **Launch section** of the app to access the **Tunebook section** and load the latest version of the Session DB. Once loaded, the session’s Sets, Tunes and Chordbook data can be accessed offline. By Default, Session DB is set to be updated weekly (hard-refresh the app to update manually).
 
 ![A screenshot of the Launch section of the app](/assets/screens/screenshot-launch-desktop.webp)
 
-The **Quick Help ⇧** dialog with brief introduction to Tunebook controls opens up on first load. It can later be accessed in the **Help Guide ⍰** menu of the app. Help Guide offers detailed descriptions for every element of the Tunebook interface (press `Shift + F1` or **Show Help** button in the **Tunebook Actions ☰** hamburger menu to view). For help with using ABC Transcription Tools, see Michael Eskin’s detailed <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">User Guide</a>.
+The **Quick Help ⇧** dialog with brief introduction to Tunebook controls opens up on first load. It can later be accessed in the **Help Guide ❔** menu of the app. Help Guide offers detailed descriptions for every element of the Tunebook interface (press `Shift + F1` or **Show Help** button in the **Tunebook Actions ☰** hamburger menu to view). For help with using ABC Transcription Tools, see Michael Eskin’s detailed <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">User Guide</a>.
 
 ![A screenshot of the Quick Help dialog menu of the app](/assets/screens/screenshot-tunebook-quick-help.webp)
 
@@ -41,7 +48,7 @@ The Tunebook interface is split between the **Header**, the **Footer** and the *
 
 ![A screenshot of the Tunebook section of the app](/assets/screens/screenshot-tunebook-desktop.webp)
 
-Use **Tunebook Header** elements to filter and select items, switch between **Setlist 🎶** and **Tunelist ♫** and view the current item in the **Full Screen** mode. Optional controls open **List Viewer / Set Maker** (when used on Tune Selector button) and **Chord Viewer** (when used on Full Screen button).
+Use **Tunebook Header** elements to filter and select items, switch between **Setlist 🎶** and **Tunelist 🎵** and view the current item in the **Full Screen** mode. Optional controls open **List Viewer / Set Maker** (when used on Tune Selector button) and **Chord Viewer** (when used on Full Screen button).
 
 Use **Tunebook Footer** for accessing shortcuts to various modules and features. Open **Tunebook Actions ☰** menu to view the list of available shortcuts (central button in **Mobile mode**, bottom-right button in **Desktop mode**  or `SHIFT + F2`).
 
@@ -65,7 +72,7 @@ The **Set Maker** mode offers to combine Tunebook items into new sets using cust
 
 ![Examples of adaptive mobile layout of the Set Maker module of the app](/assets/screens/screenshot-set-maker-mobile.webp)
 
-The **Chord Viewer** module displays guitar chords from the current ABC in a separate dialog window. Use the dialog slider to scale contents, press the theme button to toggle between color schemes, press the **Show / Hide GUI** button to save more screen space. Chord Viewer remembers all the adjustments made by the user.
+The **Chord Viewer** module displays guitar chords from the current ABC in a separate dialog window. Use the dialog slider to scale contents, press the theme button to toggle between color schemes, press the **Show / Hide GUI** button to save more screen space. Chord Viewer remembers all the GUI adjustments made by the user.
 
 ![Examples of adaptive mobile layout of the Chord Viewer module of the app](/assets/screens/screenshot-chord-viewer-mobile.webp)
 
@@ -112,9 +119,40 @@ Option Name | Default Setting | Comments |
 > [!NOTE]
 > **[1]** Chord Viewer falls back to the last item loaded to Tune Selector when used with embedded ABC Transcription Tools. For tunebooks printing ABC to a page of the same origin, it can extract chords directly from the text with dynamic mode enabled.
 
+### Instructions for ABC DB curator:
+
+1. Get an unsorted ABC collection file (.abc or .txt)
+  <br>💡 Quick Setbook idea:
+    * Pick settings of tunes on [**The Session**](https://thesession.org/tunes)
+    * Make Sets (_Play This in a Set_)
+    * Download Setbook ABC file from:<br>`https://thesession.org/members/<userId>/sets`
+2. Open [**ABC Encoder**](#abc-encoder-module) and check [**Encoder Settings**](#encoder-settings-overview)⚙️
+3. Click `SORT` and select unsorted ABC file
+4. Check [**output files**](#input--output-defaults) saved to Download
+5. Click `ENCODE` and select sorted ABC file
+6. Check [**Session DB files**](#input--output-defaults) saved to Download
+7. _Optional:_ Host your Session DB files online
+8. _Optional:_ [**Fork this repository**](https://github.com/anton-bregolas/NS-Session-Setlist/fork)
+9. _Optional:_ Customize forked Tunebook & PWA:
+    * Replace Session DB files in `/abc`, `/abc-chords`, `/abc-encoded`
+    * Update Session DB file paths in `modules`/`scripts-nss-app.js`
+    * Edit app name & metadata in `index.html`, `abc-encoder.html`
+    * Edit app section titles in `styles`/`styles-nss-app.css`
+    * Replace app icons: `favicon.ico`, `favicon.svg`, `assets`/`icons`
+    * Replace playalong content: `index.html`, `assets`/`images`
+    * Replace app screenshots: `assets`/`screens`
+    * Edit PWA installation details in `app.webmanifest`
+    * Adjust service worker behavior & cached file list in `sw.js`
+    * Replace app/DB versions, cache prefix in `version.js`, `sw.js`
+    * Edit abcTunebookDefaults in `modules`/`scripts-abc-tools.js`
+    * Edit abcEncoderDefaults in `modules`/`scripts-abc-encoder.js`
+    * Replace subdomain name in `CNAME`
+    * Deploy to GitHub Pages: _Settings_ / _Pages_
+    * Your Session Tunebook app is ready to use!
+
 ### Notes for developers
 
-The app retrieves Tunebook and Chordbook data by fetching Session DB files specified in `scripts-nss-app.js`. Database files can thus be updated independently of the app. Session DB files are generated by the [**ABC Encoder**](#abc-encoder-module module).
+The app retrieves Tunebook and Chordbook data by fetching Session DB files specified in `scripts-nss-app.js`. Database files can thus be updated independently of the app. Session DB files are generated by the [**ABC Encoder**](#abc-encoder-module) module.
 
 File Path | Module Name | Description |
 | --- | --- | --- |
@@ -306,7 +344,25 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
-**v.1.1.8: Fix Styles in iOS Safari**
+**v1.1.10: Update README, CSS & SW Tweaks**
+
++ PWA updates:
+  - Update HTML cache retrieving logic
+
++ Tunebook updates:
+  - Add CSS variables for all page titles
+
++ README updates:
+  - Add How to install as web app
+  - Add Instructions for ABC DB curator
+  - Minor README tweaks
+
+**v1.1.9: Fix PWA offline refresh**
+
++ PWA updates:
+  - Add explicit navigate instructions to prevent "offline" app screen on hard refresh
+
+**v1.1.8: Fix Styles in iOS Safari**
 
 + Tunebook updates:
   - Swap dvh for svh for iOS browsers styles only
@@ -314,7 +370,7 @@ Import Name | Import Description | Details |
   - TO DO: Test incorrect page scaling on Safari minimize/maximize
   - Full Screen mode Zoom In / Out limits expanded for Desktop mode
 
-**v.1.1.7: Session DB Update**
+**v1.1.7: Session DB Update**
 
 + Session DB updates:
   - Update to version 2025.09.18.1

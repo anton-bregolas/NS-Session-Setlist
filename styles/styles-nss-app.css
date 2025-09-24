@@ -23,6 +23,14 @@ body {
   --notification-color-error: #ff2c0b;
   --tunebook-header-height: 7.375rem;
   --tunebook-footer-height: 4.15rem;
+  --app-launcher-title: "Novi Sad Session Setlist";
+  --app-launcher-title-short: "N.S.S.S.";
+  --app-playalong-title: "Session Tunes Play Along";
+  --app-playalong-title-short: "Play Along";
+  --app-encoder-title: "N.S.S.S. ABC Encoder";
+  --app-encoder-title-short: "ABC Encoder";
+  --app-tunebook-title-prefix: "Novi Sad Session ";
+  --app-tunebook-title-prefix-short: "N.S.S.S. ";
 }
 
 *, *::before, *::after { 
@@ -106,19 +114,19 @@ body,
 }
 
 h1:is([data-title="launcher"])::after {
-  content: "Novi Sad Session Setlist";
+  content: var(--app-launcher-title);
 }
 
 h1:is([data-title="playalong"])::after {
-  content: "Session Tunes Play Along";
+  content: var(--app-playalong-title);
 }
 
 h1:is([data-title="encoder"])::after {
-  content: "N.S.S.S. ABC Encoder";
+  content: var(--app-encoder-title);
 }
 
 h1:is([data-title="tunebook"])::after {
-  content: "Novi Sad Session "attr(data-type)"list";
+  content: var(--app-tunebook-title-prefix)attr(data-type)"list";
 }
 
 body[data-mode="mobile"] [data-title="tunebook"] {
@@ -136,15 +144,15 @@ h1 {
   @media (max-width: 50rem) {
 
     &:is([data-title="launcher"])::after {
-      content: "N.S.S.S.";
+      content: var(--app-launcher-title-short);
     }
   
     &:is([data-title="playalong"])::after {
-      content: "Play Along";
+      content: var(--app-playalong-title-short);
     }
   
     &:is([data-title="encoder"])::after {
-      content: "ABC Encoder";
+      content: var(--app-encoder-title-short);
     }
   }
 }
@@ -2140,15 +2148,15 @@ body[data-mode="desktop"] [data-hide="desktop"],
 @media screen and (max-width: 50em) {
 
   h1:is([data-title="launcher"])::after {
-    content: "N.S.S.S.";
+    content: var(--app-launcher-title-short);
   }
 
   h1:is([data-title="playalong"])::after {
-    content: "Play Along";
+    content: var(--app-playalong-title-short);
   }
 
   h1:is([data-title="encoder"])::after {
-    content: "ABC Encoder";
+    content: var(--app-encoder-title-short);
   }
 }
 
@@ -2166,7 +2174,7 @@ body[data-mode="desktop"] [data-hide="desktop"],
   }
 
   body[data-mode="desktop"] h1:is([data-title="tunebook"])::after {
-    content: "N.S.S.S. " attr(data-type) "s";
+    content: var(--app-tunebook-title-prefix-short)attr(data-type) "s";
   }
 
   body[data-mode="desktop"] [data-cutoff-desktop="tablet-s"] {

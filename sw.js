@@ -1,6 +1,7 @@
 const APP_VERSION = "1.1.9";
 const CACHE_VERSION = APP_VERSION.replaceAll(".", '');
-const CACHE_NAME = `ns-app-cache-${CACHE_VERSION}`;
+const CACHE_PREFIX = "ns-app-cache-";
+const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 const CACHE_EXPIRES_DAYS = 7;
 
 self.addEventListener('install', (event) => {
@@ -53,7 +54,7 @@ self.addEventListener('activate', (event) => {
             .filter((cacheName) => cacheName !== CACHE_NAME)
             .map((cacheName) => { 
                 console.log(`[NS App Service Worker]\n\n` +
-                `Cached version: v${cacheName.slice(13)}\n\n` +
+                `Cached version: v${cacheName.slice(CACHE_PREFIX.length)}\n\n` +
                 `Current version: v${CACHE_VERSION}\n\n` +
                 `Clearing outdated cached files...`);
                 caches.delete(cacheName);
@@ -78,23 +79,24 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
 
-  // Cache and retrieve main app sections (Launch Screen & ABC Encoder)
+  // Cache and retrieve HTML for main app sections (Launch Screen & ABC Encoder)
 
-  if (event.request.mode === 'navigate' && event.request.url.endsWith('index.html')) {
-    event.respondWith(
-      caches.match('index.html').then((cachedPage) => {
-        return cachedPage || fetch(event.request);
-      }).catch(() => caches.match('index.html'))
-    );
-    return;
-  }
+  if (event.request.mode === 'navigate' || event.request.headers.get('Accept').includes('text/html')) {
+  
+    if (event.request.url.endsWith('abc-encoder.html')) {
+      event.respondWith(
+        caches.match('abc-encoder.html').then((cachedPage) => {
+          return cachedPage || fetch(event.request);
+        }).catch(() => caches.match('abc-encoder.html'))
+      );
 
-  if (event.request.mode === 'navigate' && event.request.url.endsWith('abc-encoder.html')) {
-    event.respondWith(
-      caches.match('abc-encoder.html').then((cachedPage) => {
-        return cachedPage || fetch(event.request);
-      }).catch(() => caches.match('abc-encoder.html'))
-    );
+    } else {
+      event.respondWith(
+        caches.match('index.html').then((cachedPage) => {
+          return cachedPage || fetch(event.request);
+        }).catch(() => caches.match('index.html'))
+      );
+    }
     return;
   }
 
