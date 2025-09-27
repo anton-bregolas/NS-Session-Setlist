@@ -344,6 +344,14 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.11: Fix Encoder Edge Cases**
+
++ ABC Encoder module updates:
+  - Fix Sort skipping title formatting in Deep Edit Mode
+  - Fix cases of C: C: S: not being filled from TSO metadata
+  - Fix S: data loss from C: C: S: if other S: fields present
+  - Add more robust checks for abcCCS and Session Survey
+
 **v1.1.10: Update README, CSS & SW Tweaks**
 
 + PWA updates:

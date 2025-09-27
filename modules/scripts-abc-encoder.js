@@ -227,7 +227,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
         let abcSortedOutput = [];
 
-        if (customSettingsOn &&  +localStorage.abcSortFetchesTsoMetaData) {
+        if (customSettingsOn && +localStorage.abcSortFetchesTsoMetaData) {
 
             let preProcessedAbc = await preProcessAbcMetadata(rawAbcContent);
 
@@ -727,7 +727,16 @@ async function preProcessAbcMetadata(rawAbcContent) {
             // Replace the first found C: field in ABC
             // Else insert C: field value before Z:
 
-            if (abcItem.match(/^C:/m)) {
+            if (abcItem.match(/^C: C:/m)) {
+
+                let abcCCS = abcItem.match(/^C: C:.*/m)[0];
+                let abcS = abcCCS.split(/; S:[ ]*/)[1];
+
+                abcItem = abcS?
+                    abcItem.replace(/^C: C:.*/m, `C: ${abcCString}; S: ${abcS}`) :
+                    abcItem.replace(/^C: C:.*/m, `C: ${abcCString}`);
+
+            } else if (abcItem.match(/^C:/m)) {
 
                 abcItem = abcItem.replace(/^C:.*/m, abcCString);
 
@@ -736,7 +745,7 @@ async function preProcessAbcMetadata(rawAbcContent) {
                 abcItem = abcItem.replace(/^Z:/m, `${abcCString}\nZ:`);
             }
         }
-        
+
         return abcItem;
     }));
 
@@ -1490,21 +1499,6 @@ function applyIrishTitleFormatting(abcTitle) {
                 .join(' ');
 
     return formattedIrishTitle;
-}
-
-// Merge unordered ABC Subtitle into the Primary Title
-// Insert Subtitle as the last line of the Primary Title
-
-function mergeAbcSubTitle(abcTitle, abcSubTitle) {
-
-    const titleLines = abcTitle.match(/^T:.*/gm);
-
-    if (titleLines.length > 1) {
-
-        return `${abcTitle.trim()} / ${abcSubTitle}`
-    }
-
-    return `${abcTitle}\nT: ${abcSubTitle}`
 }
 
 // Assemble ABC title (single or multi-line)
@@ -2345,7 +2339,7 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
         abcHeadersArr[0].filter(tagLine => tagLine.startsWith("Q:"));
     const abcKArr = 
         abcHeadersArr[0].filter(tagLine => tagLine.startsWith("K:"));
-    
+
     // Fill ABC To Match primary header arrays
 
     const abcToMatchCArr =
@@ -2550,7 +2544,8 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
                 headerArr.
                     filter(tagLine => tagLine.startsWith("T:")).
                     map(
-                        title => title.replace(/^T:[ ]/, '').
+                        title => normalizeHeaderLine(title).
+                        replace(/^T:[ ]/, '').
                         replace(/^[A-Z-\s]+:[ ]/, '').
                         replace(/[ ]+(?:[Ss][Ee][Tt])(?=[ ]*(?:$|\[.*\]))/, '').
                         replaceAll(/[ ]+\[.*\]/g, '')
@@ -2832,16 +2827,18 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
         // Get abcS value from custom C: C: S: field
 
-        if (!abcS && abcCCS) {
+        if (abcCCS) {
 
-            abcS = abcCCS.split('; S: ')[1];
+            let abcSFromCCS = abcCCS.split(/; S:[ ]*/)[1] || "Various";
+
+            abcS = abcS? `${abcSFromCCS}\nS: ${abcS}` : abcSFromCCS;
         }
 
         // Get abcC value from custom C: C: S: field
 
         if (!abcC && abcCCS) {
 
-            abcC = abcCCS.split('; S: ')[0];
+            abcC = abcCCS.split(/; S:[ ]*/)[0] || "Trad[?]";
         }
     }
 
@@ -2932,7 +2929,8 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
         let secondaryHeadersStr = '';
 
         secondaryHeadersStr += 
-
+            isSkippingAbcTitleEditAllowed?
+            `\n${abcUpdTitlesArr[i].split('\nT: ').join(' / ')}\n` :
             `\n${abcTitlesArr[i].split('\nT: ').join(' / ')}\n`;
 
         secondaryHeadersStr += 
@@ -3068,8 +3066,8 @@ function mergeSetHeaderFields(abcHeadersArr) {
 
                 joinCCArr.forEach(ccArr => {
                     
-                    strCArr.push(ccArr[0].replace('C: C: ', '').split('; S: ')[0]);
-                    strSArr.push(ccArr[0].replace('C: C: ', '').split('; S: ')[1]);
+                    strCArr.push(ccArr[0].replace(/C: C:[ ]*/, '').split(/; S:[ ]*/)[0] || "Trad[?]");
+                    strSArr.push(ccArr[0].replace(/C: C:[ ]*/, '').split(/; S:[ ]*/)[1] || "Various");
                     usedLinesArr.push(ccArr[0]);
                 });
 
@@ -3731,7 +3729,7 @@ function fillSurveyDataArray(surveyData) {
 
 function applySessionSurveyResults(abcContent) {
 
-    const splitAbcArr = abcContent.split('X: ');
+    const splitAbcArr = abcContent.split(/X:[ ]*/);
     let updatedAbcContent = '';
 
     console.log("ABC Encoder:\n\nUpdating ABC output with Session Survey Data...");
@@ -3741,9 +3739,11 @@ function applySessionSurveyResults(abcContent) {
         if (!abc) return;
 
         const abcTitle = abc.match(/^T:.*/gm)[0].replace('T:', '').trim();
-        const abcTitleArr = abcTitle.split(': ');
-        const titlePrefix = abcTitleArr[0];
-        const titleName = abcTitleArr[1];
+        const abcTitleArr = abcTitle.split(/:[ ]*/);
+
+        const titleName = abcTitleArr[1]? abcTitleArr[1] : abcTitleArr[0];
+        const titlePrefix = abcTitleArr[1]? abcTitleArr[0] : '';
+
         let updatedAbc = '';
 
         // Get a string of current Set Leaders
@@ -3756,10 +3756,13 @@ function applySessionSurveyResults(abcContent) {
             abcSetLeadersStr? abcSetLeadersStr.split(', ') : [];
 
         // Search Survey Data headers for the current Tune / Set
-        const surveyHeader = sessionSurveyData[0].find(header => 
-                             header.toLowerCase().startsWith(titlePrefix.toLowerCase()) &&
-                             header.endsWith(titleName));
-        
+        const surveyHeader = titlePrefix? 
+            sessionSurveyData[0].find(header => 
+                header.toLowerCase().startsWith(titlePrefix.toLowerCase()) &&
+                header.endsWith(titleName)) :
+            sessionSurveyData[0].find(header => 
+                header.startsWith(titleName));
+
         if (surveyHeader) {
 
             const headerIndex = sessionSurveyData[0].indexOf(surveyHeader);
