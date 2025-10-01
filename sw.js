@@ -1,4 +1,4 @@
-const APP_VERSION = "1.1.11";
+const APP_VERSION = "1.1.12";
 const CACHE_VERSION = APP_VERSION.replaceAll(".", '');
 const CACHE_PREFIX = "ns-app-cache-";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
