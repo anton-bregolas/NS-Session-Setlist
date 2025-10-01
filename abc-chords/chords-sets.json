@@ -123,6 +123,11 @@
         "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tD\t(Em)\t|\n|\tD/F#\t/|\tD (G)\t/|\tD/F#\tC\t|\tA\t(D)\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tC\tC\t|\tC\tC\t|\n|\tD\tD\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||\n\nPART 3:\n|\tD\t(Dsus4)\t|\tD\t(G)\t|\t(D/F#)\t(G)\t|\t(D/F#)\t(G/B)\t|\n|\tC\tC\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||"
       },
       {
+        "title": "Sixpenny Money",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tA\t|\tBm\tA\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||\n\nPART 2:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tD\tA\t|\n|\tD\tG\t|\tD\tA\t|\tBm\tBm\t|\tG\tA\t||"
+      },
+      {
         "title": "Frost Is All Over",
         "meter": "6/8",
         "chords": "PART 1:\n|\tD\tD\t|\tD\tD/B\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tD\tD/B\t|\tD\tA\t|1\tEm\tD\t|\n|2\tEm\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tG\t|\n|\tD\tD\t|\tG\tG\t|\tD\tA\t|\tEm\tD\t||"
@@ -251,6 +256,26 @@
         "title": "Donncha Lynch's",
         "meter": "6/8",
         "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tE\tE\t|\n|\tA\tA\t|\tA\tA\t|\tD\tE\t|\tE\tE\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tE\tE\t|\tE\tE\t|\n|\tA (F#m)\t/|\tD (Bm)\t/|\t(D)\tE\t|\tE\tE\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "JIGS: I Buried My Wife Set",
+    "tuneChords": [
+      {
+        "title": "Bank of Turf",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tD\tD\t|\tG\tD\t|\tD\tA\t|\tD\tD\t|\n|\tG\tG\t|\tD\tD\t|1\tEm\tEm\t|\tA\tA\t|\n|2\tA\tA\t|\n|\tD\tD\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tG\tD\t|\tA\tA\t|\n|\tA\tA\t|\tD\tD\t|\tG\tD\t|1\tA\tA\t|\n|2\tA\tA\t||"
+      },
+      {
+        "title": "I Buried My Wife",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tC\t|\tG\tG\t|\tA5\tA5\t|\n|\tD\tD\t|\tD\tC\t|\tG\tG\t|\tA5\tA5\t||\n\nPART 2:\n|\tD\tD\t|\tD\tG\t|\tD\tD\t|\tC\tC\t|\n|\tD\tD\t|\tD\tG\t|\tC\tC\t|\tA5\tA5\t||"
+      },
+      {
+        "title": "Black Rogue",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tA5\tG\t|\tA5\tA5\t|\tA5\tG\t|\tD\tD\t|\n|\tA5\tG\t|\tA5\tA5\t|\tG\tG\t|1\tD\tD\t|\n|2\tA5\tA5\t||\n\nPART 2:\n|\tD\tEm\t|\tD/F#\tAsus4\t|\tD/F#\tG\t|\tA5\tA5\t|\n|\tD\tEm\t|\tD/F#\tG\t|\tAsus4\tG\t|1\tD/F#\tD\t|\n|2\tD/F#\tD\t||"
       }
     ]
   },
@@ -555,7 +580,27 @@
     ]
   },
   {
-    "setTitle": "POLKAS: Ballydesmond Set",
+    "setTitle": "POLKAS: Ballydesmond Classic Set",
+    "tuneChords": [
+      {
+        "title": "Ballydesmond No. 0",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tC\tC\t|\tD\tD\t|\tA5\tA5\t|\n|\tD\tD\t|\tC\tC\t|\tA5\tA5\t|\t(D)\t(D)\t||\n\nPART 2:\n|\tD (A5)\t/|\tC\tC\t|\tD (A5)\t/|\tA5\tA5\t|\n|\tD (A5)\t/|\tC\tC\t|\tA5\tA5\t|\tA5\tA5\t|\n|\tD (A5)\tA5\t|\tA5\tA5\t|\tA5\tA5\t|\tG\tG\t|\n|\tD\tD\t|\tC\tC\t|\tA5\tA5\t|\tA5\tA5\t||"
+      },
+      {
+        "title": "Ballydesmond No. 1",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tC\tC\t|\tG\tG\t|1\tEm\tEm\t|\n|2\tAm\tAm\t||\n\nPART 2:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|1\tEm\tEm\t|\n|2\tAm\tAm\t||"
+      },
+      {
+        "title": "Ballydesmond No. 2",
+        "meter": "2/4",
+        "chords": "PART 1:\n|\tC\tG\t|\tAm\tEm\t|\tG\tG\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tG\tG\t|\tC\tEm\t|1\tAm\tAm\t|\n|2\tAm\tAm\t||\n\nPART 2:\n|\tAm\tAm\t|\tG\tG\t|\tAm\tAm\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tG\tG\t|\tAm\tEm\t|1\tAm\tAm\t|\n|2\tAm\tAm\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "POLKAS: Ballydesmond Session Set",
     "tuneChords": [
       {
         "title": "Ballydesmond No. 1",
@@ -885,6 +930,46 @@
     ]
   },
   {
+    "setTitle": "REELS: Charlie Mulvihill's Set",
+    "tuneChords": [
+      {
+        "title": "Lad O'Beirne's (Dmaj)",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tG\t|\tD\tD\t|\tD\tA\t|\tG\tA\t|\n|\tD\tG\t|\tD\tD\t|\tG\tG\t|1\tG\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|1\tG\tA\t|\n|2\tA\tA\t||"
+      },
+      {
+        "title": "Charlie Mulvihill's",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tBm\tA\t|\n|\tD\tG\t|\tD\tA\t|\tBm\tG\t|1\tA\tD\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tD\tG\t|\tD\tA\t|\tD\tD\t|\tG\tA\t|\n|\tBm\tBm\t|\tBm\tA\t|\tG\tG\t|1\tA\tD\t|\n|2\tA\tD\t||"
+      },
+      {
+        "title": "Andy McGann's",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tA\t|\tD\tD\t|1\tBm\tBm\t|\n|2\tBm\tA\t||\n\nPART 2:\n|\tD\tD\t|\tD\tG\t|\tBm\tBm\t|\tG\tA\t|\n|\tD\tD\t|\tD\tG\t|\tBm\tBm\t|1\tG\tA\t|\n|2\tEm\tBm\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "REELS: Coachman's Whip Set",
+    "tuneChords": [
+      {
+        "title": "Coachman's Whip",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tEm\tEm\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tD\tD7\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tG\t|\tEm\tEm\t|\tC\tD\t|\n|\tG\tG\t|\t(Em)\t/|\tD\tD7\t|1\tC\tD\t|\n|2\tC\tD\t||"
+      },
+      {
+        "title": "Drag Her Round the Road",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|1\tG\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tEm\tEm\t|\tC\tD\t|\n|\tG\tG\t|\tC\tD\t|\tEm\tEm\t|\tC\tD\t||"
+      },
+      {
+        "title": "Flagstone of Memories",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG\tC\t|\tG\tD\t|\n|\tG\tG\t|\tG\tC\t|\tG\tC\t|1\tD\tG\t|\n|2\tD7\tG\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tC\t|\tG\tG\t|\t(C)\tD\t|\n|\tEm\tD\t|\tC\tC\t|\t(Em)\t(C)\t|1\tD\tG\t|\n|2\tD7\tC\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "REELS: Devanny's Goat Set",
     "tuneChords": [
       {
@@ -1008,7 +1093,7 @@
         "chords": "PART 1:\n|\tG\tG\t|\tG\tA\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\tA\t|\tD\tD\t|\tD\tD\t||\n\nPART 2:\n|\tD (A)\tD D\t|\tD\tD\t|\tEm\tEm\t|\tA\tA\t|\n|\tBm\tBm\t|\tD/F#\t/|\tG\tG\t|\tG\tA\t||"
       },
       {
-        "title": "Garrett Barry's",
+        "title": "Garrett Barry's (Gmaj)",
         "meter": "4/4",
         "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tC\tD\t|\n|\tG\tG\t|\tEm\t(G/B)\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG/B\tG/B\t|\tG\tG\t|\tC\t(D)\t|\n|\tG (Em)\t/|\tG/B\tG/B\t|\tC\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||"
       }
@@ -1018,7 +1103,7 @@
     "setTitle": "REELS: Lad O'Beirne's Set",
     "tuneChords": [
       {
-        "title": "Lad O'Beirne's",
+        "title": "Lad O'Beirne's (Gmaj)",
         "meter": "4/4",
         "chords": "PART 1:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tCadd9\t/|\tG (G/B)\t/|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tG/B\t|1\tD\tD\t|\n|2\tD\tD\t||"
       },

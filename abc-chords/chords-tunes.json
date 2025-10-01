@@ -215,6 +215,11 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\t(B5)\t/|\tEm\tEm\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tEm\tEm\t|\tAm\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tC\tD\t|1\tG\tD\t|\n|2\tG\tG\t||"
   },
   {
+    "title": "JIG: I Buried My Wife",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tC\t|\tG\tG\t|\tA5\tA5\t|\n|\tD\tD\t|\tD\tC\t|\tG\tG\t|\tA5\tA5\t||\n\nPART 2:\n|\tD\tD\t|\tD\tG\t|\tD\tD\t|\tC\tC\t|\n|\tD\tD\t|\tD\tG\t|\tC\tC\t|\tA5\tA5\t||"
+  },
+  {
     "title": "JIG: Jackie Small's",
     "meter": "6/8",
     "chords": "PART 1:\n|\tE\tE\t|\tE\tD\t|\tE\tE\t|\tD\tD/F#\t|\n|\tE\tE\t|\tE\t(A)\t|\tD\tD\t|1\tD\tD/F# (A)\t|\n|2\tD/F# (A)\tD/F# (A)\t||\n\nPART 2:\n|\tD/F#\t(Em)\t|\tD\tD\t|\tD/F#\t(Em)\t|\tD\t(D/B)\t|\n|\tD/F#\t(Em)\t|\tD\tD\t|\tD/B\tD/B\t|1\tA\t(Em)\t|\n|2\t(Em)\tD/F# (A)\t||"
@@ -285,6 +290,11 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG (Em)\t/|\tG (C)\t/|\tAm\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tC (Am)\tBm\t|1\tC\tD\t|\n|2\tC\tD\t||"
   },
   {
+    "title": "JIG: Sixpenny Money",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tA\t|\tBm\tA\t|\n|\tD\tD\t|\tG\tA\t|\tBm\tBm\t|\tG\tA\t||\n\nPART 2:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tD\tA\t|\n|\tD\tG\t|\tD\tA\t|\tBm\tBm\t|\tG\tA\t||"
+  },
+  {
     "title": "JIG: Stick Across the Hob",
     "meter": "6/8",
     "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tG\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tG\tG\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tD/F#\t|\tEm\tD\t|\tAsus4\t/|\tA\tA\t|\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tG\tD/F#\t|\tEm\tD\t|\tA\tA\t|\tAsus4\t/||\n\nPART 3:\n|\tG\tD/F#\t|\tEm\tD\t|\t(Asus4)\t/|\tA\tA\t|\n|\tG\tD/F#\t|\tEm\tD\t|\t(Asus4)\t/|\tAsus4\t/||"
@@ -333,6 +343,11 @@
     "title": "POLKA: Ballinafad",
     "meter": "2/4",
     "chords": "PART 1:\n|\tG\t(D/F#)\t|\tG/B\tG/B\t|\tA\tA\t|\tD\tD/F#\t|\n|\tG\t(D/F#)\t|\tG/B\tG/B\t|\tA\tA\t|\tD\tD\t|\n|\tG\tG\t|\tD\tD\t|\tG/B\tD\t|\tG\tD\t|\n|\tG\tD/F#\t|\tG/B\tG/B\t|\tA\tD\t|\tG\tG\t||\n\nPART 2:\n|\tG\t(D/F#)\t|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\n|\tG/B\tG/B\t|\tC\tG\t|1\tC\tD\t|\tG\tD\t|\n|2\tC\tD\t|\n|\tG\tG\t||"
+  },
+  {
+    "title": "POLKA: Ballydesmond No. 0",
+    "meter": "2/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tC\tC\t|\tD\tD\t|\tA5\tA5\t|\n|\tD\tD\t|\tC\tC\t|\tA5\tA5\t|\t(D)\t(D)\t||\n\nPART 2:\n|\tD (A5)\t/|\tC\tC\t|\tD (A5)\t/|\tA5\tA5\t|\n|\tD (A5)\t/|\tC\tC\t|\tA5\tA5\t|\tA5\tA5\t|\n|\tD (A5)\tA5\t|\tA5\tA5\t|\tA5\tA5\t|\tG\tG\t|\n|\tD\tD\t|\tC\tC\t|\tA5\tA5\t|\tA5\tA5\t||"
   },
   {
     "title": "POLKA: Ballydesmond No. 1",
@@ -545,6 +560,11 @@
     "chords": "PART 1:\n|\tBm\tBm\t|\tBm\tBm\t|\tG\tG\t|\tA\tA\t|\n|\tBm\tBm\t|\tA\tA\t|\tF#m\tF#m\t|1\tG\tA\t|\n|2\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tBm7\tBm7\t|\tG\tA\t||"
   },
   {
+    "title": "REEL: Andy McGann's",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tA\t|\tD\tD\t|1\tBm\tBm\t|\n|2\tBm\tA\t||\n\nPART 2:\n|\tD\tD\t|\tD\tG\t|\tBm\tBm\t|\tG\tA\t|\n|\tD\tD\t|\tD\tG\t|\tBm\tBm\t|1\tG\tA\t|\n|2\tEm\tBm\t||"
+  },
+  {
     "title": "REEL: Ashplant",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\t(C)\t(C)\t|\t(G)\t(G)\t|\tG\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tD\t|\tEm (C)\t/|\tG\tD\t|\n|\tEm\tEm\t|\t(C)\t(C)\t|\tG\tG\t|\tD\tD\t||"
@@ -575,6 +595,16 @@
     "chords": "PART 1:\n|\tD\tG\t|\tD\t(A)\t|\tD\tG\t|\tA (G)\t(D) (A)\t|\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tA\tD\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tC (A)\tG G\t|\n|\tD\tD\t|\tG\tA\t|\tD (Bm)\t/|\tG\tA\t||"
   },
   {
+    "title": "REEL: Charlie Mulvihill's",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tG\t|\tD\tA\t|\tD\tG\t|\tBm\tA\t|\n|\tD\tG\t|\tD\tA\t|\tBm\tG\t|1\tA\tD\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tD\tG\t|\tD\tA\t|\tD\tD\t|\tG\tA\t|\n|\tBm\tBm\t|\tBm\tA\t|\tG\tG\t|1\tA\tD\t|\n|2\tA\tD\t||"
+  },
+  {
+    "title": "REEL: Coachman's Whip",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tEm\tEm\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tD\tD7\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tG\t|\tEm\tEm\t|\tC\tD\t|\n|\tG\tG\t|\t(Em)\t/|\tD\tD7\t|1\tC\tD\t|\n|2\tC\tD\t||"
+  },
+  {
     "title": "REEL: Cooley's",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\tD\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tAm\tAm\t|1\tD\tEm\t|\n|2\tD\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\tD\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tAm\tAm\t|1\tD\tEm\t|\n|2\tD\tEm\t||"
@@ -588,6 +618,11 @@
     "title": "REEL: Dick Gossip's",
     "meter": "4/4",
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD/F#\t|\tBm\tBm\t|\tG\tA\t|1\tD\tA\t|\n|2\tD A\tD D\t||\n\nPART 2:\n|\tG\tG\t|\tEm\tEm\t|\tA\tA\t|\tA\tA\t|\n|\tG\tG\t|\tEm\tEm\t|\tA\tA\t|1\tA\tD\t|\n|2\tD A\tD D\t||"
+  },
+  {
+    "title": "REEL: Drag Her Round the Road",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|1\tG\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tC\tD\t|\tEm\tEm\t|\tC\tD\t|\n|\tG\tG\t|\tC\tD\t|\tEm\tEm\t|\tC\tD\t||"
   },
   {
     "title": "REEL: Drowsy Maggie",
@@ -618,6 +653,11 @@
     "title": "REEL: First of August",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\tG\tG\t|\tD\tD\t|\tA\tA\t|\n|\tEm\tEm\t|\tG\tG\t|\tD\tD\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tC\tD\t|\tEm\tEm\t|\tC\tD\t|\tG\tG\t|\n|\tEm\tD\t|\tC\tC\t|\tAm\tD\t|1\tG\tG\t|\n|2\tAm\tBm\t||"
+  },
+  {
+    "title": "REEL: Flagstone of Memories",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG\tC\t|\tG\tD\t|\n|\tG\tG\t|\tG\tC\t|\tG\tC\t|1\tD\tG\t|\n|2\tD7\tG\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tC\t|\tG\tG\t|\t(C)\tD\t|\n|\tEm\tD\t|\tC\tC\t|\t(Em)\t(C)\t|1\tD\tG\t|\n|2\tD7\tC\t||"
   },
   {
     "title": "REEL: Galtee Rangers",
@@ -665,7 +705,12 @@
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tC\t|\tC\tG\t|\n|\tD\tD\t|\tD\tC\t|\tA\tA\t|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tBm\tBm\t|\tD/F#\tEm\t|\n|\tD\tD\t|\tA\tA\t|\tG\tG\t|\tA\tA\t||"
   },
   {
-    "title": "REEL: Lad O'Beirne's",
+    "title": "REEL: Lad O'Beirne's (Dmaj)",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tG\t|\tD\tD\t|\tD\tA\t|\tG\tA\t|\n|\tD\tG\t|\tD\tD\t|\tG\tG\t|1\tG\tA\t|\n|2\tA\tA\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|1\tG\tA\t|\n|2\tA\tA\t||"
+  },
+  {
+    "title": "REEL: Lad O'Beirne's (Gmaj)",
     "meter": "4/4",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tCadd9\t/|\tG (G/B)\t/|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tCadd9\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tC\tC\t|\tG/B\tG/B\t|1\tD\tD\t|\n|2\tD\tD\t||"
   },

@@ -344,6 +344,13 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.12: Session DB Update**
+
++ Session DB updates:
+  - Update to version 2025.10.01.1
+  - 9 sets from Anton added + arr., 1 set from Oliushka tweaked
+  - Ballydesmond & Lad O'Beirne's sets renamed to avoid duplication
+
 **v1.1.11: Fix Encoder Edge Cases**
 
 + ABC Encoder module updates:
