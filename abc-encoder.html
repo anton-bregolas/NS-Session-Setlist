@@ -134,7 +134,7 @@
                         </button>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
                             <label class="nss-checkbox-label">
-                              <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1">
+                              <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1" title="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option" aria-title="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option">
                                 <span class="nss-advanced-option-text">SORT fetches metadata from The Session</span>
                             </label>
                             <label class="nss-checkbox-label">
@@ -219,6 +219,10 @@
                             <label class="nss-checkbox-label">
                               <input type="checkbox" id="sort-skips-mergefields" data-option="abcSortSkipsMergingDuplicateFields" class="nss-checkbox-btn" value="1">
                                 <span class="nss-advanced-option-text">SORT skips merging duplicate header fields</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-skips-updating-tsometadata" data-option="abcSortSkipsUpdatingTsoMetaData" class="nss-checkbox-btn" value="1" title="SORT skips updating fetched TSO metadata if ABC contains line ‘...at The Session’" aria-title="SORT skips updating fetched TSO metadata if ABC contains line '...at The Session'">
+                                <span class="nss-advanced-option-text">SORT skips updating fetched TSO metadata</span>
                             </label>
                             <label class="nss-checkbox-label">
                               <input type="checkbox" id="sort-removes-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">

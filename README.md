@@ -203,7 +203,7 @@ Features adjustable via Advanced Settings include (`*` signifies default):
 - **Handle ABC body formatting:** `Normalize ABC part endings*`
 - **Remove duplicate ABCs:** `By ABC Title*` / `By ABC content`
 - **Remove extra line breaks in ABC:** `Wipe extra line breaks`, `Wipes text after line breaks`
-- **Skip editing ABC if:** `Do not edit headers if ABC ordered*`, `Do not edit titles if ABC ordered*`
+- **Skip editing ABC headers if:** `Do not edit headers if ABC ordered*`, `Do not edit titles if ABC ordered*`, `Do not update fetched TSO metadata*`
 - **Prevent default Encoder behavior:** `Do not merge duplicate header fields`
 
 ### Input / Output Defaults
@@ -343,6 +343,13 @@ Import Name | Import Description | Details |
 
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
+
+**v1.1.13: Fix TSO Metadata Updating**
+
++ ABC Encoder module updates:
+  - Add C: C: S: field splitting for S: values longer than 100 chars (data moved to S: field)
+  - Fix C: C: S: / C: + S: fields processing with more robust fallbacks
+  - Add Skip updating TSO metadata option to Encoder settings (on by default)
 
 **v1.1.12: Session DB Update**
 

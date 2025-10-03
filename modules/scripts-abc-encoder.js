@@ -52,6 +52,7 @@ export const abcEncoderDefaults = {
     abcSortSkipsDeepEditForOrderedAbc: "1",
     abcSortSkipsTitleEditForOrderedAbc: "1", // Linked with abcSortSkipsTitleEditForOrderedAbc
     abcSortSkipsMergingDuplicateFields: "0",
+    abcSortSkipsUpdatingTsoMetaData: "1",
     abcSortRemovesLineBreaksInAbc: "1",
     abcSortRemovesTextAfterLineBreaksInAbc: "0"
 };
@@ -70,7 +71,7 @@ const matchIndividualTunesStrict = new RegExp (/^T:.*[\s]*(?:^(?:[A-JL-Zmr]:|%).
 
 // Quick edit mode for ordered ABCs: abcSortSkipsDeepEditForOrderedAbc
 //
-const matchOrderedCustomAbc = /^C: C:.*[\s]*C: Set Leaders:.*[\s]*(?:N:.*[\s]*)*Z:.*at The Session.*[\s]*(?:N:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*(?:%.*[\s]*)*K:.*[\s]*/;
+const matchOrderedCustomAbc = /^C: C:.*[\s]*C: Set Leaders:.*[\s]*(?:N:.*[\s]*)*(?:S:.*[\s]*)*Z:.*at The Session.*[\s]*(?:N:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*(?:%.*[\s]*)*K:.*[\s]*/;
 const matchOrderedStandardAbc = /^(?:C:(?! C:| Set Leaders:).*[\s]*)*(?:C: Set Leaders:.*[\s]*)*(?:S:.*[\s]*)*(?:Z:.*[\s]*)*(?:N:.*[\s]*)*(?:[ABD-IOPU-W]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*(?:Q:.*[\s]*)*(?:%.*[\s]*)*K:.*[\s]*/;
 const matchOrderedStandardAbcPlusTsoMeta = /^(?:C:(?! C:| Set Leaders:).*[\s]*)*(?:C: Set Leaders:.*[\s]*)*(?:S:.*[\s]*)*Z:.*at The Session.*[\s]*(?:N:.*[\s]*)*(?:[ABD-IOPU-W]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*(?:Q:.*[\s]*)*(?:%.*[\s]*)*K:.*[\s]*/;
 const matchOrderedMergedSecondaryHeader = /^(?:[IPUV]:.*[\s]*)*(?:R:.*[\s]*)*(?:M:.*[\s]*)*(?:L:.*[\s]*)*(?:Q:.*[\s]*)*(?:%.*[\s]*)*K:.*[\s]*/;
@@ -647,9 +648,11 @@ async function preProcessAbcMetadata(rawAbcContent) {
     
         if (!abcItem) return abcItem;
 
-        // Do not process ABCs that already contain TSO metadata
+        // Do not process ABCs containing TSO metadata if skip setting is on
 
-        if (abcItem.includes('at The Session')) {
+        if (localStorageOk() &&
+            +localStorage.abcSortSkipsUpdatingTsoMetaData === 1 &&
+            abcItem.includes('at The Session')) {
 
             metaFoundCounter++;
             return abcItem;
@@ -1657,7 +1660,7 @@ function processAbcCCS(abcCCS, abcC, abcS, abcIndex) {
 
     let abcSVal = '';
 
-    if (abcSFromCCSArr && abcSFromCCSArr[0]) {
+    if (abcSFromCCSArr && abcSFromCCSArr[0] && !abcCCSVal.includes("S: See Notes")) {
 
         abcSVal = abcSFromCCSArr[0].includes(' + ')?
             abcIndex === 0? `${abcSFromCCSArr[0].split(' + ')[0]}, ${abcSFromCCSArr[0].split(' + ')[1]}` :
@@ -2796,14 +2799,20 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
     if (!abcN && isCustomFieldSetEnforced) {
 
-        abcN =
-            setToTunes && abcToMatchSArr.length?
-                processMergedAbcHeader(abcToMatchSArr, abcIndex).replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
+        const abcSLinksArr =
             abcToMatchSArr.length?
-                abcToMatchSArr.join('\n').replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
+                abcToMatchSArr.filter(line => line.replace(/^S:[ ]*/, '').startsWith('http')) :
             abcSArr.length?
-                abcSArr.join('\n').replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
-            '';
+                abcSArr.filter(line => line.replace(/^S:[ ]*/, '').startsWith('http')) :
+            [];
+
+        if (abcSLinksArr.length) {
+
+            abcN =
+                setToTunes && abcToMatchSArr.length?
+                    processMergedAbcHeader(abcSLinksArr, abcIndex).replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
+                    abcSLinksArr.join('\n').replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim();
+        }
     }
 
     // Add ABC Transcription field if missing, fill in the default value (N.S.S.S.)
@@ -2829,9 +2838,12 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
         if (abcCCS) {
 
-            let abcSFromCCS = abcCCS.split(/; S:[ ]*/)[1] || "Various";
+            let abcSFromCCS = abcCCS.split(/; S:[ ]*/)[1];
 
-            abcS = abcS? `${abcSFromCCS}\nS: ${abcS}` : abcSFromCCS;
+            if (abcSFromCCS && abcSFromCCS !== "See Notes") {
+
+                abcS = abcS? `${abcSFromCCS}\nS: ${abcS}` : abcSFromCCS;
+            }
         }
 
         // Get abcC value from custom C: C: S: field
@@ -2850,9 +2862,14 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
         // Attempt to fill in C: C: S: data using C: and S: fields
 
-        if (abcC && abcSArr[0] && !abcSArr[0].replace('S:', '').trim().startsWith('http')) {
+        let abcSStr =
+            abcSArr.find( // Exclude fields containing links
+                line => !line.replace('S:', '').trim().startsWith('http')
+            );
 
-            abcCCS = `${abcC}; ${abcSArr[0]}`;
+        if (abcC && abcSStr) {
+
+            abcCCS = `${abcC}; ${abcSStr}`;
 
         // Attempt to fill in C: C: S: data using C: field value
 
@@ -2866,7 +2883,14 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
             abcCCS = "Trad[?]; S: Various"
         }
-        // console.log(`ABC Encoder:\n\nMissing C: / S: field added to ${abcFirstTitle}`);
+        
+        // Split long C: C: S: lines, move S: data to footnotes
+
+        if (abcCCS.length > 97) {
+
+            abcCCS = `C: C: ${strC}; S: See Notes`;
+            abcS = abcS? `${strS}\n${abcS}` : strS;
+        }
     }
 
     // Account for header comments
@@ -2886,6 +2910,7 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
                 `${abcUpdTitlesArr[0]}\n` +
                 `C: C: ${abcCCS}\n` +
                 `C: Set Leaders: ${abcCSL}\n` +
+                `${abcCCS.includes('S: See Notes')? `S: ${abcS}\n` : ''}` +
                 `Z: ${abcZ}\n` +
                 `N: ${abcN}\n` +
                 abcNSL +
@@ -3048,6 +3073,7 @@ function mergeSetHeaderFields(abcHeadersArr) {
             headerLine.startsWith("C: Set Leaders:")) {
 
             let mergedCCLine = '';
+            let mergedSLine = '';
 
             const joinCCArr = 
                 mixedIndexedHeaderArr.
@@ -3075,6 +3101,17 @@ function mergeSetHeaderFields(abcHeadersArr) {
                 let strS = reduceArrToSlashSeparatedList(strSArr);
 
                 mergedCCLine = `C: C: ${strC}; S: ${strS}`;
+
+                if (mergedCCLine.slice(3).length > 100) {
+
+                    mergedCCLine = `C: C: ${strC}; S: See Notes`;
+
+                    mergedSLine =
+                        strS.split(' / ').map(
+                            (tagLine, i) => 
+                                `${i > 0? ' /' : 'S:'} [${i + 1}] ${tagLine}`
+                        ).join('');
+                }
             }
 
             let mergedCSLLine = '';
@@ -3115,6 +3152,7 @@ function mergeSetHeaderFields(abcHeadersArr) {
             if (mergedCCLine) mergedPrimaryArr.push(mergedCCLine);
             if (mergedCSLLine) mergedPrimaryArr.push(mergedCSLLine);
             if (mergedNSLLine) mergedPrimaryArr.push(mergedNSLLine);
+            if (mergedSLine) mergedPrimaryArr.push(mergedSLine);
 
             return;
         }

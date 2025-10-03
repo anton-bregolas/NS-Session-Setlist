@@ -2223,6 +2223,12 @@ async function appCheckBoxHandler(checkBox) {
         displayNotification("Sort will now merge ABC header fields in Sets, fixing duplicate display in abcjs", "success");
       break;
 
+    case 'abcSortSkipsUpdatingTsoMetaData':
+      checkBox.checked?
+        displayNotification("Sort will now skip fetching The Session metadata if ABC contains line ‘...at The Session’", "success") :
+        displayNotification("Sort will always fetch and update metadata in ABCs containing links to The Session", "success");
+      break;
+
     case 'abcSortRemovesLineBreaksInAbc':
       checkBox.checked?
         displayNotification("Sort will now reassemble ABC body line-by-line to ensure it has no empty lines", "success") :
