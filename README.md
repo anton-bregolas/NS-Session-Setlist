@@ -344,6 +344,14 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.14: Session DB Update**
+
++ Session DB updates:
+  - Update to version 2025.10.10.1
+  - Add Samhain Finale Medley Set (& Anton ed. arr.)
+  - Add chords to Empty Wallet Waltz & more tunes
+  - Fix long C: C: S: lines with new split to S: Encoder logic (automated)
+
 **v1.1.13: Fix TSO Metadata Updating**
 
 + ABC Encoder module updates:

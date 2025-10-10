@@ -115,6 +115,11 @@
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tD\t(Em)\t|\n|\tD/F#\t/|\tD (G)\t/|\tD/F#\tC\t|\tA\t(D)\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tC\tC\t|\tC\tC\t|\n|\tD\tD\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||\n\nPART 3:\n|\tD\t(Dsus4)\t|\tD\t(G)\t|\t(D/F#)\t(G)\t|\t(D/F#)\t(G/B)\t|\n|\tC\tC\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||"
   },
   {
+    "title": "JIG: Bank of Turf",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tG\tD\t|\tD\tA\t|\tD\tD\t|\n|\tG\tG\t|\tD\tD\t|1\tEm\tEm\t|\tA\tA\t|\n|2\tA\tA\t|\n|\tD\tD\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tG\tD\t|\tA\tA\t|\n|\tA\tA\t|\tD\tD\t|\tG\tD\t|1\tA\tA\t|\n|2\tA\tA\t||"
+  },
+  {
     "title": "JIG: Battering Ram",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\t/|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tAm\tG/B\t|\tC\tG/B\t|\tAm\tAm\t|\tD\tD\t|\n|\tEm\tEm\t|\tG/B\tG/B\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tG\tG\t|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\n|\tG/B\tG/B\t|\tC\tC\t|\tAm\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||"
@@ -228,6 +233,16 @@
     "title": "JIG: Jimmy Ward's",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tD\tD\t|\n|\tG\tG\t|\t(Am)\t/|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tAm\tAm\t|\tAm\tD\t|\tAm (C)\t/|\tD\tD\t|\n|\tAm\tAm\t|\tD\tD\t|\tC\t(G/B)\t|1\tAm\tD\t|\n|2\tAm\tD\t||"
+  },
+  {
+    "title": "JIG: Kerfunten (Dmaj)",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tA7\tA7\t|\n|\tD\tD\t|\tD\tD\t|\tD/F#\tG\t|1\tA\tD\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tD (Bm7)\t/|\tG\tG\t|\tD\tD\t|\tG\tA\t|\n|\tD (Bm7)\t/|\tG\tG\t|\tD\tBm7\t|1\tA\tD\t|\n|2\tA\tD\t||"
+  },
+  {
+    "title": "JIG: Kerfunten (Gmaj)",
+    "meter": "6/8",
+    "chords": "PART 1:\n|\tG\tG\t|\t(C)\t(D)\t|\t(G)\t(Em)\t|\tD\t(D7)\t|\n|\tG\tG\t|\t(C)\t(D)\t|\tG (Em)\tC\t|\tD\tG\t||\n\nPART 2:\n|\tG (Em)\t/|\tC\tC\t|\tG\tG\t|\tC\tD\t|\n|\tG (Em)\t/|\tC\tC\t|\tG\tEm\t|\tD\tG\t||"
   },
   {
     "title": "JIG: Kesh",
@@ -665,7 +680,7 @@
     "chords": "PART 1:\n|\tD\tD\t|\t(G)\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\t(G)\tA\t|\tD (Bm)\t/|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tD (Bm)\tG\t|\tA\tA\t||"
   },
   {
-    "title": "REEL: Garrett Barry's",
+    "title": "REEL: Garrett Barry's (Gmaj)",
     "meter": "4/4",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tC\tD\t|\n|\tG\tG\t|\tEm\t(G/B)\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG/B\tG/B\t|\tG\tG\t|\tC\t(D)\t|\n|\tG (Em)\t/|\tG/B\tG/B\t|\tC\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||"
   },
@@ -738,6 +753,11 @@
     "title": "REEL: Morning Star",
     "meter": "4/4",
     "chords": "PART 1:\n|\tG\tG\t|\tG/B\tC\t|\tG/B\tG/B\t|\tC\tD\t|\n|\tG (Em)\t/|\tG/B\tG/B\t|\tC\tC\t|\tG/B\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tG/B\tG/B\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tBm\tBm\t|\tC\t(G/B)\t|\tC\tD\t||"
+  },
+  {
+    "title": "REEL: Mountain Road",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\t(G)\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\t(G)\tA\t|\tD (Bm)\t/|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\t(G)\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD (Bm)\t/|\tD (Bm)\tA\t|\tG\tG\t|\tG\tA\t||"
   },
   {
     "title": "REEL: Mulqueeney's",
@@ -1033,6 +1053,11 @@
     "title": "VARIOUS: Wren [An Dro]",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\tBm\tBm\t||\n\nPART 2:\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tBm\tBm\t|\n|\tEm\tEm\t|\tC\tC\t|\tD\tD\t|\tD\tD\t||"
+  },
+  {
+    "title": "WALTZ: Empty Wallet",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tBm7\tBm7\tBm7\t|\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tBm7\tBm7\tBm7\t|\n|\tAm\tAm\tAm\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|1\tEm\tEm\tEm\t|\n|2\tEm\tEm\tEm\t||\n\nPART 2:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tD\tD\tD\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tEm\tEm\tEm\t|\tD\tD\tD\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tC\tC\tD\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
   },
   {
     "title": "WALTZ: Far Away",
