@@ -344,6 +344,17 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.15: Add Fallback Fonts**
+
++ App updates:
+  - Add Fira Sans as main fallback font
+  - Add more fallback fonts to declarations
+  - Fix inconsistent btn-x font display, replace with icon
+  - Icons updated
+
++ PWA updates:
+  - Add fallback font to cached files
+
 **v1.1.14: Session DB Update**
 
 + Session DB updates:

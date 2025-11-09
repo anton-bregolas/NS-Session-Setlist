@@ -88,13 +88,21 @@
             <article id="nss-popover-options" popover="manual" class="nss-popover nss-popover-menu" aria-label="Encoder Settings Menu">
                 <header class="nss-popover-header">
                     <div class="flex-wrapper nss-header-left-btn-container">
-                        <button data-load="encoder-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import saved Encoder settings or add Session Survey Data" aria-title="Import saved Encoder settings or add Session Survey Data"></button>
+                        <button data-load="encoder-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import saved Encoder settings or add Session Survey Data" aria-title="Import saved Encoder settings or add Session Survey Data">
+                            <svg class="nss-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-close"></use>
+                            </svg>
+                        </button>
                     </div>
                     <div class="nss-popover-header-title-container flex-wrapper">
                         <h2 class="nss-popover-title">Encoder Settings</h2>
                     </div>
                     <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
+                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings">
+                            <svg class="nss-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-close"></use>
+                            </svg>
+                        </button>
                     </div>
                 </header>
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
@@ -255,7 +263,11 @@
 
             <article popover data-popover="notification-popup" class="info" aria-label="Notification Popup">
                 <div class="nss-header-x-container">
-                    <button class="nss-btn nss-btn-x nss-popover-btn popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification"></button>
+                    <button class="nss-btn nss-btn-x nss-popover-btn popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-close"></use>
+                        </svg>
+                    </button>
                 </div>
                 <div class="flex-wrapper subtitle-wrapper">
                     <p data-popover="notification-message">Notification Message Test</p>

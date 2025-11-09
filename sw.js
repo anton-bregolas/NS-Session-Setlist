@@ -8,6 +8,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll([
+        'assets/fonts/FiraSans-Regular.ttf',
+        'assets/fonts/FiraSans-SemiBold.ttf',
         'assets/icons/app-icon-192x192.png',
         'assets/icons/app-icon-512x512.png',
         'assets/icons/app-icon-maskable-192x192.png',

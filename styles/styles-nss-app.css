@@ -6,6 +6,20 @@
   }
 }
 
+@font-face {
+  font-family: 'Fira Sans';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../assets/fonts/FiraSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-weight: 700;
+  font-style: normal;
+  src: url('../assets/fonts/FiraSans-SemiBold.ttf') format('truetype');
+}
+
 body {
   --accent-color: #ffd324;
   --accent-color-contrast: #ffae00;
@@ -41,7 +55,7 @@ body {
 }
 
 body * {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-family: 'Trebuchet MS', 'Fira Sans', 'Ubuntu Sans', 'Droid Sans', Helvetica, sans-serif;
 }
 
 body {
@@ -777,13 +791,7 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   height: 3.75rem;
 }
 
-.nss-btn-plus::after,
-.nss-btn-x::after {
-  content: "\00d7";
-  padding-bottom: 0.35rem;
-}
-
-.nss-btn-plus::after {
+.nss-btn-plus svg {
   transform: rotate(45deg) scale(0.9);
 }
 
@@ -954,16 +962,15 @@ body[data-mode="desktop"] .nss-footer-tunebook .tunebook-action,
 }
 
 body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action,
-[data-controls="tunebook-actions-mobile"],
-.nss-footer-tunebook .nss-btn-x {
+[data-controls="tunebook-actions-mobile"] {
   height: 3.4rem;
   width: 3.4rem;
   outline-offset: -0.05rem;
 }
 
-.nss-footer-tunebook .nss-btn-x {
-  top: 0.05rem;
-  outline-offset: -0.3rem;
+.nss-footer-tunebook .nss-btn-x svg {
+  height: 3rem;
+  width: 3rem;
 }
 
 .nss-launch {
@@ -1033,7 +1040,7 @@ body[data-mode="mobile"] .nss-select-container {
 }
 
 .nss-select-container * {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Fira Sans', 'Ubuntu Sans', 'Droid Sans', Arial, sans-serif;
 }
 
 .nss-playalong-container {
