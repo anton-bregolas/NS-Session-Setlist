@@ -532,7 +532,7 @@ GBd ~g3|gag f2g|abg afd|cAF G3:||
 X: 32
 T: JIG: Black Rogue
 C: C: Trad.; S: Various
-C: Set Leaders: Sophie, Anton, Tania
+C: Set Leaders: Sophie, Anton
 Z: Oleg Naumov arr.; Mladenski at The Session
 N: https://thesession.org/members/26966/sets/99413
 R: Jig
@@ -2458,17 +2458,17 @@ X: 145
 T: REEL: Eileen Curran
 C: C: Trad.; S: Mary Bergin
 C: Set Leaders: Anton
-Z: [Unedited]; gal_fiddle at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; gal_fiddle at The Session
 N: https://thesession.org/members/26966/sets/96505
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Gdor
-|:BAGF DGGB|AFcF dFcF|BAGF DGGA|BABc d2ga|
-abaf gfdg|fdcB AFdc|BAGF DFGA|1 (3Bcd cA BGGA:|2 (3Bcd cA BGBd||
-|:~g3 ~g3 ag|~f3e fgaf|dggf ~g3 a|bg (3agf dgga|
-abaf gfdg|fdcB AFdc|BAGF DFGA|1 (3Bcd cA BGBd:|2 BdcA BGGA||
+|:"Gm"BAGF DGGB|"F"AFcF dFcF|"Gm"BAGF DGGA|"Gm"BABc "F/A"d2ga|
+"Bb"abaf gfdg|"F"fdcB AFdc|"Eb"BAGF DFGA|1 (3Bcd cA "(Gm)"BG"Dm"GA:|2 (3Bcd "(F)"cA "(Gm)"BG"Dm"Bd||
+|:"Gm"~g3 "C5"~g3 ag|"F"~f3e fgaf|"Gm"dggf ~g3 a|"Gm"bg (3agf "F/A"dgga|
+"Bb"abaf gfdg|"F"fdcB AFdc|"Eb"BAGF DFGA|1 (3Bcd "(F)"cA "(Gm)"BG"Dm"Bd:|2 Bd"F"cA "Gm"BG G2||
 
 X: 146
 T: REEL: Eileen O'Callaghan's
@@ -2566,7 +2566,7 @@ dB|"D"AFFE F2DE|"(G)"F2FE "A"FAdB|"D"AFFE F2DE|"G"FABA "A"FE E2|
 "D"~A3B AF~F2|"G"ABde "A"fe~e2|"D (Bm)"fedc "G"BcdB|"A"A/B/c de fedB||
 
 X: 152
-T: REEL: Garrett Barry's
+T: REEL: Garrett Barry's (Gmaj)
 C: C: Trad.; S: Planxty
 C: Set Leaders: Sophie, Anton
 Z: Anton Zille ed., Oleg Naumov arr.; JACKB at The Session
@@ -2666,17 +2666,17 @@ X: 158
 T: REEL: Imelda Roland's (Ddor)
 C: C: Imelda Roland; S: Verena Commins; MacDara Ó Raghallaigh
 C: Set Leaders: Anton
-Z: [Unedited]; Tania Sycheva at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Tania Sycheva at The Session
 N: https://thesession.org/members/26966/sets/96505
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Ddor
-|:A2 FG AFcA|GC~C2 CEGE|FEDE ~F3G|AF A/B/c defd|
-~c3d cAGF|ECGC ACGC|FEDE ~F3G|AcG_B AD~D2:||
-|:AddA defg|ad~d2 adfd|c/d/c Bd cdef|gccd efge|
-~d3e dcAB|cdcA GFEG|AFDE ~F3G|AcG_B AD~D2:||
+|:"Dm"A2 FG AFcA|"C"GC~C2 CEGE|"Dm"FEDE ~F3G|"Bb"AF A/B/c "C"defd|
+"F"~c3d cAGF|"C"ECGC ACGC|"Bb"FEDE ~F3G|"Bb"AcG_B "Am"AD~D2:||
+|:"Dm"AddA defg|"G"ad~d2 adfd|"C"c/d/c Bd cdef|"Bb"gccd "C"efge|
+"Dm"~d3e "(A5)"dcAB|"(Bb)"cdcA "(C)"GFEG|"Bb"AFDE ~F3G|"C"AcG_B "Am"AD~D2:||
 
 X: 159
 T: REEL: Jenny's Chickens
@@ -2760,17 +2760,17 @@ X: 164
 T: REEL: Maghera Mountain
 C: C: Martin Hayes; S: Martin Hayes
 C: Set Leaders: Anton
-Z: [Unedited]; Sergio Rampino at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Sergio Rampino at The Session
 N: https://thesession.org/members/26966/sets/96505
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Gdor
-|:d2 cA BGGF|DGGG DGBc|d2 cA BGGB|AFcF dFcF|
-d2 cA BGGF|DGGF GBAG|FGAc fcAc|1 B/c/d AB GABc:|2 B/c/d AB GBAG||
-|:FGAc f2 ef|g3a gfef|ecgc acgf|ecgc acgc|
-BGGF G3B|AFFE FAGA|Bdge fdcA|1 B/c/d AB GBAG:|2 B/c/d AB G4||
+|:"Gm"d2 cA BGGF|DGGG DGBc|d2 cA BGGB|"F"AFcF "Bb"dF"F/A"cF|
+"Gm"d2 cA BGGF|DGGF "(Bb)"GB"(C5)"AG|"F"FGAc "F/A"fcAc|1 "C5"B/c/d "Dm"AB "Eb"GA"(F)"Bc:|2 "Eb"B/c/d "(F)"AB "(Gm)"GB"C5"AG||
+|:"F"FGAc f2 ef|"Gm"g3a gfef|"C5"ecgc acgf|ecgc acgc|
+"Gm"BGGF G3B|"F/A"AFFE FAGA|"Bb"Bdge "F/A"fdcA|1 "Bb"B/c/d "(F/A)"AB "C5"GBAG:|2 "Bb"B/c/d "(F/A)"AB "C5"GA"Dm"Bc||
 
 X: 165
 T: REEL: Maids of Mount Kisco
@@ -2986,7 +2986,7 @@ K: Gmaj
 X: 178
 T: REEL: Rip the Calico
 C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton, Mars, Oliushka
+C: Set Leaders: Tania, Anton
 Z: Anton Zille ed. arr.; Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/116537
 R: Reel

@@ -115,11 +115,6 @@
     "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tD\t(Em)\t|\n|\tD/F#\t/|\tD (G)\t/|\tD/F#\tC\t|\tA\t(D)\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tC\tC\t|\tC\tC\t|\n|\tD\tD\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||\n\nPART 3:\n|\tD\t(Dsus4)\t|\tD\t(G)\t|\t(D/F#)\t(G)\t|\t(D/F#)\t(G/B)\t|\n|\tC\tC\t|\tC\tC\t|\tD\tC\t|\tA\t(D)\t||"
   },
   {
-    "title": "JIG: Bank of Turf",
-    "meter": "6/8",
-    "chords": "PART 1:\n|\tD\tD\t|\tG\tD\t|\tD\tA\t|\tD\tD\t|\n|\tG\tG\t|\tD\tD\t|1\tEm\tEm\t|\tA\tA\t|\n|2\tA\tA\t|\n|\tD\tD\t||\n\nPART 2:\n|\tA\tA\t|\tD\tD\t|\tG\tD\t|\tA\tA\t|\n|\tA\tA\t|\tD\tD\t|\tG\tD\t|1\tA\tA\t|\n|2\tA\tA\t||"
-  },
-  {
     "title": "JIG: Battering Ram",
     "meter": "6/8",
     "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\t/|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tAm\tG/B\t|\tC\tG/B\t|\tAm\tAm\t|\tD\tD\t|\n|\tEm\tEm\t|\tG/B\tG/B\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tG\tG\t|\tEm\tEm\t|\tAm\tAm\t|\tD\tD\t|\n|\tG/B\tG/B\t|\tC\tC\t|\tAm\tAm\t|1\tD\tD\t|\n|2\tD\tD\t||"
@@ -660,6 +655,11 @@
     "chords": "PART 1:\n|\tG\tG\t|\tG\t(A)\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\tA\t|\tD\tD\t|1\tA\tD\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tA\tD\t|\tA\tD/B\t|\tA\tD\t|\tD\tD\t|\n|\tEm\t(D/F#)\t|\tG\tG\t|\tD\tD\t|\tA (G)\tD/F#\t||"
   },
   {
+    "title": "REEL: Eileen Curran",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tGm\tGm\t|\tF\tF\t|\tGm\tGm\t|\tGm\tF/A\t|\n|\tBb\tBb\t|\tF\tF\t|\tEb\tEb\t|1\t(Gm)\tDm\t|\n|2\tDm (F)\t(Gm) Dm\t||\n\nPART 2:\n|\tGm\tC5\t|\tF\tF\t|\tGm\tGm\t|\tGm\tF/A\t|\n|\tBb\tBb\t|\tF\tF\t|\tEb\tEb\t|1\tEb (F)\t(Gm) Dm\t|\n|2\tF\tGm\t||"
+  },
+  {
     "title": "REEL: Fermoy Lasses",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tD\t|\tG\tG\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tC\t|\tG\tG\t|\tD\tD\t|\n|\tG\tG\t|\tG\tC\t|\tAm7\tAm7\t|\tD\tD\t||"
@@ -710,6 +710,11 @@
     "chords": "PART 1:\n|\tEm\tG/B\t|\tD\tD/F#\t|\tEm\tEm\t|\tBm\tBm\t|\n|\tEm\tG/B\t|\tD\tD/F#\t|\tEm\tEm\t|\tD\t(G)\t||\n\nPART 2:\n|\tG\tA\t|\tD\tA\t|\tBm\tD/F#\t|\tG\tA\t|\n|\tBm\tBm\t|\tD/F#\t/|\tG\tG\t|\tA\tA\t||"
   },
   {
+    "title": "REEL: Imelda Roland's (Ddor)",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tDm\tDm\t|\tC\tC\t|\tDm\tDm\t|\tBb\tC\t|\n|\tF\tF\t|\tC\tC\t|\tBb\tBb\t|\tBb\tAm\t||\n\nPART 2:\n|\tDm\tDm\t|\tG\tG\t|\tC\tC\t|\tBb\tC\t|\n|\tDm\t(A5)\t|\t(Bb)\t(C)\t|\tBb\tBb\t|\tC\tAm\t||"
+  },
+  {
     "title": "REEL: Jenny's Chickens",
     "meter": "4/4",
     "chords": "PART 1:\n|\tB5 (D)\t/|\tB5 (D)\tA (D)\t|\tD\tE/C#\t|\tA\t(E)\t||\n\nPART 2:\n|\tB5\tB5\t|\tB5\tA\t|\tB5\tB5\t|1\tA\t(E)\t|\n|2\tA\tA\t||\n\nPART 3:\n|\tB5\t(E)\t|\t(E)\tA\t|\tB5\t(E)\t|1\tA\t(E)\t|\n|2\tF#m\t(E)\t||"
@@ -733,6 +738,11 @@
     "title": "REEL: Lochaber Badger",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tC\t|\tC\tC\t|\tBm\tEm\t|\t(G/B)\tEm\t||\n\nPART 2:\n|\tEm\tAm\t|\tAm\tBm\t|\tBm\tC (Em)\t|\tG\tEm\t||"
+  },
+  {
+    "title": "REEL: Maghera Mountain",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tGm\tGm\t|\tGm\tGm\t|\tGm\tGm\t|\tF F\tBb F/A\t|\n|\tGm\tGm\t|\t(Bb)\t(C5)\t|\tF\tF/A\t|1\tC5 Dm\tEb (F)\t|\n|2\tEb (F)\t(Gm) C5\t||\n\nPART 2:\n|\tF\tF\t|\tGm\tGm\t|\tC5\tC5\t|\tC5\tC5\t|\n|\tGm\tGm\t|\tF/A\tF/A\t|\tBb\tF/A\t|1\tBb (F/A)\tC5 C5\t|\n|2\tBb (F/A)\tC5 Dm\t||"
   },
   {
     "title": "REEL: Maids of Mount Kisco",
@@ -792,7 +802,7 @@
   {
     "title": "REEL: Rip the Calico",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tG\tG\t|\tA\tA\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||"
+    "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tG\t(Em7)\t|\tA\tA\t|\tG\t(Em7)\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD (Bm7)\t/|\tG\tA\t|\tBm7 (D)\t/|\tG\tA\t||"
   },
   {
     "title": "REEL: Rolling in the Ryegrass",
