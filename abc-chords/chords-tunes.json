@@ -15,6 +15,11 @@
     "chords": "PART 1:\n|\tG\tG\tG\t|\tD\tD\tD\t|\tG\tG\tG\t|\tC\tC\tD/F#\t|\n|\tG (Em)\t/\t/|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||\n\nPART 2:\n|\tG (Em)\t/\t/|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tC (G)\t/\t/|\tD\tD\tD\t|\tC\tC\tC\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
   },
   {
+    "title": "AIR: Planxty Irwin",
+    "meter": "3/4",
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD/F#\t/\t/|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG (Em)\t/\t/|\tG (Em)\t/\tG (Em)\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tEm (G)\t/\t/|\tA\tA\tA\t|\tD\tD\tD\t|\tD/F#\t/\t/|\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
+  },
+  {
     "title": "BARNDANCE: Hills of Tara",
     "meter": "4/4",
     "chords": "PART 1:\n|\tG\tG/B\t|\tC\tA5\t|\tD\tC\t|\tD\tD/F#\t|\n|\tG\tG/B\t|\tC\tA5\t|\tD\tD/F#\t|\tG D\tG ||\n\nPART 2:\n|\tG\tD/F#\t|\tC\tA5\t|\tD\tC\t|\tD\tD/F#\t|\n|\tG\tD/F#\t|\tC\tA5\t|\tD\tD/F#\t|\tG D\tD ||"
@@ -23,6 +28,16 @@
     "title": "BARNDANCE: If There Weren't Any Women",
     "meter": "4/4",
     "chords": "PART 1:\n|\tG\tG/B\t|\tC\tG/B\t|\tG\tEm\t|\tA\tD\t|\n|\tG\tG/B\t|\tC\tG/B\t|\tA A\tD D/F#\t|1\tG C\tG/B A\t|\n|2\tG D\tG G\t||\n\nPART 2:\n|\tC\tC\t|\tG/B\tG/B\t|\tG\tEm\t|\tA A\tD D/F#\t|\n|\tG\tG/B\t|\tC\tG/B\t|\tA A\tD D/F#\t|1\tG D\tG G\t|\n|2\tG C\t(G/B) (A)\t||"
+  },
+  {
+    "title": "BARNDANCE: Lucy Farr's",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\t(G/C)\t(G/D)\t|\tG\tG/B\t|\tC\tD\t|\n|\tG\t(Em)\t|\t(G/C)\t(G/D)\t|\tC\t(Am)\t|1\tD\tD7\t|\n|2\tD\tG\t||\n\nPART 2:\n|\tC D\tG G\t|\tEm\tEm\t|\tG/C\tEm\t|\tC\tD\t|\n|\tG\tEm\t|\tEm\tEm\t|\tC\tAm\t|1\tD\tG\t|\n|2\tD\tD7\t||"
+  },
+  {
+    "title": "BARNDANCE: Step It out Joe",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tEm\t|\tAm\tAm\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\tEm\t|\tAm\t(G/B)\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tC\tC\t|\tD\tC (D/A)\t|\tG\t(G/B)\t|\tEm\tD\t|\n|\tC\tEm\t|\tD\tC\t|\tG\tEm (C)\t|\tD\tG\t|\n|\tC\tEm\t|\tC\tG\t|\tEm\tC (G/B)\t|\tAm\tD\t||"
   },
   {
     "title": "HOP JIG: Cucanandy",
@@ -347,7 +362,7 @@
   {
     "title": "MAZURKA: Ash Grove",
     "meter": "3/4",
-    "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG (Em)\t/\t/|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG (Em)\t/\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
+    "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG (Em)\t/\t/|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG (Em)\t/\tD\t|\tC\tC\tC\t|\tD\tD\tD/F#\t|\tG\tG\tG\t||"
   },
   {
     "title": "POLKA: Ballinafad",
@@ -595,6 +610,21 @@
     "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tG\t|\tA5\tA5\t|\tA5\tD\t|\n|\tA5\tA5\t|\tA5\tG\t|\tA5\tA5\t|\tA5\tD\t||\n\nPART 2:\n|\tA5\tG\t|\tG\tG\t|\tA5 A5\tG D\t|\tD\tG\t|\n|\tA5\tG\t|\tG\tG\t|\t(D)\tEm\t|\tEm\tG\t||"
   },
   {
+    "title": "REEL: Boy in the Gap",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tC\tC\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tEm\tEm\t|\tAsus4\t/|\tA\tA\t|\n|\tD\tD\t|\tEm\tEm\t|\tAsus4\t/|\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tG\t|\tD/F#\t/|1\tG\tA\t|\n|2\tG\tC\t||"
+  },
+  {
+    "title": "REEL: Boy on the Hilltop",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tE5\t|\tC\tE5\t|\tAm\tAm\t|\tAm\tE5\t|\n|\tD\tE5\t|\tC\tG\t|\tC\tG\t|\tG\tE5\t||\n\nPART 2:\n|\tAm\tAm\t|\tG\tG\t|\tAm\tAm\t|\tG\tG\t|\n|\tAm\tAm\t|\tE5\tE5\t|\tD\tD\t|\tG\tE5\t||"
+  },
+  {
+    "title": "REEL: Boys of Ballinahinch",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tG\t|\tD/F#\t/|\tG\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD/F#\t(D/B)\t|\tEm\tA\t||\n\nPART 2:\n|\tD\t(Em)\t|\t(D/F#)\tG\t|\tD/F#\t(D/B)\t|\tEm\tA\t|\n|\tD\t(Em)\t|\t(D/F#)\tG\t|\tD/F#\tEm\t|\tA\tA\t||"
+  },
+  {
     "title": "REEL: Brenda Stubbert's",
     "meter": "4/4",
     "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tG\tG\t|\n|\tAm\tAm\t|\tAm\tAm\t|\tEm\tEm\t|\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\t(D)\t(D)\t|\tG\tG\t|\tC\tG/B\t|\n|\tG/B\tAm\tAm\t|\t(D)\t(D)\t|\tEm\tEm\t|\tG\tG\t|\n|\tG\tAm\tAm\t|\tD\tD\t|\tG\tG\t|\tEm\tEm\t||"
@@ -755,6 +785,11 @@
     "chords": "PART 1:\n|\tEm\tD\t|\tG\tG\t|\tC\tAm\t|\tG/B\t(D)\t|\n|\tEm\tD\t|\tG\tG\t|\tC\tD/B\t|\tAsus4\tD\t||\n\nPART 2:\n|\tG\t(G/B)\t|\tC\tC\t|\tG/B\tEm\t|\tAsus4\tD\t|\n|\tG\t(G/B)\t|\tC\tC\t|\tG/B\tG/B\t|\tC\t(D)\t||"
   },
   {
+    "title": "REEL: Miss Johnson",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tG\tG\t|\tC\tG/B\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tC\tG/B\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG G\tD G/B\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tD (C)\t/|\tC\tD\t||"
+  },
+  {
     "title": "REEL: Molly Bán",
     "meter": "4/4",
     "chords": "PART 1:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tEm\t|\n|\tD\tD\t|\tC\tC\t|\tD/B\tD/B\t||"
@@ -768,6 +803,11 @@
     "title": "REEL: Mountain Road",
     "meter": "4/4",
     "chords": "PART 1:\n|\tD\tD\t|\t(G)\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\t(G)\tA\t|\tD (Bm)\t/|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\t(G)\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD (Bm)\t/|\tD (Bm)\tA\t|\tG\tG\t|\tG\tA\t||"
+  },
+  {
+    "title": "REEL: Moyard",
+    "meter": "4/4",
+    "chords": "PART 1:\n|\tD\tD\t|\tD\tA\t|\tD\tD/F#\t|\tG\tA\t|\n|\tD\tD\t|\tD/B\tA\t|\tG\tD/F#\t|1\tEm\tA\t|\n|2\tEm (A)\tD\t||\n\nPART 2:\n|\tA\tA\t|\tA\tG\t|\tA\tA\t|\tG\tD/F#\t|\n|\tA\tA\t|\tA\tD/F#\t|\tG\tG\t|1\tEm (A)\tD\t|\n|2\tEm\tA\t||"
   },
   {
     "title": "REEL: Mulqueeney's",

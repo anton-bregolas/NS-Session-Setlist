@@ -15,6 +15,21 @@
     ]
   },
   {
+    "setTitle": "BARNDANCES: Lucy Farr's Set",
+    "tuneChords": [
+      {
+        "title": "Lucy Farr's",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\t(G/C)\t(G/D)\t|\tG\tG/B\t|\tC\tD\t|\n|\tG\t(Em)\t|\t(G/C)\t(G/D)\t|\tC\t(Am)\t|1\tD\tD7\t|\n|2\tD\tG\t||\n\nPART 2:\n|\tC D\tG G\t|\tEm\tEm\t|\tG/C\tEm\t|\tC\tD\t|\n|\tG\tEm\t|\tEm\tEm\t|\tC\tAm\t|1\tD\tG\t|\n|2\tD\tD7\t||"
+      },
+      {
+        "title": "Step It out Joe",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tEm\t|\tAm\tAm\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\tEm\t|\tAm\t(G/B)\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tC\tC\t|\tD\tC (D/A)\t|\tG\t(G/B)\t|\tEm\tD\t|\n|\tC\tEm\t|\tD\tC\t|\tG\tEm (C)\t|\tD\tG\t|\n|\tC\tEm\t|\tC\tG\t|\tEm\tC (G/B)\t|\tAm\tD\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "HORNPIPES: Callaghan's Set",
     "tuneChords": [
       {
@@ -430,7 +445,12 @@
       {
         "title": "Ash Grove [Mazurka]",
         "meter": "3/4",
-        "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG (Em)\t/\t/|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG (Em)\t/\tD\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||"
+        "chords": "PART 1:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG (Em)\t/\t/|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tC\t|\tAm\tAm\tAm\t|\tD\tD\tD\t|\n|\tG (Em)\t/\tD\t|\tC\tC\tC\t|\tD\tD\tD/F#\t|\tG\tG\tG\t||"
+      },
+      {
+        "title": "Planxty Irwin [Air]",
+        "meter": "3/4",
+        "chords": "PART 1:\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD/F#\t/\t/|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|\tG\tG\tG\t||\n\nPART 2:\n|\tG (Em)\t/\t/|\tG (Em)\t/\tG (Em)\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tEm (G)\t/\t/|\tA\tA\tA\t|\tD\tD\tD\t|\tD/F#\t/\t/|\n|\tG\tG\tG\t|\tC\tC\tC\t|\tD\tD\tD\t|\tG\tG\tG\t|\n|\tC\tC\tC\t|\tG\tG\tG\t|\tD\tD\tD/F#\t|1\tG\tG\tG\t|\n|2\tG\tG\tG\t||"
       }
     ]
   },
@@ -940,6 +960,26 @@
     ]
   },
   {
+    "setTitle": "REELS: Boys on the Hilltop Set",
+    "tuneChords": [
+      {
+        "title": "Boy on the Hilltop",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tE5\t|\tC\tE5\t|\tAm\tAm\t|\tAm\tE5\t|\n|\tD\tE5\t|\tC\tG\t|\tC\tG\t|\tG\tE5\t||\n\nPART 2:\n|\tAm\tAm\t|\tG\tG\t|\tAm\tAm\t|\tG\tG\t|\n|\tAm\tAm\t|\tE5\tE5\t|\tD\tD\t|\tG\tE5\t||"
+      },
+      {
+        "title": "Boys of Ballinahinch",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tG\t|\tD/F#\t/|\tG\tA\t|\n|\tD\tD\t|\tD\tG\t|\tD/F#\t(D/B)\t|\tEm\tA\t||\n\nPART 2:\n|\tD\t(Em)\t|\t(D/F#)\tG\t|\tD/F#\t(D/B)\t|\tEm\tA\t|\n|\tD\t(Em)\t|\t(D/F#)\tG\t|\tD/F#\tEm\t|\tA\tA\t||"
+      },
+      {
+        "title": "Boy in the Gap",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tC\tC\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tEm\tEm\t|\tAsus4\t/|\tA\tA\t|\n|\tD\tD\t|\tEm\tEm\t|\tAsus4\t/|\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tG\t|\tD/F#\t/|1\tG\tA\t|\n|2\tG\tC\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "REELS: Brenda Stubbert's Set",
     "tuneChords": [
       {
@@ -1186,6 +1226,21 @@
         "title": "Red-Haired Lass",
         "meter": "4/4",
         "chords": "PART 1:\n|\tG\t(D)\t|\t(G/B)\t(C)\t|\tG/B\t(Em)\t|\tAm\tD\t|\n|\tG\t(Am)\t|\t(G/B)\t(C)\t|\tG/B\t(Em)\t|\tAm\tD\t||\n\nPART 2:\n|\tG G/B\tC G/B\t|\tG/B\tD\t|\tG G/B\tC G/B\t|\tEm\tD\t|\n|\tG G/B\tC G/B\t|\tG/B\tD\t|\tAm\tG/B\t|\tC\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "REELS: Moyard Set",
+    "tuneChords": [
+      {
+        "title": "Moyard",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tA\t|\tD\tD/F#\t|\tG\tA\t|\n|\tD\tD\t|\tD/B\tA\t|\tG\tD/F#\t|1\tEm\tA\t|\n|2\tEm (A)\tD\t||\n\nPART 2:\n|\tA\tA\t|\tA\tG\t|\tA\tA\t|\tG\tD/F#\t|\n|\tA\tA\t|\tA\tD/F#\t|\tG\tG\t|1\tEm (A)\tD\t|\n|2\tEm\tA\t||"
+      },
+      {
+        "title": "Miss Johnson",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tG\t|\tC\tG/B\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tC\tG/B\t|\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG G\tD G/B\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tEm\t|\tD (C)\t/|\tC\tD\t||"
       }
     ]
   },

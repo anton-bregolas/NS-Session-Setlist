@@ -26,24 +26,24 @@ T: BARNDANCES: Lucy Farr's Set
 T: Lucy Farr's
 C: C: Trad. / Charlie Lennon; S: Martin Hayes / Nathan Gourley & Laura Feddersen
 C: Set Leaders: Anton
-Z: Anton Zille ed.; Bannerman / ceili at The Session
+Z: Anton Zille ed., arr.; Bannerman / ceili at The Session
 N: https://thesession.org/members/26966/sets/115134
 R: Barndance
 M: 4/4
 L: 1/8
 Q: 1/2=86
 K: Gmaj
-|:G2 G2 G2 G2|GABG E2 D2|B2 B2 B2 B2|BcdB A4|
-BcdB G2 G2|GABG E2 D2|DEGA BddB|1 A2 G2 G2 D/E/F:|2 A2 G2 G4||
-|:BcdB G2 G2|GABG E2 D2|DEGA BddB|B2 A2 A4|
-BcdB G2 G2|GABG E2 D2|DEGA BddB|1 A2 G2 G4:|2 A2 G2 G2 D/E/F||
+|:"G"G2 G2 G2 G2|GABG "(G/C)"E2 "(G/D)"D2|"G"B2 B2 "G/B"B2 B2|"C"BcdB "D"A4|
+"G"BcdB "(Em)"G2 G2|GABG "(G/C)"E2 "(G/D)"D2|"C"DEGA "(Am)"BddB|1 "D"A2 G2 "D7"G2 D/E/F:|2 "D"A2 G2 "G"G4||
+|:"C"Bc"D"dB "G"G2 G2|"Em"GABG E2 D2|"G/C"DEGA "Em"BddB|"C"B2 A2 "D"A4|
+"G"BcdB "Em"G2 G2|GABG E2 D2|"C"DEGA "Am"BddB|1 "D"A2 G2 "G"G4:|2 "D"A2 G2 "D7"G2 D/E/F||
 T: Step It out Joe
 K: Gmaj
-|:G2 (3GGG GEDE|GABd dBdB|A2 (3AAA A2 gA|(3AAA eg gedB|
-G2 (3GGG GEDE|GABd dBdB|A2 (3Bcd eaaf|1 gedB AEED:|2 gedB BA A2||
-|:abaf g3e|dBAd BE~E2|GEDE GABd|eBdB A2 (3Bcd|
-[1 eaaf ~g3e|dBAG E4|DEGA B2 eB|dBAB G4:|
-[2 eaaf gabg|aged g3a|bage ageg|dBAd BEED||
+|:"G"G2 (3GGG GEDE|GABd "Em"dBdB|"Am"A2 (3AAA A2 gA|"C"(3AAA eg "D"gedB|
+"G"G2 (3GGG GEDE|"(G/B)"GABd "Em"dBdB|"Am"A2 (3Bcd "(G/B)"eaaf|1 "C"gedB "D"AEED:|2 "C"gedB "D"BA A2||
+|:"C"abaf g3e|"D"dBAd "C (D/A)"BE~E2|"G"GEDE "(G/B)"GABd|"Em"eBdB "D"A2 (3Bcd|
+[1 "C"eaaf "Em"~g3e|"D"dBAG "C"E4|"G"DEGA "Em (C)"B2 eB|"D"dBAB "G"G4:|
+[2 "C"eaaf "Em"gabg|"C"aged "G"g3a|"Em"bage "C (G/B)"ageg|"Am"dBAd "D"BEED||
 
 X: 3
 T: HORNPIPES: Callaghan's Set
@@ -741,7 +741,7 @@ T: MEDLEY: Ash Grove Set
 T: Ash Grove [Mazurka]
 C: C: Trad. / Turlough O'Carolan; S: Síle Friel & Ryan Molloy; Tommy Reck / Planxty
 C: Set Leaders: Alexey, Sophie, Anton
-Z: Anton Zille ed. arr.; ceolachan / Shablabar at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; ceolachan / Shablabar at The Session
 N: https://thesession.org/members/26966/sets/99352
 R: Mazurka
 M: 3/4
@@ -753,19 +753,19 @@ K: Gmaj
 |:D/E/F|"G"G2 B2 d/e/f|"Em"g2 d2 B2|"C"AG AB cd|"D"e2 c2 A2|
 "G"GF GA Bc|"Em"d2 B2 G2|"D"A2 d2 "A"^c2|"D"d3 B cA|
 "Em"B2 G2 E2|"C"E2 F2 G2|"Am"AB cB AG|"D"BA GF ED|
-"G (Em)"G2 BG "D"AF|"C"G2 E2 G2|"D"D2 E2 F2|"G"G4:||
+"G (Em)"G2 BG "D"AF|"C"G2 E2 G2|"D"D2 E2 "D/F#"F2|"G"G4:||
 T: Planxty Irwin [Air]
 R: Air
 Q: 1/4=144
 K: Gmaj
-d2|:g4 f2|e3f g2|d4 c2|B3A G2|
-c4 A2|B3c d2|F4 G2|A4 d2|
-g4 f2|e3f g2|d4 c2|B3A G2|
-c4 A2|B3c d2|G2 A2 F2|G4 d2:||
-|:g4 g2|g3f g2|a3b a2|a3f d2|
-b4 b2|a3b g2|f3g e2|d2 e2 f2|
-g4 f2|e3f g2|d4 c2|B3A G2|
-c4 A2|B3c d2|G2 A2 F2|1 G4 d2:|2 G6||
+d2|:"G"g4 f2|"C"e3f g2|"D"d4 c2|"G"B3A G2|
+"C"c4 A2|"G"B3c d2|"D/F#"F4 G2|"D"A4 d2|
+"G"g4 f2|"C"e3f g2|"D"d4 c2|"G"B3A G2|
+"C"c4 A2|"G"B3c d2|"D"G2 A2 "D/F#"F2|"G"G4 d2:||
+|:"G (Em)"g4 g2|g3f g2|"D"a3b a2|a3f d2|
+"Em (G)"b4 b2|"A"a3b g2|"D"f3g e2|"D/F#"d2 e2 f2|
+"G"g4 f2|"C"e3f g2|"D"d4 c2|"G"B3A G2|
+"C"c4 A2|"G"B3c d2|"D"G2 A2 "D/F#"F2|1 "G"G4 d2:|2 "G"G6||
 
 X: 29
 T: MEDLEY: Fishy Song Set
@@ -1603,30 +1603,30 @@ T: REELS: Boys on the Hilltop Set
 T: Boy on the Hilltop
 C: C: Trad.; S: Various
 C: Set Leaders: Alexey, Anton
-Z: Anton Zille ed.; Thady Quill / JACKB at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Thady Quill / JACKB at The Session
 N: https://thesession.org/members/26966/sets/99333
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Ador
-A3c B2AG|EGGF G2AG|EA~A2 BABd|egdB BAdB|
-A3c BGAG|EG~G2 G2AB|c2ec B2GB|dBGA BAAG||
-A2 B/c/d egdB|GBdB defg|a2ed egdB|GBdB BAA2|
-aged egdB|GB~B2 defg|afge fdef|gbaf gedB||
-T: Boys of Ballinahinch
+"D"A3c "E5"B2 AG|"C"EGGF G2"E5"AG|"Am"EA~A2 BABd|egdB "E5"BAdB|
+"D"A3c "E5"BG AG|"C"EG~G2 "G"G2 AB|"C"c2 ec "G"B2 GB|dBGA "E5"BAAG||
+"Am"A2 B/c/d egdB|"G"GBdB defg|"Am"a2 ed egdB|"G"GBdB BA A2|
+"Am"aged egdB|"E5"GB~B2 defg|"D"afge fdef|"G"gbaf "E5"gedB||
+T: Boys of Ballinahinch / The Strawberry Blossom
 K: Dmaj
-ag|f2df edBA|B/c/d ef g2 ag|f2df edBc|dBAF EF D2|
-fAdf edBA|B/c/d ef g2 ag|f2df edBc|dBAF EF D2||
-faaf d3e|faaf g3e|faab afdf|gfed B2Ae|
-faaf dcde|faaf g3a|bgaf gfed|B/c/d ef g2||
+ag|"D"f2 df edBA|B/c/d ef "G"g2 ag|"D/F#"f2 df edBc|"G"dBAF "A"EF D2|
+"D"fAdf edBA|B/c/d ef "G"g2 ag|"D/F#"f2 df "(D/B)"edBc|"Em"dBAF "A"EF D2||
+"D"faaf "(Em)"d3e|"(D/F#)"faaf "G"g3e|"D/F#"faab "(D/B)"afdf|"Em"gfed "A"B2 Ae|
+"D"faaf "(Em)"dcde|"(D/F#)"faaf "G"g3a|"D/F#"bgaf "Em"gfed|"A"B/c/d ef g2||
 T: Boy in the Gap
 K: Dmaj
-|:D2FA dedc|A2GE =cEGE|D2FA dedc|A2GE EDD2:||
-|:~f3g fedf|~e3f edcB|ABcd edcd|eaag eaag|
-~f3g fedf|egfd edcB|A2 B/c/d e2dc|A2GE EDD2:||
-|:df~f2 df~f2|ce~e2 gece|dffe ~f3g|a2ge edde|
-f2de fdAF|G2BG EFGE|D2FA dedc|1 A2GE EDD2:|2 A2GE =cEGE||
+|:"D"D2 FA dedc|"C"A2 GE =cEGE|"D"D2 FA dedc|"G"A2 GE "A"ED D2:||
+|:"D"~f3g fedf|"Em"~e3f edcB|"Asus4"ABcd edcd|"A"eaag eaag|
+"D"~f3g fedf|"Em"egfd edcB|"Asus4"A2 B/c/d e2 dc|"A"A2 GE ED D2:||
+|:"D"df~f2 df~f2|"A"ce~e2 gece|"D"dffe ~f3g|"G"a2 ge "A"edde|
+"D"f2 de fdAF|"G"G2 BG EFGE|"D/F#"D2 FA dedc|1 "G"A2 GE "A"ED D2:|2 "G"A2 GE "C"=cEGE||
 
 X: 58
 T: REELS: Brenda Stubbert's Set
@@ -2001,23 +2001,23 @@ T: REELS: Moyard Set
 T: Moyard
 C: C: Ciaran Kelly / Trad.; S: Ciaran Kelly / Mary Bergin
 C: Set Leaders: Anton
-Z: Anton Zille ed.; Bregolas / Pierre LAÏLY at The Session
+Z: Anton Zille ed. arr, Oleg Naumov arr.; Bregolas / Pierre LAÏLY at The Session
 N: https://thesession.org/members/26966/sets/105937
 R: Reel
 M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Dmaj
-|:DFAF d2 AF|DFAF GE~E2|DFAF dFAd|B/c/d eg fd d2|
-DFAF dFAF|DFAF GEEF|~G3A B/c/d ef|1 a2 ge fd d2:|2 a2 ge fddf||
-|:~e3d cA~A2|EAcA eAcA|efed cA~A2|afge fddf|
-~e3d cA~A2|EAcA eAcA|~G3A B/c/d ef|1 a2 ge fddf:|2 a2 ge fd d2||
+|:"D"DFAF d2 AF|DFAF "A"GE~E2|"D"DFAF "D/F#"dFAd|"G"B/c/d eg "A"fd d2|
+"D"DFAF dFAF|"D/B"DFAF "A"GEEF|"G"~G3A "D/F#"B/c/d ef|1 "Em"a2 ge "A"fd d2:|2 "Em (A)"a2 ge "D"fddf||
+|:"A"~e3d cA~A2|EAcA "G"eAcA|"A"efed cA~A2|"G"afge "D/F#"fddf|
+"A"~e3d cA~A2|EAcA "D/F#"eAcA|"G"~G3A B/c/d ef|1 "Em (A)"a2 ge "D"fddf:|2 "Em"a2 ge "A"fd d2||
 T: Miss Johnson
 K: Gmaj
-|:BcdB G2 BG|DGBG dGBG|BcdB GBAG|E/F/G AB cAdc|
-BcdB G2 BG|DGBG dGBc|dBcA BGAG|E/F/G AB cA~A2:||
-|:Bcde dcBc|dBgB aBgB|Bcde dcBc|A2 af gfed|
-Bcde dcBc|dBgB aBgB|~f3e defg|a2 af gfed:||
+|:"G"BcdB G2 BG|DGBG "C"dG"G/B"BG|"G"BcdB GBAG|"C"E/F/G AB "D"cAdc|
+"G"BcdB G2 BG|"Em"DGBG dGBc|"C"dBcA "G/B"BGAG|"D"E/F/G AB cA~A2:||
+|:"G"Bcde dcBc|"G"dBgB "D"aB"G/B"gB|"G"Bcde dcBc|"C"A2 af "D"gfed|
+"G"Bcde dcBc|"Em"dBgB aBgB|"D (C)"~f3e defg|"C"a2 af "D"gfed:||
 
 X: 72
 T: REELS: Mulqueeney's Set
