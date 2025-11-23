@@ -2883,14 +2883,31 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
             abcCCS = "Trad[?]; S: Various"
         }
-        
-        // Split long C: C: S: lines, move S: data to footnotes
+    }
 
-        if (abcCCS.length > 97) {
+    // Split long C: C: S: lines, move S: data to footnotes
 
-            abcCCS = `C: C: ${strC}; S: See Notes`;
-            abcS = abcS? `${strS}\n${abcS}` : strS;
+    if (isCustomFieldSetEnforced && abcCCS.length > 97) {
+
+        let abcCFromCCS = abcCCS.split('; S:')[0];
+        let abcSFromCCS = abcCCS.split('; S:')[1].trim();
+
+        const abcSFromCCSArr = abcSFromCCS.split(' / ');
+        let sLinePrefix = '';
+
+        if (abcSFromCCSArr.length > 1 && abcSFromCCSArr[0].includes(' + ')) {
+
+            sLinePrefix = `${abcSFromCCSArr[0].split(' + ')[0]}; `;
+            abcSFromCCSArr[0] = abcSFromCCSArr[0].split(' + ')[1];
         }
+        
+        abcS =
+            abcSFromCCSArr.map(
+                (sLine, i) => 
+                    `${i > 0? ' / ' : ''}[${i + 1}] ${sLinePrefix}${sLine}`
+            ).join('');
+
+        abcCCS = `${abcCFromCCS}; S: See Notes`;
     }
 
     // Account for header comments
@@ -3104,12 +3121,21 @@ function mergeSetHeaderFields(abcHeadersArr) {
 
                 if (mergedCCLine.slice(3).length > 100) {
 
+                    const splitLongSArr = strS.split(' / ');
+                    let sLinePrefix = '';
+
+                    if (splitLongSArr.length > 1 && splitLongSArr[0].includes(' + ')) {
+
+                        sLinePrefix = `${splitLongSArr[0].split(' + ')[0]}; `;
+                        splitLongSArr[0] = splitLongSArr[0].split(' + ')[1];
+                    }
+
                     mergedCCLine = `C: C: ${strC}; S: See Notes`;
 
                     mergedSLine =
-                        strS.split(' / ').map(
+                        splitLongSArr.map(
                             (tagLine, i) => 
-                                `${i > 0? ' /' : 'S:'} [${i + 1}] ${tagLine}`
+                                `${i > 0? ' /' : 'S:'} [${i + 1}] ${sLinePrefix}${tagLine}`
                         ).join('');
                 }
             }

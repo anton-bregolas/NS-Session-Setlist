@@ -344,10 +344,16 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.19: Fix Long CCS Fields**
+
++ ABC Encoder module updates:
+  - Fix Encoder logic for splitting C: C: S: fields longer than 100 chars
+  - Add "Common Source + " pattern recognition for long C: C: S: field splitting logic
+
 **v1.1.18: Fix Focus on Viewer Close**
 
 + App / Chord Viewer / List Viewer updates:
-  - Fix app not finding first visible element on viewer close
+  - Fix app not finding first visible focus element on viewer close
 
 **v1.1.17: Session DB Update**
 
