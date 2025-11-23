@@ -344,6 +344,23 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.18: Fix Focus on Viewer Close**
+
++ App / Chord Viewer / List Viewer updates:
+  - Fix app not finding first visible element on viewer close
+
+**v1.1.17: Session DB Update**
+
++ Session DB Updates:
+  - Update to version 2025.11.19.1
+  - Add chords for Ash Grove Set, Boys on the Hilltop Set, Lucy Farr's Set, Moyard Set
+
+**v1.1.16: Session DB Update**
+
++ Session DB Updates:
+  - Update to version 2025.11.12.1
+  - Add chords for Imelda Roland's Set
+
 **v1.1.15: Add Fallback Fonts**
 
 + App updates:

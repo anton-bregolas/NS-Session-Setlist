@@ -847,9 +847,12 @@ function showQuickHelpDescription(event) {
 function focusOnTuneBookActions() {
 
     const tuneBookActionsBtns =
-      document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
+      document.querySelectorAll(
+        '[data-load="tunebook-actions-menu"]:not([hidden])'
+      );
 
-    const focusElem = getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
+    const focusElem =
+      getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
 
     if (focusElem) focusElem.focus();
 }
@@ -967,7 +970,7 @@ export function getFirstCurrentlyDisplayedElem(nodeList) {
 
   for (let i = 0; i < nodeList.length; i++) {
 
-    if(!!nodeList[i].offsetParent) {
+    if(nodeList[i].offsetParent) {
 
       foundEl = nodeList[i];
       break;

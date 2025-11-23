@@ -23,7 +23,7 @@ import { displayWarningEffect, displayNotification } from "./scripts-nss-app.js"
 // Define required app elements
 
 // Elements used to launch the viewer, first currently displayed gets focus on exit
-const launchEls = document.querySelectorAll('[data-load="chord-viewer"]');
+const launchElsData = '[data-load="chord-viewer"]';
 // Fallback button receiving focus after viewer is closed
 const altFocusBtn = document.querySelector('#fullScreenButton');
 // Select element containing a list of Tune / Set options
@@ -66,7 +66,10 @@ export function openChordViewer(setChords, tuneChords) {
   
   const isDynamicChordsMode = isLocalStorageOk()? +localStorage.chordViewerAllowDynamicChords : false;
 
-  const launchButton = launchEls
+  const launchButton =
+    getFirstCurrentlyDisplayedElem(
+      document.querySelectorAll(launchElsData)
+    );
 
   if (!setChords && !tuneChords && !isDynamicChordsMode) {
 
@@ -313,8 +316,13 @@ function handleChordViewerClick(event) {
 
     chordViewerDialog.close();
 
+    const foundEl =
+      getFirstCurrentlyDisplayedElem(
+        document.querySelectorAll(launchElsData)
+      );
+
     const focusElem =
-      getFirstCurrentlyDisplayedElem(launchEls) ?? altFocusBtn;
+      foundEl ?? altFocusBtn;
 
     focusElem.focus();
 
@@ -997,7 +1005,7 @@ function removeAbcHeadersAndCommands(abcContent) {
 function removeAbcAccidentalsAndDecorations(abcContent) {
 
   let filteredAbc = 
-    abcContent.replaceAll(/[_=^\.~]/g, '');
+    abcContent.replaceAll(/[_=^.~]/g, '');
 
   return filteredAbc;
 }
@@ -1015,8 +1023,7 @@ function convertAbcIntervalsToSingleNotes(abcContent) {
 
 function normalizeAbcTriplets(abcContent) {
 
-  let filteredAbc = abcContent.replaceAll(/[]/g, '')
-                              .replaceAll(/\([34](\w)\/(\w)\/(\w)\//g, `$1//$2//$3/`)
+  let filteredAbc = abcContent.replaceAll(/\([34](\w)\/(\w)\/(\w)\//g, `$1//$2//$3/`)
                               .replaceAll(/\([34](\w)(\w)(\w)/g, `$1/$2/$3`);
 
   return filteredAbc;
@@ -1159,7 +1166,7 @@ function getFirstCurrentlyDisplayedElem(nodeList) {
 
   for (let i = 0; i < nodeList.length; i++) {
 
-    if(!!nodeList[i].offsetParent) {
+    if(nodeList[i].offsetParent) {
 
       foundEl = nodeList[i];
       break;
