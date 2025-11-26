@@ -344,6 +344,20 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.20: Update Encoder Tests**
+
++ Tests updates:
+  - Update SORT tests to match updated logic
+  - Add SORT and ENCODE tests with various settings
+  - Add Chord Viewer / Chordbook tests
+  - Add localStorage initialization before testing
+  - Add mock functions to handle imported helpers
+  - Add test sections:
+    * SORT OUTPUT (Sets / Tunes)
+    1. SORT BEHAVIOR (Custom ABC / Standard ABC)
+    2. ENCODE OUTPUT (Sets / Tunes)
+    3. CHORD VIEWER OUTPUT (Sets / Tunes)
+
 **v1.1.19: Fix Long CCS Fields**
 
 + ABC Encoder module updates:

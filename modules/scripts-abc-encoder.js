@@ -834,7 +834,7 @@ async function fetchTsoMetadata(urlArr, urlType) {
 // [Sorted Chordbook Extracted from Source ABC],*
 // [Sorted Chordbook Extracted from Tunes ABC]*
 
-function getSortedAbc(abcContent) { 
+export function getSortedAbc(abcContent) { 
 
     // Verify that localStorage is available
     const customSettingsOn = localStorageOk();
@@ -3434,7 +3434,7 @@ function getLastAbcHeaderValueOfKind(abcArr, tag) {
 
 // Pass ABC contents to Sort and Encode functions, return a JSON array of objects
 
-async function getEncodedAbc(abcContent, fileName) {
+export async function getEncodedAbc(abcContent, fileName) {
 
     // Verify that localStorage is available
     const customSettingsOn = localStorageOk();
@@ -3481,7 +3481,7 @@ async function getEncodedAbc(abcContent, fileName) {
 // Tune Name, Tune Type and Set Leaders, return data in an array of objects
 // Additionally extract Subtitles for Tune / Set if secondary titles found
 
-function encodeTunesForAbcTools(abcContent) {
+export function encodeTunesForAbcTools(abcContent) {
 
     try {
 
