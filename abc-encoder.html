@@ -16,13 +16,11 @@
     <link rel="stylesheet" href="./styles/styles-nss-app.css">
     <script type="module" src="./modules/scripts-3p/popover-polyfill/popover.min.js"></script>
     <script type="module" src="./modules/scripts-nss-app.js"></script>
-    <link rel="manifest" href="app.webmanifest?v=110">
-    <link rel="icon" href="favicon.ico?v=110" sizes="any">
-    <link rel="icon" href="favicon.svg?v=110" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=110">
-    <link rel="mask-icon" href="assets/icons/apple-touch-icon.png?v=110" color="#442069">
+    <link rel="manifest" href="app.webmanifest">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="NS Setlist">
-    <meta name="msapplication-config" content="assets/icons/browserconfig.xml">
     <meta name="application-name" content="NS Setlist">
 </head>
 
@@ -37,7 +35,7 @@
             <nav class="nss-encodernav-container">
                 <div id="nss-encoder-header" class="nss-app-header flex-wrapper-space-between">
                     <button class="nss-btn nss-link-btn flex-wrapper" tabindex="-1">
-                        <a data-help-guide="readme" href="https://github.com/anton-bregolas/NS-Session-Setlist#abc-encoder" target="_blank" class="nss-link nss-icon-container" title="Open ABC Encoder Readme on GitHub" aria-title="Open ABC Encoder Readme on GitHub">
+                        <a data-help-guide="readme" href="https://github.com/anton-bregolas/NS-Session-Setlist#abc-encoder-module" target="_blank" class="nss-link nss-icon-container" title="Open ABC Encoder Readme on GitHub" aria-title="Open ABC Encoder Readme on GitHub">
                             <svg class="nss-icon github-icon-dark" aria-hidden="true">
                                 <use href="assets/icons/icons.svg#nav-icon-github"></use>
                             </svg>
@@ -90,13 +88,21 @@
             <article id="nss-popover-options" popover="manual" class="nss-popover nss-popover-menu" aria-label="Encoder Settings Menu">
                 <header class="nss-popover-header">
                     <div class="flex-wrapper nss-header-left-btn-container">
-                        <button data-load="encoder-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import saved Encoder settings or add Session Survey Data" aria-title="Import saved Encoder settings or add Session Survey Data"></button>
+                        <button data-load="encoder-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import saved Encoder settings or add Session Survey Data" aria-title="Import saved Encoder settings or add Session Survey Data">
+                            <svg class="nss-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-close"></use>
+                            </svg>
+                        </button>
                     </div>
                     <div class="nss-popover-header-title-container flex-wrapper">
                         <h2 class="nss-popover-title">Encoder Settings</h2>
                     </div>
                     <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings"></button>
+                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings">
+                            <svg class="nss-icon" aria-hidden="true">
+                                <use href="assets/icons/icons.svg#action-icon-close"></use>
+                            </svg>
+                        </button>
                     </div>
                 </header>
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
@@ -136,7 +142,7 @@
                         </button>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
                             <label class="nss-checkbox-label">
-                              <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1">
+                              <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1" title="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option" aria-title="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option">
                                 <span class="nss-advanced-option-text">SORT fetches metadata from The Session</span>
                             </label>
                             <label class="nss-checkbox-label">
@@ -223,6 +229,10 @@
                                 <span class="nss-advanced-option-text">SORT skips merging duplicate header fields</span>
                             </label>
                             <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-skips-updating-tsometadata" data-option="abcSortSkipsUpdatingTsoMetaData" class="nss-checkbox-btn" value="1" title="SORT skips updating fetched TSO metadata if ABC contains line ‘...at The Session’" aria-title="SORT skips updating fetched TSO metadata if ABC contains line '...at The Session'">
+                                <span class="nss-advanced-option-text">SORT skips updating fetched TSO metadata</span>
+                            </label>
+                            <label class="nss-checkbox-label">
                               <input type="checkbox" id="sort-removes-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">
                                 <span class="nss-advanced-option-text">SORT wipes extra line breaks in ABC</span>
                             </label>
@@ -253,7 +263,11 @@
 
             <article popover data-popover="notification-popup" class="info" aria-label="Notification Popup">
                 <div class="nss-header-x-container">
-                    <button class="nss-btn nss-btn-x nss-popover-btn popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification"></button>
+                    <button class="nss-btn nss-btn-x nss-popover-btn popup-btn-x flex-wrapper" title="Close notification" aria-title="Close notification">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="assets/icons/icons.svg#action-icon-close"></use>
+                        </svg>
+                    </button>
                 </div>
                 <div class="flex-wrapper subtitle-wrapper">
                     <p data-popover="notification-message">Notification Message Test</p>

@@ -1,77 +1,104 @@
-import { APP_VERSION } from './version.js';
-
+const APP_VERSION = "1.1.20";
 const CACHE_VERSION = APP_VERSION.replaceAll(".", '');
-
-const CACHE_NAME = `ns-app-cache-${CACHE_VERSION}`;
-
-export const CACHE_EXPIRES_DAYS = 7;
+const CACHE_PREFIX = "ns-app-cache-";
+const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
+const CACHE_EXPIRES_DAYS = 7;
+const APP_ASSETS = [
+  'assets/fonts/FiraSans-Regular.ttf',
+  'assets/fonts/FiraSans-SemiBold.ttf',
+  'assets/icons/app-icon-192x192.png',
+  'assets/icons/app-icon-512x512.png',
+  'assets/icons/app-icon-maskable-192x192.png',
+  'assets/icons/app-icon-maskable-512x512.png',
+  'assets/icons/apple-touch-icon.png',
+  'assets/icons/icons.svg',
+  'assets/icons/icons-chord-viewer.svg',
+  'assets/images/playalong-polkas-johnwalshs.jpg',
+  'assets/images/playalong-polkas-pando.jpg',
+  'assets/images/playalong-polkas-toureendarby.jpg',
+  'modules/scripts-abc-encoder.js',
+  'modules/scripts-abc-tools.js',
+  'modules/scripts-chord-viewer.js',
+  'modules/scripts-emoji-manager.js',
+  'modules/scripts-list-viewer.js',
+  'modules/scripts-nss-app.js',
+  'modules/scripts-preload-nssapp.js',
+  'modules/scripts-3p/ap-style-title-case/ap-style-title-case.js',
+  'modules/scripts-3p/lz-string/lz-string.min.js',
+  'modules/scripts-3p/p-limit/p-limit.js',
+  'modules/scripts-3p/p-limit/yocto-queue.js',
+  'modules/scripts-3p/p-throttle/p-throttle.js',
+  'modules/scripts-3p/popover-polyfill/popover.min.js',
+  'modules/scripts-3p/storage-available/storage-available.js',
+  'styles/styles-chord-viewer.css',
+  'styles/styles-list-viewer.css',
+  'styles/styles-nss-app.css',
+  'abc-encoder.html',
+  'app.webmanifest',
+  'favicon.ico',
+  'favicon.svg',
+  'index.html',
+  'version.js'
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll([
-        'assets/icons/icons.svg',
-        'assets/icons/icons-chord-viewer.svg',
-        'assets/images/playalong-polkas-johnwalshs.jpg',
-        'assets/images/playalong-polkas-pando.jpg',
-        'assets/images/playalong-polkas-toureendarby.jpg',
-        'modules/scripts-abc-encoder.js',
-        'modules/scripts-abc-tools.js',
-        'modules/scripts-chord-viewer.js',
-        'modules/scripts-emoji-manager.js',
-        'modules/scripts-list-viewer.js',
-        'modules/scripts-nss-app.js',
-        'modules/scripts-preload-nssapp.js',
-        'modules/scripts-3p/ap-style-title-case/ap-style-title-case.js',
-        'modules/scripts-3p/lz-string/lz-string.min.js',
-        'modules/scripts-3p/p-limit/p-limit.js',
-        'modules/scripts-3p/p-limit/yocto-queue.js',
-        'modules/scripts-3p/p-throttle/p-throttle.js',
-        'modules/scripts-3p/popover-polyfill/popover.min.js',
-        'modules/scripts-3p/storage-available/storage-available.js',
-        'styles/styles-chord-viewer.css',
-        'styles/styles-list-viewer.css',
-        'styles/styles-nss-app.css',
-        'abc-encoder.html',
-        'index.html',
-        'version.js'
-      ]);
+      cache.addAll(APP_ASSETS);
     })
   );
 });
 
 self.addEventListener('activate', (event) => {
     event.waitUntil(
-      caches.keys().then((cacheNames) => {
+      caches.keys().then(cacheKeys => {
         return Promise.all(
-          cacheNames
-            .filter((cacheName) => cacheName !== CACHE_NAME)
-            .map((cacheName) => { 
+          cacheKeys
+            .filter(cacheKey => cacheKey !== CACHE_NAME)
+            .map(cacheKey => { 
                 console.log(`[NS App Service Worker]\n\n` +
-                `Cached version: v${cacheName.slice(13)}\n\n` +
+                `Cached version: v${cacheKey.slice(CACHE_PREFIX.length)}\n\n` +
                 `Current version: v${CACHE_VERSION}\n\n` +
                 `Clearing outdated cached files...`);
-                caches.delete(cacheName);
+                caches.delete(cacheKey);
             })
         );
       })
     );
 });
 
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        // Activate new service worker on page reload
-        self.clients.claim().then(() => {
-            // Stop the old service worker, notify about version change in console 
-            console.log(`[NS App Service Worker]\n\n` + `Cache version updated to v${CACHE_VERSION}`);
-            self.registration.unregister().then(() => {
-                self.skipWaiting();
-            });
-        })
-    );
-});
+// self.addEventListener('activate', (event) => {
+//     event.waitUntil(
+//         // Activate new service worker on page reload
+//         self.clients.claim().then(() => {
+//             // Stop the old service worker, notify about version change in console 
+//             console.log(`[NS App Service Worker]\n\n` + `Cache version updated to v${CACHE_VERSION}`);
+//             self.registration.unregister().then(() => {
+//                 self.skipWaiting();
+//             });
+//         })
+//     );
+// });
 
 self.addEventListener('fetch', (event) => {
+
+  // Cache and retrieve HTML for main app sections (Launch Screen & ABC Encoder)
+
+  if (event.request.mode === 'navigate' || event.request.headers.get('Accept').includes('text/html')) {
+    event.respondWith(
+      caches.match(event.request).then(cacheRes => {
+        return cacheRes || fetch(event.request)
+          .then(fetchRes => { return fetchRes });
+      }).catch(error => {
+        console.warn(error);
+        return caches.match(event.request.url.pathname)
+        .then(resFromCache => {
+          return resFromCache || caches.match('index.html');
+        });
+      })
+    );
+    return;
+  }
 
   // Cache and retrieve Session DB files
 
@@ -90,7 +117,7 @@ self.addEventListener('fetch', (event) => {
             }
             // If not found in cache or outdated, try to retrieve a fresh copy
             console.log(`[NS App Service Worker]\n\n` + `Session DB missing or outdated\n\n` + `Fetching a fresh version...`);
-            return fetchWithTimeout(event.request, 60000)
+            return fetchWithTimeout(event.request, 30000)
               .then((networkResponse) => {
                 if (navigator.onLine && networkResponse && networkResponse.ok) {
                   // Clone the network response without accessing its body
@@ -159,10 +186,10 @@ function isCacheExpired(cachedResponse, maxAgeInDays) {
   // Helper function preventing infinite loading if connection is lost during fetch request
 
 function fetchWithTimeout(request, timeout) {
-    return Promise.race([
-      fetch(request),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error(`[NS App Service Worker]\n\n` + `Fetch request timed out`)), timeout)
-      ),
-    ]);
-  }
+  return Promise.race([
+    fetch(request),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error(`[NS App Service Worker]\n\n` + `Fetch request timed out`)), timeout)
+    ),
+  ]);
+}

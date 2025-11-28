@@ -71,6 +71,18 @@
   }
 }
 
+@font-face {
+  font-family: 'Fira Sans';
+  font-weight: 400;
+  src: url('../assets/fonts/FiraSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-weight: 700;
+  src: url('../assets/fonts/FiraSans-SemiBold.ttf') format('truetype');
+}
+
 [data-list-viewer="dialog"] {
   width: 100dvw;
   height: 100dvh;
@@ -86,7 +98,7 @@
 }
 
 [data-list-viewer="dialog"] * {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-family: 'Trebuchet MS', 'Fira Sans', 'Ubuntu Sans', 'Droid Sans', Helvetica, sans-serif;
 }
 
 [data-list-viewer="container"] {
@@ -204,12 +216,6 @@
 
 [data-lvw-action].btn-x {
   outline-offset: 0.25em;
-}
-
-[data-lvw-action].btn-x::after {
-  font-size: var(--list-ui-button-width);
-  content: "\00d7";
-  padding-bottom: 0.1em;
 }
 
 [data-list-viewer="tune-tile"]:is(:focus-visible),

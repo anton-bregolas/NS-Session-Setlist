@@ -52,6 +52,7 @@ export const abcEncoderDefaults = {
     abcSortSkipsDeepEditForOrderedAbc: "1",
     abcSortSkipsTitleEditForOrderedAbc: "1", // Linked with abcSortSkipsTitleEditForOrderedAbc
     abcSortSkipsMergingDuplicateFields: "0",
+    abcSortSkipsUpdatingTsoMetaData: "1",
     abcSortRemovesLineBreaksInAbc: "1",
     abcSortRemovesTextAfterLineBreaksInAbc: "0"
 };
@@ -70,7 +71,7 @@ const matchIndividualTunesStrict = new RegExp (/^T:.*[\s]*(?:^(?:[A-JL-Zmr]:|%).
 
 // Quick edit mode for ordered ABCs: abcSortSkipsDeepEditForOrderedAbc
 //
-const matchOrderedCustomAbc = /^C: C:.*[\s]*C: Set Leaders:.*[\s]*(?:N:.*[\s]*)*Z:.*at The Session.*[\s]*(?:N:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*(?:%.*[\s]*)*K:.*[\s]*/;
+const matchOrderedCustomAbc = /^C: C:.*[\s]*C: Set Leaders:.*[\s]*(?:N:.*[\s]*)*(?:S:.*[\s]*)*Z:.*at The Session.*[\s]*(?:N:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*Q:.*[\s]*(?:%.*[\s]*)*K:.*[\s]*/;
 const matchOrderedStandardAbc = /^(?:C:(?! C:| Set Leaders:).*[\s]*)*(?:C: Set Leaders:.*[\s]*)*(?:S:.*[\s]*)*(?:Z:.*[\s]*)*(?:N:.*[\s]*)*(?:[ABD-IOPU-W]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*(?:Q:.*[\s]*)*(?:%.*[\s]*)*K:.*[\s]*/;
 const matchOrderedStandardAbcPlusTsoMeta = /^(?:C:(?! C:| Set Leaders:).*[\s]*)*(?:C: Set Leaders:.*[\s]*)*(?:S:.*[\s]*)*Z:.*at The Session.*[\s]*(?:N:.*[\s]*)*(?:[ABD-IOPU-W]:.*[\s]*)*R:.*[\s]*M:.*[\s]*L:.*[\s]*(?:Q:.*[\s]*)*(?:%.*[\s]*)*K:.*[\s]*/;
 const matchOrderedMergedSecondaryHeader = /^(?:[IPUV]:.*[\s]*)*(?:R:.*[\s]*)*(?:M:.*[\s]*)*(?:L:.*[\s]*)*(?:Q:.*[\s]*)*(?:%.*[\s]*)*K:.*[\s]*/;
@@ -227,7 +228,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
         let abcSortedOutput = [];
 
-        if (customSettingsOn &&  +localStorage.abcSortFetchesTsoMetaData) {
+        if (customSettingsOn && +localStorage.abcSortFetchesTsoMetaData) {
 
             let preProcessedAbc = await preProcessAbcMetadata(rawAbcContent);
 
@@ -647,9 +648,11 @@ async function preProcessAbcMetadata(rawAbcContent) {
     
         if (!abcItem) return abcItem;
 
-        // Do not process ABCs that already contain TSO metadata
+        // Do not process ABCs containing TSO metadata if skip setting is on
 
-        if (abcItem.includes('at The Session')) {
+        if (localStorageOk() &&
+            +localStorage.abcSortSkipsUpdatingTsoMetaData === 1 &&
+            abcItem.includes('at The Session')) {
 
             metaFoundCounter++;
             return abcItem;
@@ -727,7 +730,16 @@ async function preProcessAbcMetadata(rawAbcContent) {
             // Replace the first found C: field in ABC
             // Else insert C: field value before Z:
 
-            if (abcItem.match(/^C:/m)) {
+            if (abcItem.match(/^C: C:/m)) {
+
+                let abcCCS = abcItem.match(/^C: C:.*/m)[0];
+                let abcS = abcCCS.split(/; S:[ ]*/)[1];
+
+                abcItem = abcS?
+                    abcItem.replace(/^C: C:.*/m, `C: ${abcCString}; S: ${abcS}`) :
+                    abcItem.replace(/^C: C:.*/m, `C: ${abcCString}`);
+
+            } else if (abcItem.match(/^C:/m)) {
 
                 abcItem = abcItem.replace(/^C:.*/m, abcCString);
 
@@ -736,7 +748,7 @@ async function preProcessAbcMetadata(rawAbcContent) {
                 abcItem = abcItem.replace(/^Z:/m, `${abcCString}\nZ:`);
             }
         }
-        
+
         return abcItem;
     }));
 
@@ -822,7 +834,7 @@ async function fetchTsoMetadata(urlArr, urlType) {
 // [Sorted Chordbook Extracted from Source ABC],*
 // [Sorted Chordbook Extracted from Tunes ABC]*
 
-function getSortedAbc(abcContent) { 
+export function getSortedAbc(abcContent) { 
 
     // Verify that localStorage is available
     const customSettingsOn = localStorageOk();
@@ -1492,21 +1504,6 @@ function applyIrishTitleFormatting(abcTitle) {
     return formattedIrishTitle;
 }
 
-// Merge unordered ABC Subtitle into the Primary Title
-// Insert Subtitle as the last line of the Primary Title
-
-function mergeAbcSubTitle(abcTitle, abcSubTitle) {
-
-    const titleLines = abcTitle.match(/^T:.*/gm);
-
-    if (titleLines.length > 1) {
-
-        return `${abcTitle.trim()} / ${abcSubTitle}`
-    }
-
-    return `${abcTitle}\nT: ${abcSubTitle}`
-}
-
 // Assemble ABC title (single or multi-line)
 // Optional: Add TYPE: prefix to ABC Title
 // Optional: Add [Type] suffix to ABC Title
@@ -1663,11 +1660,11 @@ function processAbcCCS(abcCCS, abcC, abcS, abcIndex) {
 
     let abcSVal = '';
 
-    if (abcSFromCCSArr && abcSFromCCSArr[0]) {
+    if (abcSFromCCSArr && abcSFromCCSArr[0] && !abcCCSVal.includes("S: See Notes")) {
 
         abcSVal = abcSFromCCSArr[0].includes(' + ')?
-            abcIndex === 0? `${abcSFromCCSArr[0].split(' + ')[0]}, ${abcSFromCCSArr[0].split(' + ')[1]}` :
-            `${abcSFromCCSArr[0].split(' + ')[0]}, ${getValueByAbcIndex(abcSFromCCSArr, abcIndex).trim()}` :
+            abcIndex === 0? `${abcSFromCCSArr[0].split(' + ')[0]}; ${abcSFromCCSArr[0].split(' + ')[1]}` :
+            `${abcSFromCCSArr[0].split(' + ')[0]}; ${getValueByAbcIndex(abcSFromCCSArr, abcIndex).trim()}` :
             getValueByAbcIndex(abcSFromCCSArr, abcIndex).trim();
     }
 
@@ -2345,7 +2342,7 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
         abcHeadersArr[0].filter(tagLine => tagLine.startsWith("Q:"));
     const abcKArr = 
         abcHeadersArr[0].filter(tagLine => tagLine.startsWith("K:"));
-    
+
     // Fill ABC To Match primary header arrays
 
     const abcToMatchCArr =
@@ -2550,7 +2547,8 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
                 headerArr.
                     filter(tagLine => tagLine.startsWith("T:")).
                     map(
-                        title => title.replace(/^T:[ ]/, '').
+                        title => normalizeHeaderLine(title).
+                        replace(/^T:[ ]/, '').
                         replace(/^[A-Z-\s]+:[ ]/, '').
                         replace(/[ ]+(?:[Ss][Ee][Tt])(?=[ ]*(?:$|\[.*\]))/, '').
                         replaceAll(/[ ]+\[.*\]/g, '')
@@ -2801,14 +2799,20 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
     if (!abcN && isCustomFieldSetEnforced) {
 
-        abcN =
-            setToTunes && abcToMatchSArr.length?
-                processMergedAbcHeader(abcToMatchSArr, abcIndex).replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
+        const abcSLinksArr =
             abcToMatchSArr.length?
-                abcToMatchSArr.join('\n').replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
+                abcToMatchSArr.filter(line => line.replace(/^S:[ ]*/, '').startsWith('http')) :
             abcSArr.length?
-                abcSArr.join('\n').replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
-            '';
+                abcSArr.filter(line => line.replace(/^S:[ ]*/, '').startsWith('http')) :
+            [];
+
+        if (abcSLinksArr.length) {
+
+            abcN =
+                setToTunes && abcToMatchSArr.length?
+                    processMergedAbcHeader(abcSLinksArr, abcIndex).replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim() :
+                    abcSLinksArr.join('\n').replaceAll(/^S:[ ]*/gm, 'N: ').replace('N:', '').trim();
+        }
     }
 
     // Add ABC Transcription field if missing, fill in the default value (N.S.S.S.)
@@ -2832,16 +2836,21 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
         // Get abcS value from custom C: C: S: field
 
-        if (!abcS && abcCCS) {
+        if (abcCCS) {
 
-            abcS = abcCCS.split('; S: ')[1];
+            let abcSFromCCS = abcCCS.split(/; S:[ ]*/)[1];
+
+            if (abcSFromCCS && abcSFromCCS !== "See Notes") {
+
+                abcS = abcS? `${abcSFromCCS}\nS: ${abcS}` : abcSFromCCS;
+            }
         }
 
         // Get abcC value from custom C: C: S: field
 
         if (!abcC && abcCCS) {
 
-            abcC = abcCCS.split('; S: ')[0];
+            abcC = abcCCS.split(/; S:[ ]*/)[0] || "Trad[?]";
         }
     }
 
@@ -2853,9 +2862,14 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
         // Attempt to fill in C: C: S: data using C: and S: fields
 
-        if (abcC && abcSArr[0] && !abcSArr[0].replace('S:', '').trim().startsWith('http')) {
+        let abcSStr =
+            abcSArr.find( // Exclude fields containing links
+                line => !line.replace('S:', '').trim().startsWith('http')
+            );
 
-            abcCCS = `${abcC}; ${abcSArr[0]}`;
+        if (abcC && abcSStr) {
+
+            abcCCS = `${abcC}; ${abcSStr}`;
 
         // Attempt to fill in C: C: S: data using C: field value
 
@@ -2869,7 +2883,31 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
             abcCCS = "Trad[?]; S: Various"
         }
-        // console.log(`ABC Encoder:\n\nMissing C: / S: field added to ${abcFirstTitle}`);
+    }
+
+    // Split long C: C: S: lines, move S: data to footnotes
+
+    if (isCustomFieldSetEnforced && abcCCS.length > 97) {
+
+        let abcCFromCCS = abcCCS.split('; S:')[0];
+        let abcSFromCCS = abcCCS.split('; S:')[1].trim();
+
+        const abcSFromCCSArr = abcSFromCCS.split(' / ');
+        let sLinePrefix = '';
+
+        if (abcSFromCCSArr.length > 1 && abcSFromCCSArr[0].includes(' + ')) {
+
+            sLinePrefix = `${abcSFromCCSArr[0].split(' + ')[0]}; `;
+            abcSFromCCSArr[0] = abcSFromCCSArr[0].split(' + ')[1];
+        }
+        
+        abcS =
+            abcSFromCCSArr.map(
+                (sLine, i) => 
+                    `${i > 0? ' / ' : ''}[${i + 1}] ${sLinePrefix}${sLine}`
+            ).join('');
+
+        abcCCS = `${abcCFromCCS}; S: See Notes`;
     }
 
     // Account for header comments
@@ -2889,6 +2927,7 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
                 `${abcUpdTitlesArr[0]}\n` +
                 `C: C: ${abcCCS}\n` +
                 `C: Set Leaders: ${abcCSL}\n` +
+                `${abcCCS.includes('S: See Notes')? `S: ${abcS}\n` : ''}` +
                 `Z: ${abcZ}\n` +
                 `N: ${abcN}\n` +
                 abcNSL +
@@ -2932,7 +2971,8 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
         let secondaryHeadersStr = '';
 
         secondaryHeadersStr += 
-
+            isSkippingAbcTitleEditAllowed?
+            `\n${abcUpdTitlesArr[i].split('\nT: ').join(' / ')}\n` :
             `\n${abcTitlesArr[i].split('\nT: ').join(' / ')}\n`;
 
         secondaryHeadersStr += 
@@ -3050,6 +3090,7 @@ function mergeSetHeaderFields(abcHeadersArr) {
             headerLine.startsWith("C: Set Leaders:")) {
 
             let mergedCCLine = '';
+            let mergedSLine = '';
 
             const joinCCArr = 
                 mixedIndexedHeaderArr.
@@ -3068,8 +3109,8 @@ function mergeSetHeaderFields(abcHeadersArr) {
 
                 joinCCArr.forEach(ccArr => {
                     
-                    strCArr.push(ccArr[0].replace('C: C: ', '').split('; S: ')[0]);
-                    strSArr.push(ccArr[0].replace('C: C: ', '').split('; S: ')[1]);
+                    strCArr.push(ccArr[0].replace(/C: C:[ ]*/, '').split(/; S:[ ]*/)[0] || "Trad[?]");
+                    strSArr.push(ccArr[0].replace(/C: C:[ ]*/, '').split(/; S:[ ]*/)[1] || "Various");
                     usedLinesArr.push(ccArr[0]);
                 });
 
@@ -3077,6 +3118,26 @@ function mergeSetHeaderFields(abcHeadersArr) {
                 let strS = reduceArrToSlashSeparatedList(strSArr);
 
                 mergedCCLine = `C: C: ${strC}; S: ${strS}`;
+
+                if (mergedCCLine.slice(3).length > 100) {
+
+                    const splitLongSArr = strS.split(' / ');
+                    let sLinePrefix = '';
+
+                    if (splitLongSArr.length > 1 && splitLongSArr[0].includes(' + ')) {
+
+                        sLinePrefix = `${splitLongSArr[0].split(' + ')[0]}; `;
+                        splitLongSArr[0] = splitLongSArr[0].split(' + ')[1];
+                    }
+
+                    mergedCCLine = `C: C: ${strC}; S: See Notes`;
+
+                    mergedSLine =
+                        splitLongSArr.map(
+                            (tagLine, i) => 
+                                `${i > 0? ' /' : 'S:'} [${i + 1}] ${sLinePrefix}${tagLine}`
+                        ).join('');
+                }
             }
 
             let mergedCSLLine = '';
@@ -3117,6 +3178,7 @@ function mergeSetHeaderFields(abcHeadersArr) {
             if (mergedCCLine) mergedPrimaryArr.push(mergedCCLine);
             if (mergedCSLLine) mergedPrimaryArr.push(mergedCSLLine);
             if (mergedNSLLine) mergedPrimaryArr.push(mergedNSLLine);
+            if (mergedSLine) mergedPrimaryArr.push(mergedSLine);
 
             return;
         }
@@ -3372,7 +3434,7 @@ function getLastAbcHeaderValueOfKind(abcArr, tag) {
 
 // Pass ABC contents to Sort and Encode functions, return a JSON array of objects
 
-async function getEncodedAbc(abcContent, fileName) {
+export async function getEncodedAbc(abcContent, fileName) {
 
     // Verify that localStorage is available
     const customSettingsOn = localStorageOk();
@@ -3419,7 +3481,7 @@ async function getEncodedAbc(abcContent, fileName) {
 // Tune Name, Tune Type and Set Leaders, return data in an array of objects
 // Additionally extract Subtitles for Tune / Set if secondary titles found
 
-function encodeTunesForAbcTools(abcContent) {
+export function encodeTunesForAbcTools(abcContent) {
 
     try {
 
@@ -3731,7 +3793,7 @@ function fillSurveyDataArray(surveyData) {
 
 function applySessionSurveyResults(abcContent) {
 
-    const splitAbcArr = abcContent.split('X: ');
+    const splitAbcArr = abcContent.split(/X:[ ]*/);
     let updatedAbcContent = '';
 
     console.log("ABC Encoder:\n\nUpdating ABC output with Session Survey Data...");
@@ -3741,9 +3803,11 @@ function applySessionSurveyResults(abcContent) {
         if (!abc) return;
 
         const abcTitle = abc.match(/^T:.*/gm)[0].replace('T:', '').trim();
-        const abcTitleArr = abcTitle.split(': ');
-        const titlePrefix = abcTitleArr[0];
-        const titleName = abcTitleArr[1];
+        const abcTitleArr = abcTitle.split(/:[ ]*/);
+
+        const titleName = abcTitleArr[1]? abcTitleArr[1] : abcTitleArr[0];
+        const titlePrefix = abcTitleArr[1]? abcTitleArr[0] : '';
+
         let updatedAbc = '';
 
         // Get a string of current Set Leaders
@@ -3756,10 +3820,13 @@ function applySessionSurveyResults(abcContent) {
             abcSetLeadersStr? abcSetLeadersStr.split(', ') : [];
 
         // Search Survey Data headers for the current Tune / Set
-        const surveyHeader = sessionSurveyData[0].find(header => 
-                             header.toLowerCase().startsWith(titlePrefix.toLowerCase()) &&
-                             header.endsWith(titleName));
-        
+        const surveyHeader = titlePrefix? 
+            sessionSurveyData[0].find(header => 
+                header.toLowerCase().startsWith(titlePrefix.toLowerCase()) &&
+                header.endsWith(titleName)) :
+            sessionSurveyData[0].find(header => 
+                header.startsWith(titleName));
+
         if (surveyHeader) {
 
             const headerIndex = sessionSurveyData[0].indexOf(surveyHeader);

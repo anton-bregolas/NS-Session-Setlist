@@ -6,6 +6,20 @@
   }
 }
 
+@font-face {
+  font-family: 'Fira Sans';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../assets/fonts/FiraSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-weight: 700;
+  font-style: normal;
+  src: url('../assets/fonts/FiraSans-SemiBold.ttf') format('truetype');
+}
+
 body {
   --accent-color: #ffd324;
   --accent-color-contrast: #ffae00;
@@ -23,6 +37,14 @@ body {
   --notification-color-error: #ff2c0b;
   --tunebook-header-height: 7.375rem;
   --tunebook-footer-height: 4.15rem;
+  --app-launcher-title: "Novi Sad Session Setlist";
+  --app-launcher-title-short: "N.S.S.S.";
+  --app-playalong-title: "Session Tunes Play Along";
+  --app-playalong-title-short: "Play Along";
+  --app-encoder-title: "N.S.S.S. ABC Encoder";
+  --app-encoder-title-short: "ABC Encoder";
+  --app-tunebook-title-prefix: "Novi Sad Session ";
+  --app-tunebook-title-prefix-short: "N.S.S.S. ";
 }
 
 *, *::before, *::after { 
@@ -33,7 +55,7 @@ body {
 }
 
 body * {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-family: 'Trebuchet MS', 'Fira Sans', 'Ubuntu Sans', 'Droid Sans', Helvetica, sans-serif;
 }
 
 body {
@@ -41,6 +63,7 @@ body {
   padding: 0;
   height: 100%;
   overflow: hidden;
+  touch-action: pan-x pan-y;
 }
 
 body,
@@ -76,6 +99,10 @@ body,
   overscroll-behavior: contain;
 }
 
+[data-browser*="ios"] .body-container {
+  height: 100svh;
+}
+
 [data-tunebook] .body-container {
   overflow-y: hidden;
 }
@@ -101,19 +128,19 @@ body,
 }
 
 h1:is([data-title="launcher"])::after {
-  content: "Novi Sad Session Setlist";
+  content: var(--app-launcher-title);
 }
 
 h1:is([data-title="playalong"])::after {
-  content: "Session Tunes Play Along";
+  content: var(--app-playalong-title);
 }
 
 h1:is([data-title="encoder"])::after {
-  content: "N.S.S.S. ABC Encoder";
+  content: var(--app-encoder-title);
 }
 
 h1:is([data-title="tunebook"])::after {
-  content: "Novi Sad Session "attr(data-type)"list";
+  content: var(--app-tunebook-title-prefix)attr(data-type)"list";
 }
 
 body[data-mode="mobile"] [data-title="tunebook"] {
@@ -131,15 +158,15 @@ h1 {
   @media (max-width: 50rem) {
 
     &:is([data-title="launcher"])::after {
-      content: "N.S.S.S.";
+      content: var(--app-launcher-title-short);
     }
   
     &:is([data-title="playalong"])::after {
-      content: "Play Along";
+      content: var(--app-playalong-title-short);
     }
   
     &:is([data-title="encoder"])::after {
-      content: "ABC Encoder";
+      content: var(--app-encoder-title-short);
     }
   }
 }
@@ -578,10 +605,6 @@ option:disabled {
   content: "PRESS THIS OR SHIFT+F4 TO FOCUS ON ABC FRAME";
 }
 
-.nss-abc-focus-label:is(:focus, :focus-visible) {
-  /* outline: none; */
-}
-
 [data-controls="iframe-zoom"],
 [data-controls="iframe-gui"],
 body[data-mode="desktop"] [data-controls="iframe-nav"],
@@ -622,6 +645,7 @@ body[data-mode="mobile"] [data-size="small"] {
   display: var(--fullscreen-gui-display);
 }
 
+body[data-browser*="-ios"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
 body[data-mode="desktop"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-zoom"],
 body[data-mode="desktop"] .nss-abc-embed:is(:fullscreen, :-webkit-full-screen, :-ms-fullscreen) [data-controls="iframe-gui"] {
   justify-content: space-around;
@@ -767,13 +791,7 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   height: 3.75rem;
 }
 
-.nss-btn-plus::after,
-.nss-btn-x::after {
-  content: "\00d7";
-  padding-bottom: 0.35rem;
-}
-
-.nss-btn-plus::after {
+.nss-btn-plus svg {
   transform: rotate(45deg) scale(0.9);
 }
 
@@ -824,6 +842,10 @@ body[data-mode="mobile"] .nss-icon-filler:not(.nss-footer-tunebook .nss-icon-fil
 .nss-popover-btn:is(:hover, :focus, :focus-visible),
 .nss-btn-quick-help:is(:hover, :focus, :focus-visible) {
   filter: drop-shadow(1px 1px 8px var(--accent-color));
+}
+
+[data-browser*="safari"] .nss-popover-btn:is(:hover, :focus, :focus-visible) {
+  filter: none;
 }
 
 #fullScreenButton:is(:hover, :focus, :focus-visible),
@@ -940,16 +962,15 @@ body[data-mode="desktop"] .nss-footer-tunebook .tunebook-action,
 }
 
 body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action,
-[data-controls="tunebook-actions-mobile"],
-.nss-footer-tunebook .nss-btn-x {
+[data-controls="tunebook-actions-mobile"] {
   height: 3.4rem;
   width: 3.4rem;
   outline-offset: -0.05rem;
 }
 
-.nss-footer-tunebook .nss-btn-x {
-  top: 0.05rem;
-  outline-offset: -0.3rem;
+.nss-footer-tunebook .nss-btn-x svg {
+  height: 3rem;
+  width: 3rem;
 }
 
 .nss-launch {
@@ -1019,7 +1040,7 @@ body[data-mode="mobile"] .nss-select-container {
 }
 
 .nss-select-container * {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Fira Sans', 'Ubuntu Sans', 'Droid Sans', Arial, sans-serif;
 }
 
 .nss-playalong-container {
@@ -1151,6 +1172,10 @@ body[data-mode="mobile"] .nss-select-container {
   border: 0.3rem solid var(--accent-color);
   overflow: hidden;
   padding: 0;
+}
+
+[data-browser*="ios"] .nss-popover {
+  height: min(calc(80svh - 3rem), 45rem);
 }
 
 .nss-popover-menu {
@@ -1444,6 +1469,10 @@ body[data-mode="desktop"] [data-tbk-action="select-fullscreen-tunes"] .nss-mini-
   opacity 0.15s ease-out;
 }
 
+[data-browser*="safari"] .tunebook-action {
+  filter: none;
+}
+
 .tunebook-action .nss-icon,
 .tunebook-action .nss-icon-filler {
   transition:
@@ -1516,11 +1545,19 @@ body[data-mode="desktop"] [data-popover="tunebook-actions-popup"] {
   border-radius: 0.25rem;
 }
 
+body[data-mode="desktop"][data-browser*="ios"] [data-popover="tunebook-actions-popup"] {
+  height: calc(100svh - var(--tunebook-header-height) - var(--tunebook-footer-height));
+}
+
 body[data-mode="desktop"] [data-pops-up-from="header"] {
   height: calc(100dvh - var(--tunebook-header-height));
   right: unset;
   left: 0;
   bottom: 0;
+}
+
+body[data-mode="desktop"][data-browser*="ios"] [data-pops-up-from="header"] {
+  height: calc(100svh - var(--tunebook-header-height));
 }
 
 body[data-mode="desktop"] .tunebook-actions-grid {
@@ -1791,8 +1828,16 @@ body[data-mode="desktop"] [data-close-direction="down"] {
   padding: 0 5rem
 }
 
+[data-browser*="ios"] .nss-help-guide-container {
+  max-height: calc(100svh - var(--tunebook-header-height) - var(--tunebook-footer-height));
+}
+
 .nss-help-popover[data-pops-up-from="header"] .nss-help-guide-container {
   max-height: calc(100dvh - var(--tunebook-header-height));
+}
+
+[data-browser*="ios"] .nss-help-popover[data-pops-up-from="header"] .nss-help-guide-container {
+  max-height: calc(100svh - var(--tunebook-header-height));
 }
 
 .nss-help-guide-text-block {
@@ -1988,7 +2033,7 @@ body[data-mode="desktop"] [data-hide="desktop"],
        screen and (max-height: 40em) {
 
   .nss-popover-menu {
-    width: 100dvw;
+    width: 100%;
     height: 100dvh;
     border-radius: 0;
     overflow: hidden;
@@ -2005,6 +2050,18 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 14rem);
+  }
+
+  [data-browser*="ios"] .nss-popover-menu {
+    height: 100svh;
+  }
+
+  [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
+    height: calc(100svh - 7.75rem);
+  }
+
+  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100svh - 14rem);
   }
 
   .nss-popover-header {
@@ -2098,15 +2155,15 @@ body[data-mode="desktop"] [data-hide="desktop"],
 @media screen and (max-width: 50em) {
 
   h1:is([data-title="launcher"])::after {
-    content: "N.S.S.S.";
+    content: var(--app-launcher-title-short);
   }
 
   h1:is([data-title="playalong"])::after {
-    content: "Play Along";
+    content: var(--app-playalong-title-short);
   }
 
   h1:is([data-title="encoder"])::after {
-    content: "ABC Encoder";
+    content: var(--app-encoder-title-short);
   }
 }
 
@@ -2124,7 +2181,7 @@ body[data-mode="desktop"] [data-hide="desktop"],
   }
 
   body[data-mode="desktop"] h1:is([data-title="tunebook"])::after {
-    content: "N.S.S.S. " attr(data-type) "s";
+    content: var(--app-tunebook-title-prefix-short)attr(data-type) "s";
   }
 
   body[data-mode="desktop"] [data-cutoff-desktop="tablet-s"] {
@@ -2166,6 +2223,14 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 13.6rem);
+  }
+
+  [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
+    height: calc(100svh - 7.5rem);
+  }
+
+  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100svh - 13.6rem);
   }
 
   .nss-popover-header-title-container,
@@ -2334,6 +2399,14 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 17.75rem);
+  }
+
+  [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
+    height: calc(100svh - 11.75rem);
+  }
+
+  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
+    height: calc(100svh - 17.75rem);
   }
 }
 

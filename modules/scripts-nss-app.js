@@ -9,7 +9,6 @@ import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 import { APP_VERSION, DB_VERSION } from '../version.js';
-import { CACHE_EXPIRES_DAYS } from '../sw.js'
 
 ///////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist App Scripts
@@ -353,7 +352,7 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
 
 export function switchTuneBookItem(loadDir) {
 
-  const isSafari = checkIfSafariBrowser();
+  const isSafari = checkIfSafariLikeBrowser();
 
   const currentTuneBook =
     isSafari? [...tuneSelector.querySelectorAll('option')].slice(1) :
@@ -423,7 +422,7 @@ function zoomTuneBookItem(zoomDir) {
 
     let newPageZoom = +currentPageZoom.slice(0, -1) + zoomValue;
 
-    if (newPageZoom > 100 || newPageZoom < 50) return;
+    if (newPageZoom > 120 || newPageZoom < 40) return;
 
     abcContainer.style.zoom = `${newPageZoom}%`;
 
@@ -775,7 +774,7 @@ function showHelpGuidePopover() {
     helpGuidePopover.dataset.popsUpFrom = "header";
   }
 
-  if (checkIfIosSafariBrowser()) {
+  if (checkIfIosBrowser()) {
 
     disableTuneBookSelectors();
   }
@@ -848,9 +847,12 @@ function showQuickHelpDescription(event) {
 function focusOnTuneBookActions() {
 
     const tuneBookActionsBtns =
-      document.querySelectorAll('[data-load="tunebook-actions-menu"]:not([hidden])');
+      document.querySelectorAll(
+        '[data-load="tunebook-actions-menu"]:not([hidden])'
+      );
 
-    const focusElem = getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
+    const focusElem =
+      getFirstCurrentlyDisplayedElem(tuneBookActionsBtns);
 
     if (focusElem) focusElem.focus();
 }
@@ -968,7 +970,7 @@ export function getFirstCurrentlyDisplayedElem(nodeList) {
 
   for (let i = 0; i < nodeList.length; i++) {
 
-    if(!!nodeList[i].offsetParent) {
+    if(nodeList[i].offsetParent) {
 
       foundEl = nodeList[i];
       break;
@@ -1044,30 +1046,119 @@ export function checkIfMobileMode() {
   return document.body.dataset.mode === "mobile";
 }
 
-// Return true if user agent string suggests the app is opened in Safari Browser
+// Return true if the app is viewed from Safari-like browser
 
-function checkIfSafariBrowser() {
+function checkIfSafariLikeBrowser() {
 
-  const userAgentStr = navigator.userAgent.toLowerCase();
+  const dataBrowser =
+    document.body.dataset.browser;
 
-  const isSafariBrowser =
-    userAgentStr.indexOf('safari') > -1 && userAgentStr.indexOf('chrome') === -1;
+  const isSafariLike =
+    dataBrowser.indexOf('safari') > -1 || dataBrowser.indexOf('-ios') > -1;
 
-  return isSafariBrowser;
+  return isSafariLike;
 }
 
-// Return true if user agent string suggests the app is opened in iOS
+// Return true if the app appears to be opened in iOS
 
-function checkIfIosSafariBrowser() {
+function checkIfIosBrowser() {
 
-  const userAgentStr = navigator.userAgent.toLowerCase();
+  const dataBrowser =
+    document.body.dataset.browser;
 
-  const isIosSafari =
-    checkIfSafariBrowser() &&
-    !/crios/.test(userAgentStr) &&
-    /ip(ad|hone|od)/.test(userAgentStr);
+  const isIosBrowser =
+    dataBrowser.indexOf('-ios') > -1;
 
-  return isIosSafari;
+  return isIosBrowser;
+}
+
+// Attempt to check what browser and platform the app is being viewed from
+// Return string in the format: browsertype-android|ios|desktop
+
+function getBrowserId() {
+
+  const userAgentStr =
+    navigator.userAgent.toLowerCase();
+
+  const isChromeLike =
+    userAgentStr.indexOf('chrome') > -1;
+
+  const isSafari =
+    userAgentStr.indexOf('safari') > -1 &&
+    !isChromeLike;
+
+  let userBrowserMarker = 
+    userAgentStr.indexOf('firefox') > -1? "firefox" :
+    userAgentStr.indexOf('gecko/') > -1? "gecko" :
+    userAgentStr.indexOf('webview') > -1? "webview" :
+    userAgentStr.indexOf('wv') > -1? "webview" :
+    isSafari? "safari" :
+    isChromeLike? "chromium" :
+    userAgentStr.indexOf('version/') > -1? "webview" :
+    "other";
+
+  // Mobile / Android
+
+  const isAndroid =
+    userAgentStr.indexOf('android') > -1;
+
+  if (isAndroid) {
+
+    return `${userBrowserMarker}-android`;
+  }
+
+  // Mobile / iOS
+
+  const isIOS =
+    /ip(ad|hone|od)/.test(userAgentStr) ||
+    (/macintosh/.test(userAgentStr) &&
+     navigator.maxTouchPoints &&
+     navigator.maxTouchPoints > 2);
+
+  if (isSafari && isIOS) {
+
+    userBrowserMarker =
+      userAgentStr.indexOf('fxios') > -1? "firefox" :
+      userAgentStr.indexOf('crios') > -1? "chrome" :
+      userAgentStr.indexOf('opios') > -1? "opera" :
+      userAgentStr.indexOf('brave') > -1? "brave" :
+      userAgentStr.indexOf('edge') > -1? "edge" :
+      userAgentStr.indexOf('yabrowser') > -1? "yandex" :
+      userAgentStr.indexOf('duckduckgo') > -1? "webview" :
+      userAgentStr.indexOf('webview') > -1? "webview" :
+      "safari";
+
+    return `${userBrowserMarker}-ios`;
+  }
+
+  if (isIOS) {
+
+    return `webview-ios`;
+  }
+
+  // Desktop / Firefox & Gecko-based
+
+  if (userBrowserMarker === "firefox" ||
+      userBrowserMarker === "gecko") {
+
+    return userBrowserMarker === "gecko"? "gecko-desktop" : "firefox-desktop";
+  }
+
+  // Desktop / Safari
+
+  if (isSafari) {
+
+    return "safari-desktop"
+  }
+
+  // Desktop / Chromium-based (likely)
+
+  if (isChromeLike) {
+
+    return "chromium-desktop"
+  }
+
+  return "other";
 }
 
 // Reset Tunebook dropdown menus without reinitializing ABC Tools
@@ -1166,7 +1257,7 @@ export function resetTuneBookFilters() {
 
   // Reset filters without refreshing the page
 
-  const isSafari = checkIfSafariBrowser();
+  const isSafari = checkIfSafariLikeBrowser();
 
   // Safari only: Repopulate Tune Selector
 
@@ -2135,6 +2226,12 @@ async function appCheckBoxHandler(checkBox) {
         displayNotification("Sort will now merge ABC header fields in Sets, fixing duplicate display in abcjs", "success");
       break;
 
+    case 'abcSortSkipsUpdatingTsoMetaData':
+      checkBox.checked?
+        displayNotification("Sort will now skip fetching The Session metadata if ABC contains line ‘...at The Session’", "success") :
+        displayNotification("Sort will always fetch and update metadata in ABCs containing links to The Session", "success");
+      break;
+
     case 'abcSortRemovesLineBreaksInAbc':
       checkBox.checked?
         displayNotification("Sort will now reassemble ABC body line-by-line to ensure it has no empty lines", "success") :
@@ -2245,7 +2342,7 @@ function filterTuneBook() {
     return;
   }
   
-  const isSafari = checkIfSafariBrowser();
+  const isSafari = checkIfSafariLikeBrowser();
   const tuneGroups = tuneSelector.querySelectorAll(':scope > optgroup');
   const tuneOptions = tuneSelector.querySelectorAll('optgroup > *');
   const activeFilter = filterOptions.querySelector('option:checked')
@@ -3007,6 +3104,7 @@ function appWindowKeyboardEventHandler(event) {
 
   if (event.type === 'keydown' &&
       event.key === 'Tab' &&
+      !checkIfHelpMenuOpen() &&
       ((!event.shiftKey &&
         event.target.id === "fullScreenButton") ||
       (!checkIfMobileMode() &&
@@ -3397,7 +3495,7 @@ function addHelpGuideDescription(el) {
 
 function quitHelpGuidePopover() {
 
-  if (checkIfIosSafariBrowser()) {
+  if (checkIfIosBrowser()) {
 
     reEnableTuneBookSelectors();
   }
@@ -4092,8 +4190,48 @@ function initAbcFrameLabel() {
   const focusLabelBtn =
     document.querySelector('[data-focus="abc-frame"]');
 
+  if (!focusLabelBtn) return;
+
   focusLabelBtn.addEventListener('focusout', () => toggleAbcFocusLabel("hide"));
 }
+
+// Initialize browser metadata body attribute for specific tweaks
+
+function initBrowserMetaData() {
+
+  document.body.dataset.browser = getBrowserId();
+}
+
+// Initialize GoatCounter, a privacy-oriented analytics tool
+
+async function initGoatCounter() {
+
+  try {
+
+    const response = await fetch('//gc.zgo.at/count.js');
+
+    if (!response.ok) {
+      
+      throw new Error("Failed to load GoatCounter script");
+    }
+
+    const goatScript = document.createElement('script');
+  
+    goatScript.dataset.goatcounter =
+      "https://session.goatcounter.com/count";
+
+    goatScript.async = true;
+
+    goatScript.src = "//gc.zgo.at/count.js";
+
+    document.head.appendChild(goatScript);
+
+  } catch (error) {
+
+    console.warn(`GoatCounter disabled (${error.message})`);
+  }
+}
+
 
 // Initialize popover polyfill warning if the browser doesn't support Popover API
 
@@ -4126,11 +4264,11 @@ function initWindowEvents() {
 
   window.addEventListener('keyup', appWindowKeyboardEventHandler);
 
-  window.addEventListener('touchstart', appWindowTouchEventHandler);
+  window.addEventListener('touchstart', appWindowTouchEventHandler, { passive: true });
 
-  window.addEventListener('touchend', appWindowTouchEventHandler);
+  window.addEventListener('touchend', appWindowTouchEventHandler, { passive: true });
 
-  window.addEventListener('touchmove', appWindowTouchEventHandler);
+  window.addEventListener('touchmove', appWindowTouchEventHandler, { passive: true });
 
   window.addEventListener('resize', appWindowResizeHandler);
 
@@ -4143,6 +4281,8 @@ function initWindowEvents() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  initGoatCounter();
+  initBrowserMetaData();
   initPopoverWarning();
   initQuickHelpDialog();
   initWindowEvents();
@@ -4164,10 +4304,9 @@ document.addEventListener('DOMContentLoaded', () => {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('../sw.js', { type: 'module' })
+      .register('/sw.js')
       .then((registration) => {
         console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
-        console.log(`[NS App Service Worker]\n\n` + `Cache set to expire in ${CACHE_EXPIRES_DAYS} days`);
       })
       .catch((error) => {
         console.warn(`[NS App Service Worker]\n\n` + `Registration failed!\n\n` + error);

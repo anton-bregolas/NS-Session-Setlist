@@ -19,7 +19,7 @@ import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 // Define required app elements
 
 // Elements used to launch the viewer, first currently displayed gets focus on exit
-const launchEls = document.querySelectorAll('[data-load="list-viewer"]');
+const launchElsData = '[data-load="list-viewer"]';
 // Select element containing a list of Tune / Set options
 const tuneSelector = document.querySelector('#tuneSelector');
 // Select element containing a list of filter options
@@ -80,7 +80,7 @@ export function openListViewer(selectList) {
     if (!selectItem.hasAttribute("disabled") && !selectItem.text.toLowerCase().match(placeHolderText)) {
 
       const itemObj =
-        { title: selectItem.text, subtitles: selectItem.subtitles, url: selectItem.value, index: i };
+        { title: selectItem.text, subtitles: selectItem.dataset.subtitles, url: selectItem.value, index: i };
 
       tunesArr.push(itemObj);
     }
@@ -140,9 +140,9 @@ export function initListViewer() {
   listViewerTiles.addEventListener('contextmenu', handleTilesMouseEvents);
   listViewerTiles.addEventListener('keydown', handleTilesKeyboardNavigation);
 
-  listViewerTiles.addEventListener('touchstart', handleTilesTouchEvents);
-  listViewerTiles.addEventListener('touchend', handleTilesTouchEvents);
-  listViewerTiles.addEventListener('touchmove', handleTilesTouchEvents);
+  listViewerTiles.addEventListener('touchstart', handleTilesTouchEvents, { passive: true });
+  listViewerTiles.addEventListener('touchend', handleTilesTouchEvents, { passive: true });
+  listViewerTiles.addEventListener('touchmove', handleTilesTouchEvents, { passive: true });
 
   listViewerSearchInput.addEventListener('input', handleSearchFilterInput);
 
@@ -317,8 +317,13 @@ function quitListViewer(noFocus) {
 
   if (noFocus) return;
 
+  const foundEl =
+    getFirstCurrentlyDisplayedElem(
+      document.querySelectorAll(launchElsData)
+    );
+
   const focusElem =
-    getFirstCurrentlyDisplayedElem(launchEls) ?? tuneSelector;
+    foundEl ?? tuneSelector;
 
   focusElem.focus();
 }
@@ -1629,7 +1634,7 @@ function getFirstCurrentlyDisplayedElem(nodeList) {
 
   for (let i = 0; i < nodeList.length; i++) {
 
-    if(!!nodeList[i].offsetParent) {
+    if(nodeList[i].offsetParent) {
 
       foundEl = nodeList[i];
       break;
