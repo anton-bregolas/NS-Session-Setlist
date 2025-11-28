@@ -85,18 +85,34 @@ self.addEventListener('fetch', (event) => {
   // Cache and retrieve HTML for main app sections (Launch Screen & ABC Encoder)
 
   if (event.request.mode === 'navigate' || event.request.headers.get('Accept').includes('text/html')) {
-    event.respondWith(
-      caches.match(event.request).then(cacheRes => {
-        return cacheRes || fetch(event.request)
-          .then(fetchRes => { return fetchRes });
-      }).catch(error => {
-        // console.warn(error);
-        return caches.match(event.request.url.pathname)
-        .then(resFromCache => {
-          return resFromCache || caches.match('index.html');
-        });
-      })
-    );
+
+    if (event.request.url.endsWith('abc-encoder.html')) {
+      event.respondWith(
+        caches.match('abc-encoder.html').then((cachedPage) => {
+          return cachedPage || fetch(event.request);
+        }).catch(() => caches.match('index.html'))
+      );
+
+    } else {
+      event.respondWith(
+        caches.match('index.html').then((cachedPage) => {
+          return cachedPage || fetch(event.request);
+        }).catch(() => caches.match('index.html'))
+      );
+    }
+    // event.respondWith(
+    //   caches.match(event.request).then(cacheRes => {
+    //     return cacheRes || fetch(event.request)
+    //       .then(fetchRes => { return fetchRes });
+    //   }).catch(error => {
+    //     // console.warn(error);
+    //     let resUrl = new URL(event.request.url);
+    //     return caches.match(resUrl.pathname)
+    //     .then(resFromCache => {
+    //       return resFromCache || caches.match('index.html');
+    //     });
+    //   })
+    // );
     return;
   }
 
@@ -162,7 +178,8 @@ self.addEventListener('fetch', (event) => {
               // console.log(`[NS App Service Worker]\n\n` + `Loading cached version of the file`);
               return response || fetch(event.request);
           }).catch((error) => { 
-            console.warn(`[NS App Service Worker] Offline`, error)
+            console.warn(`[NS App Service Worker] Offline mode`)
+            return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
           })
       );
   }
