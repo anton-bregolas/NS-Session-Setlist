@@ -90,7 +90,7 @@ self.addEventListener('fetch', (event) => {
         return cacheRes || fetch(event.request)
           .then(fetchRes => { return fetchRes });
       }).catch(error => {
-        console.warn(error);
+        // console.warn(error);
         return caches.match(event.request.url.pathname)
         .then(resFromCache => {
           return resFromCache || caches.match('index.html');
@@ -158,13 +158,17 @@ self.addEventListener('fetch', (event) => {
 
   } else {
       event.respondWith(
-          caches.match(event.request).then((response) => {
+          caches.match(event.request).then(response => {
               // console.log(`[NS App Service Worker]\n\n` + `Loading cached version of the file`);
               return response || fetch(event.request);
+          }).catch((error) => { 
+            console.warn(`[NS App Service Worker] Offline`, error)
           })
       );
   }
 });
+
+
 
 // Helper function to check if a cached response is expired
 
