@@ -192,6 +192,23 @@ async function handleDBCaching(request) {
 
 async function handleAssetCaching(request) {
 
+  // Fix icons not loading on refresh in offline mode
+
+  if (request.url.endsWith('icons.svg') ||
+      request.url.endsWith('icons-chord-viewer.svg')) {
+
+    const cacheKey =
+      new Request(url, {
+        cache: 'only-if-cached',
+        mode: 'same-origin'
+      });
+    
+    const cachedSvg =
+      await caches.match(cacheKey, { ignoreSearch: true });
+
+    if (cachedSvg) return cachedSvg;
+  }
+
   // Get assets from cache, ignoring search parameters
 
   const cachedAsset =
