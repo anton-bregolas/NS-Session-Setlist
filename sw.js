@@ -194,11 +194,11 @@ async function handleAssetCaching(request) {
 
   // Fix icons not loading on refresh in offline mode
 
-  if (request.url.endsWith('icons.svg') ||
-      request.url.endsWith('icons-chord-viewer.svg')) {
+  if (request.url.includes('icons.svg#') ||
+      request.url.includes('icons-chord-viewer.svg#')) {
 
     const cacheKey =
-      new Request(url, {
+      new Request(request.url, {
         cache: 'only-if-cached',
         mode: 'same-origin'
       });
