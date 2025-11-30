@@ -95,6 +95,17 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  // Handle offline behavior of analytics
+
+  if (request.method === 'POST' && url.pathname.includes('goatcounter.com')) {
+    event.respondWith(
+      navigator.onLine
+        ? fetch(request).catch(() => new Response(''))
+        : new Response('', { status: 200 })
+    );
+    return;
+  }
+
   // Filter out unrelated requests
   
   if (url.origin !== location.origin || request.method !== 'GET') {
