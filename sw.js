@@ -97,7 +97,7 @@ self.addEventListener('fetch', (event) => {
 
   // Filter out unrelated requests
   
-  if (url.origin !== location.origin) {
+  if (url.origin !== location.origin || request.method !== 'GET') {
     return;
   }
 
