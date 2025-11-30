@@ -93,14 +93,20 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', (event) => {
 
   const { request } = event;
-  const url = request.url;
+  const url = new URL(request.url);
+
+  // Filter out unrelated requests
+  
+  if (url.origin !== location.origin) {
+    return;
+  }
 
   // Handle navigation: Serve cached HTML for main app sections, fall back to launch screen
 
   if (request.mode === 'navigate') {
     event.respondWith(
       caches.match(
-        url.includes('abc-encoder') ?
+        url.pathname.includes('abc-encoder') ?
           'abc-encoder.html' :
           'index.html')
         .then(navResponse => navResponse || caches.match('index.html'))
@@ -110,7 +116,7 @@ self.addEventListener('fetch', (event) => {
 
   // Handle Session DB files
 
-  if (/(sets|tunes|chords-sets|chords-tunes)\.json$/.test(url)) {
+  if (/(sets|tunes|chords-sets|chords-tunes)\.json$/.test(url.pathname)) {
     event.respondWith(handleDBCaching(request));
     return;
   }
