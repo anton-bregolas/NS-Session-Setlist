@@ -197,14 +197,17 @@ async function handleAssetCaching(request) {
   if (request.url.includes('icons.svg#') ||
       request.url.includes('icons-chord-viewer.svg#')) {
 
-    const cacheKey =
-      new Request(request.url, {
-        cache: 'only-if-cached',
-        mode: 'same-origin'
-      });
+    const cacheKey = new Request(request.url, {
+      method: request.method,
+      headers: request.headers,
+      mode: 'same-origin',
+      credentials: request.credentials,
+      cache: 'only-if-cached',
+      redirect: request.redirect
+    });
     
     const cachedSvg =
-      await caches.match(cacheKey, { ignoreSearch: true });
+      await caches.match(cacheKey);
 
     if (cachedSvg) return cachedSvg;
   }
