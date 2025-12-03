@@ -344,6 +344,20 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.21: Fix Service Worker & Icons**
+
++ PWA updates:
+  - Fix SW self-removal on launch, causing offline mode to fail
+  - Refactor & simplify SW logic, split caching for regular & lazy-loaded assets
+  - Add fallbacks for specific request types for full offline support
+  - Exclude requests of unrelated origin or type
+  - Handle offline Goatcounter requests
+
++ App updates:
+  - Make Fira Sans primary font in app and viewer modules
+  - Add svg sprites to html files to handle Chrome regression (icons not loading from cached .svg file while offline)
+  - Icon sprites simplified, files kept for archive purposes
+
 **v1.1.20: Update Encoder Tests**
 
 + Tests updates:
