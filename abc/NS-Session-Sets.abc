@@ -441,7 +441,7 @@ T: JIGS: I Buried My Wife Set
 T: Bank of Turf
 C: C: Trad.; S: Various
 C: Set Leaders: Tania, Anton
-Z: Oleg Naumov arr.; nobu / Josh Kane / Mladenski at The Session
+Z: [Unedited], Oleg Naumov arr.; nobu / Josh Kane / Mladenski at The Session
 N: https://thesession.org/members/26966/sets/112552
 R: Jig
 M: 6/8
@@ -717,24 +717,24 @@ T: MARCHES: Pikeman Set
 T: Pikeman / Halting
 C: C: Trad.; S: Dessie Wilkinson & Gerry O'Connor
 C: Set Leaders: Mars, Anton
-Z: Anton Zille ed.; gian marco / Jürgen at The Session
+Z: Anton Zille ed., . & Oleg Naumov arr.; gian marco / Jürgen at The Session
 N: https://thesession.org/members/26966/sets/114279
 R: March
 M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Amin
-|:A2 A/B/c/d/ ee- ed|e>d ef ec A2|G2 G/A/B/c/ dd- de|d>B GB d2 cB|
-A2 A/B/c/d/ ee- ed|e>d ef ec A2|ag- ge dc- cB| A>B AG A2 E2:||
-aa- ag ed- de|g>a ge dB G2|aa- ag ed- de|g>a ge g2 a/g/e/g/|
-aa- ag ed- de|g>a ge dB G^G|A>B cd e>d cB|A>B cd e2- ee|
-aa- ag ed- de|g>a ge dB G^G|A>B cd e>d cB|A>B AG A2 E2||
+|:"Am"A2 A/B/c/d/ ee- ed|e>d ef ec A2|"G"G2 G/A/B/c/ dd- de|"Em"d>B GB d2 cB|
+"Am"A2 A/B/c/d/ ee- ed|e>d ef ec A2|"G"ag- ge "Em"dc- cB| "Am"A>B "G"AG "Am"A2 E2:||
+"Am"aa- ag ed- de|"G"g>a g"(C)"e "(G)"dB G2|"Am"aa- ag ed- de|"G"g>a ge "(G/B)"g2 "Em"a/g/e/g/|
+"Am"aa- ag ed- de|"G"g>a ge dB G"(G#dim7)"^G|"Am"A>B cd e>d "G"cB|"Am"A>B "(G)"cd "Am"e2- ee|
+"Am"aa- ag ed- de|"G"g>a ge dB G"(G#dim7)"^G|"Am"A>B cd e>d "G"cB|"Am"A>B "G"AG "Am"A2 E2||
 T: Down the Glen / Down the Brae / Old Crossroads
 K: Ador
-|:E2 A2 AB cd|e2 a2 ge- ed|c>B ce dB GA|B2 AB/A/ GE ED|
-E2 A>E AB cd|e2 a2 ge- ed|c>B ce dB GA|1 B2 AG A2 AG:|2 BA AG A2 ag||
-|:e2 a2 ab/a/ ga|b2 a2 ge- eg|d>^c de g>f ga|ge de g2 ag|
-e2 a2 ab/a/ ga|b2 a2 ge- ed|c>B ce dB GA|1 BA AG A2 ag:|2 B2 AG A2 AG||
+|:"Am"E2 A2 AB cd|e2 a2 ge- ed|"G"c>B ce dB GA|"Em"B2 AB/A/ GE ED|
+"Am (F)"E2 A>E AB cd|e2 a2 ge- ed|"G"c>B ce dB GA|1 "Em"B2 "G"AG "Am"A2 AG:|2 "Em"BA "G"AG "Am"A2 ag||
+|:"Am"e2 a2 ab/a/ ga|b2 a2 ge- eg|"G"d>^c de g>f ga|"Em"ge de g2 ag|
+"Am (F)"e2 a2 ab/a/ ga|"(F)"b2 a2 ge- ed|"G"c>B ce "Em"dB GA|1 "Em"BA "(G)"AG "(Am)"A2 ag:|2 "Em"B2 "G"AG "Am"A2 AG||
 
 X: 28
 T: MEDLEY: Ash Grove Set
@@ -928,7 +928,7 @@ X: 35
 T: MEDLEY: Samhain Finale Set
 T: Empty Wallet [Waltz]
 C: C: Fredrik Jakobsson / Hammy Hamilton / Hammy Hamilton / Michael Gorman / Trad.; S: See Notes
-C: Set Leaders: Oliushka, Anton, Tania, Mars
+C: Set Leaders: Anton, Oliushka, Tania, Mars
 S: [1] Sandy's Band; Krack / [2] Hammy Hamilton / [3][4][5] Various
 Z: Anton Zille ed. arr.; Bregolas / Mars / Artem Baguinski / Jeremy / Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/116537
@@ -948,7 +948,7 @@ GA|:"G"B3A G2|"C"E3-E G2|"D"A2 D2 B2|"Bm7"A4 Bc|
 T: Kerfunten (Gmaj) [Jig]
 R: Jig
 M: 6/8
-Q: 3/8=114
+Q: 3/8=116
 K: Gmaj
 |:"G"~B3 BAG|"(C)"dBd "(D)"deg|"(G)"dBd "(Em)"gdB|"D"~A3 "(D7)"DFA|
 "G"~B3 BAG|"(C)"dBd "(D)"deg|"G (Em)"dBd "C"gdB|"D"~A3 "G"G3:||
@@ -963,7 +963,7 @@ K: Dmaj
 T: Mountain Road [Reel]
 R: Reel
 M: 4/4
-Q: 1/2=105
+Q: 1/2=100
 K: Dmaj
 "D"F2 AF BFAF|"(G)"~F2 AF "A"EFDE|"D"F2AF BFAF|"G"G/F/E FD "A"EDB,D|
 "D"F2AF BFAF|"(G)"~F2 AF "A"EFDE|"D (Bm)"FA~A2 BAFB|"G"ABde "A"fddc||
@@ -1114,7 +1114,7 @@ K: Ador
 X: 41
 T: POLKAS: Ballydesmond Session Set
 T: Ballydesmond No. 1
-C: C: Trad.; S: Various
+C: C: Trad.; S: Denis Murphy & Julia Clifford / Denis Murphy & Julia Clifford / Various
 C: Set Leaders: Andrey, Olya, Vova, Anton, Tania, Oliushka, André
 Z: Anton Zille ed., Oleg Naumov arr.; ceolachan / ceolachan / Mix O'Lydian at The Session
 N: https://thesession.org/members/26966/sets/96720
@@ -1675,7 +1675,7 @@ A/B/c|:"D"dcdf "G"e/f/e dB|"D"ADFE DEFA|dcdf "A"e/f/e dB|"G"Afaf "A"edBc|
 "D"~d3f "G"e2 dB|"D"AF~F2 DEFA|"G"BAGF GABc|1 dBAF "A"E2 FA:|2 dBAF "A"EAFE||
 |:"D"D2 F/E/D ADFA|dBAF DEFE|DEDF ABAF|"G"G/A/G F/G/F "A"EDB,A,|
 "D"D2 F/E/D ADFA|dBAF DEFA|"G"BAGF GABc|1 dBAF "A"EGFE:|2 dBAF "A"E2||
-T: Charlie Mulvihill's
+T: Charlie Mulvihill's / Muckross Abbey
 K: Dmaj
 dB|:"D"AF~F2 "G"G2 FG|"D"ADFD "A"EGFE|"D"D2 FA de"G"fe|"Bm"dBAF "A"E2 dB|
 "D"AF~F2 "G"G2 FG|"D"ADFD "A"E/F/G FE|"Bm"D2 FA de"G"fe|1 dB"A"AF "D"D2 dB:|2 dB"A"AF "D"D2 de||
@@ -1722,7 +1722,7 @@ T: REELS: Devanny's Goat Set
 T: Devanny's Goat
 C: C: Tommy Whelan (?) / Trad.; S: Noel Hill / Noel Hill / Bothy Band
 C: Set Leaders: Tania, Anton, Sophie
-Z: Anton Zille ed., Oleg Naumov arr.; Moulouf / Kenny / Josh Kane at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Moulouf / Kenny / Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/92390
 R: Reel
 M: 4/4
@@ -1741,10 +1741,10 @@ K: Amix
 "D"a2 fa bafa|"D"a/b/a fd "G"edBd|"G"~g3e "D/F#"~f3e|"Em"dfed "D (A)"Bcdf:||
 T: Rip the Calico
 K: Dmaj
-|:"D"d2 dc defd|"G"ed B/c/d "A"egfe|"D"~d3c defd|"G"efdB "A"~A3B:||
-|:"G"dB~B2 gefd|"A"ed B/c/d egfe|"G"dB~B2 gefd|1 "A"efdB ~A3B:|2 "A"efdB ~A3e||
-"D"faaf gefd|"G"ed B/c/d "A"egfe|"D"fa~a2 gefd|"G"efdB "A"~A3e|
-"D"~a3f gefd|"G"ed B/c/d "A"egfe|"D"fa~a2 bfaf|"G"e2 ef "A"g/f/e fe||
+|:"D"d2 dc defd|"G"ed B/c/d "A"egfe|"D"d2 dc defd|"G"efdB "A"A3B:||
+|:"G"dB~B2 "(Em7)"gefd|"A"ed B/c/d egfe|"G"dB~B2 "(Em7)"gefd|1 "A"efdB A3B:|2 "A"efdB A3e||
+"D"faaf gefd|"G"ed B/c/d "A"egfe|"D"fa~a2 gefd|"G"efdB "A"A3e|
+"D (Bm7)"a3f gefd|"G"ed B/c/d "A"egfe|"Bm7 (D)"fa~a2 bfaf|"G"e2 ef "A"g/f/e fe||
 
 X: 62
 T: REELS: Earl's Chair Set
@@ -2050,7 +2050,7 @@ K: Emin
 X: 73
 T: REELS: Road to Cashel Set
 T: Francis John McGovern
-C: C: Trad. / Charlie Lennon / Trad.; S: Cathal McConnell / Kevin Burke; Charlie Lennon / Various
+C: C: Trad. / Charlie Lennon / Trad.; S: Cathal McConnell; Charlie Lennon / Kevin Burke; Charlie Lennon / Various
 C: Set Leaders: Anton
 Z: [Unedited]; Kenny / Phantom Button / swisspiper at The Session
 N: https://thesession.org/members/26966/sets/104914
@@ -2280,35 +2280,35 @@ T: SINGLE JIGS: Scully Casey's Set
 T: Humours of Kilclogher / Humours of Kiltyclogher
 C: C: Trad.; S: Liam O'Flynn / Bobby Casey & Tommy Keane
 C: Set Leaders: Alexey, Anton
-Z: Anton Zille ed.; NfldWhistler / Richie Davis / gian marco at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; NfldWhistler / Richie Davis / gian marco at The Session
 N: https://thesession.org/members/26966/sets/99621
 R: Single Jig
 M: 12/8
 L: 1/8
 Q: 3/8=116
-K: Ador
-B|:AGE ~G2E c2E EFG|~D3 D2E GED D2B|
-AGE ~G2E c2E EFG|~A3 BGE ~A3 A2B:||
-|:c2B c2d ecA ABc|BAG GA/B/c dBG GAB|
-c2B c2d ecA ABc|BAG GAB ~A3 A2B:||
+K: Dmix
+B|:"Am"AGE ~G2E c2E EFG|"D"~D3 D2E GED D2B|
+"Am"AGE ~G2E c2E EFG|"D"~A3 BGE ~A3 A2B:||
+|:"C"c2B c2d ecA "D"ABc|"G"BAG GA/B/c "Em"dBG "(G/B)"GAB|
+"C"c2B c2d ecA "(D)"ABc|"G"BAG GAB "D"~A3 A2B:||
 T: Scully Casey's
 K: Dmaj
-dcd AGE =F2G A2B|=cBc A2c cBc ABc|
-dcd AGE =F2G A2g|fed edc d2e f2e|
-dcd AGE =F2G A2B|=cBc A2c cBc ABc|
-dcd AGE =F2G A2g|fed edc d3 d2A||
-d2e ~f2g ~a3 afd|B=cd e2f gaf ge^c|
-d2e f2g ~a3 agf|ecA ABc d3 d2A|
-d2e ~f2g ~a3 afd|B=cd e2f ~g3 ge/f/g|
-agf gfe fed edc|dcA ABc d2e f2e||
+"D"dcd AGE "Dm/F"=F2G A2B|"C"=cBc A2c cBc "A7"AB^c|
+"D"dcd AGE "Dm/F"=F2G "(A5)"A2g|"G"fed "A"edc "D"d2e f2e|
+"D"dcd AGE "Dm/F"=F2G A2B|"C"=cBc A2c cBc "A7"AB^c|
+"D"dcd AGE "Dm/F"=F2G "A5 (D/F#)"A2g|"G"fed "A"edc "D"d3 d2A||
+"D"d2e ~f2g ~a3 "D/F#"afd|"C"B=cd e2f "G"gaf "A7"ge^c|
+"D"d2e f2g ~a3 "D/F#"agf|"G"ecA "A"ABc "D"d3 "A"d2A|
+"D"d2e ~f2g ~a3 "D/F#"afd|"C"B=cd e2f "G"~g3 "A7"ge/f/g|
+"D"agf "A5"gfe "D5"fed "D/F#"edc|"G"dcA "A"ABc "D"d2e "A5"=f2e||
 T: Bimíd ag Ól
 R: Jig
 M: 6/8
 K: Gmaj
-|:DGA ~B3|cBc ~d3|DGA B2 d|cAG AGF|
-DGA ~B3|cBc def|~g3 afd|cAF G2D:||
-|:GBd ~g3|gfd =f3|GBd ~g3|gfd cAF|
-GBd ~g3|gag f2g|abg afd|cAF G3:||
+|:"G"DGA "(G/B)"~B3|"C"cBc "D"~d3|"G"DGA B2 d|"C"cAG "D"AGF|
+"G"DGA ~B3|"Em"cBc "G/B"def|"C"~g3 afd|"D (D7)"cAF "G"G2D:||
+|:"G"GBd "(C)"~g3|"C"gfd "F"=f3|"G"GBd "(C)"~g3|"C"gfd "D"cAF|
+"Em (G)"GBd "(C)"~g3|gag "G/B (A5)"f2g|"C (A5)"abg "(C)"afd|"D"cAF "G (C)"G3:||
 
 X: 82
 T: SINGLE JIGS: Tonn Clíodhna Set

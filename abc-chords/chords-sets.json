@@ -440,6 +440,21 @@
     ]
   },
   {
+    "setTitle": "MARCHES: Pikeman Set",
+    "tuneChords": [
+      {
+        "title": "Pikeman",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tEm\tEm\t|\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tEm\t|\tAm G\tAm Am\t||\n\nPART 2:\n|\tAm\tAm\t|\tG (C)\t(G) (G)\t|\tAm\tAm\t|\tG G\t(G/B) Em\t|\n|\tAm\tAm\t|\tG\t(G#dim7)\t|\tAm\tG\t|\tAm (G)\tAm Am\t|\n|\tAm\tAm\t|\tG\t(G#dim7)\t|\tAm\tG\t|\tAm G\tAm Am\t||"
+      },
+      {
+        "title": "Down the Glen",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tEm\tEm\t|\n|\tAm (F)\t/|\tAm (F)\t/\t|\tG\tG\t|1\tEm G\tAm Am\t|\n|2\tEm G\tAm Am\t||\n\nPART 2:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tEm\tEm\t|\n|\tAm (F)\t/|\t(F)\t(F)\t|\tG\tEm\t|1\tEm (G)\t(Am) /\t|\n|2\tEm G\tAm Am\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "MEDLEY: Ash Grove Set",
     "tuneChords": [
       {
@@ -1055,7 +1070,7 @@
       {
         "title": "Rip the Calico",
         "meter": "4/4",
-        "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tG\tG\t|\tA\tA\t|\tG\tG\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||"
+        "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tG\t(Em7)\t|\tA\tA\t|\tG\t(Em7)\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD (Bm7)\t/|\tG\tA\t|\tBm7 (D)\t/|\tG\tA\t||"
       }
     ]
   },
@@ -1391,6 +1406,26 @@
         "title": "Old Favourite",
         "meter": "12/8",
         "chords": "PART 1:\n|\tG\tG\t|\tC\tD\t|\tG\tG\t|1\tC D\tG D\t|\n|2\tC D\tG D\t||\n\nPART 2:\n|\tEm D\tC C\t|\tAm\tD\t|\tEm D\tC C\t|\tD\tG\t|\n|\tEm D\tC D/B\t|\tAm\tD\t|\tEm\tD\t|\tC\tD/B\t|\n|\tC\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "SINGLE JIGS: Scully Casey's Set",
+    "tuneChords": [
+      {
+        "title": "Humours of Kilclogher",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tAm\tAm\t|\tD\tD\t|\tAm\tAm\t|\tD\tD\t||\n\nPART 2:\n|\tC\tD\t|\tG G\tEm (G/B)\t|\tC\t(D)\t|\tG\tD\t||"
+      },
+      {
+        "title": "Scully Casey's",
+        "meter": "12/8",
+        "chords": "PART 1:\n|\tD\tDm/F\t|\tC\tA7\t|\tD D\tDm/F (A5)\t|\tG A\tD D\t|\n|\tD\tDm/F\t|\tC\tA7\t|\tD D\tDm/F A5 (D/F#)\t|\tG A\tD D\t||\n\nPART 2:\n|\tD\tD/F#\t|\tC C\tG A7\t|\tD\tD/F#\t|\tG A\tD A\t|\n|\tD\tD/F#\t|\tC C\tG A7\t|\tD A5\tD5 D/F#\t|\tG A\tD A5\t||"
+      },
+      {
+        "title": "Bimíd ag Ól",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\t(G/B)\t|\tC\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG\tG\t|\tEm\tG/B\t|\tC\tC\t|\tD (D7)\tG\t||\n\nPART 2:\n|\tG\t(C)\t|\tC\tF\t|\tG\t(C)\t|\tC\tD\t|\n|\tEm (G)\t(C)\t|\t(C)\tG/B (A5)\t|\tC (A5)\t(C)\t|\tD\tG (C)\t||"
       }
     ]
   },

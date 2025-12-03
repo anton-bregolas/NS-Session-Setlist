@@ -344,6 +344,13 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.22: Session DB Update**
+
++ Session DB Updates:
+  - Update to version 2025.12.03.1
+  - Add chords to Scully Casey's Set & Pikeman Set
+  - Minor fixes in tunes
+
 **v1.1.21: Fix Service Worker & Icons**
 
 + PWA updates:

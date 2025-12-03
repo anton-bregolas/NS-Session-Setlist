@@ -52,7 +52,7 @@ K: Gmaj
 X: 4
 T: AIR: Planxty Irwin
 C: C: Turlough O'Carolan; S: Planxty
-C: Set Leaders: Alexey, Sophie, Anton
+C: Set Leaders: Alexey, Sophie, Anton, Tania
 Z: Anton Zille ed. arr., Oleg Naumov arr.; Shablabar at The Session
 N: https://thesession.org/members/26966/sets/99352
 R: Air
@@ -464,17 +464,17 @@ X: 28
 T: JIG: Bank of Turf
 C: C: Trad.; S: Various
 C: Set Leaders: Tania, Anton
-Z: [Unedited]; nobu at The Session
+Z: [Unedited], Oleg Naumov arr.; nobu at The Session
 N: https://thesession.org/members/26966/sets/112552
 R: Jig
 M: 6/8
 L: 1/8
 Q: 3/8=116
 K: Dmaj
-|:ABA DFA|BAF DFA|dcd ede|~f3 def|
-~g3 gab|afd B3|1 efe e2d|cBA AdB:|2 ABA efe|d3 dcd||
-|:eAA efg|fdd fga|gfe fed|edB ABd|
-eAA efg|fdd fga|gfe dcB|1 A3 Bcd:|2 A3 AdB||
+|:"D"ABA DFA|"G"BAF "D"DFA|"D"dcd "A"ede|"D"~f3 def|
+"G"~g3 gab|"D"afd B3|1 "Em"efe e2d|"A"cBA AdB:|2 "A"ABA efe|"D"d3 dcd||
+|:"A"eAA efg|"D"fdd fga|"G"gfe "D"fed|"A"edB ABd|
+"A"eAA efg|"D"fdd fga|"G"gfe "D"dcB|1 "A"A3 Bcd:|2 "A"A3 AdB||
 
 X: 29
 T: JIG: Battering Ram
@@ -517,24 +517,24 @@ X: 31
 T: JIG: Bimíd ag Ól
 C: C: Trad.; S: Bobby Casey & Tommy Keane
 C: Set Leaders: Alexey, Anton
-Z: Anton Zille ed.; gian marco at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; gian marco at The Session
 N: https://thesession.org/members/26966/sets/99621
 R: Jig
 M: 6/8
 L: 1/8
 Q: 3/8=116
 K: Gmaj
-|:DGA ~B3|cBc ~d3|DGA B2 d|cAG AGF|
-DGA ~B3|cBc def|~g3 afd|cAF G2D:||
-|:GBd ~g3|gfd =f3|GBd ~g3|gfd cAF|
-GBd ~g3|gag f2g|abg afd|cAF G3:||
+|:"G"DGA "(G/B)"~B3|"C"cBc "D"~d3|"G"DGA B2 d|"C"cAG "D"AGF|
+"G"DGA ~B3|"Em"cBc "G/B"def|"C"~g3 afd|"D (D7)"cAF "G"G2D:||
+|:"G"GBd "(C)"~g3|"C"gfd "F"=f3|"G"GBd "(C)"~g3|"C"gfd "D"cAF|
+"Em (G)"GBd "(C)"~g3|gag "G/B (A5)"f2g|"C (A5)"abg "(C)"afd|"D"cAF "G (C)"G3:||
 
 X: 32
 T: JIG: Black Rogue
 C: C: Trad.; S: Various
-C: Set Leaders: Sophie, Anton
-Z: Oleg Naumov arr.; Mladenski at The Session
-N: https://thesession.org/members/26966/sets/99413
+C: Set Leaders: Tania, Anton
+Z: [Unedited], Oleg Naumov arr.; Mladenski at The Session
+N: https://thesession.org/members/26966/sets/112552
 R: Jig
 M: 6/8
 L: 1/8
@@ -567,7 +567,7 @@ X: 34
 T: JIG: Breeches Mary
 C: C: Trad.; S: Denis Murphy & Julia Clifford
 C: Set Leaders: Anton, Mars
-Z: Anton Zille ed., arr., Oleg Naumov arr.; ceolachan at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; ceolachan at The Session
 N: https://thesession.org/members/26966/sets/94456
 R: Jig
 M: 6/8
@@ -840,7 +840,7 @@ T: JIG: I Buried My Wife
 T: I Buried My Wife and Danced on Her Grave
 C: C: Trad.; S: Various
 C: Set Leaders: Tania, Anton
-Z: [Unedited]; Josh Kane at The Session
+Z: [Unedited], Oleg Naumov arr.; Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/112552
 R: Jig
 M: 6/8
@@ -889,13 +889,13 @@ K: Gmaj
 X: 53
 T: JIG: Kerfunten (Dmaj)
 C: C: Hammy Hamilton; S: Various
-C: Set Leaders: Tania, Mars, Anton, Oliushka
+C: Set Leaders: Anton, Oliushka, Tania, Mars
 Z: Anton Zille ed. arr.; Artem Baguinski at The Session
 N: https://thesession.org/members/26966/sets/116537
 R: Jig
 M: 6/8
 L: 1/8
-Q: 3/8=114
+Q: 3/8=116
 K: Dmaj
 |:"D"F3 FED|FGA Bcd|A2B BAF|"A7"E3 EDE|
 "D"F3 FED|FGA Bcd|"D/F#"AFA "G"dAF|1 "A"EFE "D"D2E:|2 "A"EFE "D"DFA||
@@ -905,13 +905,13 @@ K: Dmaj
 X: 54
 T: JIG: Kerfunten (Gmaj)
 C: C: Hammy Hamilton; S: Hammy Hamilton
-C: Set Leaders: Mars, Tania, Anton
+C: Set Leaders: Anton, Oliushka, Tania, Mars
 Z: Anton Zille ed. arr.; Mars at The Session
 N: https://thesession.org/members/26966/sets/116537
 R: Jig
 M: 6/8
 L: 1/8
-Q: 3/8=114
+Q: 3/8=116
 K: Gmaj
 |:"G"~B3 BAG|"(C)"dBd "(D)"deg|"(G)"dBd "(Em)"gdB|"D"~A3 "(D7)"DFA|
 "G"~B3 BAG|"(C)"dBd "(D)"deg|"G (Em)"dBd "C"gdB|"D"~A3 "G"G3:||
@@ -1133,7 +1133,7 @@ D|:"G"GBA G2B|def gdB|GBA G2B|"C"AFD "D"AFD|
 X: 67
 T: JIG: Sixpenny Money
 C: C: Trad.; S: Various
-C: Set Leaders: Oliushka, Anton, Sophie
+C: Set Leaders: Oliushka, Anton, Sophie, Tania, André
 Z: Anton Zille ed. arr., Oleg Naumov arr.; tziguk at The Session
 N: https://thesession.org/members/26966/sets/95963
 R: Jig
@@ -1187,7 +1187,7 @@ X: 70
 T: JIG: Tenpenny Bit
 C: C: Trad.; S: Denis Murphy & Julia Clifford
 C: Set Leaders: Anton, Mars
-Z: Anton Zille ed., arr., Oleg Naumov arr.; GaryAMartin at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; GaryAMartin at The Session
 N: https://thesession.org/members/26966/sets/94456
 R: Jig
 M: 6/8
@@ -1285,35 +1285,35 @@ T: MARCH: Down the Glen
 T: Down the Brae / Old Crossroads
 C: C: Trad.; S: Dessie Wilkinson & Gerry O'Connor
 C: Set Leaders: Mars, Anton
-Z: Anton Zille ed.; Jürgen at The Session
+Z: Anton Zille ed., . & Oleg Naumov arr.; Jürgen at The Session
 N: https://thesession.org/members/26966/sets/114279
 R: March
 M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Ador
-|:E2 A2 AB cd|e2 a2 ge- ed|c>B ce dB GA|B2 AB/A/ GE ED|
-E2 A>E AB cd|e2 a2 ge- ed|c>B ce dB GA|1 B2 AG A2 AG:|2 BA AG A2 ag||
-|:e2 a2 ab/a/ ga|b2 a2 ge- eg|d>^c de g>f ga|ge de g2 ag|
-e2 a2 ab/a/ ga|b2 a2 ge- ed|c>B ce dB GA|1 BA AG A2 ag:|2 B2 AG A2 AG||
+|:"Am"E2 A2 AB cd|e2 a2 ge- ed|"G"c>B ce dB GA|"Em"B2 AB/A/ GE ED|
+"Am (F)"E2 A>E AB cd|e2 a2 ge- ed|"G"c>B ce dB GA|1 "Em"B2 "G"AG "Am"A2 AG:|2 "Em"BA "G"AG "Am"A2 ag||
+|:"Am"e2 a2 ab/a/ ga|b2 a2 ge- eg|"G"d>^c de g>f ga|"Em"ge de g2 ag|
+"Am (F)"e2 a2 ab/a/ ga|"(F)"b2 a2 ge- ed|"G"c>B ce "Em"dB GA|1 "Em"BA "(G)"AG "(Am)"A2 ag:|2 "Em"B2 "G"AG "Am"A2 AG||
 
 X: 77
 T: MARCH: Pikeman
 T: Halting
 C: C: Trad.; S: Dessie Wilkinson & Gerry O'Connor
 C: Set Leaders: Mars, Anton
-Z: Anton Zille ed.; gian marco at The Session
+Z: Anton Zille ed., . & Oleg Naumov arr.; gian marco at The Session
 N: https://thesession.org/members/26966/sets/114279
 R: March
 M: 4/4
 L: 1/8
 Q: 1/2=82
 K: Amin
-|:A2 A/B/c/d/ ee- ed|e>d ef ec A2|G2 G/A/B/c/ dd- de|d>B GB d2 cB|
-A2 A/B/c/d/ ee- ed|e>d ef ec A2|ag- ge dc- cB| A>B AG A2 E2:||
-aa- ag ed- de|g>a ge dB G2|aa- ag ed- de|g>a ge g2 a/g/e/g/|
-aa- ag ed- de|g>a ge dB G^G|A>B cd e>d cB|A>B cd e2- ee|
-aa- ag ed- de|g>a ge dB G^G|A>B cd e>d cB|A>B AG A2 E2||
+|:"Am"A2 A/B/c/d/ ee- ed|e>d ef ec A2|"G"G2 G/A/B/c/ dd- de|"Em"d>B GB d2 cB|
+"Am"A2 A/B/c/d/ ee- ed|e>d ef ec A2|"G"ag- ge "Em"dc- cB| "Am"A>B "G"AG "Am"A2 E2:||
+"Am"aa- ag ed- de|"G"g>a g"(C)"e "(G)"dB G2|"Am"aa- ag ed- de|"G"g>a ge "(G/B)"g2 "Em"a/g/e/g/|
+"Am"aa- ag ed- de|"G"g>a ge dB G"(G#dim7)"^G|"Am"A>B cd e>d "G"cB|"Am"A>B "(G)"cd "Am"e2- ee|
+"Am"aa- ag ed- de|"G"g>a ge dB G"(G#dim7)"^G|"Am"A>B cd e>d "G"cB|"Am"A>B "G"AG "Am"A2 E2||
 
 X: 78
 T: MARCH: Snow on the Tracks
@@ -1371,7 +1371,7 @@ X: 81
 T: POLKA: Ballydesmond No. 0
 C: C: Trad.; S: Denis Murphy & Julia Clifford
 C: Set Leaders: Anton, Oliushka
-Z: Anton Zille ed. arr.; ceolachan at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; ceolachan at The Session
 N: https://thesession.org/members/26966/sets/116067
 R: Polka
 M: 2/4
@@ -2348,7 +2348,7 @@ X: 138
 T: REEL: Devanny's Goat
 C: C: Tommy Whelan (?); S: Noel Hill
 C: Set Leaders: Tania, Anton, Sophie
-Z: Anton Zille ed., Oleg Naumov arr.; Moulouf at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Moulouf at The Session
 N: https://thesession.org/members/26966/sets/92390
 R: Reel
 M: 4/4
@@ -2714,7 +2714,7 @@ X: 161
 T: REEL: Lad O'Beirne's (Dmaj)
 T: Garrett Barry's (Dmaj)
 C: C: Trad.; S: Denis Murphy
-C: Set Leaders: Anton, Mars
+C: Set Leaders: Anton
 Z: Anton Zille ed. arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/114278
 R: Reel
@@ -2730,7 +2730,7 @@ A/B/c|:"D"dcdf "G"e/f/e dB|"D"ADFE DEFA|dcdf "A"e/f/e dB|"G"Afaf "A"edBc|
 X: 162
 T: REEL: Lad O'Beirne's (Gmaj)
 C: C: Lad O'Beirne (?); S: Tulla Céilí Band
-C: Set Leaders: Anton, Sophie, Mars
+C: Set Leaders: Anton, Sophie
 Z: Anton Zille ed. arr., Oleg Naumov arr.; Josh Kane at The Session
 N: https://thesession.org/members/26966/sets/74251
 R: Reel
@@ -2857,13 +2857,13 @@ K: Gmaj
 X: 170
 T: REEL: Mountain Road
 C: C: Michael Gorman; S: Various
-C: Set Leaders: Anton, Mars, Tania
+C: Set Leaders: Anton, Tania, Mars
 Z: Anton Zille ed. arr.; Jeremy at The Session
 N: https://thesession.org/members/26966/sets/116537
 R: Reel
 M: 4/4
 L: 1/8
-Q: 1/2=105
+Q: 1/2=100
 K: Dmaj
 "D"F2 AF BFAF|"(G)"~F2 AF "A"EFDE|"D"F2AF BFAF|"G"G/F/E FD "A"EDB,D|
 "D"F2AF BFAF|"(G)"~F2 AF "A"EFDE|"D (Bm)"FA~A2 BAFB|"G"ABde "A"fddc||
@@ -2923,7 +2923,7 @@ X: 174
 T: REEL: New Mown Meadows (Amix)
 C: C: Trad.; S: Noel Hill
 C: Set Leaders: Tania, Anton, Sophie, Mars
-Z: Anton Zille ed., Oleg Naumov arr.; Kenny at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Kenny at The Session
 N: https://thesession.org/members/26966/sets/92390
 R: Reel
 M: 4/4
@@ -2986,14 +2986,14 @@ K: Gmaj
 
 X: 178
 T: REEL: Rip the Calico
-C: C: Trad.; S: Various
-C: Set Leaders: Tania, Anton
-Z: Anton Zille ed. arr.; Josh Kane at The Session
-N: https://thesession.org/members/26966/sets/116537
+C: C: Trad.; S: Bothy Band
+C: Set Leaders: Tania, Anton, Sophie
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Josh Kane at The Session
+N: https://thesession.org/members/26966/sets/92390
 R: Reel
 M: 4/4
 L: 1/8
-Q: 1/2=105
+Q: 1/2=100
 K: Dmaj
 |:"D"d2 dc defd|"G"ed B/c/d "A"egfe|"D"d2 dc defd|"G"efdB "A"A3B:||
 |:"G"dB~B2 "(Em7)"gefd|"A"ed B/c/d egfe|"G"dB~B2 "(Em7)"gefd|1 "A"efdB A3B:|2 "A"efdB A3e||
@@ -3296,17 +3296,17 @@ T: SINGLE JIG: Humours of Kilclogher
 T: Humours of Kiltyclogher
 C: C: Trad.; S: Liam O'Flynn
 C: Set Leaders: Alexey, Anton
-Z: Anton Zille ed.; NfldWhistler at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; NfldWhistler at The Session
 N: https://thesession.org/members/26966/sets/99621
 R: Single Jig
 M: 12/8
 L: 1/8
 Q: 3/8=116
-K: Ador
-B|:AGE ~G2E c2E EFG|~D3 D2E GED D2B|
-AGE ~G2E c2E EFG|~A3 BGE ~A3 A2B:||
-|:c2B c2d ecA ABc|BAG GA/B/c dBG GAB|
-c2B c2d ecA ABc|BAG GAB ~A3 A2B:||
+K: Dmix
+B|:"Am"AGE ~G2E c2E EFG|"D"~D3 D2E GED D2B|
+"Am"AGE ~G2E c2E EFG|"D"~A3 BGE ~A3 A2B:||
+|:"C"c2B c2d ecA "D"ABc|"G"BAG GA/B/c "Em"dBG "(G/B)"GAB|
+"C"c2B c2d ecA "(D)"ABc|"G"BAG GAB "D"~A3 A2B:||
 
 X: 198
 T: SINGLE JIG: Kevin McHugh's
@@ -3364,21 +3364,21 @@ X: 201
 T: SINGLE JIG: Scully Casey's
 C: C: Trad.; S: Bobby Casey & Tommy Keane
 C: Set Leaders: Alexey, Anton
-Z: Anton Zille ed.; Richie Davis at The Session
+Z: Anton Zille ed. arr., Oleg Naumov arr.; Richie Davis at The Session
 N: https://thesession.org/members/26966/sets/99621
 R: Single Jig
 M: 12/8
 L: 1/8
 Q: 3/8=116
 K: Dmaj
-dcd AGE =F2G A2B|=cBc A2c cBc ABc|
-dcd AGE =F2G A2g|fed edc d2e f2e|
-dcd AGE =F2G A2B|=cBc A2c cBc ABc|
-dcd AGE =F2G A2g|fed edc d3 d2A||
-d2e ~f2g ~a3 afd|B=cd e2f gaf ge^c|
-d2e f2g ~a3 agf|ecA ABc d3 d2A|
-d2e ~f2g ~a3 afd|B=cd e2f ~g3 ge/f/g|
-agf gfe fed edc|dcA ABc d2e f2e||
+"D"dcd AGE "Dm/F"=F2G A2B|"C"=cBc A2c cBc "A7"AB^c|
+"D"dcd AGE "Dm/F"=F2G "(A5)"A2g|"G"fed "A"edc "D"d2e f2e|
+"D"dcd AGE "Dm/F"=F2G A2B|"C"=cBc A2c cBc "A7"AB^c|
+"D"dcd AGE "Dm/F"=F2G "A5 (D/F#)"A2g|"G"fed "A"edc "D"d3 d2A||
+"D"d2e ~f2g ~a3 "D/F#"afd|"C"B=cd e2f "G"gaf "A7"ge^c|
+"D"d2e f2g ~a3 "D/F#"agf|"G"ecA "A"ABc "D"d3 "A"d2A|
+"D"d2e ~f2g ~a3 "D/F#"afd|"C"B=cd e2f "G"~g3 "A7"ge/f/g|
+"D"agf "A5"gfe "D5"fed "D/F#"edc|"G"dcA "A"ABc "D"d2e "A5"=f2e||
 
 X: 202
 T: SINGLE JIG: Seanchaí Muimhneach
@@ -3937,9 +3937,9 @@ g>f e>d B2 A>B|(3dBA B>A G2 G2|G4 G2:||
 X: 235
 T: WALTZ: Empty Wallet
 C: C: Fredrik Jakobsson; S: Sandy's Band; Krack
-C: Set Leaders: Oliushka, Anton, Tania
-Z: Anton Zille ed. arr.; Bregolas at The Session
-N: https://thesession.org/members/26966/sets/116537
+C: Set Leaders: Oliushka, Anton, Sophie
+Z: Oliushka Tikhaia ed. arr., Anton Zille ed. arr.; Bregolas at The Session
+N: https://thesession.org/members/26966/sets/95961
 R: Waltz
 M: 3/4
 L: 1/8
@@ -3952,7 +3952,7 @@ GA|:"G"B3A G2|"C"E3-E G2|"D"A2 D2 B2|"Bm7"A4 Bc|
 |:"G"Bd d2 B2|"D"Ad d2 A2|"Em"GF GB AG|"D"FG FE D2|
 "C"EG~G2 EG|"G"DG~G2 AB|"C"c3B AG| "D"A3B/A/ GA|
 "G"Bd d2 B2|"D"Ad d2 A2|"Em"GF GB AG|"D"FG FE D2|
-"C"EG~G2 EG|"G"DG~G2 AB|"C"cB AG "D"GF|1 "G"G3B/A/ GA:|2 "G"G6||
+"C"EG~G2 EG|"G"DG~G2 AB|"C"cB AG "D"GF|1 "G"G3B/A/ GA:|2 "G"G4||
 
 X: 236
 T: WALTZ: Far Away
@@ -4049,7 +4049,7 @@ X: 241
 T: WALTZ: Petranu Vals
 C: C: Oliushka Tikhaia; S: ThZCh
 C: Set Leaders: Oliushka, Anton, Sophie
-Z: Oliushka Tikhaia ed., Anton Zille ed. arr.; Bregolas at The Session
+Z: Oliushka Tikhaia ed. arr., Anton Zille ed. arr.; Bregolas at The Session
 N: https://thesession.org/members/26966/sets/95961
 R: Waltz
 M: 3/4
