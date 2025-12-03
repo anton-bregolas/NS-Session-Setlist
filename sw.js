@@ -7,8 +7,6 @@ const CACHE_EXPIRES_DAYS = 7;
 const APP_ASSETS = [
   'index.html',
   'abc-encoder.html',
-  'assets/icons/icons.svg',
-  'assets/icons/icons-chord-viewer.svg',
   'styles/styles-chord-viewer.css',
   'styles/styles-list-viewer.css',
   'styles/styles-nss-app.css',
@@ -192,26 +190,6 @@ async function handleDBCaching(request) {
 
 async function handleAssetCaching(request) {
 
-  // Fix icons not loading on refresh in offline mode
-
-  if (request.url.includes('icons.svg#') ||
-      request.url.includes('icons-chord-viewer.svg#')) {
-
-    const cacheKey = new Request(request.url, {
-      method: request.method,
-      headers: request.headers,
-      mode: 'same-origin',
-      credentials: request.credentials,
-      cache: 'only-if-cached',
-      redirect: request.redirect
-    });
-    
-    const cachedSvg =
-      await caches.match(cacheKey);
-
-    if (cachedSvg) return cachedSvg;
-  }
-
   // Get assets from cache, ignoring search parameters
 
   const cachedAsset =
@@ -220,6 +198,8 @@ async function handleAssetCaching(request) {
   if (cachedAsset) {
     return cachedAsset;
   }
+
+  // Get assets from network, fix headers if needed
 
   try {
 
@@ -232,7 +212,7 @@ async function handleAssetCaching(request) {
 
     // Use fallbacks for specific cases
 
-    if (request.destination === 'script') {
+    if (request.destination === 'script' || request.destination === 'font') {
 
       const cacheKey = new Request(request.url, {
         method: request.method,
@@ -254,8 +234,8 @@ async function handleAssetCaching(request) {
     if (request.destination === 'image') {
       return caches.match('assets/screens/placeholder-offline-h.webp');
     }
-    
-    console.warn(`[NS App Service Worker] Offline: No cached assets available`, error);
+
+    console.warn(`[NS App Service Worker] Offline: No cached assets available for this <${request.destination}>`, error);
   }
 }
 
