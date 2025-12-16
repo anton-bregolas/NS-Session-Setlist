@@ -105,8 +105,8 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Filter out unrelated requests
-  
-  if (url.origin !== location.origin || request.method !== 'GET') {
+
+  if (request.method !== 'GET') {
     return;
   }
 
@@ -148,7 +148,7 @@ async function handleDBCaching(request) {
   if (cachedDB && !isCacheExpired(cachedDB, CACHE_EXPIRES_DAYS)) {
     console.log(
       `[NS App Service Worker]\n\n` +
-      `Retrieving cachedDB version of Session DB`
+      `Retrieving cached version of Session DB`
     );
     return cachedDB;
   }

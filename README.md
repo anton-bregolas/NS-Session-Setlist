@@ -344,6 +344,12 @@ Import Name | Import Description | Details |
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>
 
+**v1.1.23: Fix Service Worker Filters**
+
++ PWA updates:
+  - Fix leftover SW test filtering to allow proper caching
+  - Fix minor typos
+
 **v1.1.22: Session DB Update**
 
 + Session DB Updates:
