@@ -8,11 +8,11 @@ import { parseAbcFromFile, parseEncoderImportFile, initEncoderSettings, download
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
 import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
-import { APP_VERSION, DB_VERSION } from '../version.js';
-
+import appVersionJson from '../version.json' with { type: "json" };
 ///////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist App Scripts
 // https://github.com/anton-bregolas/
+// MIT License
 // (c) Anton Zille 2024-2025
 //
 // Session DB and/or Code Contributors:
@@ -143,7 +143,7 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
   if (isTuneBookInitialized === false) {
 
-    initAbcTools(itemQuery);
+    await initAbcTools(itemQuery);
 
     initTunebookRadioBtns();
 
@@ -1384,7 +1384,9 @@ async function tuneDataFetch() {
     
     if (localStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
 
-      displayNotification(`App version: v${APP_VERSION}; Session DB: ${DB_VERSION} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
+      const { appVersion, dbVersion } = appVersionJson;
+
+      displayNotification(`App version: v${appVersion}; Session DB: ${dbVersion} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
     }
     
     return tuneDataSize[0];
@@ -1944,6 +1946,12 @@ async function appCheckBoxHandler(checkBox) {
 
     // App Options
 
+    case 'abcToolsUseLiteEditor':
+      checkBox.checked?
+        displayNotification("App will now open tunes in ABC Tools Lite editor", "success") :
+        displayNotification("App will now open tunes in ABC Transcription Tools editor", "success");
+      break;
+
     case 'abcToolsSaveAndRestoreTunes':
       checkBox.checked?
         displayNotification("App will now store last opened Tunebook item between sessions", "success") :
@@ -2072,6 +2080,12 @@ async function appCheckBoxHandler(checkBox) {
       checkBox.checked?
         displayNotification("Encode will now output text string compatible with ABC Tools export website", "success") :
         displayNotification("Encode will now output JSON file compatible with Novi Sad Session Setlist", "success");
+      break;
+
+    case 'abcEncodeUsesLzwCompression':
+      checkBox.checked?
+        displayNotification("Encode will now use LZString / lzw to compress ABC (longer ABC Tools links)", "success") :
+        displayNotification("Encode will now use pako / zlib to compress ABC (shorter ABC Tools links)", "success");
       break;
 
     case 'abcSortEnforcesCustomAbcFields':

@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////////////////////////////
 // Novi Sad Session ABC Encoder Module
 // https://github.com/anton-bregolas/
+// MIT License
 // (c) Anton Zille 2024-2025
 ///////////////////////////////////////////////////////////////////////
 
@@ -8,6 +9,7 @@ import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-titl
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
 import { pThrottle } from './scripts-3p/p-throttle/p-throttle.js'
 import { makeAbcChordBook } from './scripts-chord-viewer.js'
+import { deflateCompress, deflateDecompress } from './scripts-abc-utils.js';
 import { localStorageOk, fetchData, initSettingsFromObject, initAppCheckBoxes, displayWarningEffect, displayNotification } from './scripts-nss-app.js';
 
 ////////////////////////////////
@@ -27,6 +29,7 @@ export const abcEncoderDefaults = {
     abcEncodeSortsTuneBook: "0",
     abcEncodeExportsTuneList: "0",
     abcEncodeOutputsAbcToolsString: "0",
+    abcEncodeUsesLzwCompression: "0",
     abcSortEnforcesCustomAbcFields: "1",
     abcSortExportsTunesFromSets: "1",
     abcSortExportsChordsFromTunes: "1",
@@ -219,7 +222,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
     if (taskType === "abc-decode") { 
 
-        abcEncoderOutput = getDecodedAbc(rawAbcContent);
+        abcEncoderOutput = await getDecodedAbc(rawAbcContent);
     }
 
     // Sort ABC input data: Apply NS Session format style to each Set or Tune, sort by Tune Title, return sorted ABC
@@ -489,7 +492,8 @@ export function downloadAbcEncoderFile(fileContent, fileName, taskType) {
     const isForAbcToolsWebsite = localStorageOk() && +localStorage.abcEncodeOutputsAbcToolsString;
 
     const fileExt =
-        isForAbcToolsWebsite || !fileName.includes('.')? 'txt' : fileName.slice(fileName.lastIndexOf('.') + 1);
+        isForAbcToolsWebsite || taskType === "abc-decode" || !fileName.includes('.')? 'txt' :
+        fileName.slice(fileName.lastIndexOf('.') + 1);
 
     const abcFile =
         new Blob(
@@ -544,7 +548,8 @@ function validateAbcFile(abcContent, taskType) {
 
             const testJson = JSON.parse(abcContent);
 
-            if (Object.keys(testJson[0]).join(', ') === "name, leaders, type, url" ||
+            if (Object.keys(testJson[0]).join(', ') === "name, subtitles, leaders, type, url" ||
+                Object.keys(testJson[0]).join(', ') === "name, subtitles, type, url" ||
                 Object.keys(testJson[0]).join(', ') === "name, type, url" ||
                 Object.keys(testJson[0]).join(', ') === "Name, URL") {
 
@@ -2887,7 +2892,7 @@ function addCustomAbcFields(abcContent, abcToMatchArr, setToTunes, abcIndex) {
 
     // Split long C: C: S: lines, move S: data to footnotes
 
-    if (isCustomFieldSetEnforced && abcCCS.length > 97) {
+    if (isCustomFieldSetEnforced && abcCCS.length > 90) {
 
         let abcCFromCCS = abcCCS.split('; S:')[0];
         let abcSFromCCS = abcCCS.split('; S:')[1].trim();
@@ -3119,7 +3124,7 @@ function mergeSetHeaderFields(abcHeadersArr) {
 
                 mergedCCLine = `C: C: ${strC}; S: ${strS}`;
 
-                if (mergedCCLine.slice(3).length > 100) {
+                if (mergedCCLine.slice(6).length > 90) {
 
                     const splitLongSArr = strS.split(' / ');
                     let sLinePrefix = '';
@@ -3458,9 +3463,9 @@ export async function getEncodedAbc(abcContent, fileName) {
 
         const encodedAbcOutput = customSettingsOn && +localStorage.abcEncodeOutputsAbcToolsString?
 
-            `const tunes=${JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[0]))};` :
+            `const tunes=${JSON.stringify(await encodeTunesForAbcTools(sortedAbcContent[0]))};` :
 
-            JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[0]), null, 2);
+            JSON.stringify(await encodeTunesForAbcTools(sortedAbcContent[0]), null, 2);
 
         let encodedAbcTunesOutput = '';
 
@@ -3468,9 +3473,9 @@ export async function getEncodedAbc(abcContent, fileName) {
 
             encodedAbcTunesOutput = +localStorage.abcEncodeOutputsAbcToolsString?
             
-            `const tunes=${JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[0]))};` :
+            `const tunes=${JSON.stringify(await encodeTunesForAbcTools(sortedAbcContent[0]))};` :
             
-            JSON.stringify(encodeTunesForAbcTools(sortedAbcContent[1]), null, 2);
+            JSON.stringify(await encodeTunesForAbcTools(sortedAbcContent[1]), null, 2);
         }
 
         return [encodedAbcOutput, encodedAbcTunesOutput];
@@ -3481,7 +3486,7 @@ export async function getEncodedAbc(abcContent, fileName) {
 // Tune Name, Tune Type and Set Leaders, return data in an array of objects
 // Additionally extract Subtitles for Tune / Set if secondary titles found
 
-export function encodeTunesForAbcTools(abcContent) {
+export async function encodeTunesForAbcTools(abcContent) {
 
     try {
 
@@ -3490,6 +3495,9 @@ export function encodeTunesForAbcTools(abcContent) {
         const encodedAbcArr = [];
 
         const isForAbcToolsWebsite = +localStorage.abcEncodeOutputsAbcToolsString;
+
+        const isEncoderUsingLzw =
+                localStorageOk() && +localStorage.abcEncodeUsesLzwCompression === 1;
 
         // Extract Tune Name, Tune Type and Set Leaders custom keys, push to JSON object
 
@@ -3570,17 +3578,38 @@ export function encodeTunesForAbcTools(abcContent) {
                 }
             }
 
-            // Generate URL to Michael Eskin's ABC Tools with default parameters
+            // Generate compressed ABC for ABC Tools URL with default parameters
 
-            const encodedAbcString = LZString.compressToEncodedURIComponent(`X:${rawAbcArr[i].replaceAll(/(\r?\n\n|\r?\n\r\n)/g, '')}`);
+            const preparedAbc = `X:${rawAbcArr[i].replaceAll(/(\r?\n\n|\r?\n\r\n)/g, '')}`;
+
+            let encodedAbcString = '';
+
+            if (isEncoderUsingLzw) {
+
+                encodedAbcString = LZString.compressToEncodedURIComponent(preparedAbc);
+            
+            } else {
+
+                encodedAbcString = await deflateCompress(preparedAbc, 'deflate');
+            }
 
             const encodedAbcTitle = isForAbcToolsWebsite? encodedAbcArr[i].Name.replaceAll(' ', '_') : encodedAbcArr[i].name.replaceAll(' ', '_');
 
-            const abcToolsUrl = `https://michaeleskin.com/abctools/abctools.html?lzw=${encodedAbcString}&format=noten&ssp=10&name=${encodedAbcTitle}`;
+            const compPrefix = isEncoderUsingLzw? `lzw=` : `def=`;
+
+            const abcToolsUrl = 
+                `${compPrefix}${encodedAbcString}&format=noten&ssp=10&name=${encodedAbcTitle}`;
 
             if (isForAbcToolsWebsite) {
 
-                encodedAbcArr[i].URL = abcToolsUrl;
+                const isLitePreferredEditor =
+                    localStorageOk() && +localStorage.abcToolsUseLiteEditor === 1;
+                
+                const editorUrl = isLitePreferredEditor?
+                    `https://abc.tunebook.app/abctools.html` :
+                    `https://michaeleskin.com/abctools/abctools.html`;
+                
+                encodedAbcArr[i].URL = `${editorUrl}?${abcToolsUrl}`;
 
             } else {
 
@@ -3608,7 +3637,7 @@ export function encodeTunesForAbcTools(abcContent) {
 
 // Decode ABC contents encoded via lz-string and return a string of ABCs
 
-function getDecodedAbc(abcContent) { 
+async function getDecodedAbc(abcContent) { 
 
     const encodedAbcJson = JSON.parse(abcContent);
     const decodedAbcArr = [];
@@ -3618,22 +3647,24 @@ function getDecodedAbc(abcContent) {
 
     displayNotification("Decoding file contents...");
 
-    encodedAbcJson.forEach(abcObject => {
+    for (const abcObject of encodedAbcJson) {
 
         let encodedAbcString = '';
 
         if (Object.hasOwn(abcObject, "url")) {
 
-            encodedAbcString = abcObject.url?.match(/lzw=(?:[^&]*)/)[0];
+            encodedAbcString = abcObject.url?.match(/(?:lzw|def)=(?:[^&]*)/)[0];
 
         } else if (Object.hasOwn(abcObject, "URL")) {
 
-            encodedAbcString = abcObject.URL?.match(/lzw=(?:[^&]*)/)[0];
+            encodedAbcString = abcObject.URL?.match(/(?:lzw|def)=(?:[^&]*)/)[0];
         }
 
         if (encodedAbcString) {
 
-            let decodedAbcString = LZString.decompressFromEncodedURIComponent(encodedAbcString.split('lzw=')[1]);
+            let decodedAbcString = encodedAbcString.match(/lzw=/)?
+                LZString.decompressFromEncodedURIComponent(encodedAbcString.split('lzw=')[1]) :
+                await deflateDecompress(encodedAbcString.split('def=')[1]);
 
             if (encodedAbcJson.indexOf(abcObject) !== encodedAbcJson.length - 1) {
 
@@ -3645,7 +3676,7 @@ function getDecodedAbc(abcContent) {
             }
 
         }
-    });
+    }
 
     decodedAbcOutput = decodedAbcArr.join('');
 

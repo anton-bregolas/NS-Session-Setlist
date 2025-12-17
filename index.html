@@ -21,7 +21,7 @@
     <link rel="manifest" href="app.webmanifest">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="NS Setlist">
     <meta name="application-name" content="NS Setlist">
     <script>(_=>{let FF_FOUC_FIX})()</script>
@@ -293,6 +293,10 @@
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
                     <div class="nss-checkbox-container flex-column">
                         <label class="nss-checkbox-label">
+                            <input type="checkbox" id="tools-use-abctools-lite" data-option="abcToolsUseLiteEditor" class="nss-checkbox-btn" value="1">
+                            Use ABC Tools Lite editor to view tunes
+                        </label>
+                        <label class="nss-checkbox-label">
                             <input type="checkbox" id="tools-save-restore-tunes" data-option="abcToolsSaveAndRestoreTunes" class="nss-checkbox-btn" value="1">
                             Save & load last opened Set or Tune
                         </label>
@@ -308,14 +312,14 @@
                             <input type="checkbox" id="tunebook-share-links-abctools" data-option="tuneBookShareLinksToAbcTools" class="nss-checkbox-btn" value="1">
                             Share links open ABC Tools instead of app
                         </label>
-                        <label class="nss-checkbox-label">
-                            <input type="checkbox" id="tools-fullscreen-new-window" data-option="abcToolsFullScreenOpensNewWindow" class="nss-checkbox-btn" value="1">
-                            Full Screen opens ABC Tools in new window
-                        </label>
                         <button class="nss-btn nss-btn-advanced-options">
                             Show advanced options
                         </button>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
+                            <label class="nss-checkbox-label">
+                                <input type="checkbox" id="tools-fullscreen-new-window" data-option="abcToolsFullScreenOpensNewWindow" class="nss-checkbox-btn" value="1">
+                                Full Screen opens ABC Tools in new window
+                            </label>
                             <label class="nss-checkbox-label">
                                 <input type="checkbox" id="tunebook-show-status-report" data-option="tuneBookShowStatusReport" class="nss-checkbox-btn" value="1">
                                 App: Show Tunebook report at launch

@@ -19,7 +19,7 @@
     <link rel="manifest" href="app.webmanifest">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="NS Setlist">
     <meta name="application-name" content="NS Setlist">
 </head>
@@ -116,10 +116,14 @@
                             ENCODE exports plaintext Tunelist with links
                         </label>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
-                        <label class="nss-checkbox-label">
-                          <input type="checkbox" id="encode-outputs-abctoolsstring" data-option="abcEncodeOutputsAbcToolsString" class="nss-checkbox-btn" value="1">
-                            <span class="nss-advanced-option-text">ENCODE output is for ABC Tools export website</span>
-                        </label>
+                            <label class="nss-checkbox-label">
+                            <input type="checkbox" id="encode-outputs-abctoolsstring" data-option="abcEncodeOutputsAbcToolsString" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">ENCODE output is for ABC Tools export website</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                            <input type="checkbox" id="encode-uses-lzw-compression" data-option="abcEncodeUsesLzwCompression" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">ENCODE uses legacy LZW compression for URLs</span>
+                            </label>
                         </div>
                         <label class="nss-checkbox-label">
                           <input type="checkbox" id="sort-enforces-fields" data-option="abcSortEnforcesCustomAbcFields" class="nss-checkbox-btn" value="1">
