@@ -19,7 +19,7 @@
     <link rel="manifest" href="app.webmanifest">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="NS Setlist">
     <meta name="application-name" content="NS Setlist">
 </head>
@@ -116,10 +116,18 @@
                             ENCODE exports plaintext Tunelist with links
                         </label>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
-                        <label class="nss-checkbox-label">
-                          <input type="checkbox" id="encode-outputs-abctoolsstring" data-option="abcEncodeOutputsAbcToolsString" class="nss-checkbox-btn" value="1">
-                            <span class="nss-advanced-option-text">ENCODE output is for ABC Tools export website</span>
-                        </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="encode-outputs-abctoolsstring" data-option="abcEncodeOutputsAbcToolsString" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">ENCODE output is for ABC Tools export website</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="tools-use-abctools-lite" data-option="abcEncodeTuneListLinksToLite" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">ENCODE plaintext Tunelist links to ABC Tools Lite</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="encode-uses-lzw-compression" data-option="abcEncodeUsesLzwCompression" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">ENCODE uses legacy LZW compression for URLs</span>
+                            </label>
                         </div>
                         <label class="nss-checkbox-label">
                           <input type="checkbox" id="sort-enforces-fields" data-option="abcSortEnforcesCustomAbcFields" class="nss-checkbox-btn" value="1">
@@ -286,6 +294,17 @@
                         <use href="#action-icon-settings"></use>
                     </svg>
                 </button>
+                <button data-load="support-follow" class="nss-btn nss-footer-link flex-wrapper" title="Support Developer & Follow NS Session" aria-title="Support Developer & Follow NS Session">
+                    <span class="nss-gradient-text flex-wrapper">
+                        Donate
+                    </span>
+                    <svg class="nss-mini-icon" aria-hidden="true">
+                        <use href="#action-icon-thumbsup"></use>
+                    </svg>
+                    <span class="nss-gradient-text flex-wrapper">
+                        Follow
+                    </span>
+                </button>
                 <button class="nss-btn nss-switch-btn nss-launcher-link flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
                     <svg class="nss-switch-icon" data-icon="launch" aria-hidden="true">
                         <use href="#action-icon-launch"></use>
@@ -342,6 +361,9 @@
     <symbol fill="currentColor" viewBox="0 0 16 16" id="action-icon-sort-az">
         <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"></path>
         <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"></path>
+    </symbol>
+    <symbol fill="currentColor" viewBox="0 0 16 16" id="action-icon-thumbsup">
+        <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"></path>
     </symbol>
 </svg>
 

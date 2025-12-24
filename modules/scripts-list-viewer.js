@@ -1,18 +1,20 @@
 ////////////////////////////////////////////////////////////////////////
 // Novi Sad Session List Viewer Module
 // https://github.com/anton-bregolas/
+// MIT License
 // (c) Anton Zille 2025
 ////////////////////////////////////////////////////////////////////////
 
-// Import function for checking whether localStorage is available and writeable
+// Import deflate compression algorithm (for ABC Set Maker) & utility functions
 
-import { storageAvailable } from "./scripts-3p/storage-available/storage-available.js";
+import { ariaHideMe, ariaShowMe, deflateCompress, deflateDecompress, toggleColorTheme,
+         getFirstCurrentlyDisplayedElem, isLocalStorageOk } from "./scripts-abc-utils.js";
 
-// Import custom functions handling Tune <> Set conversions for Set Maker
+// Import custom functions for handling Tune <> Set conversions in Set Maker
 
 import { makeTunesFromSets, sortFilterAbc } from "./scripts-abc-encoder.js";
 
-// Import lz-string compression algorithm (for decoding & encoding ABC items)
+// Import lz-string compression algorithm (for ABC Set Maker)
 
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
 
@@ -61,9 +63,9 @@ let tileLongPressTimeoutId; // Keep track of the latest timeout set for tile lon
 const tileItemsArr = [];
 const tileTitlesArr = [];
 
-///////////////////////////////////
-// LIST VIEWER LAUNCH FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// LIST VIEWER: LAUNCH FUNCTIONS
+///////////////////////////////////////////
 
 // Open List Viewer launch sequence
 
@@ -122,9 +124,9 @@ export function openListViewer(selectList) {
   initDialogSlider();
 }
 
-///////////////////////////////////
-// LIST VIEWER INIT FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// LIST VIEWER: INIT FUNCTIONS
+///////////////////////////////////////////
 
 // Initialize List Viewer Dialog
 
@@ -155,7 +157,7 @@ export function initListViewer() {
         const lightThemeBtn = 
           document.querySelector('[data-lvw-action="toggle-theme"][data-theme="light"]');
 
-        toggleColorTheme("light", lightThemeBtn);
+        toggleColorTheme("light", lightThemeBtn, listViewerDialog.id);
     }
 
     if (+localStorage.listViewerHideSliderGui) {
@@ -212,9 +214,9 @@ function initDialogSlider() {
   }
 }
 
-///////////////////////////////////
-// TILES DISPLAY FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// LIST VIEWER: TILES DISPLAY FUNCTIONS
+///////////////////////////////////////////
 
 // Create responsive grid layout with tune tiles inside List Viewer Dialog
 
@@ -328,9 +330,9 @@ function quitListViewer(noFocus) {
   focusElem.focus();
 }
 
-///////////////////////////////////
-// SET MAKER FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// LIST VIEWER: SET MAKER FUNCTIONS
+///////////////////////////////////////////
 
 // Start the Set Maker mode
 // Display warning if not enough items for a Set
@@ -595,31 +597,43 @@ function resetSetMakerMode() {
 }
 
 // Create an encoded Set of tunes from tile items
-// Extract ABC data from compressed LZW strings
+// Extract ABC data from compressed lzw/def strings
 // Split merged sets into tunes before processing
 // Return a compressed ABC URL string
 
-function createTuneSetUrl(selectedItems) {
+async function createTuneSetUrl(selectedItems) {
 
   const abcArr = [];
 
   let baseUrl = ''; 
   let baseUrlParams = '';
 
-  selectedItems.forEach((item, index) => {
+  baseUrl = 
+    isLocalStorageOk() && +localStorage.abcEncodeTuneListLinksToLite === 1?
+    `https://abc.tunebook.app/abctools.html` :
+    `https://michaeleskin.com/abctools/abctools.html`;
+
+  for (const [index, item] of selectedItems.entries()) {
+
+    const dataUrl = item.dataset.url;
 
     if (index === 0) {
 
-      baseUrl = item.dataset.url.split('?lzw=')[0];
-      baseUrlParams = `&format=${item.dataset.url.split('&format=')[1]}`;
+      baseUrlParams = `&format=${dataUrl.split('&format=')[1]}`;
     }
 
-    const dataUrl = item.dataset.url;
     const dataUrlName = dataUrl.split('&name=')[1];
-    const abcInLzw = dataUrl.match(/lzw=(?:[^&]*)/)[0];
     const tuneNoInSet = item.querySelector('[data-lvw-counter]').dataset.lvwCounter;
+    
+    const encodedAbc = dataUrl.match(/(?:lzw|def)=(?:[^&]*)/);
+    
+    if (!encodedAbc) return;
 
-    let abc = LZString.decompressFromEncodedURIComponent(abcInLzw.split('lzw=')[1]);
+    const encodedAbcContent = encodedAbc[0].replace(/(?:lzw|def)=/, '');
+  
+    let abc = encodedAbc[0].match(/lzw=/)?
+      LZString.decompressFromEncodedURIComponent(encodedAbcContent) :
+      await deflateDecompress(encodedAbcContent);
 
     abc = abc.replace(/^X:.*\s/, '');
 
@@ -629,28 +643,32 @@ function createTuneSetUrl(selectedItems) {
     }
 
     abcArr[tuneNoInSet - 1] = abc;
-  });
+  };
 
   const abcString = abcArr.flat().join('\n');
 
   const sortedAbc = sortFilterAbc(`T: NEW SET\n${abcString}`)[0].join('\n');
 
+  const encodedAbcSet =
+    isLocalStorageOk() && +localStorage.abcEncodeUsesLzwCompression === 1?
+      `?lzw=${LZString.compressToEncodedURIComponent(sortedAbc)}` :
+      `?def=${await deflateCompress(sortedAbc, 'deflate')}`;
+    
   const abcUrlOutput =
     baseUrl +
-    "?lzw=" +
-    LZString.compressToEncodedURIComponent(sortedAbc) +
+    encodedAbcSet +
     baseUrlParams.replace(/&name=.*(?=&|$)/, '&name=NEW_SET');
 
   return abcUrlOutput;
 }
 
-///////////////////////////////////
-// LIST VIEWER CLICK NAVIGATION
-//////////////////////////////////
+////////////////////////////////////////////
+// LIST VIEWER: CLICK NAVIGATION
+///////////////////////////////////////////
 
 // Handle clicks on interactable List Viewer elements
 
-function handleListViewerClick(event) {
+async function handleListViewerClick(event) {
 
   const actionTrigger = event.target.closest('[data-lvw-action]');
 
@@ -698,7 +716,7 @@ function handleListViewerClick(event) {
 
     const themeId = actionTrigger.dataset.theme;
 
-    toggleColorTheme(themeId, actionTrigger);
+    toggleColorTheme(themeId, actionTrigger, listViewerDialog.id);
 
     return;
   }
@@ -722,18 +740,11 @@ function handleListViewerClick(event) {
     const selectedItems =
       listViewerTiles.querySelectorAll('[aria-selected="true"]');
 
-    const setUrl = createTuneSetUrl(selectedItems);
+    const setUrl = await createTuneSetUrl(selectedItems);
 
     if (!setUrl) return;
 
     window.open(setUrl, '_blank');
-
-    // quitListViewer();
-
-    // setTimeout(() => {
-
-    //   loadTuneBookItem(null, null, setUrl);  
-    // }, 150);
 
     return;
   }
@@ -941,9 +952,9 @@ function handleTilesListBoxFocusIn(e) {
   }
 }
 
-///////////////////////////////////
-// LIST VIEWER KEYBOARD NAVIGATION
-//////////////////////////////////
+////////////////////////////////////////////
+// LIST VIEWER: KEYBOARD NAVIGATION
+///////////////////////////////////////////
 
 // Handle key presses when List Viewer Dialog is open
 
@@ -1415,9 +1426,9 @@ function findMatchingTileObject(startIndex, endIndex) {
   return null;
 }
 
-///////////////////////////////////
-// TILES FILTERING FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// LIST VIEWER: TILES FILTERING FUNCTIONS
+///////////////////////////////////////////
 
 // Handle List Viewer Search Input
 
@@ -1563,89 +1574,3 @@ function hideSearchFilterInput() {
   ariaHideMe(listViewerSearchInput);
   ariaShowMe(listViewerTitleBox);
 }
-
-///////////////////////////////////
-// UTILITY FUNCTIONS
-//////////////////////////////////
-
-// Check if localStorage is available and writable
-
-function isLocalStorageOk() {
-
-  return storageAvailable('localStorage');
-}
-
-// Hide an element via attribute hidden and set aria-hidden to true
-
-function ariaHideMe(el) {
-
-  if (el.hasAttribute("inert")) return;
-
-  el.setAttribute("hidden", "");
-  el.setAttribute("aria-hidden", "true");
-}
-
-// Remove attribute hidden from an element and set aria-hidden to false
-
-function ariaShowMe(el) {
-
-  if (el.hasAttribute("inert")) return;
-    
-  el.removeAttribute("hidden");
-  el.removeAttribute("aria-hidden");
-}
-
-// Toggle between color themes (default options: light & dark)
-// Store theme preference for this Viewer in localStorage
-// Hide the element that triggered theme change
-
-function toggleColorTheme(themeId, triggerBtn) {
-
-  const listViewerThemeBtns =
-
-    listViewerDialog.querySelectorAll('[data-lvw-action="toggle-theme"]');
-
-  listViewerDialog.className = themeId;
-
-  listViewerThemeBtns.forEach(themeBtn => {
-
-    if (themeBtn.classList.contains(`btn-${themeId}`)) {
-
-      if (isLocalStorageOk()) {
-
-        localStorage.listViewerPrefersColorTheme = themeId;
-      }
-
-      themeBtn.removeAttribute("inert");
-      ariaShowMe(themeBtn);
-      themeBtn.focus();
-    }
-  });
-
-  ariaHideMe(triggerBtn);
-  triggerBtn.setAttribute("inert", "");
-}
-
-// Get the first element in a NodeList that is currently displayed
-
-function getFirstCurrentlyDisplayedElem(nodeList) {
-
-  let foundEl = null;
-
-  for (let i = 0; i < nodeList.length; i++) {
-
-    if(nodeList[i].offsetParent) {
-
-      foundEl = nodeList[i];
-      break;
-    }
-  }
-
-  return foundEl;
-}
-
-///////////////////////////////////
-// PLACEHOLDER FUNCTIONS
-//////////////////////////////////
-
-// Use these functions as placeholders in place of imports

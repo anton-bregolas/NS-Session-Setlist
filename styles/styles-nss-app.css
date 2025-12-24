@@ -45,6 +45,10 @@ body {
   --app-encoder-title-short: "ABC Encoder";
   --app-tunebook-title-prefix: "Novi Sad Session ";
   --app-tunebook-title-prefix-short: "N.S.S.S. ";
+  --app-tunebook-font: 'Fira Sans';
+  --app-tunebook-font-fallback: 'Fira Sans', 'Ubuntu Sans', 'Droid Sans', Arial, sans-serif;
+  --app-ui-font: 'Fira Sans';
+  --app-ui-font-fallback: 'Fira Sans', 'Trebuchet MS', 'Ubuntu Sans', 'Droid Sans', Helvetica, sans-serif;
 }
 
 *, *::before, *::after { 
@@ -55,7 +59,7 @@ body {
 }
 
 body * {
-  font-family: 'Fira Sans', 'Trebuchet MS', 'Ubuntu Sans', 'Droid Sans', Helvetica, sans-serif;
+  font-family: var(--app-ui-font), var(--app-ui-font-fallback);
 }
 
 body {
@@ -736,6 +740,7 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
 
 [data-controls="tunebook-actions-mobile"],
 [data-controls="tunebook-actions-desktop"],
+[data-load="support-follow"] .nss-mini-icon,
 [data-controls="mode"] .nss-mini-icon {
   color: var(--accent-color);
 }
@@ -750,8 +755,14 @@ body[data-mode="mobile"] [data-controls="tunebook-actions-desktop"]:not(#nss-tun
   font-size: 1.5rem;
 }
 
+[data-load="support-follow"] .nss-mini-icon,
 [data-type="desktop-switch"] {
   opacity: 0.95;
+}
+
+[data-load="support-follow"] {
+  font-variant: small-caps;
+  gap: 0.3rem;
 }
 
 .nss-btn-abcraw {
@@ -1040,7 +1051,7 @@ body[data-mode="mobile"] .nss-select-container {
 }
 
 .nss-select-container * {
-  font-family: 'Fira Sans', 'Ubuntu Sans', 'Droid Sans', Arial, sans-serif;
+  font-family: var(--app-tunebook-font), var(--app-tunebook-font-fallback);
 }
 
 .nss-playalong-container {
@@ -1184,15 +1195,11 @@ body[data-mode="mobile"] .nss-select-container {
 
 .nss-popover-menu .nss-popover-body {
   width: 100%;
-  height: calc(100% - 5.5rem);
+  height: calc(100% - 9.25rem);
   align-items: flex-start;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable both-edges;
-}
-
-[aria-label="Encoder Settings Menu"] .nss-popover-body {
-  height: calc(100% - 9.25rem);
 }
 
 .nss-popover-header,
@@ -1232,10 +1239,6 @@ body[data-mode="mobile"] .nss-select-container {
 }
 
 .nss-checkbox-container {
-  margin: 1rem 1rem 2.5rem;
-}
-
-[aria-label="Encoder Settings Menu"] .nss-checkbox-container {
   margin: 1rem 1rem 0;
 }
 
@@ -1297,17 +1300,13 @@ input[type="checkbox"]:focus-visible {
 
 .nss-btn-advanced-options {
   width: 65%;
-  margin: 1rem auto 0;
+  margin: 0 auto;
   padding: 1.25em;
   font-size: 1.2rem;
   color: var(--accent-color);
   border: 0.2rem solid;
   border-radius: 0.75rem;
   opacity: 0.85;
-}
-
-[aria-label="Encoder Settings Menu"] .nss-btn-advanced-options {
-  margin: 0 auto;
 }
 
 .nss-advanced-option-text {
@@ -2042,14 +2041,10 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   .nss-popover-menu .nss-popover-body {
     width: 100%;
-    height: calc(100dvh - 7.75rem);
+    height: calc(100dvh - 14rem);
     align-items: flex-start;
     overflow-y: auto;
     overscroll-behavior: contain;
-  }
-
-  [aria-label="Encoder Settings Menu"] .nss-popover-body {
-    height: calc(100dvh - 14rem);
   }
 
   [data-browser*="ios"] .nss-popover-menu {
@@ -2057,10 +2052,6 @@ body[data-mode="desktop"] [data-hide="desktop"],
   }
 
   [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
-    height: calc(100svh - 7.75rem);
-  }
-
-  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100svh - 14rem);
   }
 
@@ -2079,18 +2070,10 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
   .nss-popover-header-title-container {
     margin: 1.75rem auto;
-    max-width: calc(100svw - 12.7rem);
-  }
-
-  [aria-label="Encoder Settings Menu"] .nss-popover-header-title-container {
     max-width: calc(100svw - 14.6rem);
   }
 
   .nss-checkbox-container {
-    margin: 2.75rem 1rem;
-  }
-
-  [aria-label="Encoder Settings Menu"] .nss-checkbox-container {
     margin: 2.75rem 1rem 2.25rem;
   }
 
@@ -2146,7 +2129,7 @@ body[data-mode="desktop"] [data-hide="desktop"],
     transform: unset;
   }
 
-  .nss-footer-launch [data-type="telegram-link"] {
+  .nss-footers [data-load="support-follow"] {
     display: none;
   }
 }
@@ -2212,29 +2195,19 @@ body[data-mode="desktop"] [data-hide="desktop"],
 /* @media screen and (max-height: 768px) and (max-width: 544px) and (min-width: 481px) { */
 @media screen and (max-height: 48em) and (max-width: 34em) and (min-width: calc(30em + 1px)) {
 
-  .nss-popover-header h2,
-  [aria-label="Encoder Settings Menu"] .nss-popover-header h2 {
+  .nss-popover-header h2 {
     font-size: calc(3.25rem - 1vw);
   }
 
   .nss-popover-menu .nss-popover-body {
-    height: calc(100dvh - 7.5rem);
-  }
-
-  [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 13.6rem);
   }
 
   [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
-    height: calc(100svh - 7.5rem);
-  }
-
-  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100svh - 13.6rem);
   }
 
-  .nss-popover-header-title-container,
-  [aria-label="Encoder Settings Menu"] .nss-popover-header-title-container {
+  .nss-popover-header-title-container {
     max-width: calc(100svw - 10.75rem);
   }
 }
@@ -2385,7 +2358,7 @@ body[data-mode="desktop"] [data-hide="desktop"],
     transform: unset;
   }
 
-  .nss-footer-launch [data-type="telegram-link"] {
+  .nss-footers [data-load="support-follow"] {
     display: none;
   }
 }
@@ -2394,18 +2367,10 @@ body[data-mode="desktop"] [data-hide="desktop"],
 @media screen and (max-width: 30em) {
 
   .nss-popover-menu .nss-popover-body {
-    height: calc(100dvh - 11.75rem);
-  }
-
-  [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100dvh - 17.75rem);
   }
 
   [data-browser*="ios"] .nss-popover-menu .nss-popover-body {
-    height: calc(100svh - 11.75rem);
-  }
-
-  [data-browser*="ios"] [aria-label="Encoder Settings Menu"] .nss-popover-body {
     height: calc(100svh - 17.75rem);
   }
 }

@@ -13,6 +13,7 @@ Module Name | GitHub Repo | Help Link |
 | 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html" target="_blank">**ABC Encoder Module by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#abc-encoder-module) |
 | 👉 **Chord Viewer Module by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#chord-viewer-module) |
 | 👉 **List Viewer / Set Maker by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#list-viewer--set-maker) |
+| 👉 <a href="https://abc.tunebook.app" target="_blank">**ABC Tools Lite by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/abctools-lite" target="_blank">abctools-lite</a> | <a href="https://github.com/anton-bregolas/abctools-lite" target="_blank">README</a> |
 | 👉 <a href="https://michaeleskin.com/abc" target="_blank">**ABC Transcription Tools by Michael Eskin**</a> | <a href="https://github.com/seisiuneer/abctools" target="_blank">abctools</a> | <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">GUIDE</a> |
 | 👉 <a href="https://abcjs.net/" target="_blank">**abcjs by Paul Rosen and Gregory Dyke**</a> | <a href="https://github.com/paulrosen/abcjs" target="_blank">abcjs</a> | <a href="https://paulrosen.github.io/abcjs" target="_blank">DOCS</a> |
 
@@ -340,6 +341,54 @@ Import Name | Import Description | Details |
 | `makeTunesFromSets`, `sortFilterAbc` | Custom scripts for making ABC Sets | Required for creating ABC Sets and generating Set URLs. Imported from `scripts-abc-encoder.js` by default |
 
 ## Version History
+
+**v1.2.0: Deflated Session DB, New SW, Tools Lite**
+
++ App updates (BREAKING):
+  - Use ABC Tools Lite as the default notation editor
+  - Make ABC Transcription Tools selectable as optional editor
+  - Add abcToolsUseLiteEditor option to App Options
+  - Add new version.json file for versioning & update checks
+  - Add scripts-abc-utils.js module to reuse common utility functions
+  - Add deflate support & custom functions to app scripts (NB: requires async)
+  - Refactor app logic to use new Session DB with def= url-queries
+  - Add fallbacks for lzw= and full https links to ensure compatibility
+  - Expand App Options menu, add Export & Import options buttons
+  - Make listViewerSearchSubTitles option on by default
+  - Organize functions with new group labels in script files
+  - Add GoatCounter events to follow basic feature stats & spot errors
+  - Add placeholder Donate & Follow button in place of Telegram link (TO DO)
+
++ PWA updates (BREAKING):
+  - Refactor Service Worker to mostly async-await
+  - Fix SW logic on install-activate-claim: offline-stable version
+  - Add abc-utils module and version.json to cached assets
+
++ Tunebook updates:
+  - Add def= compression/decompression support in related functions
+  - Add getAbcLinkToPreferredEditor function with fallback logic to handle non-def links
+  - Fix loadTabsMidiOptions fallthrough for forced piano option 
+
++ ABC Encoder module updates:
+  - Make deflate the default compression algorithm for Encode
+  - Add def= compression/decompression support in related functions
+  - Add abcEncodeUsesLzwCompression and abcEncodeTuneListLinksToLite options
+  - Fix Tunelist logic when abcEncodeOutputsAbcToolsString is on
+
++ Chord Viewer / List Viewer updates:
+  - Add def= compression/decompression support in related functions
+  - Move common reusable handlers to scripts-abc-utils.js
+  - Make toggleColorTheme reusable, move to abc-utils
+
++ Tests updates:
+  - Update Encode tests with expected new def= urls
+
++ AUV updates:
+  - Add refactored auto-update-version scripts to project
+
++ Session DB Updates:
+  - Convert Session DB to new def= url format
+  - Update to version 2025.12.21.1
 
 <details>
   <summary><b>Beta version updates (v.1.1+)</b></summary>

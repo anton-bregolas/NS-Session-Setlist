@@ -1,20 +1,22 @@
 ////////////////////////////////////////////////////////////////////////
 // Novi Sad Session Chord Viewer Module
 // https://github.com/anton-bregolas/
+// MIT License
 // (c) Anton Zille 2024-2025
 ////////////////////////////////////////////////////////////////////////
 
-// Import function to get last Tunebook URL (use with embedded ABC Tools)
+// Import deflate compression algorithm (for dynamic chord generation) & utility functions
 
-import { getLastTunebookUrl } from "./scripts-abc-tools.js";
-
-// Import function for checking whether localStorage is available and writeable
-
-import { storageAvailable } from "./scripts-3p/storage-available/storage-available.js";
+import { ariaHideMe, ariaShowMe, deflateDecompress, toggleColorTheme,
+         getFirstCurrentlyDisplayedElem, isLocalStorageOk } from "./scripts-abc-utils.js";
 
 // Import lz-string compression algorithm (for dynamic chord generation)
 
 import { LZString } from "./scripts-3p/lz-string/lz-string.min.js";
+
+// Import function to get last Tunebook URL (use with embedded ABC Tools)
+
+import { getLastTunebookUrl } from "./scripts-abc-tools.js";
 
 // Import custom functions handling warning messages, user notifications and focus on exit
 
@@ -53,16 +55,16 @@ const maxWTops = 90; // Highest max-width value for chords (%)
 
 let isSliderInitialized = false; // Keep track of the slider initialization status
 
-///////////////////////////////////
-// CHORD VIEWER LAUNCH FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// CHORD VIEWER: LAUNCH FUNCTIONS
+///////////////////////////////////////////
 
 // Open Chord Viewer:
 // Extract Chords from ABC or URL if dynamic chord mode is on
 // Load Chordbook chords into the Chord Viewer Dialog
 // Show dialog, initiate Chord Viewer Slider settings
 
-export function openChordViewer(setChords, tuneChords) {
+export async function openChordViewer(setChords, tuneChords) {
   
   const isDynamicChordsMode = isLocalStorageOk()? +localStorage.chordViewerAllowDynamicChords : false;
 
@@ -100,16 +102,20 @@ export function openChordViewer(setChords, tuneChords) {
 
       const abcUrl = tuneSelector.value || getLastTunebookUrl();
 
-      const abcInLzw = abcUrl.match(/(?<=lzw=)(?:[^&]*)/)? abcUrl.match(/(?<=lzw=)(?:[^&]*)/)[0] : null;
+      const encodedAbc = abcUrl.match(/(?:lzw|def)=(?:[^&]*)/);
 
-      if (!abcUrl || !abcInLzw) {
+      if (!abcUrl || !encodedAbc) {
   
         displayNotification("Select an item in Tune Selector", "warning");
         displayWarningEffect(launchButton, altFocusBtn);
         return;
       }
+
+      const encodedAbcContent = encodedAbc[0].replace(/(?:lzw|def)=/, '');
   
-      abcContent = LZString.decompressFromEncodedURIComponent(abcInLzw);
+      abcContent = encodedAbc[0].match(/lzw=/)?
+        LZString.decompressFromEncodedURIComponent(encodedAbcContent) :
+        await deflateDecompress(encodedAbcContent);
     }
 
     const extractedChordsArr = extractChordsFromAbc(abcContent);
@@ -145,16 +151,20 @@ export function openChordViewer(setChords, tuneChords) {
     if (!selectedTuneTitle || selectedTuneTitle.toLowerCase().includes("select")) {
 
       const lastUrl = getLastTunebookUrl();
-      const abcInLzw = lastUrl.match(/(?<=lzw=)(?:[^&]*)/)? lastUrl.match(/(?<=lzw=)(?:[^&]*)/)[0] : null;
+      const encodedAbc = abcUrl.match(/(?:lzw|def)=(?:[^&]*)/);
 
-      if (!lastUrl || !abcInLzw) {
+      if (!lastUrl || !encodedAbc) {
 
         displayNotification("Select an item in Tune Selector", "warning");
         displayWarningEffect(launchButton, altFocusBtn);
         return;
       }
 
-      const abcContent = LZString.decompressFromEncodedURIComponent(abcInLzw);
+      const encodedAbcContent = encodedAbc[0].replace(/(?:lzw|def)=/, '');
+  
+      const abcContent = encodedAbc[0].match(/lzw=/)?
+        LZString.decompressFromEncodedURIComponent(encodedAbcContent) :
+        await deflateDecompress(encodedAbcContent);
 
       extractedTuneTitle = abcContent.match(/(?<=^T:).*/m)? abcContent.match(/(?<=^T:).*/m)[0].trim() : null;
     }
@@ -190,9 +200,9 @@ export function openChordViewer(setChords, tuneChords) {
   initDialogSlider();
 }
 
-///////////////////////////////////
-// CHORD VIEWER INIT FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// CHORD VIEWER: INIT FUNCTIONS
+///////////////////////////////////////////
 
 // Initialize Chord Viewer Dialog
 
@@ -216,7 +226,7 @@ export function initChordViewer() {
         const lightThemeBtn = 
           document.querySelector('[data-cvw-action="toggle-theme"][data-theme="light"]');
 
-        toggleColorTheme("light", lightThemeBtn);
+        toggleColorTheme("light", lightThemeBtn, chordViewerDialog.id);
     }
   }
 
@@ -293,7 +303,7 @@ function handleChordViewerClick(event) {
 
     const themeId = actionTrigger.dataset.theme;
 
-    toggleColorTheme(themeId, actionTrigger);
+    toggleColorTheme(themeId, actionTrigger, chordViewerDialog.id);
 
     return;
   }
@@ -384,9 +394,9 @@ function initDialogSlider() {
   }
 }
 
-///////////////////////////////////
-// CHORD DISPLAY FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// CHORD VIEWER: CHORD DISPLAY FUNCTIONS
+///////////////////////////////////////////
 
 // Create responsive grid layout with chords data inside Chords Dialog
 
@@ -582,9 +592,9 @@ function appChordSliderHandler(event) {
   }
 }
 
-///////////////////////////////////
-// CHORD EXTRACTION FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// CHORD VIEWER: CHORD EXTRACTION FUNCTIONS
+///////////////////////////////////////////
 
 // Make Chordbook JSON from string in ABC notation
 // Validate JSON and return the Chords Array or []
@@ -936,9 +946,9 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
   return [completeChordBar, abcBarChordsInput[abcBarChordsInput.length - 1]];
 }
 
-///////////////////////////////////
-// ABC CLEANUP FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// CHORD VIEWER: ABC CLEANUP FUNCTIONS
+///////////////////////////////////////////
 
 // Check if the tune is in triple meter based on its M: text
 
@@ -1052,9 +1062,9 @@ function normalizeAbcFractions(abcContent) {
   return filteredAbc;
 }
 
-///////////////////////////////////
-// VALIDATION FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// CHORD VIEWER: VALIDATION FUNCTIONS
+///////////////////////////////////////////
 
 // Check if ABC contains at least one valid X: header
 // Check if ABC contains at least one valid "chord"
@@ -1096,89 +1106,9 @@ function getValidChordsArray(chordBookJson) {
   }
 }
 
-///////////////////////////////////
-// UTILITY FUNCTIONS
-//////////////////////////////////
-
-// Check if localStorage is available and writable
-
-function isLocalStorageOk() {
-
-  return storageAvailable('localStorage');
-}
-
-// Hide an element via attribute hidden and set aria-hidden to true
-
-function ariaHideMe(el) {
-
-  if (el.hasAttribute("inert")) return;
-
-  el.setAttribute("hidden", "");
-  el.setAttribute("aria-hidden", "true");
-}
-
-// Remove attribute hidden from an element and set aria-hidden to false
-
-function ariaShowMe(el) {
-
-  if (el.hasAttribute("inert")) return;
-    
-  el.removeAttribute("hidden");
-  el.removeAttribute("aria-hidden");
-}
-
-// Toggle between color themes (default options: light & dark)
-// Store theme preference for this Viewer in localStorage
-// Hide the element that triggered theme change
-
-function toggleColorTheme(themeId, triggerBtn) {
-
-  const chordViewerThemeBtns =
-
-    chordViewerDialog.querySelectorAll('[data-cvw-action="toggle-theme"]');
-
-  chordViewerDialog.className = themeId;
-
-  chordViewerThemeBtns.forEach(themeBtn => {
-
-    if (themeBtn.classList.contains(`btn-${themeId}`)) {
-
-      if (isLocalStorageOk()) {
-
-        localStorage.chordViewerPrefersColorTheme = themeId;
-      }
-
-      themeBtn.removeAttribute("inert");
-      ariaShowMe(themeBtn);
-      themeBtn.focus();
-    }
-  });
-
-  ariaHideMe(triggerBtn);
-  triggerBtn.setAttribute("inert", "");
-}
-
-// Get the first element in a NodeList that is currently displayed
-
-function getFirstCurrentlyDisplayedElem(nodeList) {
-
-  let foundEl = null;
-
-  for (let i = 0; i < nodeList.length; i++) {
-
-    if(nodeList[i].offsetParent) {
-
-      foundEl = nodeList[i];
-      break;
-    }
-  }
-
-  return foundEl;
-}
-
-///////////////////////////////////
-// PLACEHOLDER FUNCTIONS
-//////////////////////////////////
+////////////////////////////////////////////
+// CHORD VIEWER: PLACEHOLDER FUNCTIONS
+///////////////////////////////////////////
 
 // Use these functions as placeholders in place of imports
 
@@ -1220,7 +1150,7 @@ function getFirstCurrentlyDisplayedElem(nodeList) {
 //   }, 2500);
 // }
 
-// Get last URL containing LZ-encoded ABC that was loaded to ABC Tools
+// Get last URL containing encoded ABC that was loaded into ABC Tools
 // Copy as export to module containing ABC Tools Export Website scripts
 // Replace lastURL with custom logic if used independently
 

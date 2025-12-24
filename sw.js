@@ -1,4 +1,4 @@
-const APP_VERSION = "1.1.23";
+const APP_VERSION = '1.2.0';
 const CACHE_VERSION = APP_VERSION.replaceAll(".", '');
 const CACHE_PREFIX = "ns-app-cache-";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
@@ -10,6 +10,7 @@ const APP_ASSETS = [
   'styles/styles-chord-viewer.css',
   'styles/styles-list-viewer.css',
   'styles/styles-nss-app.css',
+  'modules/scripts-abc-utils.js',
   'modules/scripts-abc-encoder.js',
   'modules/scripts-abc-tools.js',
   'modules/scripts-chord-viewer.js',
@@ -26,7 +27,7 @@ const APP_ASSETS = [
   'modules/scripts-3p/storage-available/storage-available.js',
   'favicon.ico',
   'favicon.svg',
-  'version.js'
+  'version.json'
 ];
 
 const APP_ASSETS_LAZY = [
@@ -49,57 +50,81 @@ const APP_ASSETS_LAZY = [
 // Keep loading low-priority assets after activation
 
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(APP_ASSETS);
-      })
-      .then(() => {
-        return self.skipWaiting();
-      })
-      .then(() => {
-        caches.open(CACHE_NAME).then(cache => {
-          cache.addAll(APP_ASSETS_LAZY).catch(error => {
-            console.warn(`[NS App Service Worker] Lazy-loading of assets interrupted`, error);
-          });
-        });
-      })
-  );
+
+  event.waitUntil(handleInstall());
 });
+
+async function handleInstall() {
+
+  // Cache critical app assets immediately
+
+  const cache = await caches.open(CACHE_NAME);
+
+  await cache.addAll(APP_ASSETS);
+
+  await self.skipWaiting();
+
+  // Lazy-load non-critical assets in the background
+
+  try {
+
+    await cache.addAll(APP_ASSETS_LAZY);
+
+  } catch (error) {
+
+    console.warn(`[NS App Service Worker] Lazy-loading of assets interrupted`, error);
+  }
+}
 
 // Activate service worker, clear outdated caches, claim all pages
 
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys()
-    .then(cacheKeys => Promise.all(
-      cacheKeys
-        .filter(cacheKey => cacheKey.startsWith(CACHE_PREFIX) && cacheKey !== CACHE_NAME)
-        .map(cacheKey => {
-          console.log(`[NS App Service Worker]\n\n` +
+
+  event.waitUntil(handleActivate());
+});
+
+async function handleActivate() {
+
+  const cacheKeys = await caches.keys();
+
+  await Promise.all(
+    cacheKeys
+      .filter(cacheKey => cacheKey.startsWith(CACHE_PREFIX) && cacheKey !== CACHE_NAME)
+      .map(cacheKey => {
+        console.log(`[NS App Service Worker]\n\n` +
           `Cached version: v${cacheKey.slice(CACHE_PREFIX.length)}\n\n` +
           `Current version: v${CACHE_VERSION}\n\n` +
           `Clearing outdated cached files...`);
-          return caches.delete(cacheKey);
-        }))
-    ).then(() => self.clients.claim())
+        return caches.delete(cacheKey);
+      })
   );
-});
+
+  await self.clients.claim();
+}
 
 // Handle service worker fetch requests
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
 
   const { request } = event;
+  
   const url = new URL(request.url);
 
   // Handle offline behavior of analytics
 
-  if (request.method === 'POST' && url.pathname.includes('goatcounter.com')) {
+  if (url.hostname.includes('gc.zgo.at') || url.hostname.includes('goatcounter.com')) {
+    
+    if (self.location.hostname === 'localhost' ||
+        self.location.hostname.match(/127\.\d{1,3}\.\d{1,3}\.\d{1,3}/)) {
+      
+      event.respondWith(new Response(null, { status: 200, statusText: 'OK' }));
+      return;
+    }
+
     event.respondWith(
-      navigator.onLine
-        ? fetch(request).catch(() => new Response(''))
-        : new Response('', { status: 200 })
+      fetch(event.request).catch(() => {
+        return new Response(null, { status: 204, statusText: 'No Content' });
+      })
     );
     return;
   }
@@ -110,22 +135,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Handle navigation: Serve cached HTML for main app sections, fall back to launch screen
+  // Handle page navigation
 
   if (request.mode === 'navigate') {
-    event.respondWith(
-      caches.match(
-        url.pathname.includes('abc-encoder') ?
-          'abc-encoder.html' :
-          'index.html')
-        .then(navResponse => navResponse || caches.match('index.html'))
-    );
+
+    event.respondWith(handleNavigate(url));
     return;
   }
 
   // Handle Session DB files
 
   if (/(sets|tunes|chords-sets|chords-tunes)\.json$/.test(url.pathname)) {
+
     event.respondWith(handleDBCaching(request));
     return;
   }
@@ -134,6 +155,26 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(handleAssetCaching(request));
 });
+
+// Handle navigation: Serve cached HTML for main app sections
+// Fall back to launch screen page if no resource cached
+
+async function handleNavigate(url) {
+
+  const targetPage =
+    url.pathname.includes('abc-encoder')?
+      'abc-encoder.html' :
+      'index.html';
+
+  let response = await caches.match(targetPage);
+
+  if (!response) {
+
+    response = await caches.match('index.html');
+  }
+
+  return response;
+}
 
 // Cache and retrieve up-to-date Session DB files
 
@@ -154,22 +195,23 @@ async function handleDBCaching(request) {
   }
 
   // Fetch up-to-date DB from network, fall back to cached DB
-  
+
   try {
+
     console.log(
       `[NS App Service Worker]\n\n` +
       `Session DB missing or outdated\n\n` +
       `Fetching a fresh version...`
     );
+
     const networkResponse = await fetch(request);
-    if (networkResponse?.ok) {
-      appCache.put(request, networkResponse.clone());
-      console.log(
-        `[NS App Service Worker]\n\n` +
-        `Session DB successfully updated`
-      );
+
+    if (networkResponse && networkResponse.ok) {
+      await appCache.put(request, networkResponse.clone());
+      console.log(`[NS App Service Worker]\n\nSession DB successfully updated`);
       return networkResponse;
     }
+
   } catch (error) {
     console.log(
       `[NS App Service Worker]\n\n` +
@@ -192,10 +234,10 @@ async function handleAssetCaching(request) {
 
   // Get assets from cache, ignoring search parameters
 
-  const cachedAsset =
-    await caches.match(request, { ignoreSearch: true });
+  const cachedAsset = await caches.match(request, { ignoreSearch: true });
 
   if (cachedAsset) {
+
     return cachedAsset;
   }
 
@@ -206,43 +248,51 @@ async function handleAssetCaching(request) {
     // Try fetching assets from network
 
     const networkResponse = await fetch(request);
+
     return networkResponse;
 
-  } catch(error) {
+  } catch (error) {
 
-    // Use fallbacks for specific cases
-
-    if (request.destination === 'script' || request.destination === 'font') {
-
-      const cacheKey = new Request(request.url, {
-        method: request.method,
-        headers: request.headers,
+    // Fallback for critical asset types
+    
+    if (request.destination === 'script' ||
+        request.destination === 'json' ||
+        request.destination === 'font') {
+ 
+      const cacheOnlyRequest = new Request(request.url, {
+        method: 'GET',
         mode: 'same-origin',
-        credentials: request.credentials,
         cache: 'only-if-cached',
-        redirect: request.redirect
+        credentials: 'omit'
       });
 
-      const fallbackResponse =
-        await caches.match(cacheKey);
+      const fallbackResponse = await caches.match(cacheOnlyRequest);
 
       if (fallbackResponse) {
+
         return fallbackResponse;
       }
     }
 
     if (request.destination === 'image') {
-      return caches.match('assets/screens/placeholder-offline-h.webp');
+      
+      return await caches.match('assets/screens/placeholder-offline-h.webp') || new Response('', { status: 404 });
     }
 
-    console.warn(`[NS App Service Worker] Offline: No cached assets available for this <${request.destination}>`, error);
+    // Return a generic failed response if no fallback is available
+
+    console.warn(`[NS App Service Worker] Offline: No cached assets available for this ${request.destination? request.destination : 'item'}`, error);
+
+    return new Response('', { status: 504, statusText: 'Gateway Timeout' });
   }
 }
 
 // Helper function to check if a cached response is expired
 
 function isCacheExpired(cachedResponse, maxAgeInDays) {
-  const date = cachedResponse.headers.get('date');
-  if (!date) return true;
-  return (Date.now() - new Date(date)) / (1000 * 60 * 60 * 24) >= maxAgeInDays;
+
+  const dateHeader = cachedResponse.headers.get('date');
+  if (!dateHeader) return true;
+  const ageInDays = (Date.now() - new Date(dateHeader)) / (1000 * 60 * 60 * 24);
+  return ageInDays >= maxAgeInDays;
 }
