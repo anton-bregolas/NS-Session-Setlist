@@ -27,7 +27,9 @@
     <script>(_=>{let FF_FOUC_FIX})()</script>
 </head>
 
-<body data-mode="desktop">
+<body data-mode="desktop" data-layout="default">
+
+    <div class="app-fadein-overlay"></div>
 
     <div class="background-container"></div>
 
@@ -269,24 +271,20 @@
             </section>
 
             <article id="nss-popover-options" popover="manual" class="nss-popover nss-popover-menu" aria-label="App Options Menu">
-                <header class="nss-popover-header">
-                    <div class="flex-wrapper nss-header-left-btn-container">
-                        <button data-load="app-options-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import Saved App Options" aria-title="Import Saved App Options">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="#action-icon-close"></use>
-                            </svg>
-                        </button>
-                    </div>
+                <header class="nss-popover-header flex-wrapper-space-between">
+                    <button data-load="app-options-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import Saved App Options" aria-title="Import Saved App Options">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="#action-icon-close"></use>
+                        </svg>
+                    </button>
                     <div class="nss-popover-header-title-container flex-wrapper">
-                        <h2 class="nss-popover-title">Tunebook Options</h2>
+                        <h2 class="nss-popover-title">Tunebook&nbsp;Options</h2>
                     </div>
-                    <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close App Options" aria-title="Close App Options">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="#action-icon-close"></use>
-                            </svg>
-                        </button>
-                    </div>
+                    <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close App Options" aria-title="Close App Options">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="#action-icon-close"></use>
+                        </svg>
+                    </button>
                 </header>
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
                     <div class="nss-checkbox-container flex-column">
@@ -310,7 +308,7 @@
                             <input type="checkbox" id="tunebook-share-links-abctools" data-option="tuneBookShareLinksToAbcTools" class="nss-checkbox-btn" value="1">
                             Share links open ABC Tools instead of app
                         </label>
-                        <button class="nss-btn nss-btn-advanced-options">
+                        <button id="nss-show-advanced-options" class="nss-btn nss-btn-advanced-options">
                             Show advanced options
                         </button>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
@@ -366,6 +364,15 @@
                                 <input type="checkbox" id="lvw-search-subtitles" data-option="listViewerSearchSubTitles" class="nss-checkbox-btn" value="1">
                                 List Viewer: Search through ABC subtitles
                             </label>
+                            <button data-load="abc-encoder" class="nss-btn nss-btn-advanced-options" title="Click to launch ABC Encoder" aria-title="Click to launch ABC Encoder">
+                                Open ABC Encoder
+                            </button>
+                            <button data-load="cvw-tool" class="nss-btn nss-btn-advanced-options" title="Click to launch Chord Viewer as a standalone tool" aria-title="Click to launch Chord Viewer as a standalone tool" hidden aria-hidden="true">
+                                Open Chord Viewer
+                            </button>
+                            <button data-load="lvw-tool" class="nss-btn nss-btn-advanced-options" title="Click to launch List Viewer as a standalone tool" aria-title="Click to launch List Viewer as a standalone tool" hidden aria-hidden="true">
+                                Open List Viewer
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -377,6 +384,7 @@
                             </svg>
                         </button>
                     </div>
+                    <button class="nss-btn nss-option-btn nss-app-version-btn"></button>
                     <div class="flex-wrapper">
                         <button data-load="app-options-json" class="nss-btn nss-option-btn nss-popover-btn flex-wrapper" title="Save Current App Options to File" aria-title="Save Current App Options to File">
                             <svg class="nss-mid-icon" aria-hidden="true">
@@ -384,6 +392,34 @@
                             </svg> 
                         </button>
                     </div>
+                </footer>
+            </article>
+
+            <article id="nss-support-popover" popover="manual" class="nss-popover nss-popover-menu" aria-label="Support and Follow Menu">
+                <header class="nss-popover-header flex-wrapper-space-between">
+                    <button class="nss-btn nss-option-btn nss-popover-btn flex-wrapper" data-load="send-email" title="Send Developer a Message" aria-title="Send Developer a Message">
+                        <svg class="nss-mini-icon" aria-hidden="true">
+                            <use href="#support-icon-email"></use>
+                        </svg>
+                    </button>
+                    <div class="nss-popover-header-title-container flex-wrapper">
+                        <h2 class="nss-popover-title">Support&nbsp;Developer</h2>
+                    </div>
+                    <button autofocus id="nss-support-popover-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Support & Follow Menu" aria-title="Close Support & Follow Menu">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="#action-icon-close"></use>
+                        </svg>
+                    </button>
+                </header>
+                <div class="nss-popover-body flex-wrapper" tabindex="-1">
+                    <div id="nss-support-popover-text" class="nss-popover-bodytext-container flex-column"></div>
+                </div>
+                <footer class="nss-popover-footer flex-wrapper">
+                    <a data-type="telegram-link" href="https://t.me/irish_sessions_ns" target="_blank" class="nss-footer-link flex-wrapper" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">
+                        <span class="nss-gradient-text">
+                            Follow NS Sessions
+                        </span>
+                    </a>
                 </footer>
             </article>
 
@@ -535,7 +571,7 @@
                         </button>
                     </div>
                     <div class="nss-qhelp-q-container flex-wrapper">
-                        <button id="nss-help-popover-open" class="nss-btn nss-popover-btn flex-align-center" title="Show Help Guide Menu" aria-title="Show Help Guide Menu">
+                        <button id="nss-help-popover-open" data-load="help-from-qhelp" class="nss-btn nss-popover-btn nss-option-btn flex-align-center" title="Show Help Guide Menu" aria-title="Show Help Guide Menu">
                             <svg class="nss-icon" aria-hidden="true">
                                 <use href="#nav-icon-help"></use>
                             </svg>
@@ -649,16 +685,21 @@
                         <use href="#action-icon-options"></use>
                     </svg>
                 </button>
-                <button data-load="support-follow" class="nss-btn nss-footer-link flex-wrapper" title="Support Developer & Follow NS Session" aria-title="Support Developer & Follow NS Session">
+                <button data-controls="support-menu" data-load="support-options" class="nss-btn nss-option-btn nss-footer-link flex-wrapper" title="Support Developer & Follow NS Session" aria-title="Support Developer & Follow NS Session">
                     <span class="nss-gradient-text flex-wrapper">
-                        Donate
+                        Support
                     </span>
                     <svg class="nss-mini-icon" aria-hidden="true">
                         <use href="#action-icon-thumbsup"></use>
                     </svg>
                     <span class="nss-gradient-text flex-wrapper">
-                        Follow
+                        Follow&nbsp;
                     </span>
+                </button>
+                <button data-load="app-refresh" class="nss-btn nss-option-btn flex-wrapper" title="Refresh the App" aria-title="Refresh the App">
+                    <svg class="nss-icon" aria-hidden="true">
+                        <use href="#action-icon-refresh"></use>
+                    </svg>
                 </button>
                 <button class="nss-btn nss-link-btn flex-wrapper" tabindex="-1">
                     <a href="abc-encoder.html" class="nss-link nss-icon-container" title="Launch ABC Encoder" aria-title="Launch ABC Encoder">
@@ -844,6 +885,14 @@
                             <use href="#action-icon-view"></use>
                         </svg>
                     </button>
+                    <button data-tbk-action="refresh-tunebook" data-load="app-refresh" class="tunebook-action nss-btn nss-option-btn flex-wrapper" title="Refresh Tunebook (reloads app)" aria-title="Refresh Tunebook (reloads app)">
+                        <svg class="nss-action-icon" aria-hidden="true">
+                            <use href="#action-icon-refresh"></use>
+                        </svg>
+                        <span class="tunebook-action-label nss-gradient-text">
+                            REFRESH APP
+                        </span>
+                    </button>
             </article>
 
         </footer>
@@ -1011,6 +1060,9 @@
     </symbol>
     <symbol fill="currentColor" viewBox="0 0 16 16" id="help-arrow-diagonal">
         <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"></path>
+    </symbol>
+    <symbol fill="currentColor" viewBox="0 0 16 16" id="support-icon-email">
+        <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l3.235 1.94a2.8 2.8 0 0 0-.233 1.027L1 5.384v5.721l3.453-2.124q.219.416.55.835l-3.97 2.443A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741l-3.968-2.442q.33-.421.55-.836L15 11.105V5.383l-3.002 1.801a2.8 2.8 0 0 0-.233-1.026L15 4.217V4a1 1 0 0 0-1-1zm6 2.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"></path>
     </symbol>
 </svg>
 

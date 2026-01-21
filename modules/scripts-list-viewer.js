@@ -647,7 +647,15 @@ async function createTuneSetUrl(selectedItems) {
 
   const abcString = abcArr.flat().join('\n');
 
-  const sortedAbc = sortFilterAbc(`T: NEW SET\n${abcString}`)[0].join('\n');
+  let sortedAbc = sortFilterAbc(`T: NEW SET\n${abcString}`)[0].join('\n');
+
+  const isMedley = sortedAbc.match(/^R:.+/gm)?.length > 1;
+
+  if (isMedley) {
+
+    sortedAbc =
+      sortedAbc.replace(`T: NEW SET`, `T: NEW MEDLEY`).replace(/^K:/m, `%hide_rhythm_tag\nK:`);
+  }
 
   const encodedAbcSet =
     isLocalStorageOk() && +localStorage.abcEncodeUsesLzwCompression === 1?

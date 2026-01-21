@@ -58,11 +58,32 @@ export function adjustHtmlFontSize(viewPortW, viewPortH) {
   return newFontSizePercent;
 }
 
+// Check if the browser is likely a mobile browser
+
+export function isMobileBrowser() {
+
+  const userAgentStr =
+    navigator.userAgent.toLowerCase();
+
+  const isAndroid =
+    userAgentStr.indexOf('android') > -1;
+
+  const isIOS =
+    /ip(ad|hone|od)/.test(userAgentStr) ||
+    (/macintosh/.test(userAgentStr) &&
+     navigator.maxTouchPoints &&
+     navigator.maxTouchPoints > 2);
+
+  return (isAndroid || isIOS)? true : false;
+}
+
 // Initialize app mode based on viewport width
 
 function initAppMode() {
 
-  if (viewPortW < 880 || viewPortH <= 768) {
+  const isLikelyMobile = isMobileBrowser();
+
+  if (viewPortW < 880 || (viewPortH <= 768 && isLikelyMobile)) {
 
     document.body.dataset.mode = "mobile";
 

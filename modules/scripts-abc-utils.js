@@ -191,7 +191,7 @@ export function toDashedLowerCase(str) {
 }
 
 ////////////////////////////////////////////
-// ABC UTILS: HIDE & SHOW ELEM FUNCTIONS
+// ABC UTILS: HIDE & SHOW ELEM HANDLERS
 ///////////////////////////////////////////
 
 // Hide an element via attribute hidden and set aria-hidden to true
@@ -264,7 +264,382 @@ export function toggleColorTheme(themeId, triggerBtn, viewerDialogId) {
   triggerBtn.setAttribute("inert", "");
 }
 
+////////////////////////////////////////////
+// ABC UTILS: NODE INTERFACE HANDLERS
+///////////////////////////////////////////
+
+// Add Node element with text content to a container
+
+export function addTextElem(
+    containerId = '',
+    elemTag = "p",
+    elemText = '',
+    elemClassArr,
+    elemAttrObj,
+    textWrapperObj
+  ) {
+
+  if (!containerId) return;
+
+  const containerElem = document.getElementById(containerId);
+
+  const newElem = document.createElement(elemTag);
+
+  if (elemClassArr) addClasses(newElem, elemClassArr);
+
+  if (elemAttrObj) addAttributes(newElem, elemAttrObj);
+  
+  if (textWrapperObj) {
+
+    textWrapperObj.position = "inner";
+
+    addElemWrapper(
+      textWrapperObj,
+      containerId,
+      newElem,
+      elemText
+    );
+    return;
+  }
+
+  newElem.textContent = elemText;
+
+  containerElem.appendChild(newElem);
+}
+
+// Add Node element with image content to a container
+
+export function addImageElem(
+    containerId = '',
+    elemSrc = '',
+    elemAlt = '',
+    elemClassArr,
+    elemAttrObj,
+    imgWrapperObj
+  ) {
+
+  if (!containerId || !elemSrc) return;
+
+  const containerElem = document.getElementById(containerId);
+
+  const newElem = document.createElement('img');
+
+  newElem.src = elemSrc;
+
+  if (elemAlt) newElem.setAttribute("alt", elemAlt);
+
+  if (elemClassArr) addClasses(newElem, elemClassArr);
+
+  if (elemAttrObj) addAttributes(newElem, elemAttrObj);
+  
+  if (imgWrapperObj) {
+
+    imgWrapperObj.position = "outer";
+
+    addElemWrapper(
+      imgWrapperObj,
+      containerId,
+      newElem
+    );
+    return;
+  }
+
+  containerElem.appendChild(newElem);
+}
+
+// Add multiple classes to a specified element Node
+
+export function addClasses(targetElem, classArr) {
+
+  if (classArr && classArr.length) {
+
+    classArr.forEach(elemClass => targetElem.classList.add(elemClass));
+  }
+}
+
+// Add multiple attributes to a specified element Node
+
+export function addAttributes(targetElem, attrObj) {
+
+  if (attrObj && Object.keys(attrObj).length) {
+
+    for (const attrName in attrObj) {
+
+      targetElem.setAttribute(attrName, attrObj[attrName] || '');
+    }
+  }
+}
+
+// Wrap an element into another element (a, span etc.) and append it to container
+
+export function addElemWrapper(
+    wrapperObj,
+    containerId,
+    targetElem,
+    wrappedText
+  ) {
+
+  if (wrapperObj && Object.keys(wrapperObj).length && containerId) {
+
+    const containerElem = document.getElementById(containerId);
+
+    const wrapElemType =
+      wrapperObj.wrapper? wrapperObj.wrapper : "div";
+
+    const wrapElem =
+      document.createElement(wrapElemType);
+
+    if (wrapperObj.classes) {
+
+      addClasses(wrapElem, wrapperObj.classes);
+    }
+
+    if (wrapperObj.attributes) {
+
+      addAttributes(wrapElem, wrapperObj.attributes);
+    }
+
+    if (wrapperObj.position && wrapperObj.position === "inner") {
+
+      if (wrappedText) wrapElem.textContent = wrappedText;
+      
+      targetElem.appendChild(wrapElem);
+
+      containerElem.appendChild(targetElem);
+
+    } else {
+
+      if (wrappedText) targetElem.textContent = wrappedText;
+      
+      wrapElem.appendChild(targetElem);
+
+      containerElem.appendChild(wrapElem);
+    }
+  }
+}
+
+// Generate support menu body text (reusable component example)
+
+export function addSupportMenuContent(containerId) {
+
+  const supportMenuContainer =
+    document.getElementById(containerId);
+
+  supportMenuContainer.textContent = '';
+
+  addTextElem(
+    containerId,
+    "h3",
+    "A word from Anton Zille"
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "This is a free and open source project which you can use and modify for your own needs. " +
+    "If you find it useful, here are a few ways you can support me:"
+  );
+
+  addTextElem(
+    containerId,
+    "h3",
+    "BANDCAMP",
+    null,
+    null,
+    {
+      "wrapper": "span",
+      "classes": ["nss-gradient-text"],
+      "attributes": { "data-test": "test-value" }
+    }
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "Wishlist: Support these amazing artists and help me catch up with some great releases I've been unable to order from Bandcamp (“Send as gift”)."
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "Bandcamp Wishlist",
+    null,
+    null,
+    {
+      "wrapper": "a",
+      "classes": ["nss-link"],
+      "attributes": { 
+        "href": "https://bandcamp.com/bregolas/wishlist",
+        "target": "_blank",
+        "title": "Open Anton Zille's wishlist on Bandcamp",
+        "aria-title": "Open Anton Zille's wishlist on Bandcamp"
+      }
+    }
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "Album: Get the CD of my old Sliabh Moscow band Polca an Rí released in 2021. Available as digital download with a few physical copies left."
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "Polca an Rí CD",
+    null,
+    null,
+    {
+      "wrapper": "a",
+      "classes": ["nss-link"],
+      "attributes": { 
+        "href": "https://sliabhmoscow.bandcamp.com/album/from-sliabh-mosc-to-cathair-pheadair",
+        "target": "_blank",
+        "title": "Get Polca an Rí album on Bandcamp",
+        "aria-title": "Get Polca an Rí album on Bandcamp"
+      }
+    }
+  );
+
+  addTextElem(
+    containerId,
+    "h3",
+    "GITHUB",
+    null,
+    null,
+    {
+      "wrapper": "span",
+      "classes": ["nss-gradient-text"],
+      "attributes": { "data-test": "test-value" }
+    }
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "Feel free to send me bug reports, comments and suggestions related to this project using the message button above."
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "You can also open an issue or send a pull request if you wish to help implement additional features."
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "GitHub Page",
+    null,
+    null,
+    {
+      "wrapper": "a",
+      "classes": ["nss-link"],
+      "attributes": { 
+        "href": "https://github.com/anton-bregolas",
+        "target": "_blank",
+        "title": "Open Anton Zille's GitHub page",
+        "aria-title": "Open Anton Zille's GitHub page"
+      }
+    }
+  );
+
+  addTextElem(
+    containerId,
+    "h3",
+    "TIP JAR",
+    null,
+    null,
+    {
+      "wrapper": "span",
+      "classes": ["nss-gradient-text"],
+      "attributes": { "data-test": "test-value" }
+    }
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "If you use crypto, you can help cover the app's maintenance costs (domain, hosting etc.)"
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "My registrar allows low-fee payments via Polygon and Base networks (USDC, POL, ETH). Click on the EVM address below to copy it to clipboard:"
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "0x0Eb609017F7ddeF85341B37FDB01F565c8fDE7FF",
+    null,
+    null,
+    {
+      "wrapper": "button",
+      "classes": ["nss-btn", "nss-option-btn", "nss-copytext-btn"],
+      "attributes": {
+        "data-load": "copy-text",
+        "title": "Copy Tip Jar EVM address to clipboard",
+        "aria-title": "Copy Tip Jar EVM address to clipboard"
+      }
+    }
+  );
+  addTextElem(
+    containerId,
+    "h3",
+    "YOUTUBE",
+    null,
+    null,
+    {
+      "wrapper": "span",
+      "classes": ["nss-gradient-text"],
+      "attributes": { "data-test": "test-value" }
+    }
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "Subscribe to Anton Zille's YouTube channel:"
+  );
+
+  addTextElem(
+    containerId,
+    "p",
+    "YouTube",
+    null,
+    null,
+    {
+      "wrapper": "a",
+      "classes": ["nss-link"],
+      "attributes": { 
+        "href": "https://www.youtube.com/@AntonBregolas",
+        "target": "_blank",
+        "title": "View Anton Zille's YouTube channel",
+        "aria-title": "View Anton Zille's YouTube channel"
+      }
+    }
+  );
+
+  addImageElem(
+    containerId,
+    "../assets/images/az.webp",
+    "A shot of Anton Zille overlooking Mittenwald",
+    null,
+    { "data-image": "photo-developer",
+      "title": "A shot of Anton Zille overlooking Mittenwald",
+     },
+    {
+      "wrapper": "div",
+      "classes": ["nss-popover-image-container", "flex-wrapper"]
+    }
+  );
+}
+
 // Get the first element in a NodeList that is currently displayed
+// Elements with display: none property are discarded (null)
+// Return null if none of the elements are displayed
 
 export function getFirstCurrentlyDisplayedElem(nodeList) {
 
@@ -272,7 +647,7 @@ export function getFirstCurrentlyDisplayedElem(nodeList) {
 
   for (let i = 0; i < nodeList.length; i++) {
 
-    if(nodeList[i].offsetParent) {
+    if(nodeList[i]?.offsetParent) {
 
       foundEl = nodeList[i];
       break;

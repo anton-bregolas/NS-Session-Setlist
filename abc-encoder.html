@@ -22,9 +22,12 @@
     <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="NS Setlist">
     <meta name="application-name" content="NS Setlist">
+    <script>(_=>{let FF_FOUC_FIX})()</script>
 </head>
 
 <body>
+
+    <div class="app-fadein-overlay"></div>
 
     <div class="background-container"></div>
 
@@ -86,24 +89,20 @@
             </section>
 
             <article id="nss-popover-options" popover="manual" class="nss-popover nss-popover-menu" aria-label="Encoder Settings Menu">
-                <header class="nss-popover-header">
-                    <div class="flex-wrapper nss-header-left-btn-container">
-                        <button data-load="encoder-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import saved Encoder settings or add Session Survey Data" aria-title="Import saved Encoder settings or add Session Survey Data">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="#action-icon-close"></use>
-                            </svg>
-                        </button>
-                    </div>
+                <header class="nss-popover-header flex-wrapper-space-between">
+                    <button data-load="encoder-import" data-state="empty" class="nss-btn nss-btn-plus nss-option-btn nss-popover-btn flex-wrapper" title="Import saved Encoder settings or add Session Survey Data" aria-title="Import saved Encoder settings or add Session Survey Data">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="#action-icon-close"></use>
+                        </svg>
+                    </button>
                     <div class="nss-popover-header-title-container flex-wrapper">
-                        <h2 class="nss-popover-title">Encoder Settings</h2>
+                        <h2 class="nss-popover-title">Encoder&nbsp;Settings</h2>
                     </div>
-                    <div class="flex-wrapper nss-header-x-container">
-                        <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings">
-                            <svg class="nss-icon" aria-hidden="true">
-                                <use href="#action-icon-close"></use>
-                            </svg>
-                        </button>
-                    </div>
+                    <button autofocus id="nss-popover-options-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Encoder Settings" aria-title="Close Encoder Settings">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="#action-icon-close"></use>
+                        </svg>
+                    </button>
                 </header>
                 <div class="nss-popover-body flex-wrapper" tabindex="-1">
                     <div class="nss-checkbox-container flex-column">
@@ -141,17 +140,17 @@
                           <input type="checkbox" id="sort-exports-chords" data-option="abcSortExportsChordsFromTunes" class="nss-checkbox-btn" value="1">
                             SORT extracts chords from Tunebook
                         </label>
-                        <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-removes-keylesstunes" data-option="abcSortUsesStrictTuneDetection" class="nss-checkbox-btn" value="1">
-                            SORT removes tunes with no K: (strict mode)
-                        </label>
-                        <button class="nss-btn nss-btn-advanced-options">
+                        <button id="nss-show-advanced-options" class="nss-btn nss-btn-advanced-options">
                             Show advanced options
                         </button>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
                             <label class="nss-checkbox-label">
                               <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1" title="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option" aria-title="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option">
                                 <span class="nss-advanced-option-text">SORT fetches metadata from The Session</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-removes-keylesstunes" data-option="abcSortUsesStrictTuneDetection" class="nss-checkbox-btn" value="1">
+                                <span class="nss-advanced-option-text">SORT removes tunes with no K: (strict mode)</span>
                             </label>
                             <label class="nss-checkbox-label">
                               <input type="checkbox" id="sort-formats-settitle-first" data-option="abcSortFormatsSetTitleFirstName" data-disables="abcSortFormatsSetTitleSlashNames" class="nss-checkbox-btn" value="1" title="SORT adds first tune name as Set Title. This setting disables Add slash-separated names as Set title option" aria-title="SORT adds first tune name as Set Title. This setting disables Add slash-separated names as Set title option">
@@ -259,6 +258,7 @@
                             </svg> 
                         </button>
                     </div>
+                    <button class="nss-btn nss-option-btn nss-app-version-btn"></button>
                     <div class="flex-wrapper">
                         <button data-load="encoder-json" class="nss-btn nss-option-btn nss-popover-btn flex-wrapper" title="Save Encoder Settings to file" aria-title="Save Encoder Settings to file">
                             <svg class="nss-mid-icon" aria-hidden="true">
@@ -266,6 +266,34 @@
                             </svg> 
                         </button>
                     </div>
+                </footer>
+            </article>
+
+            <article id="nss-support-popover" popover="manual" class="nss-popover nss-popover-menu" aria-label="Support and Follow Menu">
+                <header class="nss-popover-header flex-wrapper-space-between">
+                    <button class="nss-btn nss-option-btn nss-popover-btn flex-wrapper" data-load="send-email" title="Send Developer a Message" aria-title="Send Developer a Message">
+                        <svg class="nss-mini-icon" aria-hidden="true">
+                            <use href="#support-icon-email"></use>
+                        </svg>
+                    </button>
+                    <div class="nss-popover-header-title-container flex-wrapper">
+                        <h2 class="nss-popover-title">Support&nbsp;Developer</h2>
+                    </div>
+                    <button autofocus id="nss-support-popover-close" class="nss-btn nss-btn-x nss-popover-btn flex-wrapper" title="Close Support & Follow Menu" aria-title="Close Support & Follow Menu">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="#action-icon-close"></use>
+                        </svg>
+                    </button>
+                </header>
+                <div class="nss-popover-body flex-wrapper" tabindex="-1">
+                    <div id="nss-support-popover-text" class="nss-popover-bodytext-container flex-column"></div>
+                </div>
+                <footer class="nss-popover-footer flex-wrapper">
+                    <a data-type="telegram-link" href="https://t.me/irish_sessions_ns" target="_blank" class="nss-footer-link flex-wrapper" title="Visit NS Session's Telegram channel" aria-title="Visit NS Session's Telegram channel">
+                        <span class="nss-gradient-text">
+                            Follow NS Sessions
+                        </span>
+                    </a>
                 </footer>
             </article>
 
@@ -294,15 +322,15 @@
                         <use href="#action-icon-settings"></use>
                     </svg>
                 </button>
-                <button data-load="support-follow" class="nss-btn nss-footer-link flex-wrapper" title="Support Developer & Follow NS Session" aria-title="Support Developer & Follow NS Session">
+                <button data-controls="support-menu" data-load="support-options" class="nss-btn nss-option-btn nss-footer-link flex-wrapper" title="Support Developer & Follow NS Session" aria-title="Support Developer & Follow NS Session">
                     <span class="nss-gradient-text flex-wrapper">
-                        Donate
+                        Support
                     </span>
                     <svg class="nss-mini-icon" aria-hidden="true">
                         <use href="#action-icon-thumbsup"></use>
                     </svg>
                     <span class="nss-gradient-text flex-wrapper">
-                        Follow
+                        Follow&nbsp;
                     </span>
                 </button>
                 <button class="nss-btn nss-switch-btn nss-launcher-link flex-wrapper" title="Return to Launch Screen" aria-title="Return to Launch Screen">
@@ -364,6 +392,9 @@
     </symbol>
     <symbol fill="currentColor" viewBox="0 0 16 16" id="action-icon-thumbsup">
         <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"></path>
+    </symbol>
+    <symbol fill="currentColor" viewBox="0 0 16 16" id="support-icon-email">
+        <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l3.235 1.94a2.8 2.8 0 0 0-.233 1.027L1 5.384v5.721l3.453-2.124q.219.416.55.835l-3.97 2.443A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741l-3.968-2.442q.33-.421.55-.836L15 11.105V5.383l-3.002 1.801a2.8 2.8 0 0 0-.233-1.026L15 4.217V4a1 1 0 0 0-1-1zm6 2.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"></path>
     </symbol>
 </svg>
 

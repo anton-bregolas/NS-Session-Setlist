@@ -127,7 +127,11 @@ export async function initAbcTools(itemQuery) {
     } else {
 
         console.warn(`NS Session App:\n\nTunebook appears empty, reload the app`);
+        
         displayNotification("No Tunebook items found. Reload the app to try again", "error");
+        
+        goatCountEvent("!error-init-tunebook", "nss-app__initAbcTools");
+        
         return;
     }
 
@@ -151,13 +155,9 @@ export async function initAbcTools(itemQuery) {
     // Load a Tunebook item using query params
 
     if (itemQuery) {
-
-        setTimeout(() => {
             
-            loadFromQueryString(itemQuery);
+        loadFromQueryString(itemQuery);
         
-        }, 150);
-
         return;
     }
 
@@ -169,12 +169,8 @@ export async function initAbcTools(itemQuery) {
 
     isFirstTuneBookLoad = false;
 
-    setTimeout(function() {
-
-        tuneSelector.selectedIndex = 1;
-        tuneSelector.dispatchEvent(new Event('change'));
-
-    }, 150);
+    tuneSelector.selectedIndex = 1;
+    tuneSelector.dispatchEvent(new Event('change'));
 }
 
 // Load a Set or a Tune into the Tuneframe
@@ -242,7 +238,7 @@ export async function loadTuneBookItem(currentTuneBook, itemNumber, passedUrl) {
 
             saveLastTuneBookItem();
             
-        }, 250);
+        }, 150);
     }
 }
 
@@ -664,8 +660,6 @@ function saveLastTuneBookItem() {
 
     if (tunes.length > 1) {
 
-        console.log(`NS Session App:\n\nSaving current Tunebook item...`);
-
         if (tuneSelector.value !== "") {
 
             const currentTuneName = tuneSelector.options[tuneSelector.selectedIndex].text;
@@ -674,6 +668,8 @@ function saveLastTuneBookItem() {
             localStorage.lastTuneBookSet_NSSSAPP = currentTuneName :
             localStorage.lastTuneBookTune_NSSSAPP = currentTuneName;
 
+            console.log(`NS Session App:\n\n"${currentTuneName}" saved as last opened item`);
+
         } else {
 
             const defaultTuneName = tuneSelector.options[1].text
@@ -681,6 +677,8 @@ function saveLastTuneBookItem() {
             checkTuneBookSetting() === "setlist"?
             localStorage.lastTuneBookSet_NSSSAPP = defaultTuneName :
             localStorage.lastTuneBookTune_NSSSAPP = defaultTuneName;
+
+            console.log(`NS Session App:\n\n"${defaultTuneName}" saved as last opened item`);
         }
     }
     
@@ -688,9 +686,9 @@ function saveLastTuneBookItem() {
 
     if (+theLastTuneTab > -1) {
 
-        console.log(`NS Session App:\n\nSaving Tab & MIDI setting...`);
-
         localStorage.lastTabMidiOption_NSSSAPP = theLastTuneTab;
+
+        console.log(`NS Session App:\n\nSaving last used custom Tab & MIDI setting [${theLastTuneTab}]`);
     }
 }
 
@@ -726,23 +724,19 @@ export function restoreLastTunebookItem() {
 
     if (!isLocalStorageOk() || isTuneRestorePaused === true) return;
 
-    setTimeout(function() {
+    if (tunes.length > 1) {
 
-        if (tunes.length > 1) {
+        const theLastTuneName = checkTuneBookSetting() === "setlist"? 
+                                localStorage.lastTuneBookSet_NSSSAPP :
+                                localStorage.lastTuneBookTune_NSSSAPP;
 
-            const theLastTuneName = checkTuneBookSetting() === "setlist"? 
-                                    localStorage.lastTuneBookSet_NSSSAPP :
-                                    localStorage.lastTuneBookTune_NSSSAPP;
+        if (theLastTuneName && (theLastTuneName != "")) {
 
-                if (theLastTuneName && (theLastTuneName != "")) {
+            console.log(`NS Session App:\n\nRestoring last Tunebook item saved:\n\n[${theLastTuneName}]`);
 
-                    console.log(`NS Session App:\n\nRestoring last Tunebook item saved:\n\n[${theLastTuneName}]`);
-
-                    setSelectedTuneByName(theLastTuneName);
-                }
-            }
-
-    }, 250);
+            setSelectedTuneByName(theLastTuneName);
+        }
+    }
 }
 
 // Check if Tunebook contains an item with the name passed
@@ -802,11 +796,13 @@ export function setSelectedTuneByQuery(itemType, itemName) {
     // Display warning and clear hash if no match
 
     console.warn(`NS Session App:\n\nInvalid item params in user query`);
+    
     displayNotification("Invalid query provided, check input URL", "warning");
 
     isTuneRestorePaused = false;
 
     const currentSection = checkTuneBookSetting();
+
     window.location.hash = `#${currentSection}`;
 }
 
@@ -833,15 +829,11 @@ export function setFilterByQuery(filterParam) {
 
     if (gotMatch) {
 
-        setTimeout(() => {
+        filterOptions.dispatchEvent(new Event('change'));
 
-            filterOptions.dispatchEvent(new Event('change'));
-
-            switchTuneBookItem("next");
-            
-            isTuneRestorePaused = false;
-            
-        }, 250);
+        switchTuneBookItem("next");
+        
+        isTuneRestorePaused = false;
 
         return;
     }
@@ -849,6 +841,7 @@ export function setFilterByQuery(filterParam) {
     // Display warning if no match
 
     console.warn(`NS Session App:\n\nInvalid filter params in user query`);
+    
     displayNotification("Invalid query provided, check input URL", "warning");
 
     isTuneRestorePaused = false;
@@ -972,11 +965,13 @@ export async function handleFullScreenButton(altView) {
             setTimeout(() => {
                 
                 exitFullScreenBtn.focus();
-            }, 100);
+            }, 50);
 
         } catch {
 
             console.log(`NS Session App:\n\nFull Screen mode not available. Opening tune in new window...`);
+
+            goatCountEvent("!error-use-fullscreen-api", "nss-app__handleFullScreenButton");
             
             openInAbcTools();
         }

@@ -1,5 +1,7 @@
-const APP_VERSION = '1.2.0';
-const CACHE_VERSION = APP_VERSION.replaceAll(".", '');
+const APP_VERSION = '1.2.1';
+const CACHE_VERSION =
+  APP_VERSION.replaceAll(".", '').slice(0, 2) +
+  APP_VERSION.slice(-1).padStart(2, "0");
 const CACHE_PREFIX = "ns-app-cache-";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 const CACHE_EXPIRES_DAYS = 7;
@@ -25,6 +27,7 @@ const APP_ASSETS = [
   'modules/scripts-3p/p-throttle/p-throttle.js',
   'modules/scripts-3p/popover-polyfill/popover.min.js',
   'modules/scripts-3p/storage-available/storage-available.js',
+  'assets/images/placeholder-offline.webp',
   'favicon.ico',
   'favicon.svg',
   'version.json'
@@ -41,7 +44,7 @@ const APP_ASSETS_LAZY = [
   'assets/images/playalong-polkas-johnwalshs.jpg',
   'assets/images/playalong-polkas-pando.jpg',
   'assets/images/playalong-polkas-toureendarby.jpg',
-  'assets/screens/placeholder-offline-h.webp',
+  'assets/images/az.webp',
   'app.webmanifest'
 ];
 
@@ -117,7 +120,7 @@ self.addEventListener('fetch', event => {
     if (self.location.hostname === 'localhost' ||
         self.location.hostname.match(/127\.\d{1,3}\.\d{1,3}\.\d{1,3}/)) {
       
-      event.respondWith(new Response(null, { status: 200, statusText: 'OK' }));
+      event.respondWith(new Response(null, { status: 204, statusText: 'No Content' }));
       return;
     }
 
@@ -165,15 +168,45 @@ async function handleNavigate(url) {
     url.pathname.includes('abc-encoder')?
       'abc-encoder.html' :
       'index.html';
+  
+  // Try cached pages first
+  const pageCached =
+    await caches.match(targetPage);
 
-  let response = await caches.match(targetPage);
+  if (pageCached) return pageCached;
 
-  if (!response) {
+  // Fall back to network response
+  try {
 
-    response = await caches.match('index.html');
+    const pageFetched =
+      await fetch(targetPage);
+
+    if (pageFetched?.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(targetPage, pageFetched.clone());
+    }
+
+    return pageFetched;
+
+  // Force loading from cache in case hard reload skips it
+  } catch (error) {
+
+    const indexCached =
+      await caches.match('index.html');
+
+    if (indexCached) return indexCached;
+
+  // Return response with error if no pages available
+    console.warn(
+      `[NS App Service Worker]\n\n` +
+      `Offline: No cached pages available`
+    );
+
+    return new Response(
+      JSON.stringify({ error: 'Offline: No cached pages available' }),
+      { status: 503, headers: { 'Content-Type': 'application/json' } }
+    );
   }
-
-  return response;
 }
 
 // Cache and retrieve up-to-date Session DB files
@@ -266,7 +299,8 @@ async function handleAssetCaching(request) {
         credentials: 'omit'
       });
 
-      const fallbackResponse = await caches.match(cacheOnlyRequest);
+      const fallbackResponse =
+        await caches.match(cacheOnlyRequest);
 
       if (fallbackResponse) {
 
@@ -276,12 +310,17 @@ async function handleAssetCaching(request) {
 
     if (request.destination === 'image') {
       
-      return await caches.match('assets/screens/placeholder-offline-h.webp') || new Response('', { status: 404 });
+      return await caches.match('assets/images/placeholder-offline.webp') || new Response('', { status: 404 });
     }
 
     // Return a generic failed response if no fallback is available
 
-    console.warn(`[NS App Service Worker] Offline: No cached assets available for this ${request.destination? request.destination : 'item'}`, error);
+    console.warn(
+      `[NS App Service Worker]\n\n` +
+      `Offline: No cached assets available for this ` +
+      `${request.destination? request.destination : 'item'}:\n\n` +
+      `${request.url}\n\n`, error
+    );
 
     return new Response('', { status: 504, statusText: 'Gateway Timeout' });
   }

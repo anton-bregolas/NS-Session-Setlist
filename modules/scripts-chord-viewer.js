@@ -102,9 +102,9 @@ export async function openChordViewer(setChords, tuneChords) {
 
       const abcUrl = tuneSelector.value || getLastTunebookUrl();
 
-      const encodedAbc = abcUrl.match(/(?:lzw|def)=(?:[^&]*)/);
+      const encodedAbc = abcUrl? abcUrl.match(/(?:lzw|def)=(?:[^&]*)/) : null;
 
-      if (!abcUrl || !encodedAbc) {
+      if (!encodedAbc) {
   
         displayNotification("Select an item in Tune Selector", "warning");
         displayWarningEffect(launchButton, altFocusBtn);
@@ -150,10 +150,11 @@ export async function openChordViewer(setChords, tuneChords) {
 
     if (!selectedTuneTitle || selectedTuneTitle.toLowerCase().includes("select")) {
 
-      const lastUrl = getLastTunebookUrl();
-      const encodedAbc = abcUrl.match(/(?:lzw|def)=(?:[^&]*)/);
+      const abcUrl = tuneSelector.value || getLastTunebookUrl();
 
-      if (!lastUrl || !encodedAbc) {
+      const encodedAbc = abcUrl? abcUrl.match(/(?:lzw|def)=(?:[^&]*)/) : null;
+
+      if (!encodedAbc) {
 
         displayNotification("Select an item in Tune Selector", "warning");
         displayWarningEffect(launchButton, altFocusBtn);

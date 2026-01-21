@@ -1,6 +1,7 @@
 .DS_Store
 .npmrc
 .vscode
+CNAME
 node_modules
 auto-update-version.js
 bun.lock

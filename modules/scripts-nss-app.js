@@ -1,13 +1,14 @@
-import { ariaHideMe, ariaShowMe, isLocalStorageOk, sanitizeQueryParam } from './scripts-abc-utils.js';
+import { addSupportMenuContent, ariaHideMe, ariaShowMe, isLocalStorageOk,
+         getFirstCurrentlyDisplayedElem, sanitizeQueryParam } from './scripts-abc-utils.js';
 import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, displayOptions,
          restoreLastTunebookItem, populateTuneSelector, populateFilterOptions, sortFilterOptions, 
          resetViewportWidth, getViewportWidth, getViewportHeight, getLastTunebookUrl, tuneFrame, 
          handleFullScreenButton, loadFromQueryString, getAbcLinkToPreferredEditor } from './scripts-abc-tools.js';
 import { abcEncoderDefaults, downloadAbcEncoderFile, initEncoderSettings, parseAbcFromFile, parseEncoderImportFile, 
          readFileContent, resetEncoderSettings } from './scripts-abc-encoder.js';
+import { adjustHtmlFontSize, isMobileBrowser } from './scripts-preload-nssapp.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
-import { adjustHtmlFontSize } from './scripts-preload-nssapp.js';
 import appVersionJson from '../version.json' with { type: "json" };
 ///////////////////////////////////////////////////////////////////////
 // Novi Sad Session Setlist App Scripts
@@ -29,10 +30,13 @@ let tuneBookSetting = "setlist"; // Tunebook loads Setlist by default
 let isTuneBookInitialized = false; // If false, opening Tunebook will initialize ABC Tools and fetch Session DB data
 let isCompactTunebookModeOn = false; // If true, Tunebook footer and Tunelist / Setlist switch buttons are hidden
 let lastAppSectionOpened = "launcher"; // Keep track of the last app section name / latest hash handled by routing
+let lastPressedNavBtn; // Keep track of the last Tunebook navigation button pressed
 let lastTuneBookMode; // Keep track of the last Tunebook mode setting for this session
 let lastTuneBookOpened; // Keep track of the latest Tunebook opened (fallback global variable)
-let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
 let longPressTimeoutId; // Keep track of the latest timeout set for long press events
+let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
+let statusNotifyTimeout = 1250; // Set default banner hide timeout for status notifications
+let successNotifyTimeout = 4500; // Set default banner hide timeout for success notifications
 
 // Define Session DB items
 
@@ -63,6 +67,7 @@ const abcContainer = document.querySelector('.nss-abc-embed');
 
 const helpGuidePopover = document.getElementById('help-guide');
 const appOptionsPopover = document.querySelector('#nss-popover-options');
+const appSupportPopover = document.querySelector('#nss-support-popover');
 const fullScreenViewTunesRadioBtn = document.querySelector('#nss-radio-view-tunes');
 const fullScreenViewChordsRadioBtn = document.querySelector ('#nss-radio-view-chords');
 const advancedOptions = document.querySelectorAll('.nss-advanced-options-container');
@@ -70,12 +75,17 @@ const notificationPopup = document.querySelector('[data-popover="notification-po
 const notificationMessage = document.querySelector('[data-popover="notification-message"]');
 const tuneBookActionsPopup = document.querySelector('[data-popover="tunebook-actions-popup"]');
 const tuneBookActionsHeaderBtn = document.querySelector('#nss-tunebook-actions-header');
+const appVersionUpdateBtn = document.querySelector('.nss-app-version-btn');
 
 // Dialog Menus
 
 const chordViewerDialog = document.getElementById('chord-viewer');
 const listViewerDialog = document.getElementById('list-viewer');
 const quickHelpDialog = document.getElementById('quick-help');
+
+// Contact Developer (@ in base64)
+
+const appSupportContact = 'YW50b24uYnJlZ29sYXNAcHJvdG9uLm1l';
 
 ////////////////////////////////////////////
 // APP SCRIPTS: LAUNCHERS
@@ -128,14 +138,18 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
   showTuneBookEls();
 
+  if (isCompactTunebookModeOn) setTuneBookCompactMode();
+
   if (!tuneBookActionsHeaderBtn.hasAttribute("hidden")) {
 
-    tuneBookActionsHeaderBtn.focus();
+    lastPressedNavBtn = tuneBookActionsHeaderBtn;
 
   } else {
 
-    document.querySelector(`#nss-tunebook-${targetSection}-switch`).focus();
+    lastPressedNavBtn = document.querySelector(`#nss-tunebook-${targetSection}-switch`);
   }
+
+  lastPressedNavBtn.focus();
 
   handleSelectorLabels("init");
 
@@ -201,6 +215,19 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
     refreshTuneBook();
   }
+
+  // Reload last saved Tunebook item if data-reload flag exists
+
+  if (document.body.dataset.reload) {
+
+    console.log(`NS Session App:\n\nTunebook has been reloaded`);
+
+    restoreLastTunebookItem();
+
+    document.body.removeAttribute("data-reload");
+
+    return;
+  }
   
   // Simply log Tunebook opened event if section has not changed
 
@@ -261,7 +288,9 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
         localStorage.tuneBookLastOpened_NSSSAPP = targetSection;
       }
 
-      document.querySelector(`#nss-tunebook-${targetSection}-switch`).focus();
+      lastPressedNavBtn = document.querySelector(`#nss-tunebook-${targetSection}-switch`);
+
+      lastPressedNavBtn.focus();
 
       return;
     }
@@ -412,37 +441,49 @@ export function switchTuneBookItem(loadDir) {
 
 function zoomTuneBookItem(zoomDir) {
 
-  const zoomValue = zoomDir === "zoom-in"? 10 : -10;
+  const isMobileMode = checkIfMobileMode();
 
-  // Desktop Mode
+  const zoomStep = zoomDir === "zoom-in"? 10 : -10;
 
-  if (!checkIfMobileMode()) {
+  const maxZoomValue = isMobileMode? 105 : 120;
 
-    const currentPageZoom = abcContainer.style.zoom || "100%";
+  const minZoomValue = isMobileMode? 35 : 40;
 
-    let newPageZoom = +currentPageZoom.slice(0, -1) + zoomValue;
+  const startZoomPercent = isMobileMode? "95%" : "100%";
 
-    if (newPageZoom > 120 || newPageZoom < 40) return;
+  // Mobile Mode: Rescale iframe width
 
-    abcContainer.style.zoom = `${newPageZoom}%`;
+  if (isMobileMode) {
 
-    if (isLocalStorageOk()) localStorage.tuneBookFullScreenZoom = `${newPageZoom}%`;
-    
+    const currentAbcFrameWidth = tuneFrame.style.width || startZoomPercent;
+
+    const currentZoomValue = +currentAbcFrameWidth.slice(0, -1);
+
+    let newZoomValue = currentZoomValue + zoomStep;
+
+    if (newZoomValue > maxZoomValue || newZoomValue < minZoomValue) return;
+
+    tuneFrame.style.width = `${newZoomValue}%`;
+
+    if (isLocalStorageOk()) localStorage.tuneBookFullScreenWidth = `${newZoomValue}%`;
+
     return;
   }
 
-  // Mobile Mode
+  // Desktop Mode: Zoom iframe in/out
 
-  const currentAbcFrameWidth = tuneFrame.style.width || "100%";
+  const currentPageZoom = tuneFrame.style.zoom || startZoomPercent;
 
-  let newAbcFrameWidth = +currentAbcFrameWidth.slice(0, -1) + zoomValue;
+  const currentZoomValue = +currentPageZoom.slice(0, -1);
 
-  if (newAbcFrameWidth > 100 || newAbcFrameWidth < 30) return;
+  let newZoomValue = currentZoomValue + zoomStep;
 
-  tuneFrame.style.width = `${newAbcFrameWidth}%`;
+  if (newZoomValue > maxZoomValue || newZoomValue < minZoomValue) return;
 
-  if (isLocalStorageOk()) localStorage.tuneBookFullScreenWidth = `${newAbcFrameWidth}%`;
+  tuneFrame.style.zoom = `${newZoomValue}%`;
 
+  if (isLocalStorageOk()) localStorage.tuneBookFullScreenZoom = `${newZoomValue}%`;
+  
   return;
 }
 
@@ -476,6 +517,8 @@ function switchTunebookMode(targetMode) {
     targetMode === "mobile-switch"? '#nss-tunebook-actions-footer-mobile' :
     '#nss-tunebook-actions-footer-desktop';
 
+  lastPressedNavBtn = document.querySelector(tuneBookActionsBtnId);
+
   if (targetMode === "mobile-switch") {
 
     document.body.dataset.mode = "mobile";
@@ -501,6 +544,8 @@ function switchTunebookMode(targetMode) {
   refreshTuneBook(true);
 
   handleSelectorLabels("init");
+
+  lastPressedNavBtn.focus();
 }
 
 // Switch Tunebook to Compact Mode, hiding footer section
@@ -516,6 +561,8 @@ function setTuneBookCompactMode() {
   ariaHideMe(tuneBookFooter);
     
   isCompactTunebookModeOn = true;
+
+  document.body.dataset.layout = "compact";
     
   allSwitchBtns.forEach(switchBtn => {
 
@@ -616,6 +663,14 @@ function switchTuneBookFavBtn(btn, containerData) {
   const favBtnContainer =
     document.querySelector(`[data-tbk-container="${containerData}"]`);
 
+  const favContainerLeft =
+    document.querySelector('[data-tbk-container="pick-fav-left"]');
+
+  const favContainerRight =
+    document.querySelector('[data-tbk-container="pick-fav-right"]');
+
+  // Handle picking radio fav buttons (always come in pairs)
+
   if (btnAction.startsWith("select-fullscreen")) {
 
     if (btnAction === "select-fullscreen-tunes" &&
@@ -624,19 +679,19 @@ function switchTuneBookFavBtn(btn, containerData) {
     if (btnAction === "select-fullscreen-chords" &&
         !fullScreenViewChordsRadioBtn.parentElement.hasAttribute("hidden")) return;
 
-    favBtnContainer.textContent = '';
+    favContainerLeft.textContent = '';
+    favContainerRight.textContent = '';
 
-    ariaHideMe(favBtnContainer);
+    ariaHideMe(favContainerLeft);
+    ariaHideMe(favContainerRight);
 
-    if (btnAction === "select-fullscreen-tunes") {
-      ariaShowMe(fullScreenViewTunesRadioBtn.parentElement);
-    }
+    ariaShowMe(fullScreenViewTunesRadioBtn.parentElement);
+    ariaShowMe(fullScreenViewChordsRadioBtn.parentElement);
 
-    if (btnAction === "select-fullscreen-chords") {
-      ariaShowMe(fullScreenViewChordsRadioBtn.parentElement);
-    }
     return;
   }
+
+  // Handle picking other fav buttons
 
   const favBtn = btn.cloneNode(true);
 
@@ -661,16 +716,31 @@ function switchTuneBookFavBtn(btn, containerData) {
     if (favBtnSvg) favBtnSvg.classList.add("nss-mini-icon");
   }
 
+  // Handle switching from radio to other fav buttons
+  // Switch leftover radio button pair to an alternative fav button
+
   if (favBtnContainer.children.length === 0) {
 
     ariaShowMe(favBtnContainer);
 
     if (containerData === "pick-fav-left") {
+
       ariaHideMe(fullScreenViewTunesRadioBtn.parentElement);
+
+      if (!fullScreenViewChordsRadioBtn.parentElement.hasAttribute("hidden")) {
+
+        initTunebookAltFavBtnRight();
+      }
     }
 
     if (containerData === "pick-fav-right") {
+
       ariaHideMe(fullScreenViewChordsRadioBtn.parentElement);
+
+      if (!fullScreenViewTunesRadioBtn.parentElement.hasAttribute("hidden")) {
+
+        initTunebookAltFavBtnLeft();
+      }
     }
   }
 
@@ -755,9 +825,29 @@ export async function openSettingsMenu(dataType, dataOptions) {
 
   // Open Support & Follow Menu
 
-  if (dataType === "support-follow") {
+  if (dataType === "support-options") {
 
-    console.warn("BUMP")
+    const containerId = 
+      "nss-support-popover-text";
+
+    const supportMenuContainer =
+      document.getElementById(containerId);
+
+    if (!supportMenuContainer) return;
+
+    if (appOptionsPopover && appOptionsPopover.matches(':popover-open')) {
+
+      appOptionsPopover.hidePopover();
+    }
+
+    if (!supportMenuContainer.dataset.static) {
+
+      addSupportMenuContent(containerId);
+      supportMenuContainer.dataset.static = "true";
+    }
+
+    appSupportPopover.showPopover();
+
     return;
   }
 
@@ -770,6 +860,12 @@ export async function openSettingsMenu(dataType, dataOptions) {
   // Open App Options
 
   if (dataType === "app-options") {
+
+    if (appSupportPopover && 
+        appSupportPopover.matches(':popover-open')) {
+
+      appSupportPopover.hidePopover();
+    }
 
     printLocalStorageSettings(abcTunebookDefaults, true);
 
@@ -905,6 +1001,24 @@ function focusOnAbcFrame() {
   }, 1500);
 }
 
+// Shift focus to app's Tunebook GUI
+// Refocus on previously pressed navigation button (if available)
+// Focus on Tune Selector (if no previous button stored)
+
+function focusOnTuneBookGui() {
+
+  if (lastPressedNavBtn) {
+
+    lastPressedNavBtn.focus();
+
+    lastPressedNavBtn = null;
+    
+    return;
+  }
+
+  tuneSelector.focus();
+}
+
 // Shift focus to the specific element of a currently open popover
 // Optional: Set a timeout for the focus
 
@@ -954,7 +1068,7 @@ export function displayNotification(msgText, msgType, nextFocusEl) {
     notificationTimeoutId = setTimeout(() => {
 
       notificationPopup.hidePopover();
-    }, 2000);
+    }, statusNotifyTimeout);
 
     return;
   }
@@ -964,7 +1078,7 @@ export function displayNotification(msgText, msgType, nextFocusEl) {
     notificationTimeoutId = setTimeout(() => {
 
       notificationPopup.hidePopover();
-    }, 4500);
+    }, successNotifyTimeout);
 
     return;
   }
@@ -987,26 +1101,6 @@ export function displayWarningEffect(focusBtn, fallBackBtn) {
     targetBtn.style.removeProperty('outline');
     targetBtn.style.removeProperty('filter');
   }, 2500);
-}
-
-// Get the first element in a NodeList that is currently displayed
-// Elements with display: none property are discarded (null)
-// Return null if none of the elements are displayed
-
-export function getFirstCurrentlyDisplayedElem(nodeList) {
-
-  let foundEl = null;
-
-  for (let i = 0; i < nodeList.length; i++) {
-
-    if(nodeList[i].offsetParent) {
-
-      foundEl = nodeList[i];
-      break;
-    }
-  }
-
-  return foundEl;
 }
 
 // Hide Tunebook Actions menu popover
@@ -1212,13 +1306,8 @@ export function refreshTuneBook(isSoftRefresh, itemQuery) {
   // Load a Tunebook item using query params
 
   if (itemQuery) {
-
-    setTimeout(() => {
       
-      loadFromQueryString(itemQuery);
-
-    }, 150);
-
+    loadFromQueryString(itemQuery);
     return;
   }
 
@@ -1392,6 +1481,42 @@ function updateAppSectionTitle(targetSection) {
   }
 }
 
+// Update app version data in App Options menu
+
+function updateAppVersionData(versionJson, newVersionJson) {
+
+  const { appVersion, appDate, dbVersion } = versionJson;
+
+  const appVersionText = `App version ${appVersion}`;
+
+  let appVersionTitle;
+
+  if (newVersionJson) {
+
+    appVersionTitle =
+      appVersionText + ` | Click to update to version ${newVersionJson.appVersion}`;
+
+    appVersionUpdateBtn.textContent = `Press to update app`;
+
+    appVersionUpdateBtn.dataset.load = "app-update";
+
+  } else {
+
+    appVersionTitle = appVersionText + `. Click to copy detailed report`;
+
+    appVersionUpdateBtn.textContent = appVersionText;
+
+    appVersionUpdateBtn.dataset.load = "copy-text";
+
+    appVersionUpdateBtn.dataset.copyText = 
+      `App version: ${appVersion}\nLast updated on: ${appDate}\nSession DB version: ${dbVersion}`;
+  }
+
+  appVersionUpdateBtn.setAttribute("title", appVersionTitle);
+
+  appVersionUpdateBtn.setAttribute("aria-title", appVersionTitle);
+}
+
 ////////////////////////////////////////////
 // APP SCRIPTS: FETCHERS & DATA HANDLERS
 ///////////////////////////////////////////
@@ -1426,6 +1551,8 @@ async function tuneDataFetch() {
 
     window.location.hash = "#launcher";
 
+    goatCountEvent("!error-fetch-tune-db", "nss-app__tuneDataFetch");
+
     return null;
   }
 }
@@ -1442,7 +1569,7 @@ export async function fetchData(url, type) {
 
     if (!response.ok) {
 
-      throw new Error("Failed to fetch data from Tune DB", { cause: response });
+      throw new Error("Failed to fetch data from Session DB", { cause: response });
     }
 
     if (type === "json") {
@@ -1529,75 +1656,81 @@ export function clearData() {
   
 function parseAppOptionsImportFile(triggerBtn) {
 
-    try {
+  try {
 
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = '.json';
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
 
-        fileInput.onchange = async function() {
+    fileInput.onchange = async function() {
 
-            const fileExt =
-                this.files[0].name.split('.').pop().toLowerCase();
+      const fileExt =
+        this.files[0].name.split('.').pop().toLowerCase();
 
-            if (fileExt !== 'json' && fileExt !== 'tsv') {
+      if (fileExt !== 'json' && fileExt !== 'tsv') {
 
-                console.warn("NS Session App:\n\n Settings import file rejected, unsupported file type");
+        console.warn("NS Session App:\n\n Settings import file rejected, unsupported file type");
 
-                displayNotification("Unsupported file type: Import .json file to restore App Options", "warning");
-                displayWarningEffect(triggerBtn);
-
-                return;
-            }
-
-            const rawImportFileData = this.files[0];
-
-            try {
-
-                const importFileContents = await readFileContent(rawImportFileData);
-
-                console.log("NS Session App:\n\nApp Options import file contents read");
-
-                const isAppOptionsSettingsFile =
-                    importFileContents.match(/^\[\s*{\s*"abcToolsUseLiteEditor":/);
-
-                if (fileExt === 'json' && !isAppOptionsSettingsFile) {
-
-                    console.warn("NS Session App:\n\nInvalid App Options file!");
-
-                    displayNotification("Not a valid App Options file", "warning");
-                    displayWarningEffect(triggerBtn);
-
-                    return;
-                }
-
-                // Process App Options JSON, restore user settings
-
-                if (isAppOptionsSettingsFile) {
-
-                    restoreAppOptionsFromFile(importFileContents);
-                    return;
-                }
-
-            } catch (error) {
-
-                console.error("NS Session App:\n\nError reading imported data file:\n\n", error);
-
-                displayNotification("Error reading imported data file", "error");
-                displayWarningEffect(triggerBtn);
-            }
-        };
-        
-        fileInput.click();
-
-    } catch (error) {
-
-        console.error("NS Session App:\n\nParsing sequence failed!\n\n", error);
-        
-        goatCountEvent("!error-parse-app-options", "nss-app__parseAppOptionsImportFile");
-        displayNotification("Error parsing imported data file", "error");
+        displayNotification("Unsupported file type: Import .json file to restore App Options", "warning");
         displayWarningEffect(triggerBtn);
-    }
+
+        return;
+      }
+
+      const rawImportFileData = this.files[0];
+
+      try {
+
+        const importFileContents = await readFileContent(rawImportFileData);
+
+        console.log("NS Session App:\n\nApp Options import file contents read");
+
+        const isAppOptionsSettingsFile =
+          importFileContents.match(/^\[\s*{\s*"abcToolsUseLiteEditor":/);
+
+        if (fileExt === 'json' && !isAppOptionsSettingsFile) {
+
+          console.warn("NS Session App:\n\nInvalid App Options file!");
+
+          displayNotification("Not a valid App Options file", "warning");
+          
+          displayWarningEffect(triggerBtn);
+
+          return;
+        }
+
+        // Process App Options JSON, restore user settings
+
+        if (isAppOptionsSettingsFile) {
+
+          restoreAppOptionsFromFile(importFileContents);
+          return;
+        }
+
+      } catch (error) {
+
+        console.error("NS Session App:\n\nError reading imported data file:\n\n", error);
+
+        displayNotification("Error reading imported data file", "error");
+        
+        displayWarningEffect(triggerBtn);
+
+        goatCountEvent("!error-app-import-read", "nss-app__parseAppOptionsImportFile");
+      }
+    };
+    
+    fileInput.click();
+
+  } catch (error) {
+
+    console.error("NS Session App:\n\nParsing sequence failed!\n\n", error);
+    
+    displayNotification("Error parsing imported data file", "error");
+    
+    displayWarningEffect(triggerBtn);
+    
+    goatCountEvent("!error-app-import-parse", "nss-app__parseAppOptionsImportFile");
+  }
 }
 
 // Process Settings JSON and restore user settings
@@ -1618,17 +1751,129 @@ function restoreAppOptionsFromFile(importFileData) {
 
   } catch (error) {
 
-    goatCountEvent("!error-import-app-options", "nss-app__restoreAppOptionsFromFile");
-    displayNotification("Error parsing imported options file", "error");
     console.error("NS Session App:\n\nParsing options file data failed\n\n", error);
+    
+    displayNotification("Error parsing imported options file", "error");
+    
+    goatCountEvent("!error-app-options-restore", "nss-app__restoreAppOptionsFromFile");
   }
 
   initAppCheckBoxes(true);
 
   goatCountEvent("#import-app-options", "app-ui");
 
-  displayNotification("App options have been restored", "success");
   console.log("NS Session App:\n\nEncoder options restored");
+  
+  displayNotification("App options have been restored", "success");
+}
+
+// Fetch the latest app version data from the repository
+// Update the app version button with the version data
+
+async function fetchAppVersionData() {
+
+  const { appVersion } = appVersionJson;
+
+  // Skip the check if offline or localhost
+  if (!navigator.onLine ||
+      window.origin.toString()
+      .replace(/http[s]*:\/\//, '')
+      .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
+    ) {
+      
+    updateAppVersionData(appVersionJson);
+    return;
+  }
+
+  console.log(`NS Session App:\n\nChecking for updates...`);
+
+  appVersionUpdateBtn.textContent =
+    'Checking for updates...';
+
+  const appBaseUrl =
+    window.location.origin +
+    window.location.pathname.replace(/\/[^\/]*$/, '/');
+    
+  const appVersionRemoteUrl =
+    `${appBaseUrl}version.json`;
+    // `https://ns.tunebook.app/version.json`;
+
+  // Create an AbortController
+  // Prevent hanged version checks
+  const controller = new AbortController();
+  const timeoutMs = 3000;
+
+  // Set up the timeout
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
+
+  try {
+
+    const remoteResponse =
+      await fetch(appVersionRemoteUrl, {
+        signal: controller.signal,
+        cache: 'no-store'
+        });
+
+    clearTimeout(timeoutId);
+
+    if (!remoteResponse.ok) {
+      throw new Error(`Failed to fetch app version JSON: ${remoteResponse.status}`);
+    }
+
+    const remoteVersionJson =
+      await remoteResponse.json();
+
+    // Check if version changed
+    // Update version button accordingly
+
+    if (remoteVersionJson &&
+        remoteVersionJson.appVersion &&
+        (remoteVersionJson.appVersion !== appVersion)) {
+
+      updateAppVersionData(appVersionJson, remoteVersionJson);
+
+      console.log(
+        `NS Session App:\n\nApp update available\n\n` + 
+        `(v${appVersion} -> v${remoteVersionJson.appVersion})`
+      );
+
+      if (!appOptionsPopover.matches(':popover-open') && !checkIfTunebookOpen()) {
+
+        displayNotification("Update available: Refresh app or go to Options⚙️ to get the latest version", "success");
+      }
+
+    } else {
+
+      updateAppVersionData(appVersionJson);
+
+      console.log(
+        `NS Session App:\n\nApp v${appVersion} is up to date`
+      );
+    }
+
+  } catch (err) {
+
+    // Show error warning in the console
+    // Update version button with current app version
+
+    clearTimeout(timeoutId);
+
+    updateAppVersionData(appVersionJson);
+
+    goatCountEvent(
+      "!error-fetch-version-data",
+      "nss-app__fetchAppVersionData"
+    );
+    
+    console.warn(
+      'NS Session App:\n\nCould not fetch app version\n\n',
+      err.name === 'AbortError'?
+        `App version check timed out after ${timeoutMs / 1000}s` :
+        err
+    );
+  }
 }
 
 ////////////////////////////////////////////
@@ -1705,8 +1950,12 @@ async function appButtonHandler(btn) {
 
   if (btn.hasAttribute('data-cvw-action') || btn.hasAttribute('data-lvw-action')) {
 
-    return;
+    return; // Handle viewer module buttons separately //
   }
+
+  // Read data-load attribute value
+
+  const dataLoad = btn.dataset.load;
 
   // Tunebook actions menu: Fav picker mode
 
@@ -1733,6 +1982,7 @@ async function appButtonHandler(btn) {
     document.body.dataset.mode === "desktop"?
     tuneBookFooter.querySelector('[data-controls="mode"]').focus() :
     tuneBookFooter.querySelector('[data-controls="tunebook-actions-mobile"]').focus();
+
     return;
   }
 
@@ -1758,7 +2008,7 @@ async function appButtonHandler(btn) {
   if (btn.dataset.controls && btn.dataset.controls === "mode" && btn.dataset.type) {
 
     switchTunebookMode(btn.dataset.type);
-    goatCountEvent(`#${btn.dataset.load}`, "app-ui");
+    goatCountEvent(`#${dataLoad? dataLoad : 'switch-undefined-mode'}`, "app-ui");
     return;
   }
 
@@ -1766,23 +2016,27 @@ async function appButtonHandler(btn) {
 
   if (btn.classList.contains('nss-btn-launch')) {
 
-    if (btn.dataset.load === "setlist" || 
-        btn.dataset.load === "tunelist" || 
-        btn.dataset.load === "playalong") {
+    if (!dataLoad) return;
 
-      window.location.hash = `#${btn.dataset.load}`;
-      goatCountEvent(`#${btn.dataset.load}`, "app-ui");
+    if (dataLoad === "setlist" || 
+        dataLoad === "tunelist" || 
+        dataLoad === "playalong") {
+
+      window.location.hash = `#${dataLoad}`;
+      goatCountEvent(`#${dataLoad}`, "app-ui");
       return;
     }
 
     // Handle ABC Encoder buttons
 
-    if (btn.dataset.load.startsWith("abc")) {
+    if (dataLoad.startsWith("abc")) {
       
-      parseAbcFromFile(btn.dataset.load, btn);
-      goatCountEvent(`#${btn.dataset.load}`, "encoder-ui");
+      parseAbcFromFile(dataLoad, btn);
+      goatCountEvent(`#${dataLoad}`, "encoder-ui");
       return;
     }
+
+    return; // Launch Buttons End Here //
   }
 
   // Switch Buttons: Load and swap section content depending on data type
@@ -1798,9 +2052,11 @@ async function appButtonHandler(btn) {
       return;
     }
 
+    if (!dataLoad) return;
+
     // Help overlay switcher
 
-    if (btn.dataset.load === "help") {
+    if (dataLoad === "help") {
 
       hideTuneBookActionsMenu();
 
@@ -1813,8 +2069,10 @@ async function appButtonHandler(btn) {
 
     if (btn.classList.contains('nss-arrow-btn')) {
 
-      switchTuneBookItem(btn.dataset.load);
-      
+      switchTuneBookItem(dataLoad);
+
+      lastPressedNavBtn = btn;
+
       return;
     }
 
@@ -1822,23 +2080,23 @@ async function appButtonHandler(btn) {
 
     if (btn.classList.contains('nss-zoom-btn')) {
 
-      zoomTuneBookItem(btn.dataset.load);
+      zoomTuneBookItem(dataLoad);
       
       return;
     }
 
     // GUI switchers
 
-    if (btn.dataset.load.startsWith("toggle-gui")) {
+    if (dataLoad.startsWith("toggle-gui")) {
 
-      toggleFullScreenGui(btn.dataset.load);
+      toggleFullScreenGui(dataLoad);
 
       return;
     }
 
     // Full Screen switchers
 
-    if (btn.dataset.load === "exit-fullscreen") {
+    if (dataLoad === "exit-fullscreen") {
 
       exitFullScreenMode();
       
@@ -1848,35 +2106,89 @@ async function appButtonHandler(btn) {
     // Tunebook switchers >>>
     // Hash change triggers switchAppSection
 
-    window.location.hash = `#${btn.dataset.load}`;
-    return;
+    window.location.hash = `#${dataLoad}`;
+
+    return; // Switch Buttons End Here //
   }
 
   // Option Buttons: Load settings or dialogue menus
 
   if (btn.classList.contains('nss-option-btn')) {
 
-    if (!btn.dataset.load) return;
+    if (!dataLoad) return;
+
+    // Update the App
+
+    if (dataLoad === "app-update") {
+
+      console.log('NS Session App:\n\nUpdating the app...');
+
+      window.location.reload(true);
+      
+      return;
+    }
+
+    // Refresh the App
+
+    if (dataLoad === "app-refresh") {
+
+      window.location.reload();
+      return;
+    }
+
+    // Copy text to clipboard
+
+    if (dataLoad === "copy-text") {
+
+      if (btn.dataset.copyText) {
+
+        if (btn.classList.contains('nss-app-version-btn')) {
+
+          copyTextToClipboard(btn.dataset.copyText, true);
+          displayNotification("Version data copied to clipboard", "success");
+          return;
+        }
+
+        copyTextToClipboard(btn.dataset.copyText);
+        return;
+      }
+
+      copyTextToClipboard(btn.textContent);
+      return;
+    }
+
+    // Send email to developer
+
+    if (dataLoad === "send-email") {
+
+      const devMail = atob(appSupportContact);
+      const msgBody = encodeURIComponent(`\n\n(Sent via NS Session Setlist support menu)`);
+      copyTextToClipboard(devMail);
+      window.location.href = `mailto:${devMail}?&body=${msgBody}`;
+      return;
+    }
 
     // Reset App Options to defaults
 
-    if (btn.dataset.load === "app-defaults") {
+    if (dataLoad === "app-defaults") {
 
       resetAppOptions();
+      goatCountEvent("#reset-app-options", "app-ui");
       return;
     }
 
     // Reset Encoder Settings to defaults
 
-    if (btn.dataset.load === "encoder-defaults") {
+    if (dataLoad === "encoder-defaults") {
 
       resetEncoderSettings();
+      goatCountEvent("#reset-encoder-settings", "encoder-ui");
       return;
     }
 
     // Export Encoder Settings and save them as a .json file
 
-    if (btn.dataset.load === "app-options-json") {
+    if (dataLoad === "app-options-json") {
 
       downloadAbcEncoderFile(
         exportLocalStorageSettings(abcTunebookDefaults),
@@ -1888,7 +2200,7 @@ async function appButtonHandler(btn) {
 
     // Export Encoder Settings and save them as a .json file
 
-    if (btn.dataset.load === "encoder-json") {
+    if (dataLoad === "encoder-json") {
 
       downloadAbcEncoderFile(
         exportLocalStorageSettings(abcEncoderDefaults),
@@ -1900,7 +2212,7 @@ async function appButtonHandler(btn) {
 
     // Prompt file selection menu for App Options Import
 
-    if (btn.dataset.load === "app-options-import") {
+    if (dataLoad === "app-options-import") {
 
       parseAppOptionsImportFile(btn);
       return;
@@ -1908,7 +2220,7 @@ async function appButtonHandler(btn) {
 
     // Prompt file selection menu for Encoder Settings Import
 
-    if (btn.dataset.load === "encoder-import") {
+    if (dataLoad === "encoder-import") {
 
       parseEncoderImportFile(btn);
       return;
@@ -1916,7 +2228,7 @@ async function appButtonHandler(btn) {
 
     // Trigger Tunebook compact mode
    
-    if (btn.dataset.load === "tunebook-compact-mode") {
+    if (dataLoad === "tunebook-compact-mode") {
 
       setTuneBookCompactMode();
       return;
@@ -1924,16 +2236,25 @@ async function appButtonHandler(btn) {
 
     // Copy share link to current Tunebook item to clipboard
 
-    if (btn.dataset.load === "share-link") {
+    if (dataLoad === "share-link") {
 
       copyTextToClipboard(getShareLink());
       goatCountEvent(`#share-link-copy`, "app-ui");
       return;
     }
 
+    // Open Help Guide from Quick Help Dialog
+
+    if (dataLoad === "help-from-qhelp") {
+
+      quickHelpDialog.close();
+      showHelpGuidePopover();
+      return;
+    }
+
     // Close options menu if menu button pressed again
 
-    if (btn.dataset.load === "app-options" || btn.dataset.load === "encoder-options") {
+    if (dataLoad === "app-options" || dataLoad === "encoder-options") {
 
       if (appOptionsPopover.matches(':popover-open')) {
 
@@ -1944,7 +2265,7 @@ async function appButtonHandler(btn) {
 
     // Close Tunebook actions menu if menu button pressed again
 
-    if (btn.dataset.load === "tunebook-actions-menu") {
+    if (dataLoad === "tunebook-actions-menu") {
 
       if (tuneBookActionsPopup.matches(':popover-open')) {
 
@@ -1955,73 +2276,100 @@ async function appButtonHandler(btn) {
 
     // Open the associated menu by default
 
-    await openSettingsMenu(btn.dataset.load);
+    await openSettingsMenu(dataLoad);
+
+    return; // Option Buttons End Here //
   }
 
+  // Advanced Options Buttons: Reveal options or launch a standalone tool
+  
   if (btn.classList.contains('nss-btn-advanced-options')) {
 
-    btn.style.display = "none";
+    // Show all advanced options and inputs available
 
-    advancedOptions.forEach(optGroup => {
+    if (btn.id === 'nss-show-advanced-options') {
 
-      ariaShowMe(optGroup);
-    });
+      btn.style.display = "none";
 
-    return;
-  }
+      advancedOptions.forEach(optGroup => {
 
-  // Close Buttons: Hide parent element, show alternative navigation
+        ariaShowMe(optGroup);
+      });
 
-  if (btn.id === 'nss-popover-options-close') {
-
-    appOptionsPopover.hidePopover();
-
-    document.querySelector('[data-controls="options-menu"]').focus();
-
-    return;
-  }
-
-  if (btn.id === 'nss-help-popover-open') {
-
-    quickHelpDialog.close();
-
-    showHelpGuidePopover();
-
-    return;
-  }
-
-  if (btn.id === 'nss-qhelp-dialog-close') {
-
-    quickHelpDialog.close();
-
-    focusOnTuneBookActions();
-
-    return;
-  }
-
-  if (btn.classList.contains('popup-btn-x') &&
-      btn.classList.contains('tunebook-action')) {
-
-    tuneBookActionsPopup.hidePopover();
-
-    focusOnTuneBookActions();
-
-    return;
-  }
-
-  if (btn.classList.contains('popup-btn-x')) {
-
-    const parentPopup = btn.parentElement.parentElement;
-    const nextFocusEl = parentPopup.dataset.nextFocus;
-
-    parentPopup.hidePopover();
-
-    if (nextFocusEl) {
-
-      document.querySelector(nextFocusEl).focus();
+      return;
     }
 
-    return;
+    if (!dataLoad) return;
+
+    // Launch ABC Encoder
+    
+    if (dataLoad === "abc-encoder") {
+
+      window.location.href = "abc-encoder.html";
+
+      return;
+    }
+
+    return; // Advanced Options Buttons End Here //
+  }
+
+  // Popover X Buttons: Hide parent element, shift focus to another button
+
+  if (btn.classList.contains('nss-btn-x') || btn.classList.contains('popup-btn-x')) {
+  
+    if (btn.id === 'nss-popover-options-close') {
+
+      appOptionsPopover.hidePopover();
+
+      document.querySelector('[data-controls="options-menu"]').focus();
+
+      return;
+    }
+
+    if (btn.id === 'nss-support-popover-close') {
+
+      appSupportPopover.hidePopover();
+
+      document.querySelector('[data-controls="support-menu"]').focus();
+
+      return;
+    }
+
+    if (btn.id === 'nss-qhelp-dialog-close') {
+
+      quickHelpDialog.close();
+
+      focusOnTuneBookActions();
+
+      return;
+    }
+
+    if (btn.classList.contains('popup-btn-x') &&
+        btn.classList.contains('tunebook-action')) {
+
+      tuneBookActionsPopup.hidePopover();
+
+      focusOnTuneBookActions();
+
+      return;
+    }
+
+    if (btn.classList.contains('popup-btn-x')) {
+
+      const parentPopup = btn.parentElement.parentElement;
+      const nextFocusEl = parentPopup.dataset.nextFocus;
+
+      parentPopup.hidePopover();
+
+      if (nextFocusEl) {
+
+        document.querySelector(nextFocusEl).focus();
+      }
+
+      return;
+    }
+
+    return; // Popover X Buttons End Here //
   }
 
   // Theme buttons: Change color theme of document depending on the section
@@ -2042,9 +2390,13 @@ async function appButtonHandler(btn) {
     });
 
     ariaHideMe(btn);
+
     btn.setAttribute("inert", "");
-    return;
+    
+    return; // Theme Buttons End Here //
   }
+
+  return; // Button Handler Ends Here //
 }
 
 // Handle custom checkbox events
@@ -2096,9 +2448,10 @@ async function appCheckBoxHandler(checkBox) {
     // App Options
 
     case 'abcToolsUseLiteEditor':
+      document.body.dataset.reload = "true";
       checkBox.checked?
-        displayNotification("App will now open tunes in ABC Tools Lite editor", "success") :
-        displayNotification("App will now open tunes in ABC Transcription Tools editor", "success");
+        displayNotification("Refresh to apply: App will open tunes in ABC Tools Lite", "success") :
+        displayNotification("Refresh to apply: App will open tunes in ABC Transcription Tools", "success");
       break;
 
     case 'abcToolsSaveAndRestoreTunes':
@@ -2122,7 +2475,7 @@ async function appCheckBoxHandler(checkBox) {
     case 'tuneBookShareLinksToAbcTools':
       checkBox.checked?
         displayNotification("App will now generate share links to ABC Transcription Tools", "success") :
-        displayNotification("App will now prioritize in-app links over ABC Tools links", "success");
+        displayNotification("App will now generate short share links to Tunebook", "success");
       break;
 
     case 'abcToolsFullScreenOpensNewWindow':
@@ -2208,7 +2561,7 @@ async function appCheckBoxHandler(checkBox) {
     case 'listViewerSearchSubTitles':
       checkBox.checked?
         displayNotification("List Viewer Search will now look through all ABC subtitles", "success") :
-        displayNotification("List Viewer Search will now look through tile names", "success");
+        displayNotification("List Viewer Search will now look through primary ABC titles", "success");
       break;
 
     // Encoder Settings
@@ -2759,6 +3112,10 @@ function removeMobileSelectorStyles(tuneBookSelectors, tuneBookSelectorHeaders) 
 
 export function appWindowResizeHandler() {
 
+  // Check if the browser is likely a mobile browser
+
+  const isLikelyMobile = isMobileBrowser();
+
   // Handle global font size adjustments >>>
 
   const viewPortW = getViewportWidth();
@@ -2767,7 +3124,7 @@ export function appWindowResizeHandler() {
   // Adjust font-size value based on viewport size for small and medium-sized screens
 
   if (document.body.dataset.mode === "mobile" &&
-      (viewPortW < 880 || viewPortH <= 768)) {
+     (viewPortW < 880 || (viewPortH <= 768 && isLikelyMobile))) {
 
     document.documentElement.style.fontSize = adjustHtmlFontSize(viewPortW, viewPortH);
   
@@ -2852,11 +3209,10 @@ export function handleFullScreenChange() {
     // Desktop Mode
 
     if (!checkIfMobileMode()) {
-     
-      if (isLocalStorageOk() && localStorage.tuneBookFullScreenZoom) {
 
-        abcContainer.style.zoom = localStorage.tuneBookFullScreenZoom;
-      }
+      tuneFrame.style.zoom =
+        isLocalStorageOk() && localStorage.tuneBookFullScreenZoom?
+          localStorage.tuneBookFullScreenZoom : "100%";
 
       return;
     }
@@ -2868,10 +3224,9 @@ export function handleFullScreenChange() {
     abcContainer.style.backgroundColor = "white";
     tuneFrame.style.border = "unset";
       
-    if (isLocalStorageOk() && localStorage.tuneBookFullScreenWidth) {
-
-      tuneFrame.style.width = localStorage.tuneBookFullScreenWidth;
-    }
+    tuneFrame.style.width =
+      isLocalStorageOk() && localStorage.tuneBookFullScreenWidth?
+        localStorage.tuneBookFullScreenWidth : "95%";
 
     return;
 
@@ -2879,7 +3234,6 @@ export function handleFullScreenChange() {
 
   } else {
 
-    abcContainer.removeAttribute("style");
     tuneFrame.removeAttribute("style");
 
     iframeControls.forEach(controlEl => {
@@ -3185,15 +3539,33 @@ function appWindowTouchEventHandler(event) {
 
 async function appWindowKeyboardEventHandler(event) {
 
+  const key = event.key;
+
   // Handle Escape key press with open popovers
 
   if (event.type === 'keydown' &&
-      event.key === 'Escape' &&
-      tuneBookActionsPopup.matches(':popover-open')) {
+      key === 'Escape') {
+    
+    if (tuneBookActionsPopup.matches(':popover-open')) {
 
-    hideTuneBookActionsMenu();
-    focusOnTuneBookActions();
-    return;
+      hideTuneBookActionsMenu();
+      focusOnTuneBookActions();
+      return;
+    }
+
+    if (appOptionsPopover.matches(':popover-open')) {
+
+      appOptionsPopover.hidePopover();
+      document.querySelector('[data-controls="options-menu"]').focus();
+      return;
+    }
+
+    if (appSupportPopover.matches(':popover-open')) {
+
+      appSupportPopover.hidePopover();
+      document.querySelector('[data-controls="support-menu"]').focus();
+      return;
+    }
   }
 
   // Handle Tunebook-specific shortcuts
@@ -3207,7 +3579,19 @@ async function appWindowKeyboardEventHandler(event) {
       !chordViewerDialog.open &&
       !listViewerDialog.open) {
 
-    switch (event.key) {
+    if (key === "F1" ||
+        key === "F2" ||
+        key === "F3" ||
+        key === "F4" ||
+        key === "F11") {
+
+      goatCountEvent(
+        `#pressed-shift-${key.toLowerCase()}`,
+        "shortcut"
+      );
+    }
+
+    switch (key) {
       case "F1":
         event.preventDefault();
         showHelpGuidePopover();
@@ -3244,24 +3628,35 @@ async function appWindowKeyboardEventHandler(event) {
 
   if (event.type === 'keydown' &&
       event.shiftKey &&
-      event.key.startsWith('Arrow') &&
+      key.startsWith('Arrow') &&
       checkIfTunebookOpen() &&
       !checkIfHelpMenuOpen() &&
       !quickHelpDialog.open &&
       !chordViewerDialog.open &&
       !listViewerDialog.open) {
 
-    switch (event.key) {
+    const prevBtn =
+      getFirstCurrentlyDisplayedElem(
+        document.querySelectorAll('[data-load="prev"]')
+      );
+    const nextBtn =
+      getFirstCurrentlyDisplayedElem(
+        document.querySelectorAll('[data-load="next"]')
+      );
+
+    switch (key) {
       case 'ArrowLeft':
       case 'ArrowUp':
         event.preventDefault();
         switchTuneBookItem("prev");
+        lastPressedNavBtn = prevBtn;
         return;
 
       case 'ArrowRight':
       case 'ArrowDown':
         event.preventDefault();
         switchTuneBookItem("next");
+        lastPressedNavBtn = nextBtn;
         return;
 
       default:
@@ -3272,7 +3667,7 @@ async function appWindowKeyboardEventHandler(event) {
   // Handle triggers for ABC Frame focus popup label
 
   if (event.type === 'keydown' &&
-      event.key === 'Tab' &&
+      key === 'Tab' &&
       !checkIfHelpMenuOpen() &&
       ((!event.shiftKey &&
         event.target.id === "fullScreenButton") ||
@@ -3280,6 +3675,7 @@ async function appWindowKeyboardEventHandler(event) {
         event.shiftKey &&
         event.target.id === "nss-tunebook-exit-footer") ||
       (!document.fullscreenElement &&
+        checkIfMobileMode() &&
         event.shiftKey &&
         event.target.dataset.load &&
         event.target.dataset.load === "prev") ||
@@ -3293,6 +3689,7 @@ async function appWindowKeyboardEventHandler(event) {
         event.target.dataset.load === "exit-fullscreen") ||
       (document.fullscreenElement &&
         event.shiftKey &&
+        abcContainer.hasAttribute("style") &&
         abcContainer.getAttribute("style").startsWith("--fullscreen-gui-display: none") &&
         event.target.dataset.load &&
         event.target.dataset.load === "toggle-gui-fullscreen"))
@@ -3328,14 +3725,22 @@ async function appWindowKeyboardEventHandler(event) {
         break;
     }
 
-    switch (event.key) {
+    switch (key) {
       case "F4":
         event.preventDefault();
+        goatCountEvent(
+          `#pressedfs-shift-${key.toLowerCase()}`,
+          "shortcut"
+        );
         focusOnAbcFrame();
         return;
 
       case "F11":
         event.preventDefault();
+        goatCountEvent(
+          `#pressedfs-shift-${key.toLowerCase()}`,
+          "shortcut"
+        );
         exitFullScreenMode();
         return;
     
@@ -3349,7 +3754,7 @@ async function appWindowKeyboardEventHandler(event) {
 
   if (checkIfHelpMenuOpen() &&
       event.type === 'keydown' &&
-      event.key === "Escape") {
+      key === "Escape") {
 
     quitHelpGuidePopover();
     focusOnTuneBookActions();
@@ -3368,7 +3773,7 @@ async function appWindowKeyboardEventHandler(event) {
 
   if (checkIfHelpMenuOpen() &&
       event.type === 'keydown' &&
-      (event.key === 'Enter' || event.key === ' ')) {
+      (key === 'Enter' || key === ' ')) {
 
     event.preventDefault();
     helpGuidePopoverHandler(event);
@@ -3377,11 +3782,16 @@ async function appWindowKeyboardEventHandler(event) {
 
   if (event.type === 'keydown') {
 
-    if (event.key === "Enter" && event.shiftKey &&
+    if (key === "Enter" && event.shiftKey &&
         triggerEl.dataset.longPress &&
         triggerEl.dataset.longPress !== "off") {
 
       event.preventDefault();
+
+      goatCountEvent(
+        `#pressed-shift-${key.toLowerCase()}`,
+        "shortcut"
+      );
 
       if (triggerEl.dataset.favBtn) {
 
@@ -3407,7 +3817,7 @@ async function appWindowKeyboardEventHandler(event) {
 
   if (event.type === 'keyup') {
 
-    if (event.key === "Enter" && event.shiftKey &&
+    if (key === "Enter" && event.shiftKey &&
         triggerEl.dataset.longPress) {
 
       if (triggerEl.dataset.favBtn) {
@@ -3572,7 +3982,7 @@ function addHelpGuideDescription(el) {
   switch (elLoads) {
     case 'launcher':
       helpText =
-        "Exit to app's start screen. Press Open Setlist / Open Tunelist / Play Along buttons to switch between app sections. Click Open App Options ⚙️ button to adjust Tunebook settings.";
+        "Exit to app's start screen. Press Open Setlist / Open Tunelist / Play Along buttons to switch between app sections. Click Options⚙️ button to adjust Tunebook settings.";
       break;
 
     case 'tunebook-actions-menu':
@@ -3670,6 +4080,22 @@ function quitHelpGuidePopover() {
   }
 
   helpGuidePopover.hidePopover();
+}
+
+// Handle ABC Tools iframe load event
+// Restore focus to Tunebook GUI trapped by vanilla ABC Tools
+// (Temporary workaround until fixed in upstream)
+
+function appAbcToolsLoadHandler() {
+
+  const localStorageOk = isLocalStorageOk();
+
+  if (!localStorageOk ||
+      (localStorageOk &&
+      +localStorage.abcToolsUseLiteEditor === 0)) {
+
+    focusOnTuneBookGui();
+  }
 }
 
 ////////////////////////////////////////////
@@ -3915,16 +4341,19 @@ function getShareLink(optionType) {
 
 // Copy input text to clipboard using Clipboard API
 
-async function copyTextToClipboard(inputText) {
+async function copyTextToClipboard(inputText, isSilentCopy) {
 
   if (!navigator.clipboard && inputText) {
 
-    displayNotification(inputText, "report");
-    console.log(`NS Session App:\n\nThis browser does not support Clipboard API. Displaying text in status bar...`);
+    if (!isSilentCopy) displayNotification(inputText, "report");
+    console.log(
+      `NS Session App:\n\nThis browser does not support Clipboard API.` +
+      isSilentCopy? '' : ` Displaying text in status bar...`
+    );
     return;
   }
 
-  if (!inputText) {
+  if (!inputText && !isSilentCopy) {
 
     displayNotification("Select an item to share", "warning");
     console.log(`NS Session App:\n\nNo text copied to clipboard, input string missing or empty`);
@@ -3935,13 +4364,14 @@ async function copyTextToClipboard(inputText) {
 
     navigator.clipboard.writeText(inputText);
 
-    displayNotification("Copied to clipboard", "status");
+    if (!isSilentCopy) displayNotification("Copied to clipboard", "success");
     console.log(`NS Session App:\n\nText copied to clipboard:\n\n${inputText}`);
 
   } catch(error) {
 
-    displayNotification("Could not copy to clipboard", "warning");
+    if (!isSilentCopy) displayNotification("Could not copy to clipboard", "warning");
     console.warn(`NS Session App:\n\nError trying to copy text to clipboard`);
+    goatCountEvent("!error-copy-text-clipboard", "nss-app__copyTextToClipboard");
   }
 }
 
@@ -3957,6 +4387,7 @@ function initAppSettings() {
   
     console.warn(`NS Session App:\n\nThis browser does not support Local Storage. Custom settings will not be saved`);
     displayNotification("This browser does not support Local Storage: Settings won't be saved", "warning");
+    goatCountEvent("!error-init-local-storage", "nss-app__initAppSettings");
     return;
   }
 
@@ -4181,6 +4612,21 @@ function initTunebookFavBtns() {
   const favDataLeft = localStorage.tuneBookFavBtnLeft;
   const favDataRight = localStorage.tuneBookFavBtnRight;
 
+  const isMobileMode = checkIfMobileMode();
+
+  // Tweak default fav buttons for mobile mode users
+  
+  if (isMobileMode && !favDataLeft && !favDataRight) {
+
+    initTunebookAltFavBtnLeft();
+
+    initTunebookAltFavBtnRight();
+
+    return;
+  }
+
+  // Restore fav buttons previously picked by the user
+
   if (favDataLeft && favDataLeft !== "select-fullscreen-tunes") {
 
     const copyLeftElem =
@@ -4196,6 +4642,29 @@ function initTunebookFavBtns() {
     
     switchTuneBookFavBtn(copyRightElem, "pick-fav-right");
   }
+}
+
+// Initialize alternative Left Tunebook Fav Button
+
+function initTunebookAltFavBtnLeft() {
+
+  const copyLeftElem =
+    document.querySelector(`[data-tbk-action="show-help"]`);
+
+  switchTuneBookFavBtn(copyLeftElem, "pick-fav-left");
+}
+
+// Initialize alternative Right Tunebook Fav Button
+
+function initTunebookAltFavBtnRight() {
+
+  const currentViewportW = getViewportWidth();
+
+  const copyRightElem = currentViewportW < 528?
+    document.querySelector(`[data-tbk-action="open-launch-screen"]`) :
+    document.querySelector(`[data-tbk-action="open-list-viewer"]`);
+    
+  switchTuneBookFavBtn(copyRightElem, "pick-fav-right");
 }
 
 // Initialize app mode based on viewport dimensions
@@ -4287,10 +4756,20 @@ function initBrowserTweaks() {
 // Initialize GoatCounter, a privacy-oriented analytics tool
 
 async function initGoatCounter() {
+  
+  const controller = new AbortController();
+  const timeoutMs = 3000;
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
 
   try {
 
-    const response = await fetch('//gc.zgo.at/count.js');
+    const response =
+      // await fetch('//gc.zgo.at/count.js');
+      await fetch('//gc.zgo.at/count.js', { signal: controller.signal });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       
@@ -4309,6 +4788,8 @@ async function initGoatCounter() {
     document.head.appendChild(goatScript);
 
   } catch (error) {
+
+    clearTimeout(timeoutId);
 
     console.warn(`GoatCounter disabled (${error.message})`);
   }
@@ -4338,6 +4819,15 @@ function initPopoverWarning() {
 
     console.log(`NS Session App:\n\nThis browser does not support Popover API. Polyfill has been applied`);
   }
+}
+
+// Initialize ABC Tools iframe
+
+function initTuneFrame() {
+
+  if (!tuneFrame) return;
+
+  tuneFrame.addEventListener('load', appAbcToolsLoadHandler);
 }
 
 // Add global event listeners to the app's window object
@@ -4379,6 +4869,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGoatCounter();
   initBrowserTweaks();
   initPopoverWarning();
+  initTuneFrame();
   initQuickHelpDialog();
   initWindowEvents();
   initAppSettings();
@@ -4386,13 +4877,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initChordViewer();
   initListViewer();
   appRouterOnLoad();
+  fetchAppVersionData();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });
 
 ////////////////////////////////////////////
 // APP SCRIPTS: SERVICE WORKER
-///////////////////////////////////////////
+///////////////////////////////////////////  
 
 // Register service worker on window load
 
@@ -4404,6 +4896,10 @@ if ('serviceWorker' in navigator) {
         console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
       })
       .catch((error) => {
+        goatCountEvent(
+          "!error-sw-register",
+          "nss-app__serviceWorker"
+        );
         console.warn(`[NS App Service Worker]\n\n` + `Registration failed!\n\n` + error);
       });
   });

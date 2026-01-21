@@ -34,8 +34,8 @@ export const abcEncoderDefaults = {
     abcSortEnforcesCustomAbcFields: "1",
     abcSortExportsTunesFromSets: "1",
     abcSortExportsChordsFromTunes: "1",
-    abcSortUsesStrictTuneDetection: "0",
     abcSortFetchesTsoMetaData: "0",
+    abcSortUsesStrictTuneDetection: "0",
     abcSortFormatsSetTitleFirstName: "1", // Disables abcSortFormatsSetTitleSlashNames
     abcSortFormatsSetTitleSlashNames: "0",  // Disables abcSortFormatsSetTitleFirstName
     abcSortFormatsTitlesTypePrefix: "1", // Disables abcSortFormatsTitlesTypeSuffix abcSortFormatsTitlesMovesTheAnA; Force-enables abcSortFormatsTitlesNoTheAnAEnd
@@ -366,7 +366,10 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
                 console.error("ABC Encoder:\n\nError reading ABC file content:\n\n", error);
 
                 displayNotification("Error reading file content", "error");
+                
                 displayWarningEffect(triggerBtn);
+
+                goatCountEvent("!error-encoder-input-read", "abc-encoder__parseAbcFromFile");
             }
         }
         
@@ -377,7 +380,10 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
 
         displayNotification("Failed to parse file", "error");
+
         displayWarningEffect(triggerBtn);
+
+        goatCountEvent("!error-encoder-input-parse", "abc-encoder__parseAbcFromFile");        
     }
 }
 
@@ -417,7 +423,6 @@ export function parseEncoderImportFile(triggerBtn) {
                 console.log("ABC Encoder:\n\nSettings import file contents read");
 
                 const isEncoderSettingsFile =
-                    // importFileContents.startsWith(`[\n  {\n    "abcEncodeSortsTuneBook":`);
                     importFileContents.match(/^\[\s*{\s*"abcEncodeSortsTuneBook":/);
 
                 const isSessionSurveyFile = 
@@ -468,7 +473,10 @@ export function parseEncoderImportFile(triggerBtn) {
                 console.error("ABC Encoder:\n\nError reading imported data file:\n\n", error);
 
                 displayNotification("Error reading imported data file", "error");
+                
                 displayWarningEffect(triggerBtn);
+
+                goatCountEvent("!error-encoder-import-read", "abc-encoder__parseEncoderImportFile");
             }
         };
         
@@ -479,7 +487,10 @@ export function parseEncoderImportFile(triggerBtn) {
         console.error("ABC Encoder:\n\nParsing sequence failed!\n\n", error);
 
         displayNotification("Error parsing imported data file", "error");
+
         displayWarningEffect(triggerBtn);
+
+        goatCountEvent("!error-encoder-import-parse", "abc-encoder__parseEncoderImportFile");
     }
 }
 
@@ -577,9 +588,9 @@ function validateAbcFile(abcContent, taskType) {
 
         } catch (error) {
 
-            goatCountEvent("!error-validate-encoder-input", "abc-encoder__validateAbcFile");
-
             console.log(`ABC Encoder:\n\nDecoding task failed. Details:\n\n${error}`);
+            
+            goatCountEvent("!error-validate-encoder-input", "abc-encoder__validateAbcFile");
 
             return false;
         }
@@ -659,6 +670,8 @@ async function preProcessAbcMetadata(rawAbcContent) {
 
         addEncoderWarningMsg = "Failed to get metadata from The\xa0Session";
         
+        goatCountEvent("!error-fetch-tso-metadata", "abc-encoder__preProcessAbcMetadata");
+
         return rawAbcContent;
     }
 
@@ -907,7 +920,11 @@ export function getSortedAbc(abcContent) {
     } else {
 
         console.warn("ABC Encoder:\n\nNo valid ABC data found after sorting");
+
         displayNotification("No valid ABC data found", "warning");
+
+        goatCountEvent("!error-sort-abc-nodata", "abc-encoder__getSortedAbc");
+
         return;
     }
 }
@@ -3638,10 +3655,12 @@ export async function encodeTunesForAbcTools(abcContent) {
     } catch (error) {
 
         console.warn("ABC Encoder:\n\nFailed to encode ABC!\n\n", { cause: error });
-
+        
         displayNotification("Failed to encode ABC", "error");
-
+        
         addEncoderWarningMsg = "Failed to encode ABC";
+        
+        goatCountEvent("!error-encode-for-abctools", "abc-encoder__encodeTunesForAbcTools");
     }
 }
 
@@ -3706,16 +3725,22 @@ async function getDecodedAbc(abcContent) {
         } else {
 
             console.warn("ABC Encoder:\n\nNo valid ABC data found after decoding");
+            
             addEncoderWarningMsg = "No valid ABC data found";
+
+            goatCountEvent("!error-decode-abc-read", "abc-encoder__getDecodedAbc");
+            
             return '';
         }
 
     } catch (error) {
 
-        goatCountEvent("!error-decode-abc-json", "abc-encoder__getDecodedAbc");
-
         console.error("ABC Encoder:\n\nError parsing encoded ABC during Decode\n\n", error);
+        
         addEncoderWarningMsg = "Failed to parse encoded ABC";
+        
+        goatCountEvent("!error-decode-abc-parse", "abc-encoder__getDecodedAbc");
+        
         return '';
     }
 }
@@ -3794,9 +3819,11 @@ function exportPlainTuneList(abcContent, isFromAbcToolsWebsite) {
 
     } catch (error) {
 
-        goatCountEvent("!error-export-plain-tunelist", "abc-encoder__exportPlainTuneList");
         console.error(`ABC Encoder:\n\nExporting plaintext tunelist failed. Details:\n\n${error}`);
+        
         addEncoderWarningMsg = "Failed to export plaintext tunelist";
+        
+        goatCountEvent("!error-export-plain-tunelist", "abc-encoder__exportPlainTuneList");
     }
 
     return tuneListStr;
@@ -3837,10 +3864,11 @@ function restoreEncoderSettingsFromFile(importFileData) {
 
     } catch (error) {
 
-        goatCountEvent("!error-import-encoder-settings", "abc-encoder__restoreEncoderSettingsFromFile");
-
         displayNotification("Error parsing imported settings file", "error");
+        
         console.error("ABC Encoder:\n\nParsing settings file data failed\n\n", error);
+        
+        goatCountEvent("!error-import-encoder-settings", "abc-encoder__restoreEncoderSettingsFromFile");
     }
 
     initAppCheckBoxes(true);

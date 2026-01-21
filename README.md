@@ -13,6 +13,7 @@ Module Name | GitHub Repo | Help Link |
 | 👉 <a href="https://anton-bregolas.github.io/NS-Session-Setlist/abc-encoder.html" target="_blank">**ABC Encoder Module by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#abc-encoder-module) |
 | 👉 **Chord Viewer Module by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#chord-viewer-module) |
 | 👉 **List Viewer / Set Maker by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#list-viewer--set-maker) |
+| 👉 **Common Utilities Module by Anton Zille** | <a href="https://github.com/anton-bregolas/NS-Session-Setlist" target="_blank">NS-Session-Setlist</a> | [README](#abc-utils-module) |
 | 👉 <a href="https://abc.tunebook.app" target="_blank">**ABC Tools Lite by Anton Zille**</a> | <a href="https://github.com/anton-bregolas/abctools-lite" target="_blank">abctools-lite</a> | <a href="https://github.com/anton-bregolas/abctools-lite" target="_blank">README</a> |
 | 👉 <a href="https://michaeleskin.com/abc" target="_blank">**ABC Transcription Tools by Michael Eskin**</a> | <a href="https://github.com/seisiuneer/abctools" target="_blank">abctools</a> | <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">GUIDE</a> |
 | 👉 <a href="https://abcjs.net/" target="_blank">**abcjs by Paul Rosen and Gregory Dyke**</a> | <a href="https://github.com/paulrosen/abcjs" target="_blank">abcjs</a> | <a href="https://paulrosen.github.io/abcjs" target="_blank">DOCS</a> |
@@ -35,7 +36,7 @@ The app may be installed via a PWA-supporting browser to guarantee offline acces
 
 ### How it works for app user:
 
-Open **Setlist 🎶** or **Tunelist 🎵** from the **Launch section** of the app to access the **Tunebook section** and load the latest version of the Session DB. Once loaded, the session’s Sets, Tunes and Chordbook data can be accessed offline. By Default, Session DB is set to be updated weekly (hard-refresh the app to update manually).
+Open **Setlist 🎶** or **Tunelist 🎵** from the **Launch section** of the app to access the **Tunebook section** and load the latest version of the Session DB. Once loaded, the session’s Sets, Tunes and Chordbook data can be accessed offline. The app auto-updates in the background when online. It will notify about a new version when refresh is required (go to App Options or hard-refresh the app to update manually).
 
 ![A screenshot of the Launch section of the app](/assets/screens/screenshot-launch-desktop.webp)
 
@@ -55,7 +56,13 @@ Use **Tunebook Footer** for accessing shortcuts to various modules and features.
 
 ![A screenshot of the Tunebook Actions menu of the app](/assets/screens/screenshot-tunebook-actions.webp)
 
-Both **Mobile 📲** and **Desktop 🖥️** layouts adapt to the current screen size. Wider screen layouts include extra side buttons. Pick two **Fav Buttons** useful for your current layout using optional controls on left-of-center and right-of-center slots. Default layouts feature a pair of **Full Screen behavior** radio buttons that change the binding of the top-right **Full Screen View / 👁️** button.
+Both **Mobile 📲** and **Desktop 🖥️** layouts adapt to the current screen size. Wider screen layouts include extra side buttons.
+
+Pick two **Fav Buttons**💚 using optional controls on left-of-center and right-of-center slots.
+
+The default desktop layout features a pair of radio buttons that adjust Full Screen behavior. Switching between Tunes and Chords changes the binding of the top-right Full Screen View / 👁 button and may come in handy when frequently using both views.
+
+When opened on a narrow screen in mobile mode, the app sets the Help and Return to Launch Screen buttons as the default fav buttons.
 
 ![Examples of adaptive mobile layout of the Tunebook section of the app](/assets/screens/screenshot-tunebook-mobile.webp)
 
@@ -100,8 +107,10 @@ Active Section | Key Combination | Description |
 
 Option Name | Default Setting | Comments |
 | --- | --- | --- |
+| `Use ABC Tools Lite editor to view tunes` | **ON** | Open tunes in ABC Tools Lite (ON) or ABC Transcription Tools (OFF) |
 | `Save & load last opened Set or Tune` | **ON** | Store last opened Tunebook item between sessions |
 | `Always open Tunebook in Mobile Mode` | **OFF** | Enable persistent mobile mode ignoring viewport size |
+| `Always open Tunebook in Desktop Mode` | **OFF** | Enable persistent desktop mode ignoring viewport size |
 | `Share links open ABC Tools instead of app` | **OFF** | Always generate share links to ABC Transcription Tools |
 | `Full Screen opens ABC Tools in new window` | **OFF** | Full Screen button redirects to ABC Transcription Tools |
 | `App: Show Tunebook report at launch` | **OFF** | Show version info and Session DB stats on Tunebook startup |
@@ -115,7 +124,7 @@ Option Name | Default Setting | Comments |
 | `Chord Viewer: Generate chords dynamically` | **OFF** | Extract chords directly from ABC or Tune Selector instead of Chordbook **[1]** |
 | `Chord Viewer: Use bold font for chords` | **OFF** | Make chords and barlines more readable on small screens |
 | `List Viewer: Always hide slider input GUI` | **OFF** | Do not show List Viewer slider |
-| `List Viewer: Search through ABC subtitles ` | **OFF** | Look through all tune titles & subtitles when filtering the list |
+| `List Viewer: Search through ABC subtitles ` | **ON** | Look through all tune titles & subtitles when filtering the list |
 
 > [!NOTE]
 > **[1]** Chord Viewer falls back to the last item loaded to Tune Selector when used with embedded ABC Transcription Tools. For tunebooks printing ABC to a page of the same origin, it can extract chords directly from the text with dynamic mode enabled.
@@ -160,6 +169,7 @@ File Path | Module Name | Description |
 | `index.html` | **NS Session App** | NS Session App HTML markup |
 | `/modules/scripts-nss-app.js` | **NS Session App scripts** | Scripts handling Launcher, Tunebook and Playalong app sections |
 | `/modules/scripts-abc-tools.js` | **Custom ABC Tools scripts** | Modified and refactored scripts from ABC Transcription Tools Export Tunebook Website |
+| `/modules/scripts-abc-utils.js` | **Common utility scripts** | Various utility scripts shared between modules |
 | `/modules/scripts-emoji-manager.js` | **App Emoji Manager scripts** | Optional scripts for displaying randomized emojis in Tunebook |
 | `/modules/scripts-preload-nssapp.js` | **App Preload scripts** | Scripts executed before common app scripts are loaded |
 | `/styles/styles-nss-app.css` | **NS Session App styles** | Common NS Session App styles |
@@ -185,6 +195,8 @@ Setting Name | Default Setting | Comments |
 | `ENCODE automatically passes tunes to SORT` | **OFF** | Output all Encode and Sort file types selected |
 | `ENCODE exports plaintext Tunelist with links` | **OFF** | Output .txt Tunelist with links for each ABC file |
 | `ENCODE output is for ABC Tools export website` | **OFF** | Output text string compatible with ABC Tools Export Website |
+| `ENCODE plaintext Tunelist links to ABC Tools Lite` | **ON** | Create links to ABC Tools Lite (ON) or ABC Transcription Tools (OFF) when processing Tunelist |
+| `ENCODE uses legacy LZW compression for URLs` | **OFF** | Use LZString instead of Deflate to compress ABC |
 | `SORT enforces custom N.S.S.S. ABC fields` | **ON** | Use custom C: C: S: and C: Set Leaders: ABC fields, order ABC tags à la NS Session Setlist |
 | `SORT exports Tunes ABC from Sets ABC` | **ON** | Output separate ABC of Tunes converted from Sets |
 | `SORT extracts chords from Tunebook` | **ON** | Output Chordbook JSON for each ABC file |
@@ -225,7 +237,7 @@ Tool | Input | Output |
 
 ### Output ABC Field Order
 
-Given the fluidity and variability of the de-facto applied <a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank">**ABC Notation Standard**</a>, Encoder attempts to strike a balance between rigid-but-predictable and highly-permissive output. As such Encoder v.1.0 combines an array of customizable settings with a pre-determined order of ABC Fields. Strict order of fields serves both aesthetic and functional purposes and enables the custom ABC Field-merging algorithm that produces clean-looking ABC Sets.
+Given the fluidity and variability of the de-facto applied <a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank">**ABC Notation Standard**</a>, Encoder attempts to strike a balance between rigid-but-predictable and highly-permissive output. As such ABC Encoder combines an array of customizable settings with a pre-determined order of ABC Fields. Strict order of fields serves both aesthetic and functional purposes and enables the custom ABC Field-merging algorithm that produces clean-looking ABC Sets.
 
 > [!NOTE]
 > ABC Field merging is ON by default and can be turned off in Encoder Settings.
@@ -291,11 +303,12 @@ File Path | Module Name | Description |
 
 Import Name | Import Description | Details |
 | --- | --- | --- |
-| `apStyleTitleCase` | Convert string to AP Title Case | Required for formatting ABC titles |
+| `scripts-abc-utils.js` | Shared utility scripts | Includes Deflate compression handlers, localStorage checks and other utils |
 | `LZString` | LZ-based compression algorithm | Required for compressing and decompressing ABC strings |
+| `apStyleTitleCase` | Convert string to AP Title Case | Required for formatting ABC titles |
 | `pThrottle` | Throttle promise-returning functions | Required for throttling API requests to The Session |
 | `makeAbcChordBook` | Generate Chordbook from ABC data | Required for creating Chordbook JSON with Encoder's Sort tool. Imported from `scripts-chord-viewer.js` |
-| `localStorageOk`, `fetchData`, `initSettingsFromObject`, `initAppCheckBoxes`, `displayWarningEffect`, `displayNotification` | Shared NS Session App scripts | Required for initializing localStorage items, fetching data and displaying notifications. Imported from `scripts-nss-app.js` |
+| `fetchData`, `initSettingsFromObject`, `initAppCheckBoxes`, `displayWarningEffect`, `displayNotification` | Shared NS Session App scripts | Required for initializing localStorage items, fetching data and displaying notifications. Imported from `scripts-nss-app.js` |
 
 ## Chord Viewer Module
 
@@ -314,8 +327,8 @@ See comments in `scripts-chord-viewer.js` for more details.
 
 Import Name | Import Description | Details |
 | --- | --- | --- |
+| `scripts-abc-utils.js` | Shared utility scripts | Includes Deflate compression handlers, localStorage checks and other utils |
 | `LZString` | LZ-based compression algorithm | Required for decompressing ABC encoded by LZString |
-| `storageAvailable` | Detect if localStorage is available | Required for localStorage checks (replaceable by custom logic) |
 | `getLastTunebookUrl` | Get last URL loaded into ABC Tools | Required for extracting ABC in Chordbook Mode (replaceable by custom logic). Imported from `scripts-abc-tools.js` by default |
 | `displayWarningEffect`, `displayNotification` | Custom scripts for user notifications | Replaceable by placeholder functions or custom logic. Imported from `scripts-nss-app.js` by default |
 
@@ -336,11 +349,86 @@ See comments in `scripts-list-viewer.js` for more details.
 
 Import Name | Import Description | Details |
 | --- | --- | --- |
+| `scripts-abc-utils.js` | Shared utility scripts | Includes Deflate compression handlers, localStorage checks and other utils |
 | `LZString` | LZ-based compression algorithm | Required for decompressing ABC encoded by LZString |
-| `storageAvailable` | Detect if localStorage is available | Required for localStorage checks (replaceable by custom logic) |
 | `makeTunesFromSets`, `sortFilterAbc` | Custom scripts for making ABC Sets | Required for creating ABC Sets and generating Set URLs. Imported from `scripts-abc-encoder.js` by default |
 
 ## Version History
+
+**v1.2.1: Add Support Menu, Version Check, UI Fixes**
+
++ App updates:
+  - Add App Version / Version Update button to Options Menu
+    * Clicking on App Version button will copy detailed version data
+    * Clicking on Version Update button will reload page (hard reload for Firefox)
+  - Add Support Menu Popover with developer contacts & links
+    * Add Send Email button with custom mailto & copy address logic
+    * Add Support Menu content via reusable utility function
+    * Scale developer photo depending on viewport size
+  - Add isMobileBrowser to preload scripts and appWindowResizeHandler to prevent Y-axis auto-scaling on Desktop
+  - Add Refresh App button:
+    * Add Refresh button to Launch Screen if browser identifies as mobile (Android or iOS)
+    * Add Refresh button to Tunebook Actions if Compact Mode enabled
+  - Add Advanced Options buttons:
+    * Add Open ABC Encoder button (doubles as a mobile fallback)
+    * Add placeholder buttons for opening standalone viewer tools
+  - Add fade-in overlay on app load to smooth out cases of layout jump
+    * Fade-in is currently triggered by browser data attr added to body
+    * Fade-in signals layout & browser tweaks have been applied
+  - Add height/width 100% declarations for html, body and popover menus for simpler responsive calculations 
+  - Add fixed height to popover menu header and footer to simplify popover body height calc in CSS and make layout more predictable
+  - Add App Launcher header and popover menu header & footer CSS variables
+  - Fix Launch Screen and Options Menu title containers to improve title scaling
+  - Fix height calc for notification popups with popover menu open
+  - Fix X button centering for multi-line notification popups
+  - Refactor button handler to reuse data-load attr
+  - Add GoatCounter error events for Encoder & Tunebook
+
++ PWA updates:
+  - Fix handleNavigate logic, change to cache first
+  - Add version number padding (always 4 digits)
+  - Add az.webp to lazy-loaded assets
+  - Move placeholder image to primary cache
+
++ Tunebook updates:
+  - Add lastPressedNavBtn global variable
+  - Fix ABC Tools trapping focus on reload
+    * Fixed focus algorithm in ABC Tools Lite (no app fix needed)
+    * Restore focus to lastPressedNavBtn for vanilla ABC Tools
+    * TO DO: Fix issue in ABC Tools upstream
+  - Fix radio fav button selection: Always add and remove them in pairs
+  - Add Mobile Mode-specific default fav buttons (Help & Launch Screen)
+  - Notifications are now displayed above bottom bar (default layout)
+  - Add layout data attr for checks & styles ("default" on startup, "compact" for Compact Mode)
+  - Add optional reload data attr flag to force-reload reopened Tunebook (load tunes in new editor etc.)
+  - Fix keyboard focus on ABC Tools in Full Screen Mode with Zoom GUI turned off
+  - Fix Zoom scaling app UI buttons in Desktop Mode on mobile
+  - Zoom level now ranges between 35% and 105% in Mobile Mode (default: 95%)
+  - Remove reduntant tune load timeouts
+
++ Chord Viewer updates:
+  - Add missing last URL checks
+
++ List Viewer updates:
+  - Set Maker: Fix multiple R: tags in Medleys (ABC Tools-specific)
+
++ ABC Encoder module updates:
+  - Update Encoder Options, make shortlist more compact, move strict mode to advanced options
+  - Add Support Menu Popover
+  - Add Popover Menu fixes
+  - Add Fade-in overlay
+  - Add Firefox FOUC fix
+
++ ABC Utils module updates:
+  - Add Node Elem handlers to common util scripts
+  - Add common Support Menu handler addSupportMenuContent
+
++ Accessibility updates: 
+  - A11y: Add prefers-reduced-motion rules
+  - A11y: Add underline styles for inline links and buttons
+  - A11y: Scale up notification popup text for smaller viewports
+<details>
+  <summary><b>v1.2.0</b></summary>
 
 **v1.2.0: Deflated Session DB, New SW, Tools Lite**
 
@@ -357,7 +445,7 @@ Import Name | Import Description | Details |
   - Make listViewerSearchSubTitles option on by default
   - Organize functions with new group labels in script files
   - Add GoatCounter events to follow basic feature stats & spot errors
-  - Add placeholder Donate & Follow button in place of Telegram link (TO DO)
+  - Add placeholder Support & Follow button in place of Telegram link
 
 + PWA updates (BREAKING):
   - Refactor Service Worker to mostly async-await
@@ -389,9 +477,10 @@ Import Name | Import Description | Details |
 + Session DB Updates:
   - Convert Session DB to new def= url format
   - Update to version 2025.12.21.1
+</details>
 
 <details>
-  <summary><b>Beta version updates (v.1.1+)</b></summary>
+  <summary><b>Beta version updates (v1.1+)</b></summary>
 
 **v1.1.23: Fix Service Worker Filters**
 
@@ -638,7 +727,7 @@ Import Name | Import Description | Details |
 </details>
 
 <details>
-  <summary><b>Alpha version updates (v.1.0+)</b></summary>
+  <summary><b>Alpha version updates (v1.0+)</b></summary>
 
 **v1.0.51: Update README & Versioning**
 
@@ -1125,7 +1214,7 @@ Import Name | Import Description | Details |
 </details>
 
 <details>
-  <summary><b>Pre-alpha updates (v.0.1+)</b></summary>
+  <summary><b>Pre-alpha updates (v0.1+)</b></summary>
 
 <details>
   <summary><b>v.0.9: UI/UX Upgrade</b></summary>
