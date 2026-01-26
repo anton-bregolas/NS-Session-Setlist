@@ -1,4 +1,4 @@
-const APP_VERSION = '1.2.1';
+const APP_VERSION = '1.2.2';
 const CACHE_VERSION =
   APP_VERSION.replaceAll(".", '').slice(0, 2) +
   APP_VERSION.slice(-1).padStart(2, "0");

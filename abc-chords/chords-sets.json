@@ -1,5 +1,20 @@
 [
   {
+    "setTitle": "AIRS: Sí Bheag, Sí Mhór Set",
+    "tuneChords": [
+      {
+        "title": "Sí Bheag, Sí Mhór",
+        "meter": "3/4",
+        "chords": "PART 1:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tA\tA\tA\t|\tD\tD\tD\t|\tD (Bm)\t/\t/|\n|\tG\tG\tG\t|\tA\tA\tA\t|\tD (Bm)\t/\t/|\tD (Bm)\t/\tD (Bm)\t|\n|\tG\tG\tG\t|\tA\tA\tA\t|\tD\tD\tD\t|\tD\t(A)\t(A)\t||\n\nPART 2:\n|\tD (Bm)\t/\t/|\t(A)\t(A)\t(A)\t|\tG\tG\tG\t|\tD\tD\tD\t|\n|\tA\tA\tA\t|\tD\tD\tD\t|\tG\tG\tG\t|\t(A)\t(A)\t(A)\t|\n|\tD (Bm)\t/\t/|\tD (Bm)\t/\t/|\tG\tG\tG\t|\tA\tA\tA\t|\n|\tG\tG\tG\t|\tA\tA\tA\t|\tD (G)\t/\t(A)\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
+      },
+      {
+        "title": "Lord Inchiquin",
+        "meter": "3/4",
+        "chords": "PART 1:\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\n|\tD (Bm)\t/\t/|\tG\tG\tG\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t||\n\nPART 2:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tD/F#\tG\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD/F#\t|\tG\tG\tA\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tA\tA\tA\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tEm\tEm\t(F#m)\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "BARNDANCES: Hills of Tara Set",
     "tuneChords": [
       {
@@ -155,17 +170,17 @@
       {
         "title": "Black Rogue",
         "meter": "6/8",
-        "chords": "PART 1:\n|\tA5\tG\t|\tA5\tA5\t|\tA5\tG\t|\tD\tD\t|\n|\tA5\tG\t|\tA5\tA5\t|\tG\tG\t|1\tD\tD\t|\n|2\tA5\tA5\t||\n\nPART 2:\n|\tD\tEm\t|\tD/F#\tAsus4\t|\tD/F#\tG\t|\tA5\tA5\t|\n|\tD\tEm\t|\tD/F#\tG\t|\tAsus4\tG\t|1\tD/F#\tD\t|\n|2\tD/F#\tD\t||"
+        "chords": "PART 1:\n|\tA5\tG\t|\tA5\tA5\t|\tA5\tG\t|\tD\tD\t|\n|\tA5\tG\t|\tA5\tA5\t|\tG\tG\t|1\tD\tD\t|\n|2\tA5\tA5\t||\n\nPART 2:\n|\tD\tEm\t|\tD/F#\tAsus4\t|\tD/F#\tG\t|\tA5\tA5\t|\n|\tD\tEm\t|\tD/F#\tG\t|\tAsus4\tG\t|1\tD\tD\t|\n|2\tD\tD\t||"
       },
       {
         "title": "Winnie Hayes'",
         "meter": "6/8",
-        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tD (G)\t/|\tD/B\tD\t||\n\nPART 2:\n|\tEm (D)\tEm\t|\t(C)\t(C)\t|\tAm\tAm\t|\tD/F# (Bm)\t/|\n|\tG\tD/F#\t|\tEm\t(G/B)\t|\tAm\tAm\t|\tD (Bm)\t/||"
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC (Am)\t/|\tD (Bm)\t/||\n\nPART 2:\n|\tEm (D)\tEm\t|\t(C)\t(C)\t|\tAm\tAm\t|\tD/F# (Bm)\t/|\n|\tG\tD/F#\t|\tEm\t(G/B)\t|\tAm (C)\t/|\tBm (D)\t/||"
       },
       {
         "title": "Cordal",
         "meter": "6/8",
-        "chords": "PART 1:\n|\tG\tA\t|\tA\tD\t|\tD\tD\t|\tG\tG\t|\n|\tG\tA\t|\tA\tD\t|\tG\tG\t|\tG\t(A)\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD\tD\t|\tA\tA\t|\tG\t(D/F#)\t|\tG\tA\t||"
+        "chords": "PART 1:\n|\tG\tA\t|\tA\tD\t|\tD\tD\t|\tG\tG\t|\n|\tG\tA\t|\tA\tD\t|\tBm\tBm\t|1\tG\t(D/F#)\t|\n|2\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tBm\tBm\t|\tA\tA\t|\tG (Bm)\tA (F#m)\t|1\tG\tA\t|\n|2\tG\tA\t||"
       }
     ]
   },
@@ -181,6 +196,21 @@
         "title": "Tenpenny Bit",
         "meter": "6/8",
         "chords": "PART 1:\n|\tD\tG\t|\tG\tG\t|\tC\tC\t|\tD\tD\t|\n|\tG (Em)\t/|\tG (Em)\tEm\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tEm (A5)\t/|\tD (A5)\t/|\tC (A5)\t/|\tD (A5)\tD/F# (D)\t|\n|\tG (A5)\tD (A5)\t|\tG\tA5\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "JIGS: Castlebar Races Set",
+    "tuneChords": [
+      {
+        "title": "Castlebar Races",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\tG\t|\t(C)\t(D)\t|\t(G)\t(G)\t|\tC\tD\t|\n|\tG\tG\t|\t(C)\tD\t|\tEm\tEm\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tC\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tC\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tG/B\t|\tC\tC\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tC\tD\t||"
+      },
+      {
+        "title": "Dawn Chorus",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\t(G/B)\t|\tAm\tBm\t|\tEm\tC\t|\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\t(G/B)\t|\tC\tD\t|\tEm\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD\t|\tEm\t(G/B)\t|\n|\tC\tC\t|\tG\tG\t|\tC\tD\t|\tD\tG\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD\t|\tC\tC\t|\n|\tEm\tC\t|\tG\t(G/B)\t|\tC\tC\t|\tDsus4\t/||"
       }
     ]
   },
@@ -341,6 +371,16 @@
         "title": "Lilting Fisherman",
         "meter": "6/8",
         "chords": "PART 1:\n|\tG\tG\t|\tG\t(C)\t|\tC (G)\t/|\tD\tD\t|\n|\tG (Em)\t/|\tG (Em)\t/\t|\tC\tD\t|1\tG\tG\t|\n|2\tG\tG\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tG\tG\t|\tA\tA\t|1\tD\tD\t|\n|2\tD\t(A)\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "JIGS: Lark in the Bog Set",
+    "tuneChords": [
+      {
+        "title": "Cordal",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tG\tA\t|\tA\tD\t|\tD |\tG\tG\t|\n|\tG\tA\t|\tA\tD\t|\tBm\tBm\t|1\tG\t(D/F#)\t|\n|2\tG\tA\t||\n\nPART 2:\n|\tD\tD\t|\tA\tA\t|\tD\tD\t|\tG\tA\t|\n|\tBm\tBm\t|\tA\tA\t|\tG (Bm)\tA (F#m)\t|1\tG\tA\t|\n|2\tG\tA\t||"
       }
     ]
   },
@@ -579,8 +619,8 @@
       },
       {
         "title": "Kerfunten (Dmaj) [Jig]",
-        "meter": "3/4",
-        "chords": "PART 1:\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD\tD\tD\t|\tA7\tA7\tA7\t|\n|\tD\tD\tD\t|\tD\tD\tD\t|\tD/F#\tG\t|1\tA\tD\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tD (Bm7)\t/\t/|\tG\tG\tG\t|\tD\tD\tD\t|\tG\tA\t|\n|\tD (Bm7)\t/\t/|\tG\tG\tG\t|\tD\tBm7\t|1\tA\tD\t|\n|2\tA\tD\t||"
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tD\tD\t|\tD\tD\t|\tD\tD\t|\tA7\tA7\t|\n|\tD\tD\t|\tD\tD\t|\tD/F#\tG\t|1\tA\tD\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tD (Bm7)\t/|\tG\tG\t|\tD\tD\t|\tG\tA\t|\n|\tD (Bm7)\t/|\tG\tG\t|\tD\tBm7\t|1\tA\tD\t|\n|2\tA\tD\t||"
       },
       {
         "title": "Mountain Road [Reel]",
@@ -589,8 +629,8 @@
       },
       {
         "title": "Rip the Calico [Reel]",
-        "meter": "3/4",
-        "chords": "PART 1:\n|\tD\tD\tD\t|\tG\tG\tA\tA\t|\tD\tD\tD\t|\tG\tG\tA\tA\t||\n\nPART 2:\n|\tG\tG\t(Em7)\t/\t|\tA\tA\tA\t|\tG\tG\t(Em7)\t/\t|1\tA\tA\tA\t|\n|2\tA\tA\tA\t||\n\nPART 3:\n|\tD\tD\tD\t|\tG\tG\tA\tA\t|\tD\tD\tD\t|\tG\tG\tA\tA\t|\n|\tD (Bm7)\t/\t/|\tG\tG\tA\tA\t|\tBm7 (D)\t/\t/|\tG\tG\tA\tA\t||"
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t||\n\nPART 2:\n|\tG\t(Em7)\t|\tA\tA\t|\tG\t(Em7)\t|1\tA\tA\t|\n|2\tA\tA\t||\n\nPART 3:\n|\tD\tD\t|\tG\tA\t|\tD\tD\t|\tG\tA\t|\n|\tD (Bm7)\t/|\tG\tA\t|\tBm7 (D)\t/|\tG\tA\t||"
       }
     ]
   },
@@ -1170,6 +1210,26 @@
     ]
   },
   {
+    "setTitle": "REELS: Jack Rowe Set",
+    "tuneChords": [
+      {
+        "title": "Jack Rowe",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tD7\tD7\t|\tC\tD\t|\tG\tG\t|\tEm\tEm\t|\n|\tD7\tD7\t|\tC\tD\t|\tG\tD\t|1\tEm\tC\t|\n|2\tC\tG\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tD\t|\tEm\t(C)\t|\tD\tG\t|\n|\tEm\tC\t|\tG\tG\t|\tC\tD\t|1\tC\tG\t|\n|2\tC\tC\t||"
+      },
+      {
+        "title": "Palmer's Gate",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tEm\tEm\t|\tD\tD\t|\tG\tG\t|\tC\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tG\tG\t|1\tC\tD\t|\n|2\tEm\tD\t||\n\nPART 2:\n|\tC\tC\t|\tC\tD\t|\tG\tG\t|\tC\tD\t|\n|\tC\tC\t|\tC\tD\t|\tG\tD\t|1\tC\tD\t|\n|2\tC\tC\t||"
+      },
+      {
+        "title": "Providence",
+        "meter": "4/4",
+        "chords": "PART 1:\n|\tA\tA\t|\tD\tD\t|\tG\tD\t|\tBm\tBm\t|\n|\tA\tA\t|\tD (Bm)\t/|\tG\tD\t|1\tA\tD\t|\n|2\tA\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tA\t|\tD\tD\t|\tA\tD\t|\n|\tD (Bm)\t/|\tD (Bm)\tG\t|\tA\tA\t|1\tA\tD\t|\n|2\tD\tD\t||"
+      }
+    ]
+  },
+  {
     "setTitle": "REELS: Jenny's Chickens Set",
     "tuneChords": [
       {
@@ -1576,6 +1636,21 @@
         "title": "Butterfly",
         "meter": "9/8",
         "chords": "PART 1:\n|\tEm\tEm\tD\t|\tEm\tEm\tD\t|\tEm\tEm\tD\t|\tG\tG\tD\t||\n\nPART 2:\n|\tAm\tAm\tAm\t|\tBm\tBm\tBm\t|\tC\tC\tC\t|\tD\tD\tD\t||\n\nPART 3:\n|\tEm\tEm\tEm\t|\tD\tD\tD\t|\tC\tC\tC\t|\tD\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "SLIP JIGS: Peacock Follows the Hen Set",
+    "tuneChords": [
+      {
+        "title": "Peacock Follows the Hen",
+        "meter": "9/8",
+        "chords": "PART 1:\n|\tEm\tEm\tEm\t|\tEm\t(C)\tD\t|\tEm\tEm\tEm\t|\tC\tC\tD\t|\n|\tEm\tEm\tEm\t|\tC\tC\tD\t|\tEm\tEm\t(Bm)\t|\tC\tC\tD\t||\n\nPART 2:\n|\tG\tC\tD\t|\tG\tG\tD\t|\tG\tG\tEm\t|\tC\tC\tD\t|\n|\tG\tC\tD\t|\tG\tG\tA\t|\tG\tG\tEm\t|\tAm\tAm\tD\t||"
+      },
+      {
+        "title": "Humours of Whiskey",
+        "meter": "9/8",
+        "chords": "PART 1:\n|\tBm\tBm\tBm\t|\tBm\tA\tA\t|\tBm\tBm\tBm\t|\tG\tG\tA\t|\n|\tBm\tBm\tBm\t|\tG\tBm\tA\t|\tG\tBm\tBm\t|\tG\tD\tA\t||\n\nPART 2:\n|\tD\tD\tA\t|\tD\tD\tG\t|\tD\tD\tA\t|\tG\tG\tA\t|\n|\tD\tD\tA\t|\tD\tD\tG\t|\tD\tD\tD\t|\tG\tEm\tF#m\t||"
       }
     ]
   },

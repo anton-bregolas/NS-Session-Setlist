@@ -355,6 +355,19 @@ Import Name | Import Description | Details |
 
 ## Version History
 
+**v1.2.2: Session DB Fixes & Update**
+
++ Chord Viewer updates:
+  - Fix missing time signature value in Medleys
+  - Add fallback logic for tunes missing R: / M: / L:
+
++ ABC Encoder module updates:
+  - Fix "Set" suffix missing in Medleys
+
++ Session DB Updates:
+  - Add 7 Sets (Anton Zille ed. arr.)
+  - Update to version 2026.01.26.1
+
 **v1.2.1: Add Support Menu, Version Check, UI Fixes**
 
 + App updates:

@@ -1573,8 +1573,12 @@ function joinAbcTitle(abcTitleArr, abcTitlePrefix, abcTitleSuffix, abcSetTitle, 
 
     if (abcTitleSuffix && !primaryTitle.includes(abcTitleSuffix)) {
 
+        const isSetSuffix =
+            abcTitleSuffix === ' Set' ||
+            abcTitleSuffix === ' Set [Medley]';
+
         outputTitleSuffix =
-            abcMedleyTuneSuffix && abcTitleSuffix !== ' Set [Medley]'? '' :
+            abcMedleyTuneSuffix && !isSetSuffix? '' :
             primaryTitle.match(/[ ]+[Ss][Ee][Tt]/)? abcTitleSuffix.replace(' Set', '') :
             abcTitleSuffix;
     }

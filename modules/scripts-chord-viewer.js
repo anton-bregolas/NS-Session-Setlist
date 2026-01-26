@@ -645,6 +645,7 @@ export function makeAbcChordBook(abcContent) {
     if (isTuneSet) {
 
       const abcPrimaryTitle = abc.match(/(?<=^T:).*/m)[0].trim();
+
       const abcTunesArr = 
         abc.replace(/^T:.*/, '')
            .trim()
@@ -653,6 +654,9 @@ export function makeAbcChordBook(abcContent) {
            .map(tune => `T:${tune}`);
 
       abcChordsObj = { "setTitle": abcPrimaryTitle, "tuneChords": [] };
+
+      let lastTuneMeter = "4/4"; // Fallback M value
+      let lastTuneNoteLength = "1/8"; // Fallback L value
 
       abcTunesArr.forEach(tune => {
 
@@ -663,8 +667,11 @@ export function makeAbcChordBook(abcContent) {
         }
 
         abcTitle = tune.match(/^.*/)[0].split(' / ')[0].trim();
-        abcMeter = tune.match(/^M:/m)? tune.match(/(?<=^M:).*/m)[0].trim() : abc.match(/(?<=^M:).*/m)[0].trim();
-        abcNoteLength = tune.match(/^L:/m)? tune.match(/(?<=^L:).*/m)[0].trim() : abc.match(/(?<=^L:).*/m)[0].trim();
+        abcMeter = tune.match(/^M:/m)? tune.match(/(?<=^M:).*/m)[0].trim() : lastTuneMeter;
+        abcNoteLength = tune.match(/^L:/m)? tune.match(/(?<=^L:).*/m)[0].trim() : lastTuneNoteLength;
+
+        lastTuneMeter = abcMeter;
+        lastTuneNoteLength = abcNoteLength;
 
         const tuneChordObj = getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength);
 
@@ -676,8 +683,8 @@ export function makeAbcChordBook(abcContent) {
     } else {
 
       abcTitle = abc.match(/(?<=^T:).*/m)[0].trim();
-      abcMeter = abc.match(/(?<=^M:).*/m)[0].trim();
-      abcNoteLength = abc.match(/(?<=^L:).*/m)[0].trim();
+      abcMeter = abc.match(/(?<=^M:).*/m)[0].trim() || "4/4";
+      abcNoteLength = abc.match(/(?<=^L:).*/m)[0].trim() || "1/8";
       abcBody = normalizeAbc(abc);
 
       abcChordsObj = getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength);
