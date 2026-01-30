@@ -662,16 +662,16 @@ export function makeAbcChordBook(abcContent) {
 
         abcBody = normalizeAbc(tune);
 
-        if (!abcBody.match(/".*"/)) {
-          return;
-        }
-
         abcTitle = tune.match(/^.*/)[0].split(' / ')[0].trim();
         abcMeter = tune.match(/^M:/m)? tune.match(/(?<=^M:).*/m)[0].trim() : lastTuneMeter;
         abcNoteLength = tune.match(/^L:/m)? tune.match(/(?<=^L:).*/m)[0].trim() : lastTuneNoteLength;
 
         lastTuneMeter = abcMeter;
         lastTuneNoteLength = abcNoteLength;
+
+        if (!abcBody.match(/".*"/)) {
+          return;
+        }
 
         const tuneChordObj = getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength);
 

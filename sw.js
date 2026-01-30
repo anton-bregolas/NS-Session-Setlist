@@ -1,7 +1,8 @@
 const APP_VERSION = '1.2.2';
+const appVersionArr = APP_VERSION.split('.');
 const CACHE_VERSION =
-  APP_VERSION.replaceAll(".", '').slice(0, 2) +
-  APP_VERSION.slice(-1).padStart(2, "0");
+  appVersionArr[0] + appVersionArr[1] +
+  (appVersionArr.length > 2? appVersionArr[2].padStart(2, "0") : '');
 const CACHE_PREFIX = "ns-app-cache-";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 const CACHE_EXPIRES_DAYS = 7;
@@ -148,9 +149,16 @@ self.addEventListener('fetch', event => {
 
   // Handle Session DB files
 
-  if (/(sets|tunes|chords-sets|chords-tunes)\.json$/.test(url.pathname)) {
+  if (/(sets|tunes)\.json$/.test(url.pathname)) {
 
     event.respondWith(handleDBCaching(request));
+    return;
+  }
+
+  // Handle version.json, skip network-only requests
+
+  if (/version\.json$/.test(url.pathname) && /^\?t\=\d*/.test(url.search)) {
+
     return;
   }
 

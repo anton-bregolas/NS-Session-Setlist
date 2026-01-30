@@ -1780,7 +1780,7 @@ async function fetchAppVersionData() {
       .replace(/http[s]*:\/\//, '')
       .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
     ) {
-      
+
     updateAppVersionData(appVersionJson);
     return;
   }
@@ -1796,7 +1796,6 @@ async function fetchAppVersionData() {
     
   const appVersionRemoteUrl =
     `${appBaseUrl}version.json`;
-    // `https://ns.tunebook.app/version.json`;
 
   // Create an AbortController
   // Prevent hanged version checks
@@ -1811,7 +1810,7 @@ async function fetchAppVersionData() {
   try {
 
     const remoteResponse =
-      await fetch(appVersionRemoteUrl, {
+      await fetch(`${appVersionRemoteUrl}?t=${Date.now()}`, {
         signal: controller.signal,
         cache: 'no-store'
         });
@@ -1841,7 +1840,7 @@ async function fetchAppVersionData() {
 
       if (!appOptionsPopover.matches(':popover-open') && !checkIfTunebookOpen()) {
 
-        displayNotification("Update available: Refresh app or go to Options⚙️ to get the latest version", "success");
+        displayNotification("Update available: Refresh app or go to Options (⚙️) to get latest version", "success");
       }
 
     } else {
