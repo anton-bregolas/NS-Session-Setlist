@@ -1,4 +1,4 @@
-const APP_VERSION = '1.2.2';
+const APP_VERSION = '1.2.3';
 const appVersionArr = APP_VERSION.split('.');
 const CACHE_VERSION =
   appVersionArr[0] + appVersionArr[1] +
