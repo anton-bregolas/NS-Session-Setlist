@@ -40,14 +40,20 @@ let successNotifyTimeout = 4500; // Set default banner hide timeout for success 
 
 // Define Session DB items
 
+let sessionDbVersion = '';
 export const tuneSets = [];
 export const tuneList = [];
 export const setChords = [];
 export const tuneChords = [];
-export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/sets.json"
-export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunes.json"
-export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
-export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-tunes.json";
+export const dbVersionLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/version-db.json";
+export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-encoded/sets.json"
+export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-encoded/tunes.json"
+export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-chords/chords-sets.json";
+export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-chords/chords-tunes.json";
+
+// Open Broadcast Channel for DB Updates
+
+const updateMsgChannel = new BroadcastChannel("update-msg");
 
 // Define common app elements
 
@@ -1485,7 +1491,7 @@ function updateAppSectionTitle(targetSection) {
 
 function updateAppVersionData(versionJson, newVersionJson) {
 
-  const { appVersion, appDate, dbVersion } = versionJson;
+  const { appVersion, appDate } = versionJson;
 
   const appVersionText = `App version ${appVersion}`;
 
@@ -1509,7 +1515,7 @@ function updateAppVersionData(versionJson, newVersionJson) {
     appVersionUpdateBtn.dataset.load = "copy-text";
 
     appVersionUpdateBtn.dataset.copyText = 
-      `App version: ${appVersion}\nLast updated on: ${appDate}\nSession DB version: ${dbVersion}`;
+      `App version: ${appVersion}\nLast updated on: ${appDate}`;
   }
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);
@@ -1521,29 +1527,98 @@ function updateAppVersionData(versionJson, newVersionJson) {
 // APP SCRIPTS: FETCHERS & DATA HANDLERS
 ///////////////////////////////////////////
 
+// Initialize Session DB data on first load
+
+async function initSessionDb() {
+
+  if (!('caches' in window)) {
+
+    console.warn("NS Session App:\n\nCache API is not supported in this browser");
+    return;
+  }
+
+  if (!navigator.onLine ||
+      window.origin.toString()
+      .replace(/http[s]*:\/\//, '')
+      .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
+    ) {
+
+    return;
+  }
+
+  try {
+
+    const isSessionDbCached = await caches.has("session-db-cache");
+
+    if (isSessionDbCached) {
+
+      return;
+    }
+
+    const isSessionDBLoaded = await tuneDataFetch();
+
+    if (isSessionDBLoaded) {
+
+      console.log("NS Session App:\n\nSession DB initialized");
+    }
+
+  } catch (error) {
+
+    console.warn("NS Session App:\n\nFailed to load Session DB data on startup");
+
+    goatCountEvent("!error-init-session-db", "nss-app__initSessionDb");
+  }
+}
+
 // Fetch Session DB data
+// Update DB version info
 
 async function tuneDataFetch() {
 
   try {
 
-    const tuneDataSize = await updateDataJsons();
+    const tuneData = await updateDataJsons();
 
-    if (!tuneDataSize[0]) {
+    if (!tuneData[0]) {
 
       return null;
     }
 
-    console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
+    console.log(
+      `NS Session App:\n\nSession DB ` +
+      `${sessionDbVersion? `${sessionDbVersion} ` : ''}` +
+      `(${tuneData[0]} sets, ${tuneData[1]} tunes) ` + 
+      `successfully fetched and pushed to data JSONs`
+    );
+
+    // Update app version button with Session DB data
+
+    if (appVersionUpdateBtn && appVersionUpdateBtn.dataset.copyText) {
+
+      appVersionUpdateBtn.dataset.copyText =
+        `${appVersionUpdateBtn.dataset.copyText}\nSession DB version: ${sessionDbVersion}`;
+    }
+
+    // Close update broadcast channel
+
+    updateMsgChannel.close();
+
+    // Show Tunebook report if enabled
     
     if (isLocalStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
 
-      const { appVersion, dbVersion } = appVersionJson;
+      const { appVersion } = appVersionJson;
 
-      displayNotification(`App version: v${appVersion}; Session DB: ${dbVersion} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
+      setTimeout(() => {
+        displayNotification(
+          `App version: v${appVersion}; ` +
+          `Session DB: ${sessionDbVersion} (${tuneData[0]} sets, ${tuneData[1]} tunes)`,
+          "report"
+        );
+      }, 100);
     }
     
-    return tuneDataSize[0];
+    return tuneData[0];
 
   } catch (error) {
 
@@ -1551,7 +1626,7 @@ async function tuneDataFetch() {
 
     window.location.hash = "#launcher";
 
-    goatCountEvent("!error-fetch-tune-db", "nss-app__tuneDataFetch");
+    goatCountEvent("!error-fetch-session-db", "nss-app__tuneDataFetch");
 
     return null;
   }
@@ -1601,7 +1676,8 @@ export async function fetchDataJsons() {
       fetchData(tuneSetsLink, "json"),
       fetchData(tuneListLink, "json"),
       fetchData(setChordsLink, "json"),
-      fetchData(tuneChordsLink, "json")
+      fetchData(tuneChordsLink, "json"),
+      fetchData(dbVersionLink, "json")
     ]);
 }
 
@@ -1611,13 +1687,16 @@ export async function updateDataJsons() {
 
   console.log("NS Session App:\n\nFetching data from Session DB...");
 
-  const [setsData, tunesData, setChordsData, tuneChordsData] =
-  await fetchDataJsons();
+  const [setsData, tunesData, setChordsData, tuneChordsData, dbVersionData] =
+    await fetchDataJsons();
 
   updateData(tuneSets, setsData);
   updateData(tuneList, tunesData);
   updateData(setChords, setChordsData);
   updateData(tuneChords, tuneChordsData);
+
+  const { dbVersion } = dbVersionData;
+  sessionDbVersion = dbVersion;
 
   return [tuneSets.length, tuneList.length, setChords.length, tuneChords.length];
 }
@@ -1625,6 +1704,8 @@ export async function updateDataJsons() {
 // Update Custom Tune Data JSON
 
 export async function updateData(dataJson, newData) {
+
+  if (!newData || !newData.length) return;
 
   dataJson.length = 0;
 
@@ -4097,6 +4178,20 @@ function appAbcToolsLoadHandler() {
   }
 }
 
+// Handle Broadcast Channel messages shared between app & SW
+// Display notifications depending on update message type
+
+function appUpdateMessageHandler(event) {
+
+  if (event.data.msg && event.data.msg === "db-updated") {
+
+    setTimeout(() => {
+      
+      displayNotification("Session DB updated: Refresh to apply", "success");
+    }, 50);
+  }
+}
+
 ////////////////////////////////////////////
 // APP SCRIPTS: ROUTERS & HASH MANIPULATORS
 ///////////////////////////////////////////
@@ -4820,6 +4915,13 @@ function initPopoverWarning() {
   }
 }
 
+// Initialize update messages shared between app and service worker
+
+function initUpdateMessages() {
+
+  updateMsgChannel.addEventListener('message', appUpdateMessageHandler);
+}
+
 // Initialize ABC Tools iframe
 
 function initTuneFrame() {
@@ -4868,6 +4970,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGoatCounter();
   initBrowserTweaks();
   initPopoverWarning();
+  initUpdateMessages();
   initTuneFrame();
   initQuickHelpDialog();
   initWindowEvents();
@@ -4893,6 +4996,7 @@ if ('serviceWorker' in navigator) {
       .register('/sw.js')
       .then((registration) => {
         console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
+        initSessionDb();
       })
       .catch((error) => {
         goatCountEvent(

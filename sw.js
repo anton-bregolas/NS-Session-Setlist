@@ -1,11 +1,12 @@
 const APP_VERSION = '1.2.3';
+const DB_VERSION = '2026.01.26.1';
 const appVersionArr = APP_VERSION.split('.');
-const CACHE_VERSION =
+const APP_CACHE_VERSION =
   appVersionArr[0] + appVersionArr[1] +
   (appVersionArr.length > 2? appVersionArr[2].padStart(2, "0") : '');
-const CACHE_PREFIX = "ns-app-cache-";
-const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
-const CACHE_EXPIRES_DAYS = 7;
+const APP_CACHE_PREFIX = "ns-app-cache-";
+const APP_CACHE_NAME = `${APP_CACHE_PREFIX}${APP_CACHE_VERSION}`;
+const DB_CACHE_NAME = "session-db-cache";
 
 const APP_ASSETS = [
   'index.html',
@@ -62,7 +63,7 @@ async function handleInstall() {
 
   // Cache critical app assets immediately
 
-  const cache = await caches.open(CACHE_NAME);
+  const cache = await caches.open(APP_CACHE_NAME);
 
   await cache.addAll(APP_ASSETS);
 
@@ -93,11 +94,11 @@ async function handleActivate() {
 
   await Promise.all(
     cacheKeys
-      .filter(cacheKey => cacheKey.startsWith(CACHE_PREFIX) && cacheKey !== CACHE_NAME)
+      .filter(cacheKey => cacheKey.startsWith(APP_CACHE_PREFIX) && cacheKey !== APP_CACHE_NAME)
       .map(cacheKey => {
         console.log(`[NS App Service Worker]\n\n` +
-          `Cached version: v${cacheKey.slice(CACHE_PREFIX.length)}\n\n` +
-          `Current version: v${CACHE_VERSION}\n\n` +
+          `Cached version: v${cacheKey.slice(APP_CACHE_PREFIX.length)}\n\n` +
+          `Current version: v${APP_CACHE_VERSION}\n\n` +
           `Clearing outdated cached files...`);
         return caches.delete(cacheKey);
       })
@@ -147,18 +148,18 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Handle Session DB files
+  // Handle version files, skip network-only requests
 
-  if (/(sets|tunes)\.json$/.test(url.pathname)) {
+  if (/version(-db)*\.json$/.test(url.pathname) && /^\?t\=\d*/.test(url.search)) {
 
-    event.respondWith(handleDBCaching(request));
     return;
   }
 
-  // Handle version.json, skip network-only requests
+  // Handle Session DB files
 
-  if (/version\.json$/.test(url.pathname) && /^\?t\=\d*/.test(url.search)) {
+  if (/(sets|tunes|version-db)\.json$/.test(url.pathname)) {
 
+    event.respondWith(handleDBCaching(event, url.pathname));
     return;
   }
 
@@ -190,7 +191,7 @@ async function handleNavigate(url) {
       await fetch(targetPage);
 
     if (pageFetched?.ok) {
-      const cache = await caches.open(CACHE_NAME);
+      const cache = await caches.open(APP_CACHE_NAME);
       cache.put(targetPage, pageFetched.clone());
     }
 
@@ -218,16 +219,72 @@ async function handleNavigate(url) {
 }
 
 // Cache and retrieve up-to-date Session DB files
+// Use stale-while-revalidate for serving DB files
 
-async function handleDBCaching(request) {
+async function handleDBCaching(event, requestUrlPathName) {
 
-  const appCache = await caches.open(CACHE_NAME);
+  const request = event.request;
 
-  // Serve DB from cache if not outdated, use offline-safe lookup
+  const sessionDbCache = await caches.open(DB_CACHE_NAME);
 
-  const cachedDB = await caches.match(request, { ignoreSearch: true });
+  const cachedDB = await sessionDbCache.match(request, { ignoreSearch: true });
 
-  if (cachedDB && !isCacheExpired(cachedDB, CACHE_EXPIRES_DAYS)) {
+  // Fetch up-to-date DB from network
+
+  const networkFetchPromise = (async () => {
+
+    try {
+
+      console.log(
+        `[NS App Service Worker]\n\n` +
+        `Fetching Session DB from network...`
+      );
+
+      const networkResponse = await fetch(request);
+
+      if (networkResponse && networkResponse.ok) {
+
+        await sessionDbCache.put(request, networkResponse.clone());
+
+        console.log(`[NS App Service Worker]\n\nSession DB successfully updated`);
+
+        // Post version update message to main app module
+
+        if (requestUrlPathName.endsWith("version-db.json")) {
+
+          const responseData = await networkResponse.clone().json();
+
+          if (responseData &&
+              responseData.dbVersion &&
+              responseData.dbVersion !== DB_VERSION) {
+
+            const updateMsgChannel =
+              new BroadcastChannel("update-msg");
+
+            updateMsgChannel.postMessage({
+              msg: 'db-updated',
+              url: request.url
+            });
+
+            updateMsgChannel.close();
+          }
+        }
+
+        return networkResponse;
+      }
+
+    } catch (error) {
+      console.log(
+        `[NS App Service Worker]\n\n` +
+        `Fetch unsuccessful. Falling back to cached version of Session DB`);
+    }
+  })();
+
+  event.waitUntil(networkFetchPromise);
+
+  // Serve DB from cache immediately
+
+  if (cachedDB) {
     console.log(
       `[NS App Service Worker]\n\n` +
       `Retrieving cached version of Session DB`
@@ -235,33 +292,14 @@ async function handleDBCaching(request) {
     return cachedDB;
   }
 
-  // Fetch up-to-date DB from network, fall back to cached DB
+  // Serve DB from network if no cache
 
-  try {
+  if (networkFetchPromise) {
 
-    console.log(
-      `[NS App Service Worker]\n\n` +
-      `Session DB missing or outdated\n\n` +
-      `Fetching a fresh version...`
-    );
-
-    const networkResponse = await fetch(request);
-
-    if (networkResponse && networkResponse.ok) {
-      await appCache.put(request, networkResponse.clone());
-      console.log(`[NS App Service Worker]\n\nSession DB successfully updated`);
-      return networkResponse;
-    }
-
-  } catch (error) {
-    console.log(
-      `[NS App Service Worker]\n\n` +
-      `Fetch unsuccessful. Falling back to cached version of Session DB`);
+    return networkFetchPromise;
   }
 
-  if (cachedDB) {
-    return cachedDB;
-  }
+  // Return 503 if offline and no cache
 
   return new Response(
     JSON.stringify({ error: 'Offline: No cached Session DB available' }),
