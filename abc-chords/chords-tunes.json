@@ -7,7 +7,7 @@
   {
     "title": "AIR: Lord Inchiquin",
     "meter": "3/4",
-    "chords": "PART 1:\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\n|\tD (Bm)\t/\t/|\tG\tG\tG\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t||\n\nPART 2:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tD/F#\tG\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD/F#\t|\tG\tG\tA\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tA\tA\tA\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tEm\tEm\t(F#m)\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
+    "chords": "PART 1:\n|\tD\tD\tD\t|\t(G)\t(G)\t(G)\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\n|\tD (Bm)\t/\t/|\tG\tG\tG\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t||\n\nPART 2:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tD/F#\tG\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD/F#\t|\tG\tG\tA\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tA\tA\tA\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tEm\tEm\t(F#m)\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
   },
   {
     "title": "AIR: Mountains of Pomeroy",
@@ -382,7 +382,7 @@
   {
     "title": "JIG: Winnie Hayes'",
     "meter": "6/8",
-    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC (Am)\t/|\tD (Bm)\t/||\n\nPART 2:\n|\tEm (D)\tEm\t|\t(C)\t(C)\t|\tAm\tAm\t|\tD/F# (Bm)\t/|\n|\tG\tD/F#\t|\tEm\t(G/B)\t|\tAm (C)\t/|\tBm (D)\t/||"
+    "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC (Am)\t/|\tD (Bm)\t/||\n\nPART 2:\n|\tEm (D)\t(Em)\t|\t(C)\t(C)\t|\tAm\tAm\t|\tD/F# (Bm)\t/|\n|\tG\tD/F#\t|\tEm\t(G/B)\t|\tAm (C)\t/|\tBm (D)\t/||"
   },
   {
     "title": "MARCH: Down the Glen",
@@ -787,7 +787,7 @@
   {
     "title": "REEL: Jack Rowe",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tD7\tD7\t|\tC\tD\t|\tG\tG\t|\tEm\tEm\t|\n|\tD7\tD7\t|\tC\tD\t|\tG\tD\t|1\tEm\tC\t|\n|2\tC\tG\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tD\t|\tEm\t(C)\t|\tD\tG\t|\n|\tEm\tC\t|\tG\tG\t|\tC\tD\t|1\tC\tG\t|\n|2\tC\tC\t||"
+    "chords": "PART 1:\n|\tD7\tD7\t|\tC\tD\t|\tG (Em)\t/|\tEm (C)\t/|\n|\tD7\tD7\t|\tC\tD\t|\tG\tD\t|1\tEm\tC\t|\n|2\tC\tG\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tD\t|\tEm\t(C)\t|\tD\tG\t|\n|\tEm\tC\t|\tG\tG\t|\tC\tD\t|1\tC\tG\t|\n|2\tC\tC\t||"
   },
   {
     "title": "REEL: Jenny's Chickens",
