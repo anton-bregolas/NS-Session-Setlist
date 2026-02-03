@@ -253,7 +253,7 @@ async function handleDBCaching(event, requestUrlPathName) {
         if (requestUrlPathName.endsWith("version-db.json")) {
 
           const responseData = await networkResponse.clone().json();
-console.warn(DB_VERSION, responseData.dbVersion)
+console.warn(DB_VERSION, responseData.dbVersion);
           if (responseData &&
               responseData.dbVersion &&
               responseData.dbVersion !== DB_VERSION) {
@@ -265,7 +265,7 @@ console.warn(DB_VERSION, responseData.dbVersion)
               msg: `db-updated-${responseData.dbVersion}`,
               url: request.url
             });
-
+console.warn("Broadcast msg sent");
             updateMsgChannel.close();
           }
         }

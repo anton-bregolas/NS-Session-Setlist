@@ -4178,10 +4178,10 @@ function appAbcToolsLoadHandler() {
 // Display notifications depending on update message type
 
 function appUpdateMessageHandler(event) {
-
+console.warn("Broadcast msg received");
   // if (event.data.msg && event.data.msg === "db-updated") {
   if (event.data.msg && event.data.msg.startsWith("db-updated")) {
-
+console.warn(`Broadcast msg: ${event.data.msg}`);
     setTimeout(() => {
 
       // displayNotification("Session DB updated: Refresh to apply", "success");
