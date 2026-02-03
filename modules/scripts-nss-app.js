@@ -1599,10 +1599,6 @@ async function tuneDataFetch() {
         `${appVersionUpdateBtn.dataset.copyText}\nSession DB version: ${sessionDbVersion}`;
     }
 
-    // Close update broadcast channel
-
-    updateMsgChannel.close();
-
     // Show Tunebook report if enabled
     
     if (isLocalStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
@@ -4183,11 +4179,13 @@ function appAbcToolsLoadHandler() {
 
 function appUpdateMessageHandler(event) {
 
-  if (event.data.msg && event.data.msg === "db-updated") {
+  // if (event.data.msg && event.data.msg === "db-updated") {
+  if (event.data.msg && event.data.msg.startsWith("db-updated")) {
 
     setTimeout(() => {
-      
-      displayNotification("Session DB updated: Refresh to apply", "success");
+
+      // displayNotification("Session DB updated: Refresh to apply", "success");
+      displayNotification(`Session DB updated to ${event.data.msg.replace("db-updated-", '')}: Refresh to apply`, "success");
     }, 50);
   }
 }

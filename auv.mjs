@@ -13,29 +13,40 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync, spawn } from 'node:child_process';
 import appVersionJson from './version.json' with { type: "json" };
+import dbVersionJson from './version-db.json' with { type: "json" };
+
+const abcSetsFilePath = 'abc/NS-Session-Sets.abc';  // Raw ABC Sets file
+const abcTunesFilePath = 'abc/NS-Session-Tunes.abc';  // Raw ABC Tunes file
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const versionFile = path.join(__dirname, 'version.json');
+const dbVersionFile = path.join(__dirname, 'version-db.json');
 const serviceWorkerFile = path.join(__dirname, 'sw.js');
 
 const args = process.argv.slice(2);
 
 function getVersionData() {
-  const { appVersion, appDate, dbVersion } = appVersionJson;
+  const { appVersion, appDate } = appVersionJson;
   return {
     appVersion: appVersion ? appVersion : null,
-    appDate: appDate ? appDate : null,
-    dbVersion: dbVersion? dbVersion : null
+    appDate: appDate ? appDate : null
   };
 }
 
-function getBaseAppVersion(appVersion) {
-  return appVersion.split('.').slice(0, -1).join('.');
+function getSessionDbData() {
+  const { dbVersion } = dbVersionJson;
+  return {
+    dbVersion: dbVersion ? dbVersion : null
+  };
 }
 
 function bumpAppVersion(appVersion, versionType) {
+  if (!appVersion && versionType && versionType === "breaking") {
+    return '0.1.0';
+  }
+  if (!appVersion) return '0.0.1';
   const parts = appVersion.split('.');
   // Major version: Breaking changes, new milestone
   if (versionType && versionType === "breaking") {
@@ -58,6 +69,7 @@ function getCurrentDate(dateType) {
 }
 
 function bumpDbVersion(currentDbVersion) {
+  if (!currentDbVersion) return '0001.01.01.1';
   const todayBase = getCurrentDate("dbDate");
   const match = currentDbVersion.match(/^(\d{4}\.\d{2}\.\d{2})\.(\d+)$/);
   if (match && match[1] === todayBase) {
@@ -89,20 +101,32 @@ async function updateFile(filePath, updateData) {
   }
 }
 
-async function updateVersionFile(newAppVersion, newAppDate, newDbVersion) {
+async function updateVersionFile(newAppVersion, newAppDate) {
   const jsonData = JSON.parse(await readFileData(versionFile));
   jsonData.appVersion = newAppVersion ?? jsonData.appVersion;
   jsonData.appDate = newAppDate ?? jsonData.appDate;
-  jsonData.dbVersion = newDbVersion ?? jsonData.dbVersion;
   const updatedJson = JSON.stringify(jsonData, null, 2);
   await updateFile(versionFile, updatedJson);
 }
 
-async function updateServiceWorker(newAppVersion) {
+async function updateDbVersionFile(newDbVersion) {
+  const jsonData = JSON.parse(await readFileData(dbVersionFile));
+  jsonData.dbVersion = newDbVersion ?? jsonData.dbVersion;
+  const updatedJson = JSON.stringify(jsonData, null, 2);
+  await updateFile(dbVersionFile, updatedJson);
+}
+
+async function updateServiceWorker(newAppVersion, newDbVersion) {
   const swData = await readFileData(serviceWorkerFile);
-  const updatedSw = 
-    swData
-    .replace(/APP_VERSION\s*=\s*["'`].*?["'`]/, `APP_VERSION = '${newAppVersion}'`)
+  let updatedSw = swData;
+  if (newAppVersion) {
+    updatedSw = 
+      updatedSw.replace(/APP_VERSION\s*=\s*["'`].*?["'`]/, `APP_VERSION = '${newAppVersion}'`);
+  }
+  if (newDbVersion) {
+    updatedSw = 
+      updatedSw.replace(/DB_VERSION\s*=\s*["'`].*?["'`]/, `DB_VERSION = '${newDbVersion}'`);
+  }
   await updateFile(serviceWorkerFile, updatedSw);
 }
 
@@ -116,9 +140,27 @@ async function addAllChanges() {
   }
 }
 
+async function addSessionDbChanges() {
+  try {
+    execSync(`git add ${abcSetsFilePath}`, { stdio: 'inherit' });
+    execSync(`git add ${abcTunesFilePath}`, { stdio: 'inherit' });
+    execSync('git add abc-chords/chords-sets.json', { stdio: 'inherit' });
+    execSync('git add abc-chords/chords-tunes.json', { stdio: 'inherit' });
+    execSync('git add abc-encoded/sets.json', { stdio: 'inherit' });
+    execSync('git add abc-encoded/tunes.json', { stdio: 'inherit' });
+    execSync('git add sw.js', { stdio: 'inherit' });
+    execSync('git add version-db.json', { stdio: 'inherit' });
+    console.log(`✓ Added Session DB changes`);
+  } catch (err) {
+    console.error(`✗ Failed to add DB changes:`, err.message || err);
+    process.exit(1);
+  }
+}
+
 async function addVersionChanges() {
   try {
     execSync('git add version.json', { stdio: 'inherit' });
+    execSync('git add version-db.json', { stdio: 'inherit' });
     execSync('git add sw.js', { stdio: 'inherit' });
     execSync('git add README.md', { stdio: 'inherit' });
     console.log(`✓ Added changes to version files`);
@@ -174,8 +216,12 @@ async function main() {
 
   const type = args[0];
 
-  if (!type || !['-a', '-bc', '-bca', '-buv', '-c', '-ca', '-help', '-tst', '-udb', '-uv', '-v'].includes(type)) {
-    console.error('NS Session Setlist :: Auto-Update-Version\n\nUsage: v[a|bc|bca|buv|c|ca|help|tst|u|udb|us|uv|v] || node auv.mjs [-a|-bc|-bca|-buv|-c|-ca|-help|-tst|-udb|-uv|-v]');
+  if (!type || !['-a', '-bc', '-bca', '-buv', '-c', '-ca', '-cua', '-help', '-tst', '-udb', '-uv', '-v'].includes(type)) {
+    console.error(
+      'NS Session Setlist :: Auto-Update-Version\n\n' +
+      'Usage:\nnode auv.mjs [-a|-bc|-bca|-buv|-c|-ca|-cua|-help|-tst|-udb|-uv|-v] ||\n'+
+      '(with .bashsrc aliases) v[a|bc|bca|buv|c|ca|cua|help|tst|u|udb|us|uv|v]'
+    );
     process.exit(1);
   }
 
@@ -187,7 +233,8 @@ async function main() {
      '-bca\t|\tvbca\t|\tupdate version with breaking changes, add all, open commit editor' + '\n' +     
      '-buv\t|\tvbuv\t|\tupdate / add version files only with breaking changes, auto-commit' + '\n' +
      '-c\t|\tvc\t|\topen commit editor, update / add / commit version files on success' + '\n' +
-     '-ca\t|\tvca\t|\tupdate version, add all, open commit editor' + '\n' +
+     '-ca\t|\tvca\t|\tupdate version, add all files with changes, open commit editor' + '\n' +
+     '-cua\t|\tvcua\t|\tupdate db version, add db files, open commit editor' + '\n' +
      '-help\t|\tvhelp\t|\tlist all available commands' + '\n' +
      '-tst\t|\tvtst\t|\ttest updated app version / date' + '\n' +
      '-udb\t|\tvudb\t|\tupdate / add db version only, auto-commit' + '\n' +
@@ -202,7 +249,9 @@ async function main() {
     return;
   }
 
-  const { appVersion, appDate, dbVersion } = getVersionData();
+  const { appVersion, appDate,  } = getVersionData();
+
+  const { dbVersion } = getSessionDbData();
   
   if (type === '-v') {
     console.log(
@@ -214,11 +263,10 @@ async function main() {
   const newAppVersion =
     (type === '-bc' || type === '-bca' || type === '-buv')?
       bumpAppVersion(appVersion, "breaking") :
-    type === '-aa' ? bumpAppVersion(appVersion, "minor") :
       bumpAppVersion(appVersion);
 
   const newDbVersion =
-    (type === '-udb' || type === '-tst')?
+    (type === '-cua' || type === '-udb' || type === '-tst')?
       bumpDbVersion(dbVersion) : dbVersion;
 
   const newAppDate = getCurrentDate();
@@ -233,14 +281,14 @@ async function main() {
     return; 
   }
 
-  if (type === '-udb') {
-    await updateVersionFile(newAppVersion, newAppDate, newDbVersion);
-    await updateServiceWorker(newAppVersion, newAppDate);
+  if (type === '-cua' || type === '-udb') {
+    await updateDbVersionFile(newDbVersion);
+    await updateServiceWorker(null, newDbVersion);
   }
 
   if (type === '-ca' || type === '-bca') {
     await updateVersionFile(newAppVersion, newAppDate);
-    await updateServiceWorker(newAppVersion, newAppDate);
+    await updateServiceWorker(newAppVersion);
   }
 
   let commitMsg = '';
@@ -249,12 +297,19 @@ async function main() {
   if (type === '-ca' || type === '-bca') {
     await addAllChanges();
     commitMsg = 
-      `NS Session App v${newAppVersion}: \n\n+ updates:\n  -`;
+      `NS Session App v${newAppVersion}: \n\n+ App updates:\n  -`;
+    exitCode = await openCommitEditor(commitMsg);
+
+  } else if (type === '-cua') {
+    await addSessionDbChanges();
+    commitMsg = 
+      `NS Session App v${appVersion}: Session DB Update\n\n` +
+      `+ Session DB Updates:\n  - Update to version ${newDbVersion}`;
     exitCode = await openCommitEditor(commitMsg);
 
   } else if (type === '-c' || type === '-bc') {
     commitMsg = 
-      `NS Session App v${newAppVersion}: \n\n+ updates:\n  -`;
+      `NS Session App v${newAppVersion}: \n\n+ App updates:\n  -`;
     exitCode = await openCommitEditor(commitMsg);
 
   } else if (type === '-uv' || type === '-buv') {
@@ -265,7 +320,7 @@ async function main() {
   } else if (type === '-udb') {
     await addAllChanges();
     commitMsg =
-      `NS Session App v${newAppVersion}: Session DB Update\n\n` +
+      `NS Session App v${appVersion}: Session DB Update\n\n` +
       `+ Session DB Updates:\n  - Update to version ${newDbVersion}`;
     exitCode = await commitWithMessage(commitMsg);
   }
@@ -278,7 +333,7 @@ async function main() {
     // For -c, only update version file & service worker if commit succeeded
     if (type === '-c' || type === '-bc') {
       await updateVersionFile(newAppVersion, newAppDate);
-      await updateServiceWorker(newAppVersion, newAppDate);
+      await updateServiceWorker(newAppVersion);
       await addVersionChanges();
       commitMsg = `NS Session App v${newAppVersion}: Update Version`;
       await commitChangesWithMessage(commitMsg);

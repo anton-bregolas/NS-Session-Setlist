@@ -1,5 +1,5 @@
 const APP_VERSION = '1.2.3';
-const DB_VERSION = '2026.02.03.1';
+const DB_VERSION = '2026.02.03.2';
 const appVersionArr = APP_VERSION.split('.');
 const APP_CACHE_VERSION =
   appVersionArr[0] + appVersionArr[1] +
@@ -240,7 +240,7 @@ async function handleDBCaching(event, requestUrlPathName) {
         `Fetching Session DB from network...`
       );
 
-      const networkResponse = await fetch(request);
+      const networkResponse = await fetch(request, { cache: "no-cache" });
 
       if (networkResponse && networkResponse.ok) {
 
@@ -253,7 +253,7 @@ async function handleDBCaching(event, requestUrlPathName) {
         if (requestUrlPathName.endsWith("version-db.json")) {
 
           const responseData = await networkResponse.clone().json();
-
+console.warn(DB_VERSION, responseData.dbVersion)
           if (responseData &&
               responseData.dbVersion &&
               responseData.dbVersion !== DB_VERSION) {
@@ -262,7 +262,7 @@ async function handleDBCaching(event, requestUrlPathName) {
               new BroadcastChannel("update-msg");
 
             updateMsgChannel.postMessage({
-              msg: 'db-updated',
+              msg: `db-updated-${responseData.dbVersion}`,
               url: request.url
             });
 
