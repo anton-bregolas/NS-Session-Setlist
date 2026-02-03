@@ -243,7 +243,8 @@ async function handleDBCaching(event, requestUrlPathName) {
       const networkResponse = await fetch(request, { cache: "no-cache" });
 
       if (networkResponse && networkResponse.ok) {
-
+console.warn(DB_VERSION);
+console.warn(networkResponse);
         await sessionDbCache.put(request, networkResponse.clone());
 
         console.log(`[NS App Service Worker]\n\nSession DB successfully updated`);

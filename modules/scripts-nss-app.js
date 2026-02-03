@@ -1515,7 +1515,9 @@ function updateAppVersionData(versionJson, newVersionJson) {
     appVersionUpdateBtn.dataset.load = "copy-text";
 
     appVersionUpdateBtn.dataset.copyText = 
-      `App version: ${appVersion}\nLast updated on: ${appDate}`;
+      `App version: ${appVersion}` +
+      `\nLast updated on: ${appDate}` +
+      `\nSession DB version: ${sessionDbVersion? sessionDbVersion : '[Open Tunebook to Update]'}`;
   }
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);
@@ -1596,7 +1598,9 @@ async function tuneDataFetch() {
     if (appVersionUpdateBtn && appVersionUpdateBtn.dataset.copyText) {
 
       appVersionUpdateBtn.dataset.copyText =
-        `${appVersionUpdateBtn.dataset.copyText}\nSession DB version: ${sessionDbVersion}`;
+        appVersionUpdateBtn.dataset.copyText.replace(
+          /(Session DB version).*/, `$1: ${sessionDbVersion}`
+        );
     }
 
     // Show Tunebook report if enabled
