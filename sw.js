@@ -1,5 +1,5 @@
 const APP_VERSION = '1.2.3';
-const DB_VERSION = '2026.02.03.5';
+const DB_VERSION = '2026.02.03.6';
 const appVersionArr = APP_VERSION.split('.');
 const APP_CACHE_VERSION =
   appVersionArr[0] + appVersionArr[1] +
