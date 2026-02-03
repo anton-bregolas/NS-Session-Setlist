@@ -1508,16 +1508,8 @@ async function updateAppVersionData(versionJson, newVersionJson) {
 
   } else {
 
-    const dbCache = await caches.open("session-db-cache");
-
-    const dbVersionCached = await dbCache.match('/version-db.json');
-
-    if (dbVersionCached) {
-
-      const dbVersionJson = await dbVersionCached.json();
-
-      sessionDbVersion = dbVersionJson.dbVersion || '';
-    }
+    console.warn(`Cached version: ${await getCurrentlyCachedDbVersion()}`);
+    sessionDbVersion = await getCurrentlyCachedDbVersion() ?? '';
 
     appVersionTitle = appVersionText + `. Click to copy detailed report`;
 
@@ -1544,29 +1536,20 @@ async function updateAppVersionData(versionJson, newVersionJson) {
 
 async function initSessionDb() {
 
-  if (!('caches' in window)) {
-
-    console.warn("NS Session App:\n\nCache API is not supported in this browser");
-    return;
-  }
-
   if (!navigator.onLine ||
       window.origin.toString()
       .replace(/http[s]*:\/\//, '')
       .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
-    ) {
+  ) {
 
     return;
   }
 
   try {
 
-    const isSessionDbCached = await caches.has("session-db-cache");
+    const sessionDbFound = await isSessionDbCached();
 
-    if (isSessionDbCached) {
-
-      return;
-    }
+    if (sessionDbFound !== false) return;
 
     const isSessionDBLoaded = await tuneDataFetch();
 
@@ -1603,6 +1586,16 @@ async function tuneDataFetch() {
       `(${tuneData[0]} sets, ${tuneData[1]} tunes) ` + 
       `successfully fetched and pushed to data JSONs`
     );
+
+    // Update app version button with Session DB data
+
+    if (appVersionUpdateBtn && appVersionUpdateBtn.dataset.copyText) {
+
+      appVersionUpdateBtn.dataset.copyText =
+        appVersionUpdateBtn.dataset.copyText.replace(
+          /(Session DB version).*/, `$1: ${sessionDbVersion}`
+        );
+    }
 
     // Show Tunebook report if enabled
     
@@ -1861,7 +1854,7 @@ async function fetchAppVersionData() {
       window.origin.toString()
       .replace(/http[s]*:\/\//, '')
       .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
-    ) {
+  ) {
 
     await updateAppVersionData(appVersionJson);
     return;
@@ -1955,6 +1948,54 @@ async function fetchAppVersionData() {
         err
     );
   }
+}
+
+// Check if Session DB cache exists and is available
+// Return undefined if Cache API is not available
+
+async function isSessionDbCached() {
+
+  if (!('caches' in window)) {
+
+    console.warn("NS Session App:\n\nCache API is not supported in this browser");
+    return;
+  }
+
+  const isSessionDbCached = await caches.has("session-db-cache");
+
+  if (isSessionDbCached) {
+
+    return true;
+  }
+
+  return false;
+}
+
+// Get Session DB version data from cache
+
+async function getCurrentlyCachedDbVersion() {
+
+  const sessionDbFound = await isSessionDbCached();
+
+  if (!sessionDbFound) return null;
+
+  const dbCache = await caches.open("session-db-cache");
+
+  const dbKeys = await dbCache.keys();
+
+  const dbVersionKey =
+    dbKeys.find(key => key.url.endsWith("version-db.json"));
+
+  if (dbVersionKey) {
+
+    const dbVersionCached = await dbCache.match(dbVersionKey);
+
+    const dbVersionJson = await dbVersionCached.json();
+
+    return dbVersionJson.dbVersion || null;
+  }
+
+  return null;
 }
 
 ////////////////////////////////////////////
