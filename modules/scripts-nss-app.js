@@ -1489,7 +1489,7 @@ function updateAppSectionTitle(targetSection) {
 
 // Update app version data in App Options menu
 
-function updateAppVersionData(versionJson, newVersionJson) {
+async function updateAppVersionData(versionJson, newVersionJson) {
 
   const { appVersion, appDate } = versionJson;
 
@@ -1508,6 +1508,17 @@ function updateAppVersionData(versionJson, newVersionJson) {
 
   } else {
 
+    const dbCache = await caches.open("session-db-cache");
+
+    const dbVersionCached = await dbCache.match('/version-db.json');
+
+    if (dbVersionCached) {
+
+      const dbVersionJson = await dbVersionCached.json();
+
+      sessionDbVersion = dbVersionJson.dbVersion || '';
+    }
+
     appVersionTitle = appVersionText + `. Click to copy detailed report`;
 
     appVersionUpdateBtn.textContent = appVersionText;
@@ -1517,7 +1528,7 @@ function updateAppVersionData(versionJson, newVersionJson) {
     appVersionUpdateBtn.dataset.copyText = 
       `App version: ${appVersion}` +
       `\nLast updated on: ${appDate}` +
-      `\nSession DB version: ${sessionDbVersion? sessionDbVersion : '[Open Tunebook to Update]'}`;
+      `\nSession DB version: ${sessionDbVersion? sessionDbVersion : '[Open Tunebook]'}`;
   }
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);
@@ -1592,16 +1603,6 @@ async function tuneDataFetch() {
       `(${tuneData[0]} sets, ${tuneData[1]} tunes) ` + 
       `successfully fetched and pushed to data JSONs`
     );
-
-    // Update app version button with Session DB data
-
-    if (appVersionUpdateBtn && appVersionUpdateBtn.dataset.copyText) {
-
-      appVersionUpdateBtn.dataset.copyText =
-        appVersionUpdateBtn.dataset.copyText.replace(
-          /(Session DB version).*/, `$1: ${sessionDbVersion}`
-        );
-    }
 
     // Show Tunebook report if enabled
     
@@ -1862,7 +1863,7 @@ async function fetchAppVersionData() {
       .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
     ) {
 
-    updateAppVersionData(appVersionJson);
+    await updateAppVersionData(appVersionJson);
     return;
   }
 
@@ -1912,7 +1913,7 @@ async function fetchAppVersionData() {
         remoteVersionJson.appVersion &&
         (remoteVersionJson.appVersion !== appVersion)) {
 
-      updateAppVersionData(appVersionJson, remoteVersionJson);
+      await updateAppVersionData(appVersionJson, remoteVersionJson);
 
       console.log(
         `NS Session App:\n\nApp update available\n\n` + 
@@ -1926,7 +1927,7 @@ async function fetchAppVersionData() {
 
     } else {
 
-      updateAppVersionData(appVersionJson);
+      await updateAppVersionData(appVersionJson);
 
       console.log(
         `NS Session App:\n\nApp v${appVersion} is up to date`
@@ -1940,7 +1941,7 @@ async function fetchAppVersionData() {
 
     clearTimeout(timeoutId);
 
-    updateAppVersionData(appVersionJson);
+    await updateAppVersionData(appVersionJson);
 
     goatCountEvent(
       "!error-fetch-version-data",
