@@ -1,5 +1,5 @@
 const APP_VERSION = '1.2.3';
-const DB_VERSION = '2026.02.03.6';
+// const DB_VERSION = '2026.02.03.6';
 const appVersionArr = APP_VERSION.split('.');
 const APP_CACHE_VERSION =
   appVersionArr[0] + appVersionArr[1] +
@@ -250,25 +250,25 @@ async function handleDBCaching(event, requestUrlPathName) {
 
         // Post version update message to main app module
 
-        if (requestUrlPathName.endsWith("version-db.json")) {
+//         if (requestUrlPathName.endsWith("version-db.json")) {
 
-          const responseData = await networkResponse.clone().json();
-console.warn(DB_VERSION, responseData.dbVersion);
-          if (responseData &&
-              responseData.dbVersion &&
-              responseData.dbVersion !== DB_VERSION) {
+//           const responseData = await networkResponse.clone().json();
+// console.warn(DB_VERSION, responseData.dbVersion);
+//           if (responseData &&
+//               responseData.dbVersion &&
+//               responseData.dbVersion !== DB_VERSION) {
 
-            const updateMsgChannel =
-              new BroadcastChannel("update-msg");
+//             const updateMsgChannel =
+//               new BroadcastChannel("update-msg");
 
-            updateMsgChannel.postMessage({
-              msg: `db-updated-${responseData.dbVersion}`,
-              url: request.url
-            });
-console.warn("Broadcast msg sent");
-            updateMsgChannel.close();
-          }
-        }
+//             updateMsgChannel.postMessage({
+//               msg: `db-updated-${responseData.dbVersion}`,
+//               url: request.url
+//             });
+// console.warn("Broadcast msg sent");
+//             updateMsgChannel.close();
+//           }
+//         }
 
         return networkResponse;
       }

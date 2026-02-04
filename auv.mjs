@@ -123,10 +123,10 @@ async function updateServiceWorker(newAppVersion, newDbVersion) {
     updatedSw = 
       updatedSw.replace(/APP_VERSION\s*=\s*["'`].*?["'`]/, `APP_VERSION = '${newAppVersion}'`);
   }
-  if (newDbVersion) {
-    updatedSw = 
-      updatedSw.replace(/DB_VERSION\s*=\s*["'`].*?["'`]/, `DB_VERSION = '${newDbVersion}'`);
-  }
+  // if (newDbVersion) {
+  //   updatedSw = 
+  //     updatedSw.replace(/DB_VERSION\s*=\s*["'`].*?["'`]/, `DB_VERSION = '${newDbVersion}'`);
+  // }
   await updateFile(serviceWorkerFile, updatedSw);
 }
 
@@ -283,7 +283,7 @@ async function main() {
 
   if (type === '-cua' || type === '-udb') {
     await updateDbVersionFile(newDbVersion);
-    await updateServiceWorker(null, newDbVersion);
+    // await updateServiceWorker(null, newDbVersion);
   }
 
   if (type === '-ca' || type === '-bca') {

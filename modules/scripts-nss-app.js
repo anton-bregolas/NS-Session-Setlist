@@ -51,10 +51,6 @@ export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS
 export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-chords/chords-sets.json";
 export const tuneChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/test/abc-chords/chords-tunes.json";
 
-// Open Broadcast Channel for DB Updates
-
-const updateMsgChannel = new BroadcastChannel("update-msg");
-
 // Define common app elements
 
 const allSwitchBtn = document.querySelectorAll('.nss-switch-btn');
@@ -102,14 +98,18 @@ const appSupportContact = 'YW50b24uYnJlZ29sYXNAcHJvdG9uLm1l';
 async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
   // Fetch latest Session DB if Tunebook has not been initialized
+  // Show available update notifications on first Tunebook load
+
+  let dbUpdateResult = null;
+  let dbUpdateVersion = null;
 
   if (!isTuneBookInitialized) {
 
-    const isSessionDBLoaded = await tuneDataFetch();
+    dbUpdateResult = await doSessionDbUpdate();
 
-    if (!isSessionDBLoaded) {
+    if (!dbUpdateResult || !dbUpdateResult[0]) {
 
-      // Display an error and hightlight section button if fetch attempt fails
+      // Abort: Display an error and hightlight section button if fetch attempt fails
 
       const triggerBtnId = `#nss-launch-${targetSection}`;
       
@@ -121,6 +121,8 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
       return;
     }
+
+    dbUpdateVersion = dbUpdateResult[0];
   }
 
   // Launch Tunebook
@@ -159,7 +161,7 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
   handleSelectorLabels("init");
 
-  // Initialize ABC Tools when Tunebook first opened
+  // Initialize ABC Tools & show notifications on first Tunebook load
 
   if (isTuneBookInitialized === false) {
 
@@ -175,18 +177,57 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
     lastTuneBookOpened = tuneBookSetting;
 
-    if (isLocalStorageOk()) {
+    // Notify: Display notifications upon checking localStorage settings
 
-      localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
+    if (!isLocalStorageOk()) return;
 
-      if (!localStorage.tuneBookInitialized_NSSSAPP) {
+    localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
 
-        displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "success");
+    const isAbcToolsLoaded = !!+localStorage.tuneBookInitialized_NSSSAPP;
+    const isStatusReportOn = !!+localStorage.tuneBookShowStatusReport;
+    const lastDbVersion = localStorage.lastSessionDbVersion_NSSSAPP || '';
 
-        openQuickHelpDialog();
+    // Show Quick Help Dialog on first ever load of Tunebook / ABC Tools
 
-        localStorage.tuneBookInitialized_NSSSAPP = 1;
-      }
+    if (!isAbcToolsLoaded) {
+
+      openQuickHelpDialog();
+
+      updateDbVersionData(dbUpdateVersion);
+
+      localStorage.tuneBookInitialized_NSSSAPP = 1;
+
+      localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
+
+      return;
+    }
+
+    // Do update notification & tweaks if Session DB version changed
+
+    if (lastDbVersion !== dbUpdateVersion) {
+
+      displayNotification("Session DB updated: Refresh to apply", "success");
+
+      const cachedDbVersion = await getCurrentlyCachedDbVersion();
+
+      updateDbVersionData(dbUpdateVersion, lastDbVersion, cachedDbVersion);
+
+      localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
+
+      return;
+    }
+
+    // Show Tunebook report if option enabled
+    
+    if (isStatusReportOn) {
+
+      const { appVersion } = appVersionJson;
+
+      displayNotification(
+        `App version: v${appVersion}; ` +
+        `Session DB: ${dbUpdateVersion} (${dbUpdateResult[1]} sets, ${dbUpdateResult[2]} tunes)`,
+        "report"
+      );
     }
 
     return;
@@ -1489,7 +1530,7 @@ function updateAppSectionTitle(targetSection) {
 
 // Update app version data in App Options menu
 
-async function updateAppVersionData(versionJson, newVersionJson) {
+function updateAppVersionData(versionJson, newVersionJson) {
 
   const { appVersion, appDate } = versionJson;
 
@@ -1508,8 +1549,9 @@ async function updateAppVersionData(versionJson, newVersionJson) {
 
   } else {
 
-    console.warn(`Cached version: ${await getCurrentlyCachedDbVersion()}`);
-    sessionDbVersion = await getCurrentlyCachedDbVersion() ?? '';
+    let lastDbVersion;
+
+    if (isLocalStorageOk()) lastDbVersion = localStorage.lastSessionDbVersion_NSSSAPP;
 
     appVersionTitle = appVersionText + `. Click to copy detailed report`;
 
@@ -1520,7 +1562,7 @@ async function updateAppVersionData(versionJson, newVersionJson) {
     appVersionUpdateBtn.dataset.copyText = 
       `App version: ${appVersion}` +
       `\nLast updated on: ${appDate}` +
-      `\nSession DB version: ${sessionDbVersion? sessionDbVersion : '[Open Tunebook]'}`;
+      `\nSession DB version: ${lastDbVersion? lastDbVersion : '[Updating]'}`;
   }
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);
@@ -1528,22 +1570,40 @@ async function updateAppVersionData(versionJson, newVersionJson) {
   appVersionUpdateBtn.setAttribute("aria-title", appVersionTitle);
 }
 
+// Update Session DB version data in App Options menu
+
+function updateDbVersionData(dbVersion, lastDbVersion, cachedDbVersion) {
+
+  if (!dbVersion || !appVersionUpdateBtn || !appVersionUpdateBtn.dataset.copyText) {
+
+    return;
+  }
+
+  appVersionUpdateBtn.dataset.copyText =
+    appVersionUpdateBtn.dataset.copyText.replace(
+      /(Session DB version).*/,
+      `$1: ${dbVersion}` +
+      `${cachedDbVersion? `\nCached DB version: ${cachedDbVersion}` : ''}` +
+      `${lastDbVersion? `\nLast DB version: ${lastDbVersion}` : ''}`
+    );
+}
+
 ////////////////////////////////////////////
 // APP SCRIPTS: FETCHERS & DATA HANDLERS
 ///////////////////////////////////////////
 
-// Initialize Session DB data on first load
+// Initialize Session DB data on first app load
 
 async function initSessionDb() {
 
-  if (!navigator.onLine ||
-      window.origin.toString()
-      .replace(/http[s]*:\/\//, '')
-      .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
-  ) {
+  // if (!navigator.onLine ||
+  //     window.origin.toString()
+  //     .replace(/http[s]*:\/\//, '')
+  //     .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
+  // ) {
 
-    return;
-  }
+  //   return;
+  // }
 
   try {
 
@@ -1551,9 +1611,9 @@ async function initSessionDb() {
 
     if (sessionDbFound !== false) return;
 
-    const isSessionDBLoaded = await tuneDataFetch();
+    const dbUpdateResult = await updateDataJsons();
 
-    if (isSessionDBLoaded) {
+    if (dbUpdateResult && dbUpdateResult.length) {
 
       console.log("NS Session App:\n\nSession DB initialized");
     }
@@ -1566,53 +1626,27 @@ async function initSessionDb() {
   }
 }
 
-// Fetch Session DB data
-// Update DB version info
+// Handle Session DB fetching & updating on first Tunebook launch
+// Return null on error or unexpected data length to abort launch
 
-async function tuneDataFetch() {
+async function doSessionDbUpdate() {
 
   try {
 
-    const tuneData = await updateDataJsons();
+    const dbUpdateArr = await updateDataJsons();
 
-    if (!tuneData[0]) {
+    if (!dbUpdateArr || !dbUpdateArr.length || dbUpdateArr.length < 3) {
 
       return null;
     }
 
     console.log(
-      `NS Session App:\n\nSession DB ` +
-      `${sessionDbVersion? `${sessionDbVersion} ` : ''}` +
-      `(${tuneData[0]} sets, ${tuneData[1]} tunes) ` + 
+      `NS Session App:\n\nSession DB ${dbUpdateArr[0]} ` +
+      `(${dbUpdateArr[1]} sets, ${dbUpdateArr[2]} tunes) ` + 
       `successfully fetched and pushed to data JSONs`
     );
-
-    // Update app version button with Session DB data
-
-    if (appVersionUpdateBtn && appVersionUpdateBtn.dataset.copyText) {
-
-      appVersionUpdateBtn.dataset.copyText =
-        appVersionUpdateBtn.dataset.copyText.replace(
-          /(Session DB version).*/, `$1: ${sessionDbVersion}`
-        );
-    }
-
-    // Show Tunebook report if enabled
     
-    if (isLocalStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
-
-      const { appVersion } = appVersionJson;
-
-      setTimeout(() => {
-        displayNotification(
-          `App version: v${appVersion}; ` +
-          `Session DB: ${sessionDbVersion} (${tuneData[0]} sets, ${tuneData[1]} tunes)`,
-          "report"
-        );
-      }, 100);
-    }
-    
-    return tuneData[0];
+    return dbUpdateArr;
 
   } catch (error) {
 
@@ -1620,7 +1654,7 @@ async function tuneDataFetch() {
 
     window.location.hash = "#launcher";
 
-    goatCountEvent("!error-fetch-session-db", "nss-app__tuneDataFetch");
+    goatCountEvent("!error-fetch-session-db", "nss-app__doSessionDbUpdate");
 
     return null;
   }
@@ -1662,9 +1696,10 @@ export async function fetchData(url, type) {
   }
 }
 
-// Fetch all Session DB JSONs
+// Fetch all Session DB components
+// Return a nested array of JSONs
 
-export async function fetchDataJsons() {
+async function fetchDataJsons() {
 
   return Promise.all([
       fetchData(tuneSetsLink, "json"),
@@ -1675,9 +1710,10 @@ export async function fetchDataJsons() {
     ]);
 }
 
-// Push new tune data to Custom JSONs after fetching Session DB
+// Push new data to app database after fetching Session DB
+// Return a reference array with Session DB version & sizes
 
-export async function updateDataJsons() {
+async function updateDataJsons() {
 
   console.log("NS Session App:\n\nFetching data from Session DB...");
 
@@ -1690,14 +1726,13 @@ export async function updateDataJsons() {
   updateData(tuneChords, tuneChordsData);
 
   const { dbVersion } = dbVersionData;
-  sessionDbVersion = dbVersion;
 
-  return [tuneSets.length, tuneList.length, setChords.length, tuneChords.length];
+  return [dbVersion, tuneSets.length, tuneList.length, setChords.length, tuneChords.length];
 }
 
-// Update Custom Tune Data JSON
+// Update target Session DB JSON with new data
 
-export async function updateData(dataJson, newData) {
+async function updateData(dataJson, newData) {
 
   if (!newData || !newData.length) return;
 
@@ -1714,9 +1749,9 @@ export async function updateData(dataJson, newData) {
   console.log(`NS Session App:\n\n${dataType} data loaded`);
 }
 
-// Clear Session DB JSONs
+// Clear Session DB app data
 
-export function clearData() {
+function clearDataJsons() {
 
   tuneSets.length = 0;
   tuneList.length = 0;
@@ -1856,7 +1891,7 @@ async function fetchAppVersionData() {
       .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
   ) {
 
-    await updateAppVersionData(appVersionJson);
+    updateAppVersionData(appVersionJson);
     return;
   }
 
@@ -1888,7 +1923,7 @@ async function fetchAppVersionData() {
       await fetch(`${appVersionRemoteUrl}?t=${Date.now()}`, {
         signal: controller.signal,
         cache: 'no-store'
-        });
+      });
 
     clearTimeout(timeoutId);
 
@@ -1906,7 +1941,7 @@ async function fetchAppVersionData() {
         remoteVersionJson.appVersion &&
         (remoteVersionJson.appVersion !== appVersion)) {
 
-      await updateAppVersionData(appVersionJson, remoteVersionJson);
+      updateAppVersionData(appVersionJson, remoteVersionJson);
 
       console.log(
         `NS Session App:\n\nApp update available\n\n` + 
@@ -1920,7 +1955,7 @@ async function fetchAppVersionData() {
 
     } else {
 
-      await updateAppVersionData(appVersionJson);
+      updateAppVersionData(appVersionJson);
 
       console.log(
         `NS Session App:\n\nApp v${appVersion} is up to date`
@@ -1934,7 +1969,7 @@ async function fetchAppVersionData() {
 
     clearTimeout(timeoutId);
 
-    await updateAppVersionData(appVersionJson);
+    updateAppVersionData(appVersionJson);
 
     goatCountEvent(
       "!error-fetch-version-data",
@@ -4220,22 +4255,6 @@ function appAbcToolsLoadHandler() {
   }
 }
 
-// Handle Broadcast Channel messages shared between app & SW
-// Display notifications depending on update message type
-
-function appUpdateMessageHandler(event) {
-console.warn("Broadcast msg received");
-  // if (event.data.msg && event.data.msg === "db-updated") {
-  if (event.data.msg && event.data.msg.startsWith("db-updated")) {
-console.warn(`Broadcast msg: ${event.data.msg}`);
-    setTimeout(() => {
-
-      // displayNotification("Session DB updated: Refresh to apply", "success");
-      displayNotification(`Session DB updated to ${event.data.msg.replace("db-updated-", '')}: Refresh to apply`, "success");
-    }, 50);
-  }
-}
-
 ////////////////////////////////////////////
 // APP SCRIPTS: ROUTERS & HASH MANIPULATORS
 ///////////////////////////////////////////
@@ -4959,13 +4978,6 @@ function initPopoverWarning() {
   }
 }
 
-// Initialize update messages shared between app and service worker
-
-function initUpdateMessages() {
-
-  updateMsgChannel.addEventListener('message', appUpdateMessageHandler);
-}
-
 // Initialize ABC Tools iframe
 
 function initTuneFrame() {
@@ -5014,7 +5026,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initGoatCounter();
   initBrowserTweaks();
   initPopoverWarning();
-  initUpdateMessages();
   initTuneFrame();
   initQuickHelpDialog();
   initWindowEvents();
