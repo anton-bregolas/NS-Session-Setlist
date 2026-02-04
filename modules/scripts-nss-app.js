@@ -1562,7 +1562,7 @@ function updateAppVersionData(versionJson, newVersionJson) {
     appVersionUpdateBtn.dataset.copyText = 
       `App version: ${appVersion}` +
       `\nLast updated on: ${appDate}` +
-      `\nSession DB version: ${lastDbVersion? lastDbVersion : '[Updating]'}`;
+      `\nSession DB version: ${lastDbVersion? lastDbVersion : '[Open Tunebook]'}`;
   }
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);

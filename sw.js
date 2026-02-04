@@ -1,5 +1,4 @@
 const APP_VERSION = '1.2.3';
-// const DB_VERSION = '2026.02.03.6';
 const appVersionArr = APP_VERSION.split('.');
 const APP_CACHE_VERSION =
   appVersionArr[0] + appVersionArr[1] +
@@ -150,7 +149,7 @@ self.addEventListener('fetch', event => {
 
   // Handle version files, skip network-only requests
 
-  if (/version(-db)*\.json$/.test(url.pathname) && /^\?t\=\d*/.test(url.search)) {
+  if (/version\.json$/.test(url.pathname) && /^\?t\=\d*/.test(url.search)) {
 
     return;
   }
@@ -159,7 +158,7 @@ self.addEventListener('fetch', event => {
 
   if (/(sets|tunes|version-db)\.json$/.test(url.pathname)) {
 
-    event.respondWith(handleDBCaching(event, url.pathname));
+    event.respondWith(handleDBCaching(event));
     return;
   }
 
@@ -221,7 +220,7 @@ async function handleNavigate(url) {
 // Cache and retrieve up-to-date Session DB files
 // Use stale-while-revalidate for serving DB files
 
-async function handleDBCaching(event, requestUrlPathName) {
+async function handleDBCaching(event) {
 
   const request = event.request;
 
@@ -248,28 +247,6 @@ async function handleDBCaching(event, requestUrlPathName) {
 
         console.log(`[NS App Service Worker]\n\nSession DB successfully updated`);
 
-        // Post version update message to main app module
-
-//         if (requestUrlPathName.endsWith("version-db.json")) {
-
-//           const responseData = await networkResponse.clone().json();
-// console.warn(DB_VERSION, responseData.dbVersion);
-//           if (responseData &&
-//               responseData.dbVersion &&
-//               responseData.dbVersion !== DB_VERSION) {
-
-//             const updateMsgChannel =
-//               new BroadcastChannel("update-msg");
-
-//             updateMsgChannel.postMessage({
-//               msg: `db-updated-${responseData.dbVersion}`,
-//               url: request.url
-//             });
-// console.warn("Broadcast msg sent");
-//             updateMsgChannel.close();
-//           }
-//         }
-
         return networkResponse;
       }
 
@@ -294,17 +271,23 @@ async function handleDBCaching(event, requestUrlPathName) {
 
   // Serve DB from network if no cache
 
-  if (networkFetchPromise) {
+  try {
 
-    return networkFetchPromise;
-  }
+    const networkResponse = await networkFetchPromise;
+
+    if (networkResponse) return networkResponse;
+
+    throw new Error();
 
   // Return 503 if offline and no cache
 
-  return new Response(
-    JSON.stringify({ error: 'Offline: No cached Session DB available' }),
-    { status: 503, headers: { 'Content-Type': 'application/json' } }
-  );
+  } catch (error) {
+
+    return new Response(
+      JSON.stringify({ 'error': 'Offline: No cached Session DB available' }),
+      { 'status': 503, 'headers': { 'Content-Type': 'application/json' } }
+    );
+  }
 }
 
 // Fetch app assets from network or cache with offline-safe request
