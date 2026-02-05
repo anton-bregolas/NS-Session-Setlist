@@ -204,13 +204,15 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
     // Do update notification & tweaks if Session DB version changed
 
+    const cachedDbVersion = await getCurrentlyCachedDbVersion();
+    
+    console.warn(dbUpdateVersion, cachedDbVersion, lastDbVersion);
+
     if (lastDbVersion !== dbUpdateVersion) {
 
       displayNotification("Session DB updated: Refresh to apply", "success");
 
-      const cachedDbVersion = await getCurrentlyCachedDbVersion();
-
-      updateDbVersionData(dbUpdateVersion, lastDbVersion, cachedDbVersion);
+      updateDbVersionData(dbUpdateVersion, cachedDbVersion, lastDbVersion);
 
       localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
 
@@ -223,11 +225,13 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
       const { appVersion } = appVersionJson;
 
-      displayNotification(
-        `App version: v${appVersion}; ` +
-        `Session DB: ${dbUpdateVersion} (${dbUpdateResult[1]} sets, ${dbUpdateResult[2]} tunes)`,
-        "report"
-      );
+      setTimeout(() => {
+        displayNotification(
+          `App version: v${appVersion}; ` +
+          `Session DB: ${dbUpdateVersion} (${dbUpdateResult[1]} sets, ${dbUpdateResult[2]} tunes)`,
+          "report"
+        );
+      }, 50);
     }
 
     return;
@@ -1562,7 +1566,7 @@ function updateAppVersionData(versionJson, newVersionJson) {
     appVersionUpdateBtn.dataset.copyText = 
       `App version: ${appVersion}` +
       `\nLast updated on: ${appDate}` +
-      `\nSession DB version: ${lastDbVersion? lastDbVersion : '[Open Tunebook]'}`;
+      `\nSession DB version: ${lastDbVersion? lastDbVersion : '[Not Loaded]'}`;
   }
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);
@@ -1572,7 +1576,7 @@ function updateAppVersionData(versionJson, newVersionJson) {
 
 // Update Session DB version data in App Options menu
 
-function updateDbVersionData(dbVersion, lastDbVersion, cachedDbVersion) {
+function updateDbVersionData(dbVersion, cachedDbVersion, lastDbVersion) {
 
   if (!dbVersion || !appVersionUpdateBtn || !appVersionUpdateBtn.dataset.copyText) {
 
@@ -1596,14 +1600,14 @@ function updateDbVersionData(dbVersion, lastDbVersion, cachedDbVersion) {
 
 async function initSessionDb() {
 
-  // if (!navigator.onLine ||
-  //     window.origin.toString()
-  //     .replace(/http[s]*:\/\//, '')
-  //     .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
-  // ) {
+  if (!navigator.onLine ||
+      window.origin.toString()
+      .replace(/http[s]*:\/\//, '')
+      .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
+  ) {
 
-  //   return;
-  // }
+    return;
+  }
 
   try {
 
@@ -1614,6 +1618,15 @@ async function initSessionDb() {
     const dbUpdateResult = await updateDataJsons();
 
     if (dbUpdateResult && dbUpdateResult.length) {
+
+      const dbUpdateVersion = dbUpdateResult[0];
+
+      if (isLocalStorageOk()) {
+
+        localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
+      }
+
+      updateDbVersionData(dbUpdateVersion);
 
       console.log("NS Session App:\n\nSession DB initialized");
     }
@@ -1628,12 +1641,13 @@ async function initSessionDb() {
 
 // Handle Session DB fetching & updating on first Tunebook launch
 // Return null on error or unexpected data length to abort launch
+// Handle alternative manual Session DB fetching & version update
 
-async function doSessionDbUpdate() {
+async function doSessionDbUpdate(isManual) {
 
   try {
 
-    const dbUpdateArr = await updateDataJsons();
+    const dbUpdateArr = await updateDataJsons(isManual? true : false);
 
     if (!dbUpdateArr || !dbUpdateArr.length || dbUpdateArr.length < 3) {
 
@@ -1645,14 +1659,32 @@ async function doSessionDbUpdate() {
       `(${dbUpdateArr[1]} sets, ${dbUpdateArr[2]} tunes) ` + 
       `successfully fetched and pushed to data JSONs`
     );
+
+    if (isManual) {
+      
+      updateDbVersionData(dbUpdateArr[0]);
+
+      displayNotification("Session DB updated", "success");
+    }
     
     return dbUpdateArr;
 
   } catch (error) {
 
-    console.warn(`NS Session App:\n\nLaunching app sequence failed. Details:\n\n${error.message}`);
+    console.warn(
+      `NS Session App:\n\nSession DB update failed.` +
+      `${!isManual? ` Tunebook launch aborted.` : ''}` +
+      ` Details:\n\n${error.message}`
+    );
 
-    window.location.hash = "#launcher";
+    if (isManual) {
+      
+      displayNotification("Session DB could not be loaded", "error");
+    
+    } else {
+
+      window.location.hash = "#launcher";
+    }
 
     goatCountEvent("!error-fetch-session-db", "nss-app__doSessionDbUpdate");
 
@@ -1661,12 +1693,15 @@ async function doSessionDbUpdate() {
 }
 
 // Make a Session DB fetch request then return JSON or text or handle errors
+// Allow optional no-cache requests to prioritize network-first response in SW
 
-export async function fetchData(url, type) {
+export async function fetchData(url, type, isNoCache) {
 
   try {
 
-    const response = await fetch(url);
+    const response = 
+      isNoCache? await fetch(url, { cache: 'no-cache' }) :
+      await fetch(url);
 
     let data;
 
@@ -1699,26 +1734,26 @@ export async function fetchData(url, type) {
 // Fetch all Session DB components
 // Return a nested array of JSONs
 
-async function fetchDataJsons() {
+async function fetchDataJsons(isNoCache) {
 
   return Promise.all([
-      fetchData(tuneSetsLink, "json"),
-      fetchData(tuneListLink, "json"),
-      fetchData(setChordsLink, "json"),
-      fetchData(tuneChordsLink, "json"),
-      fetchData(dbVersionLink, "json")
+      fetchData(tuneSetsLink, "json", isNoCache),
+      fetchData(tuneListLink, "json", isNoCache),
+      fetchData(setChordsLink, "json", isNoCache),
+      fetchData(tuneChordsLink, "json", isNoCache),
+      fetchData(dbVersionLink, "json", isNoCache)
     ]);
 }
 
 // Push new data to app database after fetching Session DB
 // Return a reference array with Session DB version & sizes
 
-async function updateDataJsons() {
+async function updateDataJsons(isNoCache) {
 
   console.log("NS Session App:\n\nFetching data from Session DB...");
 
   const [setsData, tunesData, setChordsData, tuneChordsData, dbVersionData] =
-    await fetchDataJsons();
+    await fetchDataJsons(isNoCache);
 
   updateData(tuneSets, setsData);
   updateData(tuneList, tunesData);
@@ -1985,7 +2020,7 @@ async function fetchAppVersionData() {
   }
 }
 
-// Check if Session DB cache exists and is available
+// Check if Session DB cache exists and is not empty
 // Return undefined if Cache API is not available
 
 async function isSessionDbCached() {
@@ -1996,11 +2031,17 @@ async function isSessionDbCached() {
     return;
   }
 
-  const isSessionDbCached = await caches.has("session-db-cache");
+  const dbCacheName = "session-db-cache";
+
+  const isSessionDbCached = await caches.has(dbCacheName);
 
   if (isSessionDbCached) {
 
-    return true;
+    const dbCache = await caches.open(dbCacheName);
+
+    const dbCacheKeys = await dbCache.keys();
+
+    return dbCacheKeys.length > 0;
   }
 
   return false;
@@ -2464,6 +2505,14 @@ async function appButtonHandler(btn) {
 
       window.location.href = "abc-encoder.html";
 
+      return;
+    }
+
+    // Update Session DB
+    
+    if (dataLoad === "update-db") {
+
+      doSessionDbUpdate(true);
       return;
     }
 
@@ -3014,7 +3063,9 @@ function filterTuneBook() {
 
     console.log("NS Session App:\n\nTunebook filters cleared");
 
-    displayNotification("Tunebook filters cleared", "status");
+    setTimeout(() => {
+      displayNotification("Tunebook filters cleared", "status");
+    }, 150);
 
     tuneSelector.focus();
 
@@ -5044,6 +5095,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ///////////////////////////////////////////  
 
 // Register service worker on window load
+// Initialize Session DB when SW is ready
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -5051,7 +5103,11 @@ if ('serviceWorker' in navigator) {
       .register('/sw.js')
       .then((registration) => {
         console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
-        initSessionDb();
+        navigator.serviceWorker.ready.then(() => {
+          if (window.location.hash === "#launcher" || window.location.hash === "#playalong") {
+            initSessionDb();
+          }
+        });
       })
       .catch((error) => {
         goatCountEvent(
