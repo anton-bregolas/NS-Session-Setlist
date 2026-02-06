@@ -355,6 +355,76 @@ Import Name | Import Description | Details |
 
 ## Version History
 
+<details>
+  <summary><b>v1.2.3 Separate Session DB Checks & Updates</b></summary>
+
+**v1.2.3: Separate Session DB Handling**
+
++ App updates:
+  - Split App & Session DB caching and versioning
+    * App version: version.json
+    * DB version: version-db.json
+  - Add dbVersionLink to app scripts
+  - Add Update DB button to Advanced Options:
+    * Fetch DB version check with no-store
+    * Force DB cache update with reload
+  - Update updateDataJsons:
+    * Fetch dbVersionData
+    * Return dbVersion string at arr[0]
+  - Update all fetch scripts to include cacheOption arg for optional caching strategies
+  - Add doSessionDbUpdate for handling automatic and manual Session DB updates 
+  - Add fetchDbVersionData for handling version-db.json fetching
+  - Add isSessionDbCached and getCurrentlyCachedDbVersion for DB cache checks
+  - Add lastSessionDbVersion_NSSSAPP local storage variable for update notification handling
+  - Update launchTuneBook with new DB update logic:
+    * Fetch & update DB on first Tunebook launch
+    * Show success notification on version change
+    * Show error if offline and no DB or no cached ABC Tools
+    * Update DB version with fetched data
+    * Update lastSessionDbVersion_NSSSAPP value
+  - Update updateAppVersionData with new dbVersion handling
+  - Add updateDbVersionData for updating version in App Options
+  - Update
+  - Add initSessionDb to preload DB on first launch:
+    * Initialize DB if not cached, not offline and not localhost
+    * Run initSessionDb after SW is ready
+    * Fetch Session DB & update version data
+
++ Tunebook updates:
+  - Check for Session DB updates on first Tunebook launch per session
+  - Check isAbcToolsLoaded on first Tunebook launch per session
+  - Show ABC Tools not cached warning if offline and first time opening Tunebook
+  - Show Session DB updated notification on first Tunebook launch per session
+  - Show detailed Session DB update report if show report option is ON
+  - Fix app report formatting for neater display on mobile viewports
+
++ PWA updates:
+  - Split cache into independent App & DB caches
+    * App cache keeps using versioned name, updates on SW install / activate if version changed
+    * DB cache uses static name & versioning / update logic handled by app 
+  - Refactor Service Worker:
+    * Add isNetworkFirst flag to fetch handler
+    * Split handleDBCaching into handleDBFetchUpdate and handleDBCacheFirst
+    * Handle navigate and assets caching with optional network-first strategy
+    * Fix navigate handler logic
+    * Handle DB assets cache-first or network-first depending on the flag passed and cache availability
+    * Skip handling version files with timestamp query
+    * Do not use isCacheExpired, handle DB checks in app
+
++ AUV updates:
+  - Add -uca / vuca alias for auto-update Session DB & open commit
+  - Update DB update logic, add version-db.json
+  - Do not update DB version in sw.js on auto-update, update only version-db.json
+
++ Session DB Updates:
+  - Add version-db.json to Session DB
+  - Update dbVersion to 2026.02.06.1
+  - Cache all DB files in session-db-cache
+</details>
+
+<details>
+  <summary><b>v1.2.2 Update Session DB, Fix CVW & Encoder</b></summary>
+
 **v1.2.2: Session DB Fixes & Update**
 
 + Chord Viewer updates:
@@ -364,9 +434,16 @@ Import Name | Import Description | Details |
 + ABC Encoder module updates:
   - Fix "Set" suffix missing in Medleys
 
++ PWA updates:
+  - Update app Launch Screen screenshots
+
 + Session DB Updates:
   - Add 7 Sets (Anton Zille ed. arr.)
   - Update to version 2026.01.26.1
+</details>
+
+<details>
+  <summary><b>v1.2.1 Add Support Menu, App Version Check</b></summary>
 
 **v1.2.1: Add Support Menu, Version Check, UI Fixes**
 
@@ -440,8 +517,10 @@ Import Name | Import Description | Details |
   - A11y: Add prefers-reduced-motion rules
   - A11y: Add underline styles for inline links and buttons
   - A11y: Scale up notification popup text for smaller viewports
+</details>
+
 <details>
-  <summary><b>v1.2.0</b></summary>
+  <summary><b>v1.2.0 Add Deflate, Tools Lite, New SW</b></summary>
 
 **v1.2.0: Deflated Session DB, New SW, Tools Lite**
 

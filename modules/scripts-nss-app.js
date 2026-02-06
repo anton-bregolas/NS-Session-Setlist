@@ -44,6 +44,7 @@ export const tuneSets = [];
 export const tuneList = [];
 export const setChords = [];
 export const tuneChords = [];
+export const dbVersionLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/version-db.json";
 export const tuneSetsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/sets.json"
 export const tuneListLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-encoded/tunes.json"
 export const setChordsLink = "https://raw.githubusercontent.com/anton-bregolas/NS-Session-Setlist/refs/heads/main/abc-chords/chords-sets.json";
@@ -91,30 +92,46 @@ const appSupportContact = 'YW50b24uYnJlZ29sYXNAcHJvdG9uLm1l';
 // APP SCRIPTS: LAUNCHERS
 ///////////////////////////////////////////
 
-// Load Tunebook with Setlist or Tunelist interface, initiate ABC Tools
+// Launch Tunebook with Setlist or Tunelist interface, load ABC Tools
 
 async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
+  // Check if ABC Tools editor has been loaded at least once
+
+  const isAbcToolsLoaded = 
+    isLocalStorageOk()? !!+localStorage.abcToolsLoaded_NSSSAPP : true;
+
   // Fetch latest Session DB if Tunebook has not been initialized
+  // Prevent Tunebook from loading with empty ABC Tools while offline
+
+  let dbUpdateResult = null;
+  let dbUpdateVersion = null;
 
   if (!isTuneBookInitialized) {
 
-    const isSessionDBLoaded = await tuneDataFetch();
+    dbUpdateResult = await doSessionDbUpdate();
 
-    if (!isSessionDBLoaded) {
+    if (!dbUpdateResult || !dbUpdateResult[0] || (!navigator.onLine && !isAbcToolsLoaded)) {
 
-      // Display an error and hightlight section button if fetch attempt fails
+      // Abort: Display an error and hightlight section button if Tunebook launch fails
+
+      window.location.hash = "#launcher";
 
       const triggerBtnId = `#nss-launch-${targetSection}`;
       
       const triggerBtn = document.querySelector(triggerBtnId);
-      
-      displayNotification("Tunebook data could not be loaded", "error", triggerBtnId);
+
+      const warningMsgText =
+        isAbcToolsLoaded? "Tunebook data could not be loaded" : "ABC Tools not cached: Reopen while online";
+
+      displayNotification(warningMsgText, "error", triggerBtnId);
 
       displayWarningEffect(triggerBtn);
 
       return;
     }
+
+    dbUpdateVersion = dbUpdateResult[0];
   }
 
   // Launch Tunebook
@@ -153,7 +170,7 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
   handleSelectorLabels("init");
 
-  // Initialize ABC Tools when Tunebook first opened
+  // Initialize ABC Tools & show notifications on first Tunebook load
 
   if (isTuneBookInitialized === false) {
 
@@ -169,18 +186,58 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
     lastTuneBookOpened = tuneBookSetting;
 
-    if (isLocalStorageOk()) {
+    // Notify: Display notifications upon checking localStorage settings
 
-      localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
+    if (!isLocalStorageOk()) return;
 
-      if (!localStorage.tuneBookInitialized_NSSSAPP) {
+    localStorage.tuneBookLastOpened_NSSSAPP = tuneBookSetting;
 
-        displayNotification("First time loading Tunebook: Please wait for ABC Tools to load", "success");
+    const isStatusReportOn = !!+localStorage.tuneBookShowStatusReport;
 
-        openQuickHelpDialog();
+    const lastDbVersion = localStorage.lastSessionDbVersion_NSSSAPP || '';
 
-        localStorage.tuneBookInitialized_NSSSAPP = 1;
-      }
+    // Show Quick Help Dialog on first ever load of Tunebook / ABC Tools
+
+    if (!isAbcToolsLoaded) {
+
+      openQuickHelpDialog();
+
+      updateDbVersionData(dbUpdateVersion);
+
+      localStorage.abcToolsLoaded_NSSSAPP = 1;
+
+      localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
+
+      return;
+    }
+
+    // Do update notification & tweaks if Session DB version changed
+
+    if (lastDbVersion !== dbUpdateVersion) {
+
+      displayNotification(`Session DB updated to ${dbUpdateVersion}`, "report");
+
+      updateDbVersionData(dbUpdateVersion);
+
+      localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
+
+      return;
+    }
+
+    // Show Tunebook report if option enabled
+    
+    if (isStatusReportOn) {
+
+      const { appVersion } = appVersionJson;
+
+      setTimeout(() => {
+        displayNotification(
+          `App version: v${appVersion}; ` +
+          `Session\u00a0DB:\u00a0${dbUpdateVersion} ` +
+          `(${dbUpdateResult[1]}\u00a0sets,\u00a0${dbUpdateResult[2]}\u00a0tunes)`,
+          "report"
+        );
+      }, 50);
     }
 
     return;
@@ -1485,7 +1542,7 @@ function updateAppSectionTitle(targetSection) {
 
 function updateAppVersionData(versionJson, newVersionJson) {
 
-  const { appVersion, appDate, dbVersion } = versionJson;
+  const { appVersion, appDate } = versionJson;
 
   const appVersionText = `App version ${appVersion}`;
 
@@ -1502,6 +1559,10 @@ function updateAppVersionData(versionJson, newVersionJson) {
 
   } else {
 
+    let lastDbVersion;
+
+    if (isLocalStorageOk()) lastDbVersion = localStorage.lastSessionDbVersion_NSSSAPP;
+
     appVersionTitle = appVersionText + `. Click to copy detailed report`;
 
     appVersionUpdateBtn.textContent = appVersionText;
@@ -1509,7 +1570,9 @@ function updateAppVersionData(versionJson, newVersionJson) {
     appVersionUpdateBtn.dataset.load = "copy-text";
 
     appVersionUpdateBtn.dataset.copyText = 
-      `App version: ${appVersion}\nLast updated on: ${appDate}\nSession DB version: ${dbVersion}`;
+      `App version: ${appVersion}` +
+      `\nLast updated on: ${appDate}` +
+      `\nSession DB version: ${lastDbVersion? lastDbVersion : '[Not Loaded]'}`;
   }
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);
@@ -1517,53 +1580,152 @@ function updateAppVersionData(versionJson, newVersionJson) {
   appVersionUpdateBtn.setAttribute("aria-title", appVersionTitle);
 }
 
+// Update Session DB version data in App Options menu
+
+function updateDbVersionData(dbVersion) {
+
+  if (!dbVersion || !appVersionUpdateBtn || !appVersionUpdateBtn.dataset.copyText) {
+
+    return;
+  }
+
+  appVersionUpdateBtn.dataset.copyText =
+    appVersionUpdateBtn.dataset.copyText.replace(
+      /(Session DB version).*/, `$1: ${dbVersion}`
+    );
+}
+
 ////////////////////////////////////////////
 // APP SCRIPTS: FETCHERS & DATA HANDLERS
 ///////////////////////////////////////////
 
-// Fetch Session DB data
+// Initialize Session DB data on first app load
 
-async function tuneDataFetch() {
+async function initSessionDb() {
+
+  if (!navigator.onLine ||
+      window.origin.toString()
+      .replace(/http[s]*:\/\//, '')
+      .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
+  ) {
+
+    return;
+  }
 
   try {
 
-    const tuneDataSize = await updateDataJsons();
+    const sessionDbFound = await isSessionDbCached();
 
-    if (!tuneDataSize[0]) {
+    if (sessionDbFound !== false) return;
 
-      return null;
+    const dbUpdateResult = await updateDataJsons();
+
+    if (dbUpdateResult && dbUpdateResult.length) {
+
+      const dbUpdateVersion = dbUpdateResult[0];
+
+      if (isLocalStorageOk()) {
+
+        localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
+      }
+
+      updateDbVersionData(dbUpdateVersion);
+
+      console.log("NS Session App:\n\nSession DB initialized");
     }
-
-    console.log(`NS Session App:\n\nSession DB items (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes) successfully fetched and pushed to data JSONs`);
-    
-    if (isLocalStorageOk() && +localStorage.tuneBookShowStatusReport === 1) {
-
-      const { appVersion, dbVersion } = appVersionJson;
-
-      displayNotification(`App version: v${appVersion}; Session DB: ${dbVersion} (${tuneDataSize[0]} sets, ${tuneDataSize[1]} tunes)`, "report");
-    }
-    
-    return tuneDataSize[0];
 
   } catch (error) {
 
-    console.warn(`NS Session App:\n\nLaunching app sequence failed. Details:\n\n${error.message}`);
+    console.warn("NS Session App:\n\nFailed to load Session DB data on startup");
 
-    window.location.hash = "#launcher";
+    goatCountEvent("!error-init-session-db", "nss-app__initSessionDb");
+  }
+}
 
-    goatCountEvent("!error-fetch-tune-db", "nss-app__tuneDataFetch");
+// Handle Session DB fetching & updating on every Tunebook launch
+// Return null on error or unexpected data length to abort launch
+// Handle alternative manual Session DB fetching & version update
+
+async function doSessionDbUpdate(isManual, cacheOption) {
+
+  try {
+
+    // Fetch up-to-date Session DB version data from network
+    const remoteDbVersion = await fetchDbVersionData();
+
+    // Fail fast if manual update can't fetch from network
+    if (isManual && !remoteDbVersion) throw new Error("Failed to fetch");
+
+    // Try checking if current DB version is up to date
+    const localDbVersion = await getCurrentlyCachedDbVersion();
+
+    // Notify and exit if manual update & version is up to date
+    if (isManual && localDbVersion === remoteDbVersion) {
+      
+      console.log(`NS Session App:\n\nSession DB [${localDbVersion}] is already up to date`);
+      displayNotification("Session DB is up to date", "success");
+      return null;
+    }
+
+    const isUpdateAvailable =
+      remoteDbVersion && localDbVersion !== remoteDbVersion;
+
+    if (isUpdateAvailable) {
+
+      console.log(`NS Session App:\n\nSession DB update available [${remoteDbVersion}]`);
+
+    } else {
+
+      console.log(`NS Session App:\n\nSession DB [${localDbVersion}] is up to date`);
+    }
+
+    const dbUpdateArr =
+      isUpdateAvailable? await updateDataJsons("reload") :
+      await updateDataJsons(cacheOption);
+
+    if (!dbUpdateArr || !dbUpdateArr.length || dbUpdateArr.length < 3) {
+
+      if (isManual) throw new Error("Database missing or incomplete");
+      return null;
+    }
+
+    console.log(
+      `NS Session App:\n\nSession DB [${dbUpdateArr[0]}] ` +
+      `(${dbUpdateArr[1]} sets, ${dbUpdateArr[2]} tunes) ` + 
+      `successfully fetched and pushed to data JSONs`
+    );
+    
+    return dbUpdateArr;
+
+  } catch (error) {
+
+    console.warn(
+      `NS Session App:\n\nSession DB update failed.` +
+      `${!isManual? ` Tunebook launch aborted.` : ''}` +
+      ` Details:\n\n${error.message}`
+    );
+
+    if (isManual) {
+      
+      displayNotification("Session DB could not be loaded", "error");
+    }
+
+    goatCountEvent("!error-update-session-db", "nss-app__doSessionDbUpdate");
 
     return null;
   }
 }
 
 // Make a Session DB fetch request then return JSON or text or handle errors
+// Allow optional no-cache requests to prioritize network-first response in SW
 
-export async function fetchData(url, type) {
+export async function fetchData(url, type, cacheOption) {
 
   try {
 
-    const response = await fetch(url);
+    const response = 
+      cacheOption? await fetch(url, { cache: cacheOption }) :
+      await fetch(url);
 
     let data;
 
@@ -1593,38 +1755,45 @@ export async function fetchData(url, type) {
   }
 }
 
-// Fetch all Session DB JSONs
+// Fetch all Session DB components
+// Return a nested array of JSONs
 
-export async function fetchDataJsons() {
+async function fetchDataJsons(cacheOption) {
 
   return Promise.all([
-      fetchData(tuneSetsLink, "json"),
-      fetchData(tuneListLink, "json"),
-      fetchData(setChordsLink, "json"),
-      fetchData(tuneChordsLink, "json")
+      fetchData(tuneSetsLink, "json", cacheOption),
+      fetchData(tuneListLink, "json", cacheOption),
+      fetchData(setChordsLink, "json", cacheOption),
+      fetchData(tuneChordsLink, "json", cacheOption),
+      fetchData(dbVersionLink, "json", cacheOption)
     ]);
 }
 
-// Push new tune data to Custom JSONs after fetching Session DB
+// Push new data to app database after fetching Session DB
+// Return a reference array with Session DB version & sizes
 
-export async function updateDataJsons() {
+async function updateDataJsons(cacheOption) {
 
-  console.log("NS Session App:\n\nFetching data from Session DB...");
+  console.log("NS Session App:\n\nUpdating Session DB app data...");
 
-  const [setsData, tunesData, setChordsData, tuneChordsData] =
-  await fetchDataJsons();
+  const [setsData, tunesData, setChordsData, tuneChordsData, dbVersionData] =
+    await fetchDataJsons(cacheOption);
 
   updateData(tuneSets, setsData);
   updateData(tuneList, tunesData);
   updateData(setChords, setChordsData);
   updateData(tuneChords, tuneChordsData);
 
-  return [tuneSets.length, tuneList.length, setChords.length, tuneChords.length];
+  const { dbVersion } = dbVersionData;
+
+  return [dbVersion, tuneSets.length, tuneList.length, setChords.length, tuneChords.length];
 }
 
-// Update Custom Tune Data JSON
+// Update target Session DB JSON with new data
 
-export async function updateData(dataJson, newData) {
+async function updateData(dataJson, newData) {
+
+  if (!newData || !newData.length) return;
 
   dataJson.length = 0;
 
@@ -1635,13 +1804,12 @@ export async function updateData(dataJson, newData) {
     dataJson === tuneList? "Tunes" :
     dataJson === setChords? "Set Chords" : "Tune Chords";
 
-  // console.log(`NS Session App:\n\nSession DB updated`);
   console.log(`NS Session App:\n\n${dataType} data loaded`);
 }
 
-// Clear Session DB JSONs
+// Clear Session DB app data
 
-export function clearData() {
+function clearDataJsons() {
 
   tuneSets.length = 0;
   tuneList.length = 0;
@@ -1779,8 +1947,8 @@ async function fetchAppVersionData() {
       window.origin.toString()
       .replace(/http[s]*:\/\//, '')
       .match(/(?:localhost|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|::1)(?:$|:\d{1,5})/)
-    ) {
-      
+  ) {
+
     updateAppVersionData(appVersionJson);
     return;
   }
@@ -1796,7 +1964,6 @@ async function fetchAppVersionData() {
     
   const appVersionRemoteUrl =
     `${appBaseUrl}version.json`;
-    // `https://ns.tunebook.app/version.json`;
 
   // Create an AbortController
   // Prevent hanged version checks
@@ -1811,15 +1978,15 @@ async function fetchAppVersionData() {
   try {
 
     const remoteResponse =
-      await fetch(appVersionRemoteUrl, {
+      await fetch(`${appVersionRemoteUrl}?t=${Date.now()}`, {
         signal: controller.signal,
         cache: 'no-store'
-        });
+      });
 
     clearTimeout(timeoutId);
 
     if (!remoteResponse.ok) {
-      throw new Error(`Failed to fetch app version JSON: ${remoteResponse.status}`);
+      throw new Error(remoteResponse.status);
     }
 
     const remoteVersionJson =
@@ -1841,7 +2008,7 @@ async function fetchAppVersionData() {
 
       if (!appOptionsPopover.matches(':popover-open') && !checkIfTunebookOpen()) {
 
-        displayNotification("Update available: Refresh app or go to Options⚙️ to get the latest version", "success");
+        displayNotification("Update available: Refresh to apply", "success");
       }
 
     } else {
@@ -1853,7 +2020,7 @@ async function fetchAppVersionData() {
       );
     }
 
-  } catch (err) {
+  } catch (error) {
 
     // Show error warning in the console
     // Update version button with current app version
@@ -1868,12 +2035,129 @@ async function fetchAppVersionData() {
     );
     
     console.warn(
-      'NS Session App:\n\nCould not fetch app version\n\n',
-      err.name === 'AbortError'?
-        `App version check timed out after ${timeoutMs / 1000}s` :
-        err
+      'NS Session App:\n\nCould not fetch app version',
+      error.name === 'AbortError'?
+        `(App version check timed out after ${timeoutMs}ms)` :
+      error.message?
+        `(Error: ${error.message})` :
+      `(${error})`
     );
   }
+}
+
+// Fetch the latest Session DB version data from custom path
+// Return DB version number or null if no version data
+
+async function fetchDbVersionData() {
+
+  console.log(`NS Session App:\n\nFetching Session DB version data...`);
+
+  // Create an AbortController
+  // Prevent hanged version checks
+  const controller = new AbortController();
+  const timeoutMs = 5000;
+
+  // Set up the timeout
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
+
+  try {
+
+    const remoteResponse =
+      await fetch(`${dbVersionLink}?t=${Date.now()}`, {
+        signal: controller.signal,
+        cache: 'no-store'
+      });
+
+    clearTimeout(timeoutId);
+
+    if (!remoteResponse.ok) {
+      throw new Error(remoteResponse.status);
+    }
+
+    const remoteVersionJson =
+      await remoteResponse.json();
+
+    return remoteVersionJson.dbVersion || null;
+
+  } catch (error) {
+
+    // Show error warning in the console
+    // Update version button with current app version
+
+    clearTimeout(timeoutId);
+
+    goatCountEvent(
+      "!error-fetch-version-db-data",
+      "nss-app__fetchDbVersionData"
+    );
+    
+    console.warn(
+      'NS Session App:\n\nCould not fetch Session DB version',
+      error.name === 'AbortError'?
+        `(DB version check timed out after ${timeoutMs}ms)` :
+      error.message?
+        `(Error: ${error.message})` :
+      `(${error})`
+    );
+
+    return null;
+  }
+}
+
+// Check if Session DB cache exists and is not empty
+// Return undefined if Cache API is not available
+
+async function isSessionDbCached() {
+
+  if (!('caches' in window)) {
+
+    console.warn("NS Session App:\n\nCache API is not supported in this browser");
+    return;
+  }
+
+  const dbCacheName = "session-db-cache";
+
+  const isSessionDbCached = await caches.has(dbCacheName);
+
+  if (isSessionDbCached) {
+
+    const dbCache = await caches.open(dbCacheName);
+
+    const dbCacheKeys = await dbCache.keys();
+
+    return dbCacheKeys.length > 0;
+  }
+
+  return false;
+}
+
+// Get Session DB version data from cache
+
+async function getCurrentlyCachedDbVersion() {
+
+  const sessionDbFound = await isSessionDbCached();
+
+  if (!sessionDbFound) return null;
+
+  const dbCache = await caches.open("session-db-cache");
+
+  const dbKeys = await dbCache.keys();
+
+  const dbVersionKey =
+    dbKeys.find(key => key.url.endsWith("version-db.json"));
+
+  if (dbVersionKey) {
+
+    const dbVersionCached = await dbCache.match(dbVersionKey);
+
+    const dbVersionJson = await dbVersionCached.json();
+
+    return dbVersionJson.dbVersion || null;
+  }
+
+  return null;
 }
 
 ////////////////////////////////////////////
@@ -2306,6 +2590,24 @@ async function appButtonHandler(btn) {
     if (dataLoad === "abc-encoder") {
 
       window.location.href = "abc-encoder.html";
+
+      return;
+    }
+
+    // Update Session DB
+    
+    if (dataLoad === "update-db") {
+
+      const dbUpdateResult = await doSessionDbUpdate(true, "reload");
+      
+      if (dbUpdateResult) {
+
+        const dbUpdateVersion = dbUpdateResult[0];
+
+        updateDbVersionData(dbUpdateVersion);
+        
+        displayNotification(`Session DB updated to ${dbUpdateVersion}`, "success");
+      }
 
       return;
     }
@@ -2857,7 +3159,9 @@ function filterTuneBook() {
 
     console.log("NS Session App:\n\nTunebook filters cleared");
 
-    displayNotification("Tunebook filters cleared", "status");
+    setTimeout(() => {
+      displayNotification("Tunebook filters cleared", "status");
+    }, 150);
 
     tuneSelector.focus();
 
@@ -4209,7 +4513,7 @@ function appRouterOnLoad() {
 
     console.log(`NS Session App:\n\nHash routing is being blocked\n
     Hash links loading on startup allowed? [${!!+localStorage.tuneBookAllowLoadFromHashLink}]\n
-    Tunebook previously initialized? [${!!+localStorage.tuneBookInitialized_NSSSAPP}]`);
+    ABC Tools previously loaded? [${!!+localStorage.abcToolsLoaded_NSSSAPP}]`);
 
     window.location.hash = "#launcher";
 
@@ -4766,7 +5070,6 @@ async function initGoatCounter() {
   try {
 
     const response =
-      // await fetch('//gc.zgo.at/count.js');
       await fetch('//gc.zgo.at/count.js', { signal: controller.signal });
 
     clearTimeout(timeoutId);
@@ -4887,6 +5190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ///////////////////////////////////////////  
 
 // Register service worker on window load
+// Initialize Session DB when SW is ready
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -4894,6 +5198,11 @@ if ('serviceWorker' in navigator) {
       .register('/sw.js')
       .then((registration) => {
         console.log(`[NS App Service Worker]\n\n` + `Registered with scope:\n\n` + registration.scope);
+        navigator.serviceWorker.ready.then(() => {
+          if (window.location.hash === "#launcher" || window.location.hash === "#playalong") {
+            initSessionDb();
+          }
+        });
       })
       .catch((error) => {
         goatCountEvent(

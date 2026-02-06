@@ -1,10 +1,11 @@
-const APP_VERSION = '1.2.2';
-const CACHE_VERSION =
-  APP_VERSION.replaceAll(".", '').slice(0, 2) +
-  APP_VERSION.slice(-1).padStart(2, "0");
-const CACHE_PREFIX = "ns-app-cache-";
-const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
-const CACHE_EXPIRES_DAYS = 7;
+const APP_VERSION = '1.2.3';
+const appVersionArr = APP_VERSION.split('.');
+const APP_CACHE_VERSION =
+  appVersionArr[0] + appVersionArr[1] +
+  (appVersionArr.length > 2? appVersionArr[2].padStart(2, "0") : '');
+const APP_CACHE_PREFIX = "ns-app-cache-";
+const APP_CACHE_NAME = `${APP_CACHE_PREFIX}${APP_CACHE_VERSION}`;
+const DB_CACHE_NAME = "session-db-cache";
 
 const APP_ASSETS = [
   'index.html',
@@ -61,9 +62,16 @@ async function handleInstall() {
 
   // Cache critical app assets immediately
 
-  const cache = await caches.open(CACHE_NAME);
+  const cache = await caches.open(APP_CACHE_NAME);
 
-  await cache.addAll(APP_ASSETS);
+  try {
+
+    await cache.addAll(APP_ASSETS);
+
+  } catch (error) {
+
+    console.warn(`[NS App Service Worker] Failed to cache main app assets`, error);
+  }
 
   await self.skipWaiting();
 
@@ -92,11 +100,11 @@ async function handleActivate() {
 
   await Promise.all(
     cacheKeys
-      .filter(cacheKey => cacheKey.startsWith(CACHE_PREFIX) && cacheKey !== CACHE_NAME)
+      .filter(cacheKey => cacheKey.startsWith(APP_CACHE_PREFIX) && cacheKey !== APP_CACHE_NAME)
       .map(cacheKey => {
         console.log(`[NS App Service Worker]\n\n` +
-          `Cached version: v${cacheKey.slice(CACHE_PREFIX.length)}\n\n` +
-          `Current version: v${CACHE_VERSION}\n\n` +
+          `Cached version: v${cacheKey.slice(APP_CACHE_PREFIX.length)}\n\n` +
+          `Current version: v${APP_CACHE_VERSION}\n\n` +
           `Clearing outdated cached files...`);
         return caches.delete(cacheKey);
       })
@@ -125,7 +133,7 @@ self.addEventListener('fetch', event => {
     }
 
     event.respondWith(
-      fetch(event.request).catch(() => {
+      fetch(request).catch(() => {
         return new Response(null, { status: 204, statusText: 'No Content' });
       })
     );
@@ -138,143 +146,194 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Check for custom request caching strategy
+
+  const cacheOption = request.cache;
+
+  const isNetworkFirst =
+    cacheOption === 'reload' ||
+    cacheOption === 'no-cache' ||
+    cacheOption === 'no-store';
+
   // Handle page navigation
 
   if (request.mode === 'navigate') {
 
-    event.respondWith(handleNavigate(url));
+    event.respondWith(handleNavigate(event, url.pathname, isNetworkFirst));
+    return;
+  }
+
+  // Skip caching version files with timestamp
+
+  if (/version(?:-db)*\.json$/.test(url.pathname) && url.searchParams.has('t')) {
+
     return;
   }
 
   // Handle Session DB files
 
-  if (/(sets|tunes|chords-sets|chords-tunes)\.json$/.test(url.pathname)) {
+  if (/(sets|tunes|version-db)\.json$/.test(url.pathname)) {
+  
+    if (isNetworkFirst) {
 
-    event.respondWith(handleDBCaching(request));
+      event.respondWith(handleDBFetchUpdate(event, true));
+      return;
+    }
+  
+    event.respondWith(handleDBCacheFirst(event));
     return;
   }
 
   // Handle all other assets
 
-  event.respondWith(handleAssetCaching(request));
+  event.respondWith(handleAssetCaching(event, isNetworkFirst));
 });
 
 // Handle navigation: Serve cached HTML for main app sections
-// Fall back to launch screen page if no resource cached
+// No cache: Fall back to network response & add to app cache
 
-async function handleNavigate(url) {
+async function handleNavigate(event, pathname, isNetworkFirst) {
 
-  const targetPage =
-    url.pathname.includes('abc-encoder')?
-      'abc-encoder.html' :
-      'index.html';
-  
+  const request = event.request;
+
+  // Redirect to /index.html from root
+  const cacheKey =
+    (pathname === '/' || pathname === '/index.html')?
+      '/index.html' : pathname;
+
   // Try cached pages first
   const pageCached =
-    await caches.match(targetPage);
+    await caches.match(cacheKey);
 
-  if (pageCached) return pageCached;
+  if (!!pageCached && !isNetworkFirst)
+    return pageCached;
 
   // Fall back to network response
   try {
 
-    const pageFetched =
-      await fetch(targetPage);
+    const pageFetched = await fetch(request);
 
-    if (pageFetched?.ok) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(targetPage, pageFetched.clone());
+    if (pageFetched.ok) {
+
+      const cache = await caches.open(APP_CACHE_NAME);
+
+      cache.put(request, pageFetched.clone());
+      
+      return pageFetched;
     }
 
-    return pageFetched;
-
-  // Force loading from cache in case hard reload skips it
   } catch (error) {
+    
+    // Force loading from cache in case hard reload skips it
+    if (pageCached) return pageCached;
 
-    const indexCached =
-      await caches.match('index.html');
-
-    if (indexCached) return indexCached;
-
-  // Return response with error if no pages available
+    // Return response with error if no pages available
     console.warn(
       `[NS App Service Worker]\n\n` +
-      `Offline: No cached pages available`
+      `Offline: No cached page available`
     );
 
     return new Response(
-      JSON.stringify({ error: 'Offline: No cached pages available' }),
+      JSON.stringify({ error: 'Offline: No cached page available' }),
       { status: 503, headers: { 'Content-Type': 'application/json' } }
     );
   }
 }
 
-// Cache and retrieve up-to-date Session DB files
+// Serve Session DB files from cache
 
-async function handleDBCaching(request) {
+async function handleDBCacheFirst(event) {
 
-  const appCache = await caches.open(CACHE_NAME);
+  const request = event.request;
 
-  // Serve DB from cache if not outdated, use offline-safe lookup
+  const sessionDbCache = await caches.open(DB_CACHE_NAME);
 
-  const cachedDB = await caches.match(request, { ignoreSearch: true });
+  const cachedResponse = await sessionDbCache.match(request);
 
-  if (cachedDB && !isCacheExpired(cachedDB, CACHE_EXPIRES_DAYS)) {
+  // Serve DB from cache immediately
+
+  if (!!cachedResponse) {
+
     console.log(
       `[NS App Service Worker]\n\n` +
       `Retrieving cached version of Session DB`
     );
-    return cachedDB;
+
+    // Fetch up-to-date DB from network in background
+
+    // event.waitUntil(handleDBFetchUpdate(event));
+
+    return cachedResponse;
   }
 
-  // Fetch up-to-date DB from network, fall back to cached DB
+  // Fetch DB from network if no cache
+
+  return handleDBFetchUpdate(event);
+}
+
+// Try to fetch Session DB files from network
+// Update Session DB cache if fetch successful
+
+async function handleDBFetchUpdate(event, isNetworkFirst) {
+
+  const request = event.request;
 
   try {
 
     console.log(
       `[NS App Service Worker]\n\n` +
-      `Session DB missing or outdated\n\n` +
-      `Fetching a fresh version...`
+      `Fetching Session DB from network...`
     );
 
     const networkResponse = await fetch(request);
 
-    if (networkResponse && networkResponse.ok) {
-      await appCache.put(request, networkResponse.clone());
+    if (networkResponse.ok) {
+
+      const sessionDbCache = await caches.open(DB_CACHE_NAME);
+
+      await sessionDbCache.put(request, networkResponse.clone());
+
       console.log(`[NS App Service Worker]\n\nSession DB successfully updated`);
-      return networkResponse;
     }
 
+    return networkResponse;
+
   } catch (error) {
-    console.log(
-      `[NS App Service Worker]\n\n` +
-      `Fetch unsuccessful. Falling back to cached version of Session DB`);
-  }
 
-  if (cachedDB) {
-    return cachedDB;
-  }
+    if (isNetworkFirst) {
 
-  return new Response(
-    JSON.stringify({ error: 'Offline: No cached Session DB available' }),
-    { status: 503, headers: { 'Content-Type': 'application/json' } }
-  );
+      console.log(
+        `[NS App Service Worker]\n\n` +
+        `Update unsuccessful: Using cached version of Session DB`
+      );
+
+      return;
+    }
+
+    return new Response(
+      JSON.stringify({ 'error': 'Offline: No cached Session DB available' }),
+      { 'status': 503, 'headers': { 'Content-Type': 'application/json' } }
+    );
+  }
 }
 
 // Fetch app assets from network or cache with offline-safe request
 
-async function handleAssetCaching(request) {
+async function handleAssetCaching(event, isNetworkFirst) {
+
+  const request = event.request;
 
   // Get assets from cache, ignoring search parameters
 
   const cachedAsset = await caches.match(request, { ignoreSearch: true });
 
-  if (cachedAsset) {
+  if (!!cachedAsset && !isNetworkFirst) {
 
     return cachedAsset;
   }
 
-  // Get assets from network, fix headers if needed
+  // Fetch assets from network
+  // Try fixing headers for edge cases
 
   try {
 
@@ -286,7 +345,8 @@ async function handleAssetCaching(request) {
 
   } catch (error) {
 
-    // Fallback for critical asset types
+    // Fallback for critical asset types:
+    // Try modified cache-only request
     
     if (request.destination === 'script' ||
         request.destination === 'json' ||
@@ -307,6 +367,9 @@ async function handleAssetCaching(request) {
         return fallbackResponse;
       }
     }
+
+    // Fallback for images:
+    // Serve offline placeholder
 
     if (request.destination === 'image') {
       
