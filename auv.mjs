@@ -216,11 +216,11 @@ async function main() {
 
   const type = args[0];
 
-  if (!type || !['-a', '-bc', '-bca', '-buv', '-c', '-ca', '-cua', '-help', '-tst', '-udb', '-uv', '-v'].includes(type)) {
+  if (!type || !['-a', '-bc', '-bca', '-buv', '-c', '-ca', '-help', '-tst', '-uca', '-udb', '-uv', '-v'].includes(type)) {
     console.error(
       'NS Session Setlist :: Auto-Update-Version\n\n' +
-      'Usage:\nnode auv.mjs [-a|-bc|-bca|-buv|-c|-ca|-cua|-help|-tst|-udb|-uv|-v] ||\n'+
-      '(with .bashsrc aliases) v[a|bc|bca|buv|c|ca|cua|help|tst|u|udb|us|uv|v]'
+      'Usage:\nnode auv.mjs [-a|-bc|-bca|-buv|-c|-ca|-help|-tst|-uca|-udb|-uv|-v] ||\n'+
+      '(with .bashsrc aliases) v[a|bc|bca|buv|c|ca|help|tst|uca|udb|us|uv|v]'
     );
     process.exit(1);
   }
@@ -234,9 +234,9 @@ async function main() {
      '-buv\t|\tvbuv\t|\tupdate / add version files only with breaking changes, auto-commit' + '\n' +
      '-c\t|\tvc\t|\topen commit editor, update / add / commit version files on success' + '\n' +
      '-ca\t|\tvca\t|\tupdate version, add all files with changes, open commit editor' + '\n' +
-     '-cua\t|\tvcua\t|\tupdate db version, add db files, open commit editor' + '\n' +
      '-help\t|\tvhelp\t|\tlist all available commands' + '\n' +
      '-tst\t|\tvtst\t|\ttest updated app version / date' + '\n' +
+     '-uca\t|\tvuca\t|\tupdate db version, add db files, open commit editor' + '\n' +
      '-udb\t|\tvudb\t|\tupdate / add db version only, auto-commit' + '\n' +
      '-uv\t|\tvuv\t|\tupdate / add version files only, auto-commit' + '\n' +
      '-v\t|\tvv\t|\tshow current app version / date' + '\n'
@@ -266,7 +266,7 @@ async function main() {
       bumpAppVersion(appVersion);
 
   const newDbVersion =
-    (type === '-cua' || type === '-udb' || type === '-tst')?
+    (type === '-uca' || type === '-udb' || type === '-tst')?
       bumpDbVersion(dbVersion) : dbVersion;
 
   const newAppDate = getCurrentDate();
@@ -281,7 +281,7 @@ async function main() {
     return; 
   }
 
-  if (type === '-cua' || type === '-udb') {
+  if (type === '-uca' || type === '-udb') {
     await updateDbVersionFile(newDbVersion);
     // await updateServiceWorker(null, newDbVersion);
   }
@@ -300,7 +300,7 @@ async function main() {
       `NS Session App v${newAppVersion}: \n\n+ App updates:\n  -`;
     exitCode = await openCommitEditor(commitMsg);
 
-  } else if (type === '-cua') {
+  } else if (type === '-uca') {
     await addSessionDbChanges();
     commitMsg = 
       `NS Session App v${appVersion}: Session DB Update\n\n` +

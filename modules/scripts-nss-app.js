@@ -215,7 +215,7 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
     if (lastDbVersion !== dbUpdateVersion) {
 
-      displayNotification("Session DB updated", "success");
+      displayNotification(`Session DB updated to ${dbUpdateVersion}`, "report");
 
       updateDbVersionData(dbUpdateVersion);
 
@@ -233,7 +233,8 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
       setTimeout(() => {
         displayNotification(
           `App version: v${appVersion}; ` +
-          `Session DB: ${dbUpdateVersion} (${dbUpdateResult[1]} sets, ${dbUpdateResult[2]} tunes)`,
+          `Session\u00a0DB:\u00a0${dbUpdateVersion} ` +
+          `(${dbUpdateResult[1]}\u00a0sets,\u00a0${dbUpdateResult[2]}\u00a0tunes)`,
           "report"
         );
       }, 50);
