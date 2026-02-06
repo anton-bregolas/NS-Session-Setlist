@@ -355,6 +355,13 @@ Import Name | Import Description | Details |
 
 ## Version History
 
+<details>
+  <summary><b>v1.2.3 Separate Session DB Checks & Updates</b></summary>
+</details>
+
+<details>
+  <summary><b>v1.2.2 Update Session DB, Fix CVW & Encoder</b></summary>
+
 **v1.2.2: Session DB Fixes & Update**
 
 + Chord Viewer updates:
@@ -367,6 +374,10 @@ Import Name | Import Description | Details |
 + Session DB Updates:
   - Add 7 Sets (Anton Zille ed. arr.)
   - Update to version 2026.01.26.1
+</details>
+
+<details>
+  <summary><b>v1.2.1 Add Support Menu, App Version Check</b></summary>
 
 **v1.2.1: Add Support Menu, Version Check, UI Fixes**
 
@@ -440,8 +451,10 @@ Import Name | Import Description | Details |
   - A11y: Add prefers-reduced-motion rules
   - A11y: Add underline styles for inline links and buttons
   - A11y: Scale up notification popup text for smaller viewports
+</details>
+
 <details>
-  <summary><b>v1.2.0</b></summary>
+  <summary><b>v1.2.0 Add Deflate, Tools Lite, New SW</b></summary>
 
 **v1.2.0: Deflated Session DB, New SW, Tools Lite**
 

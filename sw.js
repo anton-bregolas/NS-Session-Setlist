@@ -146,21 +146,26 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Check if network requests must be prioritized
+  // Check for custom request caching strategy
 
-  const isNoCache = request.cache === 'no-cache';
+  const cacheOption = request.cache;
+
+  const isNetworkFirst =
+    cacheOption === 'reload' ||
+    cacheOption === 'no-cache' ||
+    cacheOption === 'no-store';
 
   // Handle page navigation
 
   if (request.mode === 'navigate') {
 
-    event.respondWith(handleNavigate(event, url.pathname));
+    event.respondWith(handleNavigate(event, url.pathname, isNetworkFirst));
     return;
   }
 
-  // Handle version files, skip network-only requests
+  // Skip caching version files with timestamp
 
-  if (/version\.json$/.test(url.pathname) && /^\?t\=\d*/.test(url.search)) {
+  if (/version(?:-db)*\.json$/.test(url.pathname) && url.searchParams.has('t')) {
 
     return;
   }
@@ -168,20 +173,26 @@ self.addEventListener('fetch', event => {
   // Handle Session DB files
 
   if (/(sets|tunes|version-db)\.json$/.test(url.pathname)) {
+  
+    if (isNetworkFirst) {
 
-    event.respondWith(handleDBCaching(event, isNoCache));
+      event.respondWith(handleDBFetchUpdate(event, true));
+      return;
+    }
+  
+    event.respondWith(handleDBCacheFirst(event));
     return;
   }
 
   // Handle all other assets
 
-  event.respondWith(handleAssetCaching(event, isNoCache));
+  event.respondWith(handleAssetCaching(event, isNetworkFirst));
 });
 
 // Handle navigation: Serve cached HTML for main app sections
 // No cache: Fall back to network response & add to app cache
 
-async function handleNavigate(event, pathname, isNoCache) {
+async function handleNavigate(event, pathname, isNetworkFirst) {
 
   const request = event.request;
 
@@ -194,7 +205,7 @@ async function handleNavigate(event, pathname, isNoCache) {
   const pageCached =
     await caches.match(cacheKey);
 
-  if (pageCached && !isNoCache)
+  if (!!pageCached && !isNetworkFirst)
     return pageCached;
 
   // Fall back to network response
@@ -229,10 +240,9 @@ async function handleNavigate(event, pathname, isNoCache) {
   }
 }
 
-// Cache and retrieve up-to-date Session DB files
-// Use stale-while-revalidate cache update strategy
+// Serve Session DB files from cache
 
-async function handleDBCaching(event, isNoCache) {
+async function handleDBCacheFirst(event) {
 
   const request = event.request;
 
@@ -242,7 +252,7 @@ async function handleDBCaching(event, isNoCache) {
 
   // Serve DB from cache immediately
 
-  if (!!cachedResponse && !isNoCache) {
+  if (!!cachedResponse) {
 
     console.log(
       `[NS App Service Worker]\n\n` +
@@ -251,33 +261,31 @@ async function handleDBCaching(event, isNoCache) {
 
     // Fetch up-to-date DB from network in background
 
-    handleDBFetchUpdate(event);
+    // event.waitUntil(handleDBFetchUpdate(event));
 
     return cachedResponse;
   }
 
-  // Serve DB from network if no cache
+  // Fetch DB from network if no cache
 
-  return handleDBFetchUpdate(event, true);
+  return handleDBFetchUpdate(event);
 }
 
-// Fetch Session DB files and update DB cache
+// Try to fetch Session DB files from network
+// Update Session DB cache if fetch successful
 
-async function handleDBFetchUpdate(event, isFallback) {
+async function handleDBFetchUpdate(event, isNetworkFirst) {
 
   const request = event.request;
 
   try {
 
-    if (isFallback) {
+    console.log(
+      `[NS App Service Worker]\n\n` +
+      `Fetching Session DB from network...`
+    );
 
-      console.log(
-        `[NS App Service Worker]\n\n` +
-        `Fetching Session DB update from network...`
-      );
-    }
-
-    const networkResponse = await fetch(request, { cache: "no-cache" });
+    const networkResponse = await fetch(request);
 
     if (networkResponse.ok) {
 
@@ -286,32 +294,32 @@ async function handleDBFetchUpdate(event, isFallback) {
       await sessionDbCache.put(request, networkResponse.clone());
 
       console.log(`[NS App Service Worker]\n\nSession DB successfully updated`);
-
-      return networkResponse;
     }
+
+    return networkResponse;
 
   } catch (error) {
 
-    if (isFallback) {
-
-      return new Response(
-        JSON.stringify({ 'error': 'Offline: No cached Session DB available' }),
-        { 'status': 503, 'headers': { 'Content-Type': 'application/json' } }
-      );
-
-    } else {
+    if (isNetworkFirst) {
 
       console.log(
         `[NS App Service Worker]\n\n` +
         `Update unsuccessful: Using cached version of Session DB`
       );
+
+      return;
     }
+
+    return new Response(
+      JSON.stringify({ 'error': 'Offline: No cached Session DB available' }),
+      { 'status': 503, 'headers': { 'Content-Type': 'application/json' } }
+    );
   }
 }
 
 // Fetch app assets from network or cache with offline-safe request
 
-async function handleAssetCaching(event, isNoCache) {
+async function handleAssetCaching(event, isNetworkFirst) {
 
   const request = event.request;
 
@@ -319,12 +327,13 @@ async function handleAssetCaching(event, isNoCache) {
 
   const cachedAsset = await caches.match(request, { ignoreSearch: true });
 
-  if (cachedAsset && !isNoCache) {
+  if (!!cachedAsset && !isNetworkFirst) {
 
     return cachedAsset;
   }
 
-  // Get assets from network, fix headers if needed
+  // Fetch assets from network
+  // Try fixing headers for edge cases
 
   try {
 
@@ -336,7 +345,8 @@ async function handleAssetCaching(event, isNoCache) {
 
   } catch (error) {
 
-    // Fallback for critical asset types
+    // Fallback for critical asset types:
+    // Try modified cache-only request
     
     if (request.destination === 'script' ||
         request.destination === 'json' ||
@@ -357,6 +367,9 @@ async function handleAssetCaching(event, isNoCache) {
         return fallbackResponse;
       }
     }
+
+    // Fallback for images:
+    // Serve offline placeholder
 
     if (request.destination === 'image') {
       
