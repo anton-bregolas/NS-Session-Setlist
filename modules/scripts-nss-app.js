@@ -1619,12 +1619,11 @@ async function initSessionDb() {
 
       const dbVersionCached = await getCurrentlyCachedDbVersion();
 console.warn(`DB Version cached:`, dbVersionCached? `[${dbVersionCached}]` : '[N/A]');
-      if (!dbVersionCached) return;
+      // if (!dbVersionCached) return;
 
-      localStorage.lastSessionDbVersion_NSSSAPP = dbVersionCached;
+      // localStorage.lastSessionDbVersion_NSSSAPP = dbVersionCached;
 
-      updateDbVersionData(dbVersionCached);
-
+      // updateDbVersionData(dbVersionCached);
       return;
     }
 
@@ -1659,7 +1658,7 @@ console.warn(`DB Version cached:`, dbVersionCached? `[${dbVersionCached}]` : '[N
 // Handle alternative manual Session DB fetching & version update
 
 async function doSessionDbUpdate(isManual, cacheOption) {
-
+debugger;
   try {
 
     // Fetch up-to-date Session DB version data from network
@@ -1683,7 +1682,12 @@ async function doSessionDbUpdate(isManual, cacheOption) {
       remoteDbVersion && localDbVersion !== remoteDbVersion;
 
     if (isUpdateAvailable) {
+
       console.log(`NS Session App:\n\nSession DB update available [${remoteDbVersion}]`);
+
+    } else {
+
+      console.log(`NS Session App:\n\nSession DB [${localDbVersion}] is up to date`);
     }
 
     const dbUpdateArr =
@@ -1811,7 +1815,6 @@ async function updateData(dataJson, newData) {
     dataJson === tuneList? "Tunes" :
     dataJson === setChords? "Set Chords" : "Tune Chords";
 
-  // console.log(`NS Session App:\n\nSession DB updated`);
   console.log(`NS Session App:\n\n${dataType} data loaded`);
 }
 
@@ -2606,13 +2609,15 @@ async function appButtonHandler(btn) {
     
     if (dataLoad === "update-db") {
 
-      const dbUpdateData = await doSessionDbUpdate(true, "reload");
+      const dbUpdateResult = await doSessionDbUpdate(true, "reload");
       
-      if (dbUpdateData) {
+      if (dbUpdateResult) {
 
-        updateDbVersionData(dbUpdateData[0]);
+        const dbUpdateVersion = dbUpdateResult[0];
+
+        updateDbVersionData(dbUpdateVersion);
         
-        displayNotification("Session DB updated", "success");
+        displayNotification(`Session DB updated to ${dbUpdateVersion}`, "success");
       }
 
       return;
