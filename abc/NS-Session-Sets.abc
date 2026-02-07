@@ -2,7 +2,7 @@ X: 1
 T: AIRS: Sí Bheag, Sí Mhór Set
 T: Sí Bheag, Sí Mhór
 C: C: Turlough O'Carolan; S: Various
-C: Set Leaders: Anton, Oleg, Tania, Oliushka, André
+C: Set Leaders: Anton, Oleg, Tania, Oliushka
 Z: Anton Zille ed. arr.; JACKB / shanaway at The Session
 N: https://thesession.org/members/26966/sets/99684
 R: Air
@@ -20,7 +20,7 @@ de|:"D"f2 fe d2|d2 de d2|"G"B4 A2|"D"F4 A2|
 "G"ba gf ed|"A"e4 dc|"D (G)"d2 de "(A)"dc|1 "D"d4 de:|2 "D"d4||
 T: Lord Inchiquin
 K: Dmaj
-A2|:"D"d2 de fe|"G"d2 ed cB|"D"A2 F2 A2|f4 e2|
+A2|:"D"d2 de fe|"(G)"d2 ed cB|"D"A2 F2 A2|f4 e2|
 "D"d2 ed cB|"Bm"A2 G2 F2|"G"G2 BA GF|"A"E4 ag|
 "D (Bm)"f3e d2|"G"d2 c2 B2|"D"A2 F2 "A"A2|"D"f4 e2|
 "G"d2 ed cB|"D"Ad-d2 F2|"A"E4 D2|"D"D4 A2:||
@@ -285,7 +285,7 @@ T: Winnie Hayes'
 K: Edor
 |:"Em"BAF E3|FEE EFA|BAF EFG|"D"FDD FGA|
 "Em"BAF ~E3|FEE EBd|"C (Am)"edB AB/c/d|"D (Bm)"edB AFA:||
-|:"Em (D)"Bcd "Em"e2e|"(C)"fee efd|"Am"Bcd ede|"D/F# (Bm)"~f3 def|
+|:"Em (D)"Bcd "(Em)"e2e|"(C)"fee efd|"Am"Bcd ede|"D/F# (Bm)"~f3 def|
 "G"gbg "D/F#"faf|"Em"edB "(G/B)"e2f|"Am (C)"edB ABd|"Bm (D)"edB AFA:||
 T: Cordal
 K: Amix
@@ -319,36 +319,6 @@ K: Gmaj
 "G (A5)"aba "D (A5)"age|"G"ged "A5"^cde|"C"eag edB|1 "D"BAG ABd:|2 "D"BAG A2g||
 
 X: 13
-T: JIGS: Castlebar Races Set
-T: Castlebar Races / Mist on the Meadow / Thrush in the Straw
-C: C: Trad. / Charlie Lennon; S: See Notes
-C: Set Leaders: Anton, Mars
-S: [1] Ship in the Clouds; Kerry Fiddles / [2] Ship in the Clouds; Charlie Lennon & Johnny Connolly
-Z: Anton Zille ed. arr.; Michael Eskin at The Session
-N: https://thesession.org/members/26966/sets/126752
-R: Jig
-M: 6/8
-L: 1/8
-Q: 3/8=116
-K: Gmaj
-|:"G"gdB BAB|"(C)"GBA "(D)"GBd|"(G)"gdB BAB|"C"GBd "D"e2f|
-"G"g2B BAB|"(C)"GBA "D"GBd|"Em"gfe fdB|"C"ABd "D"e2f:||
-"Em"gfg bge|"D"fef afd|"Em"gfg bge|"D"afd "C"e2f|
-"Em"gfg bge|"D"fef afd|"C"gfe fdB|ABd "D"e2f|
-"Em"~g3 bge|"D"~f3 afd|"Em"gfg "G/B"bge|"C"edB GBd|
-"Em"~g3 bge|"D"~f3 afd|"C"gfe fdB|ABd "D"e2f||
-T: Dawn Chorus
-K: Gmaj
-"G"B3 BAB|dBB BGE|"D"D2A ADA|DAA BGE|
-"G"D2B BAB|dBB "(G/B)"BAG|"Am"ABd "Bm"BAB|"Em"FEE "C"EGE|
-"G"D2B BAB|dBB BGE|"D"D2A ABA|DE/F/G AGE|
-"G"D2B BAB|dBB "(G/B)"BAG|"C"AB/^c/d "D"BAB|"Em"FEE E2f||
-"Em"g2e efg|"D"f/g/af def|"Em"gfg "D"aga|"Em"bge "(G/B)"e2f|
-"C"gag gfe|"G"ded dBd|"C"g3 "D"~B3|dBG "G"G2f|
-"Em"geB eag|"D"fd^c def|"Em"gBg "D"aAa|"C"bge e2f|
-"Em"gab "C"efg|"G"ded "(G/B)"dBd|"C"~g3 ~B3|"Dsus4"~d3 DEG||
-
-X: 14
 T: JIGS: Cook in the Kitchen Set
 T: Cook in the Kitchen
 C: C: Trad.; S: Various
@@ -380,6 +350,36 @@ K: Gmaj
 "G(Em)"BAG EGD|"G(Em)"EGD "D"EGA|"C"BAG EGD|1 "D"EGF G2A:|2 "D"EGF G2D||
 |:"G"GBd e2d|"D"dgd B2A|"C"GBd edB|"D"cea aga|
 "Em"bag age|"D"ged e/f/ge|"C"dBG AGA|1 "D"BGF G2D:|2 "D"BGF G2A||
+
+X: 14
+T: JIGS: Dawn Chorus Set
+T: Castlebar Races / Mist on the Meadow / Thrush in the Straw
+C: C: Trad. / Charlie Lennon; S: See Notes
+C: Set Leaders: Anton
+S: [1] Ship in the Clouds; Kerry Fiddles / [2] Ship in the Clouds; Charlie Lennon & Johnny Connolly
+Z: Anton Zille ed. arr.; Michael Eskin at The Session
+N: https://thesession.org/members/26966/sets/126752
+R: Jig
+M: 6/8
+L: 1/8
+Q: 3/8=116
+K: Gmaj
+|:"G"gdB BAB|"(C)"GBA "(D)"GBd|"(G)"gdB BAB|"C"GBd "D"e2f|
+"G"g2B BAB|"(C)"GBA "D"GBd|"Em"gfe fdB|"C"ABd "D"e2f:||
+"Em"gfg bge|"D"fef afd|"Em"gfg bge|"D"afd "C"e2f|
+"Em"gfg bge|"D"fef afd|"C"gfe fdB|ABd "D"e2f|
+"Em"~g3 bge|"D"~f3 afd|"Em"gfg "G/B"bge|"C"edB GBd|
+"Em"~g3 bge|"D"~f3 afd|"C"gfe fdB|ABd "D"e2f||
+T: Dawn Chorus
+K: Gmaj
+"G"B3 BAB|dBB BGE|"D"D2A ADA|DAA BGE|
+"G"D2B BAB|dBB "(G/B)"BAG|"Am"ABd "Bm"BAB|"Em"FEE "C"EGE|
+"G"D2B BAB|dBB BGE|"D"D2A ABA|DE/F/G AGE|
+"G"D2B BAB|dBB "(G/B)"BAG|"C"AB/^c/d "D"BAB|"Em"FEE E2f||
+"Em"g2e efg|"D"f/g/af def|"Em"gfg "D"aga|"Em"bge "(G/B)"e2f|
+"C"gag gfe|"G"ded dBd|"C"g3 "D"~B3|dBG "G"G2f|
+"Em"geB eag|"D"fd^c def|"Em"gBg "D"aAa|"C"bge e2f|
+"Em"gab "C"efg|"G"ded "(G/B)"dBd|"C"~g3 ~B3|"Dsus4"~d3 DEG||
 
 X: 15
 T: JIGS: Dusty Windowsills Set
@@ -2050,7 +2050,7 @@ M: 4/4
 L: 1/8
 Q: 1/2=100
 K: Gmaj
-|:"D7"A3F GFED|"C"E/F/G AB "D"c2 BA|"G"GBdg egdB|"Em"GBAF GFED|
+|:"D7"A3F GFED|"C"E/F/G AB "D"c2 BA|"G (Em)"GBdg egdB|"Em (C)"GBAF GFED|
 "D7"EAAF GFED|"C"E/F/G AB "D"cABA|"G"GBdB "D"AcBA|1 "Em"GEDE "C"GDEG:|2 "C"GEDE "G"G4||
 |:"Em"g3e "D"fedf|"C"efge "D"fagf|"Em"eB~B2 "(C)"efge|"D"fdef "G"g2 ef|
 "Em"gbag "C"eage|"G"dB~B2 BAGF|"C"GBdB "D"A/B/c BA|1 "C"GEDE "G"GABd:|2 "C"GEDE GDEG||

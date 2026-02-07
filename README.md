@@ -356,6 +356,18 @@ Import Name | Import Description | Details |
 ## Version History
 
 <details>
+  <summary><b>v1.2.4 Fix Chord Viewer & Update DB</b></summary>
+
+**v1.2.4: Fix Chord Viewer & Update DB**
+
++ Chord Viewer updates:
+  - Fix R: / M: / L: fallback logic
+
++ Session DB Updates:
+  - Minor fixes & tweaks
+  - Update dbVersion to 2026.02.06.2
+
+<details>
   <summary><b>v1.2.3 Separate Session DB Checks & Updates</b></summary>
 
 **v1.2.3: Separate Session DB Handling**

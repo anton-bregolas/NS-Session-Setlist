@@ -10,7 +10,7 @@
       {
         "title": "Lord Inchiquin",
         "meter": "3/4",
-        "chords": "PART 1:\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\n|\tD (Bm)\t/\t/|\tG\tG\tG\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t||\n\nPART 2:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tD/F#\tG\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD/F#\t|\tG\tG\tA\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tA\tA\tA\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tEm\tEm\t(F#m)\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
+        "chords": "PART 1:\n|\tD\tD\tD\t|\t(G)\t(G)\t(G)\t|\tD\tD\tD\t|\tD\tD\tD\t|\n|\tD\tD\tD\t|\tBm\tBm\tBm\t|\tG\tG\tG\t|\tA\tA\tA\t|\n|\tD (Bm)\t/\t/|\tG\tG\tG\t|\tD\tD\tA\t|\tD\tD\tD\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|\tD\tD\tD\t||\n\nPART 2:\n|\tA\tA\tA\t|\tA\tA\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tD/F#\tG\tA\t|\tD\tD\tD\t|\tA\tA\tA\t|\n|\tD\tD\tD/F#\t|\tG\tG\tA\t|\tBm\tBm\tBm\t|\tBm\tBm\tBm\t|\n|\tG\tG\tG\t|\tEm\tEm\tEm\t|\tA\tA\tA\t|\tA\tA\tA\t|\n|\tD\tD\tD\t|\tG\tG\tG\t|\tD\tD\tD\t|\tEm\tEm\t(F#m)\t|\n|\tG\tG\tG\t|\tD\tD\tD\t|\tA\tA\tA\t|1\tD\tD\tD\t|\n|2\tD\tD\tD\t||"
       }
     ]
   },
@@ -175,7 +175,7 @@
       {
         "title": "Winnie Hayes'",
         "meter": "6/8",
-        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC (Am)\t/|\tD (Bm)\t/||\n\nPART 2:\n|\tEm (D)\tEm\t|\t(C)\t(C)\t|\tAm\tAm\t|\tD/F# (Bm)\t/|\n|\tG\tD/F#\t|\tEm\t(G/B)\t|\tAm (C)\t/|\tBm (D)\t/||"
+        "chords": "PART 1:\n|\tEm\tEm\t|\tEm\tEm\t|\tEm\tEm\t|\tD\tD\t|\n|\tEm\tEm\t|\tEm\tEm\t|\tC (Am)\t/|\tD (Bm)\t/||\n\nPART 2:\n|\tEm (D)\t(Em)\t|\t(C)\t(C)\t|\tAm\tAm\t|\tD/F# (Bm)\t/|\n|\tG\tD/F#\t|\tEm\t(G/B)\t|\tAm (C)\t/|\tBm (D)\t/||"
       },
       {
         "title": "Cordal",
@@ -200,21 +200,6 @@
     ]
   },
   {
-    "setTitle": "JIGS: Castlebar Races Set",
-    "tuneChords": [
-      {
-        "title": "Castlebar Races",
-        "meter": "6/8",
-        "chords": "PART 1:\n|\tG\tG\t|\t(C)\t(D)\t|\t(G)\t(G)\t|\tC\tD\t|\n|\tG\tG\t|\t(C)\tD\t|\tEm\tEm\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tC\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tC\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tG/B\t|\tC\tC\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tC\tD\t||"
-      },
-      {
-        "title": "Dawn Chorus",
-        "meter": "6/8",
-        "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\t(G/B)\t|\tAm\tBm\t|\tEm\tC\t|\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\t(G/B)\t|\tC\tD\t|\tEm\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD\t|\tEm\t(G/B)\t|\n|\tC\tC\t|\tG\tG\t|\tC\tD\t|\tD\tG\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD\t|\tC\tC\t|\n|\tEm\tC\t|\tG\t(G/B)\t|\tC\tC\t|\tDsus4\t/||"
-      }
-    ]
-  },
-  {
     "setTitle": "JIGS: Cook in the Kitchen Set",
     "tuneChords": [
       {
@@ -231,6 +216,21 @@
         "title": "Have a Drink With Me",
         "meter": "6/8",
         "chords": "PART 1:\n|\tG\tG\t|\tG\tD\t|\tG\tG\t|\tC\tD\t|\n|\tG (Em)\t/|\tG (Em)\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tG\tG\t|\tD\tD\t|\tC\tC\t|\tD\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|1\tD\tD\t|\n|2\tD\tD\t||"
+      }
+    ]
+  },
+  {
+    "setTitle": "JIGS: Dawn Chorus Set",
+    "tuneChords": [
+      {
+        "title": "Castlebar Races",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\tG\t|\t(C)\t(D)\t|\t(G)\t(G)\t|\tC\tD\t|\n|\tG\tG\t|\t(C)\tD\t|\tEm\tEm\t|\tC\tD\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tEm\t|\tD\tC\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tC\tD\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tG/B\t|\tC\tC\t|\n|\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tC\tD\t||"
+      },
+      {
+        "title": "Dawn Chorus",
+        "meter": "6/8",
+        "chords": "PART 1:\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\t(G/B)\t|\tAm\tBm\t|\tEm\tC\t|\n|\tG\tG\t|\tG\tG\t|\tD\tD\t|\tD\tD\t|\n|\tG\tG\t|\tG\t(G/B)\t|\tC\tD\t|\tEm\tEm\t||\n\nPART 2:\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD\t|\tEm\t(G/B)\t|\n|\tC\tC\t|\tG\tG\t|\tC\tD\t|\tD\tG\t|\n|\tEm\tEm\t|\tD\tD\t|\tEm\tD\t|\tC\tC\t|\n|\tEm\tC\t|\tG\t(G/B)\t|\tC\tC\t|\tDsus4\t/||"
       }
     ]
   },
@@ -1215,7 +1215,7 @@
       {
         "title": "Jack Rowe",
         "meter": "4/4",
-        "chords": "PART 1:\n|\tD7\tD7\t|\tC\tD\t|\tG\tG\t|\tEm\tEm\t|\n|\tD7\tD7\t|\tC\tD\t|\tG\tD\t|1\tEm\tC\t|\n|2\tC\tG\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tD\t|\tEm\t(C)\t|\tD\tG\t|\n|\tEm\tC\t|\tG\tG\t|\tC\tD\t|1\tC\tG\t|\n|2\tC\tC\t||"
+        "chords": "PART 1:\n|\tD7\tD7\t|\tC\tD\t|\tG (Em)\t/|\tEm (C)\t/|\n|\tD7\tD7\t|\tC\tD\t|\tG\tD\t|1\tEm\tC\t|\n|2\tC\tG\t||\n\nPART 2:\n|\tEm\tD\t|\tC\tD\t|\tEm\t(C)\t|\tD\tG\t|\n|\tEm\tC\t|\tG\tG\t|\tC\tD\t|1\tC\tG\t|\n|2\tC\tC\t||"
       },
       {
         "title": "Palmer's Gate",
