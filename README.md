@@ -356,6 +356,25 @@ Import Name | Import Description | Details |
 ## Version History
 
 <details>
+  <summary><b>v1.2.5 Fix Popover Animations</b></summary>
+
+**v1.2.5: Fix Popover Animations**
+
++ App / Tunebook updates:
+  - Refactor Popover animations:
+    * Ensure allow-discrete works in supporting browsers
+    * Notification popups now slide up on lauch screens
+    * Tunebook popups now slide up if compact mode enabled
+    * Tunebook popups appear instantly if footer section visible
+    * Tunebook Actions Menu now slides up consistently
+    * Tunebook Actions Menu appears instantly in desktop mode
+  - Prepare fallback popup animation for app launch:
+    * Delay and fade-in popup until app ready
+    * Prevent styling conflict with fade-in overlay
+  - Prepare Quick Help shortcuts styles
+</details>
+
+<details>
   <summary><b>v1.2.4 Fix Chord Viewer & Update DB</b></summary>
 
 **v1.2.4: Fix Chord Viewer & Update DB**
@@ -366,6 +385,7 @@ Import Name | Import Description | Details |
 + Session DB Updates:
   - Minor fixes & tweaks
   - Update dbVersion to 2026.02.06.2
+</details>
 
 <details>
   <summary><b>v1.2.3 Separate Session DB Checks & Updates</b></summary>
