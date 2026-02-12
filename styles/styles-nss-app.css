@@ -1737,14 +1737,14 @@ body[data-mode="desktop"] [data-close-direction="down"] {
   z-index: 3;
 }
 
-/* body[data-browser]:not([data-status*="ready"]) [data-popover="notification-popup"] {
+body[data-browser]:not([data-status*="ready"]) [data-popover="notification-popup"] {
   animation: popup-startup-fade-in 0.5s ease-in-out both;
 }
 
 @keyframes popup-startup-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
-} */
+}
 
 [data-layout="default"][data-tunebook="open"] [data-popover="notification-popup"] {
   bottom: var(--tunebook-footer-height);

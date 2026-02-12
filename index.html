@@ -38,8 +38,8 @@
         <header class="nss-header-container">
 
             <div id="nss-app-header" class="nss-app-header flex-wrapper-space-between">
-                <button id="website_help" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
-                    <a href="https://github.com/anton-bregolas/NS-Session-Setlist#ns-session-app" target="_blank" class="nss-link nss-icon-container" title="Open Tunebook App Readme on GitHub" aria-title="Open Tunebook App Readme on GitHub">
+                <button class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
+                    <a data-url="readme" href="https://github.com/anton-bregolas/NS-Session-Setlist#ns-session-app" target="_blank" class="nss-link nss-icon-container" title="Open Tunebook App Readme on GitHub" aria-title="Open Tunebook App Readme on GitHub">
                         <svg class="nss-icon github-icon-dark" aria-hidden="true">
                             <use href="#nav-icon-github"></use>
                         </svg>
@@ -54,7 +54,7 @@
                     <h1 id="nss-appnav-title" class="nss-gradient-text" data-title="launcher" aria-title="Novi Sad Session Setlist"></h1>
                 </div>
                 <button id="nss-btn-abctools" class="nss-btn nss-link-btn nss-launch-el flex-wrapper" tabindex="-1">
-                    <a href="https://abc.tunebook.app/abctools.html" target="_blank" class="nss-link nss-icon-container" title="Launch ABC Transcription Tools" aria-title="Open ABC Transcription Tools">
+                    <a data-url="abc" href="https://abc.tunebook.app/abctools.html" target="_blank" class="nss-link nss-icon-container" title="Launch ABC Transcription Tools" aria-title="Open ABC Transcription Tools">
                         <svg class="nss-icon github-icon-dark" aria-hidden="true">
                             <use href="#nav-icon-abctools-fill"></use>
                         </svg>
@@ -531,7 +531,7 @@
                 </div>
             </dialog>
 
-            <dialog id="quick-help" class="nss-qhelp-dialog" aria-label="Quick Help Dialog">
+            <dialog id="quick-help" data-hint="labels" class="nss-qhelp-dialog" aria-label="Quick Help Dialog">
                 <div class="nss-qhelp-container grid-wrapper">
                     <div class="nss-qhelp-header-icons nss-qhelp-row grid-wrapper">
                         <svg class="nss-icon" aria-hidden="true">
@@ -551,26 +551,26 @@
                         </svg>
                     </div>
                     <div class="nss-qhelp-header-labels nss-qhelp-row grid-wrapper">
-                        <button data-hide="pops-up-from-footer" class="nss-btn nss-btn-qhelp" aria-label="(Top Left) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
-                            <span class="nss-btn-qhelp-label">Open Actions</span>
+                        <button data-hide="pops-up-from-footer" class="nss-btn nss-btn-qhelp" aria-label="(Top Left) Open Tunebook Actions menu for quick access to modules and features (Shortcut: Shift + F2)" title="Open Tunebook Actions menu for quick access to modules and features">
+                            <span class="nss-btn-qhelp-label">Open Actions</span><span class="nss-btn-qhelp-shortcut">⇧ + F2</span>
                         </button>
-                        <button data-hide="pops-up-from-header" class="nss-btn nss-btn-qhelp" aria-label="(Top Left) Switch between Setlist and Tunelist" title="Switch between Setlist and Tunelist">
-                            <span class="nss-btn-qhelp-label">Switch Tunebook</span>
+                        <button data-hide="pops-up-from-header" class="nss-btn nss-btn-qhelp" aria-label="(Top Left) Switch between Setlist and Tunelist (Shortcut: Shift + Backtick key)" title="Switch between Setlist and Tunelist">
+                            <span class="nss-btn-qhelp-label">Switch Tunebook</span><span class="nss-btn-qhelp-shortcut">^&nbsp;+&nbsp;⇧&nbsp;+&nbsp;~<br>(Backtick)</span>
                         </button>
-                        <button class="nss-btn nss-btn-qhelp" aria-label="(Top Center Left) Filter Tunebook by Tune Type / Set Leader" title="Filter Tunebook by tune type or custom filter">
-                            <span class="nss-btn-qhelp-label">Select Filter</span>
+                        <button class="nss-btn nss-btn-qhelp" aria-label="(Top Center Left) Filter Tunebook by Tune Type / Set Leader (Shortcut for Share: Shift + F8)" title="Filter Tunebook by tune type or custom filter">
+                            <span class="nss-btn-qhelp-label">Select Filter</span><span class="nss-btn-qhelp-shortcut">Share Link:<br>⇧&nbsp;+&nbsp;F8</span>
                         </button>
-                        <button data-hide="tunes-loaded" class="nss-btn nss-btn-qhelp" aria-label="(Top Center) Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer" title="Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
-                            <span class="nss-btn-qhelp-label">Select a Set</span>
+                        <button data-hide="tunes-loaded" class="nss-btn nss-btn-qhelp" aria-label="(Top Center) Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer (Shortcut for List Viewer: Shift + F3)" title="Select an ABC Set from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
+                            <span class="nss-btn-qhelp-label">Select a Set</span><span class="nss-btn-qhelp-shortcut">Alt Fn:<br>⇧&nbsp;+&nbsp;⏎</span>
                         </button>
-                        <button data-hide="sets-loaded" class="nss-btn nss-btn-qhelp" aria-label="(Top Center) Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer" title="Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
-                            <span class="nss-btn-qhelp-label">Select a Tune</span>
+                        <button data-hide="sets-loaded" class="nss-btn nss-btn-qhelp" aria-label="(Top Center) Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer (Shortcut for List Viewer: Shift + F3)" title="Select an ABC Tune from dropdown menu. Use Right-Click / Shift + Enter / Long Touch to open List Viewer">
+                            <span class="nss-btn-qhelp-label">Select a Tune</span><span class="nss-btn-qhelp-shortcut">Alt Fn:<br>⇧&nbsp;+&nbsp;⏎</span>
                         </button>
-                        <button data-cutoff-desktop="tablet-s" data-cutoff-mobile="l" class="nss-btn nss-btn-qhelp" aria-label="(Top Center Right) Select Tabs & MIDI presets for playback" title="Select Tabs & MIDI presets for playback">
-                            <span class="nss-btn-qhelp-label">Select Tab/MIDI</span>
+                        <button data-cutoff-desktop="tablet-s" data-cutoff-mobile="l" class="nss-btn nss-btn-qhelp" aria-label="(Top Center Right) Select Tabs & MIDI presets for playback (Shortcut for List Viewer: Shift + F3)" title="Select Tabs & MIDI presets for playback">
+                            <span class="nss-btn-qhelp-label">Select Tab/MIDI</span><span class="nss-btn-qhelp-shortcut">List Viewer:<br>⇧&nbsp;+&nbsp;F3</span>
                         </button>
-                        <button class="nss-btn nss-btn-qhelp" aria-label="(Top Right) View tunes or chords in Full Screen mode. Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer" title="View tunes or chords in Full Screen mode. Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer">
-                            <span class="nss-btn-qhelp-label">Fullscreen Button</span>
+                        <button class="nss-btn nss-btn-qhelp" aria-label="(Top Right) View tunes or chords in Full Screen mode (Shortcut: Shift + F11). Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer" title="View tunes or chords in Full Screen mode. Use Right-Click / Shift + Enter / Long Touch to open Chord Viewer">
+                            <span class="nss-btn-qhelp-label">Fullscreen Button</span><span class="nss-btn-qhelp-shortcut">⇧ + F11<br>Alt&nbsp;Fn: ⇧&nbsp;+&nbsp;⏎</span>
                         </button>
                     </div>
                     <div class="nss-qhelp-q-container flex-wrapper">
@@ -589,26 +589,26 @@
                         </button>
                     </div>
                     <div class="nss-qhelp-footer-labels nss-qhelp-row grid-wrapper">
-                        <button data-cutoff-mobile="l" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Left) Return to app's Launch Screen" title="Return to app's Launch Screen">
-                            <span class="nss-btn-qhelp-label">Launch Screen</span>
+                        <button data-cutoff-mobile="l" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Left) Return to app's Launch Screen (Shortcut: Shift + F12)" title="Return to app's Launch Screen">
+                            <span class="nss-btn-qhelp-label">Launch Screen</span><span class="nss-btn-qhelp-shortcut">⇧ + F12</span>
                         </button>
                         <button class="nss-btn nss-btn-qhelp" aria-label="(Bottom Left-of-Center) Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs" title="Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs">
-                            <span class="nss-btn-qhelp-label">Left Fav Button</span>
+                            <span class="nss-btn-qhelp-label">Left Fav Button</span><span class="nss-btn-qhelp-shortcut">Alt Fn:<br>⇧&nbsp;+&nbsp;⏎</span>
                         </button>
-                        <button data-hide="desktop" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Center) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
-                            <span class="nss-btn-qhelp-label">Open Actions</span>
+                        <button data-hide="desktop" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Center) Open Tunebook Actions menu for quick access to modules and features (Shortcut: Shift + F2)" title="Open Tunebook Actions menu for quick access to modules and features">
+                            <span class="nss-btn-qhelp-label">Open Actions</span><span class="nss-btn-qhelp-shortcut">⇧ + F2</span>
                         </button>
-                        <button data-hide="mobile" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Center) Switch to mobile Tunebook mode with adaptive design" title="Switch to mobile Tunebook mode with adaptive design">
-                            <span class="nss-btn-qhelp-label">Mobile Mode</span>
+                        <button data-hide="mobile" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Center) Switch to mobile Tunebook mode with adaptive design (Shortcut: Shift + F9)" title="Switch to mobile Tunebook mode with adaptive design">
+                            <span class="nss-btn-qhelp-label">Mobile Mode</span><span class="nss-btn-qhelp-shortcut">⇧ + F9</span>
                         </button>
                         <button class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right-of-Center) Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs" title="Pick and use quick access button from Tunebook actions. Use Right-Click / Shift + Enter / Long Touch to edit favs">
-                            <span class="nss-btn-qhelp-label">Right Fav Button</span>
+                            <span class="nss-btn-qhelp-label">Right Fav Button</span><span class="nss-btn-qhelp-shortcut">Alt Fn:<br>⇧&nbsp;+&nbsp;⏎</span>
                         </button>
-                        <button data-cutoff-mobile="l" data-hide="desktop" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right) Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes" title="Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes">
-                            <span class="nss-btn-qhelp-label">Hide Footer</span>
+                        <button data-cutoff-mobile="l" data-hide="desktop" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right) Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes (Shortcut: Shift + F7)" title="Switch to compact Tunebook mode with no footer. Use Launch Screen to switch between Sets and Tunes">
+                            <span class="nss-btn-qhelp-label">Hide Footer</span><span class="nss-btn-qhelp-shortcut">⇧ + F7</span>
                         </button>
-                        <button data-cutoff-mobile="l" data-hide="mobile" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right) Open Tunebook Actions menu for quick access to modules and features" title="Open Tunebook Actions menu for quick access to modules and features">
-                            <span class="nss-btn-qhelp-label">Open Actions</span>
+                        <button data-cutoff-mobile="l" data-hide="mobile" class="nss-btn nss-btn-qhelp" aria-label="(Bottom Right) Open Tunebook Actions menu for quick access to modules and features (Shortcut: Shift + F2)" title="Open Tunebook Actions menu for quick access to modules and features">
+                            <span class="nss-btn-qhelp-label">Open Actions</span><span class="nss-btn-qhelp-shortcut">⇧ + F2</span>
                         </button>
                     </div>
                     <div class="nss-qhelp-footer-icons nss-qhelp-row grid-wrapper">
@@ -634,6 +634,11 @@
 
             <article id="help-guide" popover="manual" class="nss-help-popover" aria-label="Help Guide Popover">
                 <header class="nss-help-popover-header">
+                    <button data-help-guide="quick-help" class="nss-btn nss-popover-btn nss-btn-quick-help-mini flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">
+                        <svg class="nss-icon" aria-hidden="true">
+                            <use href="#help-arrow-vertical"></use>
+                        </svg>
+                    </button>
                     <button class="nss-btn nss-link-btn flex-wrapper" tabindex="-1">
                         <a data-help-guide="readme" href="https://github.com/anton-bregolas/NS-Session-Setlist#ns-session-app" target="_blank" class="nss-link nss-icon-container" title="Open Tunebook App Readme on GitHub" aria-title="Open Tunebook App Readme on GitHub">
                             <svg class="nss-icon github-icon-dark" aria-hidden="true">
@@ -654,11 +659,6 @@
                     </div>
                 </div>
                 <footer class="nss-help-popover-footer flex-wrapper">
-                    <button data-help-guide="quick-help" class="nss-btn nss-popover-btn nss-btn-quick-help-mini flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">
-                        <svg class="nss-icon" aria-hidden="true">
-                            <use href="#help-arrow-vertical"></use>
-                        </svg>
-                    </button>
                     <button data-help-guide="quick-help" class="nss-btn nss-btn-quick-help flex-wrapper" title="Show Quick Help Dialog" aria-title="Show Quick Help Dialog">Show Quick Help</button>
                 </footer>
             </article>

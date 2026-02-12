@@ -35,8 +35,14 @@ let lastTuneBookMode; // Keep track of the last Tunebook mode setting for this s
 let lastTuneBookOpened; // Keep track of the latest Tunebook opened (fallback global variable)
 let longPressTimeoutId; // Keep track of the latest timeout set for long press events
 let notificationTimeoutId; // Keep track of the latest timeout set for clearing notifications
-let statusNotifyTimeout = 1250; // Set default banner hide timeout for status notifications
+let statusNotifyTimeout = 2000; // Set default banner hide timeout for status notifications
 let successNotifyTimeout = 4500; // Set default banner hide timeout for success notifications
+
+// Define Section Element Lists for Hash & Keyboard Navigation
+
+const tuneBooksListArr = ["setlist", "tunelist"];
+const appLaunchButtonsArr = ["setlist", "tunelist", "playalong"];
+const abcEncoderButtonsArr = ["abc-sort", "abc-encode", "abc-decode"];
 
 // Define Session DB items
 
@@ -215,7 +221,16 @@ async function launchTuneBook(targetSection, currentSection, itemQuery) {
 
     if (lastDbVersion !== dbUpdateVersion) {
 
-      displayNotification(`Session DB updated to ${dbUpdateVersion}`, "report");
+      const dbUpdateDetails =
+        isStatusReportOn?
+          ` (version\u00a0${dbUpdateVersion},` +
+          ` ${dbUpdateResult[1]}\u00a0sets,\u00a0${dbUpdateResult[2]}\u00a0tunes)` :
+          '';
+
+      const dbUpdateMsg =
+        `Session\u00a0DB\u00a0updated${dbUpdateDetails}`;
+
+      displayNotification(dbUpdateMsg, "report");
 
       updateDbVersionData(dbUpdateVersion);
 
@@ -343,6 +358,7 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
       if (isLocalStorageOk()) {
 
         localStorage.tuneBookLastOpened_NSSSAPP = targetSection;
+        localStorage.lastLauncherUsed_NSSSAPP = targetSection;
       }
 
       lastPressedNavBtn = document.querySelector(`#nss-tunebook-${targetSection}-switch`);
@@ -616,8 +632,6 @@ function setTuneBookCompactMode() {
     switchContainer.querySelector('[data-load="tunebook-actions-menu"]');
     
   ariaHideMe(tuneBookFooter);
-    
-  isCompactTunebookModeOn = true;
 
   document.body.dataset.layout = "compact";
     
@@ -633,6 +647,7 @@ function setTuneBookCompactMode() {
   });
   
   tuneBookActionsBtn.focus();
+
   tuneBookFooter.setAttribute("inert", "");
 
   setTimeout(() => {
@@ -640,9 +655,13 @@ function setTuneBookCompactMode() {
     tuneBookActionsPopup.dataset.popsUpFrom = "header";
   }, 250);
 
+  if (isCompactTunebookModeOn) return;
+
   goatCountEvent(`#switch-compact-mode`, "app-ui");
 
   displayNotification("Compact mode enabled: Refresh app to reset", "success");
+
+  isCompactTunebookModeOn = true;
 }
 
 // Hide or show GUI elements depending on toggle element type
@@ -847,6 +866,8 @@ export async function openSettingsMenu(dataType, dataOptions) {
 
   if (dataType === "chord-viewer") {
     
+    goatCountEvent("#chord-viewer", "app-ui");
+
     await openChordViewer(setChords, tuneChords);
     return;
   }
@@ -854,6 +875,8 @@ export async function openSettingsMenu(dataType, dataOptions) {
   // Open List Viewer
 
   if (dataType === "list-viewer") {
+
+    goatCountEvent("#list-viewer", "app-ui");
 
     openListViewer(document.querySelector('#tuneSelector'));
     return;
@@ -903,8 +926,9 @@ export async function openSettingsMenu(dataType, dataOptions) {
       supportMenuContainer.dataset.static = "true";
     }
 
-    appSupportPopover.showPopover();
+    goatCountEvent("#support-options", "app-ui");
 
+    appSupportPopover.showPopover();
     return;
   }
 
@@ -994,11 +1018,17 @@ function openQuickHelpDialog() {
     quickHelpDialog.dataset.tbkLoaded = "sets";
   }
 
+  quickHelpDialog.dataset.hint = "labels"
+
   const helpTextDiv =
     quickHelpDialog.querySelector('.nss-qhelp-description');
+
+  const isMobileViewPort =
+    getViewportWidth() < 768 || getViewportHeight() < 700;
     
   helpTextDiv.textContent =
-    "Select an element label to view description";
+    `Select an element label to view description` +
+    (isMobileViewPort? '' : `\nPress Shift + / to view keyboard shortcuts`);
 
   goatCountEvent("#quick-help", "app-ui");
 
@@ -1080,6 +1110,8 @@ function focusOnTuneBookGui() {
 // Optional: Set a timeout for the focus
 
 function focusOnActivePopoverElem(popoverEl, focusElAttr, timeOutVal = 0) {
+
+  if (!popoverEl) return;
 
   if (!popoverEl.matches(':popover-open') && !popoverEl.open) return;
 
@@ -1938,7 +1970,7 @@ function restoreAppOptionsFromFile(importFileData) {
 // Fetch the latest app version data from the repository
 // Update the app version button with the version data
 
-async function fetchAppVersionData() {
+async function initAppVersionData() {
 
   const { appVersion } = appVersionJson;
 
@@ -2006,9 +2038,9 @@ async function fetchAppVersionData() {
         `(v${appVersion} -> v${remoteVersionJson.appVersion})`
       );
 
-      if (!appOptionsPopover.matches(':popover-open') && !checkIfTunebookOpen()) {
+      if (!checkIfTunebookOpen()) {
 
-        displayNotification("Update available: Refresh to apply", "success");
+        displayNotification(`App update available: Refresh\u00a0to\u00a0apply`, "success");
       }
 
     } else {
@@ -2031,7 +2063,7 @@ async function fetchAppVersionData() {
 
     goatCountEvent(
       "!error-fetch-version-data",
-      "nss-app__fetchAppVersionData"
+      "nss-app__initAppVersionData"
     );
     
     console.warn(
@@ -2302,12 +2334,16 @@ async function appButtonHandler(btn) {
 
     if (!dataLoad) return;
 
-    if (dataLoad === "setlist" || 
-        dataLoad === "tunelist" || 
-        dataLoad === "playalong") {
+    if (appLaunchButtonsArr.includes(dataLoad)) {
 
       window.location.hash = `#${dataLoad}`;
+
       goatCountEvent(`#${dataLoad}`, "app-ui");
+
+      if (isLocalStorageOk()) {
+        localStorage.lastLauncherUsed_NSSSAPP = dataLoad;
+      }
+
       return;
     }
 
@@ -2316,7 +2352,13 @@ async function appButtonHandler(btn) {
     if (dataLoad.startsWith("abc")) {
       
       parseAbcFromFile(dataLoad, btn);
+
       goatCountEvent(`#${dataLoad}`, "encoder-ui");
+
+      if (isLocalStorageOk()) {
+        localStorage.lastEncoderUsed_NSSSAPP = dataLoad;
+      }
+
       return;
     }
 
@@ -2547,6 +2589,17 @@ async function appButtonHandler(btn) {
       }
     }
 
+    // Close Support menu if menu button pressed again
+
+    if (dataLoad === "support-options") {
+
+      if (appSupportPopover.matches(':popover-open')) {
+
+        appSupportPopover.hidePopover();
+        return;
+      }
+    }
+
     // Close Tunebook actions menu if menu button pressed again
 
     if (dataLoad === "tunebook-actions-menu") {
@@ -2752,8 +2805,8 @@ async function appCheckBoxHandler(checkBox) {
     case 'abcToolsUseLiteEditor':
       document.body.dataset.reload = "true";
       checkBox.checked?
-        displayNotification("Refresh to apply: App will open tunes in ABC Tools Lite", "success") :
-        displayNotification("Refresh to apply: App will open tunes in ABC Transcription Tools", "success");
+        displayNotification("App will open tunes in ABC Tools Lite", "success") :
+        displayNotification("App will open tunes in ABC Transcription Tools", "success");
       break;
 
     case 'abcToolsSaveAndRestoreTunes':
@@ -3711,7 +3764,17 @@ async function appWindowMouseEventHandler(event) {
 
       event.preventDefault();
 
+      const fullScreenSetting =
+        +document.querySelector('input[name="nss-radio-view"]:checked').value;
+
+      if (fullScreenSetting === 1) {
+
+        handleFullScreenButton(null);
+        return;
+      }
+
       await openSettingsMenu("chord-viewer");
+
       return;
     }
 
@@ -3844,32 +3907,247 @@ function appWindowTouchEventHandler(event) {
 async function appWindowKeyboardEventHandler(event) {
 
   const key = event.key;
+  const keycode = event.code;
 
   // Handle Escape key press with open popovers
 
   if (event.type === 'keydown' &&
       key === 'Escape') {
     
-    if (tuneBookActionsPopup.matches(':popover-open')) {
+    if (tuneBookActionsPopup && tuneBookActionsPopup.matches(':popover-open')) {
 
       hideTuneBookActionsMenu();
       focusOnTuneBookActions();
       return;
     }
 
-    if (appOptionsPopover.matches(':popover-open')) {
+    if (appOptionsPopover && appOptionsPopover.matches(':popover-open')) {
 
       appOptionsPopover.hidePopover();
       document.querySelector('[data-controls="options-menu"]').focus();
       return;
     }
 
-    if (appSupportPopover.matches(':popover-open')) {
+    if (appSupportPopover && appSupportPopover.matches(':popover-open')) {
 
       appSupportPopover.hidePopover();
       document.querySelector('[data-controls="support-menu"]').focus();
       return;
     }
+  }
+
+  // Reveal or hide Quick Help shortcuts
+
+  if (event.type === 'keydown' &&
+      event.shiftKey &&
+      (key === "/" ||
+      keycode === "Slash") &&
+      quickHelpDialog &&
+      quickHelpDialog.open) {
+
+    const helpTextDiv =
+      quickHelpDialog.querySelector('.nss-qhelp-description');
+
+    const isMobileViewPort =
+      getViewportWidth() < 768 || getViewportHeight() < 700;
+
+    if (quickHelpDialog.dataset.hint === "labels") {
+
+      helpTextDiv.textContent =
+        `Open Help Guide: Shift + F1` +
+        `\nFocus on ABC Tools: Shift + F4`;
+
+      quickHelpDialog.dataset.hint = "shortcuts"
+      return;
+    }
+
+    helpTextDiv.textContent =
+      `Select an element label to view description` +
+      (isMobileViewPort? '' : `\nPress Shift + / to view keyboard shortcuts`);
+
+    quickHelpDialog.dataset.hint = "labels"
+    return;
+  }
+
+  // Handle Launch Screen shortcuts for App & Encoder
+
+  if (event.type === 'keydown' &&
+      event.shiftKey &&
+      !checkIfTunebookOpen()) {
+
+    const isEncoderOpen =
+      location.pathname.endsWith('abc-encoder.html');
+
+    // Click Launch Screen Buttons
+
+    if (event.ctrlKey) {
+
+      const codesUsed = /^(?:Backquote|Digit[1-3]|Numpad[1-3])$/;
+      const keysUsed = /[~]/;
+
+      if (!codesUsed.test(keycode) &&
+          !keysUsed.test(key)) return;
+
+      event.preventDefault();
+
+      if (key === "~" || keycode === "Backquote") {
+
+        goatCountEvent(
+          `#pressed-ctrl-shift-backquote`,
+          isEncoderOpen? "encoder-shortcut" : "launcher-shortcut"
+        );
+
+        if (!isLocalStorageOk()) return;
+
+        const lastElemUsed = isEncoderOpen?
+          localStorage.lastEncoderUsed_NSSSAPP :
+          localStorage.lastLauncherUsed_NSSSAPP;
+
+        if (isEncoderOpen) {
+
+          const targetBtn =
+            document.querySelector(`[data-load="${lastElemUsed}"]`);
+
+          if (!targetBtn) return;
+
+          targetBtn.focus();
+
+          document.activeElement.click();
+          
+          return;
+        }
+
+        if (!lastElemUsed) return;
+
+        window.location.hash = lastElemUsed;
+
+        localStorage.lastLauncherUsed_NSSSAPP = lastElemUsed;
+
+        return;
+      }
+
+      if (!/^(?:Digit|Numpad)/.test(keycode)) return;
+
+      const num = keycode.startsWith('Numpad')?
+        keycode.replace('Numpad', '') :
+        keycode.replace('Digit', '');
+
+      if ((!isEncoderOpen && !appLaunchButtonsArr[num - 1]) &&
+          (isEncoderOpen && !abcEncoderButtonsArr[num - 1]))
+        return;
+
+      goatCountEvent(
+        `#pressed-ctrl-shift-${num}`,
+        isEncoderOpen? "encoder-shortcut" : "launcher-shortcut"
+      );
+
+      if (isEncoderOpen) {
+
+        const targetBtn =
+          document.querySelector(`[data-load="${abcEncoderButtonsArr[num - 1]}"]`);
+
+        if (!targetBtn) return;
+
+        targetBtn.focus();
+
+        document.activeElement.click();
+        
+        return;
+      }
+
+      const targetLauncher =
+        appLaunchButtonsArr[num - 1];
+
+      if (isLocalStorageOk()) {
+        localStorage.lastLauncherUsed_NSSSAPP =
+          targetLauncher;
+      }
+
+      window.location.hash = targetLauncher;
+      return;
+    }
+
+    const keysUsedArr =
+      ["F1", "F2", "F3", "F4", "F8", "F12"];
+
+    if (!keysUsedArr.includes(key)) return;
+
+    if (key === "F12" && !isLocalStorageOk()) return;
+
+    event.preventDefault();
+
+    goatCountEvent(
+      `#pressed-shift-${key.toLowerCase()}`,
+      isEncoderOpen? "encoder-shortcut" : "launcher-shortcut"
+    );
+
+    const abcLink =
+        document.querySelector('[data-url="abc"]');
+
+    const helpLink =
+        document.querySelector('[data-url="readme"]');
+
+    const optionsBtn =
+      isEncoderOpen?
+        document.querySelector('[data-load="encoder-options"]') :
+        document.querySelector('[data-load="app-options"]');
+
+    const supportBtn =
+      document.querySelector('[data-controls="support-menu"]');
+
+    let lastTuneBook;
+
+    if (key === "F12")
+      lastTuneBook = localStorage.tuneBookLastOpened_NSSSAPP;
+
+    switch (key) {
+      case "F1": // Click Readme Button
+        if (helpLink) helpLink.focus();
+        if (helpLink) document.activeElement.click();
+        return;
+
+      case "F2": // Click Options Button
+        if (optionsBtn) optionsBtn.focus();
+        if (optionsBtn) document.activeElement.click();
+        return;
+
+      case "F3": // Switch Between Tunebook & Encoder
+        window.location.href =
+          isEncoderOpen? "index.html" : "abc-encoder.html";
+        return;
+
+      case "F4": // Click ABC Tools Button
+        if (abcLink) abcLink.focus();
+        if (abcLink) document.activeElement.click();
+        return;
+
+      case "F8": // Click Support Menu Button
+        if (supportBtn) supportBtn.focus();
+        if (supportBtn) document.activeElement.click();
+        return;
+
+      case "F12": // Switch to Last Opened Tunebook
+        if (isEncoderOpen) {
+
+          window.location.href =
+            `index.html${lastTuneBook? `#${lastTuneBook}` : ''}`;
+
+        } else {
+
+          window.location.hash =
+            `#${lastTuneBook? lastTuneBook : `${tuneBooksListArr[0]}`}`;
+
+          if (isLocalStorageOk()) {
+
+            localStorage.lastLauncherUsed_NSSSAPP = lastTuneBook;
+          }
+        }
+        return;
+
+      default:
+        break;
+    }
+    return;
   }
 
   // Handle Tunebook-specific shortcuts
@@ -3883,49 +4161,163 @@ async function appWindowKeyboardEventHandler(event) {
       !chordViewerDialog.open &&
       !listViewerDialog.open) {
 
-    if (key === "F1" ||
-        key === "F2" ||
-        key === "F3" ||
-        key === "F4" ||
-        key === "F11") {
+    // Shuffle through list of Tunebooks
+    // Additional Ctrl + Shift shortcuts
+
+    if (event.ctrlKey) {
+
+      const codesUsed = /^(?:Backquote|Digit[1-9]|Numpad[1-9]|F1[0-2]?)$/;
+      const keysUsed = /[~]/;
+
+      if (!codesUsed.test(keycode) &&
+          !keysUsed.test(key)) return;
+
+      event.preventDefault();
+
+      if (keycode.startsWith("F1")) {
+
+        goatCountEvent(
+          `#pressed-ctrl-shift-${keycode.toLowerCase()}`,
+          "tunebook-shortcut"
+        );
+
+        switch (keycode) {
+          case "F1":
+            openQuickHelpDialog();
+            return;
+
+          case "F10":
+            // reserved
+            return;
+
+          case "F11":
+            await openSettingsMenu("chord-viewer");
+            return;
+
+          case "F12":
+            window.location.href = "abc-encoder.html";
+            return;
+        
+          default:
+            break;
+        }
+        return;
+      }
+
+      if (key === "~" || keycode === "Backquote") {
+
+        goatCountEvent(
+          `#pressed-ctrl-shift-backquote`,
+          "tunebook-shortcut"
+        );
+
+        const lastTuneBook = isLocalStorageOk()?
+          localStorage.tuneBookLastOpened_NSSSAPP : '';
+
+        const nextTuneBook =
+          tuneBooksListArr[tuneBooksListArr.indexOf(lastTuneBook) + 1];
+
+        window.location.hash =
+          nextTuneBook? nextTuneBook : tuneBooksListArr[0];
+
+        return;
+      }
+
+      if (!/^(?:Digit|Numpad)/.test(keycode)) return;
+
+      const num = keycode.startsWith('Numpad')?
+        keycode.replace('Numpad', '') :
+        keycode.replace('Digit', '');
+
+      const targetTuneBook =
+        tuneBooksListArr[num - 1];
+
+      if (!targetTuneBook)
+        return;
+
+      goatCountEvent(
+        `#pressed-ctrl-shift-${num}`,
+        "tunebook-shortcut"
+      );
+
+      if (isLocalStorageOk()) {
+        localStorage.lastLauncherUsed_NSSSAPP =
+          targetTuneBook;
+      }
+
+      window.location.hash = targetTuneBook;
+      return;
+    }
+
+    // Execute Tunebook Actions
+
+    const keysUsedArr =
+      ["F1", "F2", "F3", "F4", "F7", "F8", "F9", "F11", "F12"];
+
+    if (keysUsedArr.includes(key)) {
+
+      event.preventDefault();
 
       goatCountEvent(
         `#pressed-shift-${key.toLowerCase()}`,
-        "shortcut"
+        "tunebook-shortcut"
       );
+
+      if (key === "F9") {
+
+        const currentMode = document.body.dataset.mode;
+
+        const targetMode =
+          currentMode === "desktop"? "mobile" : "desktop";
+
+        switchTunebookMode(`${targetMode}-switch`);
+
+        goatCountEvent(`#switch-${targetMode}-mode`, "app-ui");
+        return;
+      }
+
+      switch (key) {
+        case "F1":
+          showHelpGuidePopover();
+          return;
+
+        case "F2":
+          focusOnTuneBookActions();
+          document.activeElement.click();
+          return;
+
+        case "F3":
+          await openSettingsMenu("list-viewer");
+          return;
+
+        case "F4":
+          toggleAbcFocusLabel("hide");
+          focusOnAbcFrame();
+          return;
+
+        case "F7":
+          if (!isCompactTunebookModeOn) {
+            setTuneBookCompactMode();
+          }
+          return;
+
+        case "F8":
+          copyTextToClipboard(getShareLink());
+          return;
+
+        case "F11":
+          handleFullScreenButton("chord-viewer");
+          return;
+
+        case "F12":
+          window.location.hash = "#launcher";
+          return;
+
+        default:
+          break;
+      }
+      return;
     }
-
-    switch (key) {
-      case "F1":
-        event.preventDefault();
-        showHelpGuidePopover();
-        return;
-
-      case "F2":
-        event.preventDefault();
-        focusOnTuneBookActions();
-        document.activeElement.click();
-        return;
-
-      case "F3":
-        event.preventDefault();
-        await openSettingsMenu("list-viewer");
-        return;
-
-      case "F4":
-        event.preventDefault();
-        toggleAbcFocusLabel("hide");
-        focusOnAbcFrame();
-        return;
-
-      case "F11":
-        event.preventDefault();
-        handleFullScreenButton("chord-viewer");
-        return;
-    
-      default:
-        break;
-    }    
   }
 
   // Handle Tunebook arrow navigation
@@ -3966,6 +4358,7 @@ async function appWindowKeyboardEventHandler(event) {
       default:
         break;
     }
+    return;
   }
 
   // Handle triggers for ABC Frame focus popup label
@@ -4003,38 +4396,44 @@ async function appWindowKeyboardEventHandler(event) {
     return;
   }
 
-  // Handle Full Screen mode shortcuts
+  // Handle Tunebook Full Screen mode shortcuts
 
   if (document.fullscreenElement &&
       checkIfTunebookOpen() &&
       event.type === 'keydown' &&
       event.shiftKey) {
 
-    switch(event.keyCode) {
-      case 61:
-      case 107:
-      case 187:
+    switch(key) {
+      case "+": // Support US, UK, French layouts
+      case "*": // Support German, Italian, Spanish layouts
         event.preventDefault();
         zoomTuneBookItem("zoom-in");
         return;
 
-      case 173:
-      case 109:
-      case 189:
+      case "_": // Support US, UK, Nordic, Spanish layouts
+      case "-": // Support French layout
         event.preventDefault();
         zoomTuneBookItem("zoom-out");
         return;
-    
-      default:
-        break;
-    }
 
-    switch (key) {
+      case "?":
+        // Support Nordic layouts
+        if (keycode === "Minus") {
+          event.preventDefault();
+          zoomTuneBookItem("zoom-in");
+        }
+        // Support German, Italian layouts
+        if (keycode === "Slash") {
+          event.preventDefault();
+          zoomTuneBookItem("zoom-out");
+        }
+        return;
+
       case "F4":
         event.preventDefault();
         goatCountEvent(
-          `#pressedfs-shift-${key.toLowerCase()}`,
-          "shortcut"
+          `#pressed-shift-${key.toLowerCase()}`,
+          "fullscreen-shortcut"
         );
         focusOnAbcFrame();
         return;
@@ -4042,8 +4441,8 @@ async function appWindowKeyboardEventHandler(event) {
       case "F11":
         event.preventDefault();
         goatCountEvent(
-          `#pressedfs-shift-${key.toLowerCase()}`,
-          "shortcut"
+          `#pressed-shift-${key.toLowerCase()}`,
+          "fullscreen-shortcut"
         );
         exitFullScreenMode();
         return;
@@ -4094,7 +4493,7 @@ async function appWindowKeyboardEventHandler(event) {
 
       goatCountEvent(
         `#pressed-shift-${key.toLowerCase()}`,
-        "shortcut"
+        "tunebook-shortcut"
       );
 
       if (triggerEl.dataset.favBtn) {
@@ -4104,6 +4503,15 @@ async function appWindowKeyboardEventHandler(event) {
       }
 
       if (triggerEl.id === "fullScreenButton") {
+
+        const fullScreenSetting =
+          +document.querySelector('input[name="nss-radio-view"]:checked').value;
+
+        if (fullScreenSetting === 1) {
+
+          handleFullScreenButton(null);
+          return;
+        }
 
         await openSettingsMenu("chord-viewer");
         return;
@@ -4195,9 +4603,20 @@ function activateLongPressFullScreenBtn(event, fullScreenButton) {
 
   const timeOutVal = 500;
 
-  const callBackArgs = ["chord-viewer"];
+  const fullScreenSetting =
+    +document.querySelector('input[name="nss-radio-view"]:checked').value;
 
-  appSetLongPressTimeout(event, fullScreenButton, timeOutVal, openSettingsMenu, callBackArgs);
+  const callBackFn =
+    fullScreenSetting === 1?
+      handleFullScreenButton :
+    openSettingsMenu;
+
+  const callBackArgs =
+    fullScreenSetting === 1?
+      [null] :
+    ["chord-viewer"];
+
+  appSetLongPressTimeout(event, fullScreenButton, timeOutVal, callBackFn, callBackArgs);
 }
 
 // Activate long press event on the Tune Selector
@@ -4283,31 +4702,39 @@ function addHelpGuideDescription(el) {
 
   if (!elLoads) return null;
 
+  const isMobileViewPort =
+    checkIfMobileMode() || getViewportWidth() < 768 || getViewportHeight() < 700;
+
   switch (elLoads) {
     case 'launcher':
       helpText =
-        "Exit to app's start screen. Press Open Setlist / Open Tunelist / Play Along buttons to switch between app sections. Click Options⚙️ button to adjust Tunebook settings.";
+        "Exit to app's start screen. Press Open Setlist / Open Tunelist / Play Along buttons to switch between app sections. Click Options⚙️ button to adjust Tunebook settings." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nShift + F12");
       break;
 
     case 'tunebook-actions-menu':
       helpText =
-        "Open a popup menu with shortcuts to Tunebook modules and features. Use the minimize button to close the menu. Actions are navigable via keyboard with the Tab key.";
+        "Open a popup menu with shortcuts to Tunebook modules and features. Use the minimize button to close the menu. Actions are navigable via keyboard with the Tab key." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nShift + F2");
       break;
 
     case 'tunelist':
       helpText =
-        "Load the Session Tunelist without exiting Tunebook. By default the last loaded Set is saved and then restored when Setlist is reopened. If Save & Restore is disabled in App Options, the first item on the list is always loaded.";
+        "Load the Session Tunelist without exiting Tunebook. By default the last loaded Set is saved and then restored when Setlist is reopened. If Save & Restore is disabled in App Options, the first item on the list is always loaded." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nCtrl + Shift + 2");
       break;
 
     case 'setlist':
       helpText =
-        "Load the Session Setlist without exiting Tunebook. By default the last loaded Tune is saved and then restored when Tunelist is reopened. If Save & Restore is disabled in App Options, the first item on the list is always loaded.";
-      break;
+        "Load the Session Setlist without exiting Tunebook. By default the last loaded Tune is saved and then restored when Tunelist is reopened. If Save & Restore is disabled in App Options, the first item on the list is always loaded." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nCtrl + Shift + 1");
+        break;
 
     case 'prev':
     case 'next':
       helpText =
-        "Switch between Tunebook items. Arrow navigation is located on top of the page in Desktop mode and in the middle of the page in Mobile mode and in Full Screen view.";
+        "Switch between Tunebook items. Arrow navigation is located on top of the page in Desktop mode and in the middle of the page in Mobile mode and in Full Screen view." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\n" + (elLoads === "prev"? "Shift + ←" : "Shift + →"));
       break;
 
     case 'tunebook-filters':
@@ -4317,7 +4744,9 @@ function addHelpGuideDescription(el) {
 
     case 'tunebook-tunes':
       helpText =
-        "Select an item from the dropdown list to load into ABC Transcription Tools. Use Right-Click / Shift + Enter / Long Touch to open List Viewer / Set Maker.";
+        "Select an item from the dropdown list to load into ABC Transcription Tools." +
+        ` Use ${isMobileViewPort? '' : 'Right-Click / Shift + Enter / '}Long Touch to open List Viewer / Set Maker.` +
+        (isMobileViewPort? '' : "\n\nList Viewer shortcut:\nShift + F3");
       break;
 
     case 'tunebook-tabsmidi':
@@ -4327,43 +4756,55 @@ function addHelpGuideDescription(el) {
 
     case 'fullscreen-mode':
       helpText =
-        "Open the current ABC or chords in Full Screen mode depending on the settings. Using Right-Click / Shift + Enter / Long Touch on the button opens Chord Viewer. Use Shift + F11 keyboard shortcut while outside of ABC Transcription Tools to activate this button.";
+        "Open the current ABC or chords in Full Screen mode depending on the settings." +
+        ` Using ${isMobileViewPort? '' : 'Right-Click / Shift + Enter / '}Long Touch on the button opens Chord Viewer.` +
+        `${isMobileViewPort? '' : ' Use Shift + F11 keyboard shortcut while outside of ABC Transcription Tools to activate this button.'}` +
+        `${isMobileViewPort? '' : '\n\nChord Viewer shortcut:\nCtrl + Shift + F11'}`;
       break;
 
     case 'fs-radio-tunes':
     case 'fs-radio-chords':
       helpText =
-        "Choose the default behavior for the Full Screen button. Useful for those frequently switching between ABC and Chord Viewer. Use Right-Click / Shift + Enter / Long Touch on the slot to pick alternative fav buttons from Tunebook Actions.";
+        "Choose the default behavior for the Full Screen button. Useful for those frequently switching between ABC and Chord Viewer." +
+        ` Use ${isMobileViewPort? '' : 'Right-Click / Shift + Enter / '}Long Touch on the slot to pick alternative fav buttons from Tunebook Actions.`;
       break;
 
     case 'share-link':
       helpText =
-        "Generate a short link to the currently selected Set or Tune or an active Tunebook filter. The link opens the item directly in the app. If no items or filters are selected, the last loaded link to ABC Transcription Tools will be copied instead.";
+        "Generate a short link to the currently selected Set or Tune or an active Tunebook filter. The link opens the item directly in the app. If no items or filters are selected, the last loaded link to ABC Transcription Tools will be copied instead." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nShift + F8");
       break;
 
     case 'list-viewer':
       helpText =
-        "Load the List Viewer / Set Maker module to view the searchable list of filtered items. Use the Start button or select an item with Right-Click / Shift + Enter / Long Touch to switch to the Set Maker mode. Use the slider to resize rows. Toggle between color schemes with the theme button.";
+        "Load List Viewer / Set Maker to view the searchable list of tunes." +
+        ` Use the Start button or select an item with ${isMobileViewPort? '' : 'Right-Click / Shift + Enter / '}Long Touch to switch to the Set Maker mode.` +
+        " Use slider to resize, use theme button to toggle between color schemes." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nShift + F3");
       break;
 
     case 'chord-viewer':
       helpText =
-        "Load the Chord Viewer module to view guitar chords for the current ABC. Use the Chord Viewer slider to scale the chords, press the theme button to toggle between color schemes.";
+        "Load the Chord Viewer module to view guitar chords for the current ABC. Use the Chord Viewer slider to scale the chords, press the theme button to toggle between color schemes." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nCtrl + Shift + F11");
       break;
 
     case 'tunebook-compact-mode':
       helpText =
-        "Switch to compact Tunebook mode with footer bar hidden. Tunebook Actions are accessible via header while in compact mode. Reload the app to reset the layout.";
+        "Switch to compact Tunebook mode with footer bar hidden. Tunebook Actions are accessible via header while in compact mode. Reload the app to reset the layout." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nShift + F7");
       break;
 
     case 'switch-mobile-mode':
       helpText =
-        "Adjust the Tunebook layout to suit devices with small and medium-sized screens. ABC Transcription Tools are view-only while in Mobile mode (Double Tap the tune to play, Long Touch to rewind). Rotate the device to see more elements in Mobile mode.";
+        "Adjust the Tunebook layout to suit devices with small and medium-sized screens. ABC Transcription Tools are view-only while in Mobile mode (Double Tap the tune to play, Long Touch to rewind). Rotate the device to see more elements in Mobile mode." +
+        (isMobileViewPort? '' : "\n\nKeyboard shortcut:\nShift + F9");
       break;
 
     case 'help':
       helpText =
-        "Launch Help Guide Dialog. Use Shift + F1 keyboard shortcut to open this menu while outside of the ABC Transcription Tools frame. To view Michael Eskin's User Guide click on \u2754 button within ABC Transcription Tools.";
+        "Launch Help Guide Dialog. Use Shift + F1 keyboard shortcut to open this menu while outside of the ABC Transcription Tools frame. To view Michael Eskin's User Guide click on \u2754 button within ABC Transcription Tools." +
+        (isMobileViewPort? '' : "\n\nQuick Help shortcut:\nCtrl + Shift + F1");
       break;
   
     default:
@@ -5165,10 +5606,20 @@ function initWindowEvents() {
   initFullScreenEvents();
 }
 
+// Set status data attribute for style tweaks and debugging
+
+function setAppStatus(dataStatus = "loading", statusTimeout = 0) {
+
+  setTimeout(() => {
+    document.body.dataset.status = dataStatus;
+  }, statusTimeout);
+}
+
 // Initialize event listeners and settings on Launch Screen load
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  setAppStatus();
   initGoatCounter();
   initBrowserTweaks();
   initPopoverWarning();
@@ -5180,7 +5631,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initChordViewer();
   initListViewer();
   appRouterOnLoad();
-  fetchAppVersionData();
+  initAppVersionData();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });
@@ -5202,6 +5653,7 @@ if ('serviceWorker' in navigator) {
           if (window.location.hash === "#launcher" || window.location.hash === "#playalong") {
             initSessionDb();
           }
+          setAppStatus("ready", 1200);
         });
       })
       .catch((error) => {
@@ -5210,6 +5662,7 @@ if ('serviceWorker' in navigator) {
           "nss-app__serviceWorker"
         );
         console.warn(`[NS App Service Worker]\n\n` + `Registration failed!\n\n` + error);
+        setAppStatus("ready-nosw", 1200);
       });
   });
 }

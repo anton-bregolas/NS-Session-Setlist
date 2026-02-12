@@ -40,11 +40,11 @@ Open **Setlist 🎶** or **Tunelist 🎵** from the **Launch section** of the ap
 
 ![A screenshot of the Launch section of the app](/assets/screens/screenshot-launch-desktop.webp)
 
-The **Quick Help ⇧** dialog with brief introduction to Tunebook controls opens up on first load. It can later be accessed in the **Help Guide ❔** menu of the app. Help Guide offers detailed descriptions for every element of the Tunebook interface (press `Shift + F1` or **Show Help** button in the **Tunebook Actions ☰** hamburger menu to view). For help with using ABC Transcription Tools, see Michael Eskin’s detailed <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">User Guide</a>.
+The **Quick Help ⇧** dialog with brief introduction to Tunebook controls opens up on first load. It can later be accessed in the **Help Guide ❔** menu of the app and by pressing `Ctrl + Shift + F1`. Help Guide offers detailed descriptions for every element of the Tunebook interface (press `Shift + F1` or **Show Help** button in the **Tunebook Actions ☰** hamburger menu to view). For help with using ABC Transcription Tools, see Michael Eskin’s detailed <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">User Guide</a>.
 
 ![A screenshot of the Quick Help dialog menu of the app](/assets/screens/screenshot-tunebook-quick-help.webp)
 
-The Tunebook interface is split between the **Header**, the **Footer** and the **ABC frame**. Header and Footer are fully keyboard-navigable. See list of [Tunebook Shortcuts](#tunebook-keyboard-shortcuts) for key combinations used in various app sections. See <a href="https://michaeleskin.com/abctools/userguide.html#playing_your_tunes" target="_blank">Playing Your Tunes</a> section of the ABC Transcription Tools User Guide for help with navigation within the ABC frame.
+The Tunebook interface is split between the **Header**, the **Footer** and the **ABC frame**. Header and Footer are fully keyboard-navigable. See list of [Tunebook Shortcuts](#tunebook-keyboard-shortcuts) and [Launch Screen Shortcuts](#launch-screen-keyboard-shortcuts) for key combinations used in various app sections. See <a href="https://michaeleskin.com/abctools/userguide.html#playing_your_tunes" target="_blank">Playing Your Tunes</a> section of the ABC Transcription Tools User Guide for help with navigation within the ABC frame.
 
 **Optional controls** are accessible via `Shift + Enter` for keyboard users, `Right-Click` for mouse users or `Long Touch` for touchscreen users.
 
@@ -80,9 +80,24 @@ The **Set Maker** mode offers to combine Tunebook items into new sets using cust
 
 ![Examples of adaptive mobile layout of the Set Maker module of the app](/assets/screens/screenshot-set-maker-mobile.webp)
 
-The **Chord Viewer** module displays guitar chords from the current ABC in a separate dialog window. Use the dialog slider to scale contents, press the theme button to toggle between color schemes, press the **Show / Hide GUI** button to save more screen space. Chord Viewer remembers all the GUI adjustments made by the user.
+The **Chord Viewer** module (`CTRL + SHIFT + F11`) displays guitar chords from the current ABC in a separate dialog window. Use the dialog slider to scale contents, press the theme button to toggle between color schemes, press the **Show / Hide GUI** button to save more screen space. Chord Viewer remembers all the GUI adjustments made by the user.
 
 ![Examples of adaptive mobile layout of the Chord Viewer module of the app](/assets/screens/screenshot-chord-viewer-mobile.webp)
+
+### Launch Screen Keyboard Shortcuts
+
+| Key Combination | Description |
+| --- | --- |
+| `CTRL + SHIFT + ~` | Open Last Launcher |
+| `CTRL + SHIFT + 1` | Open Setlist |
+| `CTRL + SHIFT + 2` | Open Tunelist |
+| `CTRL + SHIFT + 3` | Open Playalong |
+| `SHIFT + F1` | Open README Link |
+| `SHIFT + F2` | Open Tunebook Options |
+| `SHIFT + F3` | Open ABC Encoder |
+| `SHIFT + F4` | Open ABC Tools Editor |
+| `SHIFT + F8` | Open Support Menu |
+| `SHIFT + F12` | Open Last Tunebook Used |
 
 ### Tunebook Keyboard Shortcuts
 
@@ -91,10 +106,20 @@ Active Section | Key Combination | Description |
 | **Tunebook / Full Screen** | `SHIFT + F4` | Focus on ABC Frame |
 | **Tunebook / Full Screen** | `SHIFT + "↓"`,<br>`SHIFT + "→"` | Load the next Set / Tune |
 | **Tunebook / Full Screen** | `SHIFT + "↑"`,<br>`SHIFT + "←"` | Load previous Set / Tune |
+| **Tunebook Interface** | `CTRL + SHIFT + ~` | Switch Tunebook |
+| **Tunebook Interface** | `CTRL + SHIFT + 1` | Switch to Setlist |
+| **Tunebook Interface** | `CTRL + SHIFT + 2` | Switch to Tunelist |
+| **Tunebook Interface** | `CTRL + SHIFT + F1` | Open Quick Help |
+| **Tunebook Interface** | `CTRL + SHIFT + F11` | Open Chord Viewer |
+| **Tunebook Interface** | `CTRL + SHIFT + F12` | Open ABC Encoder |
 | **Tunebook Interface** | `SHIFT + F1` | Open Help Guide menu |
 | **Tunebook Interface** | `SHIFT + F2` | Open Tunebook Actions |
 | **Tunebook Interface** | `SHIFT + F3` | Open List Viewer / Set Maker |
+| **Tunebook Interface** | `SHIFT + F7` | Hide Tunebook Footer |
+| **Tunebook Interface** | `SHIFT + F8` | Copy Share Link to item |
+| **Tunebook Interface** | `SHIFT + F9` | Switch Tunebook Mode |
 | **Tunebook Interface** | `SHIFT + F11` | Open Full Screen mode |
+| **Tunebook Interface** | `SHIFT + F12` | Return to Launch Screen |
 | **Full Screen Mode** | `ESC`,<br>`SHIFT + F11` | Exit Full Screen mode |
 | **Full Screen Mode** | `SHIFT + "+"` | Zoom In (Up to 100%) |
 | **Full Screen Mode** | `SHIFT + "-"` | Zoom Out (Up to 50%) |
@@ -187,6 +212,21 @@ Use **Encoder Settings** ⚙️ to fine-tune `SORT` and `ENCODE` algorithms. Cli
 > **Mass-export tip**: With `ENCODE automatically passes tunes to SORT` and `SORT exports Tunes ABC from Sets ABC` settings enabled you can use `ENCODE` button to output two pairs of .abc and .json files (Sets and Tunes) from a single ABC Sets file.
 >
 > With `SORT extracts chords from Tunebook` and `ENCODE exports plaintext Tunelist with links` settings additionally enabled you can export four types of output files at once (sorted ABC, encoded ABC, Chordbook, plaintext Tunelist).
+
+### Encoder Keyboard Shortcuts
+
+| Key Combination | Description |
+| --- | --- |
+| `CTRL + SHIFT + ~` | Open Last Encoder |
+| `CTRL + SHIFT + 1` | Open ABC Sort |
+| `CTRL + SHIFT + 2` | Open ABC Encode |
+| `CTRL + SHIFT + 3` | Open ABC Decode |
+| `SHIFT + F1` | Open README Link |
+| `SHIFT + F2` | Open Encoder Settings |
+| `SHIFT + F3` | Return to Launch Screen |
+| `SHIFT + F4` | Open Raw ABC Link |
+| `SHIFT + F8` | Open Support Menu |
+| `SHIFT + F12` | Open Last Tunebook Used |
 
 ### Encoder Settings Overview
 
@@ -354,6 +394,50 @@ Import Name | Import Description | Details |
 | `makeTunesFromSets`, `sortFilterAbc` | Custom scripts for making ABC Sets | Required for creating ABC Sets and generating Set URLs. Imported from `scripts-abc-encoder.js` by default |
 
 ## Version History
+
+<details>
+  <summary><b>v1.2.6 Add Keyboard Shortcuts</b></summary>
+
+**v1.2.6: Add Keyboard Shortcuts**
+
++ App updates:
+  - Add section element list arrays for hash & keyboard navigation
+  - Add Tunebook shortcuts
+  - Add Launch Screen shortcuts:
+    * SHIFT + F1-4 activates corner buttons
+    * CTRL + SHIFT + 1-3 opens launchers
+    * CTRL + SHIFT + ~ opens last launcher
+    * SHIFT + F8 opens Support Menu
+    * SHIFT + F12 opens last app launcher used
+  - Add ABC Encoder shortcuts (SHIFT + F*)
+    * SHIFT + F1-4 activates corner buttons
+    * CTRL + SHIFT + 1-3 opens encoders
+    * CTRL + SHIFT + ~ opens last encoder
+    * SHIFT + F8 opens Support Menu
+    * SHIFT + F12 opens last app launcher used
+  - HTML: Add data-url attributes for handling README links
+  - HTML: Add data-hint attributes for handling Quick Help shorcut text
+  - HTML: Add alternative shorcut text to Quick Help elements 
+  - HTML: Fix Quick Help arrow button tab order (move to popover header)
+
++ Tunebook updates:
+  - Update Tunebook shortcuts:
+    * `CTRL + SHIFT + ~`: Switch Tunebook
+    * `CTRL + SHIFT + 1`: Switch to Setlist
+    * `CTRL + SHIFT + 2`: Switch to Tunelist
+    * `CTRL + SHIFT + F1`: Open Quick Help
+    * `CTRL + SHIFT + F11`: Open Chord Viewer
+    * `CTRL + SHIFT + F12`: Open ABC Encoder
+    * `SHIFT + F1`: Open Help Guide menu
+    * `SHIFT + F2`: Open Tunebook Actions
+    * `SHIFT + F3`: Open List Viewer / Set Maker
+    * `SHIFT + F7`: Hide Tunebook Footer
+    * `SHIFT + F8`: Copy Share Link to item
+    * `SHIFT + F9`: Switch Tunebook Mode
+    * `SHIFT + F11`: Open Full Screen mode
+    * `SHIFT + F12`: Return to Launch Screen
+  - Enable fallback popup animation for app launch
+</details>
 
 <details>
   <summary><b>v1.2.5 Fix Popover Animations</b></summary>
