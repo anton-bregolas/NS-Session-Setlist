@@ -40,9 +40,17 @@ Open **Setlist 🎶** or **Tunelist 🎵** from the **Launch section** of the ap
 
 ![A screenshot of the Launch section of the app](/assets/screens/screenshot-launch-desktop.webp)
 
-The **Quick Help ⇧** dialog with brief introduction to Tunebook controls opens up on first load. It can later be accessed in the **Help Guide ❔** menu of the app and by pressing `Ctrl + Shift + F1`. Help Guide offers detailed descriptions for every element of the Tunebook interface (press `Shift + F1` or **Show Help** button in the **Tunebook Actions ☰** hamburger menu to view). For help with using ABC Transcription Tools, see Michael Eskin’s detailed <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">User Guide</a>.
+**Help Guide** offers detailed descriptions for every element of the Tunebook interface: press `Shift + F1` or **Show Help** button in the **Tunebook Actions ☰** hamburger menu to view. For help with using ABC Transcription Tools, see Michael Eskin’s detailed <a href="https://michaeleskin.com/abctools/userguide.html" target="_blank">User Guide</a>. For help with additional custom options available in ABC Tools Lite, a default editor used by NS Session App, visit <a href="https://github.com/anton-bregolas/abctools-lite#abc-tools-lite" target="_blank">Tools Lite Readme</a>
+
+The **Quick Help ⇧** dialog with brief introduction to Tunebook controls opens up on first load. It can later be accessed in the **Help Guide ❔** menu of the app and by pressing `Ctrl + Shift + F1`.
 
 ![A screenshot of the Quick Help dialog menu of the app](/assets/screens/screenshot-tunebook-quick-help.webp)
+
+Press `Shift + /` in **Quick Help ⇧** dialog to view keyboard shortcuts for all the visible elements.
+
+Press `Escape` or `X` to exit **Help Guide**, **Quick Help ⇧** or any other dialog menu currently open.
+
+![A screenshot of the Shortcuts overlay in Quick Help dialog menu](/assets/screens/screenshot-tunebook-quick-help-hints.webp)
 
 The Tunebook interface is split between the **Header**, the **Footer** and the **ABC frame**. Header and Footer are fully keyboard-navigable. See list of [Tunebook Shortcuts](#tunebook-keyboard-shortcuts) and [Launch Screen Shortcuts](#launch-screen-keyboard-shortcuts) for key combinations used in various app sections. See <a href="https://michaeleskin.com/abctools/userguide.html#playing_your_tunes" target="_blank">Playing Your Tunes</a> section of the ABC Transcription Tools User Guide for help with navigation within the ABC frame.
 
@@ -178,7 +186,7 @@ Option Name | Default Setting | Comments |
     * Replace app screenshots: `assets`/`screens`
     * Edit PWA installation details in `app.webmanifest`
     * Adjust service worker behavior & cached file list in `sw.js`
-    * Replace app/DB versions, cache prefix in `version.js`, `sw.js`
+    * Replace app/DB versions in `sw.js`, `version.js`, `version-db.js`
     * Edit abcTunebookDefaults in `modules`/`scripts-abc-tools.js`
     * Edit abcEncoderDefaults in `modules`/`scripts-abc-encoder.js`
     * Replace subdomain name in `CNAME`
@@ -275,11 +283,54 @@ Tool | Input | Output |
 | `ENCODE` with `pass tunes to SORT` and `export plaintext Tunelist` on and `SORT extracts chords from Tunebook` enabled | `*.abc` / `*.txt` | `NS-Session-Sets.abc`, `NS-Session-Tunes.abc`, `Tunelist[SourceABC].txt`, `Tunelist[TunesABC].txt`, `chords-sets.json`, `chords-tunes.json`, `sets.json`, `tunes.json` |
 | `DECODE` | `*.json` | `NS-Session-Sets.abc` |
 
-### Output ABC Field Order
+### Sorted ABC Minimal Fields
 
-Given the fluidity and variability of the de-facto applied <a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank">**ABC Notation Standard**</a>, Encoder attempts to strike a balance between rigid-but-predictable and highly-permissive output. As such ABC Encoder combines an array of customizable settings with a pre-determined order of ABC Fields. Strict order of fields serves both aesthetic and functional purposes and enables the custom ABC Field-merging algorithm that produces clean-looking ABC Sets.
+`SORT` will attempt to fill in all the missing fields required for the minimal "ordered" status of the ABC. With `SORT removes tunes with no K: (strict mode)` option disabled, only `X:` and `T:` are strictly required for the ABC to be processed during sorting. Strict mode adds a required `K:` field (can be left blank) and discards all the tunes without `X: T: K:`.
+
+The minimal "ordered" ABC structure depends on `SORT enforces custom N.S.S.S. ABC fields` setting.
+
+With custom ABC fields setting `OFF`:
+
+ABC Field | Description |
+| --- | --- |
+| `X:` | Reference Number |
+| `T:` | ABC Title |
+| `R:` | Rhythm |
+| `M:` | Meter |
+| `L:` | Note Length |
+| `K:` | Key |
+
+With custom ABC fields setting `ON`:
+
+ABC Field | Description |
+| --- | --- |
+| `X:` | Reference Number |
+| `T:` | ABC Set / Tune Title |
+| `C: C: S:` | Composer / Source |
+| `C: Set Leaders:` | Set Leaders |
+| `Z:` | **†** Transcription |
+| `N:` | Notes |
+| `R:` | Rhythm |
+| `M:` | Meter |
+| `Q:` | Tempo |
+| `L:` | Note Length |
+| `K:` | Key |
+
+**†** Must contain the phrase "at The Session"<br>
+for N.S.S.S. tune to be considered "ordered".<br>
+This serves as a flag indicating that original<br>
+transcription author details have been filled in.
+
+### Sorted ABC Field Order
+
+`SORT` will always try to place ABC fields in a specific order. This behavior enables "safety switch" options such as `SORT skips deep-editing headers if ABC ordered` and `SORT skips editing titles if ABC ordered`. With these options `ON` (default settings), ABC Encoder will not touch the headers of the "ordered" tunes allowing for the smart algorithm to only process the raw, unsorted items newly-added to the ABC collection and leave room for fine-tuning. If ABC header fields match the expected order, only the `X:` headers will potentially be edited (renumbered) after the ABC collection had been "ordered" once.
+
+Disabling these options will result in `SORT` always processing ABC tunes, adjusting titles and other header data automatically.
 
 > [!NOTE]
+> Given the fluidity and variability of the de-facto applied <a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank">**ABC Notation Standard**</a>, Encoder attempts to strike a balance between rigid-but-predictable and highly-permissive output. As such ABC Encoder combines an array of customizable settings with a pre-determined order of ABC Fields. Strict order of fields serves both aesthetic and functional purposes and enables the custom ABC Field-merging algorithm that produces clean-looking ABC Sets.
+
+> [!TIP]
 > ABC Field merging is ON by default and can be turned off in Encoder Settings.
 
 ABC Field Tag | Description | Mergeable? |
@@ -421,6 +472,7 @@ Import Name | Import Description | Details |
   - HTML: Fix Quick Help arrow button tab order (move to popover header)
 
 + Tunebook updates:
+  - Add Quick Help shortcuts screen (`SHIFT + /`)
   - Update Tunebook shortcuts:
     * `CTRL + SHIFT + ~`: Switch Tunebook
     * `CTRL + SHIFT + 1`: Switch to Setlist
