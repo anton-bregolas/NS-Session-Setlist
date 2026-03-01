@@ -176,22 +176,7 @@ Option Name | Default Setting | Comments |
 6. Check [**Session DB files**](#input--output-defaults) saved to Download
 7. _Optional:_ Host your Session DB files online
 8. _Optional:_ [**Fork this repository**](https://github.com/anton-bregolas/NS-Session-Setlist/fork)
-9. _Optional:_ Customize forked Tunebook & PWA:
-    * Replace Session DB files in `/abc`, `/abc-chords`, `/abc-encoded`
-    * Update Session DB file paths in `modules`/`scripts-nss-app.js`
-    * Edit app name & metadata in `index.html`, `abc-encoder.html`
-    * Edit app section titles in `styles`/`styles-nss-app.css`
-    * Replace app icons: `favicon.ico`, `favicon.svg`, `assets`/`icons`
-    * Replace playalong content: `index.html`, `assets`/`images`
-    * Replace app screenshots: `assets`/`screens`
-    * Edit PWA installation details in `app.webmanifest`
-    * Adjust service worker behavior & cached file list in `sw.js`
-    * Replace app/DB versions in `sw.js`, `version.js`, `version-db.js`
-    * Edit abcTunebookDefaults in `modules`/`scripts-abc-tools.js`
-    * Edit abcEncoderDefaults in `modules`/`scripts-abc-encoder.js`
-    * Replace subdomain name in `CNAME`
-    * Deploy to GitHub Pages: _Settings_ / _Pages_
-    * Your Session Tunebook app is ready to use!
+9. _Optional:_ [**Customize Tunebook & PWA**](https://gist.github.com/anton-bregolas/12084ce8e22eb48b732dd1ff64d47fa3)
 
 ### Notes for developers
 
