@@ -470,9 +470,9 @@ input + .icon-wrapper {
 
 a:focus-visible,
 .nss-btn:is(:focus-visible),
-input:is(:focus-visible) + span,
 select:is(:focus, :focus-visible),
 input + .icon-wrapper:is(:focus-visible),
+input[type="radio"]:focus-visible + span,
 #fullScreenButton:is(:focus, :focus-visible) {
   outline-color: var(--accent-color);
 }
@@ -511,6 +511,44 @@ a:not([class*="nss-icon-container"]):not([class*="nss-footer-link"]):focus-visib
   font-weight: bold;
 }
 
+[data-inputs="select-abc-editor"] > span,
+label[data-load*="radio-abc"] {
+  height: calc(100% - 0.5rem);
+  font-size: 1.25rem;
+  font-weight: bold;
+  gap: 0.75rem;
+}
+
+[data-inputs="select-abc-editor"] > span {
+  padding: 0 0.5rem;
+}
+
+input[data-load*="radio-abc"] {
+  appearance: none;                                                                                                    
+  width: 1rem;                                          
+  height: 1rem;
+  border-radius: 50%;
+  margin: 0.125rem 0.125rem 0 0.1875rem;
+  border: 0.2rem solid var(--gradient-color-left);
+  box-shadow: 0 0 0 1px var(--accent-color-alt);
+  transition:
+  box-shadow 0.125s ease-in-out,
+  background-color 0.125s ease-in-out;
+}
+
+input[data-load*="radio-abc"]:checked {
+  background-color: var(--accent-color);
+  box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+label:has([data-load*="radio-abc"]) {
+  color: var(--accent-color-alt);
+}
+
+label:has([data-load*="radio-abc"]:checked) {
+  color: var(--accent-color);
+}
+
 .nss-subhead-link:is(:hover, :active, :focus, :focus-visible),
 .nss-footer-link:is(:hover, :active, :focus, :focus-visible) {
   filter: drop-shadow(1px 1px 13px var(--accent-color));
@@ -535,6 +573,7 @@ label:is([class*="radio-wrapper"]) > span {
 }
 
 label:is([class*="radio-wrapper"]) > span,
+label[data-load*="radio-abc"],
 .nss-footer-link {
   height: 100%;
   padding: 0 1rem;
@@ -888,10 +927,13 @@ body[data-mode="desktop"] .nss-footer-tunebook [data-controls="tunebook-actions-
 
 .nss-copytext-btn {
   font-size: inherit;
-  line-break: anywhere;
   border-radius: 0.25rem;
   outline-offset: 0.2rem;
   text-decoration-line: underline;
+}
+
+.nss-btn-text-breakable {
+  line-break: anywhere;
 }
 
 body[data-mode="mobile"] .nss-icon-filler:not(.nss-footer-tunebook .nss-icon-filler) {
@@ -1096,6 +1138,18 @@ body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action,
   gap: 0.35em;
 }
 
+.nss-btn-launch[data-load="abc-shared-link-menu"] {
+  background-color: var(--notification-color-warning);
+}
+
+.nss-btn-launch[data-load="abc-shared-link-menu"] svg {
+  transform: rotate(-20deg) scale(1.25);
+}
+
+.nss-btn-launch[data-load*="shared-link-"]:not([data-load="abc-shared-link-menu"]) {
+  height: 6rem;
+}
+
 .nss-tunebook-nav-container {
   gap: 0.75rem;
 }
@@ -1295,6 +1349,7 @@ body[data-mode="mobile"] .nss-select-container {
   gap: 1rem;
 }
 
+.nss-popover-bodytext-container .nss-copytext-content,
 .nss-popover-bodytext-container h3,
 .nss-popover-bodytext-container p,
 .nss-popover-bodytext-container a {
@@ -1325,6 +1380,7 @@ body[data-mode="mobile"] .nss-select-container {
   margin: 0;
 }
 
+[data-load="copy-text"][data-updated],
 .nss-app-version-btn[data-load="app-update"] {
   color: var(--notification-color-success);
 }
@@ -1360,14 +1416,27 @@ body[data-mode="mobile"] .nss-select-container {
   text-align: left;
 }
 
+label:has(input[type="radio"]),
+input[type="radio"],
 .nss-checkbox-label,
 .nss-checkbox-btn {
   cursor: pointer;
 }
 
+label:has([data-load*="radio-abc"]),
 input[type="checkbox"] {
   outline: 0.15rem solid transparent;
-  transition: outline-color 0.16s ease-out;
+  transition: 
+  color 0.16s ease-out,
+  outline-color 0.16s ease-out;
+}
+
+label:has([data-load*="radio-abc"]:focus-visible) {
+  outline-color: var(--accent-color);
+}
+
+label:has([data-load*="radio-abc"][disabled]) {
+  opacity: 0.6;
 }
 
 input[type="checkbox"]:focus-visible {
@@ -2143,6 +2212,19 @@ body[data-mode="desktop"] [data-hide="desktop"],
   }
 }
 
+/* @media screen and (min-width: 880px) and (max-height: 700px) { */
+@media screen and (min-width: 55em) and (max-height: 43.75em) {
+
+  [data-shared-link] .nss-launch {
+    position: unset;
+    transform: unset;
+  }
+
+  [data-shared-link] .nss-footers [data-controls="support-menu"] {
+    display: none;
+  }
+}
+
 /* @media screen and (max-width: 880px),
        screen and (max-height: 640px){ */
 @media screen and (max-width: 55em),
@@ -2225,6 +2307,8 @@ body[data-mode="desktop"] [data-hide="desktop"],
     width: 4rem;
   }
 
+  [data-inputs="select-abc-editor"] label,
+  [data-inputs="select-abc-editor"] span,
   [data-popover="notification-popup"],
   [data-type="telegram-link"],
   .nss-app-version-btn,
@@ -2233,11 +2317,20 @@ body[data-mode="desktop"] [data-hide="desktop"],
     font-size: 1.75rem;
   }
 
+  .nss-popover-footer:has([data-inputs="select-abc-editor"]) {
+    padding: 0;
+  }
+
+  label[data-load*="radio-abc"] {
+    gap: 0.5rem;
+  }
+
   .nss-popover-bodytext-container {
     padding: 1.75rem 3.5rem 2rem;
     gap: 1.75rem;
   }
 
+  .nss-popover-bodytext-container .nss-copytext-content,
   .nss-popover-bodytext-container h3,
   .nss-popover-bodytext-container p,
   .nss-popover-bodytext-container a {
@@ -2355,6 +2448,10 @@ body[data-mode="desktop"] [data-hide="desktop"],
 
 /* @media screen and (max-height: 768px) */
 @media screen and (max-height: 48em) {
+
+  [data-shared-link] .nss-encoder-subhead-link {
+    display: none;
+  }
 
   [data-image="photo-developer"] {
     max-width: 55%;

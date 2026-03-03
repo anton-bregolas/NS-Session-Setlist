@@ -609,7 +609,7 @@ async function createTuneSetUrl(selectedItems) {
   let baseUrlParams = '';
 
   baseUrl = 
-    isLocalStorageOk() && +localStorage.abcEncodeTuneListLinksToLite === 1?
+    isLocalStorageOk() && +localStorage.abcEncodeLinksToAbcToolsLite === 1?
     `https://abc.tunebook.app/abctools.html` :
     `https://michaeleskin.com/abctools/abctools.html`;
 
@@ -625,7 +625,7 @@ async function createTuneSetUrl(selectedItems) {
     const dataUrlName = dataUrl.split('&name=')[1];
     const tuneNoInSet = item.querySelector('[data-lvw-counter]').dataset.lvwCounter;
     
-    const encodedAbc = dataUrl.match(/(?:lzw|def)=(?:[^&]*)/);
+    const encodedAbc = dataUrl.match(/(?:lzw|def)=[^&#]+/);
     
     if (!encodedAbc) return;
 
@@ -660,7 +660,7 @@ async function createTuneSetUrl(selectedItems) {
   const encodedAbcSet =
     isLocalStorageOk() && +localStorage.abcEncodeUsesLzwCompression === 1?
       `?lzw=${LZString.compressToEncodedURIComponent(sortedAbc)}` :
-      `?def=${await deflateCompress(sortedAbc, 'deflate')}`;
+      `?def=${await deflateCompress(sortedAbc)}`;
     
   const abcUrlOutput =
     baseUrl +

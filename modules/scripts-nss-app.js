@@ -5,7 +5,7 @@ import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, d
          resetViewportWidth, getViewportWidth, getViewportHeight, getLastTunebookUrl, tuneFrame, 
          handleFullScreenButton, loadFromQueryString, getAbcLinkToPreferredEditor } from './scripts-abc-tools.js';
 import { abcEncoderDefaults, downloadAbcEncoderFile, initEncoderSettings, parseAbcFromFile, parseEncoderImportFile, 
-         readFileContent, resetEncoderSettings } from './scripts-abc-encoder.js';
+         readFileContent, resetEncoderSettings, handleAbcEncoderQuery, parseAbcFromSharedLink} from './scripts-abc-encoder.js';
 import { adjustHtmlFontSize, isMobileBrowser } from './scripts-preload-nssapp.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
@@ -907,23 +907,32 @@ export async function openSettingsMenu(dataType, dataOptions) {
 
   if (dataType === "support-options") {
 
+    const popoverId = appSupportPopover.id;
+
     const containerId = 
       "nss-support-popover-text";
 
     const supportMenuContainer =
       document.getElementById(containerId);
 
-    if (!supportMenuContainer) return;
+    if (!popoverId || !supportMenuContainer) return;
 
     if (appOptionsPopover && appOptionsPopover.matches(':popover-open')) {
 
       appOptionsPopover.hidePopover();
     }
 
-    if (!supportMenuContainer.dataset.static) {
+    if (appSupportPopover.dataset.static !== "true") {
 
-      addSupportMenuContent(containerId);
-      supportMenuContainer.dataset.static = "true";
+      addSupportMenuContent(popoverId, containerId);
+
+      const sharedLinkFooterInputs =
+          appSupportPopover.querySelector('[data-inputs="select-abc-editor"]');
+
+      if (sharedLinkFooterInputs) ariaHideMe(sharedLinkFooterInputs);
+
+      appSupportPopover.dataset.static = 
+        window.location.pathname === '/abc-encoder.html'? "false" : "true";
     }
 
     goatCountEvent("#support-options", "app-ui");
@@ -956,6 +965,12 @@ export async function openSettingsMenu(dataType, dataOptions) {
   // Open Encoder Options
 
   if (dataType === "encoder-options") {
+
+    if (appSupportPopover && 
+        appSupportPopover.matches(':popover-open')) {
+
+      appSupportPopover.hidePopover();
+    }
 
     printLocalStorageSettings(abcEncoderDefaults, true);
 
@@ -1251,14 +1266,14 @@ function checkIfHelpMenuOpen() {
   return isHelpMenuOpen;
 }
 
-// Return true if app is currently in mobile mode
+// Return true if app is currently in mobile mode (using custom data-attr)
 
 export function checkIfMobileMode() {
 
   return document.body.dataset.mode === "mobile";
 }
 
-// Return true if the app is viewed from Safari-like browser
+// Return true if the app is viewed from Safari-like browser (using custom data-attr)
 
 function checkIfSafariLikeBrowser() {
 
@@ -1271,7 +1286,7 @@ function checkIfSafariLikeBrowser() {
   return isSafariLike;
 }
 
-// Return true if the app appears to be opened in iOS
+// Return true if the app appears to be opened in iOS (using custom data-attr)
 
 function checkIfIosBrowser() {
 
@@ -2264,11 +2279,6 @@ function showTuneBookEls() {
 
 async function appButtonHandler(btn) {
 
-  if (btn.hasAttribute('data-cvw-action') || btn.hasAttribute('data-lvw-action')) {
-
-    return; // Handle viewer module buttons separately //
-  }
-
   // Read data-load attribute value
 
   const dataLoad = btn.dataset.load;
@@ -2344,6 +2354,14 @@ async function appButtonHandler(btn) {
         localStorage.lastLauncherUsed_NSSSAPP = dataLoad;
       }
 
+      return;
+    }
+
+    // Handle ABC Encoder Shared Link button
+
+    if (dataLoad === "abc-shared-link-menu") {
+
+      handleAbcEncoderQuery();
       return;
     }
 
@@ -2470,8 +2488,9 @@ async function appButtonHandler(btn) {
 
         if (btn.classList.contains('nss-app-version-btn')) {
 
-          copyTextToClipboard(btn.dataset.copyText, true);
-          displayNotification("Version data copied to clipboard", "success");
+          copyTextToClipboard(
+            btn.dataset.copyText, "Version data copied to clipboard"
+          );
           return;
         }
 
@@ -2593,7 +2612,9 @@ async function appButtonHandler(btn) {
 
     if (dataLoad === "support-options") {
 
-      if (appSupportPopover.matches(':popover-open')) {
+      if (appSupportPopover.matches(':popover-open') &&
+          appSupportPopover.querySelector('.nss-popover-title')
+            .textContent.startsWith('Support')) {
 
         appSupportPopover.hidePopover();
         return;
@@ -2756,7 +2777,7 @@ async function appButtonHandler(btn) {
 
 // Handle custom checkbox events
 
-async function appCheckBoxHandler(checkBox) {
+export async function appCheckBoxHandler(checkBox, checkBoxScope) {
 
   const optionName = checkBox.dataset.option;
 
@@ -2765,32 +2786,44 @@ async function appCheckBoxHandler(checkBox) {
     localStorage[optionName] = 0;
 
     if (checkBox.dataset.disables) 
-      reEnableCheckBoxes(checkBox.dataset.disables)
+      reEnableCheckBoxes(checkBox.dataset.disables, checkBoxScope);
 
     if (checkBox.dataset.enables)
-      reEnableCheckBoxes(checkBox.dataset.enables)
+      reEnableCheckBoxes(checkBox.dataset.enables, checkBoxScope);
     
     if (checkBox.dataset.linkedOptions)
-      disableCheckBoxes(checkBox.dataset.linkedOptions);
+      disableCheckBoxes(checkBox.dataset.linkedOptions, checkBoxScope);
 
-    if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
-      document.getElementById(checkBox.dataset.linkedInput).setAttribute("disabled", "");
+    if (checkBox.dataset.linkedInput) {
+
+      const linkedInput = checkBoxScope?
+        checkBoxScope.querySelector(`#${checkBox.dataset.linkedInput}`) :
+        document.getElementById(checkBox.dataset.linkedInput);
+
+      if (linkedInput) linkedInput.setAttribute("disabled", "");
+    }
 
   } else {
 
     localStorage[optionName] = 1;
 
     if (checkBox.dataset.disables) 
-      disableCheckBoxes(checkBox.dataset.disables)
+      disableCheckBoxes(checkBox.dataset.disables, checkBoxScope);
 
     if (checkBox.dataset.enables)
-      forceEnableCheckBoxes(checkBox.dataset.enables)
+      forceEnableCheckBoxes(checkBox.dataset.enables, checkBoxScope);
 
     if (checkBox.dataset.linkedOptions)
-      reEnableCheckBoxes(checkBox.dataset.linkedOptions);
+      reEnableCheckBoxes(checkBox.dataset.linkedOptions, checkBoxScope);
 
-    if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
-      document.getElementById(checkBox.dataset.linkedInput).removeAttribute("disabled");
+    if (checkBox.dataset.linkedInput) {
+
+      const linkedInput = checkBoxScope?
+        checkBoxScope.querySelector(`#${checkBox.dataset.linkedInput}`) :
+        document.getElementById(checkBox.dataset.linkedInput);
+
+      if (linkedInput) linkedInput.removeAttribute("disabled");
+    }
   }
 
   if (isLocalStorageOk()) {
@@ -2939,10 +2972,10 @@ async function appCheckBoxHandler(checkBox) {
         displayNotification("Encode will now output JSON file compatible with Novi Sad Session Setlist", "success");
       break;
 
-    case 'abcEncodeTuneListLinksToLite':
+    case 'abcEncodeLinksToAbcToolsLite':
       checkBox.checked?
-        displayNotification("Encode will now link to ABC Tools Lite editor when processing Tunelist", "success") :
-        displayNotification("Encode will now link to Michael Eskin’s ABC Transcription Tools when processing Tunelist", "success");
+        displayNotification("Encode will now link to ABC Tools Lite editor when processing share links", "success") :
+        displayNotification("Encode will now link to Michael Eskin’s ABC Transcription Tools when processing share links", "success");
       break;
 
     case 'abcEncodeUsesLzwCompression':
@@ -2953,7 +2986,7 @@ async function appCheckBoxHandler(checkBox) {
 
     case 'abcSortEnforcesCustomAbcFields':
       checkBox.checked?
-        displayNotification("Sort will now enforce custom fields used by N.S.S.S.", "success") :
+        displayNotification("Sort will now enforce custom fields used in NS\xa0Session Setlist", "success") :
         displayNotification("Sort will now support all standard ABC fields", "success");
       break;
 
@@ -3634,6 +3667,15 @@ function appWindowClickHandler(event) {
   const triggerEl = event.target.closest(interactableEl);
 
   if (!triggerEl) return;
+
+  // Handle viewer modules and dynamic menu inputs separately //
+
+  if (triggerEl.hasAttribute('data-cvw-action') ||
+      triggerEl.hasAttribute('data-lvw-action') ||
+      triggerEl.hasAttribute('data-shared-link-action')) {
+
+    return;
+  }
 
   const elTag = triggerEl.tagName.toLowerCase();
 
@@ -4862,6 +4904,17 @@ function appRouter() {
       path !== "/NS-Session-Setlist/" && 
       path !== "/NS-Session-Setlist/index.html") return;
 
+  const urlSearchQuery = window.location.search;
+
+  // Handle search queries in URL
+
+  if (urlSearchQuery) {
+
+    window.location.href =
+      window.location.origin +
+      (window.location.hash || "#launcher");
+  }
+
   const urlHash = window.location.hash;
 
   // Handle no hash in URL
@@ -5086,22 +5139,31 @@ function getShareLink(optionType) {
 
 // Copy input text to clipboard using Clipboard API
 
-async function copyTextToClipboard(inputText, isSilentCopy) {
+export async function copyTextToClipboard(inputText, notifyText, isLongText, isSilentCopy) {
 
   if (!navigator.clipboard && inputText) {
 
-    if (!isSilentCopy) displayNotification(inputText, "report");
     console.log(
       `NS Session App:\n\nThis browser does not support Clipboard API.` +
-      isSilentCopy? '' : ` Displaying text in status bar...`
+      (isLongText || isSilentCopy? '\n\nDisplaying text in the log:' : ` Displaying text in status bar...`)
     );
+
+    if (isLongText || isSilentCopy) {
+      
+      console.log(inputText);
+      if (isSilentCopy) return;
+      displayNotification("Could not copy to clipboard", "warning");
+      return;
+    }
+
+    displayNotification(inputText, "report");
     return;
   }
 
-  if (!inputText && !isSilentCopy) {
+  if (!inputText) {
 
-    displayNotification("Select an item to share", "warning");
-    console.log(`NS Session App:\n\nNo text copied to clipboard, input string missing or empty`);
+    displayNotification("No share item found", "warning");
+    console.log(`NS Session App:\n\nNo text copied to clipboard, share item missing or empty`);
     return;
   }
 
@@ -5109,8 +5171,11 @@ async function copyTextToClipboard(inputText, isSilentCopy) {
 
     navigator.clipboard.writeText(inputText);
 
-    if (!isSilentCopy) displayNotification("Copied to clipboard", "success");
     console.log(`NS Session App:\n\nText copied to clipboard:\n\n${inputText}`);
+
+    if (isSilentCopy) return;
+    
+    displayNotification(notifyText? notifyText : "Copied to clipboard", "success");
 
   } catch(error) {
 
@@ -5241,39 +5306,55 @@ export function initCustomDropDownMenus() {
 
 // Initialize App & Encoder Settings checkboxes on page load
 
-export function initAppCheckBoxes(isHardReset) {
+export function initAppCheckBoxes(isHardReset, checkBoxScope) {
 
   if (!isLocalStorageOk()) return;
 
+  const checkBoxes = checkBoxScope?
+    checkBoxScope.querySelectorAll('.nss-checkbox-btn') :
+    allCheckBoxes;
+
   if (isHardReset) {
 
-    allCheckBoxes.forEach(checkBox => checkBox.removeAttribute("disabled"));
+    checkBoxes.forEach(checkBox => checkBox.removeAttribute("disabled"));
   }
 
-  allCheckBoxes.forEach(checkBox => {
+  checkBoxes.forEach(checkBox => {
 
     if (+localStorage[checkBox.dataset.option] === 1) {
 
       checkBox.checked = true;
 
       if (checkBox.dataset.disables)
-        disableCheckBoxes(checkBox.dataset.disables)
+        disableCheckBoxes(checkBox.dataset.disables, checkBoxScope);
 
       if (checkBox.dataset.enables)
-        forceEnableCheckBoxes(checkBox.dataset.enables)
+        forceEnableCheckBoxes(checkBox.dataset.enables, checkBoxScope);
 
-      if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
-        document.getElementById(checkBox.dataset.linkedInput).removeAttribute("disabled");
+      if (!checkBox.dataset.linkedInput) return;
+
+      const linkedInput = checkBoxScope?
+        checkBoxScope.querySelector(`#${checkBox.dataset.linkedInput}`) :
+        document.getElementById(checkBox.dataset.linkedInput);
+
+      if (linkedInput)
+        linkedInput.removeAttribute("disabled");
     
     } else {
 
       checkBox.checked = false;
 
       if (checkBox.dataset.linkedOptions)
-        disableCheckBoxes(checkBox.dataset.linkedOptions);
+        disableCheckBoxes(checkBox.dataset.linkedOptions, checkBoxScope);
 
-      if (checkBox.dataset.linkedInput && document.getElementById(checkBox.dataset.linkedInput))
-        document.getElementById(checkBox.dataset.linkedInput).setAttribute("disabled", "");
+      if (!checkBox.dataset.linkedInput) return;
+
+      const linkedInput = checkBoxScope?
+        checkBoxScope.querySelector(`#${checkBox.dataset.linkedInput}`) :
+        document.getElementById(checkBox.dataset.linkedInput);
+
+      if (linkedInput)
+        linkedInput.setAttribute("disabled", "");
     }
   });
 }
@@ -5281,53 +5362,66 @@ export function initAppCheckBoxes(isHardReset) {
 // Disable one or several App & Encoder Settings checkboxes
 // Reset the associated localStorage item's value
 
-function disableCheckBoxes(datasetDisables) {
+function disableCheckBoxes(datasetDisables, checkBoxScope) {
 
   const disableBoxesArr = datasetDisables.split(' ');
 
   disableBoxesArr.forEach(boxData => {
 
-    const boxEl = document.querySelector(`[data-option="${boxData}"]`);
-    
-    if (boxEl.checked) boxEl.checked = false;
+    const boxEls = checkBoxScope?
+      checkBoxScope.querySelectorAll(`[data-option="${boxData}"]`) :
+      document.querySelectorAll(`[data-option="${boxData}"]`);
+
+    boxEls.forEach(boxEl => {
+
+      if (boxEl.checked) boxEl.checked = false;
               
+      boxEl.setAttribute("disabled", "");
+    });
+
     localStorage.setItem(boxData, 0);
-    
-    boxEl.setAttribute("disabled", "");
   });
 }
 
 // Reenable one or several App & Encoder Settings checkboxes
 
-function reEnableCheckBoxes(datasetDisables) {
+function reEnableCheckBoxes(datasetDisables, checkBoxScope) {
 
   const reEnableBoxesArr = datasetDisables.split(' ');
 
   reEnableBoxesArr.forEach(boxData => {
 
-    const boxEl = document.querySelector(`[data-option="${boxData}"]`);
-    
-    boxEl.removeAttribute("disabled");
+    const boxEls = checkBoxScope?
+      checkBoxScope.querySelectorAll(`[data-option="${boxData}"]`) :
+      document.querySelectorAll(`[data-option="${boxData}"]`);
+
+    boxEls.forEach(boxEl => {
+
+      boxEl.removeAttribute("disabled");
+    });  
   });
 }
 
 // Enable one or several App & Encoder Settings checkboxes
 // Disable the checkbox in checked state
 
-function forceEnableCheckBoxes(datasetEnables) {
+function forceEnableCheckBoxes(datasetEnables, checkBoxScope) {
 
   const enableBoxesArr = datasetEnables.split(' ');
 
   enableBoxesArr.forEach(boxData => {
 
-    const boxEl = document.querySelector(`[data-option="${boxData}"]`);
-    
-    boxEl.checked = true;
-              
-    localStorage.setItem(boxData, 1);
-    
-    boxEl.setAttribute("disabled", "");
+    const boxEls = checkBoxScope?
+      checkBoxScope.querySelectorAll(`[data-option="${boxData}"]`) :
+      document.querySelectorAll(`[data-option="${boxData}"]`);
 
+    boxEls.forEach(boxEl => {
+
+      boxEl.checked = true;
+      boxEl.setAttribute("disabled", "");
+    });
+
+    localStorage.setItem(boxData, 1);
   });
 }
 
@@ -5337,7 +5431,7 @@ function initTunebookRadioBtns() {
 
   if (!isLocalStorageOk()) return;
 
-  if(+localStorage.abcToolsFullScreenBtnShowsChords === 1) {
+  if (+localStorage.abcToolsFullScreenBtnShowsChords === 1) {
 
     fullScreenViewChordsRadioBtn.checked = true;
 
@@ -5632,6 +5726,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initListViewer();
   appRouterOnLoad();
   initAppVersionData();
+  handleAbcEncoderQuery();
 
   console.log(`NS Session App:\n\nLaunch Screen initialized`);
 });

@@ -432,6 +432,50 @@ Import Name | Import Description | Details |
 ## Version History
 
 <details>
+  <summary><b>v1.2.7 Add Shared Link Handling to ABC Encoder</b></summary>
+
+**v1.2.7: Add Shared Link Handling to ABC Encoder**
+
++ App updates:
+  - Add Shared Link import & export logic to ABC Encoder
+  - Add separate search query handling for Encoder & Tunebook App
+  - Add Shared Link Menu button to ABC Encoder menu on successful import
+  - Add dynamically-generated Shared Link Menu with buttons and optional inputs
+  - Update app checkbox logic with optional scope
+    * All copies of checkbox with matching data-option will now be updated by default
+    * initAppCheckBoxes updated and exported
+  - Update copyTextToClipboard logic with optional messages
+  - Move button exception checks by data-attr to higher-level appWindowClickHandler
+
++ ABC Encoder module updates:
+  - Fix iOS greying out input .abc files with iOS-specific fallback logic
+    * Update parseAbcFromFile
+    * Add validateFileExt, import isIosDevice
+  - Add Export Website HTML support to ABC Decode
+    * Add preProcessDecodeInput to process Export Website HTML / TXT and Shared Links
+  - Add Shared Link Menu elements to Support Popover shell
+  - Add Shared Link Import handler (handleAbcEncoderQuery)
+  - Add Shared Link Menu content (openSharedLinkMenu)
+  - Add Shared Link Menu inputs init handler (initSharedLinkInputs)
+  - Add parseAbcFromSharedLink Shared Link parser
+  - Add Shared Link Export handling to saveAbcEncoderOutput
+  - Update encodeTunesForAbcTools with better-sanitized &name= values
+  - Rename abcEncodeTuneListLinksToLite -> abcEncodeLinksToAbcToolsLite (localStorage)
+
++ ABC Utils module updates:
+  - Add sanitizeQueryParamForAbcTools reusable helper for cleaner Shared Links
+    * Allow only a-zA-Z0-9_-' and replace & / # with words where applicable
+  - Add wrapperLabelText handling to addElemWrapper helper (input labels)
+  - Add addLabeledInputElem helper
+  - Add isIosDevice helper
+  - Update & fix addSupportMenuContent
+
++ Tunebook / Chord Viewer / List Viewer updates:
+  - Add stricter def=/lzw= query checks (no empty values or hashes allowed)
+
+</details>
+
+<details>
   <summary><b>v1.2.6 Add Keyboard Shortcuts</b></summary>
 
 **v1.2.6: Add Keyboard Shortcuts**

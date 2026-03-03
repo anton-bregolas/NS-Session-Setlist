@@ -201,11 +201,11 @@ export async function loadTuneBookItem(currentTuneBook, itemNumber, passedUrl) {
 
         if (+localStorage.abcToolsAllowTabStyleChanges === 1) {
 
-            theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format="+tabStyle);
+            theURL = theURL.replace(/&format=[^&#]+/g,"&format="+tabStyle);
 
         } else {
 
-            theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format=noten");
+            theURL = theURL.replace(/&format=[^&#]+/g,"&format=noten");
         }
 
         if (+localStorage.abcToolsAllowInstrumentChanges === 1) {
@@ -222,7 +222,7 @@ export async function loadTuneBookItem(currentTuneBook, itemNumber, passedUrl) {
 
     } else {
 
-        theURL = theURL.replace(/&format=(?:[^&]+)/g,"&format="+tabStyle);
+        theURL = theURL.replace(/&format=[^&#]+/g,"&format="+tabStyle);
     }
 
     // Create final link to the preferred ABC editor
@@ -529,6 +529,15 @@ async function injectInstrument(theURL) {
 
     const originalEncodedAbc = extractEncodedAbc(theURL);
 
+    if (!originalEncodedAbc) {
+
+        console.warn(`NS Session App:\n\nFailed to read encoded ABC link from Session DB. Invalid or corrupted data:\n\n${theURL}`);
+        
+        displayNotification("Error reading ABC from Session DB", "error");
+
+        return;
+    }
+
     const encodedAbcContent = originalEncodedAbc.replace(/(?:lzw|def)=/, '');
 
     let abcContent = originalEncodedAbc.match(/lzw=/)?
@@ -620,6 +629,15 @@ async function injectInstrument(theURL) {
 async function muteChordsPlayback(theURL) {
 
     const originalEncodedAbc = extractEncodedAbc(theURL);
+
+    if (!originalEncodedAbc) {
+
+        console.warn(`NS Session App:\n\nFailed to read encoded ABC link from Session DB. Invalid or corrupted data:\n\n${theURL}`);
+        
+        displayNotification("Error reading ABC from Session DB", "error");
+
+        return;
+    }
 
     const encodedAbcContent = originalEncodedAbc.replace(/(?:lzw|def)=/, '');
 
@@ -855,10 +873,11 @@ export function setFilterByQuery(filterParam) {
 
 function extractEncodedAbc(url) {
 
-    // Find the part of URL starting with lzw= / def= followed by any characters until the next &
-    const match = url.match(/(?:lzw|def)=(?:[^&]*)/);
+    // Find the part of URL starting with lzw= / def=
+    // Key must be followed by any characters excluding & / #
+    const match = url.match(/(?:lzw|def)=[^&#]+/);
 
-    // If a match is found, return the part after lzw= / def=
+    // If a match is found, return the key=value string
     return match ? match[0] : null;
 }
 

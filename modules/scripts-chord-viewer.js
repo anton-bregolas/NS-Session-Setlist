@@ -102,7 +102,7 @@ export async function openChordViewer(setChords, tuneChords) {
 
       const abcUrl = tuneSelector.value || getLastTunebookUrl();
 
-      const encodedAbc = abcUrl? abcUrl.match(/(?:lzw|def)=(?:[^&]*)/) : null;
+      const encodedAbc = abcUrl? abcUrl.match(/(?:lzw|def)=[^&#]+/) : null;
 
       if (!encodedAbc) {
   
@@ -152,7 +152,7 @@ export async function openChordViewer(setChords, tuneChords) {
 
       const abcUrl = tuneSelector.value || getLastTunebookUrl();
 
-      const encodedAbc = abcUrl? abcUrl.match(/(?:lzw|def)=(?:[^&]*)/) : null;
+      const encodedAbc = abcUrl? abcUrl.match(/(?:lzw|def)=[^&#]+/) : null;
 
       if (!encodedAbc) {
 

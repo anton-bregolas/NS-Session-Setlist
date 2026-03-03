@@ -9,8 +9,8 @@ import { apStyleTitleCase } from './scripts-3p/ap-style-title-case/ap-style-titl
 import { LZString } from './scripts-3p/lz-string/lz-string.min.js';
 import { pThrottle } from './scripts-3p/p-throttle/p-throttle.js';
 import { makeAbcChordBook } from './scripts-chord-viewer.js';
-import { deflateCompress, deflateDecompress, isLocalStorageOk } from './scripts-abc-utils.js';
-import { fetchData, initSettingsFromObject, initAppCheckBoxes, displayWarningEffect, displayNotification, goatCountEvent } from './scripts-nss-app.js';
+import { addTextElem, addLabeledInputElem, ariaHideMe, ariaShowMe, deflateCompress, deflateDecompress, isIosDevice, isLocalStorageOk, sanitizeQueryParamForAbcTools } from './scripts-abc-utils.js';
+import { appCheckBoxHandler, fetchData, initSettingsFromObject, initAppCheckBoxes, copyTextToClipboard, displayWarningEffect, displayNotification, goatCountEvent } from './scripts-nss-app.js';
 
 ////////////////////////////////////////////
 // ABC ENCODER: GLOBAL SETTINGS
@@ -28,8 +28,8 @@ export const abcEncoderDefaults = {
 
     abcEncodeSortsTuneBook: "0",
     abcEncodeExportsTuneList: "0",
+    abcEncodeLinksToAbcToolsLite: "1",
     abcEncodeOutputsAbcToolsString: "0",
-    abcEncodeTuneListLinksToLite: "1",
     abcEncodeUsesLzwCompression: "0",
     abcSortEnforcesCustomAbcFields: "1",
     abcSortExportsTunesFromSets: "1",
@@ -175,7 +175,7 @@ const makeProperCaseExceptions = [
 // Process and output files passed to ABC Encoder depending on task type
 // Pass the resulting abc/text or JSON output to downloadAbcEncoderFile
 
-async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
+async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType, exportType) {
 
     // Verify that localStorage is available
     const customSettingsOn = isLocalStorageOk();
@@ -188,7 +188,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
     if (taskType === "abc-encode") {
 
-        // Encode each Set or Tune from input ABC with lz-string, extract metadata, make abc-encoded JSON
+        // Encode each Set or Tune from input ABC with Deflate / lz-string, extract metadata, make abc-encoded JSON
 
         const abcEncodedOutput = await getEncodedAbc(rawAbcContent, fileName);
 
@@ -233,7 +233,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
         }
     }
 
-    // Decode tunes contained in input JSON file, decompress using lz-string, return generated ABC file
+    // Decode tunes contained in input JSON file, decompress using Deflate / lz-string, return generated ABC file
 
     if (taskType === "abc-decode") { 
 
@@ -242,7 +242,7 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
     // Sort ABC input data: Apply NS Session format style to each Set or Tune, sort by Tune Title, return sorted ABC
 
-    if (taskType === "abc-sort") {
+    if (taskType.startsWith("abc-sort")) {
 
         let abcSortedOutput = [];
 
@@ -250,11 +250,11 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 
             let preProcessedAbc = await preProcessAbcMetadata(rawAbcContent);
 
-            abcSortedOutput = getSortedAbc(preProcessedAbc);
+            abcSortedOutput = getSortedAbc(preProcessedAbc, taskType);
 
         } else {
 
-            abcSortedOutput = getSortedAbc(rawAbcContent);
+            abcSortedOutput = getSortedAbc(rawAbcContent, taskType);
         }
 
         if (!abcSortedOutput || !abcSortedOutput[0]) return;
@@ -270,6 +270,15 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
                 
                 abcEncoderTunesOutput = applySessionSurveyResults(abcEncoderTunesOutput);
             }
+        }
+
+        // Handle Export Shared Link separately
+
+        if (taskType === "abc-sort-export" || (taskType === "abc-sort-copy")) {
+
+            handleAbcSharedLinkExport(abcEncoderOutput, abcEncoderTunesOutput, exportType);
+
+            return;
         }
 
         // Optional: Save additional ABC file containing all individual Setlist Tunes
@@ -318,12 +327,20 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType) {
 }
 
 // Parse ABC Encoder input depending on task type
+// Download task output if parsing was successful
   
 export async function parseAbcFromFile(taskType, triggerBtn) {
 
+    const isIOS = isIosDevice();
+
     const fileInput = document.createElement('input');
+
     fileInput.type = 'file';
-    fileInput.accept = '.abc, .txt, .json';
+
+    fileInput.accept =
+        isIOS? '*/*' :
+            taskType === "abc-decode"? '.json, .txt, .html' : 
+                '.abc, .txt';
 
     try {
 
@@ -333,23 +350,32 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
 
             const rawAbcFile = this.files[0];
 
+            if (isIOS && !validateFileExt(rawAbcFile.name, taskType)) {
+
+                console.warn(`ABC Encoder:\n\nInvalid file extension in "${rawAbcFile.name}"!\nTask type: ${taskType}`);
+
+                displayNotification(`Invalid file extension. Sort and Encode accept ABC and TXT, Decode accepts JSON, TXT and HTML`, "warning");
+
+                return;
+            }
+
             try {
 
                 let rawAbcContent = await readFileContent(rawAbcFile);
 
                 console.log("ABC Encoder:\n\nABC file contents read");
 
-                if (taskType === "abc-decode" && rawAbcContent.startsWith("const tunes=")) {
+                if (taskType === "abc-decode") {
 
-                    rawAbcContent = rawAbcContent.slice(12, -1);
+                    rawAbcContent = preProcessDecodeInput(rawAbcContent);
                 }
 
                 if (!validateAbcFile(rawAbcContent, taskType)) {
 
                     console.warn(`ABC Encoder:\n\nInvalid data type or format! Task type: ${taskType}`);
                     const breadCrumbsMsg =
-                        taskType === "abc-encode" || taskType === "abc-sort"? '. ABC file must start with X:' :
-                        taskType === "abc-decode"? '. Does not match Session DB or Export Website (const tunes=)' :
+                        taskType === "abc-encode" || taskType.startsWith("abc-sort")? '. ABC file must start with X:' :
+                        taskType === "abc-decode"? '. Does not match Session DB, Export Website or encoded ABC link' :
                         '';
 
                     displayNotification(`Invalid data type or format${breadCrumbsMsg}`, "warning");
@@ -384,6 +410,71 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
         displayWarningEffect(triggerBtn);
 
         goatCountEvent("!error-encoder-input-parse", "abc-encoder__parseAbcFromFile");        
+    }
+}
+
+// Parse ABC Shared Link contents passed to Encoder
+// Download task output if parsing was successful
+
+export async function parseAbcFromSharedLink(abcQuery, taskType, triggerBtn, exportType) {
+
+    try {
+
+        let sharedLinkContent = '';
+
+        // Preprocess Shared Link query depending on task type
+
+        if (taskType.startsWith("abc-sort") ||
+            taskType === "abc-encode") {
+
+            const encodedAbcMatch = abcQuery.match(/(?:lzw|def)=[^&#]+/);
+
+            if (!encodedAbcMatch) {
+
+                displayNotification(`No ABC data found in Shared Link`, "warning");
+                displayWarningEffect(triggerBtn);
+                return;
+            }
+
+            const encodedAbcString = encodedAbcMatch[0];
+
+            sharedLinkContent = abcQuery.match(/lzw=/)?
+                LZString.decompressFromEncodedURIComponent(encodedAbcString.split('lzw=')[1]) :
+                await deflateDecompress(encodedAbcString.split('def=')[1]);
+
+        } else {
+
+            sharedLinkContent = preProcessDecodeInput(abcQuery);
+        }
+
+        console.log("ABC Encoder:\n\nShared Link contents read");
+
+        if (!validateAbcFile(sharedLinkContent, taskType)) {
+
+            console.warn(`ABC Encoder:\n\nInvalid Shared Link contents! Task type: ${taskType}`);
+            const breadCrumbsMsg =
+                taskType === "abc-encode" || taskType.startsWith("abc-sort")? '. ABC file must start with X:' :
+                taskType === "abc-decode"? '. Does not match Session DB, Export Website or encoded ABC link' :
+                '';
+
+            displayNotification(`Invalid Shared Link data${breadCrumbsMsg}`, "warning");
+            displayWarningEffect(triggerBtn);
+
+            return;
+        }
+
+        // Process and save ABC Encoder input
+        saveAbcEncoderOutput(sharedLinkContent, "abc-from-shared-link.txt", taskType, exportType);
+
+    } catch (error) {
+
+        console.error("ABC Encoder:\n\nError reading ABC from Shared Link query:\n\n", error);
+
+        displayNotification("Error reading Shared Link contents", "error");
+        
+        displayWarningEffect(triggerBtn);
+
+        goatCountEvent("!error-encoder-sharedlink-read", "abc-encoder__parseAbcFromSharedLink");
     }
 }
 
@@ -567,7 +658,8 @@ export function downloadAbcEncoderFile(fileContent, fileName, taskType) {
 
 function validateAbcFile(abcContent, taskType) {
 
-    if ((taskType === "abc-encode" || taskType === "abc-sort") && abcContent.startsWith("X:")) {
+    if ((taskType === "abc-encode" || taskType.startsWith("abc-sort"))
+        && abcContent.startsWith("X:")) {
 
         return true;
     }
@@ -598,6 +690,22 @@ function validateAbcFile(abcContent, taskType) {
 
     return false;
 }
+
+// Check if the file's extension matches the task type (fallback logic for devices ignoring accept)
+
+function validateFileExt(fileName, taskType) {
+
+    const fileExt = fileName.slice((fileName.lastIndexOf('.') - 1 >>> 0) + 2);
+
+    if (taskType === "abc-sort" && /(?:abc|txt)/.test(fileExt)) return true;
+
+    if (taskType === "abc-encode" && /(?:abc|txt)/.test(fileExt)) return true;
+
+    if (taskType === "abc-decode" && /(?:json|txt|html)/.test(fileExt)) return true;
+
+    return false;
+}
+
 
 ////////////////////////////////////////////
 // ABC ENCODER: FILTER INPUT FUNCTIONS
@@ -873,7 +981,7 @@ async function fetchTsoMetadata(urlArr, urlType) {
 // [Sorted Chordbook Extracted from Source ABC],*
 // [Sorted Chordbook Extracted from Tunes ABC]*
 
-export function getSortedAbc(abcContent) { 
+export function getSortedAbc(abcContent, taskType) { 
 
     // Verify that localStorage is available
     const customSettingsOn = isLocalStorageOk();
@@ -894,7 +1002,8 @@ export function getSortedAbc(abcContent) {
 
         console.log("ABC Encoder:\n\nABC file contents sorted!");
 
-        if (customSettingsOn && +localStorage.abcSortExportsChordsFromTunes) {
+        if (taskType === "abc-sort" && customSettingsOn &&
+            +localStorage.abcSortExportsChordsFromTunes) {
 
             console.log(`ABC Encoder:\n\nExtracting Chords from ABC...`);
 
@@ -907,7 +1016,8 @@ export function getSortedAbc(abcContent) {
 
             sortedAbcTunes = sortedAbcContentArr[1].join('\n\n');
 
-            if (customSettingsOn && +localStorage.abcSortExportsChordsFromTunes) {
+            if (taskType === "abc-sort" && customSettingsOn &&
+                +localStorage.abcSortExportsChordsFromTunes) {
 
                 console.log(`ABC Encoder:\n\nExtracting Chords from ABC Tunes...`);
 
@@ -3524,8 +3634,8 @@ export async function getEncodedAbc(abcContent, fileName) {
     }
 }
 
-// Encode ABC contents into ABC Tools-readable URL using lz-string, extract
-// Tune Name, Tune Type and Set Leaders, return data in an array of objects
+// Encode ABC contents into ABC Tools-readable URL using Deflate / lz-string
+// Extract Tune Name, Tune Type and Set Leaders, return data in a JSON array
 // Additionally extract Subtitles for Tune / Set if secondary titles found
 
 export async function encodeTunesForAbcTools(abcContent) {
@@ -3632,15 +3742,20 @@ export async function encodeTunesForAbcTools(abcContent) {
             
             } else {
 
-                encodedAbcString = await deflateCompress(preparedAbc, 'deflate');
+                encodedAbcString = await deflateCompress(preparedAbc);
             }
 
-            const encodedAbcTitle = isForAbcToolsWebsite? encodedAbcArr[i].Name.replaceAll(' ', '_') : encodedAbcArr[i].name.replaceAll(' ', '_');
+            const encodedAbcTitle =
+                isForAbcToolsWebsite?
+                    encodedAbcArr[i].Name :
+                    encodedAbcArr[i].name;
 
-            const compPrefix = isEncoderUsingLzw? `lzw=` : `def=`;
+            const sanitizedAbcTitle = sanitizeQueryParamForAbcTools(encodedAbcTitle);
+            
+            const queryKey = isEncoderUsingLzw? `lzw=` : `def=`;
 
             const abcToolsUrl = 
-                `${compPrefix}${encodedAbcString}&format=noten&ssp=10&name=${encodedAbcTitle}`;
+                `${queryKey}${encodedAbcString}&format=noten&ssp=10&name=${sanitizedAbcTitle}`;
 
             if (isForAbcToolsWebsite) {
                 
@@ -3672,7 +3787,7 @@ export async function encodeTunesForAbcTools(abcContent) {
 // ABC ENCODER: DECODE ABC FUNCTIONS
 ///////////////////////////////////////////
 
-// Decode ABC contents encoded via lz-string and return a string of ABCs
+// Decode ABC contents encoded via Deflate or lz-string and return a string of ABCs
 
 async function getDecodedAbc(abcContent) {
 
@@ -3689,16 +3804,29 @@ async function getDecodedAbc(abcContent) {
 
         for (const abcObject of encodedAbcJson) {
 
-            let encodedAbcString = '';
+            let encodedAbcMatch = null;
 
             if (Object.hasOwn(abcObject, "url")) {
 
-                encodedAbcString = abcObject.url?.match(/(?:lzw|def)=(?:[^&]*)/)[0];
+                encodedAbcMatch = abcObject.url?.match(/(?:lzw|def)=[^&#]+/);
 
             } else if (Object.hasOwn(abcObject, "URL")) {
 
-                encodedAbcString = abcObject.URL?.match(/(?:lzw|def)=(?:[^&]*)/)[0];
+                encodedAbcMatch = abcObject.URL?.match(/(?:lzw|def)=[^&#]+/);
             }
+
+            if (!encodedAbcMatch) {
+
+                console.warn("ABC Encoder:\n\nNo valid ABC data found after decoding");
+                
+                addEncoderWarningMsg = "No valid ABC data found";
+
+                goatCountEvent("!error-decode-abc-read", "abc-encoder__getDecodedAbc");
+                
+                return '';  
+            }
+
+            const encodedAbcString = encodedAbcMatch[0];
 
             if (encodedAbcString) {
 
@@ -3732,7 +3860,7 @@ async function getDecodedAbc(abcContent) {
             
             addEncoderWarningMsg = "No valid ABC data found";
 
-            goatCountEvent("!error-decode-abc-read", "abc-encoder__getDecodedAbc");
+            goatCountEvent("!error-decode-abc-validate", "abc-encoder__getDecodedAbc");
             
             return '';
         }
@@ -3747,6 +3875,52 @@ async function getDecodedAbc(abcContent) {
         
         return '';
     }
+}
+
+// Check if Decode ABC input includes tunes JSON or list of encoded links
+// Return Decode-compatible data after processing or unchanged original string
+
+function preProcessDecodeInput(rawInputData) {
+
+    if (rawInputData.startsWith("const tunes=")) {
+
+        return rawAbcContent.slice(12, -1);
+    }
+
+    if (rawInputData.startsWith("<!DOCTYPE html>")) {
+
+        const tunesJsonMatch = rawInputData.match(/const tunes=\[(.*)\];/);
+
+        return tunesJsonMatch? `[${tunesJsonMatch[1]}]` : rawInputData;
+    }
+
+    if (!rawInputData.match(/^\[\s*{/) &&
+        rawInputData.match(/\?(?:def|lzw)=/)) {
+
+        const encodedAbcMatch =
+            rawInputData.match(/\?(?:def|lzw)=.*?(?=(?:[,;]*\s)|[,;]*http|$)/gm);
+
+        const tunesJson = [];
+
+        encodedAbcMatch.forEach((str, i) => {
+
+            const abcName =
+                str.match(/&name=[^&#]+/)?
+                    str.match(/&name=([^&#]*)/)[1].replaceAll('_', ' ') :
+                    i + 1
+
+            tunesJson.push(
+                {
+                    "Name": abcName,
+                    "URL": str
+                }
+            );
+        });
+
+        return JSON.stringify(tunesJson);
+    }
+
+    return rawInputData;
 }
 
 ////////////////////////////////////////////
@@ -3838,7 +4012,7 @@ function exportPlainTuneList(abcContent, isFromAbcToolsWebsite) {
 
 function getAbcLinkToPreferredEditor(encodedAbc) {
 
-    if (isLocalStorageOk() && +localStorage.abcEncodeTuneListLinksToLite === 1) {
+    if (isLocalStorageOk() && +localStorage.abcEncodeLinksToAbcToolsLite === 1) {
 
         return `https://abc.tunebook.app/abctools.html?${encodedAbc}`;
     }
@@ -3847,7 +4021,7 @@ function getAbcLinkToPreferredEditor(encodedAbc) {
 }
 
 ////////////////////////////////////////////
-// ABC ENCODER: IMPORT FILE FUNCTIONS
+// ABC ENCODER: HANDLE SETTINGS IMPORT FILE
 ///////////////////////////////////////////
 
 // Process Settings JSON and restore user settings
@@ -3992,6 +4166,666 @@ function applySessionSurveyResults(abcContent) {
 }
 
 ////////////////////////////////////////////
+// ABC ENCODER: HANDLE SHARED LINK IMPORT
+///////////////////////////////////////////
+
+// Handle URL queries passed to Encoder
+
+export function handleAbcEncoderQuery() {
+
+    if (window.location.pathname !== "/abc-encoder.html") return
+
+    const abcQuery = window.location.search;
+
+    if (!abcQuery) return;
+
+    if (!/^\?(?:lzw|def)=[^&#]+/.test(abcQuery)) {
+        
+        console.warn(`NS Session App:\n\nInvalid query passed to Encoder: "${abcQuery}"`);
+        
+        displayNotification("Invalid query passed: Must start with ?def= or ?lzw= and contain non-empty value", "warning");
+        
+        return;
+    }
+
+    document.body.dataset.sharedLink = "loaded";
+
+    ariaShowMe(document.querySelector('[data-load="abc-shared-link-menu"]'));
+
+    openSharedLinkMenu(abcQuery);
+}
+
+// Open popover menu with ABC query handling options
+
+export function openSharedLinkMenu(abcQuery) {
+
+    const sharedLinkPopover =
+        document.getElementById('nss-support-popover');
+
+    const sharedLinkTitle =
+        sharedLinkPopover.querySelector('.nss-popover-title');
+
+    const sharedLinkXBtn =
+        sharedLinkPopover.querySelector('.nss-btn-x');
+
+    const containerId = "nss-support-popover-text";
+
+    const sharedLinkContainer =
+        document.getElementById(containerId);
+
+    const sharedLinkFooter =
+        sharedLinkPopover.querySelector('footer');
+
+    const sharedLinkFooterLink =
+        sharedLinkFooter.querySelector('footer a');
+
+    const sharedLinkFooterInputs =
+        sharedLinkFooter.querySelector('[data-inputs="select-abc-editor"]');
+
+    sharedLinkTitle.textContent = `Shared\xa0Link`;
+
+    sharedLinkXBtn.title = 'Close Shared Link Options Menu';
+
+    sharedLinkXBtn.setAttribute("aria-title", "Close Shared Link Options Menu");
+
+    sharedLinkContainer.textContent = '';
+
+    addTextElem(
+        containerId,
+        "h3",
+        "Select ABC Shared Link action"
+    );
+
+    addTextElem(
+        containerId,
+        "button",
+        "Copy shared link to clipboard",
+        ["nss-btn", "nss-option-btn", "nss-copytext-btn"],
+        {
+            "data-load": "copy-text",
+            "data-copy-text": " ",
+            "data-shared-link-action" : "",
+            "title": "Copy full Shared Link URL to clipboard"
+        },
+        {
+            "wrapper": "span",
+            "classes": ["nss-copytext-content"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "button",
+        "Change Encoder Settings",
+        ["nss-btn", "nss-option-btn", "nss-copytext-btn"],
+        { 
+            "data-load": "encoder-options",
+            "title": "Close this menu and open ABC Encoder Settings"
+        },
+        {
+            "wrapper": "span",
+            "classes": ["nss-copytext-content"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "h3",
+        "Sort ABC & Open in ABC Tools",
+        null,
+        null,
+        {
+            "wrapper": "span",
+            "classes": ["nss-gradient-text"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "button",
+        "Sort ABC & Open Link",
+        ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+        {
+            "data-load": "shared-link-abc-sort-export",
+            "data-shared-link-action" : "",
+            "title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools",
+            "aria-title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools"
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "h3",
+        "Sort ABC & Copy Shared Link",
+        null,
+        null,
+        {
+            "wrapper": "span",
+            "classes": ["nss-gradient-text"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "button",
+        "Sort ABC & Copy Link",
+        ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+        {
+            "data-load": "shared-link-abc-sort-copy",
+            "data-shared-link-action" : "",
+            "title": "Sort ABC and copy updated Shared Link to clipboard",
+            "aria-title": "Sort ABC and copy updated Shared Link to clipboard"
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "h3",
+        "Sort ABC & Download Files",
+        null,
+        null,
+        {
+            "wrapper": "span",
+            "classes": ["nss-gradient-text"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "button",
+        "Get Sorted ABC",
+        ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+        {
+            "data-load": "shared-link-abc-sort",
+            "data-shared-link-action" : "",
+            "title": "Sort Shared Link ABC and download Encoder output",
+            "aria-title": "Sort Shared Link ABC and download Encoder output"
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "h3",
+        "Encode ABC & Download Files",
+        null,
+        null,
+        {
+            "wrapper": "span",
+            "classes": ["nss-gradient-text"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "button",
+        "Get Encoded ABC",
+        ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+        {
+            "data-load": "shared-link-abc-encode",
+            "data-shared-link-action" : "",
+            "title": "Encode Shared Link ABC and download Encoder output",
+            "aria-title": "Encode Shared Link ABC and download Encoder output"
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "h3",
+        "Decode ABC & Download Files",
+        null,
+        null,
+        {
+            "wrapper": "span",
+            "classes": ["nss-gradient-text"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "button",
+        "Get Decoded ABC",
+        ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+        {
+            "data-load": "shared-link-abc-decode",
+            "data-shared-link-action" : "",
+            "title": "Decode Shared Link ABC and download it as plain text file",
+            "aria-title": "Decode Shared Link ABC and download it as plain text file"
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "a",
+        `Read more about ABC Encoder`,
+        null,
+        {
+            "href": "https://github.com/anton-bregolas/NS-Session-Setlist#abc-encoder-module",
+            "target": "_blank",
+            "title": "Read more about ABC Encoder on the app's GitHub page",
+            "aria-title": "Read more about ABC Encoder on the app's GitHub page"
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "a",
+        `Read more about ABC field order`,
+        null,
+        {
+            "href": "https://github.com/anton-bregolas/NS-Session-Setlist#sorted-abc-minimal-fields",
+            "target": "_blank",
+            "title": "Read more about ABC Encoder's field ordering rules on GitHub",
+            "aria-title": "Read more about ABC Encoder's field ordering rules on GitHub"
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "p",
+        "Check these optional settings for Sort:"
+    );
+
+    addLabeledInputElem(
+        containerId,
+        "shared-link-sort-enforces-fields",
+        "checkbox",
+        ["nss-checkbox-btn"],
+        {
+            "data-option": "abcSortEnforcesCustomAbcFields",
+            "data-shared-link-action": "",
+            "title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook",
+            "aria-title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook",
+            "value": "1"
+        },
+        "Add custom N.S.S.S. ABC fields",
+        {
+            "wrapper": "label",
+            "classes": ["nss-checkbox-label"],
+            "attributes": {
+                "title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook",
+                "aria-title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook"
+            }
+        }
+    );
+
+    addLabeledInputElem(
+        containerId,
+        "shared-link-sort-removes-duplicates-bytitle",
+        "checkbox",
+        ["nss-checkbox-btn"],
+        {
+            "data-option": "abcSortRemovesDuplicatesByTitle",
+            "data-disables": "abcSortRemovesDuplicatesByContent",
+            "data-shared-link-action" : "",
+            "title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option",
+            "aria-title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option",
+            "value": "1"
+        },
+        "Remove duplicates by ABC Title",
+        {
+            "wrapper": "label",
+            "classes": ["nss-checkbox-label"],
+            "attributes": {
+                "title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option",
+                "aria-title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option"
+            }
+        }
+    );
+
+    addLabeledInputElem(
+        containerId,
+        "shared-link-sort-removes-duplicates-bycontent",
+        "checkbox",
+        ["nss-checkbox-btn"],
+        {
+            "data-option": "abcSortRemovesDuplicatesByContent",
+            "data-disables": "abcSortRemovesDuplicatesByTitle",
+            "data-shared-link-action" : "",
+            "title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option",
+            "aria-title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option",
+            "value": "1"
+        },
+        "Remove duplicates by ABC content",
+        {
+            "wrapper": "label",
+            "classes": ["nss-checkbox-label"],
+            "attributes": {
+                "title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option",
+                "aria-title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option"
+            }
+        }
+    );
+
+    addLabeledInputElem(
+        containerId,
+        "shared-link-sort-skips-orderedabc-headers",
+        "checkbox",
+        ["nss-checkbox-btn"],
+        {
+            "data-option": "abcSortSkipsDeepEditForOrderedAbc",
+            "data-linked-options": "abcSortSkipsTitleEditForOrderedAbc",
+            "data-shared-link-action" : "",
+            "title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option",
+            "aria-title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option",
+            "value": "1"
+        },
+        "Skip editing headers in ordered ABC",
+        {
+            "wrapper": "label",
+            "classes": ["nss-checkbox-label"],
+            "attributes": {
+                "title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option",
+                "aria-title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option"
+            }
+        }
+    );
+
+    addLabeledInputElem(
+        containerId,
+        "sort-skips-orderedabc-settitle",
+        "checkbox",
+        ["nss-checkbox-btn"],
+        {
+            "data-option": "abcSortSkipsTitleEditForOrderedAbc",
+            "data-shared-link-action" : "",
+            "title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option",
+            "aria-title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option",
+            "value": "1"
+        },
+        "Skip editing titles in ordered ABC",
+        {
+            "wrapper": "label",
+            "classes": ["nss-checkbox-label"],
+            "attributes": {
+                "title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option",
+                "aria-title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option"
+            }
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "p",
+        "Check these optional settings for Encode:"
+    );
+
+    addLabeledInputElem(
+        containerId,
+        "shared-link-encode-outputs-abctoolsstring",
+        "checkbox",
+        ["nss-checkbox-btn"],
+        {
+            "data-option": "abcEncodeOutputsAbcToolsString",
+            "data-shared-link-action" : "",
+            "value": "1"
+        },
+        "Output is for ABC Tools export website",
+        {
+            "wrapper": "label",
+            "classes": ["nss-checkbox-label"]
+        }
+    );
+
+    addLabeledInputElem(
+        containerId,
+        "shared-link-encode-sorts-tunebook",
+        "checkbox",
+        ["nss-checkbox-btn"],
+        {
+            "data-option": "abcEncodeSortsTuneBook",
+            "data-shared-link-action" : "",
+            "value": "1"
+        },
+        "Pass ABC to Sort before encoding",
+        {
+            "wrapper": "label",
+            "classes": ["nss-checkbox-label"]
+        }
+    );
+
+    addTextElem(
+        containerId,
+        "p",
+        "Select preferred ABC Tools editor below:"
+    );
+
+    const copyQueryLinkBtn =
+        sharedLinkContainer.querySelector('button[data-copy-text]');
+
+    if (copyQueryLinkBtn) copyQueryLinkBtn.dataset.copyText = 
+        getAbcLinkToPreferredEditor(abcQuery.replace(/^\?/, ''));
+
+    if (sharedLinkFooterLink) ariaHideMe(sharedLinkFooterLink);
+
+    ariaShowMe(sharedLinkFooterInputs);
+
+    initSharedLinkInputs();
+
+    goatCountEvent("#abc-shared-link-menu", "encoder-ui");
+
+    sharedLinkPopover.showPopover();
+}
+
+////////////////////////////////////////////
+// ABC ENCODER: HANDLE SHARED LINK EXPORT
+///////////////////////////////////////////
+
+// Handle Shared Link Export of sorted sets / tunes to ABC Tools
+
+async function handleAbcSharedLinkExport(sortedSourceAbc, sortedTunesAbc, exportType) {
+
+    const sharedLinkMenu = document.getElementById('nss-support-popover');
+
+    let tunesExportLink = '';
+    let sourceExportLink = '';
+
+    if (sortedTunesAbc) {
+
+        tunesExportLink = 
+            await getEncodedAbcToolsLink(sortedTunesAbc);
+    }
+
+    sourceExportLink = 
+        await getEncodedAbcToolsLink(sortedSourceAbc);
+
+    updateCopySharedLinkBtn(sourceExportLink);
+
+    const updateMsg =
+        exportType === "link-copy"?
+            `sorted & updated` :
+            `updated & exported`
+
+    if (addEncoderWarningMsg) {
+
+        displayNotification(`Shared Link ABC ${updateMsg}. ${addEncoderWarningMsg}`, "warning");
+        addEncoderWarningMsg = '';
+
+    } else {
+        
+        displayNotification(`Shared Link ABC ${updateMsg}${addEncoderInfoMsg? '. ' + addEncoderInfoMsg : ''}`, "success");
+    }
+
+    addEncoderInfoMsg = '';
+
+    if (exportType === "link-copy") {
+
+        const sharedLinkCopyBtn = 
+            sharedLinkMenu.querySelector('[data-load="copy-text"]');
+
+        sharedLinkCopyBtn.click();
+
+        return;
+    }
+
+    if (exportType === "link-open") {
+
+        if (sortedTunesAbc) window.open(tunesExportLink, '_blank');
+
+        window.open(sourceExportLink, '_blank');
+    }
+}
+
+// Get Shared Link with encoded ABC query to preferred editor
+
+async function getEncodedAbcToolsLink(rawAbc) {
+
+    const isEncoderUsingLzw =
+        isLocalStorageOk() && +localStorage.abcEncodeUsesLzwCompression === 1;
+
+    const abcTitle = rawAbc.match(/^T:\s*(.*)/m)[1];
+
+    const sanitizedAbcTitle = sanitizeQueryParamForAbcTools(abcTitle);
+
+    const encodedAbcString = 
+        isEncoderUsingLzw?
+            LZString.compressToEncodedURIComponent(rawAbc) :
+            await deflateCompress(rawAbc);
+    
+    const queryKey = isEncoderUsingLzw? `lzw=` : `def=`;
+
+    const abcQuery = 
+        `${queryKey}${encodedAbcString}&format=noten&ssp=10&name=${sanitizedAbcTitle}`;
+
+    return getAbcLinkToPreferredEditor(abcQuery);
+}
+
+// Update the Shared Link Menu copy link button data
+
+function updateCopySharedLinkBtn(updatedLink) {
+
+    const sharedLinkMenu = document.getElementById('nss-support-popover');
+
+    const sharedLinkCopyBtn = 
+        sharedLinkMenu.querySelector('[data-load="copy-text"]');
+
+    if (!updatedLink) {
+
+        const abcQuery = window.location.search;
+
+        updatedLink =
+            getAbcLinkToPreferredEditor(abcQuery.replace(/^\?/, ''));
+    }
+    
+    if (sharedLinkCopyBtn && updatedLink) {
+        
+        sharedLinkCopyBtn.querySelector('span').textContent = "Copy updated link to clipboard";
+        sharedLinkCopyBtn.dataset.copyText = updatedLink;
+        sharedLinkCopyBtn.dataset.updated = "true";
+    }
+}
+
+////////////////////////////////////////////
+// ABC ENCODER: HANDLE MENU EVENTS
+///////////////////////////////////////////
+
+// Handle events specific to dynamically-generated Shared Link Menu
+
+function handleAbcSharedLinkMenuEvents(event) {
+
+    const interactableEl = 'button, input[type="checkbox"], input[type="radio"]';
+
+    const triggerEl = event.target.closest(interactableEl);
+
+    if (!triggerEl) return;
+
+    const elTag = triggerEl.tagName.toLowerCase();
+
+    const sharedLinkMenu =
+        document.getElementById('nss-support-popover');
+
+    // Handle button clicks
+
+    if (elTag === 'button' && event.type === 'click') {
+
+        const dataLoad = triggerEl.dataset.load;
+
+        if (!dataLoad) return;
+
+        if (dataLoad === "copy-text") {
+
+            const dataCopyText = triggerEl.dataset.copyText;
+
+            if (!dataCopyText) return;
+
+            const notifyMsg =
+                !!triggerEl.dataset.updated?
+                "Updated Shared Link copied to clipboard" :
+                "Shared Link copied to clipboard";
+
+            copyTextToClipboard(dataCopyText, notifyMsg, true);
+
+            return;
+        }
+
+        if (dataLoad.startsWith("shared-link-abc")) {
+
+            const exportType =
+                dataLoad === "shared-link-abc-sort-export"? "link-open" :
+                dataLoad === "shared-link-abc-sort-copy"? "link-copy" :
+                "file";
+
+            parseAbcFromSharedLink(
+                window.location.search,
+                dataLoad.replace("shared-link-", ''),
+                triggerEl,
+                exportType
+            );
+
+            goatCountEvent(`#${dataLoad}`, "encoder-ui");
+
+            return;
+        }
+
+        return;
+    }
+
+    // Handle checkbox clicks
+
+    if (elTag === 'input' & triggerEl.type === "checkbox" && event.type === 'click') {
+
+        const dataOption = triggerEl.dataset.option;
+
+        if (!dataOption) return;
+
+        appCheckBoxHandler(triggerEl);
+
+        const settingsMenu = document.getElementById('nss-popover-options');
+        
+        const pairedCheckbox =
+            settingsMenu.querySelector(`[data-option="${dataOption}"]`);
+
+        if (!pairedCheckbox) return;
+
+        pairedCheckbox.checked = triggerEl.checked? true : false;
+
+        return;
+    }
+
+    // Handle radio input clicks
+
+    if (elTag === 'input' & triggerEl.type === "radio" && event.type === 'click') {
+
+        // Update corresponding Settings inputs
+
+        if (triggerEl.id === "shared-links-use-abctools") {
+
+            localStorage.abcEncodeLinksToAbcToolsLite = 0;
+            document.getElementById('encode-links-abctools-lite').checked = false;
+            updateCopySharedLinkBtn();
+        }
+
+        if (triggerEl.id === "shared-links-use-toolslite") {
+
+            localStorage.abcEncodeLinksToAbcToolsLite = 1;
+            document.getElementById('encode-links-abctools-lite').checked = true;
+            updateCopySharedLinkBtn();
+        }
+
+        return;
+    }
+}
+
+////////////////////////////////////////////
 // ABC ENCODER: INIT, RESET, APPLY SETTINGS
 ///////////////////////////////////////////
 
@@ -4048,4 +4882,48 @@ function initEncoderSettingsInputs() {
     inputSortAbcTag.addEventListener('input', filterInputSortAbcTag);
 
     restoreEncoderSettingsInputs();
+}
+
+// Initialize inputs in Shared Link settings
+
+function initSharedLinkInputs() {
+
+    const sharedLinkMenu =
+        document.getElementById('nss-support-popover');
+
+    const sharedLinkMenuCheckBoxes =
+        sharedLinkMenu.querySelectorAll('.nss-checkbox-btn');
+
+    const abcToolsRadioBtn =
+        document.getElementById('shared-links-use-abctools');
+
+    const abcToolsLiteRadioBtn =
+        document.getElementById('shared-links-use-toolslite');
+
+    if (!isLocalStorageOk()) {
+
+        abcToolsRadioBtn.disabled = true;
+        abcToolsLiteRadioBtn.disabled = true;
+        sharedLinkMenuCheckBoxes.forEach(checkBox => {
+            checkBox.disabled = true;
+        });
+        return;
+    }
+
+    // Set initial values for inputs from localStorage
+
+    if (+localStorage.abcEncodeLinksToAbcToolsLite === 1) {
+
+        abcToolsLiteRadioBtn.checked = true;
+
+    } else {
+
+        abcToolsRadioBtn.checked = true;
+    }
+
+    initAppCheckBoxes(false, sharedLinkMenu);
+
+    // Listen to Shared Link Menu events
+
+    sharedLinkMenu.addEventListener('click', handleAbcSharedLinkMenuEvents);
 }

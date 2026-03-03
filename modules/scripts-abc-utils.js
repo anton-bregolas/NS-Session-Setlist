@@ -31,7 +31,7 @@ export async function deflateDecompress(abcEncoded) {
 }
 
 ////////////////////////////////////////////
-// ABC UTILS: HELPER BASE64 FUNCTIONS
+// ABC UTILS: CREATE ENCODED URL
 ///////////////////////////////////////////
 
 // Convert ArrayBuffer to URL-safe Base64
@@ -67,6 +67,29 @@ function base64UrlToArrayBuffer(base64url) {
   return bytes.buffer;
 }
 
+// Get Shared Link to ABC Tools with deflate-compressed ABC query
+
+export async function getAbcToolsSharedLink(abc) {
+
+  const abcTitle = abc.match(/^T:\s*(.*)/m)[1];
+
+  const sanitizedAbcTitle = sanitizeQueryParamForAbcTools(abcTitle);
+
+  const encodedAbcString = await deflateCompress(abc);
+
+  const abcQuery = 
+    `def=${encodedAbcString}&format=noten&ssp=10&name=${sanitizedAbcTitle}`;
+
+  if (isLocalStorageOk() &&
+      (+localStorage.prefersAbcToolsLite === 1 ||
+        +localStorage.abcEncodeLinksToAbcToolsLite === 1)) {
+
+    return `https://abc.tunebook.app/abctools.html?${abcQuery}`;
+  }
+
+  return `https://michaeleskin.com/abctools/abctools.html?${abcQuery}`;
+}
+
 ////////////////////////////////////////////
 // ABC UTILS: SANITIZERS & LANG PROCESSORS
 ///////////////////////////////////////////
@@ -92,6 +115,31 @@ export function sanitizeQueryParam(rawString) {
              .replaceAll(/[^a-z0-9_]/g, '');
 
   return sanitizedString;
+}
+
+// Filter a string returning valid ABC Tools &name= parameter text
+
+export function sanitizeQueryParamForAbcTools(rawString) {
+  
+  if (detectCyrillicRusChars(rawString)) {
+
+    rawString = convertCyrillicToTranslit(rawString);
+  }
+
+  const sanitizedStringForAbcTools = 
+
+    rawString.trim()
+             .normalize('NFKD')
+             .replace(/\p{Diacritic}/gu, '')
+             .replaceAll('&', '_and_')
+             .replaceAll(/[`’‘]/g, `'`)
+             .replaceAll(/["“”«»‟„＂]/g, `'`)
+             .replaceAll(/(?<=[a-gA-G])#/g, '_sharp_')
+             .replaceAll(/\s+[/\\]\s+/g, '_-_')
+             .replaceAll(/[\s_/\\]+/g, '_')
+             .replaceAll(/[^a-z0-9_\-']/ig, '');
+
+  return sanitizedStringForAbcTools;
 }
 
 // Check if string contains characters from a specific subset of Cyrillic unicode 
@@ -347,13 +395,59 @@ export function addImageElem(
   containerElem.appendChild(newElem);
 }
 
+// Add Node input element wrapped in a label with label text
+// Create input[type="checkbox"] if type not specified
+
+export function addLabeledInputElem(
+    containerId = '',
+    elemId = '',
+    elemType = '',
+    elemClassArr,
+    elemAttrObj,
+    labelText = '',
+    labelWrapperObj
+  ) {
+
+  if (!containerId || !elemId) return;
+
+  const containerElem = document.getElementById(containerId);
+
+  const inputElem = document.createElement('input');
+
+  inputElem.id = elemId;
+
+  inputElem.type = elemType? elemType : "checkbox";
+
+  if (elemClassArr) addClasses(inputElem, elemClassArr);
+
+  if (elemAttrObj) addAttributes(inputElem, elemAttrObj);
+  
+  if (labelWrapperObj) {
+
+    labelWrapperObj.position = "outer";
+
+    addElemWrapper(
+      labelWrapperObj,
+      containerId,
+      inputElem,
+      null,
+      labelText
+    );
+    return;
+  }
+
+  containerElem.appendChild(inputElem);
+}
+
 // Add multiple classes to a specified element Node
 
 export function addClasses(targetElem, classArr) {
 
   if (classArr && classArr.length) {
 
-    classArr.forEach(elemClass => targetElem.classList.add(elemClass));
+    classArr.forEach(elemClass => {
+      if (elemClass) targetElem.classList.add(elemClass);
+    });
   }
 }
 
@@ -365,7 +459,7 @@ export function addAttributes(targetElem, attrObj) {
 
     for (const attrName in attrObj) {
 
-      targetElem.setAttribute(attrName, attrObj[attrName] || '');
+      if (attrName) targetElem.setAttribute(attrName, attrObj[attrName] || '');
     }
   }
 }
@@ -376,7 +470,8 @@ export function addElemWrapper(
     wrapperObj,
     containerId,
     targetElem,
-    wrappedText
+    wrappedText,
+    wrapperLabelText
   ) {
 
   if (wrapperObj && Object.keys(wrapperObj).length && containerId) {
@@ -407,6 +502,16 @@ export function addElemWrapper(
 
       containerElem.appendChild(targetElem);
 
+    } else if (wrapperObj.position && wrapperObj.position === "outer" && wrapperLabelText) {
+
+      const labelText = document.createTextNode(wrapperLabelText);
+
+      wrapElem.appendChild(targetElem);
+
+      wrapElem.appendChild(labelText);
+
+      containerElem.appendChild(wrapElem);
+
     } else {
 
       if (wrappedText) targetElem.textContent = wrappedText;
@@ -420,10 +525,31 @@ export function addElemWrapper(
 
 // Generate support menu body text (reusable component example)
 
-export function addSupportMenuContent(containerId) {
+export function addSupportMenuContent(popoverId, containerId) {
+
+  const supportMenuPopover =
+    document.getElementById(popoverId);
+
+  const supportMenuTitle =
+    supportMenuPopover.querySelector('.nss-popover-title');
+
+  const supportMenuXBtn =
+    supportMenuPopover.querySelector('.nss-btn-x');
 
   const supportMenuContainer =
     document.getElementById(containerId);
+
+  const supportMenuFooter =
+    supportMenuPopover.querySelector('footer');
+
+  const supportMenuFooterLink =
+    supportMenuPopover.querySelector('footer a');
+
+  supportMenuTitle.textContent = `Support\xa0Developer`;
+
+  supportMenuXBtn.title = 'Close Support & Follow Menu';
+
+  supportMenuXBtn.setAttribute("aria-title", "Close Support & Follow Menu");
 
   supportMenuContainer.textContent = '';
 
@@ -448,8 +574,7 @@ export function addSupportMenuContent(containerId) {
     null,
     {
       "wrapper": "span",
-      "classes": ["nss-gradient-text"],
-      "attributes": { "data-test": "test-value" }
+      "classes": ["nss-gradient-text"]
     }
   );
 
@@ -509,8 +634,7 @@ export function addSupportMenuContent(containerId) {
     null,
     {
       "wrapper": "span",
-      "classes": ["nss-gradient-text"],
-      "attributes": { "data-test": "test-value" }
+      "classes": ["nss-gradient-text"]
     }
   );
 
@@ -552,8 +676,7 @@ export function addSupportMenuContent(containerId) {
     null,
     {
       "wrapper": "span",
-      "classes": ["nss-gradient-text"],
-      "attributes": { "data-test": "test-value" }
+      "classes": ["nss-gradient-text"]
     }
   );
 
@@ -566,25 +689,47 @@ export function addSupportMenuContent(containerId) {
   addTextElem(
     containerId,
     "p",
-    "My registrar allows low-fee payments via Polygon and Base networks (USDC, POL, ETH). Click on the EVM address below to copy it to clipboard:"
+    "Polygon and Base networks (USDC, POL, ETH) are currently preferred for donations. Click on the EVM address below to copy it to clipboard:"
+  );
+
+  addTextElem(
+    containerId,
+    "button",
+    "0x0Eb609017F7ddeF85341B37FDB01F565c8fDE7FF",
+    ["nss-btn", "nss-option-btn", "nss-copytext-btn", "nss-btn-text-breakable"],
+    {
+      "data-load": "copy-text",
+      "title": "Copy Tip Jar EVM address to clipboard",
+      "aria-title": "Copy Tip Jar EVM address to clipboard"
+    },
+    {
+      "wrapper": "span",
+      "classes": ["nss-copytext-content"]
+    }
   );
 
   addTextElem(
     containerId,
     "p",
-    "0x0Eb609017F7ddeF85341B37FDB01F565c8fDE7FF",
-    null,
-    null,
+    "Alternative Tip Jar (Bitcoin only):"
+  );
+
+  addTextElem(
+    containerId,
+    "button",
+    "bc1qskfx69s55qzdsggnv8dkg5vgjl47mprrjxw9x6",
+    ["nss-btn", "nss-option-btn", "nss-copytext-btn", "nss-btn-text-breakable"],
     {
-      "wrapper": "button",
-      "classes": ["nss-btn", "nss-option-btn", "nss-copytext-btn"],
-      "attributes": {
-        "data-load": "copy-text",
-        "title": "Copy Tip Jar EVM address to clipboard",
-        "aria-title": "Copy Tip Jar EVM address to clipboard"
-      }
+      "data-load": "copy-text",
+      "title": "Copy Bitcoin Tip Jar address to clipboard",
+      "aria-title": "Copy Bitcoin Tip Jar address to clipboard"
+    },
+    {
+      "wrapper": "span",
+      "classes": ["nss-copytext-content"]
     }
   );
+
   addTextElem(
     containerId,
     "h3",
@@ -593,8 +738,7 @@ export function addSupportMenuContent(containerId) {
     null,
     {
       "wrapper": "span",
-      "classes": ["nss-gradient-text"],
-      "attributes": { "data-test": "test-value" }
+      "classes": ["nss-gradient-text"]
     }
   );
 
@@ -635,6 +779,16 @@ export function addSupportMenuContent(containerId) {
       "classes": ["nss-popover-image-container", "flex-wrapper"]
     }
   );
+
+  if (!supportMenuFooter) return;
+
+  if (supportMenuFooterLink &&
+      supportMenuFooterLink.dataset.type &&
+      supportMenuFooterLink.dataset.type === "telegram-link") {
+
+    ariaShowMe(supportMenuFooterLink);
+    return;
+  }
 }
 
 // Get the first element in a NodeList that is currently displayed
@@ -655,6 +809,26 @@ export function getFirstCurrentlyDisplayedElem(nodeList) {
   }
 
   return foundEl;
+}
+
+////////////////////////////////////////////
+// ABC UTILS: USER AGENT CHECKS
+///////////////////////////////////////////
+
+// Check if the app is being viewed from an iOS device
+
+export function isIosDevice() {
+
+const userAgentStr =
+  navigator.userAgent.toLowerCase();
+
+const isIOS =
+   /ip(ad|hone|od)/.test(userAgentStr) ||
+    (/macintosh/.test(userAgentStr) &&
+      navigator.maxTouchPoints &&
+      navigator.maxTouchPoints > 2);
+  
+  return isIOS;
 }
 
 ////////////////////////////////////////////
