@@ -31,7 +31,7 @@ export const abcEncoderDefaults = {
     abcEncodeLinksToAbcToolsLite: "1",
     abcEncodeOutputsAbcToolsString: "0",
     abcEncodeUsesLzwCompression: "0",
-    abcSortEnforcesCustomAbcFields: "1",
+    abcSortEnforcesCustomAbcFields: "0",
     abcSortExportsTunesFromSets: "1",
     abcSortExportsChordsFromTunes: "1",
     abcSortFetchesTsoMetaData: "0",

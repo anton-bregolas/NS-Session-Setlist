@@ -230,7 +230,7 @@ Setting Name | Default Setting | Comments |
 | `ENCODE output is for ABC Tools export website` | **OFF** | Output text string compatible with ABC Tools Export Website |
 | `ENCODE plaintext Tunelist links to ABC Tools Lite` | **ON** | Create links to ABC Tools Lite (ON) or ABC Transcription Tools (OFF) when processing Tunelist |
 | `ENCODE uses legacy LZW compression for URLs` | **OFF** | Use LZString instead of Deflate to compress ABC |
-| `SORT enforces custom N.S.S.S. ABC fields` | **ON** | Use custom C: C: S: and C: Set Leaders: ABC fields, order ABC tags à la NS Session Setlist |
+| `SORT enforces custom N.S.S.S. ABC fields` | **OFF** | Use custom C: C: S: and C: Set Leaders: ABC fields, order ABC tags à la NS Session Setlist |
 | `SORT exports Tunes ABC from Sets ABC` | **ON** | Output separate ABC of Tunes converted from Sets |
 | `SORT extracts chords from Tunebook` | **ON** | Output Chordbook JSON for each ABC file |
 | `SORT removes tunes with no K: (strict mode)` | **OFF** | Do not output tunes with missing or empty K: field |
