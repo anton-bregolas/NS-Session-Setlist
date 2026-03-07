@@ -84,6 +84,11 @@ const tuneBookActionsPopup = document.querySelector('[data-popover="tunebook-act
 const tuneBookActionsHeaderBtn = document.querySelector('#nss-tunebook-actions-header');
 const appVersionUpdateBtn = document.querySelector('.nss-app-version-btn');
 
+// Define Status Bars for screen reader announcements
+
+const alertStatusBar = document.querySelector('[data-msg="alert"]');
+const msgStatusBar = document.querySelector('[data-msg="message"]');
+
 // Dialog Menus
 
 const chordViewerDialog = document.getElementById('chord-viewer');
@@ -361,6 +366,9 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
         localStorage.lastLauncherUsed_NSSSAPP = targetSection;
       }
 
+      alertStatusBar.textContent = `Tunebook section has been switched to ${targetSection}`;
+      resetAlertStatusBar(3000);
+
       lastPressedNavBtn = document.querySelector(`#nss-tunebook-${targetSection}-switch`);
 
       lastPressedNavBtn.focus();
@@ -397,6 +405,9 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
 
     if (targetSection === "playalong") {
 
+      alertStatusBar.textContent = `Playalong section has been opened`;
+      resetAlertStatusBar(3000);
+      
       launchPlayAlong();
       return; 
     }
@@ -404,6 +415,9 @@ function switchAppSection(targetSection, currentSection, itemQuery) {
     // Tunebook > Launch Screen switch
 
     showLaunchers();
+
+    alertStatusBar.textContent = `Launch Screen section has been opened`;
+    resetAlertStatusBar(3000);
 
     document.querySelector(`#nss-launch-${lastTuneBookOpened}`).focus();
 
@@ -1008,6 +1022,8 @@ function showHelpGuidePopover() {
 
   goatCountEvent("#help-guide", "app-ui");
 
+  tuneFrame.setAttribute("inert", "");
+
   helpGuidePopover.showPopover();
 }
 
@@ -1580,7 +1596,7 @@ function updateAppSectionTitle(targetSection) {
     "\u{1F3BC} Select a SET";
   
     tuneBookTitle.dataset.type = targetSection === "setlist"? "Set" : "Tune";
-    tuneBookTitle.setAttribute("aria-title", `Novi Sad Session ${tuneBookTitle.dataset.type}list`);
+    tuneBookTitle.setAttribute("aria-label", `Novi Sad Session ${tuneBookTitle.dataset.type}list`);
     return;
   }
 }
@@ -1624,7 +1640,7 @@ function updateAppVersionData(versionJson, newVersionJson) {
 
   appVersionUpdateBtn.setAttribute("title", appVersionTitle);
 
-  appVersionUpdateBtn.setAttribute("aria-title", appVersionTitle);
+  appVersionUpdateBtn.setAttribute("aria-label", appVersionTitle);
 }
 
 // Update Session DB version data in App Options menu
@@ -2271,6 +2287,24 @@ function showTuneBookEls() {
   });
 }
 
+// Reset Alert Status Bar text for screen readers
+
+function resetAlertStatusBar(timeout) {
+
+  setTimeout(() => {
+    alertStatusBar.textContent = "";
+  }, timeout);
+}
+
+// Reset Message Status Bar text for screen readers
+
+function resetMsgStatusBar(timeout) {
+
+  setTimeout(() => {
+    msgStatusBar.textContent = "";
+  }, timeout);
+}
+
 ////////////////////////////////////////////
 // APP SCRIPTS: EVENT HANDLERS
 ///////////////////////////////////////////
@@ -2647,6 +2681,13 @@ async function appButtonHandler(btn) {
 
     if (btn.id === 'nss-show-advanced-options') {
 
+      btn.setAttribute("aria-expanded", "true");
+
+      alertStatusBar.textContent =
+        "Advanced Options button expanded and hidden. New options revealed below";
+
+      resetAlertStatusBar(3000);
+
       btn.style.display = "none";
 
       advancedOptions.forEach(optGroup => {
@@ -2704,7 +2745,15 @@ async function appButtonHandler(btn) {
 
     if (btn.id === 'nss-support-popover-close') {
 
+      const popoverLabel = appSupportPopover.getAttribute("aria-label");
+
       appSupportPopover.hidePopover();
+
+      if (popoverLabel === "Shared Link Menu") {
+
+        document.querySelector('[data-load="abc-shared-link-menu"]').focus();
+        return;
+      } 
 
       document.querySelector('[data-controls="support-menu"]').focus();
 
@@ -4734,10 +4783,13 @@ function helpGuidePopoverHandler(event) {
   }
 
   const elTitleText = 
-    triggerEl.hasAttribute("aria-title")?
-      triggerEl.getAttribute("aria-title") : triggerEl.title || null;
+    triggerEl.hasAttribute("aria-label")?
+      triggerEl.getAttribute("aria-label") : triggerEl.title || null;
 
   const helpGuideDescr = addHelpGuideDescription(triggerEl);
+
+  msgStatusBar.textContent = `Description: ${helpGuideDescr}`;
+  resetMsgStatusBar(3000);
 
   helpGuideTitleBox.textContent =
     elTitleText && helpGuideDescr? `${elTitleText}:` :
@@ -4878,6 +4930,8 @@ function quitHelpGuidePopover() {
     reEnableTuneBookSelectors();
   }
 
+  tuneFrame.removeAttribute("inert");
+
   helpGuidePopover.hidePopover();
 }
 
@@ -4895,6 +4949,39 @@ function appAbcToolsLoadHandler() {
 
     focusOnTuneBookGui();
   }
+}
+
+// Notify speech reader user when popover menu is opened / closed
+
+export function appPopoverAlertHandler() {
+
+  const isPopoverOpen = this.matches(':popover-open');
+
+  const popoverTitle = this.getAttribute("aria-label");
+
+  if (!popoverTitle) return;
+
+  if (popoverTitle === "Notification Popup") {
+
+    const msgText =
+      this.querySelector('[data-popover="notification-message"]').textContent;
+
+      console.warn(msgText)
+
+    if (!msgText) return;
+
+    const notifyMsg = isPopoverOpen? `Popup shown. ${msgText}` : `Popup hidden.`;
+
+    msgStatusBar.textContent = notifyMsg;
+    resetMsgStatusBar(10000);
+
+    return;
+  }
+
+  const popoverMessage = isPopoverOpen? " is open." : " was closed.";
+
+  alertStatusBar.textContent = `${popoverTitle} ${popoverMessage}`;
+  resetAlertStatusBar(3000);
 }
 
 ////////////////////////////////////////////
@@ -5718,6 +5805,18 @@ export function goatCountEvent(eventPath, eventTitle) {
   }
 }
 
+// Initialize the app's popover menus
+
+function initPopovers() {
+
+  const allPopovers = document.querySelectorAll('[popover]');
+
+  allPopovers.forEach(popover => {
+
+    popover.addEventListener('toggle', appPopoverAlertHandler);
+  });
+}
+
 // Initialize popover polyfill warning if the browser doesn't support Popover API
 
 function initPopoverWarning() {
@@ -5793,6 +5892,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWindowEvents();
   initAppSettings();
   initAbcFrameLabel();
+  initPopovers();
   initChordViewer();
   initListViewer();
   appRouterOnLoad();

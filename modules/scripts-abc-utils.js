@@ -545,18 +545,24 @@ export function addSupportMenuContent(popoverId, containerId) {
   const supportMenuFooterLink =
     supportMenuPopover.querySelector('footer a');
 
+  supportMenuPopover.setAttribute("aria-label", "Support and Follow Menu");
+
   supportMenuTitle.textContent = `Support\xa0Developer`;
 
   supportMenuXBtn.title = 'Close Support & Follow Menu';
 
-  supportMenuXBtn.setAttribute("aria-title", "Close Support & Follow Menu");
+  supportMenuXBtn.setAttribute("aria-label", "Close Support & Follow Menu");
 
   supportMenuContainer.textContent = '';
 
   addTextElem(
     containerId,
     "h3",
-    "A word from Anton Zille"
+    "A word from Anton Zille",
+    null,
+    {
+      "aria-label": "A word from Anton Zilleh"
+    }
   );
 
   addTextElem(
@@ -597,7 +603,7 @@ export function addSupportMenuContent(popoverId, containerId) {
         "href": "https://bandcamp.com/bregolas/wishlist",
         "target": "_blank",
         "title": "Open Anton Zille's wishlist on Bandcamp",
-        "aria-title": "Open Anton Zille's wishlist on Bandcamp"
+        "aria-label": "Open Anton Zilleh's wishlist on Bandcamp"
       }
     }
   );
@@ -621,7 +627,7 @@ export function addSupportMenuContent(popoverId, containerId) {
         "href": "https://sliabhmoscow.bandcamp.com/album/from-sliabh-mosc-to-cathair-pheadair",
         "target": "_blank",
         "title": "Get Polca an Rí album on Bandcamp",
-        "aria-title": "Get Polca an Rí album on Bandcamp"
+        "aria-label": "Get Polca an Ree album on Bandcamp"
       }
     }
   );
@@ -663,7 +669,7 @@ export function addSupportMenuContent(popoverId, containerId) {
         "href": "https://github.com/anton-bregolas",
         "target": "_blank",
         "title": "Open Anton Zille's GitHub page",
-        "aria-title": "Open Anton Zille's GitHub page"
+        "aria-label": "Open Anton Zilleh's GitHub page"
       }
     }
   );
@@ -700,7 +706,7 @@ export function addSupportMenuContent(popoverId, containerId) {
     {
       "data-load": "copy-text",
       "title": "Copy Tip Jar EVM address to clipboard",
-      "aria-title": "Copy Tip Jar EVM address to clipboard"
+      "aria-label": "Copy Tip Jar EVM address to clipboard"
     },
     {
       "wrapper": "span",
@@ -722,7 +728,7 @@ export function addSupportMenuContent(popoverId, containerId) {
     {
       "data-load": "copy-text",
       "title": "Copy Bitcoin Tip Jar address to clipboard",
-      "aria-title": "Copy Bitcoin Tip Jar address to clipboard"
+      "aria-label": "Copy Bitcoin Tip Jar address to clipboard"
     },
     {
       "wrapper": "span",
@@ -761,7 +767,7 @@ export function addSupportMenuContent(popoverId, containerId) {
         "href": "https://www.youtube.com/@AntonBregolas",
         "target": "_blank",
         "title": "View Anton Zille's YouTube channel",
-        "aria-title": "View Anton Zille's YouTube channel"
+        "aria-label": "View Anton Zilleh's YouTube channel"
       }
     }
   );
@@ -773,6 +779,7 @@ export function addSupportMenuContent(popoverId, containerId) {
     null,
     { "data-image": "photo-developer",
       "title": "A shot of Anton Zille overlooking Mittenwald",
+      "aria-label": "A shot of Anton Zilleh overlooking Mittenwald"
      },
     {
       "wrapper": "div",

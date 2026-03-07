@@ -4303,11 +4303,13 @@ export function openSharedLinkMenu(abcQuery) {
     const sharedLinkFooterInputs =
         sharedLinkFooter.querySelector('[data-inputs="select-abc-editor"]');
 
+    sharedLinkPopover.setAttribute("aria-label", "Shared Link Menu");
+
     sharedLinkTitle.textContent = `Shared\xa0Link`;
 
     sharedLinkXBtn.title = 'Close Shared Link Options Menu';
 
-    sharedLinkXBtn.setAttribute("aria-title", "Close Shared Link Options Menu");
+    sharedLinkXBtn.setAttribute("aria-label", "Close Shared Link Options Menu");
 
     sharedLinkContainer.textContent = '';
 
@@ -4372,7 +4374,7 @@ export function openSharedLinkMenu(abcQuery) {
                 "data-load": "shared-link-abc-sort-update",
                 "data-shared-link-action" : "",
                 "title": "Sort ABC and update the imported Shared Link",
-                "aria-title": "Sort ABC and update the imported Shared Link"
+                "aria-label": "Sort ABC and update the imported Shared Link"
             }
         );
 
@@ -4397,7 +4399,7 @@ export function openSharedLinkMenu(abcQuery) {
                 "data-load": "shared-link-abc-open",
                 "data-shared-link-action" : "",
                 "title": "Open the imported Shared Link in ABC Tools",
-                "aria-title": "Open the imported Shared Link in ABC Tools"
+                "aria-label": "Open the imported Shared Link in ABC Tools"
             }
         );
 
@@ -4424,7 +4426,7 @@ export function openSharedLinkMenu(abcQuery) {
                 "data-load": "shared-link-abc-sort-export",
                 "data-shared-link-action" : "",
                 "title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools",
-                "aria-title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools"
+                "aria-label": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools"
             }
         );
 
@@ -4449,7 +4451,7 @@ export function openSharedLinkMenu(abcQuery) {
                 "data-load": "shared-link-abc-sort-copy",
                 "data-shared-link-action" : "",
                 "title": "Sort ABC and copy updated Shared Link to clipboard",
-                "aria-title": "Sort ABC and copy updated Shared Link to clipboard"
+                "aria-label": "Sort ABC and copy updated Shared Link to clipboard"
             }
         );
     }
@@ -4475,7 +4477,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-load": "shared-link-abc-sort",
             "data-shared-link-action" : "",
             "title": "Sort Shared Link ABC and download Encoder output",
-            "aria-title": "Sort Shared Link ABC and download Encoder output"
+            "aria-label": "Sort Shared Link ABC and download Encoder output"
         }
     );
 
@@ -4500,7 +4502,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-load": "shared-link-abc-encode",
             "data-shared-link-action" : "",
             "title": "Encode Shared Link ABC and download Encoder output",
-            "aria-title": "Encode Shared Link ABC and download Encoder output"
+            "aria-label": "Encode Shared Link ABC and download Encoder output"
         }
     );
 
@@ -4525,7 +4527,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-load": "shared-link-abc-decode",
             "data-shared-link-action" : "",
             "title": "Decode Shared Link ABC and download it as plain text file",
-            "aria-title": "Decode Shared Link ABC and download it as plain text file"
+            "aria-label": "Decode Shared Link ABC and download it as plain text file"
         }
     );
 
@@ -4538,7 +4540,7 @@ export function openSharedLinkMenu(abcQuery) {
             "href": "https://github.com/anton-bregolas/NS-Session-Setlist#abc-encoder-module",
             "target": "_blank",
             "title": "Read more about ABC Encoder on the app's GitHub page",
-            "aria-title": "Read more about ABC Encoder on the app's GitHub page"
+            "aria-label": "Read more about ABC Encoder on the app's GitHub page"
         }
     );
 
@@ -4551,7 +4553,7 @@ export function openSharedLinkMenu(abcQuery) {
             "href": "https://github.com/anton-bregolas/NS-Session-Setlist#sorted-abc-minimal-fields",
             "target": "_blank",
             "title": "Read more about ABC Encoder's field ordering rules on GitHub",
-            "aria-title": "Read more about ABC Encoder's field ordering rules on GitHub"
+            "aria-label": "Read more about ABC Encoder's field ordering rules on GitHub"
         }
     );
 
@@ -4570,7 +4572,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-option": "abcSortEnforcesCustomAbcFields",
             "data-shared-link-action": "",
             "title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook",
-            "aria-title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook",
+            "aria-label": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook",
             "value": "1"
         },
         "Add custom N.S.S.S. ABC fields",
@@ -4579,7 +4581,7 @@ export function openSharedLinkMenu(abcQuery) {
             "classes": ["nss-checkbox-label"],
             "attributes": {
                 "title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook",
-                "aria-title": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook"
+                "aria-label": "SORT adds custom C: C: S: and C: Set Leaders: ABC fields used in N.S.S.S. Tunebook"
             }
         }
     );
@@ -4594,7 +4596,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-disables": "abcSortRemovesDuplicatesByContent",
             "data-shared-link-action" : "",
             "title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option",
-            "aria-title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option",
+            "aria-label": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option",
             "value": "1"
         },
         "Remove duplicates by ABC Title",
@@ -4603,7 +4605,7 @@ export function openSharedLinkMenu(abcQuery) {
             "classes": ["nss-checkbox-label"],
             "attributes": {
                 "title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option",
-                "aria-title": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option"
+                "aria-label": "SORT removes duplicates by ABC Title. This setting disables Remove duplicates by ABC content option"
             }
         }
     );
@@ -4618,7 +4620,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-disables": "abcSortRemovesDuplicatesByTitle",
             "data-shared-link-action" : "",
             "title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option",
-            "aria-title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option",
+            "aria-label": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option",
             "value": "1"
         },
         "Remove duplicates by ABC content",
@@ -4627,7 +4629,7 @@ export function openSharedLinkMenu(abcQuery) {
             "classes": ["nss-checkbox-label"],
             "attributes": {
                 "title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option",
-                "aria-title": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option"
+                "aria-label": "SORT removes duplicates by ABC content. This setting disables Remove duplicates by Title option"
             }
         }
     );
@@ -4642,7 +4644,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-linked-options": "abcSortSkipsTitleEditForOrderedAbc",
             "data-shared-link-action" : "",
             "title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option",
-            "aria-title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option",
+            "aria-label": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option",
             "value": "1"
         },
         "Skip editing headers in ordered ABC",
@@ -4651,7 +4653,7 @@ export function openSharedLinkMenu(abcQuery) {
             "classes": ["nss-checkbox-label"],
             "attributes": {
                 "title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option",
-                "aria-title": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option"
+                "aria-label": "SORT skips deep-editing headers if ABC ordered. This setting is required for Skip editing ordered ABC titles option"
             }
         }
     );
@@ -4665,7 +4667,7 @@ export function openSharedLinkMenu(abcQuery) {
             "data-option": "abcSortSkipsTitleEditForOrderedAbc",
             "data-shared-link-action" : "",
             "title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option",
-            "aria-title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option",
+            "aria-label": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option",
             "value": "1"
         },
         "Skip editing titles in ordered ABC",
@@ -4674,7 +4676,7 @@ export function openSharedLinkMenu(abcQuery) {
             "classes": ["nss-checkbox-label"],
             "attributes": {
                 "title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option",
-                "aria-title": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option"
+                "aria-label": "SORT skips editing titles if ABC ordered. This setting is linked to Skip deep-editing ordered ABC headers option"
             }
         }
     );

@@ -432,6 +432,23 @@ Import Name | Import Description | Details |
 ## Version History
 
 <details>
+  <summary><b>v1.2.9 Fix ARIA Labels & Screen Reader Alerts</b></summary>
+
+**v1.2.9 Fix ARIA Labels & Screen Reader Alerts**
+
++ Accessibility updates:
+  - A11y: Add aria-label attributes to elements in need of description for screen readers
+  - A11y: Add aria-label attributes to elements with existing (visual) title attributes
+  - A11y: Add alertStatusBar and msgStatusBar elements for screen reader announcements
+  - A11y: Add appPopoverAlertHandler and initPopover handlers
+  - A11y: Add resetAlertStatusBar and resetMsgStatusBar helpers
+  - A11y: Add popover status messages for screen readers
+    * Popover menus will now alert user about open/closed status using alerts (aria-live="assertive")
+    * Notifications will now alert user about popup message and shown/hidden status using messages (aria-live="polite")
+    * Alert messages added to selected UI switchers (on section change, on advanced options expanded)
+</details>
+
+<details>
   <summary><b>v1.2.8 Fix ABC Comments & iOS Bugs</b></summary>
 
 **v1.2.8: Fix Encoder Comments Handling & iOS Bugs**
@@ -3105,7 +3122,7 @@ Import Name | Import Description | Details |
 + Accessibility updates: 
 
   - A11y: Outline styles added for tabbing through the page
-  - A11y: aria-title and title attributes added for main page buttons
+  - A11y: aria-label and title attributes added for main page buttons
   - A11y: Tab order of buttons fixed
 
 + Session DB updates: 
