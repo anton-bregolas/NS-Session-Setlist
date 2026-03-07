@@ -5,7 +5,7 @@ import { initAbcTools, initTunebookOptions, abcTunebookDefaults, tuneSelector, d
          resetViewportWidth, getViewportWidth, getViewportHeight, getLastTunebookUrl, tuneFrame, 
          handleFullScreenButton, loadFromQueryString, getAbcLinkToPreferredEditor } from './scripts-abc-tools.js';
 import { abcEncoderDefaults, downloadAbcEncoderFile, initEncoderSettings, parseAbcFromFile, parseEncoderImportFile, 
-         readFileContent, resetEncoderSettings, handleAbcEncoderQuery, parseAbcFromSharedLink} from './scripts-abc-encoder.js';
+         readFileContent, resetEncoderSettings, handleAbcEncoderQuery } from './scripts-abc-encoder.js';
 import { adjustHtmlFontSize, isMobileBrowser } from './scripts-preload-nssapp.js';
 import { initChordViewer, openChordViewer } from './scripts-chord-viewer.js'
 import { initListViewer, openListViewer } from './scripts-list-viewer.js';
@@ -3142,6 +3142,18 @@ export async function appCheckBoxHandler(checkBox, checkBoxScope) {
         displayNotification("Sort will always fetch and update metadata in ABCs containing links to The Session", "success");
       break;
 
+    case 'abcSortRemovesCommentsFromAbc':
+      checkBox.checked?
+        displayNotification("Sort will now remove all lines starting with % from ABC", "success") :
+        displayNotification("Sort will now skip blanket removal of ABC comments", "success");
+      break;
+
+    case 'abcSortRemovesCommentsBeforeTitle':
+      checkBox.checked?
+        displayNotification("Sort will now remove all lines starting with % between X: and T:", "success") :
+        displayNotification("Sort will now attempt to keep comment lines between X: and T: by moving them", "success");
+      break;
+
     case 'abcSortRemovesLineBreaksInAbc':
       checkBox.checked?
         displayNotification("Sort will now reassemble ABC body line-by-line to ensure it has no empty lines", "success") :
@@ -5138,20 +5150,43 @@ function getShareLink(optionType) {
 }
 
 // Copy input text to clipboard using Clipboard API
+// Fall back to clipboard polyfill and warning popup
 
 export async function copyTextToClipboard(inputText, notifyText, isLongText, isSilentCopy) {
 
-  if (!navigator.clipboard && inputText) {
+  if (inputText && 
+    (checkIfIosBrowser() ||
+    !navigator.clipboard ||
+    !navigator.clipboard.writeText ||
+    !window.isSecureContext)) {
 
     console.log(
-      `NS Session App:\n\nThis browser does not support Clipboard API.` +
-      (isLongText || isSilentCopy? '\n\nDisplaying text in the log:' : ` Displaying text in status bar...`)
+      `NS Session App:\n\nThis browser does not support Clipboard API. Falling back to polyfill...`
     );
 
+    const copiedViaPolyfill = await copyTextToClipboardPolyfill(inputText);
+
+    // Copy the text to clipboard using polyfill
+    if (copiedViaPolyfill) {
+
+      console.log(`NS Session App:\n\nText copied to clipboard using polyfill:\n\n${inputText}`);
+      displayNotification(notifyText? notifyText : "Copied to clipboard", "success");
+      return;
+    }
+
+    // Show the text in a popup or display warning
+    // Log the text if it's too long or must fail silently
     if (isLongText || isSilentCopy) {
-      
+
+      console.log(
+        `NS Session App:\n\nClipboard API polyfill failed` +
+        (isLongText || isSilentCopy? '\n\nDisplaying text in the log:' : ` Displaying text in status bar...`)
+      );
+
       console.log(inputText);
+
       if (isSilentCopy) return;
+
       displayNotification("Could not copy to clipboard", "warning");
       return;
     }
@@ -5183,6 +5218,42 @@ export async function copyTextToClipboard(inputText, notifyText, isLongText, isS
     console.warn(`NS Session App:\n\nError trying to copy text to clipboard`);
     goatCountEvent("!error-copy-text-clipboard", "nss-app__copyTextToClipboard");
   }
+}
+
+// Copy input text to clipboard using a fallback method for legacy browsers
+
+export async function copyTextToClipboardPolyfill(inputText) {
+
+  const hiddenText =
+    document.createElement('textarea');
+
+  hiddenText.value = inputText;
+  hiddenText.setAttribute("readonly", "");
+  hiddenText.style.position = "absolute";
+  hiddenText.style.left = "-9999px";
+  document.body.appendChild(hiddenText);
+
+  const lastFocusedEl = document.activeElement;
+
+  hiddenText.select();
+  hiddenText.setSelectionRange(0, hiddenText.value.length);
+
+  let isCopied = false;
+
+  try {
+
+    isCopied = document.execCommand("copy");
+
+  } catch (err) {
+
+    console.warn(`NS Session App:\n\nFailed to copy text to clipboard using polyfill:\n\n`, err);
+  }
+
+  document.body.removeChild(hiddenText);
+
+  if (lastFocusedEl) lastFocusedEl.focus();
+
+  return isCopied;
 }
 
 ////////////////////////////////////////////

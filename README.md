@@ -432,7 +432,31 @@ Import Name | Import Description | Details |
 ## Version History
 
 <details>
-  <summary><b>v1.2.7 Add Shared Link Handling to ABC Encoder</b></summary>
+  <summary><b>v1.2.8 Fix ABC Comments & iOS Bugs</b></summary>
+
+**v1.2.8: Fix Encoder Comments Handling & iOS Bugs**
+
++ App updates:
+  - Add copyTextToClipboardPolyfill and new fallback logic
+    * Browsers not supporting Clipboard API fall back to polyfill
+    * iOS browsers automatically fall back to polyfill (inconsistent support)
+
++ ABC Encoder module updates:
+  - Add new custom ABC comments (%) handling logic to avoid invalidating ABC over X: % T:
+    * Optional: Strip all comments from ABC
+    * Optional: Strip comments between X: and T:
+    * Default: Move comments between X: and T: after K: or T:
+  - Add new Encoder Settings comment handling options
+    * Add abcSortRemovesCommentsFromAbc (default: OFF)
+    * Add abcSortRemovesCommentsBeforeTitle (default: ON)
+  - Add new iOS device fallback logic to handleAbcSharedLinkExport
+    * iOS: Add Update Shared Link and Open Shared Link buttons to Shared Link Menu
+    * iOS: Handle Shared Link update, copy and open in new window separately due to iOS restrictions
+    * Fall back to alternative export link logic if iOS device or browser detected
+</details>
+
+<details>
+  <summary><b>v1.2.7 Add Shared Link Menu to ABC Encoder</b></summary>
 
 **v1.2.7: Add Shared Link Handling to ABC Encoder**
 
@@ -472,7 +496,6 @@ Import Name | Import Description | Details |
 
 + Tunebook / Chord Viewer / List Viewer updates:
   - Add stricter def=/lzw= query checks (no empty values or hashes allowed)
-
 </details>
 
 <details>

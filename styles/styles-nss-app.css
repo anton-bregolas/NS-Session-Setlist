@@ -1125,6 +1125,7 @@ body[data-mode="mobile"] .nss-footer-tunebook .tunebook-action,
   border-radius: 0.5rem;
 }
 
+.nss-btn-launch,
 .nss-btn-text {
   color: black;
 }

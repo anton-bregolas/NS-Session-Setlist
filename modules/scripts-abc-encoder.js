@@ -57,6 +57,8 @@ export const abcEncoderDefaults = {
     abcSortSkipsTitleEditForOrderedAbc: "1", // Linked with abcSortSkipsTitleEditForOrderedAbc
     abcSortSkipsMergingDuplicateFields: "0",
     abcSortSkipsUpdatingTsoMetaData: "1",
+    abcSortRemovesCommentsFromAbc: "0",
+    abcSortRemovesCommentsBeforeTitle: "1",
     abcSortRemovesLineBreaksInAbc: "1",
     abcSortRemovesTextAfterLineBreaksInAbc: "0"
 };
@@ -274,7 +276,9 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType, exportTyp
 
         // Handle Export Shared Link separately
 
-        if (taskType === "abc-sort-export" || (taskType === "abc-sort-copy")) {
+        if (taskType === "abc-sort-export" ||
+            (taskType === "abc-sort-copy") ||
+            (taskType === "abc-sort-update")) {
 
             handleAbcSharedLinkExport(abcEncoderOutput, abcEncoderTunesOutput, exportType);
 
@@ -1058,7 +1062,9 @@ export function sortFilterAbc(abcContent) {
 
         // Filter out empty strings and items that do not start with T:
 
-        const filteredAbcArr = splitAbcArr.map(abc => abc.trim()).filter(abc => abc.startsWith("T:"));
+        const filteredAbcArr = splitAbcArr.
+            map(abc => preProcessAbcHeaderComments(abc.trim())).
+                filter(abc => abc.startsWith("T:"));
 
         // Deduplicate filtered ABC array if user settings allow it
 
@@ -1267,6 +1273,81 @@ export function sortFilterAbc(abcContent) {
         displayNotification("Failed to sort ABC", "error");
         throw new Error("ABC Encoder:\n\nFailed to sort ABC\n\n", { cause: error });
     }
+}
+
+// Move or remove ABC comment lines depending on user settings
+// Optionally remove all comment lines starting with % from ABC
+// Optionally remove all comment lines between X: and T: headers
+
+function preProcessAbcHeaderComments(abc) {
+
+    // Make sure X: header has been removed
+
+    if (abc.startsWith('X:')) abc = abc.replace(/^X:.*/gm, '').trim();
+
+    // Ignore ABCs that do not contain comment lines
+
+    if (!/^%/m.test(abc)) return abc;
+
+    const abcLinesArr = abc.split('\n');
+
+    // Find first line in ABC that does not start with comments
+
+    const firstNonCommentLineIndex =
+        abcLinesArr.findIndex(line => !line.startsWith('%'));
+
+    // Invalidate ABCs that only contain comments
+
+    if (firstNonCommentLineIndex === -1) return '';
+
+    const abcNoOpeningCommentsArr = abcLinesArr.slice(firstNonCommentLineIndex);
+
+    // Check Encoder settings targeting ABC comments
+
+    const isStorageAvailable = isLocalStorageOk();
+
+    const isRemoveCommentsFromAbcOn =
+        isStorageAvailable && +localStorage.abcSortRemovesCommentsFromAbc === 1;
+
+    const isRemoveCommentsBeforeTitleOn =
+        isStorageAvailable && +localStorage.abcSortRemovesCommentsBeforeTitle === 1;
+
+    // Optional: Remove all comment lines from ABC
+
+    if (isRemoveCommentsFromAbcOn) {
+
+        return abcNoOpeningCommentsArr.filter(line => !line.startsWith('%')).join('\n');
+    }
+
+    // Optional: Remove comment lines between X: and T:
+
+    if (isRemoveCommentsBeforeTitleOn) {
+
+        return abcNoOpeningCommentsArr.join('\n');
+    }
+
+    // Return early if ABC does not start with comments (handle % separately)
+
+    if (!abc.startsWith('%')) return abc;
+
+    // Default: Move pre-Title comments before K: or right after T:
+
+    console.log(`ABC Encoder:\n\nMoving comment lines found before T: header...`);
+
+    const commentsToMoveStr = abcLinesArr.slice(0, firstNonCommentLineIndex).join('\n');
+
+    if (/^K:/m.test(abc)) {
+
+        const abcKIndex = abcNoOpeningCommentsArr.findIndex(line => line.startsWith('K:'));
+
+        abcNoOpeningCommentsArr.splice(abcKIndex, 0, commentsToMoveStr);
+
+        return abcNoOpeningCommentsArr.join('\n');
+    }
+
+    abcNoOpeningCommentsArr.splice(1, 0, commentsToMoveStr);
+
+    return abcNoOpeningCommentsArr.join('\n');
 }
 
 // Optionally look for and remove empty lines inside an ABC
@@ -1773,23 +1854,6 @@ function joinAbcSetTitle(abcTitleGroups, isSetTitleSlashSeparated, isSetTitleFir
                 replaceAll(/[ ]+\[.*\]/g, '').replaceAll(/[ ]+\(.*\)/g, '');
 
     return abcSetTitleOutput;
-}
-
-// Return the item in an ABC Field Text array based on abcIndex of the Tune in the Set
-// If abcIndex is greater than the number of items, return the last (or the first) array item
-
-function getValueByAbcIndex(abcArr, abcIndex) {
-
-    if (abcIndex <= abcArr.length - 1) {
-
-        return abcArr[abcIndex];
-    
-    } else {
-
-        const valueIndex = abcArr.length - 1 < 0? 0 : abcArr.length - 1;
-
-        return abcArr[valueIndex];
-    }
 }
 
 // Process the custom C: C: S: header field, separate Tune Composers from Tune Sources
@@ -3585,6 +3649,23 @@ function getLastAbcHeaderValueOfKind(abcArr, tag) {
     return '';
 }
 
+// Return an item from ABC Field Text array (split header string) based on abcIndex of the Tune in the Set
+// If abcIndex is greater than the number of items, return the last (or the first) array item
+
+function getValueByAbcIndex(abcArr, abcIndex) {
+
+    if (abcIndex <= abcArr.length - 1) {
+
+        return abcArr[abcIndex];
+    
+    } else {
+
+        const valueIndex = abcArr.length - 1 < 0? 0 : abcArr.length - 1;
+
+        return abcArr[valueIndex];
+    }
+}
+
 ////////////////////////////////////////////
 // ABC ENCODER: ENCODE ABC FUNCTIONS
 ///////////////////////////////////////////
@@ -4181,7 +4262,7 @@ export function handleAbcEncoderQuery() {
 
     if (!/^\?(?:lzw|def)=[^&#]+/.test(abcQuery)) {
         
-        console.warn(`NS Session App:\n\nInvalid query passed to Encoder: "${abcQuery}"`);
+        console.warn(`ABC Encoder:\n\nInvalid query passed to Encoder: "${abcQuery}"`);
         
         displayNotification("Invalid query passed: Must start with ?def= or ?lzw= and contain non-empty value", "warning");
         
@@ -4268,55 +4349,110 @@ export function openSharedLinkMenu(abcQuery) {
         }
     );
 
-    addTextElem(
-        containerId,
-        "h3",
-        "Sort ABC & Open in ABC Tools",
-        null,
-        null,
-        {
-            "wrapper": "span",
-            "classes": ["nss-gradient-text"]
-        }
-    );
+    if (isIosDevice()) {
 
-    addTextElem(
-        containerId,
-        "button",
-        "Sort ABC & Open Link",
-        ["nss-btn", "nss-btn-launch", "flex-wrapper"],
-        {
-            "data-load": "shared-link-abc-sort-export",
-            "data-shared-link-action" : "",
-            "title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools",
-            "aria-title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools"
-        }
-    );
+        addTextElem(
+            containerId,
+            "h3",
+            "Sort ABC & Update Shared Link",
+            null,
+            null,
+            {
+                "wrapper": "span",
+                "classes": ["nss-gradient-text"]
+            }
+        );
 
-    addTextElem(
-        containerId,
-        "h3",
-        "Sort ABC & Copy Shared Link",
-        null,
-        null,
-        {
-            "wrapper": "span",
-            "classes": ["nss-gradient-text"]
-        }
-    );
+        addTextElem(
+            containerId,
+            "button",
+            "Sort ABC & Update Link",
+            ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+            {
+                "data-load": "shared-link-abc-sort-update",
+                "data-shared-link-action" : "",
+                "title": "Sort ABC and update the imported Shared Link",
+                "aria-title": "Sort ABC and update the imported Shared Link"
+            }
+        );
 
-    addTextElem(
-        containerId,
-        "button",
-        "Sort ABC & Copy Link",
-        ["nss-btn", "nss-btn-launch", "flex-wrapper"],
-        {
-            "data-load": "shared-link-abc-sort-copy",
-            "data-shared-link-action" : "",
-            "title": "Sort ABC and copy updated Shared Link to clipboard",
-            "aria-title": "Sort ABC and copy updated Shared Link to clipboard"
-        }
-    );
+        addTextElem(
+            containerId,
+            "h3",
+            "Open Shared Link in ABC Tools",
+            null,
+            null,
+            {
+                "wrapper": "span",
+                "classes": ["nss-gradient-text"]
+            }
+        );
+    
+        addTextElem(
+            containerId,
+            "button",
+            "Open Link in ABC Tools",
+            ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+            {
+                "data-load": "shared-link-abc-open",
+                "data-shared-link-action" : "",
+                "title": "Open the imported Shared Link in ABC Tools",
+                "aria-title": "Open the imported Shared Link in ABC Tools"
+            }
+        );
+
+    } else {
+
+        addTextElem(
+            containerId,
+            "h3",
+            "Sort ABC & Open in ABC Tools",
+            null,
+            null,
+            {
+                "wrapper": "span",
+                "classes": ["nss-gradient-text"]
+            }
+        );
+    
+        addTextElem(
+            containerId,
+            "button",
+            "Sort ABC & Open Link",
+            ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+            {
+                "data-load": "shared-link-abc-sort-export",
+                "data-shared-link-action" : "",
+                "title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools",
+                "aria-title": "Sort ABC and open updated Shared Link with sets / tunes in ABC Tools"
+            }
+        );
+
+        addTextElem(
+            containerId,
+            "h3",
+            "Sort ABC & Copy Shared Link",
+            null,
+            null,
+            {
+                "wrapper": "span",
+                "classes": ["nss-gradient-text"]
+            }
+        );
+
+        addTextElem(
+            containerId,
+            "button",
+            "Sort ABC & Copy Link",
+            ["nss-btn", "nss-btn-launch", "flex-wrapper"],
+            {
+                "data-load": "shared-link-abc-sort-copy",
+                "data-shared-link-action" : "",
+                "title": "Sort ABC and copy updated Shared Link to clipboard",
+                "aria-title": "Sort ABC and copy updated Shared Link to clipboard"
+            }
+        );
+    }
 
     addTextElem(
         containerId,
@@ -4614,54 +4750,107 @@ export function openSharedLinkMenu(abcQuery) {
 
 async function handleAbcSharedLinkExport(sortedSourceAbc, sortedTunesAbc, exportType) {
 
-    const sharedLinkMenu = document.getElementById('nss-support-popover');
+    try {
 
-    let tunesExportLink = '';
-    let sourceExportLink = '';
+        if (exportType === "link-open") {
 
-    if (sortedTunesAbc) {
+            openSharedLinkInNewWindow();
+            return; // Open Link logic ends here
+        }
 
-        tunesExportLink = 
-            await getEncodedAbcToolsLink(sortedTunesAbc);
-    }
+        const sharedLinkMenu = document.getElementById('nss-support-popover');
 
-    sourceExportLink = 
-        await getEncodedAbcToolsLink(sortedSourceAbc);
+        let newWindow = null;
 
-    updateCopySharedLinkBtn(sourceExportLink);
+        // Fallback logic for handling iOS window restrictions
+        if (isIosDevice() && exportType === "link-export") {
+            
+            newWindow = window.open('about:blank', '_blank');
+        }
 
-    const updateMsg =
-        exportType === "link-copy"?
-            `sorted & updated` :
-            `updated & exported`
+        let tunesExportLink = '';
+        let sourceExportLink = '';
 
-    if (addEncoderWarningMsg) {
+        if (sortedTunesAbc) {
 
-        displayNotification(`Shared Link ABC ${updateMsg}. ${addEncoderWarningMsg}`, "warning");
-        addEncoderWarningMsg = '';
+            tunesExportLink = 
+                await getEncodedAbcToolsLink(sortedTunesAbc);
+        }
 
-    } else {
-        
-        displayNotification(`Shared Link ABC ${updateMsg}${addEncoderInfoMsg? '. ' + addEncoderInfoMsg : ''}`, "success");
-    }
+        sourceExportLink = 
+            await getEncodedAbcToolsLink(sortedSourceAbc);
 
-    addEncoderInfoMsg = '';
+        if (!sourceExportLink) {
 
-    if (exportType === "link-copy") {
+            throw new Error(`Compressor returned empty or invalid export link (${sourceExportLink})`);
+        }
 
-        const sharedLinkCopyBtn = 
-            sharedLinkMenu.querySelector('[data-load="copy-text"]');
+        // Write the new link to the Copy button
+        updateCopySharedLinkBtn(sourceExportLink);
 
-        sharedLinkCopyBtn.click();
+        const updateMsg =
+            (exportType === "link-copy" || exportType === "link-update")?
+                `sorted & updated` :
+                `updated & exported`
 
-        return;
-    }
+        if (addEncoderWarningMsg) {
 
-    if (exportType === "link-open") {
+            displayNotification(`Shared Link ABC ${updateMsg}. ${addEncoderWarningMsg}`, "warning");
+            addEncoderWarningMsg = '';
 
-        if (sortedTunesAbc) window.open(tunesExportLink, '_blank');
+        } else {
+            
+            displayNotification(`Shared Link ABC ${updateMsg}${addEncoderInfoMsg? '. ' + addEncoderInfoMsg : ''}`, "success");
+        }
 
-        window.open(sourceExportLink, '_blank');
+        addEncoderInfoMsg = '';
+
+        if (exportType === "link-update") return; // Sort & Update logic ends here
+
+        if (exportType === "link-copy") {
+
+            const sharedLinkCopyBtn = 
+                sharedLinkMenu.querySelector('[data-load="copy-text"]');
+
+            sharedLinkCopyBtn.click(); // Sort & Copy logic ends here
+
+            return;
+        }
+
+        if (exportType === "link-export") {
+
+            // Create a new window or update the blank tab (iOS fallback)
+            if (isIosDevice()) {
+
+                newWindow.location.replace(sourceExportLink);
+                
+            } else {
+
+                newWindow = window.open(sourceExportLink, '_blank');
+            }
+
+            // Warn if the browser is blocking the window
+            if (!newWindow || newWindow.closed) {
+
+                displayNotification(`Blocked by browser: Copy & Open link manually`, "warning");
+                return;
+            }
+
+            if (isIosDevice()) return; // iOS fallback logic for Export ends here
+
+            // If applicable, also open a link with extracted tunes
+            if (sortedTunesAbc) { 
+
+                window.open(tunesExportLink, '_blank'); 
+            }
+            // Sort & Export logic ends here
+        }
+
+    } catch (error) {
+
+        console.warn(`ABC Encoder:\n\nShared Link export failed:\n\n${error}`);
+
+        displayNotification("Shared Link export failed or invalid", "error");
     }
 }
 
@@ -4714,6 +4903,29 @@ function updateCopySharedLinkBtn(updatedLink) {
     }
 }
 
+// Open the current version of ABC Shared Link in new window
+// Get shared link data from copy button's data-attribute
+
+function openSharedLinkInNewWindow() {
+
+    const sharedLinkMenu = document.getElementById('nss-support-popover');
+
+    const sharedLinkCopyBtn = 
+        sharedLinkMenu.querySelector('[data-load="copy-text"]');
+    
+    const currentSharedLink =
+        sharedLinkCopyBtn.dataset.copyText;
+
+    const newWindow = window.open(currentSharedLink, '_blank');
+
+    // Warn if the browser is blocking the window
+    if (!newWindow || newWindow.closed) {
+
+        displayNotification(`Blocked by browser: Copy & Open link manually`, "warning");
+        return;
+    }
+}
+
 ////////////////////////////////////////////
 // ABC ENCODER: HANDLE MENU EVENTS
 ///////////////////////////////////////////
@@ -4729,9 +4941,6 @@ function handleAbcSharedLinkMenuEvents(event) {
     if (!triggerEl) return;
 
     const elTag = triggerEl.tagName.toLowerCase();
-
-    const sharedLinkMenu =
-        document.getElementById('nss-support-popover');
 
     // Handle button clicks
 
@@ -4760,9 +4969,19 @@ function handleAbcSharedLinkMenuEvents(event) {
         if (dataLoad.startsWith("shared-link-abc")) {
 
             const exportType =
-                dataLoad === "shared-link-abc-sort-export"? "link-open" :
+                dataLoad === "shared-link-abc-sort-export"? "link-export" :
                 dataLoad === "shared-link-abc-sort-copy"? "link-copy" :
+                dataLoad === "shared-link-abc-sort-update"? "link-update" :
+                dataLoad === "shared-link-abc-open"? "link-open" :
                 "file";
+
+            goatCountEvent(`#${dataLoad}`, "encoder-ui");
+
+            if (exportType === "link-open") {
+
+                handleAbcSharedLinkExport(null, null, "link-open");
+                return;
+            }
 
             parseAbcFromSharedLink(
                 window.location.search,
@@ -4770,8 +4989,6 @@ function handleAbcSharedLinkMenuEvents(event) {
                 triggerEl,
                 exportType
             );
-
-            goatCountEvent(`#${dataLoad}`, "encoder-ui");
 
             return;
         }

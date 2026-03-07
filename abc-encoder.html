@@ -247,6 +247,14 @@
                                 <span class="nss-advanced-option-text">SORT skips updating fetched TSO metadata</span>
                             </label>
                             <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-removes-comments-everywhere" data-option="abcSortRemovesCommentsFromAbc" data-disables="abcSortRemovesCommentsBeforeTitle" class="nss-checkbox-btn" value="1" title="SORT removes all commented lines from ABC. This setting disables Wipe comments before ABC Title option" aria-title="SORT removes all commented lines from ABC. This setting disables Wipe comments before ABC Title option">
+                                <span class="nss-advanced-option-text">SORT wipes all ABC comment lines (%)</span>
+                            </label>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-removes-comments-beforet" data-option="abcSortRemovesCommentsBeforeTitle" data-disables="abcSortRemovesCommentsFromAbc" class="nss-checkbox-btn" value="1" title="SORT removes all commented lines between X: and T: headers. This setting disables Wipe all ABC comments option" aria-title="SORT removes all commented lines between X: and T: headers. This setting disables Wipe all ABC comments option">
+                                <span class="nss-advanced-option-text">SORT wipes comments before ABC Title</span>
+                            </label>
+                            <label class="nss-checkbox-label">
                               <input type="checkbox" id="sort-removes-linebreaks" data-option="abcSortRemovesLineBreaksInAbc" class="nss-checkbox-btn" value="1">
                                 <span class="nss-advanced-option-text">SORT wipes extra line breaks in ABC</span>
                             </label>
