@@ -248,7 +248,9 @@ Features adjustable via Advanced Settings include (`*` signifies default):
 - **Handle ABC prefix & suffix:** `Add TYPE: prefix*` / `Add [Type] suffix`
 - **Handle ABC body formatting:** `Normalize ABC part endings*`
 - **Remove duplicate ABCs:** `By ABC Title*` / `By ABC content`
-- **Remove extra line breaks in ABC:** `Wipe extra line breaks`, `Wipes text after line breaks`
+- **Remove comments from ABC:** `Wipe all comments` / `Wipe* or Move comments between X: and T:`
+- **Remove extra line breaks in ABC:** `Wipe extra line breaks*`, `Wipes text after line breaks`
+- **Remove / Keep all text before X:** `Store & restore all text before X:`
 - **Skip editing ABC headers if:** `Do not edit headers if ABC ordered*`, `Do not edit titles if ABC ordered*`, `Do not update fetched TSO metadata*`
 - **Prevent default Encoder behavior:** `Do not merge duplicate header fields`
 
@@ -308,7 +310,7 @@ transcription author details have been filled in.
 
 ### Sorted ABC Field Order
 
-`SORT` will always try to place ABC fields in a specific order. This behavior enables "safety switch" options such as `SORT skips deep-editing headers if ABC ordered` and `SORT skips editing titles if ABC ordered`. With these options `ON` (default settings), ABC Encoder will not touch the headers of the "ordered" tunes allowing for the smart algorithm to only process the raw, unsorted items newly-added to the ABC collection and leave room for fine-tuning. If ABC header fields match the expected order, only the `X:` headers will potentially be edited (renumbered) after the ABC collection had been "ordered" once.
+`SORT` will always try to place ABC fields in a specific order. This behavior enables "safety switch" options such as `SORT skips deep-editing headers if ABC ordered` and `SORT skips editing titles if ABC ordered`. With these options `ON` (default settings), ABC Encoder will not touch the headers of the "ordered" tunes allowing for the smart algorithm to only process the raw, unsorted items newly-added to the ABC collection and leave room for fine-tuning of the sorted items. If ABC header fields match the expected order, only the `X:` headers will potentially be edited (renumbered) after the ABC collection had been "ordered" once.
 
 Disabling these options will result in `SORT` always processing ABC tunes, adjusting titles and other header data automatically.
 
@@ -365,6 +367,8 @@ Info Field Tag | Description | Mergeable? |
 > Encoder aims to achieve clean ABC display in abcjs-based software by modifying the source ABC code and making output compact and unified. It does not account for alternative custom commands and solutions that may be added to ABC headers.
 >
 > Encoder v.1.0 stacks any abcjs-supported comments found in the header (lines starting with `%` and `"`) before the K: field. Any header lines that invalidate the abcjs output would also invalidate the current ABC Set / Tune in Encoder output.
+>
+> All text found before the first X: header is stripped by default but may optionally be stored and reattached to the output file.
 
 ### Notes for developers
 
@@ -430,6 +434,20 @@ Import Name | Import Description | Details |
 | `makeTunesFromSets`, `sortFilterAbc` | Custom scripts for making ABC Sets | Required for creating ABC Sets and generating Set URLs. Imported from `scripts-abc-encoder.js` by default |
 
 ## Version History
+
+<details>
+  <summary><b>v1.2.10 Add Encoder ABC File Preprocessing</b></summary>
+
+**v1.2.10 Add Encoder ABC File Preprocessing**
+
++ ABC Encoder module updates:
+  - Encoder now strips ABC of all text before the first X: header by default
+  - Add preProcessAbcFile handler for optional storing of text before X:
+  - Add new store intro text before X: Encoder Settings option
+    * Add abcSortStoresRestoresTextBeforeX (default: OFF)
+  - Update saveAbcEncoderOutput, parsers and Encode / Decode logic
+  - Fix preProcessDecodeInput (remove ? from param key early)
+</details>
 
 <details>
   <summary><b>v1.2.9 Fix ARIA Labels & Screen Reader Alerts</b></summary>

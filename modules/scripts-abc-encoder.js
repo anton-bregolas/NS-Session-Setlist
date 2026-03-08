@@ -57,6 +57,7 @@ export const abcEncoderDefaults = {
     abcSortSkipsTitleEditForOrderedAbc: "1", // Linked with abcSortSkipsTitleEditForOrderedAbc
     abcSortSkipsMergingDuplicateFields: "0",
     abcSortSkipsUpdatingTsoMetaData: "1",
+    abcSortStoresRestoresTextBeforeX: "0",
     abcSortRemovesCommentsFromAbc: "0",
     abcSortRemovesCommentsBeforeTitle: "1",
     abcSortRemovesLineBreaksInAbc: "1",
@@ -87,6 +88,10 @@ const matchOrderedMergedSecondaryHeader = /^(?:[IPUV]:.*[\s]*)*(?:R:.*[\s]*)*(?:
 // Use parseSessionSurveyData to fill it with data from a .tsv file
 
 const sessionSurveyData = [];
+
+// Keep track of intro text before first X (if store & restore is ON)
+
+let abcTextBeforeX = '';
 
 // Keep track of additional info messages at various processing steps
 
@@ -184,6 +189,8 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType, exportTyp
 
     let abcEncoderOutput = '';
     let abcEncoderTunesOutput = '';
+    let abcSortOutputBeforeExport = '';
+    let abcSortTunesOutputBeforeExport = '';
 
     // Process input data depending on task type and Encoder settings
     // Generate additional file formats before returning main output
@@ -274,6 +281,20 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType, exportTyp
             }
         }
 
+        // Reattach the optionally stored intro text before first X: to ABC
+
+        if (abcTextBeforeX) {
+
+            abcSortOutputBeforeExport = abcEncoderOutput;
+            
+            abcSortTunesOutputBeforeExport = abcEncoderTunesOutput;
+
+            abcEncoderOutput = abcTextBeforeX + '\n' + abcEncoderOutput;
+
+            abcEncoderTunesOutput = abcEncoderTunesOutput?
+                abcTextBeforeX + '\n' + abcEncoderTunesOutput : '';
+        }
+
         // Handle Export Shared Link separately
 
         if (taskType === "abc-sort-export" ||
@@ -326,6 +347,12 @@ async function saveAbcEncoderOutput(rawAbcContent, fileName, taskType, exportTyp
 
     addEncoderInfoMsg = '';
 
+    // Return an array containing clean ABC and optional ABC Tunes without intro text
+    if (taskType === "abc-sort-for-encode" && abcTextBeforeX) {
+
+        return [abcSortOutputBeforeExport, abcSortTunesOutputBeforeExport];
+    }
+
     // Return an array containing Encoder Output and optional Encoder Tunes Output
     return [abcEncoderOutput, abcEncoderTunesOutput];
 }
@@ -368,6 +395,11 @@ export async function parseAbcFromFile(taskType, triggerBtn) {
                 let rawAbcContent = await readFileContent(rawAbcFile);
 
                 console.log("ABC Encoder:\n\nABC file contents read");
+
+                if (taskType === "abc-sort" || taskType === "abc-encode") {
+
+                    rawAbcContent = preProcessAbcFile(rawAbcContent, taskType);
+                }
 
                 if (taskType === "abc-decode") {
 
@@ -446,6 +478,8 @@ export async function parseAbcFromSharedLink(abcQuery, taskType, triggerBtn, exp
                 LZString.decompressFromEncodedURIComponent(encodedAbcString.split('lzw=')[1]) :
                 await deflateDecompress(encodedAbcString.split('def=')[1]);
 
+            sharedLinkContent = preProcessAbcFile(sharedLinkContent, taskType);
+
         } else {
 
             sharedLinkContent = preProcessDecodeInput(abcQuery);
@@ -467,8 +501,8 @@ export async function parseAbcFromSharedLink(abcQuery, taskType, triggerBtn, exp
             return;
         }
 
-        // Process and save ABC Encoder input
-        saveAbcEncoderOutput(sharedLinkContent, "abc-from-shared-link.txt", taskType, exportType);
+        // Process and save the imported Shared Link ABC
+        saveAbcEncoderOutput(sharedLinkContent, "abc-shared-link.txt", taskType, exportType);
 
     } catch (error) {
 
@@ -611,6 +645,39 @@ export async function readFileContent(file) {
     });
 }
 
+// Remove or store all text found before the first X: header
+
+function preProcessAbcFile(rawAbc, taskType) {
+
+    // Let files that start with X: header through
+    // Let files without X: header fail validation
+
+    if (/^X:/.test(rawAbc) || !/^X:/m.test(rawAbc)) return rawAbc;
+
+    const abcLinesArr = rawAbc.split('\n');
+
+    // Find first line in ABC that starts with X:
+
+    const firstXIndex =
+        abcLinesArr.findIndex(line => line.startsWith('X:'));
+
+    // Strip ABC of all the text before the first X:
+    
+    const noIntroTextAbc = abcLinesArr.slice(firstXIndex).join('\n');
+
+    abcTextBeforeX = '';
+
+    // Optionally store the intro text for later use in SORT output
+
+    if (taskType && (taskType.startsWith("abc-sort") || taskType === "abc-encode") && 
+        isLocalStorageOk() && +localStorage.abcSortStoresRestoresTextBeforeX === 1) {
+
+        abcTextBeforeX = abcLinesArr.slice(0, firstXIndex).join('\n');
+    }
+
+    return noIntroTextAbc;
+}
+
 // Download a file containing ABC Encoder output, assign file name depending on task type
 
 export function downloadAbcEncoderFile(fileContent, fileName, taskType) {
@@ -638,7 +705,10 @@ export function downloadAbcEncoderFile(fileContent, fileName, taskType) {
                         taskType === "abc-decode" && fileName.startsWith("sets") ? `NS-Session-Sets.${fileExt}` :
                         taskType === "abc-decode" && fileName.startsWith("tunes") ? `NS-Session-Tunes.${fileExt}` :
                         taskType === "abc-decode" ? `ABC-DECODED.${fileExt}` :
-                        taskType === "abc-sort" && !fileName.startsWith("NS-Session") && !fileName.startsWith("[ABC-SORTED]") ? `${fileName.slice(0, fileName.lastIndexOf('.'))} [ABC-SORTED].${fileExt}` :
+                        taskType && taskType.startsWith("abc-sort") &&
+                        !fileName.startsWith("NS-Session") &&
+                        !fileName.startsWith("[ABC-SORTED]") ?
+                            `${fileName.slice(0, fileName.lastIndexOf('.'))} [ABC-SORTED].${fileExt}` :
                         fileName;
     
     const abcLink = document.createElement("a");
@@ -660,7 +730,7 @@ export function downloadAbcEncoderFile(fileContent, fileName, taskType) {
 
 // Check if the file contains valid ABC format depending on the task
 
-function validateAbcFile(abcContent, taskType) {
+function validateAbcFile(abcContent, taskType = "abc-sort") {
 
     if ((taskType === "abc-encode" || taskType.startsWith("abc-sort"))
         && abcContent.startsWith("X:")) {
@@ -695,7 +765,7 @@ function validateAbcFile(abcContent, taskType) {
     return false;
 }
 
-// Check if the file's extension matches the task type (fallback logic for devices ignoring accept)
+// Check if the file's extension matches the task type (fallback logic for devices ignoring accept types)
 
 function validateFileExt(fileName, taskType) {
 
@@ -3681,7 +3751,7 @@ export async function getEncodedAbc(abcContent, fileName) {
 
     if (customSettingsOn && +localStorage.abcEncodeSortsTuneBook) {
 
-        sortedAbcContent = await saveAbcEncoderOutput(abcContent, fileName, "abc-sort");
+        sortedAbcContent = await saveAbcEncoderOutput(abcContent, fileName, "abc-sort-for-encode");
 
     } else {
 
@@ -3931,7 +4001,11 @@ async function getDecodedAbc(abcContent) {
 
         console.log("ABC Encoder:\n\nABC file contents decoded!");
 
-        if (decodedAbcOutput.startsWith("X:")) {
+        const abcSansIntroText = preProcessAbcFile(decodedAbcOutput);
+
+        const isValidAbc = validateAbcFile(abcSansIntroText);
+
+        if (isValidAbc) {
 
             return decodedAbcOutput;
             
@@ -3993,7 +4067,7 @@ function preProcessDecodeInput(rawInputData) {
             tunesJson.push(
                 {
                     "Name": abcName,
-                    "URL": str
+                    "URL": str.replace(/^\?/, '')
                 }
             );
         });

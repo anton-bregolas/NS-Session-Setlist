@@ -3191,6 +3191,12 @@ export async function appCheckBoxHandler(checkBox, checkBoxScope) {
         displayNotification("Sort will always fetch and update metadata in ABCs containing links to The Session", "success");
       break;
 
+    case 'abcSortStoresRestoresTextBeforeX':
+      checkBox.checked?
+        displayNotification("Sort will now store all the text before the first X: header and attach it to output ABC", "success") :
+        displayNotification("Sort will now strip ABC files of all the text found before the first X: header", "success");
+      break;
+
     case 'abcSortRemovesCommentsFromAbc':
       checkBox.checked?
         displayNotification("Sort will now remove all lines starting with % from ABC", "success") :
@@ -4965,8 +4971,6 @@ export function appPopoverAlertHandler() {
 
     const msgText =
       this.querySelector('[data-popover="notification-message"]').textContent;
-
-      console.warn(msgText)
 
     if (!msgText) return;
 
