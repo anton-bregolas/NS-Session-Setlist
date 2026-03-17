@@ -47,7 +47,7 @@
   {
     "title": "BARNDANCE: Step It out Joe",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tG\tG\t|\tG\tEm\t|\tAm\tAm\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\tEm\t|\tAm\t(G/B)\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tC\tC\t|\tD\tC (D/A)\t|\tG\t(G/B)\t|\tEm\tD\t|\n|\tC\tEm\t|\tD\tC\t|\tG\tEm (C)\t|\tD\tG\t|\n|\tC\tEm\t|\tC\tG\t|\tEm\tC (G/B)\t|\tAm\tD\t||"
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tEm\t|\tAm\tAm\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\tEm\t|\tAm\t(G/B)\t|1\tC\tD\t|\n|2\tC\tD\t||\n\nPART 2:\n|\tC\tC\t|\tD\tC (D/A)\t|\tG\t(G/B)\t|\tEm\tD\t|\n|1\tC\tEm\t|\tD\tC\t|\tG\tEm (C)\t|\tD\tG\t|\n|2\tC\tEm\t|\tC\tG\t|\tEm\tC (G/B)\t|\tAm\tD\t||"
   },
   {
     "title": "HOP JIG: Cucanandy",
@@ -192,7 +192,7 @@
   {
     "title": "JIG: Cliffs of Moher",
     "meter": "6/8",
-    "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\t(Em)\t/|\n|\tAm\tAm\t|\t(C)\t(C)\t|\tG\tG\t|1\tEm\tG\t|\n|2\tEm\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tG\tG\t|\n|\tG\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\t(Em)\t/|\n|\t(Em)\tF\tF\t|\tF\tF\t|\tG\tG\t|\t(Em)\t/||"
+    "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\t(Em)\t/|\n|\tAm\tAm\t|\t(C)\t(C)\t|\tG\tG\t|1\tEm\tG\t|\n|2\tEm\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tG\tG\t|\n|1\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\t(Em)\t/|\n|2\tF\tF\t|\tF\tF\t|\tG\tG\t|\t(Em)\t/||"
   },
   {
     "title": "JIG: Connaughtman's Rambles",
@@ -597,7 +597,7 @@
   {
     "title": "POLKA: Tom Mhic's No. 2",
     "meter": "2/4",
-    "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tA\t|\tG\tG\t|1\tD\tG\t||\n\nPART 2:\n|\n|2\tD\tD\t||\n\nPART 3:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 4:\n|\tA\tA\t||"
+    "chords": "PART 1:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tG\tG\t|\n|\tA\tA\t|\tA\tA\t|\tG\tG\t|1\tD\tG\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tD\tD\t|\tD\tD\t|\tG\tG\t|\tA\tA\t|\n|\tD\tD\t|\tD\tD\t|\tG\tA\t|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 3:\n|\tA\tA\t||"
   },
   {
     "title": "POLKA: Toormore No. 1",
@@ -667,7 +667,7 @@
   {
     "title": "REEL: Brenda Stubbert's",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tG\tG\t|\n|\tAm\tAm\t|\tAm\tAm\t|\tEm\tEm\t|\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\t(D)\t(D)\t|\tG\tG\t|\tC\tG/B\t|\n|\tG/B\tAm\tAm\t|\t(D)\t(D)\t|\tEm\tEm\t|\tG\tG\t|\n|\tG\tAm\tAm\t|\tD\tD\t|\tG\tG\t|\tEm\tEm\t||"
+    "chords": "PART 1:\n|\tAm\tAm\t|\tAm\tAm\t|\tG\tG\t|\tG\tG\t|\n|\tAm\tAm\t|\tAm\tAm\t|\tEm\tEm\t|\tG\tG\t||\n\nPART 2:\n|\tAm\tAm\t|\t(D)\t(D)\t|\tG\tG\t|\tC\tG/B\t|\n|1\tAm\tAm\t|\t(D)\t(D)\t|\tEm\tEm\t|\tG\tG\t|\n|2\tAm\tAm\t|\tD\tD\t|\tG\tG\t|\tEm\tEm\t||"
   },
   {
     "title": "REEL: Callaghan's",
@@ -922,7 +922,7 @@
   {
     "title": "REEL: Shaskeen",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tG\tG\t|\tG\tD/A\t|\tG/B\tD/A\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\t/|\tD/F#\t/|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tG (Em)\t/|\tD/F#\t/|\tC\tC\t|\tD\tD\t|1\tG (Em)\t/|\n|\tD/F#\t/|\tD\tD\t|\tD D\tD/B D/A\t||\n\nPART 3:\n|\n|2\tG (Em)\tD/F#\t|\tG/B\tD/A\t|\tD\tD\t|\tD\tD\t||"
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tD/A\t|\tG/B\tD/A\t|\tC\tD\t|\n|\tG\tG\t|\t(G/B)\t/|\tD/F#\t/|1\tD\tD\t|\n|2\tD\tD\t||\n\nPART 2:\n|\tG (Em)\t/|\tD/F#\t/|\tC\tC\t|\tD\tD\t|\n|1\tG (Em)\t/|\tD/F#\t/|\tD\tD\t|\tD D\tD/B D/A\t|\n|2\tG (Em)\tD/F#\t|\tG/B\tD/A\t|\tD\tD\t|\tD\tD\t||"
   },
   {
     "title": "REEL: Tommy Peoples' (Gmaj)",
@@ -942,7 +942,7 @@
   {
     "title": "REEL: Trip to Birmingham",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tAm\tD\t|\n|\tG\t(D)\t|\t(G/B)\tC\t|\tG/B\tG\t|1\tD/B\tD\t|\n|2\tD/B\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tC\t|\tG/B\t(D)\t|\tAm\tD\t|1\tG\tG\t|\n|\tG\tC\t|\tG/B\t(D)\t|\tAm\tD\t||\n\nPART 3:\n|\n|2\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tD\tD\t||"
+    "chords": "PART 1:\n|\tG\tG\t|\tG\tC\t|\tG/B\tG/B\t|\tAm\tD\t|\n|\tG\t(D)\t|\t(G/B)\tC\t|\tG/B\tG\t|1\tD/B\tD\t|\n|2\tD/B\tD\t||\n\nPART 2:\n|\tG\tG\t|\tG\tC\t|\tG/B\t(D)\t|\tAm\tD\t|\n|1\tG\tG\t|\tG\tC\t|\tG/B\t(D)\t|\tAm\tD\t|\n|2\tEm\tEm\t|\tD\tD\t|\tC\tC\t|\tD\tD\t||"
   },
   {
     "title": "REEL: Trip to Cullenstown (Gmaj)",
@@ -962,7 +962,7 @@
   {
     "title": "REEL: Tune for the Girls",
     "meter": "4/4",
-    "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tA5\t|\tD\tG\t|\tG\tEm\t|\n|\tA5\tA5\t|\tA5\tA5\t|\tD\tG\t|\tG\tEm\t||\n\nPART 2:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tD\tG\t|\n|\tG\tA\tA\t|\tA\tA\t|\tD\tG\t|\tG\tEm\t||\n\nPART 3:\n|\tEm\tA\tA\t|\tA\tA\t|\tD\tG\t|\tG\tEm\t||\n\nPART 4:\n|\tA\tA\t|\tA\tG\t|\tG\tEm\t|\t(D)\tG\t|\n|\tA\tA\t|\tA\tG\t|\tG\tEm\t|\tEm\t(D)\t||"
+    "chords": "PART 1:\n|\tA5\tA5\t|\tA5\tA5\t|\tD\tG\t|\tG\tEm\t|\n|\tA5\tA5\t|\tA5\tA5\t|\tD\tG\t|\tG\tEm\t||\n\nPART 2:\n|\tA\tA\t|\tA\tA\t|\tA\tA\t|\tD\tG\t|\n|1\tA\tA\t|\tA\tA\t|\tD\tG\t|\tG\tEm\t|\n|2\tA\tA\t|\tA\tA\t|\tD\tG\t|\tG\tEm\t||\n\nPART 3:\n|\tA\tA\t|\tA\tG\t|\tG\tEm\t|\t(D)\tG\t|\n|\tA\tA\t|\tA\tG\t|\tG\tEm\t|\tEm\t(D)\t||"
   },
   {
     "title": "REEL: Virginia",
@@ -1052,7 +1052,7 @@
   {
     "title": "SLIDE: Denis Murphy's No. 2 (Amaj)",
     "meter": "12/8",
-    "chords": "PART 1:\n|\tBm Bm\tC#m A\t|\tD\tA\t|\tBm Bm\tC#m A\t|\tBm\tE\t|\n|2\tD/F#\tE\t||\n\nPART 2:\n|\tE E\tA D/F#\t|\tD\tA\t|\tE E\tA D/F#\t|\tD\tE\t|\n|2\tD\tE\t||"
+    "chords": "PART 1:\n|\tBm Bm\tC#m A\t|\tD\tA\t|\tBm Bm\tC#m A\t|\n|1\tBm\tE\t|\n|2\tD/F#\tE\t||\n\nPART 2:\n|\tE E\tA D/F#\t|\tD\tA\t|\tE E\tA D/F#\t|\n|1\tD\tE\t|\n|2\tD\tE\t||"
   },
   {
     "title": "SLIDE: Denny Mescall's",

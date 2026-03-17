@@ -2167,7 +2167,7 @@ L: 1/8
 Q: 1/4=140
 K: Dmaj
 |:"A"AB cd|ed c/d/c/B/|AB cd|"G"e2 e2|
-"A"A>B cd|ed c>B|"G"AB ce|1 "D"de/d/ "G"cB:||2 "D"d2 d>f||
+"A"A>B cd|ed c>B|"G"AB ce|1 "D"de/d/ "G"cB:|2 "D"d2 d>f||
 |:"D"af ed|f2 e2|"G"A>B cd|"A"e2 ef/g/|
 "D"af ed|f2 eA|"G"A>B "A"ce|1 "D"d2 d>f:|2 "D"de/d/ cB|| "A"A4||
 
@@ -3281,8 +3281,8 @@ K: Gmaj
 |:"G"DG~G2 ABcA|dged "D/A"cA~A2|"G/B"~B2GB "D/A"ADFA|"C"GBAG "D"FGEF|
 "G"DG~G2 ABcA|"(G/B)"dged cA~A2|"D/F#"~f2eg fdcA|1 "D"AGFA ~G3E:|2 "D"AGFA ~G2Bc||
 |: "G (Em)"dggf ~g2fg|"D/F#"abag fddc|"C"~B2GB ADFA|"D"GBAG FDD2|
-|1 "G (Em)"dggf ~g2fg|"D/F#"~a3g fdde|"D"(3fga eg fdcA|"D"AGFA "D/B"~G2"D/A"Bc:||
-|2 "G (Em)"BG~G2 "D/F#"AF~F2|"G/B"dB~B2 "D/A"cA~A2|"D"~f2ea fdcA|"D"AGFA G4||
+[1 "G (Em)"dggf ~g2fg|"D/F#"~a3g fdde|"D"(3fga eg fdcA|"D"AGFA "D/B"~G2"D/A"Bc:|
+[2 "G (Em)"BG~G2 "D/F#"AF~F2|"G/B"dB~B2 "D/A"cA~A2|"D"~f2ea fdcA|"D"AGFA G4||
 
 X: 195
 T: REEL: Tommy Peoples' (Gmaj)
@@ -3346,8 +3346,8 @@ K: Gmaj
 E|:"G"DGGF G2Bd|e2ed "C"edBA|"G/B"~G2BG dGBG|"Am"ABAG "D"EGDE|
 "G"DGGF "(D)"G2Bd|"(G/B)"~e3d "C"efga|"G/B"bg~g2 "G"ageg|1 "D/B"dBAB "D"~G3E:|2 "D/B"dBAB "D"~G3z ||
 |:"G"dggf g2ga|~b2ag "C"edBA|"G/B"G2BG "(D)"dGBG|"Am"ABAG "D"EGD2|
-|1 "G"dggf ~g3a|~b2ag "C"edBA|"G/B"~G3B "(D)"d2BG|"Am"AGFA "D"~G3z:||
-|2 "Em"dg~g2 ag~g2|"D"~b2ag edBA|"C"~G3B d2BG|"D"AGFA ~G3||
+[1 "G"dggf ~g3a|~b2ag "C"edBA|"G/B"~G3B "(D)"d2BG|"Am"AGFA "D"~G3z:|
+[2 "Em"dg~g2 ag~g2|"D"~b2ag edBA|"C"~G3B d2BG|"D"AGFA ~G3||
 
 X: 199
 T: REEL: Trip to Cullenstown (Gmaj)
@@ -3412,7 +3412,7 @@ K: Amix
 |:"A5"CA,CD E3D|CEFG EDCA,|"D"DA,D2 "G"G3(G|G)DAD "Em"FGED|
 "A5"CA,CD E3D|CEGF EDCA,|"D"DFAF "G"G3(G|G2)ED "Em"CA,A,2:||
 |:"A"cABG A3G|EA (3AAA EAAd|cABG A3G|"D"ED (3DDD "G"EDCD|
-[1 "A"cABG A3c|AGED CA,B,C|"D"DFAD "G"G3(G|G2)ED "Em"CA,A,2:||
+[1 "A"cABG A3c|AGED CA,B,C|"D"DFAD "G"G3(G|G2)ED "Em"CA,A,2:|
 [2 "A"EAAA c3B|A3G E3C|"D"DFAD "G"G3(G|G2)ED "Em"CA,A,2||
 "A"A,EAd "A"c2A,E|Ac"G"B2 G,B,DB,|"G"A,EAd "Em"cAB2|"(D)"G,B,DG "G"BGDB,|
 "A"A,EAd "A"c2A,E|Ac"G"B2 G,B,DB,|"G"A,EAd "Em"cAB2|G,B,DG "(D)"E3D||
