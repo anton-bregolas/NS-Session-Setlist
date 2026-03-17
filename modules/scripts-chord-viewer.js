@@ -753,20 +753,32 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength) {
     const abcBarsArr = abcPart.split('|');
 
     let abcPartChords = '';
+  
+    let isVoltaBlock = false;
 
     abcBarsArr.forEach(abcBar => {
 
+      abcBar = abcBar.trim();
+
       // Discard strings like "\n", ":", "|", "A"
-      if (abcBar.trim().length <= 1) return;
+      if (abcBar.length <= 1) return;
 
       let voltaNo = '';
 
-      if (abcBar.match(/^[\d]/)) {
+      // Process voltas
+      if (abcBar.match(/^\[*\d/)) {
 
-        voltaNo = +abcBar[0] > 1? `\n|${abcBar[0]}` : abcBar[0];
+        if (abcBar.startsWith('[')) {
+
+          abcBar = abcBar.replace(/^\[*/, '');
+
+          isVoltaBlock = true;
+        }
+
+        voltaNo = (+abcBar[0] > 1 || isVoltaBlock)? `\n|${abcBar[0]}` : abcBar[0];
       }
 
-      if (barCounter >= 4 && !voltaNo) {
+      if (barCounter >= 4 && !voltaNo && !isVoltaBlock) {
 
         abcPartChords += `|\n`;
 
@@ -802,7 +814,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength) {
   });
 
   abcChordsObj.chords = abcChords.trim();
-  
+
   return abcChordsObj;
 }
 
@@ -991,8 +1003,9 @@ function processPartEndingsForChordBook(abcContent) {
 
   let filteredAbc = 
     abcContent.replaceAll(/\|](?=\r?\n|$)/g, '||') // |AB cd|] > |AB cd||
-              .replaceAll(/(?<!^\|*\[.*):\|(?=(?:\r?\n[^[]|$))/g, ':||') // |AB cd:| > |AB cd:||
-              .replaceAll(/\[(?=\d)/g, '') // |[1 AB cd:| > |1 AB cd:| // [1 AB cd:| > 1 AB cd:|
+              .replaceAll(/^\|+[ ]*\[*(\d)/gm, '[$1') // \n|1 AB cd > \n[1 AB cd
+              .replaceAll(/:\|(?=(?:\r?\n[^[]|$))/g, ':||') // |AB cd:| > |AB cd:||
+              .replaceAll(/(?:\||::)[ ]*\[(?=\d)/g, '|') // |[1 AB cd:| > |1 AB cd:|
               .replaceAll(/(?<=:\|\d[^|]*)\|(?=\r?\n|$)/g, '||') // |2 AB cd| > |2 AB cd||
               .replaceAll(/(?<=[^|])\|(?=\r?\nT|$)/g, '||') // |AB cd| + T: New Tune > |AB cd|| + T: New Tune
               .replaceAll(/:\|*:\r?\n/g, ':||\n|:') // |AB cd:: or |AB cd:|: > |AB cd:|| + |:

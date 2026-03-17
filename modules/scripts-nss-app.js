@@ -2719,6 +2719,11 @@ async function appButtonHandler(btn) {
 
         const dbUpdateVersion = dbUpdateResult[0];
 
+        if (isLocalStorageOk()) {
+
+          localStorage.lastSessionDbVersion_NSSSAPP = dbUpdateVersion;
+        }
+
         updateDbVersionData(dbUpdateVersion);
         
         displayNotification(`Session DB updated to ${dbUpdateVersion}`, "success");

@@ -1076,8 +1076,8 @@ export function getSortedAbc(abcContent, taskType) {
 
         console.log("ABC Encoder:\n\nABC file contents sorted!");
 
-        if (taskType === "abc-sort" && customSettingsOn &&
-            +localStorage.abcSortExportsChordsFromTunes) {
+        if ((taskType === "abc-sort" || taskType === "abc-sort-for-encode") &&
+            customSettingsOn && +localStorage.abcSortExportsChordsFromTunes) {
 
             console.log(`ABC Encoder:\n\nExtracting Chords from ABC...`);
 
@@ -1090,8 +1090,8 @@ export function getSortedAbc(abcContent, taskType) {
 
             sortedAbcTunes = sortedAbcContentArr[1].join('\n\n');
 
-            if (taskType === "abc-sort" && customSettingsOn &&
-                +localStorage.abcSortExportsChordsFromTunes) {
+            if ((taskType === "abc-sort" || taskType === "abc-sort-for-encode") &&
+                customSettingsOn && +localStorage.abcSortExportsChordsFromTunes) {
 
                 console.log(`ABC Encoder:\n\nExtracting Chords from ABC Tunes...`);
 
@@ -2213,8 +2213,9 @@ function normalizeHeaderLine(headerLine, isSkippingAbcTitleEditAllowed) {
 function normalizePartEndings(abcContent) {
 
     let abcOutput = abcContent.replaceAll(/\|](?=\r?\n|$)/g, '||') // |AB cd|] > |AB cd||
+                           .replaceAll(/^\|+[ ]*\[*(\d)/gm, '[$1') // \n|1 AB cd > \n[1 AB cd
                            .replaceAll(/:\|(?=(?:\r?\n[^[]|$))/g, ':||') // |AB cd:| > |AB cd:||
-                           .replaceAll(/(?<=[^\\n])\|[ ]*\[(?=\d)/g, '|') // |[1 AB cd:|[2 ef g2|| > |1 AB cd:|2 ef g2||
+                           .replaceAll(/(?:\||::)[ ]*\[(?=\d)/g, '|') // |[1 AB cd:|[2 ef g2|| > |1 AB cd:|2 ef g2||
                            .replaceAll(/(?<=:\|\d[^|]*)\|(?=\r?\n|$)/g, '||') // |2 AB cd| > |2 AB cd||
                            .replaceAll(/(?<=[^|])\|(?=\r?\nT|$)/g, '||') // |AB cd| + T: New Tune > |AB cd|| + T: New Tune
                            .replaceAll(/:\|*:\r?\n/g, ':||\n|:') // |AB cd:: or |AB cd:|: > |AB cd:|| + |:

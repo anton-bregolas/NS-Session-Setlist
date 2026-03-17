@@ -436,6 +436,28 @@ Import Name | Import Description | Details |
 ## Version History
 
 <details>
+  <summary><b>v1.2.11 Fix Normalize Volta Brackets</b></summary>
+
+**v1.2.11 Fix Normalize Volta Brackets in Encoder & Chord Viewer**
+
++ ABC Encoder module updates:
+  - Update normalizePartEndings to account for alternative volta brackets
+    * `\n|1` or `\n|[1` will now be replaced with `\n[1` 
+    * `::[2` will now be replaced with `|2`
+  - Fix Encode not downloading Chordbook files
+
++ Chord Viewer updates:
+  - Update processPartEndingsForChordBook to account for alternative volta brackets
+    * `\n|1` or `\n|[1` will now be replaced with `\n[1`, keeping the bracket 
+    * `::[2` will now be replaced with `|2`
+  - Update getChordsFromTune to handle volta block logic
+    * Trim all bars before processing
+    * Detect `[1` voltas taking up entire lines = volta blocks
+    * Fix new line after first bar of volta block, add new line before
+    * NB: Assumes last volta block is at tune part's end (`||`)
+</details>
+
+<details>
   <summary><b>v1.2.10 Add Encoder ABC File Preprocessing</b></summary>
 
 **v1.2.10 Add Encoder ABC File Preprocessing**
