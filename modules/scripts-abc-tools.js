@@ -40,6 +40,7 @@ export const abcTunebookDefaults = {
     abcToolsAllowTuneAutoReload: "1",
     listViewerOverrideTuneSelector: "0",    
     chordViewerAllowDynamicChords: "0",
+    chordViewerDisableCloneChords: "0",
     chordViewerUseBoldFonts: "0",
     listViewerHideSliderGui: "0",
     listViewerSearchSubTitles: "1"

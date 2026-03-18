@@ -425,6 +425,8 @@ function loadChordsToDialog(chordsMatch, chordsType) {
   
   const tunePartsArr = tune.chords.split('\n\n');
 
+  const isAutoCloneOff = isAutoCloneChordsDisabled();
+
   tunePartsArr.forEach(tunePart => {
 
     if (!tunePart.trim()) return;
@@ -447,10 +449,13 @@ function loadChordsToDialog(chordsMatch, chordsType) {
     
     partLinesArr.forEach(line => {
 
+      const isVoltaBlock =
+        line.match(/^\|\[[\d]/)? true : false;
+
       const lineBlock = document.createElement('div');
       lineBlock.dataset.chords = "line";
       
-      const barPattern = /\|[\d]?|\|\|/g;
+      const barPattern = /\|\[*[\d]?|\|\|/g;
       const lineBarsArr = line.split(barPattern)
         .filter(bar => bar.trim());
 
@@ -468,22 +473,26 @@ function loadChordsToDialog(chordsMatch, chordsType) {
 
       const barBlock = document.createElement('div');
       barBlock.classList.add('grid-center');
-      barBlock.dataset.chords =  isTuneTripleMeter(tune.meter)? "bar-triple" : "bar";
+      barBlock.dataset.chords = isTuneTripleMeter(tune.meter)? "bar-triple" : "bar";
       
       const lineBarStartSpan = document.createElement('span');
       lineBarStartSpan.dataset.chords = "barline";
       
       const barSeparator = barSeparators[lineBarIndex] || '|';
+
+      const voltaSeparator = barSeparator.match(/\|\[*(\d+)/);
       
-      if (barSeparator.match(/\|[\d]+/)) {
+      if (voltaSeparator) {
 
         isVolta = true;
 
-        lineBarStartSpan.textContent = '|';
+        const voltaNo = voltaSeparator[1];
+
+        lineBarStartSpan.textContent = '[';
 
         const voltaSpan = document.createElement('span');
         voltaSpan.dataset.chords = "volta";
-        voltaSpan.textContent = barSeparator.substring(1);
+        voltaSpan.textContent = voltaNo;
         
         lineBarStartSpan.appendChild(voltaSpan);
 
@@ -501,7 +510,18 @@ function loadChordsToDialog(chordsMatch, chordsType) {
         
         const chordSpan = document.createElement('span');
         chordSpan.dataset.chords = "chord";
-        chordSpan.textContent = tuneChord.trim();
+
+        if (isAutoCloneOff) {
+
+          chordSpan.textContent = 
+            tuneChord === '/'? '' :
+            tuneChord.replaceAll(/\xa0\//g, '');
+
+        } else {
+
+          chordSpan.textContent = tuneChord;
+        }
+
         barBlock.appendChild(chordSpan);
       });
 
@@ -515,6 +535,8 @@ function loadChordsToDialog(chordsMatch, chordsType) {
         lineBarEndSpan.textContent = '|';
         barBlock.appendChild(lineBarEndSpan);
       }
+
+      if (isVoltaBlock) isVolta = false;
 
       if (isFinalBar && !isVolta) {
 
@@ -775,7 +797,11 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength) {
           isVoltaBlock = true;
         }
 
-        voltaNo = (+abcBar[0] > 1 || isVoltaBlock)? `\n|${abcBar[0]}` : abcBar[0];
+        const isFirstVolta = +abcBar[0] === 1;
+
+        voltaNo = isVoltaBlock? `\n|[${abcBar[0]}` :
+          isFirstVolta? abcBar[0] :
+          `\n|${abcBar[0]}`;
       }
 
       if (barCounter >= 4 && !voltaNo && !isVoltaBlock) {
@@ -795,7 +821,7 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength) {
         abcBarChordsArr.map(c => c.replaceAll(/[^a-zA-Z0-9#♯♭♮×/()+]/g, '')).
         map(c => c.replaceAll(/(.+)\(/g, `$1\u2009(`)).
         filter(Boolean);
-      
+
       const processedChordsArr = getCompleteAbcChordBar(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength);
       
       // Discard invalid bars (bars without notes, anacruses)
@@ -822,12 +848,15 @@ function getChordsFromTune(abcBody, abcTitle, abcMeter, abcNoteLength) {
 
 function getCompleteAbcChordBar(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength) {
 
+  // Check if auto-cloning of chords is disabled
+  const isAutoCloneOff = isAutoCloneChordsDisabled();
+
   // Handle cases of single chord per bar, ignore bars where the first chord-beat is missing
   if (abcBarChordsInput.length === 1 && abcBar.match(/^:*\d*[\s]*["]/)) {
 
     const singleBarChord = abcBarChordsInput[0];
 
-    if (abcBarChordsInput[0].length > 3) {
+    if (abcBarChordsInput[0].length > 3 || isAutoCloneOff) {
 
       return [`${singleBarChord}${`\t/`.repeat(minTuneBeats - 1)}`, singleBarChord];
     }
@@ -854,21 +883,21 @@ function getCompleteAbcChordBar(abcBar, abcBarChordsInput, minTuneBeats, abcMete
   // Handle cases of zero or incomplete chord-beats per bar (2 out of 3 chords for triple-time tunes, missing first chord-beat for duple-time tunes)
   if (abcBarChordsInput.length < minTuneBeats) {
 
-    return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength);
+    return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength, isAutoCloneOff);
   }
 
   // Handle cases of incomplete chord-beats per bar (3 out of 4 chords and/or missing first chord-beat for quadruple-time tunes)
   // Handle cases of oversaturated chord-beats (time signature change etc.)
   if (abcBarChordsInput.length > minTuneBeats) {
 
-    return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats * 2, abcMeter, lastChord, isFinalBar, abcNoteLength);
+    return countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats * 2, abcMeter, lastChord, isFinalBar, abcNoteLength, isAutoCloneOff);
   }
 }
 
 // Recover missing chord-beats by counting notes against beats and inserting the sufficient number of chords
 // Account for bars where chord input was skipped or the first chord-beat is missing, fill them in using lastChord
 
-function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength) {
+function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMeter, lastChord, isFinalBar, abcNoteLength, isAutoCloneOff) {
 
   let completeChordBar = '';
 
@@ -944,17 +973,17 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
 
       if ((previousChord && currentChord) && 
         currentChord === previousChord && 
-        currentChord.length > 3) {
+        (currentChord.length > 3 || isAutoCloneOff)) {
 
         currentChord = '/';
       }
-      
+
       completeChordBar +=
         currentChord? 
         `${currentChord}` +
         `${isTuneTripleMeter(abcMeter) || beatCount % 2 !== 0 || beatsInThisFragment === minTuneBeats? '\t' : '\xa0'}` :
         '';
-      previousChord = currentChord;
+      previousChord = currentChord === '/'? previousChord : currentChord;
       beatCount++;
     }
   });
@@ -964,6 +993,17 @@ function countBeatsInsertChords(abcBar, abcBarChordsInput, minTuneBeats, abcMete
   if (noteCount <= eightsPerBar / 2 && !isVoltaBar && !isFinalBar) return null;
 
   return [completeChordBar, abcBarChordsInput[abcBarChordsInput.length - 1]];
+}
+
+// Check if auto-cloning of chords is disabled in Chord Viewer or ABC Encoder
+
+function isAutoCloneChordsDisabled() {
+
+  const isEncoderOpen = document.querySelector('[data-title="encoder"]');
+
+  return isLocalStorageOk() &&
+    ((isEncoderOpen && +localStorage.abcSortExportsChordsNoClone === 1) ||
+    (!isEncoderOpen && +localStorage.chordViewerDisableCloneChords === 1));
 }
 
 ////////////////////////////////////////////

@@ -2982,6 +2982,12 @@ export async function appCheckBoxHandler(checkBox, checkBoxScope) {
         displayNotification("Chord Viewer will always use Chordbook JSON as source of chords", "success");
       break;
 
+    case 'chordViewerDisableCloneChords':
+      checkBox.checked?
+        displayNotification("Chord Viewer will no longer clone chords to fill the grid uniformly", "success") :
+        displayNotification("Chord Viewer will auto-clone chords to fill the grid uniformly", "success");
+      break;
+
     case 'chordViewerUseBoldFonts':
       checkBox.checked?
         document.querySelector('[data-chord-viewer="chords-container"]').style.fontWeight = "bold" :
@@ -3063,6 +3069,12 @@ export async function appCheckBoxHandler(checkBox, checkBoxScope) {
       break;
 
     // Advanced Encoder Settings
+
+    case 'abcSortExportsChordsNoClone':
+      checkBox.checked?
+        displayNotification("Sort will now extract Chordbook JSON with chord cloning disabled", "success") :
+        displayNotification("Sort will now extract Chordbook JSON with chord cloning enabled", "success");
+      break;
 
     case 'abcSortFetchesTsoMetaData':
       checkBox.checked?

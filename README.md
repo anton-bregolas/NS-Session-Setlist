@@ -155,6 +155,7 @@ Option Name | Default Setting | Comments |
 | `Tunes: Allow automatic Tunebook reload` | **ON** | Auto-load items every time new filter or section selected |
 | `Tunes: Open List Viewer on selector click` | **OFF** | Replace the native browser Tune Selector menu with List Viewer |
 | `Chord Viewer: Generate chords dynamically` | **OFF** | Extract chords directly from ABC or Tune Selector instead of Chordbook **[1]** |
+| `Chord Viewer: Disable auto-cloning chords` | **OFF** | Display chords with auto-cloning disabled (requires `Generate chords dynamically` option turned ON) |
 | `Chord Viewer: Use bold font for chords` | **OFF** | Make chords and barlines more readable on small screens |
 | `List Viewer: Always hide slider input GUI` | **OFF** | Do not show List Viewer slider |
 | `List Viewer: Search through ABC subtitles ` | **ON** | Look through all tune titles & subtitles when filtering the list |
@@ -247,6 +248,7 @@ Features adjustable via Advanced Settings include (`*` signifies default):
 - **Handle ABC Set titles:** `Add first tune name as Set Title*` / `Add slash-separated list as Set Title`
 - **Handle ABC prefix & suffix:** `Add TYPE: prefix*` / `Add [Type] suffix`
 - **Handle ABC body formatting:** `Normalize ABC part endings*`
+- **Handle Chordbook extraction:** `Disable cloning chords to fill Chordbook grid`
 - **Remove duplicate ABCs:** `By ABC Title*` / `By ABC content`
 - **Remove comments from ABC:** `Wipe all comments` / `Wipe* or Move comments between X: and T:`
 - **Remove extra line breaks in ABC:** `Wipe extra line breaks*`, `Wipes text after line breaks`
@@ -434,6 +436,35 @@ Import Name | Import Description | Details |
 | `makeTunesFromSets`, `sortFilterAbc` | Custom scripts for making ABC Sets | Required for creating ABC Sets and generating Set URLs. Imported from `scripts-abc-encoder.js` by default |
 
 ## Version History
+
+<details>
+  <summary><b>v1.2.12 Add Chord Viewer Grid Options</b></summary>
+
+**v1.2.12 Add Chord Viewer Grid Options (Disable Clone Chords)**
+
++ App / Tunebook updates:
+  - Add `Chord Viewer: Disable auto-cloning chords` to app options (default: OFF)
+  - Link new option to `Chord Viewer: Generate chords dynamically` setting
+
++ ABC Encoder module updates:
+  - Add `SORT extracts chords with cloning disabled` to Encoder settings (default: OFF)
+  - Link new option to `SORT extracts chords from Tunebook` setting
+
++ Chord Viewer updates:
+  - Add optional no-clone-chords view to chord extraction and chord display logic
+    * Activated via localStorage variable chordViewerDisableCloneChords in Tunebook
+    * Activated via abcSortExportsChordsNoClone in ABC Encoder
+  - Add isAutoCloneChordsDisabled checker
+  - Update getChordsFromTune & countBeatsInsertChords with alternative chord extraction logic
+    * With disable clone chords option ON, always insert `/` to Chordbook in place of duplicate chords
+    * With disable clone chords option OFF, insert `/` to Chordbook only if the chord is too long to clone
+  - Update loadChordsToDialog with alternative chord grid fill logic
+    * With disable clone chords option ON, insert empty grid cell in place of `/`
+    * With disable clone chords option OFF, display all chord values including `/`
+  - Update getChordsFromTune & loadChordsToDialog to tweak volta block logic
+    * All volta brackets will now be displayed as `[1`
+    * Enable separate handling of volta blocks: Extract as `|[1`, display as `\n[1`
+</details>
 
 <details>
   <summary><b>v1.2.11 Fix Normalize Volta Brackets</b></summary>

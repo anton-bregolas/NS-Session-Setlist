@@ -349,8 +349,12 @@
                                 Tunes: Open List Viewer on selector click
                             </label>
                             <label class="nss-checkbox-label">
-                                <input type="checkbox" id="cvw-allow-dynamic-chords" data-option="chordViewerAllowDynamicChords" class="nss-checkbox-btn" value="1">
+                                <input type="checkbox" id="cvw-allow-dynamic-chords" data-option="chordViewerAllowDynamicChords" data-linked-options="chordViewerDisableCloneChords" class="nss-checkbox-btn" title="Chord Viewer: Generate chords dynamically. This will force Chord Viewer to ignore Chordbook data and generate chords every time it is opened. This setting is required for Disable auto-cloning chords option" aria-label="Chord Viewer: Generate chords dynamically. This will force Chord Viewer to ignore Chordbook data and generate chords every time it is opened. This setting is required for Disable auto-cloning chords option" value="1">
                                 Chord Viewer: Generate chords dynamically
+                            </label>
+                            <label class="nss-checkbox-label">
+                                <input type="checkbox" id="cvw-disable-clone-chords" data-option="chordViewerDisableCloneChords" class="nss-checkbox-btn" title="Chord Viewer: Disable auto-cloning chords. Requires Generate chords dynamically setting to be ON. This will disable auto-filling of chord grid with repeating chords" aria-label="Chord Viewer: Disable auto-cloning chords. Requires Generate chords dynamically setting to be ON. This will disable auto-filling of chord grid with repeating chords" value="1">
+                                Chord Viewer: Disable auto-cloning chords
                             </label>
                             <label class="nss-checkbox-label">
                                 <input type="checkbox" id="cvw-use-bold-fonts" data-option="chordViewerUseBoldFonts" class="nss-checkbox-btn" value="1">

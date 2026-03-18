@@ -144,13 +144,17 @@
                             SORT exports Tunes ABC from Sets ABC
                         </label>
                         <label class="nss-checkbox-label">
-                          <input type="checkbox" id="sort-exports-chords" data-option="abcSortExportsChordsFromTunes" class="nss-checkbox-btn" value="1">
+                          <input type="checkbox" id="sort-exports-chords" data-option="abcSortExportsChordsFromTunes" data-linked-options="abcSortExportsChordsNoClone" class="nss-checkbox-btn" title="SORT extracts chords from ABC and downloads files in Chordbook JSON format. This setting is required for Extract chords with cloning disabled option" aria-label="SORT extracts chords from ABC and downloads files in Chordbook JSON format. This setting is required for Extract chords with cloning disabled option" value="1">
                             SORT extracts chords from Tunebook
                         </label>
                         <button id="nss-show-advanced-options" class="nss-btn nss-btn-advanced-options" aria-expanded="false">
                             Show advanced options
                         </button>
                         <div class="nss-advanced-options-container flex-column" aria-hidden="true" hidden>
+                            <label class="nss-checkbox-label">
+                              <input type="checkbox" id="sort-exports-chords-noclone" data-option="abcSortExportsChordsNoClone" class="nss-checkbox-btn" value="1" title="SORT extracts chords from ABC with chord cloning disabled. Requires Extract chords from Tunebook option to be turned ON" aria-label="SORT extracts chords from ABC with chord cloning disabled. Requires Extract chords from Tunebook option to be turned ON">
+                                <span class="nss-advanced-option-text">SORT extracts chords with cloning disabled</span>
+                            </label>
                             <label class="nss-checkbox-label">
                               <input type="checkbox" id="sort-fetches-metadata" data-option="abcSortFetchesTsoMetaData" class="nss-checkbox-btn" value="1" title="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option" aria-label="SORT fetches data from The Session for C: and Z: fields. To handle ABCs already containing this data toggle Skip updating TSO metadata option">
                                 <span class="nss-advanced-option-text">SORT fetches metadata from The Session</span>

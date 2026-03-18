@@ -33,7 +33,8 @@ export const abcEncoderDefaults = {
     abcEncodeUsesLzwCompression: "0",
     abcSortEnforcesCustomAbcFields: "0",
     abcSortExportsTunesFromSets: "1",
-    abcSortExportsChordsFromTunes: "1",
+    abcSortExportsChordsFromTunes: "1", // Linked with abcSortExportsChordsNoClone
+    abcSortExportsChordsNoClone: "0",
     abcSortFetchesTsoMetaData: "0",
     abcSortUsesStrictTuneDetection: "0",
     abcSortFormatsSetTitleFirstName: "1", // Disables abcSortFormatsSetTitleSlashNames
