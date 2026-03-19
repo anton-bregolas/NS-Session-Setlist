@@ -2514,7 +2514,7 @@ T: Seanchaí Muimhneach / An Seanchaí Muimhneach
 K: Edor
 |:"Em"B2E EFA B2A Bcd|"Em"B2E EFA "(C)"BAG "D"FED|
 "Em"B2E EFA B2A Bcd|"D"AFE DEF A2G FED:||
-|:"Em"g2e "(D/F#)"fed "(Em)"e2B "(D/F#)"BAF|"Em (C)"B2E EFA "D"BAG FED|
+|:"Em"g2e "(D)"fed "(Em)"e2B "(D)"BAF|"Em (C)"B2E EFA "D"BAG FED|
 "Em"gfe "(D/F#)"fed "G"edB "Am"d2B|"D (C)"AFE DEF "D"A2G FED:||
 |:"Em (C)"E3 EFE EFE E3|"D"EFE EFA BAG FED|
 "Em (C)"~E3 EFE EFE B/c/dB|"D"AFE DEF A2G "(Bm)"FED:||
@@ -2539,7 +2539,7 @@ T: Dan O'Keeffe's / Danny Ab's No. 2
 K: Ador
 |:"Am"A2e e2d BAB "G"d2B|"Am"A2e e2d "G"B2G GFG|
 "Am"A2e e2d BAB d3|1 "G"BAB d2e "Em"B2A A2G:|2 "G"BAB d2e "Em"B2A A2e||
-|:"Am"e2a a2b a2g e2d|"Am"efg a2b "Am"a2g "D"e2f|
+|:"Am"e2a a2b a2g e2d|efg a2b "Am"a2g "D"e2f|
 "G"g3 gfe dBA G2A|1 "Em"BAB d2e B2A ABd:|2 "Em"BAB d2e "Em"B2A "G"A2G||
 
 X: 90
@@ -2650,10 +2650,10 @@ K: Edor
 "Em (G)"B2 A B2c "D"dfe dcB|"Bm"A2F D2F "A"E3 E3:||
 T: Denis Murphy's No. 2 (Amaj) / Bedford Cross
 K: Amaj
-|:"Bm"B3 BAB "C#m"c2B "A"A2c|BA"D"F A2F "A"E2F A2c|"Bm"B2B BAB "C#m"c2B "A"A2c|
-[1 "Bm"BAF A2F "E"E3 EFA:|2 "D/F#"BAF A2F "E"E3 E3||
-|:"E"e2B BAB "A"c2B "D/F#"A3|BA"D"F A2F "A"E2F A3|"E"e2B BAB "A"c2B "D/F#"A2c|
-[1 BA"D"F A2F "E"E3 E2f:|2 BA"D"F A2F "E"E2E EFA||
+|:"Bm"B3 BAB "C#m"c2B "A"A2c|BA"D"F A2F "A"E2F A2c|
+"Bm"B2B BAB "C#m"c2B "A"A2c|1 "Bm"BAF A2F "E"E3 EFA:|2 "D/F#"BAF A2F "E"E3 E3||
+|:"E"e2B BAB "A"c2B "D/F#"A3|BA"D"F A2F "A"E2F A3|
+"E"e2B BAB "A"c2B "D/F#"A2c|1 BA"D"F A2F "E"E3 E2f:|2 BA"D"F A2F "E"E2E EFA||
 T: Echoes of Killarney (Amaj) / Art O'Keeffe's No. 2 / Mo Shéamuisín
 K: Amaj
 |:"A"A2E A2B "A"c2e "D"agf|"A"e2c cBc "D"e2c "E"BcB|
@@ -2674,9 +2674,9 @@ L: 1/8
 Q: 3/8=116
 K: Dmaj
 A2G|:"D"F2A AFA "G"BdB "A"AFE|"D (Bm)"F2E "A"EDE "D"F2D D2E|
-"D"F2A "D/F#"AFA "G"BdB AFA|"(Em)"Bcd "A"efe|1 "D"d2 A "A"B2 A:|2 "D"d3 "A"d2 e||
+"D"F2A "D/F#"AFA "G"BdB AFA|1 "(Em)"Bcd "A"efe "D"d2 A "A"B2 A:|2 "(Em)"Bcd "A"efe "D"d3 "A"d2 e||
 |:"D"faf fed "G"g3 gfe|"D/F#"faf fed "A"f2 a b2 a|
-"D (Bm)"faf fed "G"g2e edB|"Em"ABd "A"efe|1 "D"d3 "A"d2 e:|2 "D"d2 A "A"B2 A||
+"D (Bm)"faf fed "G"g2e edB|1 "Em"ABd "A"efe "D"d3 "A"d2 e:|2 "Em"ABd "A"efe "D"d2 A "A"B2 A||
 T: Hare in the Corn (Gmaj) / Cat in the Corner
 K: Gmaj
 |:"G"B2B "G/C"A2G BdB AG"G"A|B2e "G/C"d2B "D"A3 AGA|
