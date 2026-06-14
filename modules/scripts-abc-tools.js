@@ -545,7 +545,7 @@ async function injectInstrument(theURL) {
         LZString.decompressFromEncodedURIComponent(encodedAbcContent) :
         await deflateDecompress(encodedAbcContent);
 
-    let injectMidiString = `%soundfont fluid\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 55\n%%MIDI chordvol 40`;
+    let injectMidiString = `%soundfont fatboy\n%%MIDI program 0\n%%MIDI bassprog 0\n%%MIDI chordprog 0\n%%MIDI bassvol 55\n%%MIDI chordvol 40`;
 
     // Inject a template MIDI string into the ABC if no MIDI instructions found
 
@@ -598,7 +598,8 @@ async function injectInstrument(theURL) {
             }
             else if (isClaviZouki) {
                 abcContent = abcContent.replace("%%MIDI program 0","%%MIDI program 139").replace("%%MIDI bassprog 0", "%%MIDI bassprog 7").
-                                        replace("%%MIDI chordprog 0", "%%MIDI chordprog 7").replace("%%MIDI chordvol 40","%%MIDI chordvol 25");
+                                        replace("%%MIDI chordprog 0", "%%MIDI chordprog 7").replace("%%MIDI chordvol 40","%%MIDI chordvol 25").
+                                        replace("fatboy", "fluid");
             }
             else if (isUPipes) {
                 abcContent = abcContent.replace("%%MIDI program 0","%%MIDI program 129");

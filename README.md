@@ -438,7 +438,18 @@ Import Name | Import Description | Details |
 ## Version History
 
 <details>
-  <summary><b>v1.2.12 Add Chord Viewer Grid Options</b></summary>
+  <summary><b>v1.2.13 Update soundfont defaults</b></summary>
+
+**v1.2.13 Update soundfont defaults**
+
++ Tunebook updates:
+  - Tabs & MIDI options instruments now use fatboy soundfont as default
+  - Clavizouki option uses fluid soundfont as default
+
+</details>
+
+<details>
+  <summary><b>v1.2.13 Add Chord Viewer Grid Options</b></summary>
 
 **v1.2.12 Add Chord Viewer Grid Options (Disable Clone Chords)**
 
